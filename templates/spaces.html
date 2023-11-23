@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <a href="{% url 'space_create' %}" class="btn btn-primary">Add new space</a>
+
+    {% for space in spaces %}
+  <div class="card">
+    <div class="card-header">
+        <div class="card-title h5">{{ space.name }}</div>
+    </div>
+    <div class="card-actions">
+        <a href="{% url 'space_detail' space.uuid %}" class="btn btn-primary">Edit</a>
+    </div>
+  </div>
+    {% endfor %}
+
+
+</div>
+{% endblock %}

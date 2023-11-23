@@ -1,6 +1,7 @@
 from django.urls import path
-from django.views.generic import TemplateView
-
+from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormView
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="home.html"), name='home')
+    path('spaces/', SpacesView.as_view(), name='spaces'),
+    path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
+    path('spaces/<uuid:space_uuid>/', SpaceDetailFormView.as_view(), name='space_detail')
 ]
