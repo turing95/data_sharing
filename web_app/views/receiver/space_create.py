@@ -6,7 +6,7 @@ from web_app.models import Recipient
 
 
 class SpaceFormView(FormView, LoginRequiredMixin):
-    template_name = "space_create.html"
+    template_name = "receiver/space_create.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
 

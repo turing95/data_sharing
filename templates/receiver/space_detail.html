@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'receiver/base.html' %}
 {% block content %}
-    <form action="." method="POST">
+    <form action=".." method="POST">
         {% csrf_token %}
                 {{ form.as_p }}
 

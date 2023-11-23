@@ -8,7 +8,7 @@ from django import forms
 
 
 class SpaceDetailFormView(FormView,LoginRequiredMixin):
-    template_name = "space_detail.html"
+    template_name = "receiver/space_detail.html"
     form_class = SpaceDetailForm
     success_url = reverse_lazy('spaces')
 
