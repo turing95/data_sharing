@@ -1,0 +1,16 @@
+{% extends 'receiver/base.html' %}
+{% block content %}
+    <form action="." method="POST">
+        {% csrf_token %}
+                {{ form.as_p }}
+        {# Display other fields as text #}
+    <div>
+        <label>Invited:</label>
+        {% for sender in space.senders.all %}
+        <p>{{ sender.email }}</p>
+        {% endfor %}
+    </div>
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}

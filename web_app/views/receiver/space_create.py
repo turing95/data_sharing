@@ -2,7 +2,7 @@ from web_app.forms import SpaceForm
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Recipient
+from web_app.models import Sender
 
 
 class SpaceFormView(FormView, LoginRequiredMixin):
@@ -16,5 +16,5 @@ class SpaceFormView(FormView, LoginRequiredMixin):
 
         emails = form.cleaned_data['emails']
         for email in emails:
-            Recipient.objects.create(email=email, space=space_instance)
+            Sender.objects.create(email=email, space=space_instance)
         return super().form_valid(form)
