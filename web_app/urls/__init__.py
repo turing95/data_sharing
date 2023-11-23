@@ -3,5 +3,5 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormView
 urlpatterns = [
     path('', SpacesView.as_view(), name='spaces'),
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
-    path('spaces/<uuid:space_uuid>/', SpaceDetailFormView.as_view(), name='space_detail')
+    path('spaces/<uuid:recipient_uuid>/', SpaceDetailFormView.as_view(), name='space_detail')
 ]
