@@ -2,10 +2,12 @@ from web_app.forms import SpaceDetailForm
 from django.views.generic.edit import FormView
 from web_app.models import Space
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django import forms
 
 
-class SpaceDetailFormView(FormView):
+class SpaceDetailFormView(FormView,LoginRequiredMixin):
     template_name = "space_detail.html"
     form_class = SpaceDetailForm
     success_url = reverse_lazy('spaces')
