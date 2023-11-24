@@ -23,15 +23,21 @@ class CommaSeparatedEmailField(forms.CharField):
 
 class SpaceForm(ModelForm):
     senders_emails = CommaSeparatedEmailField(
-        widget=forms.TextInput(attrs={'placeholder': 'Enter emails separated by commas', 'class': 'email-input'}),
+        widget=forms.TextInput(attrs={'placeholder': 'Enter emails separated by commas', 'class': 'email-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
         label='Emails',
         required=False  # Set to True if emails are mandatory
     )
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}))
-
+    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter name of the space','class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}))
+    is_active = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={
+            'class': 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'
+        }),
+        required=False,
+        label='Publish'
+    )
     class Meta:
         model = Space
-        fields = ['name', 'is_public']
+        fields = ['name', 'is_public','is_active']
 
     def clean_emails(self):
         # Custom clean method for emails field
