@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'compressor',
     'web_app'
 ]
 
@@ -70,6 +71,18 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+COMPRESS_ROOT = BASE_DIR / 'static'
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
+STATICFILES_DIRS = [
+    BASE_DIR / "templates",
+    BASE_DIR / "static"
+
 ]
 
 LOGIN_URL = '/accounts/login/'
