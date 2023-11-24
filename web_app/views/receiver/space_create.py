@@ -14,7 +14,7 @@ class SpaceFormView(FormView, LoginRequiredMixin):
         # This method is called when valid form data has been POSTed.
         space_instance = form.save()
 
-        emails = form.cleaned_data['emails']
+        emails = form.cleaned_data['senders_emails']
         for email in emails:
             Sender.objects.create(email=email, space=space_instance)
         return super().form_valid(form)

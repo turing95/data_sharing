@@ -22,7 +22,7 @@ class CommaSeparatedEmailField(forms.CharField):
 
 
 class SpaceForm(ModelForm):
-    emails = CommaSeparatedEmailField(
+    senders_emails = CommaSeparatedEmailField(
         widget=forms.TextInput(attrs={'placeholder': 'Enter emails separated by commas', 'class': 'email-input'}),
         label='Emails',
         required=False  # Set to True if emails are mandatory
@@ -30,9 +30,9 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['name']
+        fields = ['name','is_public']
 
     def clean_emails(self):
         # Custom clean method for emails field
-        emails = self.cleaned_data.get('emails', [])
+        emails = self.cleaned_data.get('senders_emails', [])
         return emails

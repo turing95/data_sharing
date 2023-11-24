@@ -68,11 +68,38 @@
 }
 </style>
     <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let isPublicCheckbox = document.getElementById('id_is_public');
+        let participantsDiv = document.getElementById('participants-input');
 
+        // Check if elements exist
+        if (!isPublicCheckbox || !participantsDiv) {
+            console.error('Form elements not found!');
+            return; // Exit if elements are not found
+        }
+
+        function toggleParticipantsInput() {
+            // Check the checkbox state
+            if (isPublicCheckbox.checked) {
+                participantsDiv.style.display = 'none';
+            } else {
+                participantsDiv.style.display = 'block';
+            }
+        }
+
+        // Initial check for the state of the checkbox
+        toggleParticipantsInput();
+
+        // Event listener for changes in the 'is_public' checkbox
+        isPublicCheckbox.addEventListener('change', toggleParticipantsInput);
+    });
+</script>
 </head>
 <body>
 {% block content %}
 	
 {% endblock %}
+
 </body>
 </html>

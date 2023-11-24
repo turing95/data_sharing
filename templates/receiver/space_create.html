@@ -3,7 +3,15 @@
 
     <form action="." method="POST">
         {% csrf_token %}
-                {{ form.as_p }}
+        <p>
+        {{ form.name.label_tag }} {{ form.name }}
+    </p>
+    <p>
+        {{ form.is_public.label_tag }} {{ form.is_public }}
+    </p>
+    <div id="participants-input" style="display:none;">
+        {{ form.senders_emails.label_tag }} {{ form.senders_emails }}
+    </div>
 
         <input type="submit" value="Submit">
     </form>
