@@ -30,14 +30,26 @@
     </div>
 
                 {{ requests.management_form }}
-
-    <div id="request-forms-container" class="mb-6">
-        {% for form in requests %}
+        <div id="requests-container">
+        {% for req in requests %}
             <div class="request-form">
-                {{ form.as_p }}
+                <div class="mb-6">
+                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label_tag }} </label>
+        {{ req.destination}}
+    </div>
+            <div class="mb-6">
+                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.deadline.label_tag }} </label>
+        {{ req.deadline}}
+    </div>
+            <div class="mb-6">
+                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label_tag }} </label>
+        {{ req.number_of_files}}
+    </div>
             </div>
         {% endfor %}
-    </div>
+            </div>
+        <button type="button" id="add-request-btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Request</button>
+
     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 {% endblock %}

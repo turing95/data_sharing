@@ -1,5 +1,5 @@
-from django.forms import ModelForm,DateTimeInput,inlineformset_factory
-from web_app.models import Space,Request
+from django.forms import ModelForm, DateTimeInput, inlineformset_factory
+from web_app.models import Space, Request
 from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -49,6 +49,14 @@ class SpaceForm(ModelForm):
 
 
 class RequestForm(ModelForm):
+    destination = forms.CharField(
+        widget=forms.TextInput(attrs={'required': 'required', 'placeholder': 'Enter destination for the request',
+                                      'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}))
+    number_of_files = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter number of files,leave empty for unlimited',
+                                        'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}),
+        required=False)
+
     class Meta:
         model = Request
         fields = ['destination', 'deadline', 'number_of_files']
@@ -57,4 +65,4 @@ class RequestForm(ModelForm):
         }
 
 
-RequestFormSet = inlineformset_factory(Space, Request, form=RequestForm, extra=1, can_delete=True)
+RequestFormSet = inlineformset_factory(Space, Request, form=RequestForm, extra=1)
