@@ -12,7 +12,7 @@
 
     <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
 
-    <script src="{% static 'src/index.js' %}" ></script>
+    <script src="{% static 'src/space_create.js' %}" ></script>
 </head>
 <body class="bg-green-50">
 
@@ -48,10 +48,12 @@
           </div>
         </div>
       </nav>
+<div class="container mx-auto mt-4">
 
 {% block content %}
 
 {% endblock %}
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 
 </body>

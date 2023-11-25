@@ -1,16 +1,23 @@
 {% extends 'receiver/_base.html' %}
 {% block content %}
     <form action="." method="POST">
-        {% csrf_token %}
-                {{ form.as_p }}
-        {# Display other fields as text #}
-    <div>
-        <label>Invited:</label>
-        {% for sender in space.senders.all %}
-        <p>{{ sender.email }}</p>
-        {% endfor %}
-    </div>
-        <input type="submit" value="Submit">
+ {% csrf_token %}
+
+        <div class="mb-4">
+            <!-- Form Fields -->
+            {{ form.as_p }}
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Invited:</label>
+            <div class="space-y-2">
+                {% for sender in space.senders.all %}
+                <p class="mb-3 text-gray-500 dark:text-gray-400">{{ sender.email }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
     </form>
 
 {% endblock %}
