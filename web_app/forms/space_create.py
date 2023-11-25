@@ -1,6 +1,6 @@
 from django.forms import ModelForm, DateTimeInput, inlineformset_factory
 from web_app.models import Space, Request
-from web_app.forms.css_classes import text_input
+from web_app.forms.css_classes import text_input, text_area
 from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -35,9 +35,11 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['name', 'is_public', 'is_active', 'deadline']
+        fields = ['name', 'is_public', 'is_active', 'deadline', 'instructions']
         widgets = {
-            'deadline': DateTimeInput(attrs={'type': 'datetime-local'})
+            'deadline': DateTimeInput(attrs={'type': 'datetime-local'}),
+            'instructions': forms.Textarea(
+                attrs={'placeholder': 'Enter instructions for the request', 'rows': 4, 'class': text_area})
         }
 
 

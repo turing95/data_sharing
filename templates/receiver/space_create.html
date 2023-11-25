@@ -10,9 +10,13 @@
                      {{ form.name}}
 
         </div>
-                <div class="mb-6">
+    <div class="mb-6">
                                  <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label_tag }} </label>
         {{ form.deadline}}
+    </div>
+                <div class="mb-6">
+<label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label_tag }}</label>
+                    {{ form.instructions}}
     </div>
 
                     <div class="flex items-start mb-6">

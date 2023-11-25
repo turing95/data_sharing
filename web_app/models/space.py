@@ -8,3 +8,4 @@ class Space(BaseModel,ActiveModel):
     deadline = models.DateTimeField(null=True)  # TODO  deadline model missing
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='spaces')
     is_public = models.BooleanField(default=True)
+    instructions = models.TextField(null=True,blank=True)
