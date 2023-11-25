@@ -10,3 +10,10 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
         ordering = ['created_at']
+
+
+class ActiveModel(models.Model):
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True

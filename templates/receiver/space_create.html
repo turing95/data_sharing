@@ -9,10 +9,7 @@
 
         </div>
 
-                 <div id="participants-input" class="mb-6" style="display:none;">
-                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.senders_emails.label_tag }} </label>
-        {{ form.senders_emails }}
-    </div>
+
 
 
 
@@ -33,6 +30,10 @@
         <div id="requests-container">
         {% for req in requests %}
             <div class="request-form">
+                             <div id="participants-input" class="mb-6" style="display:none;">
+                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.senders_emails.label_tag }} </label>
+        {{ form.senders_emails }}
+    </div>
                 <div class="mb-6">
                                  <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label_tag }} </label>
         {{ req.destination}}

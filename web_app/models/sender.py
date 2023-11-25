@@ -1,9 +1,7 @@
 from django.db import models
-from web_app.models import BaseModel
+from web_app.models import BaseModel, ActiveModel
 
 
-class Sender(BaseModel):
+class Sender(BaseModel,ActiveModel):
     email = models.CharField(max_length=50)
-    space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='senders')
-    is_active = models.BooleanField(default=True)
-
+    request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='senders')

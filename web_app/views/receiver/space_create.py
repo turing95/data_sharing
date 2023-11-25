@@ -21,17 +21,20 @@ class SpaceFormView(FormView, LoginRequiredMixin):
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         context = self.get_context_data()
-        requests = context['requests']
+        requests: RequestFormSet = context['requests']
 
         space_instance = form.save(commit=False)
         space_instance.user = self.request.user
         space_instance.save()
 
-        emails = form.cleaned_data['senders_emails']
+        '''emails = form.cleaned_data['senders_emails']
         for email in emails:
-            Sender.objects.create(email=email, space=space_instance)
+            Sender.objects.create(email=email, space=space_instance)'''
 
         if requests.is_valid():
             requests.instance = space_instance
             requests.save()
+            for req in requests:
+                for email in req.senders_emails:
+                    Sender.objects.create(email=email, request=req)
         return super().form_valid(form)
