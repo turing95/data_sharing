@@ -81,6 +81,9 @@ static/CACHE
 # VScode settings
 .vscode
 
+# personal files to ignore
+GIULIOREADME.md
+
 ### Django ###
 *.log
 *.pyc

@@ -20,6 +20,7 @@ from web_app.urls import urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path("", include(urlpatterns))
+    path("", include(urlpatterns)),
+    path("__debug__/", include("debug_toolbar.urls"))
 
 ]
