@@ -78,6 +78,9 @@ docs/_build/
 target/
 static/CACHE
 
+# VScode settings
+.vscode
+
 ### Django ###
 *.log
 *.pyc
