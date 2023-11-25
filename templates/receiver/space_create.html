@@ -1,17 +1,19 @@
 {% extends "receiver/_base.html" %}
 {% block content %}
-
+    {{ form.errors }}
+    {{ form.non_field_errors }}
     <form action="." method="POST">
         {% csrf_token %}
+
         <div class="mb-6">
             <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.name.label_tag }}</label>
                      {{ form.name}}
 
         </div>
-
-
-
-
+                <div class="mb-6">
+                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label_tag }} </label>
+        {{ form.deadline}}
+    </div>
 
                     <div class="flex items-start mb-6">
         <div class="flex items-center h-5">
@@ -29,19 +31,18 @@
                 {{ requests.management_form }}
         <div id="requests-container">
         {% for req in requests %}
+            {{ req.errors }}
+            {{ req.non_field_errors }}
             <div class="request-form">
                              <div id="participants-input" class="mb-6" style="display:none;">
-                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.senders_emails.label_tag }} </label>
-        {{ form.senders_emails }}
+                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.senders_emails.label_tag }} </label>
+        {{ req.senders_emails }}
     </div>
                 <div class="mb-6">
                                  <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label_tag }} </label>
         {{ req.destination}}
     </div>
-            <div class="mb-6">
-                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.deadline.label_tag }} </label>
-        {{ req.deadline}}
-    </div>
+
             <div class="mb-6">
                                  <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label_tag }} </label>
         {{ req.number_of_files}}
