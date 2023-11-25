@@ -41,7 +41,6 @@ class SpaceFormView(FormView, LoginRequiredMixin):
             requests.instance = space_instance
             requests.save()
             for req in requests:
-                print(req.__dict__)
                 for email in req.cleaned_data.get('senders_emails', []):
                     Sender.objects.create(email=email, request=req.instance)
         return super().form_valid(form)
