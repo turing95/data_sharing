@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'compressor',
     'web_app'
 ]
@@ -149,3 +150,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '332312269001-cf68atcntn1jl3lp1sgvct5u0ja3bfqd.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}

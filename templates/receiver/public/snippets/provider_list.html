@@ -1,0 +1,16 @@
+{% load allauth socialaccount %}
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+    {% element provider_list %}
+        {% for provider in socialaccount_providers %}
+            {% if provider.id == "google" %}
+            {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
+            <a href="{{ href }}" class="your-custom-class-for-google">Login with Google</a>
+        {% else %}
+            {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
+            {% element provider name=provider.name provider_id=provider.id href=href %}
+            {% endelement %}
+           {% endif %}
+        {% endfor %}
+    {% endelement %}
+{% endif %}
