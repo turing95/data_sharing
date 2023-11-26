@@ -1,0 +1,29 @@
+{% extends "account/_base_auth.html" %}
+
+{% block title %}Login - Your Site{% endblock %}
+
+{% block left_column_content %}
+    <!-- Replace with your logo -->
+    <img src="{% static 'path/to/your/logo.png' %}" alt="Logo" style="max-width: 100px;">
+    <!-- Replace with your image -->
+    <img src="{% static 'path/to/your/image.png' %}" alt="Decorative Image" style="max-width: 200px;">
+{% endblock %}
+
+{% block content %}
+    <h2>Accedi</h2>
+    <form method="post" action="{% url 'account_login' %}" class="login-form">
+        {% csrf_token %}
+        <input type="text" name="login" placeholder="Indirizzo email" class="form-control">
+        <input type="password" name="password" placeholder="Password" class="form-control">
+        <div>
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Ricordami</label>
+        </div>
+        <button type="submit" class="button">Accedi</button>
+    </form>
+    <div class="auth-links">
+        <a href="{% url 'account_signup' %}" class="auth-link">Non hai un account? Registrati</a>
+        <a href="{% url 'account_reset_password' %}" class="auth-link">Hai dimenticato la password? Reimpostala</a>
+        <!-- Add more links as needed -->
+    </div>
+{% endblock %}
