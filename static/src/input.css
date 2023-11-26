@@ -1,3 +1,5 @@
+@import './fonts/lato.css';
+@import './fonts/poppins.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
