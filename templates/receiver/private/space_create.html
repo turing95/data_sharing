@@ -1,8 +1,8 @@
-{% extends "receiver/_base.html" %}
-{% block content %}
+{% extends "receiver/private/_base.html" %}
+{% block private_content %}
     {{ form.errors }}
     {{ form.non_field_errors }}
-    <form action="." method="POST">
+    <form action=".." method="POST">
         {% csrf_token %}
 
         <div class="mb-6">

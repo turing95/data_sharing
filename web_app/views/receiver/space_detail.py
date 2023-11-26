@@ -8,7 +8,7 @@ from django import forms
 
 
 class SpaceDetailFormView(FormView):
-    template_name = "receiver/space_detail.html"
+    template_name = "receiver/private/space_detail.html"
     form_class = SpaceDetailForm
     _object = None  # Placeholder for the cached object
 

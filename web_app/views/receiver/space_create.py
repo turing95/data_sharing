@@ -7,8 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from web_app.models import Sender, Space
 
 
-class SpaceFormView(FormView, LoginRequiredMixin):
-    template_name = "receiver/space_create.html"
+class SpaceFormView(LoginRequiredMixin, FormView):
+    template_name = "receiver/private/space_create.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
     _space = None  # Placeholder for the cached object
