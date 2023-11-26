@@ -15,8 +15,7 @@
     <script src="{% static 'src/space_create.js' %}" ></script>
 </head>
 <body class="bg-green-50">
-
-    <!-- Add this -->
+{% if private_area %}
     <nav class="bg-green-50 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
             <a href="{% url 'spaces' %}" class="flex items-center">
@@ -54,6 +53,10 @@
 
 {% endblock %}
 </div>
+    {% else %}
+    <h1>welcome unknown user!</h1>
+{% endif %}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 
 </body>
