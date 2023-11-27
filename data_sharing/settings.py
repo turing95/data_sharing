@@ -161,6 +161,12 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': '332312269001-cf68atcntn1jl3lp1sgvct5u0ja3bfqd.apps.googleusercontent.com',
             'secret': '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',
             'key': ''
-        }
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/drive'
+        ],
     }
 }
+SOCIALACCOUNT_STORE_TOKENS = True
