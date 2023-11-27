@@ -13,6 +13,12 @@ class SpaceFormView(LoginRequiredMixin, FormView):
     success_url = reverse_lazy('spaces')
     _space = None  # Placeholder for the cached object
 
+    def dispatch(self, request, *args, **kwargs):
+        # Call the parent dispatch method
+        response = super().dispatch(request, *args, **kwargs)
+        response["Cross-Origin-Opener-Policy"] = "unsafe-none"
+        return response
+
     def get_success_url(self):
         if self._space is not None:
             return reverse_lazy('receiver_space_detail', kwargs={'space_uuid': self._space.uuid})
@@ -20,6 +26,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
+        data['picker_js'] = True
         if self.request.POST:
             data['requests'] = RequestFormSet(self.request.POST)
         else:

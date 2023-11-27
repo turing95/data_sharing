@@ -1,52 +1,80 @@
 document.addEventListener('DOMContentLoaded', function() {
-        let isPublicCheckbox = document.getElementById('id_is_public');
-        let participantsDiv = document.getElementById('participants-input');
+    initializeEventListeners();
+});
 
-        // Check if elements exist
-        if (!isPublicCheckbox || !participantsDiv) {
-            console.error('Form elements not found!');
-            return; // Exit if elements are not found
-        }
+function initializeEventListeners() {
+    let isPublicCheckbox = getElement('id_is_public');
+    let participantsDiv = getElement('participants-input');
 
-        function toggleParticipantsInput() {
-            // Check the checkbox state
-            if (isPublicCheckbox.checked) {
-                participantsDiv.style.display = 'none';
-            } else {
-                participantsDiv.style.display = 'block';
-            }
-        }
+    if (!isPublicCheckbox || !participantsDiv) return;
 
-        // Initial check for the state of the checkbox
-        toggleParticipantsInput();
+    // Initial toggle for participants input
+    toggleParticipantsInput(isPublicCheckbox, participantsDiv);
 
+    // Change event for the public checkbox
+    isPublicCheckbox.addEventListener('change', () => toggleParticipantsInput(isPublicCheckbox, participantsDiv));
 
-        document.getElementById('add-request-btn').addEventListener('click', function() {
-        let totalForms = document.getElementById('id_requests-TOTAL_FORMS');
-        let formCount = parseInt(totalForms.value);
-        let newForm = document.querySelector('.request-form').cloneNode(true);
+    // Click event for adding new request forms
+    let addButton = getElement('add-request-btn');
+    if (addButton) {
+        addButton.addEventListener('click', addNewRequestForm);
+    }
+}
 
-        // Replace the form number in the cloned form
-        newForm.innerHTML = newForm.innerHTML.replace(/-\d+-/g, `-${formCount}-`);
+function getElement(id) {
+    let element = document.getElementById(id);
+    if (!element) {
+        console.error(`Element with id ${id} not found!`);
+    }
+    return element;
+}
 
-        // Add a remove button to the cloned form
-        let removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.textContent = 'Remove';
-        removeBtn.className = 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800';
-        removeBtn.addEventListener('click', function() {
-            this.parentNode.remove();
-            totalForms.value = parseInt(totalForms.value) - 1;
-        });
+function toggleParticipantsInput(checkbox, div) {
+    div.style.display = checkbox.checked ? 'none' : 'block';
+}
 
-        newForm.appendChild(removeBtn);
+function addNewRequestForm() {
+    let totalForms = getElement('id_requests-TOTAL_FORMS');
+    if (!totalForms) return;
 
+    let formCount = parseInt(totalForms.value);
+    let newForm = cloneRequestForm(formCount);
+
+    if (newForm) {
         document.getElementById('requests-container').appendChild(newForm);
         totalForms.value = formCount + 1;
+    }
+}
+
+function cloneRequestForm(formCount) {
+    let templateForm = document.querySelector('.request-form');
+    if (!templateForm) {
+        console.error('Request form template not found!');
+        return null;
+    }
+
+    let newForm = templateForm.cloneNode(true);
+    newForm.innerHTML = newForm.innerHTML.replace(/-\d+-/g, `-${formCount}-`);
+
+    let removeBtn = createRemoveButton();
+    newForm.appendChild(removeBtn);
+
+    return newForm;
+}
+
+function createRemoveButton() {
+    let removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.textContent = 'Remove';
+    removeBtn.className = 'remove-btn-styles'; // Add your button styles here
+    removeBtn.addEventListener('click', function() {
+        this.parentNode.remove();
+        let totalForms = getElement('id_requests-TOTAL_FORMS');
+        if (totalForms) {
+            totalForms.value = parseInt(totalForms.value) - 1;
+        }
     });
-        // Event listener for changes in the 'is_public' checkbox
-        isPublicCheckbox.addEventListener('change', toggleParticipantsInput);
 
+    return removeBtn;
+}
 
-
-    });
