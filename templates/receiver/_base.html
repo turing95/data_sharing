@@ -25,6 +25,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 {% if picker_js %}
+{{ google_access_token |json_script:"google-access-token" }}
 
 <script type="text/javascript">
   /* exported gapiLoaded */
@@ -106,7 +107,7 @@
       document.getElementById('authorize_button').innerText = 'Refresh';
       await createPicker();
     };
-    let googleAccessToken = '{{ google_access_token }}';
+    let googleAccessToken = JSON.parse(document.getElementById('google-access-token').textContent);
           if (!googleAccessToken) {
       tokenClient.requestAccessToken({prompt: 'consent'});
 
