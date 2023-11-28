@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -158,8 +158,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '332312269001-cf68atcntn1jl3lp1sgvct5u0ja3bfqd.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': config.GOOGLE_CLIENT_ID,
+            'secret': config.GOOGLE_CLIENT_SECRET,
             'key': ''
         },
         'SCOPE': [
