@@ -2,7 +2,7 @@ from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, Space
+from web_app.models import Sender, GoogleDrive
 from allauth.socialaccount.models import SocialAccount, SocialToken
 
 
@@ -49,6 +49,9 @@ class SpaceFormView(LoginRequiredMixin, FormView):
             for req in requests:
                 for email in req.cleaned_data.get('senders_emails', []):
                     Sender.objects.create(email=email, request=req.instance)
+
+                #TODO change when more than one possible type of dest
+                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))
         return super().form_valid(form)
 
     @staticmethod

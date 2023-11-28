@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateTimeInput, inlineformset_factory
-from web_app.models import Space, Request
+from web_app.models import Space, UploadRequest
 from web_app.forms.css_classes import text_input, text_area
 from django import forms
 from django.core.validators import validate_email
@@ -59,8 +59,8 @@ class RequestForm(ModelForm):
     )
 
     class Meta:
-        model = Request
-        fields = ['destination', 'number_of_files']
+        model = UploadRequest
+        fields = ['number_of_files']
 
     def clean_emails(self):
         # Custom clean method for emails field
@@ -68,4 +68,4 @@ class RequestForm(ModelForm):
         return emails
 
 
-RequestFormSet = inlineformset_factory(Space, Request, form=RequestForm, extra=1)
+RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=1)
