@@ -143,7 +143,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+SOCIALACCOUNT_STORE_TOKENS = True
 STATIC_URL = 'static/'
 LOGIN_REDIRECT_URL = '/'
 # Default primary key field type
@@ -166,7 +166,6 @@ SOCIALACCOUNT_PROVIDERS = {
             'profile',
             'email',
             'https://www.googleapis.com/auth/drive'
-        ],
+        ]
     }
 }
-SOCIALACCOUNT_STORE_TOKENS = True

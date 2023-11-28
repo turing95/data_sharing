@@ -53,7 +53,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
 
     @staticmethod
     def get_google_access_token(user):
-        try:
+        '''try:
             # Assuming 'google' is the provider name you have used with allauth
             social_account = SocialAccount.objects.get(user=user, provider='google')
             token = SocialToken.objects.get(account=social_account)
@@ -64,3 +64,5 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         except SocialToken.DoesNotExist:
             # Handle the case where the token does not exist
             return None
+        '''
+        return None
