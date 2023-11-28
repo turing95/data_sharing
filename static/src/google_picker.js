@@ -18,7 +18,7 @@
   const config_data = JSON.parse(document.getElementById('config-data').textContent);
   config_data.googleScopes = ['https://www.googleapis.com/auth/drive'];
 
-
+  let currentDestinationInput = null;
   let tokenClient;
   let accessToken = null;
   let pickerInited = false;
@@ -70,8 +70,13 @@
   /**
    *  Sign in the user upon button click.
    */
-  function handleAuthClick() {
+  function handleAuthClick(buttonElement) {
+    const parentDiv = buttonElement.closest('.mb-6');
 
+    // Find the input within this div
+    // Store the reference to this specific destinationInput
+    const regex = /id_requests-\d+-destination/;
+    currentDestinationInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex.test(input.id));
 
     tokenClient.callback = async (response) => {
       if (response.error !== undefined) {
@@ -136,8 +141,10 @@ async function pickerCallback(data) {
         // Assuming the first selected item is a folder
         const folder = data[google.picker.Response.DOCUMENTS][0];
         const folderId = folder[google.picker.Document.ID];
-        console.log(folderId);
-
+        // Use the stored input element
+        if (currentDestinationInput) {
+            currentDestinationInput.value = folderId;
+        }
         // Fetch details about the folder
         const res = await gapi.client.drive.files.get({
             'fileId': folderId,

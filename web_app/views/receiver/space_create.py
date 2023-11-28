@@ -63,6 +63,6 @@ class SpaceFormView(LoginRequiredMixin, FormView):
             return None
         except SocialToken.DoesNotExist:
             # Handle the case where the token does not exist
-            return None
         '''
         return None
+

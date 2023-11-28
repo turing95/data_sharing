@@ -2,68 +2,80 @@
 {% block private_content %}
     {{ form.errors }}
     {{ form.non_field_errors }}
-    <form action=".." method="POST">
+    <form action="." method="POST">
         {% csrf_token %}
 
         <div class="mb-6">
-            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.name.label_tag }}</label>
-                     {{ form.name}}
+            <label for="first_name"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.name.label_tag }}</label>
+            {{ form.name }}
 
         </div>
-    <div class="mb-6">
-                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label_tag }} </label>
-        {{ form.deadline}}
-    </div>
-                <div class="mb-6">
-<label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label_tag }}</label>
-                    {{ form.instructions}}
-    </div>
-
-                    <div class="flex items-start mb-6">
-        <div class="flex items-center h-5">
-         {{ form.is_public }}
+        <div class="mb-6">
+            <label for="first_name"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label_tag }} </label>
+            {{ form.deadline }}
         </div>
-        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_public.label_tag }}</label>
-    </div>
-                <div class="flex items-start mb-6">
-        <div class="flex items-center h-5">
-         {{ form.is_active }}
+        <div class="mb-6">
+            <label for="message"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label_tag }}</label>
+            {{ form.instructions }}
         </div>
-        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_active.label_tag }}</label>
-    </div>
 
-                {{ requests.management_form }}
+        <div class="flex items-start mb-6">
+            <div class="flex items-center h-5">
+                {{ form.is_public }}
+            </div>
+            <label for="remember"
+                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_public.label_tag }}</label>
+        </div>
+        <div class="flex items-start mb-6">
+            <div class="flex items-center h-5">
+                {{ form.is_active }}
+            </div>
+            <label for="remember"
+                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_active.label_tag }}</label>
+        </div>
+
+        {{ requests.management_form }}
         <div id="requests-container">
-        {% for req in requests %}
-            {{ req.errors }}
-            {{ req.non_field_errors }}
-            <div class="request-form">
-                             <div id="participants-input" class="mb-6" style="display:none;">
-                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.senders_emails.label_tag }} </label>
-        {{ req.senders_emails }}
-    </div>
-                <div class="mb-6">
-                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label_tag }} </label>
-        {{ req.destination}}
-    </div>
+            {% for req in requests %}
+                {{ req.errors }}
+                {{ req.non_field_errors }}
+                <div class="request-form">
+                    <div id="participants-input" class="mb-6" style="display:none;">
+                        <label for="first_name"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.senders_emails.label_tag }} </label>
+                        {{ req.senders_emails }}
+                    </div>
+                    <div class="mb-6">
+                        <label for="first_name"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label_tag }} </label>
+                        {{ req.destination }}
+                        <!--Add buttons to initiate auth sequence and sign out-->
+                        <button id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
+                        <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
-            <div class="mb-6">
-                                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label_tag }} </label>
-        {{ req.number_of_files}}
-    </div>
-            </div>
-        {% endfor %}
-            </div>
-        <button type="button" id="add-request-btn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Request</button>
+                    </div>
 
-        {% include "receiver/components/submit_button.html" with button_text="Create space"%}
+                    <div class="mb-6">
+                        <label for="first_name"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label_tag }} </label>
+                        {{ req.number_of_files }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-request-btn"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Add Request
+        </button>
+
+        {% include "receiver/components/submit_button.html" with button_text="Create space" %}
     </form>
 
-<!--Add buttons to initiate auth sequence and sign out-->
-<button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-<button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
-<pre id="content" style="white-space: pre-wrap;"></pre>
+    <pre id="content" style="white-space: pre-wrap;"></pre>
 
 
 {% endblock %}
