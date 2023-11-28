@@ -1,6 +1,6 @@
 from django.forms import ModelForm, DateTimeInput, inlineformset_factory
 from web_app.models import Space, UploadRequest
-from web_app.forms.css_classes import text_input, text_area
+from web_app.forms.css_classes import text_input, text_area, text_title_input
 from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -23,8 +23,8 @@ class CommaSeparatedEmailField(forms.CharField):
 
 
 class SpaceForm(ModelForm):
-    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Enter name of the space',
-                                                         'class': text_input}))
+    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Upload Space',
+                                                         'class': text_title_input}))
     is_active = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
             'class': 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'
@@ -39,7 +39,7 @@ class SpaceForm(ModelForm):
         widgets = {
             'deadline': DateTimeInput(attrs={'type': 'datetime-local'}),
             'instructions': forms.Textarea(
-                attrs={'placeholder': 'Enter instructions for the request', 'rows': 4, 'class': text_area})
+                attrs={'placeholder': 'Explain here what files you want to request', 'rows': 4, 'class': text_area})
         }
 
 
