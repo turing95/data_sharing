@@ -3,9 +3,12 @@
 {% load socialaccount %}
 {% get_providers as socialaccount_providers %}
 {% if socialaccount_providers %}
-    <hr>
-    {% element h2 %}
-        {% translate "Or use a third-party" %}
-    {% endelement %}
-    {% include "receiver/public/snippets/provider_list.html" with process="login" %}
+    
+    <!--
+        {% element h2 %}
+            {% translate "Or use a third-party" %}
+        {% endelement %}
+    -->
+    
+    {% include "receiver/public/snippets/provider_list.html" with process="login" provider_button_text=provider_button_text %}
 {% endif %}

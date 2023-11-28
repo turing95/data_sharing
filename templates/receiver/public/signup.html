@@ -3,14 +3,24 @@
 
 {% block right_container_content %}
     <div class="max-w-lg w-full">
-        <p>
-            Already have an account? Then please <a href="{{ login_url }}">sign in</a>.
-        </p>
+        <h1 class="text-2xl font-semibold mb-4">Create a new account</h1>
+        
         <form action="." method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            {% include "receiver/components/submit_button.html" with button_text="Sign up" extra_classes="additional-css-classes" %}
+            {% include "receiver/components/submit_button.html" with button_text="Register new account" extra_classes="additional-css-classes" %}
         </form>
-        {% include "receiver/public/snippets/login.html" with page_layout="entrance" %}
+
+        <p class="text-center text-sm">
+            Already have an account? <a href="{{ login_url }}" class="text-blue-600 hover:text-blue-600 underline">Sign in</a>
+        </p>
+
+        <!-- seprarator from social account login -->
+        <div class="flex items-center justify-center my-4">
+            <div class="flex-grow border-t border-gray-300"></div>
+            <span class="mx-4 text-gray-600">or</span>
+            <div class="flex-grow border-t border-gray-300"></div>
+        </div>
+        {% include "receiver/public/snippets/login.html" with page_layout="entrance" provider_button_text="Register with Google" %}
     </div>
 {% endblock %}

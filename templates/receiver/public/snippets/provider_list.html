@@ -5,7 +5,7 @@
         {% for provider in socialaccount_providers %}
             {% if provider.id == "google" %}
             {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
-                {% include 'receiver/components/login_google.html' with href=href %}
+                {% include 'receiver/components/login_google.html' with href=href provider_button_text=provider_button_text %}
 
         {% else %}
             {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
@@ -15,3 +15,4 @@
         {% endfor %}
     {% endelement %}
 {% endif %}
+ 
