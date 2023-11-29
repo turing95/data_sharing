@@ -8,7 +8,7 @@
         <form action="." method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            {% include "receiver/components/submit_button.html" with button_text="Register new account" extra_classes="additional-css-classes" %}
+            {% include "receiver/components/buttons/submit.html" with button_text="Register new account" extra_classes="additional-css-classes" %}
         </form>
 
         <p class="text-center text-sm">
