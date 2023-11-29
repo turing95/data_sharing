@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView 
 from web_app.models import Space
 from django.contrib.auth.mixins import LoginRequiredMixin
 
