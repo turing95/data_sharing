@@ -1,5 +1,6 @@
-{% extends "receiver/private/_base.html" %}
+{% extends "receiver/private/_base.html" %} 
 {% block private_content %}
+<div class="container mx-auto mt-4">
     {{ form.errors }}
     {{ form.non_field_errors }}
     <form action="." method="POST">
@@ -75,6 +76,6 @@
 
 
     <pre id="content" style="white-space: pre-wrap;"></pre>
-
+</div>
 
 {% endblock %}
