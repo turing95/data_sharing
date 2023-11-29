@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 
 from web_app.forms import SpaceDetailForm
 from django.views.generic.edit import FormView
-from web_app.models import Space, GenericDestination, GoogleDrive
+from web_app.models import Space, GenericDestination, GoogleDrive, UploadRequest
 from django.urls import reverse_lazy
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -14,7 +14,7 @@ from google.oauth2.credentials import Credentials
 from allauth.socialaccount.models import SocialToken, SocialAccount
 
 
-class SpaceDetailFormViewPublic(FormView):
+class SpaceDetailFormViewPrivate(FormView):
     template_name = "sender/space_detail.html"
     form_class = SpaceDetailForm
     success_url = reverse_lazy('spaces')
@@ -56,8 +56,13 @@ class SpaceDetailFormViewPublic(FormView):
 
     def get_object(self):
         if not self._space:
-            pk = self.kwargs.get('space_uuid')
-            self._space = get_object_or_404(Space, pk=pk, is_public=True, is_active=True)
+            space_uuid = self.kwargs.get('space_uuid')
+            sender_uuid = self.kwargs.get('sender_uuid')
+            '''self._space = get_object_or_404(Space, pk=space_uuid,
+                                            is_public=True, is_active=True,
+                                            requests__in=UploadRequest.objects.filter(senders__uuid=sender_uuid))'''
+            self._space = get_object_or_404(Space, pk=space_uuid,  requests__senders__uuid=sender_uuid)
+
         return self._space
 
     def get_form(self, form_class=None):

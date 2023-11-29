@@ -16,7 +16,7 @@
         <form action="." method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            {% include "receiver/components/submit_button.html" with button_text="Log in"%}
+            {% include "receiver/components/buttons/submit.html" with button_text="Log in"%}
         </form>
 
         <p class="text-center text-sm">

@@ -3,38 +3,33 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeEventListeners() {
-    let isPublicCheckbox = getElement('id_is_public');
-    let participantsDiv = getElement('participants-input');
+    let isPublicCheckbox = document.getElementById('id_is_public');
+    let sendersInputs = document.getElementsByClassName('senders-input');
 
-    if (!isPublicCheckbox || !participantsDiv) return;
+
+    if (!isPublicCheckbox || !sendersInputs) return;
 
     // Initial toggle for participants input
-    toggleParticipantsInput(isPublicCheckbox, participantsDiv);
+    toggleSendersInput(isPublicCheckbox, sendersInputs);
 
     // Change event for the public checkbox
-    isPublicCheckbox.addEventListener('change', () => toggleParticipantsInput(isPublicCheckbox, participantsDiv));
+    isPublicCheckbox.addEventListener('change', () => toggleSendersInput(isPublicCheckbox, sendersInputs));
 
     // Click event for adding new request forms
-    let addButton = getElement('add-request-btn');
+    let addButton = document.getElementById('add-request-btn');
     if (addButton) {
         addButton.addEventListener('click', addNewRequestForm);
     }
 }
 
-function getElement(id) {
-    let element = document.getElementById(id);
-    if (!element) {
-        console.error(`Element with id ${id} not found!`);
+function toggleSendersInput(checkbox, divs) {
+    for (let div of divs) {
+        div.style.display = checkbox.checked ? 'none' : 'block';
     }
-    return element;
-}
-
-function toggleParticipantsInput(checkbox, div) {
-    div.style.display = checkbox.checked ? 'none' : 'block';
 }
 
 function addNewRequestForm() {
-    let totalForms = getElement('id_requests-TOTAL_FORMS');
+    let totalForms = document.getElementById('id_requests-TOTAL_FORMS');
     if (!totalForms) return;
 
     let formCount = parseInt(totalForms.value);
@@ -89,7 +84,7 @@ function createRemoveButton() {
     removeBtn.className = 'remove-btn-styles'; // Add your button styles here
     removeBtn.addEventListener('click', function() {
         this.parentNode.remove();
-        let totalForms = getElement('id_requests-TOTAL_FORMS');
+        let totalForms = document.getElementById('id_requests-TOTAL_FORMS');
         if (totalForms) {
             totalForms.value = parseInt(totalForms.value) - 1;
         }
