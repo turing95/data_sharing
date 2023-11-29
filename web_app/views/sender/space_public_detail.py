@@ -57,7 +57,7 @@ class SpaceDetailFormViewPublic(FormView):
     def get_object(self):
         if not self._space:
             pk = self.kwargs.get('space_uuid')
-            self._space = get_object_or_404(Space, pk=pk, is_public=True)
+            self._space = get_object_or_404(Space, pk=pk, is_public=True, is_active=True)
         return self._space
 
     def get_form(self, form_class=None):

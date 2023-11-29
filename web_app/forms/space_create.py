@@ -60,7 +60,7 @@ class RequestForm(ModelForm):
 
     class Meta:
         model = UploadRequest
-        fields = ['number_of_files']
+        fields = ['number_of_files', 'instructions', 'file_type', 'max_file_size', 'file_number']
 
     def clean_emails(self):
         # Custom clean method for emails field
