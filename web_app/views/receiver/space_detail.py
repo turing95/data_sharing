@@ -18,7 +18,7 @@ class SpaceDetailFormView(FormView):
     def form_valid(self, form):
         # Update the object with the form data
         space = self.get_object()
-        space.name = form.cleaned_data['name']
+        space.title = form.cleaned_data['title']
         space.save()
         return super().form_valid(form)
 
@@ -36,5 +36,5 @@ class SpaceDetailFormView(FormView):
     def get_initial(self):
         # Initialize the form with the current state of the object
         return {
-            'name': self.get_object().name,
+            'title': self.get_object().title,
         }

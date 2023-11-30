@@ -7,8 +7,13 @@
         {% csrf_token %}
 
         <div class="mb-6"> 
-            {{ form.name }}
+            {{ form.title }}
         </div>
+        <div class="mb-6 senders-input hidden">
+                        <label for="{{ form.senders_emails.id_for_label  }}"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.senders_emails.label }} </label>
+                        {{ form.senders_emails }}
+                    </div>
 
         <div class="mb-6">
             {{ form.instructions }}
@@ -43,11 +48,7 @@
                 {{ req.errors }}
                 {{ req.non_field_errors }}
                 <div class="request-form">
-                    <div class="mb-6 senders-input hidden">
-                        <label for="{{ req.senders_emails.id_for_label  }}"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.senders_emails.label }} </label>
-                        {{ req.senders_emails }}
-                    </div>
+
                     <div class="mb-6">
                         <label for="{{ req.destination.id_for_label }}"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
