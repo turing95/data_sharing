@@ -9,4 +9,4 @@ class SpacesView(LoginRequiredMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        return Space.objects.filter(user=self.request.user)
+        return self.model.objects.filter(user=self.request.user)
