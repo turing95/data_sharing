@@ -57,10 +57,20 @@ class RequestForm(ModelForm):
         label='Emails',
         required=False  # Set to True if emails are mandatory
     )
+    rename = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={
+            'class': 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out', 'onclick': 'renameToggle(this);'
+        }),
+        required=False,
+        label='Rename files'
+    )
+    file_name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'File name',
+                                      'class': text_input}))
 
     class Meta:
         model = UploadRequest
-        fields = ['number_of_files', 'instructions', 'file_type', 'max_file_size', 'file_number']
+        fields = ['number_of_files', 'instructions', 'file_type', 'max_file_size', 'file_number','file_name']
 
     def clean_emails(self):
         # Custom clean method for emails field

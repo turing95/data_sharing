@@ -12,3 +12,4 @@ class UploadRequest(BaseModel):
     file_type = models.CharField(max_length=50, choices=FileType.choices, null=True, blank=True)
     max_file_size = models.IntegerField(null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
+    file_name = models.CharField(max_length=255, null=True, blank=True)

@@ -24,7 +24,11 @@ function initializeEventListeners() {
 
 function toggleSendersInput(checkbox, divs) {
     for (let div of divs) {
-        div.style.display = checkbox.checked ? 'none' : 'block';
+        if (checkbox.checked) {
+            div.classList.add('hidden');
+        } else {
+            div.classList.remove('hidden');
+        }
     }
 }
 
@@ -93,3 +97,14 @@ function createRemoveButton() {
     return removeBtn;
 }
 
+function renameToggle(checkbox) {
+    const parentDiv = checkbox.closest('.request-form');
+    const childDiv = parentDiv.querySelector('.file-name-input');
+    if (!childDiv) return;
+
+    if (checkbox.checked) {
+        childDiv.classList.remove('hidden');
+    } else {
+        childDiv.classList.add('hidden');
+    }
+}

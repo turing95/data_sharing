@@ -16,8 +16,8 @@
 
 
         <div class="mb-6">
-            <label for="first_name"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label_tag }} </label>
+            <label for="{{ form.deadline.id_for_label }}"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
             {{ form.deadline }}
         </div>
 
@@ -26,15 +26,15 @@
             <div class="flex items-center h-5">
                 {{ form.is_public }}
             </div>
-            <label for="remember"
-                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_public.label_tag }}</label>
+            <label for="{{ form.is_public.id_for_label }}"
+                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_public.label }}</label>
         </div>
         <div class="flex items-start mb-6">
             <div class="flex items-center h-5">
                 {{ form.is_active }}
             </div>
-            <label for="remember"
-                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_active.label_tag }}</label>
+            <label for="{{ form.is_active.id_for_label }}"
+                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_active.label }}</label>
         </div>
 
         {{ requests.management_form }}
@@ -43,14 +43,14 @@
                 {{ req.errors }}
                 {{ req.non_field_errors }}
                 <div class="request-form">
-                    <div class="mb-6 senders-input" style="display:none;">
-                        <label for="first_name"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.senders_emails.label_tag }} </label>
+                    <div class="mb-6 senders-input hidden">
+                        <label for="{{ req.senders_emails.id_for_label  }}"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.senders_emails.label }} </label>
                         {{ req.senders_emails }}
                     </div>
                     <div class="mb-6">
-                        <label for="first_name"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label_tag }} </label>
+                        <label for="{{ req.destination.id_for_label }}"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
                         {{ req.destination }}
                         <!--Add buttons to initiate auth sequence and sign out-->
                         <button id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
@@ -59,9 +59,19 @@
                     </div>
 
                     <div class="mb-6">
-                        <label for="first_name"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label_tag }} </label>
+                        <label for="{{ req.number_of_files.id_for_label }}"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label }} </label>
                         {{ req.number_of_files }}
+                    </div>
+                <div class="mb-6">
+                        <label for="{{ req.rename.id_for_label }}"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.rename.label }} </label>
+                        {{ req.rename }}
+                    </div>
+                <div class="mb-6 file-name-input hidden">
+                        <label for="{{ req.file_name.id_for_label  }}"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_name.label }} </label>
+                        {{ req.file_name }}
                     </div>
                 </div>
             {% endfor %}
