@@ -16,10 +16,8 @@
 </head>
 <body>
 {% include 'receiver/components/navbar.html' %}
-<div class="pt-14">
 {% block content %}
 {% endblock %}
-</div>
 
 
 {{ config_data |json_script:"config-data"  }}
