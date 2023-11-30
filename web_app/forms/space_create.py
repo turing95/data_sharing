@@ -35,9 +35,8 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['name', 'is_public', 'is_active', 'deadline', 'instructions']
+        fields = ['name', 'is_public', 'is_active', 'instructions']
         widgets = {
-            'deadline': DateTimeInput(attrs={'type': 'datetime-local'}),
             'instructions': forms.Textarea(
                 attrs={'placeholder': 'Explain here what files you want to request', 'rows': 4, 'class': text_area})
         }
