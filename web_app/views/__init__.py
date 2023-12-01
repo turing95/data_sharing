@@ -5,3 +5,5 @@ from web_app.views.receiver.login import LoginView
 from web_app.views.receiver.reset_password import PasswordResetView
 from web_app.views.sender.space_detail import SpaceDetailFormView as SpaceDetailFormViewSender
 from web_app.views.receiver.space_detail import SpaceDetailFormView as SpaceDetailFormViewReceiver
+from web_app.views.receiver.terms_of_service import TermsOfServiceView
+from web_app.views.receiver.privacy_policy import PrivacyPolicyView

@@ -1,6 +1,7 @@
 from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
-    PasswordResetView,SignupView, LoginView,SpaceDetailFormViewSender
+    PasswordResetView,SignupView, LoginView,SpaceDetailFormViewSender, \
+    TermsOfServiceView, PrivacyPolicyView
 
 urlpatterns = [
     path('', SpacesView.as_view(), name='spaces'),
@@ -10,5 +11,7 @@ urlpatterns = [
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
     path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
     path('spaces/<uuid:space_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
-    path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_private')
+    path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_private'),
+    path('terms_of_service/', TermsOfServiceView.as_view(), name='terms_of_service'),
+    path('privacy_policy/', PrivacyPolicyView.as_view(), name='privacy_policy'),
 ]

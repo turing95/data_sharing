@@ -14,23 +14,27 @@
 
     <script src="{% static 'src/space_create.js' %}" ></script>
 </head>
-<body>
-{% include 'receiver/components/navbar.html' %}
-{% block content %}
-{% endblock %}
+<body class="flex flex-col min-h-screen">
+    <div class="flex-grow">
+
+        {% include 'receiver/components/navbar.html' %}
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% include 'receiver/components/footer.html' %}
 
 
-{{ config_data |json_script:"config-data"  }}
-{{ user_data |json_script:"user-data"  }}
+    {{ config_data |json_script:"config-data"  }}
+    {{ user_data |json_script:"user-data"  }}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-{% if picker_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    {% if picker_js %}
 
-<script type="text/javascript" src="{% static 'src/google_picker.js' %}"></script>
-<script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+    <script type="text/javascript" src="{% static 'src/google_picker.js' %}"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+        <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 
-{% endif %}
+    {% endif %}
 
 </body>
 </html>
