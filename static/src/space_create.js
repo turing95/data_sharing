@@ -3,32 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeEventListeners() {
-    let isPublicCheckbox = document.getElementById('id_is_public');
-    let sendersInputs = document.getElementsByClassName('senders-input');
-
-
-    if (!isPublicCheckbox || !sendersInputs) return;
-
-    // Initial toggle for participants input
-    toggleSendersInput(isPublicCheckbox, sendersInputs);
-
-    // Change event for the public checkbox
-    isPublicCheckbox.addEventListener('change', () => toggleSendersInput(isPublicCheckbox, sendersInputs));
-
     // Click event for adding new request forms
     let addButton = document.getElementById('add-request-btn');
     if (addButton) {
         addButton.addEventListener('click', addNewRequestForm);
-    }
-}
-
-function toggleSendersInput(checkbox, divs) {
-    for (let div of divs) {
-        if (checkbox.checked) {
-            div.classList.add('hidden');
-        } else {
-            div.classList.remove('hidden');
-        }
     }
 }
 
