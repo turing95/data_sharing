@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.http import Http404
 
 from web_app.forms import SpaceDetailForm
 from django.views.generic.edit import FormView
@@ -62,21 +62,45 @@ class SpaceDetailFormView(FormView):
         return super().form_valid(form)
 
     def get_space(self):
+        """
+                Retrieves an active Space instance associated with the sender or public.
+                If the sender is identified, it fetches a non-public, active Space.
+                Otherwise, it retrieves a public, active Space.
+
+                Returns:
+                    Space: An instance of the Space model.
+                Raises:
+                    Http404: If no matching Space instance is found.
+                """
         if not self._space:
-            space_uuid = self.kwargs.get('space_uuid')
+            space_id = self.kwargs.get('space_uuid')
             sender = self.get_sender()
-            if sender:
-                self._space = get_object_or_404(Space, pk=space_uuid, is_active=True, is_public=False,
-                                                senders__uuid=sender)
-            else:
-                self._space = get_object_or_404(Space, pk=space_uuid, is_public=True, is_active=True)
+
+            # Constructing filter criteria based on sender presence
+            filter_criteria = {
+                'pk': space_id,
+                'is_active': True,
+                'senders__uuid': sender if sender else None,
+                'is_public': not sender
+            }
+
+            try:
+                self._space = Space.objects.get(**filter_criteria)
+            except Space.DoesNotExist:
+                raise Http404(f"No Space matches the given query: {filter_criteria}")
+
         return self._space
 
     def get_sender(self):
         if not self._sender:
-            sender_uuid = self.kwargs.get('sender_uuid', None)
-            if sender_uuid is not None:
-                self._sender = get_object_or_404(Sender, pk=sender_uuid)
+            sender_id = self.kwargs.get('sender_uuid', None)
+
+            if sender_id is not None:
+                try:
+                    self._sender = Sender.objects.get(pk=sender_id)
+                except Sender.DoesNotExist:
+                    raise Http404(f"Sender with id '{sender_id}' not found")
+
         return self._sender
 
     def get_form(self, form_class=None):
