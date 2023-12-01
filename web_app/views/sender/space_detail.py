@@ -4,14 +4,11 @@ from web_app.forms import SpaceDetailForm
 from django.views.generic.edit import FormView
 from web_app.models import Space, GenericDestination, GoogleDrive, Sender
 from django.urls import reverse_lazy
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 
 from django import forms
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload, MediaIoBaseUpload
+from googleapiclient.http import MediaIoBaseUpload
 from google.oauth2.credentials import Credentials
-from allauth.socialaccount.models import SocialToken, SocialAccount
 import time
 from io import BytesIO
 
