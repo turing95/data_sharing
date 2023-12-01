@@ -5,10 +5,71 @@
     <div class="max-w-lg w-full">
         <h1 class="text-2xl font-semibold mb-4">Create a new account</h1>
         
-        <form action="." method="post">
+
+        <form action="." method="post" class="w-full">
             {% csrf_token %}
-            {{ form.as_p }}
-            {% include "receiver/components/buttons/submit.html" with button_text="Register new account" extra_classes="additional-css-classes" %}
+        
+            <!-- Display non-field errors -->
+            {% if form.non_field_errors %}
+                <div>
+                    {% for error in form.non_field_errors %}
+                        <p class = "bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        
+
+
+            <!-- Render Email Field -->
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.email.label}}</label>
+                {{ form.email}}
+                {% if form.email.help_text %}
+                    <div class="">{{ form.email.help_text }}</div>
+                {% endif %}
+                {% if form.email.errors %}
+                    <div>
+                        {% for error in form.email.errors %}
+                            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        
+            <!-- Render Password 1 Field -->
+            <div>
+                <label for="{{ form.password1.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.password1.label}}</label>
+                {{ form.password1 }}
+                {% if form.password1.help_text %}
+                    <div class="text-sm">{{ form.password1.help_text }}</div>
+                {% endif %}
+                {% if form.password1.errors %}
+                    <div>
+                        {% for error in form.password1.errors %}
+                            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        
+            <!-- Render Password 2 Field -->
+            <div>
+                <label for="{{ form.password2.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.password2.label}}</label>
+                {{ form.password2 }}
+                {% if form.password2.help_text %}
+                    <div>{{ form.password2.help_text }}</div>
+                {% endif %}
+                {% if form.password2.errors %}
+                    <div>
+                        {% for error in form.password2.errors %}
+                            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        
+            <!-- Submit Button -->
+            {% include "receiver/components/buttons/submit.html" with button_text="Register new account" %}
         </form>
 
         <p class="text-center text-sm">

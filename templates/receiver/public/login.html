@@ -13,11 +13,74 @@
             <div class="flex-grow border-t border-gray-300"></div>
         </div>
 
-        <form action="." method="post">
+        <form action="." method="post" class="w-full">
             {% csrf_token %}
-            {{ form.as_p }}
-            {% include "receiver/components/buttons/submit.html" with button_text="Log in"%}
+        
+            <!-- Display non-field errors -->
+            {% if form.non_field_errors %}
+                <div>
+                    {% for error in form.non_field_errors %}
+                        <p class = "bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        
+            <!-- Render Login Field -->
+            <div>
+                <label for="{{ form.login.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.login.label}}</label>
+                {{ form.login }}
+                {% if form.login.help_text %}
+                    <div class="">{{ form.login.help_text }}</div>
+                {% endif %}
+                {% if form.login.errors %}
+                    <div>
+                        {% for error in form.login.errors %}
+                            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        
+            <!-- Render Password Field -->
+            <div>
+                <label for="{{ form.password.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.password.label}}</label>
+                {{ form.password }}
+                {% if form.password.help_text %}
+                    <div>{{ form.password.help_text }}</div>
+                {% endif %}
+                {% if form.password.errors %}
+                    <div>
+                        {% for error in form.password.errors %}
+                            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        
+            <!-- Render Remember Checkbox -->
+            <div>
+                <label for="{{ form.remember.id_for_label }}" class="text-sm mt-1">
+                    {{ form.remember }} {{ form.remember.label }}
+                </label>
+                {% if form.remember.help_text %}
+                    <div>{{ form.remember.help_text }}</div>
+                {% endif %}
+                {% if form.remember.errors %}
+                    <div class="error-messages">
+                        {% for error in form.remember.errors %}
+                            <p class="error-class">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        
+            <!-- Submit Button -->
+            {% include "receiver/components/buttons/submit.html" with button_text="Log in" %}
         </form>
+
+
+
+        
 
         <p class="text-center text-sm">
             Do not have an account? <a href="{{ signup_url }}" class="text-blue-600 hover:text-blue-600 underline">Sign up</a>
