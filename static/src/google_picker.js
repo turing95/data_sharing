@@ -19,8 +19,10 @@ const config_data = JSON.parse(document.getElementById('config-data').textConten
 config_data.googleScopes = ['https://www.googleapis.com/auth/drive'];
 
 let currentDestinationInput = null;
+let currentAccessTokenInput = null;
 let tokenClient;
 let accessToken = null;
+let responseGoogle = null;
 let pickerInited = false;
 let gisInited = false;
 
@@ -75,14 +77,17 @@ const parentDiv = buttonElement.closest('.mb-6');
 
 // Find the input within this div
 // Store the reference to this specific destinationInput
-const regex = /id_requests-\d+-destination/;
-currentDestinationInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex.test(input.id));
+const regex_destination = /id_requests-\d+-destination/;
+const regex_token = /id_requests-\d+-token/;
+currentDestinationInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex_destination.test(input.id));
+currentAccessTokenInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex_token.test(input.id));
 
 tokenClient.callback = async (response) => {
   if (response.error !== undefined) {
     throw (response);
   }
   accessToken = response.access_token;
+  responseGoogle = response
   document.getElementById('signout_button').style.visibility = 'visible';
   document.getElementById('authorize_button').innerText = 'Refresh';
   await createPicker();
@@ -137,22 +142,23 @@ picker.setVisible(true);
 async function pickerCallback(data) {
 if (data.action === google.picker.Action.PICKED) {
     let text = `Picker response: \n${JSON.stringify(data, null, 2)}\n`;
-
+    console.log(responseGoogle)
     // Assuming the first selected item is a folder
     const folder = data[google.picker.Response.DOCUMENTS][0];
     const folderId = folder[google.picker.Document.ID];
     // Use the stored input element
     if (currentDestinationInput) {
         currentDestinationInput.value = folderId;
+        currentAccessTokenInput.value = accessToken;
     }
     // Fetch details about the folder
-    const res = await gapi.client.drive.files.get({
+    /*const res = await gapi.client.drive.files.get({
         'fileId': folderId,
         'fields': '*',
         'supportsAllDrives': true
     });
 
     text += `Drive API response for selected folder: \n${JSON.stringify(res.result, null, 2)}\n`;
-    window.document.getElementById('content').innerText = text;
+    window.document.getElementById('content').innerText = text;*/
 }
 }

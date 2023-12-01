@@ -57,7 +57,8 @@ class RequestForm(ModelForm):
     destination = forms.CharField(
         widget=forms.TextInput(attrs={'required': 'required', 'placeholder': 'Enter destination for the request',
                                       'class': text_input}))
-
+    token = forms.CharField(
+        widget=forms.HiddenInput())
     rename = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
             'class': 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out',
@@ -66,7 +67,7 @@ class RequestForm(ModelForm):
         required=False,
         label='Rename files'
     )
-    file_name = forms.CharField(
+    file_name = forms.CharField(required=False,
         widget=forms.TextInput(attrs={'placeholder': 'File name',
                                       'class': text_input}))
 

@@ -51,7 +51,9 @@ class SpaceFormView(LoginRequiredMixin, FormView):
                     Sender.objects.create(email=email, request=req.instance)
 
                 #TODO change when more than one possible type of dest
-                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))
+                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),req.cleaned_data.get('token'))
+        else:
+            print(requests.errors)
         return super().form_valid(form)
 
     @staticmethod

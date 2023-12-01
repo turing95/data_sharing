@@ -1235,6 +1235,10 @@ input:checked + .toggle-bg {
   margin-top: auto;
 }
 
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
 .line-clamp-3 {
   overflow: hidden;
   display: -webkit-box;
