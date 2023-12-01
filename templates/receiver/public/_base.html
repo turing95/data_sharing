@@ -7,7 +7,7 @@
             <!-- Main Content Container -->
             <div class=" mx-auto flex justify-center h-full">
                 <!-- Image Container -->
-                <div class="w-5/12 flex justify-center items-center bg-white">
+                <div class="w-5/12 md:min-w-[385px] flex justify-center items-center bg-white">
                     <div class="max-w-lg w-full">
                         <img src="{% static 'images/signup.png' %}" alt="Descriptive Alt Text">
                     </div>
@@ -18,7 +18,7 @@
                 </div>
                 
                 <!-- Right Side Content Container -->
-                <div class="w-5/12 flex justify-center items-center">
+                <div class="w-5/12 md:min-w-[385px] flex justify-center items-center">
                     {% block right_container_content %}
 
                     {% endblock right_container_content%}
