@@ -169,4 +169,6 @@ SOCIALACCOUNT_PROVIDERS = {
         ]
     }
 }
+
+# TODO: this is against security best practices, according to allauth docs
 SOCIALACCOUNT_LOGIN_ON_GET=True
