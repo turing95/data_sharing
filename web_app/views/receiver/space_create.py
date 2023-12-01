@@ -36,6 +36,8 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         # This method is called when valid form data has been POSTed.
         context = self.get_context_data()
         requests = context['requests']
+        if requests.is_valid() is False:
+            raise super().form_invalid(form)
 
         space_instance = form.save(commit=False)
         space_instance.user = self.request.user
@@ -49,10 +51,9 @@ class SpaceFormView(LoginRequiredMixin, FormView):
                 for email in req.cleaned_data.get('senders_emails', []):
                     Sender.objects.create(email=email, request=req.instance)
 
-                #TODO change when more than one possible type of dest
-                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),req.cleaned_data.get('token'))
+                # TODO change when more than one possible type of dest
+                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
+                                                  req.cleaned_data.get('token'))
         else:
             print(requests.errors)
         return super().form_valid(form)
-
-
