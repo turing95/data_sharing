@@ -15,10 +15,11 @@ class GenericDestination(PolymorphicRelationModel):
 class GoogleDrive(BaseModel):
     TAG = 'GOOGLE_DRIVE'
     folder_id = models.CharField(max_length=255)
+    token = models.CharField(max_length=255)
 
     @classmethod
-    def create_from_folder_id(cls,upload_request, folder_id):
-        google_drive_destination = cls(folder_id=folder_id)
+    def create_from_folder_id(cls, upload_request, folder_id, token):
+        google_drive_destination = cls(folder_id=folder_id, token=token)
 
         generic_destination = GenericDestination(
             request=upload_request,

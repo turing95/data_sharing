@@ -9,10 +9,11 @@ from django.core.files.base import ContentFile
 
 from django import forms
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
+from googleapiclient.http import MediaFileUpload, MediaIoBaseUpload
 from google.oauth2.credentials import Credentials
 from allauth.socialaccount.models import SocialToken, SocialAccount
 import time
+from io import BytesIO
 
 
 class SpaceDetailFormView(FormView):
@@ -24,6 +25,7 @@ class SpaceDetailFormView(FormView):
 
     def form_valid(self, form):
         space = self.get_space()
+        sender = self.get_sender()
         for space_req in space.requests.all():
             field_name = f'file_{space_req.pk}'
             uploaded_file = form.cleaned_data.get(field_name)
@@ -31,17 +33,14 @@ class SpaceDetailFormView(FormView):
                 # Use the stored access token
                 google_drive_destination: GoogleDrive = GenericDestination.objects.get(request=space_req).related_object
 
-                social_account = SocialAccount.objects.get(user=space.user)
-                access_token = SocialToken.objects.get(account=social_account).token
-
-                credentials = Credentials(token=access_token)
+                credentials = Credentials(token=google_drive_destination.token)
 
                 # Build the Drive service
                 service = build('drive', 'v3', credentials=credentials)
 
                 # File to be uploaded
-                temp_file_path = default_storage.save("temp/" + uploaded_file.name, ContentFile(uploaded_file.read()))
-                full_file_path = default_storage.path(temp_file_path)
+                file_stream = BytesIO(uploaded_file.read())
+                file_stream.seek(0)
 
                 if space_req.file_name is not None:
                     if sender is None:
@@ -54,14 +53,15 @@ class SpaceDetailFormView(FormView):
                 # File to be uploaded
                 file_metadata = {'name': file_name,
                                  'parents': [google_drive_destination.folder_id]}
-                media = MediaFileUpload(full_file_path,
-                                        mimetype=uploaded_file.content_type)
+                media = MediaIoBaseUpload(file_stream,
+                                          mimetype=uploaded_file.content_type,
+                                          resumable=True)
 
                 # Upload the file
                 file = service.files().create(body=file_metadata,
                                               media_body=media,
                                               fields='id').execute()
-                print(file)
+
         return super().form_valid(form)
 
     def get_space(self):

@@ -52,6 +52,7 @@
                         <label for="{{ req.destination.id_for_label }}"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
                         {{ req.destination }}
+                        {{ req.token }}
                         <!--Add buttons to initiate auth sequence and sign out-->
                         <button id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
                         <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
