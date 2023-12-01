@@ -25,7 +25,6 @@ class SpaceFormView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['google_access_token'] = self.get_google_access_token(self.request.user)
         data['picker_js'] = True
         if self.request.POST:
             data['requests'] = RequestFormSet(self.request.POST)
@@ -56,18 +55,4 @@ class SpaceFormView(LoginRequiredMixin, FormView):
             print(requests.errors)
         return super().form_valid(form)
 
-    @staticmethod
-    def get_google_access_token(user):
-        '''try:
-            # Assuming 'google' is the provider name you have used with allauth
-            social_account = SocialAccount.objects.get(user=user, provider='google')
-            token = SocialToken.objects.get(account=social_account)
-            return token.token  # token.token is the access token
-        except SocialAccount.DoesNotExist:
-            # Handle the case where the user does not have a Google social account
-            return None
-        except SocialToken.DoesNotExist:
-            # Handle the case where the token does not exist
-        '''
-        return None
 
