@@ -172,3 +172,11 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # TODO: this is against security best practices, according to allauth docs
 SOCIALACCOUNT_LOGIN_ON_GET=True
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config.GMAIL_USERNAME  # Your Google email address
+EMAIL_HOST_PASSWORD = config.GMAIL_PASSWORD  # Your Google App Password or password
+EMAIL_USE_TLS = True
