@@ -6,4 +6,4 @@ from web_app.forms.login import LoginForm
 class LoginView(AllauthLoginView):
     form_class = LoginForm
     success_url = reverse_lazy('spaces')
-    template_name = 'receiver/public/login.html'
+    template_name = 'public/authentication/login.html'
