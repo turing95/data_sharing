@@ -1,6 +1,6 @@
-{% if field.errors %}
+{% if errors %}
     <div>
-        {% for error in field.errors %}
+        {% for error in errors %}
             <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
         {% endfor %}
     </div>

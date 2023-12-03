@@ -3,14 +3,14 @@
 {% load custom_tags %}
 
 <!-- Display non-field errors -->
-{% include 'components/form_error_widget.html' with form=form %}
+{% include 'components/form_error_widget.html' with errors=form.errors %}
 <form id="space-form" action="." method="POST">
     {% csrf_token %}
     
     <!-- TITLE -->
     <div class="mb-6"> 
         {{ form.title }}
-        {% include 'components/form_error_widget.html' with field=form.title %}
+        {% include 'components/form_error_widget.html' with errors=form.title.errors %}
     </div>
 
 
@@ -23,7 +23,7 @@
             <!-- Tags will appear here, below the input field -->
             <div id="tags" class="flex flex-wrap gap-2 my-1"></div>
             <!-- Error message-->
-            {% include 'components/form_error_widget.html' with field=form.senders_emails %}
+            {% include 'components/form_error_widget.html' with errors=form.senders_emails.errors %}
             <!-- Hidden input for form submission -->
             {{ form.senders_emails }}
 
