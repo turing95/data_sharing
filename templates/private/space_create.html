@@ -35,10 +35,10 @@
     <script src="../../../static/src/email_input_widget.js"></script>
     
     <!-- CUSTOM FILE NAME SELECTOR -->
-    <div id="textInput" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees"></div>
+    <div id="textInput" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm p-2.5 min-h-[42px] focus:ring-blue-500 focus:border-blue-500 block w-full min-h-32 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees"></div>
     <script src="../../../static/src/custom_file_name_widget.js"></script>
 
-
+    <div class="mb-6 focus-visible:outline-none focus-visible:ring-0"></div>
     <!-- INSTRUCTIONS -->
     <div class="mb-6">
         {{ form.instructions }}
@@ -103,9 +103,9 @@
         </div>
         {% endfor %}
     </div>
-    {% include "receiver/components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}
+    {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}
     
-    {% include "receiver/components/buttons/submit.html" with button_text="Create space" %}
+    {% include "components/buttons/submit.html" with button_text="Create space" %}
 </form>
 
 
