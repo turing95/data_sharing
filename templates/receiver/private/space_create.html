@@ -1,88 +1,114 @@
 {% extends "receiver/private/_base.html" %} 
 {% block private_content %}
-    {{ form.errors }}
-    {{ form.non_field_errors }}
-    <form action="." method="POST">
-        {% csrf_token %}
+{{ form.errors }}
+{{ form.non_field_errors }}
+<form id="space-form" action="." method="POST">
+    {% csrf_token %}
+    
+    <!-- TITLE -->
+    <div class="mb-6"> 
+        {{ form.title }}  
+    </div>
+    
+    <!-- SENDER EMAILS -->
+        {% comment %} <!--  OLD SENDER EMAILS -->
+    <div class="mb-6">
+        <h1 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Invitations</h1>
+        <label for="{{ form.senders_emails.id_for_label  }}"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.senders_emails.label }} </label>
+        {{ form.senders_emails }}
+    </div> {% endcomment %}
 
-        <div class="mb-6"> 
-            {{ form.title }}
+    <div class="mb-6">
+        <h1 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Invitations</h1>
+        <div id="email-input-container" class="my-1 border-0">
+            <!-- Text input field -->
+            <input type="text" id="email-input" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees" />
+
+            <!-- Tags will appear here, below the input field -->
+            <div id="tags" class="flex flex-wrap gap-2"></div>
+            <!-- Hidden input for form submission -->
+            <input type="hidden" name="senders_emails" id="hidden-email-input">
+
         </div>
-        <div class="mb-6">
-                        <label for="{{ form.senders_emails.id_for_label  }}"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.senders_emails.label }} </label>
-                        {{ form.senders_emails }}
-                    </div>
+    </div>
+    <script src="../../../static/src/email_input_widget.js"></script>
+    
+    <!-- CUSTOM FILE NAME SELECTOR -->
+    <div id="textInput" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees"></div>
+    <script src="../../../static/src/custom_file_name_widget.js"></script>
 
-        <div class="mb-6">
-            {{ form.instructions }}
+
+    <!-- INSTRUCTIONS -->
+    <div class="mb-6">
+        {{ form.instructions }}
+    </div>
+    
+    
+    <div class="mb-6">
+        <label for="{{ form.deadline.id_for_label }}"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
+        {{ form.deadline }}
+    </div>
+    
+    
+    <div class="flex items-start mb-6">
+        <div class="flex items-center h-5">
+            {{ form.is_public }}
         </div>
-
-
-        <div class="mb-6">
-            <label for="{{ form.deadline.id_for_label }}"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
-            {{ form.deadline }}
+        <label for="{{ form.is_public.id_for_label }}"
+        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_public.label }}</label>
+    </div>
+    <div class="flex items-start mb-6">
+        <div class="flex items-center h-5">
+            {{ form.is_active }}
         </div>
-
-
-        <div class="flex items-start mb-6">
-            <div class="flex items-center h-5">
-                {{ form.is_public }}
+        <label for="{{ form.is_active.id_for_label }}"
+        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_active.label }}</label>
+    </div>
+    
+    {{ requests.management_form }}
+    <div id="requests-container">
+        {% for req in requests %}
+        {{ req.errors }}
+        {{ req.non_field_errors }}
+        <div class="request-form">
+            
+            <div class="mb-6">
+                <label for="{{ req.destination.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
+                {{ req.destination }}
+                {{ req.token }}
+                <!--Add buttons to initiate auth sequence and sign out-->
+                <button id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
+                <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+                
             </div>
-            <label for="{{ form.is_public.id_for_label }}"
-                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_public.label }}</label>
-        </div>
-        <div class="flex items-start mb-6">
-            <div class="flex items-center h-5">
-                {{ form.is_active }}
+            
+            <div class="mb-6">
+                <label for="{{ req.number_of_files.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label }} </label>
+                {{ req.number_of_files }}
             </div>
-            <label for="{{ form.is_active.id_for_label }}"
-                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_active.label }}</label>
+            <div class="mb-6">
+                <label for="{{ req.rename.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.rename.label }} </label>
+                {{ req.rename }}
+            </div>
+            <div class="hidden mb-6 file-name-input">
+                <label for="{{ req.file_name.id_for_label  }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_name.label }} </label>
+                {{ req.file_name }}
+            </div>
         </div>
-
-        {{ requests.management_form }}
-        <div id="requests-container">
-            {% for req in requests %}
-                {{ req.errors }}
-                {{ req.non_field_errors }}
-                <div class="request-form">
-
-                    <div class="mb-6">
-                        <label for="{{ req.destination.id_for_label }}"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
-                        {{ req.destination }}
-                        {{ req.token }}
-                        <!--Add buttons to initiate auth sequence and sign out-->
-                        <button id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
-                        <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-
-                    </div>
-
-                    <div class="mb-6">
-                        <label for="{{ req.number_of_files.id_for_label }}"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label }} </label>
-                        {{ req.number_of_files }}
-                    </div>
-                <div class="mb-6">
-                        <label for="{{ req.rename.id_for_label }}"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.rename.label }} </label>
-                        {{ req.rename }}
-                    </div>
-                <div class="mb-6 file-name-input hidden">
-                        <label for="{{ req.file_name.id_for_label  }}"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_name.label }} </label>
-                        {{ req.file_name }}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        {% endfor %}
+    </div>
     {% include "receiver/components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}
+    
+    {% include "receiver/components/buttons/submit.html" with button_text="Create space" %}
+</form>
 
-        {% include "receiver/components/buttons/submit.html" with button_text="Create space" %}
-    </form>
 
-
-    <pre id="content" style="white-space: pre-wrap;"></pre>
+<pre id="content" style="white-space: pre-wrap;"></pre>
 
 {% endblock %}
