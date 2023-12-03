@@ -7,7 +7,7 @@ from allauth.socialaccount.models import SocialAccount, SocialToken
 
 
 class SpaceFormView(LoginRequiredMixin, FormView):
-    template_name = "receiver/private/space_create.html"
+    template_name = "private/space_create.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
     _space = None  # Placeholder for the cached object

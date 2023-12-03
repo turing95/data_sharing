@@ -14,7 +14,7 @@ from io import BytesIO
 
 
 class SpaceDetailFormView(FormView):
-    template_name = "sender/space_detail.html"
+    template_name = "public/sender_space_detail.html"
     form_class = SpaceDetailForm
     success_url = reverse_lazy('spaces')
     _space = None

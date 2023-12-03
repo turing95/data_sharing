@@ -5,5 +5,5 @@ from django.urls import reverse_lazy
 
 class SignupView(AllauthSignupView):
     form_class = SignupForm
-    template_name = 'receiver/public/signup.html'
+    template_name = 'public/authentication/signup.html'
     success_url = reverse_lazy('spaces')

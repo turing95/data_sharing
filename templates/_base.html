@@ -17,11 +17,11 @@
 <body class="flex flex-col min-h-screen">
     <div class="flex-grow">
 
-        {% include 'receiver/components/navbar.html' %}
+        {% include 'components/navbar.html' %}
         {% block content %}
         {% endblock %}
     </div>
-    {% include 'receiver/components/footer.html' %}
+    {% include 'components/footer.html' %}
 
 
     {{ config_data |json_script:"config-data"  }}
