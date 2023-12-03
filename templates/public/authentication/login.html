@@ -17,14 +17,8 @@
             {% csrf_token %}
         
             <!-- Display non-field errors -->
-            {% if form.non_field_errors %}
-                <div>
-                    {% for error in form.non_field_errors %}
-                        <p class = "bg-red-300 text-sm my-1 p-1">{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        
+            {% include 'components/form_non_field_error_widget.html' with form=form %}
+
             <!-- Render Login Field -->
             <div>
                 <label for="{{ form.login.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.login.label}}</label>
@@ -32,13 +26,7 @@
                 {% if form.login.help_text %}
                     <div class="">{{ form.login.help_text }}</div>
                 {% endif %}
-                {% if form.login.errors %}
-                    <div>
-                        {% for error in form.login.errors %}
-                            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                {% include 'components/form_error_widget.html' with field=form.login %}
             </div>
         
             <!-- Render Password Field -->
@@ -48,13 +36,7 @@
                 {% if form.password.help_text %}
                     <div>{{ form.password.help_text }}</div>
                 {% endif %}
-                {% if form.password.errors %}
-                    <div>
-                        {% for error in form.password.errors %}
-                            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                {% include 'components/form_error_widget.html' with field=form.password %}
             </div>
         
             <!-- Render Remember Checkbox -->
@@ -65,13 +47,7 @@
                 {% if form.remember.help_text %}
                     <div>{{ form.remember.help_text }}</div>
                 {% endif %}
-                {% if form.remember.errors %}
-                    <div class="error-messages">
-                        {% for error in form.remember.errors %}
-                            <p class="error-class">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                {% include 'components/form_error_widget.html' with field=form.remember %}
             </div>
         
             <!-- Submit Button -->

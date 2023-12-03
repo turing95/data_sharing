@@ -1,14 +1,16 @@
 {% extends "private/_base.html" %}
 {% block private_content %}
 {% load custom_tags %}
-{{ form.errors }}
-{{ form.non_field_errors }}
+
+<!-- Display non-field errors -->
+{% include 'components/form_error_widget.html' with form=form %}
 <form id="space-form" action="." method="POST">
     {% csrf_token %}
     
     <!-- TITLE -->
     <div class="mb-6"> 
-        {{ form.title }}  
+        {{ form.title }}
+        {% include 'components/form_error_widget.html' with field=form.title %}
     </div>
 
 
@@ -17,11 +19,11 @@
         <div id="email-input-container" class="my-1 border-0">
             <!-- Text input field
             <input type="text" id="email-input" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees" />-->
-                        {{ form.email_input }}
-
+            {{ form.email_input }}
             <!-- Tags will appear here, below the input field -->
-            <div id="tags" class="flex flex-wrap gap-2 my-1">
-            </div>
+            <div id="tags" class="flex flex-wrap gap-2 my-1"></div>
+            <!-- Error message-->
+            {% include 'components/form_error_widget.html' with field=form.senders_emails %}
             <!-- Hidden input for form submission -->
             {{ form.senders_emails }}
 
