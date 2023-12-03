@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let addedEmails = new Set();
 
     function isValidEmail(email) {
-        // Simple regex for email validation
         return /\S+@\S+\.\S+/.test(email);
     }
 
@@ -32,72 +31,48 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Initialize the tags from the hidden input value
+    function processInputText(inputText) {
+        const parts = inputText.split(/[\s,]+/);
+        return parts.reduce((remainingText, part) => {
+            if (isValidEmail(part.trim())) {
+                addEmailTag(part.trim());
+            } else {
+                remainingText.push(part);
+            }
+            return remainingText;
+        }, []).join(' ');
+    }
+
     function initializeEmailTags() {
         const sendersInput = document.getElementById('id_senders_emails');
-        const emails = sendersInput.value.split(',');
-
-        emails.forEach(email => {
-            if (email.trim()) {
-                addEmailTag(email.trim());
-            }
-        });
-
-        sendersInput.value = ''; // Clear the field after processing
+        sendersInput.value.split(',').forEach(email => email.trim() && addEmailTag(email.trim()));
+        sendersInput.value = '';
     }
     initializeEmailTags();
 
-    document.getElementById('id_email_input').addEventListener('blur', (e) => {
-        const input = e.target;
-        const email = input.value.trim();
-    
+    const emailInput = document.getElementById('id_email_input');
+
+    emailInput.addEventListener('blur', () => {
+        const email = emailInput.value.trim();
         if (isValidEmail(email)) {
             addEmailTag(email);
-            input.value = ''; // Clear the input field after adding the tag
+            emailInput.value = '';
         }
     });
 
-    document.getElementById('id_email_input').addEventListener('keydown', (e) => {
+    emailInput.addEventListener('keydown', (e) => {
         if ([' ', ',', ';', 'Enter'].includes(e.key)) {
             e.preventDefault();
-            const input = e.target;
-            const inputText = input.value;
-            const parts = inputText.split(/[\s,]+/);
-
-            let remainingText = '';
-
-            parts.forEach(part => {
-                if (isValidEmail(part.trim())) {
-                    addEmailTag(part.trim());
-                } else {
-                    remainingText += part + ' ';
-                }
-            });
-
-            input.value = remainingText.trim();
+            emailInput.value = processInputText(emailInput.value);
         }
     });
 
-    document.getElementById('id_email_input').addEventListener('paste', (e) => {
+    emailInput.addEventListener('paste', (e) => {
         e.preventDefault();
-        const pastedText = (e.clipboardData || window.clipboardData).getData('text');
-        const emails = pastedText.split(/[\s,]+/);
-
-        let nonEmailText = '';
-
-        emails.forEach(email => {
-            if (isValidEmail(email.trim())) {
-                addEmailTag(email.trim());
-            } else {
-                nonEmailText += email + ' ';
-            }
-        });
-
-        document.getElementById('id_email_input').value = nonEmailText.trim();
+        emailInput.value = processInputText((e.clipboardData || window.clipboardData).getData('text'));
     });
 
-    document.getElementById("space-form").addEventListener('submit', (e) => {
-        const hiddenInput = document.getElementById('id_senders_emails');
-        hiddenInput.value = Array.from(addedEmails).join(',');
+    document.getElementById("space-form").addEventListener('submit', () => {
+        document.getElementById('id_senders_emails').value = Array.from(addedEmails).join(',');
     });
 });
