@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var emailInput = false //document.getElementById('id_email_input'); // TODO: Refactor this to use the same approach as the email input widget
-    if (emailInput) {
+    const nameInput = false// TODO: Refactor this to use the same approach as the email input widget
+    if (nameInput) {
 
         let timeout = null;
 

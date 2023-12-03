@@ -30,7 +30,9 @@ class CommaSeparatedEmailField(forms.CharField):
 
 class SpaceForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Upload Space',
-                                                         'class': text_space_title_input}))
+                                                         'class': text_space_title_input}),
+                            label='Space title')
+    
     is_active = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
             'class': 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'
@@ -40,7 +42,7 @@ class SpaceForm(ModelForm):
     )
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
-        label='Emails',
+        label='Senders emails',
         required=False  # Set to True if emails are mandatory
     )
     email_input = forms.CharField(required=False,
@@ -51,7 +53,10 @@ class SpaceForm(ModelForm):
         fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails']
         widgets = {
             'instructions': forms.Textarea(
-                attrs={'placeholder': 'Explain here what files you want to request', 'rows': 4, 'class': text_area})
+                attrs={'placeholder': 'Explain what files you are requesting',
+                       'rows': 4,
+                       'class': text_area,
+                       'label': 'Instructions'})
         }
 
 

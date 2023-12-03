@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var emailInput = document.getElementById('id_email_input');
+    const emailInput = document.getElementById('id_email_input');
     if (emailInput) {
 
         let addedEmails = new Set();
