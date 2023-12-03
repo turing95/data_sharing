@@ -37,7 +37,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         context = self.get_context_data()
         requests = context['requests']
         if requests.is_valid() is False:
-            raise super().form_invalid(form)
+            return super().form_invalid(form)
 
         space_instance = form.save(commit=False)
         space_instance.user = self.request.user
