@@ -1,0 +1,7 @@
+{% if field.errors %}
+    <div>
+        {% for error in field.errors %}
+            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+        {% endfor %}
+    </div>
+{% endif %}

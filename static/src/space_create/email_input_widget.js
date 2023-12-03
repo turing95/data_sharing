@@ -1,78 +1,81 @@
 document.addEventListener('DOMContentLoaded', function () {
+    var emailInput = document.getElementById('id_email_input');
+    if (emailInput) {
 
-    let addedEmails = new Set();
+        let addedEmails = new Set();
 
-    function isValidEmail(email) {
-        // Simple regex for email validation
-        return /\S+@\S+\.\S+/.test(email);
-    }
-
-    function createTag(email) {
-        const tag = document.createElement('span');
-        tag.className = 'inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 ';
-        tag.textContent = email;
-
-        const closeBtn = document.createElement('span');
-        closeBtn.innerHTML = '&times;';
-        closeBtn.className = 'ml-2 cursor-pointer';
-        closeBtn.onclick = () => {
-            tag.remove();
-            addedEmails.delete(email);
-        };
-
-        tag.appendChild(closeBtn);
-        return tag;
-    }
-
-    function addEmailTag(email) {
-        if (isValidEmail(email) && !addedEmails.has(email)) {
-            const tag = createTag(email);
-            document.getElementById('tags').appendChild(tag);
-            addedEmails.add(email);
+        function isValidEmail(email) {
+            return /\S+@\S+\.\S+/.test(email);
         }
-    }
 
-    document.getElementById('id_email_input').addEventListener('keydown', (e) => {
-        if ([' ', ',', ';', 'Enter'].includes(e.key)) {
-            e.preventDefault();
-            const input = e.target;
-            const inputText = input.value;
+        function createTag(email) {
+            const tag = document.createElement('span');
+            tag.className = 'inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 ';
+            tag.textContent = email;
+
+            const closeBtn = document.createElement('span');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.className = 'ml-2 cursor-pointer';
+            closeBtn.onclick = () => {
+                tag.remove();
+                addedEmails.delete(email);
+            };
+
+            tag.appendChild(closeBtn);
+            return tag;
+        }
+
+        function addEmailTag(email) {
+            if (isValidEmail(email) && !addedEmails.has(email)) {
+                const tag = createTag(email);
+                document.getElementById('tags').appendChild(tag);
+                addedEmails.add(email);
+            }
+        }
+
+        function processInputText(inputText) {
             const parts = inputText.split(/[\s,]+/);
-
-            let remainingText = '';
-
-            parts.forEach(part => {
+            return parts.reduce((remainingText, part) => {
                 if (isValidEmail(part.trim())) {
                     addEmailTag(part.trim());
                 } else {
-                    remainingText += part + ' ';
+                    remainingText.push(part);
                 }
-            });
-
-            input.value = remainingText.trim();
+                return remainingText;
+            }, []).join(' ');
         }
-    });
 
-    document.getElementById('id_email_input').addEventListener('paste', (e) => {
-        e.preventDefault();
-        const pastedText = (e.clipboardData || window.clipboardData).getData('text');
-        const emails = pastedText.split(/[\s,]+/);
+        function initializeEmailTags() {
+            const sendersInput = document.getElementById('id_senders_emails');
+            sendersInput.value.split(',').forEach(email => email.trim() && addEmailTag(email.trim()));
+            sendersInput.value = '';
+        }
+        initializeEmailTags();
 
-        let nonEmailText = '';
+        const emailInput = document.getElementById('id_email_input');
 
-        emails.forEach(email => {
-            if (isValidEmail(email.trim())) {
-                addEmailTag(email.trim());
-            } else {
-                nonEmailText += email + ' ';
+        emailInput.addEventListener('blur', () => {
+            const email = emailInput.value.trim();
+            if (isValidEmail(email)) {
+                addEmailTag(email);
+                emailInput.value = '';
             }
         });
 
-        document.getElementById('id_email_input').value = nonEmailText.trim();
-    });
+        emailInput.addEventListener('keydown', (e) => {
+            if ([' ', ',', ';', 'Enter'].includes(e.key)) {
+                e.preventDefault();
+                emailInput.value = processInputText(emailInput.value);
+            }
+        });
 
-    document.getElementById("space-form").addEventListener('submit', (e) => {
-        const hiddenInput = document.getElementById('id_senders_emails');
-        hiddenInput.value = Array.from(addedEmails).join(',');
-    });
+        emailInput.addEventListener('paste', (e) => {
+            e.preventDefault();
+            emailInput.value = processInputText((e.clipboardData || window.clipboardData).getData('text'));
+        });
+
+        document.getElementById("space-form").addEventListener('submit', () => {
+            document.getElementById('id_senders_emails').value = Array.from(addedEmails).join(',');
+        });
+    }
 });
