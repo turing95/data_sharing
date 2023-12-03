@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Appends a partial element for the user to type into
     function appendPartial(initialText = '', selectAfterAppending = false, currentSpan) {
         const newSpan = document.createElement('span')
-        newSpan.className = 'partial border border-gray-300 rounded px-2 py-1'
+        newSpan.className = 'partial focus-visible:outline-none'
         newSpan.contentEditable = true
 
         newSpan.addEventListener('input', () => {
