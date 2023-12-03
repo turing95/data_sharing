@@ -15,12 +15,17 @@ class CommaSeparatedEmailField(forms.CharField):
 
     def validate(self, value):
         super().validate(value)
+        invalid_emails = []
         for email in value:
-            print(email)
             try:
                 validate_email(email)
             except ValidationError:
-                raise ValidationError(f"{email} is not a valid email address")
+                invalid_emails.append(email)
+        if invalid_emails:
+            if len(invalid_emails) == 1:
+                raise ValidationError(f"{invalid_emails[0]} is not a valid email address")
+            else:
+                raise ValidationError(f"{', '.join(invalid_emails)} are not valid email addresses")
 
 
 class SpaceForm(ModelForm):

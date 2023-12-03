@@ -32,6 +32,31 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Initialize the tags from the hidden input value
+    function initializeEmailTags() {
+        const sendersInput = document.getElementById('id_senders_emails');
+        const emails = sendersInput.value.split(',');
+
+        emails.forEach(email => {
+            if (email.trim()) {
+                addEmailTag(email.trim());
+            }
+        });
+
+        sendersInput.value = ''; // Clear the field after processing
+    }
+    initializeEmailTags();
+
+    document.getElementById('id_email_input').addEventListener('blur', (e) => {
+        const input = e.target;
+        const email = input.value.trim();
+    
+        if (isValidEmail(email)) {
+            addEmailTag(email);
+            input.value = ''; // Clear the input field after adding the tag
+        }
+    });
+
     document.getElementById('id_email_input').addEventListener('keydown', (e) => {
         if ([' ', ',', ';', 'Enter'].includes(e.key)) {
             e.preventDefault();
