@@ -1,5 +1,6 @@
 {% extends "private/_base.html" %}
 {% block private_content %}
+{% load custom_tags %}
 {{ form.errors }}
 {{ form.non_field_errors }}
 <form id="space-form" action="." method="POST">
@@ -9,26 +10,20 @@
     <div class="mb-6"> 
         {{ form.title }}  
     </div>
-    
-    <!-- SENDER EMAILS -->
-        {% comment %} <!--  OLD SENDER EMAILS -->
-    <div class="mb-6">
-        <h1 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Invitations</h1>
-        <label for="{{ form.senders_emails.id_for_label  }}"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.senders_emails.label }} </label>
-        {{ form.senders_emails }}
-    </div> {% endcomment %}
+
 
     <div class="mb-6">
         <h1 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Invitations</h1>
         <div id="email-input-container" class="my-1 border-0">
-            <!-- Text input field -->
-            <input type="text" id="email-input" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees" />
+            <!-- Text input field
+            <input type="text" id="email-input" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees" />-->
+                        {{ form.email_input }}
 
             <!-- Tags will appear here, below the input field -->
-            <div id="tags" class="flex flex-wrap gap-2"></div>
+            <div id="tags" class="flex flex-wrap gap-2">
+            </div>
             <!-- Hidden input for form submission -->
-            <input type="hidden" name="senders_emails" id="hidden-email-input">
+            {{ form.senders_emails }}
 
         </div>
     </div>
@@ -77,8 +72,8 @@
                 {{ req.destination }}
                 {{ req.token }}
                 <!--Add buttons to initiate auth sequence and sign out-->
-                <button id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
-                <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+                <button type="button" id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
+                <button type="button" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
                 
             </div>
             

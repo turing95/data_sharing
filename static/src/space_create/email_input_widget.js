@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    document.getElementById('email-input').addEventListener('keydown', (e) => {
+    document.getElementById('id_email_input').addEventListener('keydown', (e) => {
         if ([' ', ',', ';', 'Enter'].includes(e.key)) {
             e.preventDefault();
             const input = e.target;
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('email-input').addEventListener('paste', (e) => {
+    document.getElementById('id_email_input').addEventListener('paste', (e) => {
         e.preventDefault();
         const pastedText = (e.clipboardData || window.clipboardData).getData('text');
         const emails = pastedText.split(/[\s,]+/);
@@ -68,11 +68,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        document.getElementById('email-input').value = nonEmailText.trim();
+        document.getElementById('id_email_input').value = nonEmailText.trim();
     });
 
     document.getElementById("space-form").addEventListener('submit', (e) => {
-        const hiddenInput = document.getElementById('hidden-email-input');
+        const hiddenInput = document.getElementById('id_senders_emails');
         hiddenInput.value = Array.from(addedEmails).join(',');
     });
 });

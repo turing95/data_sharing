@@ -16,6 +16,7 @@ class CommaSeparatedEmailField(forms.CharField):
     def validate(self, value):
         super().validate(value)
         for email in value:
+            print(email)
             try:
                 validate_email(email)
             except ValidationError:
@@ -33,11 +34,12 @@ class SpaceForm(ModelForm):
         label='Publish'
     )
     senders_emails = CommaSeparatedEmailField(
-        widget=forms.TextInput(attrs={'placeholder': 'Enter emails separated by commas',
-                                      'class': 'email-input ' + text_input}),
+        widget=forms.HiddenInput(),
         label='Emails',
         required=False  # Set to True if emails are mandatory
     )
+    email_input = forms.CharField(required=False,
+                                  widget=forms.TextInput(attrs={'placeholder': 'Type or paste email addresses of invitees','class':text_input}))
 
     class Meta:
         model = Space
@@ -46,11 +48,6 @@ class SpaceForm(ModelForm):
             'instructions': forms.Textarea(
                 attrs={'placeholder': 'Explain here what files you want to request', 'rows': 4, 'class': text_area})
         }
-
-    def clean_emails(self):
-        # Custom clean method for emails field
-        emails = self.cleaned_data.get('senders_emails', [])
-        return emails
 
 
 class RequestForm(ModelForm):

@@ -43,13 +43,13 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         space_instance.user = self.request.user
         space_instance.save()
         self._space = space_instance
-
+        for email in form.cleaned_data.get('senders_emails', []):
+            Sender.objects.create(email=email, space=space_instance)
         if requests.is_valid():
             requests.instance = space_instance
             requests.save()
             for req in requests:
-                for email in req.cleaned_data.get('senders_emails', []):
-                    Sender.objects.create(email=email, request=req.instance)
+
 
                 # TODO change when more than one possible type of dest
                 GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
