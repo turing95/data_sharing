@@ -26,19 +26,24 @@ class SpaceFormView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['space_form'] = True
-        data['file_name_tags'] = {'tags':[tag[1] for tag in UploadRequest.FileNameTag.choices]}
+        data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         if self.request.POST:
             data['requests'] = RequestFormSet(self.request.POST)
         else:
             data['requests'] = RequestFormSet()
         return data
 
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        context = self.get_context_data()
-        requests = context['requests']
-        if requests.is_valid() is False:
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        formset = RequestFormSet(request.POST)
+
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(form, formset)
+        else:
             return super().form_invalid(form)
+
+    def form_valid(self, form, formset):
+        # This method is called when valid form data has been POSTed.
 
         space_instance = form.save(commit=False)
         space_instance.user = self.request.user
@@ -46,15 +51,11 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         self._space = space_instance
         for email in form.cleaned_data.get('senders_emails', []):
             Sender.objects.create(email=email, space=space_instance)
-        if requests.is_valid():
-            requests.instance = space_instance
-            requests.save()
-            for req in requests:
-
-
+        if formset.is_valid():
+            formset.instance = space_instance
+            formset.save()
+            for req in formset:
                 # TODO change when more than one possible type of dest
                 GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
                                                   req.cleaned_data.get('token'))
-        else:
-            print(requests.errors)
         return super().form_valid(form)
