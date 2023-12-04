@@ -3,7 +3,9 @@
 {% load custom_tags %}
 
 <!-- Display non-field errors -->
+    {{ file_name_tags |json_script:"file-name-tags"  }}
 {% include 'components/forms/error_widget.html' with errors=form.errors %}
+
 <form id="space-form" action="." method="POST">
     {% csrf_token %}
     

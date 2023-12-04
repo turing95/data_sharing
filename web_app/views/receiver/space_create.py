@@ -2,7 +2,7 @@ from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, GoogleDrive
+from web_app.models import Sender, GoogleDrive, UploadRequest
 from allauth.socialaccount.models import SocialAccount, SocialToken
 
 
@@ -25,7 +25,8 @@ class SpaceFormView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['picker_js'] = True
+        data['space_form'] = True
+        data['file_name_tags'] = {'tags':[tag[1] for tag in UploadRequest.FileNameTag.choices]}
         if self.request.POST:
             data['requests'] = RequestFormSet(self.request.POST)
         else:

@@ -7,6 +7,9 @@ class UploadRequest(BaseModel):
         CSV = 'CSV', 'CSV'
         PDF = 'PDF', 'PDF'
 
+    class FileNameTag(models.TextChoices):
+        SENDER_EMAIL = 'SENDER_EMAIL', 'sender_email'
+
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='requests')
     file_type = models.CharField(max_length=50, choices=FileType.choices, null=True, blank=True)
     title = models.CharField(max_length=50, null=True, blank=True)
