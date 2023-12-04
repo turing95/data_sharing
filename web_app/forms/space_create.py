@@ -1,6 +1,6 @@
 from django.forms import ModelForm, inlineformset_factory
 from web_app.models import Space, UploadRequest
-from web_app.forms.css_classes import text_input, text_area, text_space_title_input
+from web_app.forms import css_classes
 from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -30,15 +30,22 @@ class CommaSeparatedEmailField(forms.CharField):
 
 class SpaceForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
-                                                         'class': text_space_title_input}),
+                                                          'class': css_classes.text_space_title_input}),
                             label='Space title')
-    
+
     is_active = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
-            'class': 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'
+            'class': css_classes.checkbox_input,
         }),
         required=False,
         label='Publish'
+    )
+    is_public = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={
+            'class': css_classes.checkbox_input,
+        }),
+        required=False,
+        label='Generate public link'
     )
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
@@ -46,7 +53,9 @@ class SpaceForm(ModelForm):
         required=False  # Set to True if emails are mandatory
     )
     email_input = forms.CharField(required=False,
-                                  widget=forms.TextInput(attrs={'placeholder': 'Type or paste email addresses of invitees','class':text_input}))
+                                  widget=forms.TextInput(
+                                      attrs={'placeholder': 'Type or paste email addresses of invitees',
+                                             'class': css_classes.text_input}))
 
     class Meta:
         model = Space
@@ -55,7 +64,7 @@ class SpaceForm(ModelForm):
             'instructions': forms.Textarea(
                 attrs={'placeholder': 'Explain what files you are requesting',
                        'rows': 4,
-                       'class': text_area,
+                       'class': css_classes.text_area,
                        'label': 'Instructions'})
         }
 
@@ -63,20 +72,20 @@ class SpaceForm(ModelForm):
 class RequestForm(ModelForm):
     destination = forms.CharField(
         widget=forms.TextInput(attrs={'required': 'required', 'placeholder': 'Enter destination for the request',
-                                      'class': text_input}))
+                                      'class': css_classes.text_input}))
     token = forms.CharField(
         widget=forms.HiddenInput())
     rename = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
-            'class': 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out',
+            'class': css_classes.checkbox_input,
             'onclick': 'renameToggle(this);'
         }),
         required=False,
         label='Rename files'
     )
     file_name = forms.CharField(required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'File name',
-                                      'class': text_input}))
+                                widget=forms.TextInput(attrs={'placeholder': 'File name',
+                                                              'class': css_classes.text_input}))
 
     class Meta:
         model = UploadRequest
