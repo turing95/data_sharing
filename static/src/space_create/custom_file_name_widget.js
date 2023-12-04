@@ -121,18 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
             element.closest('.tag').remove();
         }
 
-        // initially populates the metadata dropdown
-        function populateDropdown() {
-            const dropdown = document.getElementById('validTagsDropdown');
-            validTags.forEach(tag => {
-                const option = document.createElement('option');
-                option.value = tag;
-                option.textContent = tag;
-                dropdown.appendChild(option);
-            });
-        }
-        //populateDropdown()
-
 
 
         document.getElementById('validTagsDropdown').addEventListener('change', function() {

@@ -104,6 +104,7 @@ class RequestForm(ModelForm):
                                            'class': css_classes.text_input}),
                                 initial='{original file name}',
                                 label='File naming')
+    
     destination_display = forms.CharField(
         required=False,
         label='Non-editable Field',
