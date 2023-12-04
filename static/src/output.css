@@ -1319,6 +1319,10 @@ input:checked + .toggle-bg {
   height: 100%;
 }
 
+.max-h-\[42px\] {
+  max-height: 42px;
+}
+
 .min-h-\[42px\] {
   min-height: 42px;
 }
@@ -2163,6 +2167,11 @@ input:checked + .toggle-bg {
 .focus\:ring-marian-blue-300:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(18 34 83 / var(--tw-ring-opacity));
+}
+
+.focus-visible\:outline-none:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .active\:bg-marian-blue-800:active {

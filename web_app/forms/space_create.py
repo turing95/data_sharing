@@ -82,6 +82,14 @@ class RequestForm(ModelForm):
                                                           'class': 'bg-transparent w-1/2 text-gray-900 p-1 border-t-0 border-x-0 border-b border-b-gray-400 transition-all duration-300 text-sm    hover:border-black #hover:text-sm    focus:outline-none focus:ring-0 font-bold'}),
                             label='Request title')
     
+    # handling of the parametric file name
+    file_naming_formula = forms.CharField(
+            widget=forms.HiddenInput(),
+            label='File naming formula',
+            initial = f'{{{UploadRequest.FileNameTag.ORIGINAL_FILE_NAME.value}}}',
+            required=True
+            )
+    
     file_name_instructions = "Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:"
     file_name_tags = "<br>" + "<br>".join([
         f"- <strong>{{{tag[1]}}}</strong> - \"{'spiegazione va qui'}\""
