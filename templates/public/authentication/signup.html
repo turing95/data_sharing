@@ -10,7 +10,7 @@
             {% csrf_token %}
         
             <!-- Display non-field errors -->
-            {% include 'components/forms/error_widget.html' with errors=form.errors %}
+            {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
         
 
 
