@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from web_app.models import Sender, GoogleDrive, UploadRequest
-from allauth.socialaccount.models import SocialAccount, SocialToken
+from django.db import transaction
 
 
 class SpaceFormView(LoginRequiredMixin, FormView):
@@ -37,25 +37,28 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         form = self.get_form()
         formset = RequestFormSet(request.POST)
 
-        if form.is_valid() and formset.is_valid():
-            return self.form_valid(form, formset)
-        else:
-            return super().form_invalid(form)
-
-    def form_valid(self, form, formset):
-        # This method is called when valid form data has been POSTed.
-
-        space_instance = form.save(commit=False)
-        space_instance.user = self.request.user
-        space_instance.save()
-        self._space = space_instance
-        for email in form.cleaned_data.get('senders_emails', []):
-            Sender.objects.create(email=email, space=space_instance)
-        if formset.is_valid():
+        if form.is_valid():
+            space_instance = form.save(commit=False)
+            space_instance.user = request.user
             formset.instance = space_instance
-            formset.save()
-            for req in formset:
-                # TODO change when more than one possible type of dest
-                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
-                                                  req.cleaned_data.get('token'))
-        return super().form_valid(form)
+
+            if formset.is_valid():
+                with transaction.atomic():
+                    space_instance.save()
+                    self._space = space_instance
+                    self.handle_senders(form.cleaned_data.get('senders_emails', []), space_instance)
+                    self.handle_formset(formset)
+                return self.form_valid(form)
+        return self.form_invalid(form)
+
+    @staticmethod
+    def handle_senders(emails, space_instance):
+        Sender.objects.bulk_create([Sender(email=email, space=space_instance) for email in emails])
+
+    @staticmethod
+    def handle_formset(formset):
+        formset.save()
+        for req in formset:
+            # TODO change when more than one possible type of dest
+            GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
+                                              req.cleaned_data.get('token'))
