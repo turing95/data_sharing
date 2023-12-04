@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
             newSpan.addEventListener('click', () => {
                 getCaretOffset(newSpan)
             })
+            newSpan.addEventListener('input', () => {
+                getCaretOffset(newSpan)
+            })
+            newSpan.addEventListener('focus', () => {
+                getCaretOffset(newSpan)
+            })
 
 
             if (initialText) {
@@ -127,52 +133,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         populateDropdown()
 
-
-
-        
-
-
         document.getElementById('validTagsDropdown').addEventListener('change', function() {
             const selectedTag = `{${this.value}}`;
-            insertTextAtPosition(selectedTag);
+            appendChip(selectedTag, lastSpan)
         });
         
-        function insertTextAtPosition(text) {
-            const textInput = getTextInput();
-            const range = document.createRange();
-            const sel = window.getSelection();
-        
-            // Find the right node and offset within the textInput
-            let {node, offset} = getNodeAndOffset(textInput, lastCaretPosition);
-        
-            range.setStart(node, offset);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
-        
-            document.execCommand('insertText', false, text);
-        }
-        
-        function getNodeAndOffset(node, offset) {
-            // Traverse the node to find the exact child node and offset
-            // where the caret should be placed.
-            for (const child of node.childNodes) {
-                if (child.nodeType === Node.TEXT_NODE) {
-                    if (offset <= child.length) {
-                        return { node: child, offset: offset };
-                    }
-                    offset -= child.length;
-                } else {
-                    const result = getNodeAndOffset(child, offset);
-                    if (result) {
-                        return result;
-                    }
-                    offset -= child.textContent.length;
-                }
-            }
-        
-            return { node: node, offset: Math.min(offset, node.length) };
-        }
+
 
     }
 });
