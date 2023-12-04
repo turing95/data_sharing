@@ -1,7 +1,24 @@
-        {{ req.errors }}
-        {{ req.non_field_errors }}
+        {{ req.errors }} <!-- REMOVE AND APPLY TO SINGLE FIELDS-->
+
+        {{ file_name_tags |json_script:"file-name-tags"  }}
+
+        <!-- Display non-field errors -->
+        {% include 'components/forms/error_widget.html' with errors=form.errors %}
+            
         <div class="request-form">
 
+            <!-- SEPARATOR -->
+            <div class="flex-grow border-t border-gray-300 mt-4 mb-2"></div>
+
+            <!-- TITLE -->
+            <div class="mb-6"> 
+                <label for="{{ req.title.id_for_label }}"
+                class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.title.label }} </label>
+                {{ req.title }}
+                {% include 'components/forms/error_widget.html' with errors=req.title.errors %}
+            </div>
+            
+            <!-- DESTINATION -->
             <div class="mb-6">
                 <label for="{{ req.destination.id_for_label }}"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
@@ -11,6 +28,16 @@
                 <button type="button" id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
                 <button type="button" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
+            </div>
+
+            <!-- CUSTOM FILE NAME -->
+            <div class="mb-6">
+                <div class="mb-6 file-name-input">
+                    <label for="{{ req.file_name.id_for_label }}"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_name.label }} </label>
+                    {{ req.file_name }}
+                    {{ req.file_name.help_text }}
+                </div>
             </div>
 
             <div class="mb-6">
@@ -23,9 +50,5 @@
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.rename.label }} </label>
                 {{ req.rename }}
             </div>
-            <div class="hidden mb-6 file-name-input">
-                <label for="{{ req.file_name.id_for_label  }}"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_name.label }} </label>
-                {{ req.file_name }}
-            </div>
+
         </div>
