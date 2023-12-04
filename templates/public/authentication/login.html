@@ -17,7 +17,7 @@
             {% csrf_token %}
         
             <!-- Display non-field errors -->
-            {% include 'components/form_error_widget.html' with errors=form.errors %}
+            {% include 'components/forms/error_widget.html' with errors=form.errors %}
 
             <!-- Render Login Field -->
             <div>
@@ -26,7 +26,7 @@
                 {% if form.login.help_text %}
                     <div class="">{{ form.login.help_text }}</div>
                 {% endif %}
-                {% include 'components/form_error_widget.html' with errors=form.login.errors %}
+                {% include 'components/forms/error_widget.html' with errors=form.login.errors %}
             </div>
         
             <!-- Render Password Field -->
@@ -36,7 +36,7 @@
                 {% if form.password.help_text %}
                     <div>{{ form.password.help_text }}</div>
                 {% endif %}
-                {% include 'components/form_error_widget.html' with errors=form.password.errors %}
+                {% include 'components/forms/error_widget.html' with errors=form.password.errors %}
             </div>
         
             <!-- Render Remember Checkbox -->
@@ -47,7 +47,7 @@
                 {% if form.remember.help_text %}
                     <div>{{ form.remember.help_text }}</div>
                 {% endif %}
-                {% include 'components/form_error_widget.html' with errors=form.remember.errors %}
+                {% include 'components/forms/error_widget.html' with errors=form.remember.errors %}
             </div>
         
             <!-- Submit Button -->

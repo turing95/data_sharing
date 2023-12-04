@@ -3,7 +3,7 @@
 {% load custom_tags %}
 
 <!-- Display non-field errors -->
-{% include 'components/form_error_widget.html' with errors=form.errors %}
+{% include 'components/forms/error_widget.html' with errors=form.errors %}
 <form id="space-form" action="." method="POST">
     {% csrf_token %}
     
@@ -12,7 +12,7 @@
         <label for="{{ form.title.id_for_label }}"
         class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
         {{ form.title }}
-        {% include 'components/form_error_widget.html' with errors=form.title.errors %}
+        {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
 
     <!-- INVITATIONS -->
@@ -25,7 +25,7 @@
             <!-- Tags will appear here, below the input field -->
             <div id="tags" class="flex flex-wrap gap-2 my-1"></div>
             <!-- Error message-->
-            {% include 'components/form_error_widget.html' with errors=form.senders_emails.errors %}
+            {% include 'components/forms/error_widget.html' with errors=form.senders_emails.errors %}
             <!-- Hidden input for form submission -->
             {{ form.senders_emails }}
 
@@ -39,7 +39,7 @@
         <label for="{{ form.instructions.id_for_label }}"
         class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
         {{ form.instructions }}
-        {% include 'components/form_error_widget.html' with errors=form.instructions.errors %}
+        {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
     </div>
     
     <!-- DEADLINE -->
@@ -48,7 +48,7 @@
         <label for="{{ form.deadline.id_for_label }}"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
         {{ form.deadline }}
-        {% include 'components/form_error_widget.html' with errors=form.deadline.errors %}
+        {% include 'components/forms/error_widget.html' with errors=form.deadline.errors %}
     </div>
     
     <!-- CUSTOM FILE NAME SELECTOR -->
@@ -78,37 +78,7 @@
     {{ requests.management_form }}
     <div id="requests-container">
         {% for req in requests %}
-        {{ req.errors }}
-        {{ req.non_field_errors }}
-        <div class="request-form">
-            
-            <div class="mb-6">
-                <label for="{{ req.destination.id_for_label }}"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
-                {{ req.destination }}
-                {{ req.token }}
-                <!--Add buttons to initiate auth sequence and sign out-->
-                <button type="button" id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
-                <button type="button" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-                
-            </div>
-            
-            <div class="mb-6">
-                <label for="{{ req.number_of_files.id_for_label }}"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label }} </label>
-                {{ req.number_of_files }}
-            </div>
-            <div class="mb-6">
-                <label for="{{ req.rename.id_for_label }}"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.rename.label }} </label>
-                {{ req.rename }}
-            </div>
-            <div class="hidden mb-6 file-name-input">
-                <label for="{{ req.file_name.id_for_label  }}"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_name.label }} </label>
-                {{ req.file_name }}
-            </div>
-        </div>
+            {% include "components/forms/request.html" with req=req %}
         {% endfor %}
     </div>
     {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}

@@ -1,0 +1,31 @@
+        {{ req.errors }}
+        {{ req.non_field_errors }}
+        <div class="request-form">
+
+            <div class="mb-6">
+                <label for="{{ req.destination.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
+                {{ req.destination }}
+                {{ req.token }}
+                <!--Add buttons to initiate auth sequence and sign out-->
+                <button type="button" id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
+                <button type="button" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+
+            </div>
+
+            <div class="mb-6">
+                <label for="{{ req.number_of_files.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label }} </label>
+                {{ req.number_of_files }}
+            </div>
+            <div class="mb-6">
+                <label for="{{ req.rename.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.rename.label }} </label>
+                {{ req.rename }}
+            </div>
+            <div class="hidden mb-6 file-name-input">
+                <label for="{{ req.file_name.id_for_label  }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_name.label }} </label>
+                {{ req.file_name }}
+            </div>
+        </div>
