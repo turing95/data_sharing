@@ -22,10 +22,11 @@
             <div class="mb-6">
                 <label for="{{ req.destination.id_for_label }}"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
+                                    {{ req.destination_display }}
+
                 {{ req.destination }}
                 {{ req.token }}
                 <!--Add buttons to initiate auth sequence and sign out-->
-                <button type="button" id="authorize_button" onclick="handleAuthClick(this)">Authorize</button>
                 <button type="button" id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
             </div>
@@ -86,14 +87,54 @@
                 {{ req.number_of_files }}
             </div>
 
+            <!-- CUSTOM FILE NAME SELECTOR -->
+            <div class="container">
+
+                <!-- Flex container for textInput and dropdown -->
+                <div class="flex items-top gap-2">
+                    <!-- Hidden input for form submission -->
+                    <div id="textInput" class="focus-visible:outline-none placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm p-2.5 min-h-[42px] focus:ring-blue-500 focus:border-blue-500 block w-full min-h-32 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees"></div>
+            
+                    <!-- Dropdown for Valid Tags -->
+                    <select id="validTagsDropdown" class="dropdownClass bg-gray-50 border border-gray-300 text-gray-900 text-sm max-h-[42px] my-1">
+                        <option value="" disabled selected>Insert parameter</option>
+                        {% for tag in file_name_tags.tags %}
+                            <option value="{{ tag }}">{{ tag }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            {% comment %} </div>
+
+              <!-- CUSTOM FILE NAME SELECTOR -->
+              <div class="container">
+
+                <!-- Hidden input for form submission -->
+                {{ req.file_naming_formula }}
+                    
+                <div id="textInput" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm p-2.5 min-h-[42px] focus:ring-blue-500 focus:border-blue-500 block w-full min-h-32 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees"></div>
+                <!-- Dropdown for Valid Tags -->
+                <select id="validTagsDropdown" class="dropdownClass">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div> {% endcomment %}
+            
+            
+            <!-- ALLOWED ESTENSIONS -->
             <div class="mb-6">
                 <label for="{{ req.number_of_files.id_for_label }}"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label }} </label>
                 {{ req.number_of_files }}
             </div>
-
-
-
-
-
+            <div class="mb-6">
+                <label for="{{ req.file_types.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_types.label }} </label>
+                {{ req.file_types }}
+            </div>
+            <div class="mb-6">
+                <label for="{{ req.file_types.id_for_label }}"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_types.label }} </label>
+                {{ req.file_types }}
+            </div>
         </div>

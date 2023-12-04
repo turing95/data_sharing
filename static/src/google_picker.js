@@ -19,6 +19,7 @@ const config_data = JSON.parse(document.getElementById('config-data').textConten
 config_data.googleScopes = ['https://www.googleapis.com/auth/drive'];
 
 let currentDestinationInput = null;
+let currentDestinationDisplayInput = null;
 let currentAccessTokenInput = null;
 let tokenClient;
 let accessToken = null;
@@ -27,7 +28,7 @@ let pickerInited = false;
 let gisInited = false;
 
 
-document.getElementById('authorize_button').style.visibility = 'hidden';
+//document.getElementById('authorize_button').style.visibility = 'hidden';
 document.getElementById('signout_button').style.visibility = 'hidden';
 
 /**
@@ -65,7 +66,7 @@ maybeEnableButtons();
 */
 function maybeEnableButtons() {
 if (pickerInited && gisInited) {
-  document.getElementById('authorize_button').style.visibility = 'visible';
+  //document.getElementById('authorize_button').style.visibility = 'visible';
 }
 }
 
@@ -78,8 +79,10 @@ const parentDiv = buttonElement.closest('.mb-6');
 // Find the input within this div
 // Store the reference to this specific destinationInput
 const regex_destination = /id_requests-\d+-destination/;
+const regex_destination_display = /id_requests-\d+-destination_display/;
 const regex_token = /id_requests-\d+-token/;
 currentDestinationInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex_destination.test(input.id));
+currentDestinationDisplayInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex_destination_display.test(input.id));
 currentAccessTokenInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex_token.test(input.id));
 
 tokenClient.callback = async (response) => {
@@ -89,7 +92,6 @@ tokenClient.callback = async (response) => {
   accessToken = response.access_token;
   responseGoogle = response
   document.getElementById('signout_button').style.visibility = 'visible';
-  document.getElementById('authorize_button').innerText = 'Refresh';
   await createPicker();
 };
 if (!accessToken) {
@@ -98,7 +100,6 @@ if (!accessToken) {
 } else {
 // If the token is available, use it and proceed to create the picker
 document.getElementById('signout_button').style.visibility = 'visible';
-document.getElementById('authorize_button').innerText = 'Refresh';
 createPicker();
 }
 
@@ -112,8 +113,6 @@ function handleSignoutClick() {
 if (accessToken) {
   accessToken = null;
   google.accounts.oauth2.revoke(accessToken);
-  document.getElementById('content').innerText = '';
-  document.getElementById('authorize_button').innerText = 'Authorize';
   document.getElementById('signout_button').style.visibility = 'hidden';
 }
 }
@@ -146,9 +145,12 @@ if (data.action === google.picker.Action.PICKED) {
     // Assuming the first selected item is a folder
     const folder = data[google.picker.Response.DOCUMENTS][0];
     const folderId = folder[google.picker.Document.ID];
+    const folderName = folder[google.picker.Document.NAME];  // Get the folder name
+
     // Use the stored input element
     if (currentDestinationInput) {
         currentDestinationInput.value = folderId;
+        currentDestinationDisplayInput.value = folderName;
         currentAccessTokenInput.value = accessToken;
     }
     // Fetch details about the folder

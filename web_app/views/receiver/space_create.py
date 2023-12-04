@@ -2,7 +2,7 @@ from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, GoogleDrive, UploadRequest
+from web_app.models import Sender, GoogleDrive, UploadRequest, UploadRequestFileType
 from django.db import transaction
 
 
@@ -62,3 +62,6 @@ class SpaceFormView(LoginRequiredMixin, FormView):
             # TODO change when more than one possible type of dest
             GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
                                               req.cleaned_data.get('token'))
+            selected_file_types = req.cleaned_data['file_types']
+            for file_type in selected_file_types:
+                UploadRequestFileType.objects.create(upload_request=req.instance, file_type=file_type)
