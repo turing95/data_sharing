@@ -77,19 +77,20 @@ class FileTypeChoiceField(forms.ModelMultipleChoiceField):
 
 
 class RequestForm(ModelForm):
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled request',
-                                                          'required': 'required',
-                                                          'class': 'bg-transparent w-1/2 text-gray-900 p-1 border-t-0 border-x-0 border-b border-b-gray-400 transition-all duration-300 text-sm    hover:border-black #hover:text-sm    focus:outline-none focus:ring-0 font-bold'}),
-                            label='Request title')
-
-    file_name_instructions = "Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:"
-    file_name_tags = "<br>" + "<br>".join([
+    FILE_NAME_INSTRUCTIONS = "Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:"
+    FILE_NAME_TAGS = "<br>" + "<br>".join([
         f"- <strong>{{{tag[1]}}}</strong> - \"{'spiegazione va qui'}\""
         for tag in UploadRequest.FileNameTag.choices
     ])
+
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled request',
+                                                          'required': 'required',
+                                                          'class': css_classes.text_request_title_input}),
+                            label='Request title')
+
     file_name = forms.CharField(required=False,
                                 help_text=mark_safe(
-                                    f"<div class='text-xs'>{file_name_instructions}{file_name_tags}</div>"),
+                                    f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
                                 widget=forms.TextInput(
                                     attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
                                            'class': css_classes.text_input}),
@@ -100,7 +101,7 @@ class RequestForm(ModelForm):
         label='Non-editable Field',
         widget=forms.TextInput(
             attrs={'placeholder': 'Click to select a folder',
-                   'class': css_classes.text_input+' cursor-not-allowed',
+                   'class': css_classes.text_input + ' cursor-not-allowed',
                    'onclick': 'handleAuthClick(this)'})
     )
 
