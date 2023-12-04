@@ -29,7 +29,7 @@ class CommaSeparatedEmailField(forms.CharField):
 
 
 class SpaceForm(ModelForm):
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Upload Space',
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
                                                          'class': text_space_title_input}),
                             label='Space title')
     
