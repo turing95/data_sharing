@@ -77,7 +77,6 @@ class FileTypeChoiceField(forms.ModelMultipleChoiceField):
 
 
 class RequestForm(ModelForm):
-
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled request',
                                                           'required': 'required',
                                                           'class': 'bg-transparent w-1/2 text-gray-900 p-1 border-t-0 border-x-0 border-b border-b-gray-400 transition-all duration-300 text-sm    hover:border-black #hover:text-sm    focus:outline-none focus:ring-0 font-bold'}),
@@ -96,11 +95,17 @@ class RequestForm(ModelForm):
                                            'class': css_classes.text_input}),
                                 initial='{original file name}',
                                 label='File naming')
+    destination_display = forms.CharField(
+        required=False,
+        label='Non-editable Field',
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Click to select a folder',
+                   'class': css_classes.text_input+' cursor-not-allowed',
+                   'onclick': 'handleAuthClick(this)'})
+    )
 
     destination = forms.CharField(
-        widget=forms.TextInput(attrs={'required': 'required',
-                                      'placeholder': 'Enter destination for the request',
-                                      'class': css_classes.text_input}))
+        widget=forms.HiddenInput())
     token = forms.CharField(
         widget=forms.HiddenInput())
 
