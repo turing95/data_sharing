@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const nameInput = false// TODO: Refactor this to use the same approach as the email input widget
+    const nameInput = true// TODO: Refactor this to use the same approach as the email input widget
     if (nameInput) {
 
         let timeout = null;
 
         const getTextInput = () => document.getElementById('textInput');
-        const validTags = ['original file name', 'upload date', 'uploader email', 'space title', 'request title']
+        const validTags = ['l','original file name', 'upload date', 'uploader email', 'space title', 'request title']
+
+        let lastCaretPosition = 0;
+        let lastSpan
 
         /**
          * Get the character offset the caret is currently at
@@ -21,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let preCaretRange = range.cloneRange()
             preCaretRange.selectNodeContents(element)
             preCaretRange.setEnd(range.endContainer, range.endOffset)
+            lastCaretPosition = preCaretRange.toString().length;
+            lastSpan = element
             return preCaretRange.toString().length
         }
 
@@ -33,6 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
             newSpan.addEventListener('input', () => {
                 parseChips(newSpan);
             })
+            
+            newSpan.addEventListener('click', () => {
+                getCaretOffset(newSpan)
+            })
+
 
             if (initialText) {
                 newSpan.innerHTML = initialText
@@ -104,5 +114,65 @@ document.addEventListener('DOMContentLoaded', function () {
         function removeTag(element) {
             element.closest('.tag').remove();
         }
+
+        // initially populates the metadata dropdown
+        function populateDropdown() {
+            const dropdown = document.getElementById('validTagsDropdown');
+            validTags.forEach(tag => {
+                const option = document.createElement('option');
+                option.value = tag;
+                option.textContent = tag;
+                dropdown.appendChild(option);
+            });
+        }
+        populateDropdown()
+
+
+
+        
+
+
+        document.getElementById('validTagsDropdown').addEventListener('change', function() {
+            const selectedTag = `{${this.value}}`;
+            insertTextAtPosition(selectedTag);
+        });
+        
+        function insertTextAtPosition(text) {
+            const textInput = getTextInput();
+            const range = document.createRange();
+            const sel = window.getSelection();
+        
+            // Find the right node and offset within the textInput
+            let {node, offset} = getNodeAndOffset(textInput, lastCaretPosition);
+        
+            range.setStart(node, offset);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        
+            document.execCommand('insertText', false, text);
+        }
+        
+        function getNodeAndOffset(node, offset) {
+            // Traverse the node to find the exact child node and offset
+            // where the caret should be placed.
+            for (const child of node.childNodes) {
+                if (child.nodeType === Node.TEXT_NODE) {
+                    if (offset <= child.length) {
+                        return { node: child, offset: offset };
+                    }
+                    offset -= child.length;
+                } else {
+                    const result = getNodeAndOffset(child, offset);
+                    if (result) {
+                        return result;
+                    }
+                    offset -= child.textContent.length;
+                }
+            }
+        
+            return { node: node, offset: Math.min(offset, node.length) };
+        }
+
     }
 });

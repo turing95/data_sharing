@@ -17,7 +17,7 @@
 
     <!-- INVITATIONS -->
     <div class="mb-6">
-        <h1 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Invitations</h1>
+        <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Invitations</h3>
         <div id="email-input-container" class="my-1 border-0">
             <!-- Text input field
             <input type="text" id="email-input" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees" />-->
@@ -35,23 +35,30 @@
 
     <!-- INSTRUCTIONS -->
     <div class="mb-6">
-        <h1 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Instructions</h1>
+        <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Instructions</h3>
         <label for="{{ form.instructions.id_for_label }}"
         class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
         {{ form.instructions }}
+        {% include 'components/form_error_widget.html' with errors=form.instructions.errors %}
     </div>
     
-    
+    <!-- DEADLINE -->
     <div class="mb-6">
-        <h1 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Deadline</h1>
+        <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Deadline</h3>
         <label for="{{ form.deadline.id_for_label }}"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
         {{ form.deadline }}
+        {% include 'components/form_error_widget.html' with errors=form.deadline.errors %}
     </div>
     
     <!-- CUSTOM FILE NAME SELECTOR -->
-    <div id="textInput" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm p-2.5 min-h-[42px] focus:ring-blue-500 focus:border-blue-500 block w-full min-h-32 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees"></div>
-
+    <div class="container">
+        <div id="textInput" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm p-2.5 min-h-[42px] focus:ring-blue-500 focus:border-blue-500 block w-full min-h-32 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees"></div>
+        <!-- Dropdown for Valid Tags -->
+        <select id="validTagsDropdown" class="dropdownClass">
+            <!-- Options will be populated by JavaScript -->
+        </select>
+    </div>
     
     <div class="flex items-start mb-6">
         <div class="flex items-center h-5">
