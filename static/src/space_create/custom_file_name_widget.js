@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let timeout = null;
 
         const getTextInput = () => document.getElementById('textInput');
-        const validTags = ['l','original file name', 'upload date', 'uploader email', 'space title', 'request title']
+        const validTags = ['original file name', 'upload date', 'uploader email', 'space title', 'request title']
 
         let lastCaretPosition = 0;
         let lastSpan
