@@ -21,3 +21,4 @@ class Space(BaseModel, ActiveModel):
         constraints = [
             models.UniqueConstraint('user', 'title', name='unique_space_title')
         ]
+        ordering = ['-created_at']

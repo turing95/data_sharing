@@ -6,8 +6,8 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils import timezone as dj_timezone
-
-
+from django.utils.timezone import is_aware, make_aware, utc
+import arrow
 class CommaSeparatedEmailField(forms.CharField):
 
     def to_python(self, value):
@@ -79,15 +79,34 @@ class SpaceForm(ModelForm):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        title = cleaned_data.get("title")
+    def clean_title(self):
+        title = self.cleaned_data.get("title")
         user = self.user
-        if Space.objects.filter(user=user, title=title).exists():
+        spaces = Space.objects.filter(user=user, title=title)
+        if self.instance is not None:
+            spaces = spaces.exclude(pk=self.instance.pk)
+        if spaces.exists():
             raise forms.ValidationError(
                 "Title already exists."
             )
-        return cleaned_data
+        return title
+
+    def clean_deadline(self):
+        deadline = self.cleaned_data.get('deadline',None)
+
+        if deadline is not None:
+            # Ensure the datetime is timezone-aware
+            if not is_aware(deadline):
+                deadline = make_aware(deadline)
+
+            # Convert to UTC
+            deadline = deadline.astimezone(utc)
+            if deadline < arrow.utcnow():
+                raise forms.ValidationError(
+                    "Deadline must be in the future."
+                )
+
+        return deadline
 
     def save(self, commit=True):
         instance = super().save()
