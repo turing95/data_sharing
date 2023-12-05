@@ -54,14 +54,6 @@
                         class="block ml-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.rename.label }} </label>
                     </div>
                 </div>
-                {% comment %} <div class="mb-6">
-                    <div class="mb-6 file-name-input">
-                        <label for="{{ req.file_name.id_for_label }}"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.file_name.label }} </label>
-                        {{ req.file_name }}
-                        {{ req.file_name.help_text }}
-                    </div>
-                </div> {% endcomment %}
                 
                 <!-- CUSTOM FILE NAME SELECTOR -->
                 <div class="container">
@@ -70,7 +62,7 @@
                     <div class="flex items-top gap-2">
                         <!-- Hidden input for form submission -->
                         {{ req.file_naming_formula }}
-                        
+                        {{ req.file_naming_formula.help_text }}
                         <!-- Dropdown for Valid Tags -->
                         {{ req.available_tags_dropdown }}
                         

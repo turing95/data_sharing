@@ -95,8 +95,7 @@ class RequestForm(ModelForm):
                                 widget=forms.TextInput(
                                     attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
                                            'class': "hidden file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" +  css_classes.text_input}),
-                                initial = f'{{{UploadRequest.FileNameTag.ORIGINAL_FILE_NAME.label}}}',
-                                label='File naming')
+                                label='File naming formula')
     
     # Preparing the choices for the dropdown
     tag_choices = [(tag.label, tag.label) for tag in UploadRequest.FileNameTag]
