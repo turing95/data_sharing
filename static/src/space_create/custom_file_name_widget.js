@@ -1,5 +1,3 @@
-document.addEventListener('DOMContentLoaded', function () {
-
     // Function to insert text into the corresponding text input
     function insertText(textInput, selectedValue) {
         let lastCaretPosition = textInput.selectionStart;
@@ -13,13 +11,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         lastCaretPosition = textInput.selectionStart + selectedValue.length;
         textInput.focus(); // Focus back on the text input
-    }
+    };
+
 
     function handleTagDropdownChange(dropdown) {
         const parentDiv = dropdown.closest('.request-form');
         const childDiv= parentDiv.querySelector('.file-naming-formula-class');
         if (!childDiv) return;
-            const selectedTag = `{${this.value}}`;
+            const selectedTag = `{${dropdown.value}}`;
             insertText(childDiv, selectedTag)
             if (selectedTag) {
                 this.value = ""; // Reset the dropdown
@@ -27,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-});
+
+
+
 
 

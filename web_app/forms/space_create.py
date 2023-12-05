@@ -115,23 +115,25 @@ class RequestForm(ModelForm):
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
-                                          help_text=mark_safe(
-                                              f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
-                                          widget=forms.TextInput(
-                                              attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
-                                                     'class': "hidden file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input}),
-                                          label='File naming formula')
-
+                                help_text=mark_safe(
+                                    f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
+                                widget=forms.TextInput(
+                                    attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
+                                           'class': "file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" +  css_classes.text_input}),
+                                label='File naming formula')
+    
     # Preparing the choices for the dropdown
     tag_choices = [(tag.label, tag.label) for tag in UploadRequest.FileNameTag]
     tag_choices.insert(0, ('', 'Insert parameter'))  # Add the default option
-
+    
     # available tags dropdown
     available_tags_dropdown = forms.ChoiceField(
-        choices=tag_choices,
+        choices= tag_choices,
         required=False,
         label='Available naming tags',
-        widget=forms.Select(attrs={'class': 'hidden available-tags-dropdown-class ' + css_classes.dropdown})
+        widget=forms.Select(attrs={'class': css_classes.dropdown,
+                                'onchange': 'handleTagDropdownChange(this)'
+                                })
     )
 
     destination_display = forms.CharField(
@@ -165,6 +167,39 @@ class RequestForm(ModelForm):
         label='File Types',
         help_text='Select one or more file types.'
     )
+    
+    def clean_file_naming_formula(self):
+        file_naming_formula = self.cleaned_data.get('file_naming_formula')
+        rename = self.cleaned_data.get('rename')
+        
+        if rename is False:
+            file_naming_formula = '' # if chekbox is uncheked the naming formula is empty
+        else:
+            # List of valid tags
+            valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
+
+            # Parsing the file_naming_formula for content in curly brackets
+            invalid_tags = []
+            start_index = file_naming_formula.find('{')
+            while start_index != -1:
+                end_index = file_naming_formula.find('}', start_index)
+                if end_index == -1:
+                    # No closing bracket found - break out of the loop
+                    break
+
+                # Extracting the tag
+                tag = file_naming_formula[start_index + 1:end_index]
+                if tag not in valid_tags:
+                    invalid_tags.append(tag)
+
+                # Update start_index for next iteration
+                start_index = file_naming_formula.find('{', end_index)
+
+            if invalid_tags:
+                error_message = 'The following tags are not valid: ' + ', '.join(invalid_tags)
+                raise forms.ValidationError(error_message)
+
+            return file_naming_formula
 
     class Meta:
         model = UploadRequest
