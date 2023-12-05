@@ -2,12 +2,18 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeEventListeners();
 });
 
+
+    
+
+
+
 function initializeEventListeners() {
     // Click event for adding new request forms
     let addButton = document.getElementById('add-request-btn');
     if (addButton) {
         addButton.addEventListener('click', addNewRequestForm);
     }
+
 }
 
 function addNewRequestForm() {
@@ -32,19 +38,37 @@ function cloneRequestForm(formCount) {
 
     let newForm = templateForm.cloneNode(true);
 
-    // Update IDs and names for inputs, and reset their values
-    newForm.querySelectorAll('input, select, textarea').forEach(element => {
-        element.id = element.id.replace(/-\d+-/, `-${formCount}-`);
-        element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
-        if (element.type !== 'checkbox' && element.type !== 'radio') {
-            element.value = ''; // Reset value for text inputs, textareas, and selects
-        } else {
-            element.checked = false;
-            if (element.id.endsWith('rename')) {
-                renameToggle(element);
-            }
+    // Update Accordion Content IDs and Button targets
+    newForm.querySelectorAll('div[id^="accordion-open-body-"]').forEach(div => {
+        // Generate the new ID for the accordion content
+        let oldDivId = div.id;
+        let newDivId = `accordion-open-body-${formCount}`;
+        div.id = newDivId;
+
+        // Find the corresponding button in the newForm and update its data-accordion-target attribute
+        let buttonSelector = `button[data-accordion-target="#${oldDivId}"]`;
+        let accordionButton = newForm.querySelector(buttonSelector);
+        if (accordionButton) {
+            accordionButton.setAttribute('data-accordion-target', `#${newDivId}`);
+            accordionButton.addEventListener('click', function() {
+                toggleAccordion(this);
+            });
         }
     });
+
+    function toggleAccordion(accordionButton) {
+        let targetId = accordionButton.getAttribute('data-accordion-target');
+        let targetElement = document.querySelector(targetId);
+    
+        if (targetElement) {
+            targetElement.classList.toggle('hidden'); // Toggle visibility
+            let isExpanded = accordionButton.getAttribute('aria-expanded') === 'true';
+            accordionButton.setAttribute('aria-expanded', String(!isExpanded));
+        }
+    }
+
+
+
 
     // Update 'for' attribute of labels
     newForm.querySelectorAll('label').forEach(label => {
@@ -58,29 +82,25 @@ function cloneRequestForm(formCount) {
 
     // Reinitialize event listeners or plugins here, if necessary
 
-    // Add remove button
-    let removeBtn = createRemoveButton();
-    newForm.appendChild(removeBtn);
+    // Add event listener to the existing close button in the cloned form
+    let closeButton = newForm.querySelector('.request-close-button'); // Replace '.close-button' with the correct class or ID of your close button
+    if (closeButton) {
+        // Remove 'hidden' class to make the button visible
+        closeButton.classList.remove('invisible');
+
+        closeButton.addEventListener('click', function() {
+            this.closest('.request-form').remove();
+            let totalForms = document.getElementById('id_requests-TOTAL_FORMS');
+            if (totalForms) {
+                totalForms.value = parseInt(totalForms.value) - 1;
+            }
+        });
+    }
 
     return newForm;
 }
-function createRemoveButton() {
-    let removeBtn = document.createElement('button');
-    removeBtn.type = 'button';
-    removeBtn.textContent = 'Remove';
-    removeBtn.className = 'remove-btn-styles'; // Add your button styles here
-    removeBtn.addEventListener('click', function() {
-        this.parentNode.remove();
-        let totalForms = document.getElementById('id_requests-TOTAL_FORMS');
-        if (totalForms) {
-            totalForms.value = parseInt(totalForms.value) - 1;
-        }
-    });
 
-    return removeBtn;
-}
-
-function renameToggle(checkbox) {
+function toggleRename(checkbox) {
     const parentDiv = checkbox.closest('.request-form');
     const childDiv1= parentDiv.querySelector('.file-name-container');
     if (!childDiv1) return;

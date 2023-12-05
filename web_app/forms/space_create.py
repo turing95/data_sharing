@@ -112,22 +112,12 @@ class RequestForm(ModelForm):
     )
     
 
-    # gestisci file name  con checkbox non tiscked
-    # apply custom name va deflssaggato at creation of request
-    # sign out must be visible after autH
+    # validazione fiename, includendo quando checkbox è unchecked
+    # style destination fielrs
     # ID IN MAIUSCOLO
     # navbar ha un div dentro uno span e non va bene
 
-    
-    # file_name = forms.CharField(required=False,
-    #                             help_text=mark_safe(
-    #                                 f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
-    #                             widget=forms.TextInput(
-    #                                 attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
-    #                                        'class': 'hidden ' + css_classes.text_input}),
-    #                             initial='{original file name}',
-    #                             label='File naming')
-    
+
     destination_display = forms.CharField(
         required=False,
         label='Non-editable Field',
@@ -138,14 +128,15 @@ class RequestForm(ModelForm):
     )
 
     destination = forms.CharField(
-        widget=forms.HiddenInput())
+        widget=forms.HiddenInput(),
+        label = "Destination folder")
     token = forms.CharField(
         widget=forms.HiddenInput())
 
     rename = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
             'class': css_classes.checkbox_input,
-            'onclick': 'renameToggle(this);'
+            'onclick': 'toggleRename(this);'
         }),
         required=False,
         label='Apply custom file name'
