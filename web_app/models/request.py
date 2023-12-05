@@ -13,6 +13,8 @@ class UploadRequest(BaseModel):
         UPLOAD_DATE = 'UPLOAD_DATE', 'upload date'  # "The date when the file was uploaded"
         SPACE_TITLE = 'SPACE_TITLE', 'space title'  # "The title of the space"
         REQUEST_TITLE = 'REQUEST_TITLE', 'request title'  # "The title of the request"
+        
+    #FILE_NAME_TAG_DESCRIPTIONS = #chaidi a chat. 
 
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='requests')
     title = models.CharField(max_length=50, null=True, blank=True)

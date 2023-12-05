@@ -77,12 +77,18 @@ function createRemoveButton() {
 
 function renameToggle(checkbox) {
     const parentDiv = checkbox.closest('.request-form');
-    const childDiv = parentDiv.querySelector('.file-name-input');
-    if (!childDiv) return;
+    const childDiv3 = parentDiv.querySelector('.file-name-input');
+    const childDiv1= parentDiv.querySelector('.file-naming-formula-class');
+    const childDiv2 = parentDiv.querySelector('.available-tags-dropdown-class');
+    if (!childDiv1) return;
 
     if (checkbox.checked) {
-        childDiv.classList.remove('hidden');
+        childDiv1.classList.remove('hidden');
+        childDiv2.classList.remove('hidden');
+        childDiv3.classList.remove('hidden');
     } else {
-        childDiv.classList.add('hidden');
+        childDiv1.classList.add('hidden');
+        childDiv2.classList.add('hidden');
+        childDiv3.classList.add('hidden');
     }
 }

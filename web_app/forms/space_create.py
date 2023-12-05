@@ -89,21 +89,42 @@ class RequestForm(ModelForm):
                             label='Request title')
 
     # handling of the parametric file name
-    file_naming_formula = forms.CharField(
-            widget=forms.HiddenInput(),
-            label='File naming formula',
-            initial = f'{{{UploadRequest.FileNameTag.ORIGINAL_FILE_NAME.value}}}',
-            required=True
-            )
-    
-    file_name = forms.CharField(required=False,
+    file_naming_formula = forms.CharField(required=False,
                                 help_text=mark_safe(
                                     f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
                                 widget=forms.TextInput(
                                     attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
-                                           'class': css_classes.text_input}),
-                                initial='{original file name}',
+                                           'class': "hidden file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" +  css_classes.text_input}),
+                                initial = f'{{{UploadRequest.FileNameTag.ORIGINAL_FILE_NAME.label}}}',
                                 label='File naming')
+    
+    # Preparing the choices for the dropdown
+    tag_choices = [(tag.label, tag.label) for tag in UploadRequest.FileNameTag]
+    tag_choices.insert(0, ('', 'Insert parameter'))  # Add the default option
+    
+    # available tags dropdown
+    available_tags_dropdown = forms.ChoiceField(
+        choices= tag_choices,
+        required=False,
+        label='Available naming tags',
+        widget=forms.Select(attrs={'class': 'hidden available-tags-dropdown-class ' + css_classes.dropdown})
+    )
+    
+
+    # metti vuoto il filename di default
+    # apply custom name va deflssaggato at creation of request
+    # sign out must be visible after autH
+    # ID IN MAIUSCOLO
+
+    
+    # file_name = forms.CharField(required=False,
+    #                             help_text=mark_safe(
+    #                                 f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
+    #                             widget=forms.TextInput(
+    #                                 attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
+    #                                        'class': 'hidden ' + css_classes.text_input}),
+    #                             initial='{original file name}',
+    #                             label='File naming')
     
     destination_display = forms.CharField(
         required=False,
@@ -125,8 +146,9 @@ class RequestForm(ModelForm):
             'onclick': 'renameToggle(this);'
         }),
         required=False,
-        label='Rename files'
+        label='Apply custom file name'
     )
+    
     file_types = FileTypeChoiceField(
         queryset=FileType.objects.all(),
         required=True,
