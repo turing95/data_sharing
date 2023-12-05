@@ -94,7 +94,7 @@ class RequestForm(ModelForm):
                                     f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
                                 widget=forms.TextInput(
                                     attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
-                                           'class': "hidden file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" +  css_classes.text_input}),
+                                           'class': "placeholder-gray-500 my-1 min-h-[42px] min-h-32" +  css_classes.text_input}),
                                 label='File naming formula')
     
     # Preparing the choices for the dropdown
@@ -106,14 +106,17 @@ class RequestForm(ModelForm):
         choices= tag_choices,
         required=False,
         label='Available naming tags',
-        widget=forms.Select(attrs={'class': 'hidden available-tags-dropdown-class ' + css_classes.dropdown})
+        widget=forms.Select(attrs={'class': css_classes.dropdown,
+                                'onchange': 'handleTagDropdownChange(this);'
+                                })
     )
     
 
-    # metti vuoto il filename di default
+    # gestisci file name  con checkbox non tiscked
     # apply custom name va deflssaggato at creation of request
     # sign out must be visible after autH
     # ID IN MAIUSCOLO
+    # navbar ha un div dentro uno span e non va bene
 
     
     # file_name = forms.CharField(required=False,

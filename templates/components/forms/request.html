@@ -56,13 +56,15 @@
                 </div>
                 
                 <!-- CUSTOM FILE NAME SELECTOR -->
-                <div class="container">
+                <div class="container file-name-container hidden">
                     
                     <!-- Flex container for textInput and dropdown -->
                     <div class="flex items-top gap-2">
                         <!-- Hidden input for form submission -->
-                        {{ req.file_naming_formula }}
-                        {{ req.file_naming_formula.help_text }}
+                        <div class="flex-col">
+                            {{ req.file_naming_formula }}
+                            {{ req.file_naming_formula.help_text }}
+                        </div>
                         <!-- Dropdown for Valid Tags -->
                         {{ req.available_tags_dropdown }}
                         

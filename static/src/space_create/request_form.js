@@ -38,6 +38,11 @@ function cloneRequestForm(formCount) {
         element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
         if (element.type !== 'checkbox' && element.type !== 'radio') {
             element.value = ''; // Reset value for text inputs, textareas, and selects
+        } else {
+            element.checked = false;
+            if (element.id.endsWith('rename')) {
+                renameToggle(element);
+            }
         }
     });
 
@@ -77,15 +82,12 @@ function createRemoveButton() {
 
 function renameToggle(checkbox) {
     const parentDiv = checkbox.closest('.request-form');
-    const childDiv1= parentDiv.querySelector('.file-naming-formula-class');
-    const childDiv2 = parentDiv.querySelector('.available-tags-dropdown-class');
+    const childDiv1= parentDiv.querySelector('.file-name-container');
     if (!childDiv1) return;
 
     if (checkbox.checked) {
         childDiv1.classList.remove('hidden');
-        childDiv2.classList.remove('hidden');
     } else {
         childDiv1.classList.add('hidden');
-        childDiv2.classList.add('hidden');
     }
 }
