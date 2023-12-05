@@ -8,6 +8,8 @@ from django.utils.safestring import mark_safe
 from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware, utc
 import arrow
+
+
 class CommaSeparatedEmailField(forms.CharField):
 
     def to_python(self, value):
@@ -92,7 +94,7 @@ class SpaceForm(ModelForm):
         return title
 
     def clean_deadline(self):
-        deadline = self.cleaned_data.get('deadline',None)
+        deadline = self.cleaned_data.get('deadline', None)
 
         if deadline is not None:
             # Ensure the datetime is timezone-aware
@@ -134,25 +136,25 @@ class RequestForm(ModelForm):
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
-                                help_text=mark_safe(
-                                    f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
-                                widget=forms.TextInput(
-                                    attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
-                                           'class': "file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" +  css_classes.text_input}),
-                                label='File naming formula')
-    
+                                          help_text=mark_safe(
+                                              f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
+                                          widget=forms.TextInput(
+                                              attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
+                                                     'class': "file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input}),
+                                          label='File naming formula')
+
     # Preparing the choices for the dropdown
     tag_choices = [(tag.label, tag.label) for tag in UploadRequest.FileNameTag]
     tag_choices.insert(0, ('', 'Insert parameter'))  # Add the default option
-    
+
     # available tags dropdown
     available_tags_dropdown = forms.ChoiceField(
-        choices= tag_choices,
+        choices=tag_choices,
         required=False,
         label='Available naming tags',
         widget=forms.Select(attrs={'class': css_classes.dropdown,
-                                'onchange': 'handleTagDropdownChange(this)'
-                                })
+                                   'onchange': 'handleTagDropdownChange(this)'
+                                   })
     )
 
     destination_display = forms.CharField(
@@ -186,13 +188,17 @@ class RequestForm(ModelForm):
         label='File Types',
         help_text='Select one or more file types.'
     )
-    
+
+    class Meta:
+        model = UploadRequest
+        fields = ['title', 'file_types', 'file_name']
+
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
         rename = self.cleaned_data.get('rename')
-        
+
         if rename is False:
-            file_naming_formula = '' # if chekbox is uncheked the naming formula is empty
+            file_naming_formula = ''  # if chekbox is uncheked the naming formula is empty
         else:
             # List of valid tags
             valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
@@ -220,9 +226,6 @@ class RequestForm(ModelForm):
 
             return file_naming_formula
 
-    class Meta:
-        model = UploadRequest
-        fields = ['instructions', 'file_types', 'file_name']
-
 
 RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=1)
+DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=0)
