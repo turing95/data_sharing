@@ -5,6 +5,7 @@ from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
+from django.utils import timezone as dj_timezone
 
 
 class CommaSeparatedEmailField(forms.CharField):
@@ -51,16 +52,21 @@ class SpaceForm(ModelForm):
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
         label='Senders emails',
-        required=False  # Set to True if emails are mandatory
+        required=False
     )
     email_input = forms.CharField(required=False,
                                   widget=forms.TextInput(
                                       attrs={'placeholder': 'Type or paste email addresses of invitees',
                                              'class': css_classes.text_input}))
+    deadline = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={
+            'type': 'datetime-local'
+        }),
+    )
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails']
+        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline']
         widgets = {
             'instructions': forms.Textarea(
                 attrs={'placeholder': 'Explain what files you are requesting',
@@ -68,6 +74,11 @@ class SpaceForm(ModelForm):
                        'class': css_classes.text_area,
                        'label': 'Instructions'})
         }
+
+    def save(self, commit=True):
+        instance = super().save()
+        instance.timezone = dj_timezone.get_current_timezone_name()
+        return instance
 
 
 class FileTypeChoiceField(forms.ModelMultipleChoiceField):
@@ -90,25 +101,23 @@ class RequestForm(ModelForm):
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
-                                help_text=mark_safe(
-                                    f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
-                                widget=forms.TextInput(
-                                    attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
-                                           'class': "placeholder-gray-500 my-1 min-h-[42px] min-h-32" +  css_classes.text_input}),
-                                label='File naming formula')
-    
+                                          help_text=mark_safe(
+                                              f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
+                                          widget=forms.TextInput(
+                                              attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
+                                                     'class': "hidden file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input}),
+                                          label='File naming formula')
+
     # Preparing the choices for the dropdown
     tag_choices = [(tag.label, tag.label) for tag in UploadRequest.FileNameTag]
     tag_choices.insert(0, ('', 'Insert parameter'))  # Add the default option
-    
+
     # available tags dropdown
     available_tags_dropdown = forms.ChoiceField(
-        choices= tag_choices,
+        choices=tag_choices,
         required=False,
         label='Available naming tags',
-        widget=forms.Select(attrs={'class': css_classes.dropdown,
-                                'onchange': 'handleTagDropdownChange(this);'
-                                })
+        widget=forms.Select(attrs={'class': 'hidden available-tags-dropdown-class ' + css_classes.dropdown})
     )
     
 
@@ -141,7 +150,7 @@ class RequestForm(ModelForm):
         required=False,
         label='Apply custom file name'
     )
-    
+
     file_types = FileTypeChoiceField(
         queryset=FileType.objects.all(),
         required=True,
