@@ -1,0 +1,9 @@
+import config
+broker_url = config.CELERY_BROKER_URL
+result_backend = config.CELERY_BACKEND_URL
+accept_content = ['json']
+task_serializer = 'json'
+result_serializer = 'json'
+timezone = 'UTC'
+include = ['celery_app.tasks']
+task_alway_eager = False # set to True to wait for tasks as they were synchronous. For debugging

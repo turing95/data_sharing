@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from web_app.models import Sender, GoogleDrive, UploadRequest, UploadRequestFileType
 from django.db import transaction
-
+from web_app.tasks.notifications import sender_invite
 
 class SpaceFormView(LoginRequiredMixin, FormView):
     template_name = "private/space_create.html"
@@ -53,7 +53,9 @@ class SpaceFormView(LoginRequiredMixin, FormView):
 
     @staticmethod
     def handle_senders(emails, space_instance):
-        Sender.objects.bulk_create([Sender(email=email, space=space_instance) for email in emails])
+        for email in emails:
+            sender = Sender.objects.create(email=email, space=space_instance)
+            sender_invite
 
     @staticmethod
     def handle_formset(formset):
