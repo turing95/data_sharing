@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
+    'web_app.middleware.TimezoneMiddleware'
 ]
 
 ROOT_URLCONF = 'data_sharing.urls'

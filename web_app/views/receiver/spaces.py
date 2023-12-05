@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class SpacesView(LoginRequiredMixin, ListView):
     model = Space
     template_name = "private/spaces.html"
-    paginate_by = 5
+    paginate_by = 12
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
