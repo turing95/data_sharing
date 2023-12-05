@@ -8,11 +8,11 @@ class UploadRequest(BaseModel):
         PDF = 'PDF', 'PDF'
 
     class FileNameTag(models.TextChoices):
-        ORIGINAL_FILE_NAME = 'ORIGINAL_FILE_NAME', 'original file name'  # "The name with which the file is uploaded"
-        SENDER_EMAIL = 'SENDER_EMAIL', 'sender email'  # "The email associated with the upload space link"
-        UPLOAD_DATE = 'UPLOAD_DATE', 'upload date'  # "The date when the file was uploaded"
-        SPACE_TITLE = 'SPACE_TITLE', 'space title'  # "The title of the space"
-        REQUEST_TITLE = 'REQUEST_TITLE', 'request title'  # "The title of the request"
+        ORIGINAL_FILE_NAME = 'ORIGINAL_FILE_NAME', 'original_file_name'  # "The name with which the file is uploaded"
+        SENDER_EMAIL = 'SENDER_EMAIL', 'sender_email'  # "The email associated with the upload space link"
+        UPLOAD_DATE = 'UPLOAD_DATE', 'upload_date'  # "The date when the file was uploaded"
+        SPACE_TITLE = 'SPACE_TITLE', 'space_title'  # "The title of the space"
+        REQUEST_TITLE = 'REQUEST_TITLE', 'request_title'  # "The title of the request"
 
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='requests')
     title = models.CharField(max_length=50, null=True, blank=True)
