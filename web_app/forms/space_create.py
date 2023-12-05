@@ -82,7 +82,10 @@ class SpaceForm(ModelForm):
     def clean_title(self):
         title = self.cleaned_data.get("title")
         user = self.user
-        if Space.objects.filter(user=user, title=title).exists():
+        spaces = Space.objects.filter(user=user, title=title)
+        if self.instance is not None:
+            spaces = spaces.exclude(pk=self.instance.pk)
+        if spaces.exists():
             raise forms.ValidationError(
                 "Title already exists."
             )

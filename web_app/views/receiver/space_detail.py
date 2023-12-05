@@ -1,40 +1,27 @@
 from django.shortcuts import get_object_or_404
 
-from web_app.forms.receiver_space_detail import SpaceDetailForm
+from web_app.forms import SpaceForm
 from django.views.generic.edit import FormView
 from web_app.models import Space
 
-from django import forms
+from web_app.views import SpaceFormView
 
 
-class SpaceDetailFormView(FormView):
+class SpaceDetailFormView(SpaceFormView):
     template_name = "private/space_detail.html"
-    form_class = SpaceDetailForm
-    _object = None  # Placeholder for the cached object
+    form_class = SpaceForm
 
     def get_success_url(self):
         return self.request.path
 
-    def form_valid(self, form):
-        # Update the object with the form data
-        space = self.get_object()
-        space.title = form.cleaned_data['title']
-        space.save()
-        return super().form_valid(form)
-
-    def get_object(self):
-        if not self._object:
+    def get_space(self):
+        if not self._space:
             pk = self.kwargs.get('space_uuid')
-            self._object = get_object_or_404(Space, pk=pk)
-        return self._object
+            self._space = get_object_or_404(Space, pk=pk)
+        return self._space
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['space'] = self.get_object()
-        return context
-
-    def get_initial(self):
-        # Initialize the form with the current state of the object
-        return {
-            'title': self.get_object().title,
-        }
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.get_space()
+        return kwargs

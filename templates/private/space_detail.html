@@ -8,14 +8,6 @@
             {{ form.as_p }}
         </div>
 
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Invited:</label>
-            <div class="space-y-2">
-                {% for sender in space.senders.all %}
-                <p class="mb-3 text-gray-500 dark:text-gray-400">{{ sender.email }}</p>
-                {% endfor %}
-            </div>
-        </div>
 
         <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
     </form>
