@@ -6,6 +6,7 @@ from web_app.models import Sender, GoogleDrive, UploadRequest, UploadRequestFile
 from django.db import transaction
 from web_app.tasks.notifications import sender_invite
 
+
 class SpaceFormView(LoginRequiredMixin, FormView):
     template_name = "private/space_create.html"
     form_class = SpaceForm
@@ -32,6 +33,12 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         else:
             data['requests'] = RequestFormSet()
         return data
+
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
