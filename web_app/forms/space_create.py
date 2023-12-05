@@ -75,6 +75,20 @@ class SpaceForm(ModelForm):
                        'label': 'Instructions'})
         }
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        title = cleaned_data.get("title")
+        user = self.user
+        if Space.objects.filter(user=user, title=title).exists():
+            raise forms.ValidationError(
+                "Title already exists."
+            )
+        return cleaned_data
+
     def save(self, commit=True):
         instance = super().save()
         instance.timezone = dj_timezone.get_current_timezone_name()
@@ -120,7 +134,6 @@ class RequestForm(ModelForm):
         widget=forms.Select(attrs={'class': 'hidden available-tags-dropdown-class ' + css_classes.dropdown})
     )
 
-
     destination_display = forms.CharField(
         required=False,
         label='Non-editable Field',
@@ -132,7 +145,7 @@ class RequestForm(ModelForm):
 
     destination = forms.CharField(
         widget=forms.HiddenInput(),
-        label = "Destination folder")
+        label="Destination folder")
     token = forms.CharField(
         widget=forms.HiddenInput())
 
