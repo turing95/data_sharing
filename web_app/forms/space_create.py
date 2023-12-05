@@ -8,7 +8,6 @@ from django.utils.safestring import mark_safe
 from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware, utc
 import arrow
-
 class CommaSeparatedEmailField(forms.CharField):
 
     def to_python(self, value):
@@ -80,15 +79,14 @@ class SpaceForm(ModelForm):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        title = cleaned_data.get("title")
+    def clean_title(self):
+        title = self.cleaned_data.get("title")
         user = self.user
         if Space.objects.filter(user=user, title=title).exists():
             raise forms.ValidationError(
                 "Title already exists."
             )
-        return cleaned_data
+        return title
 
     def clean_deadline(self):
         deadline = self.cleaned_data.get('deadline',None)
@@ -100,6 +98,10 @@ class SpaceForm(ModelForm):
 
             # Convert to UTC
             deadline = deadline.astimezone(utc)
+            if deadline < arrow.utcnow():
+                raise forms.ValidationError(
+                    "Deadline must be in the future."
+                )
 
         return deadline
 
