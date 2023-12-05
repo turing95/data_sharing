@@ -119,12 +119,6 @@ class RequestForm(ModelForm):
         label='Available naming tags',
         widget=forms.Select(attrs={'class': 'hidden available-tags-dropdown-class ' + css_classes.dropdown})
     )
-    
-
-    # validazione fiename, includendo quando checkbox è unchecked
-    # style destination fielrs
-    # ID IN MAIUSCOLO
-    # navbar ha un div dentro uno span e non va bene
 
 
     destination_display = forms.CharField(
