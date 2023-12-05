@@ -55,7 +55,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
     def handle_senders(emails, space_instance):
         for email in emails:
             sender = Sender.objects.create(email=email, space=space_instance)
-            sender_invite
+            sender_invite.delay(sender.pk)
 
     @staticmethod
     def handle_formset(formset):
