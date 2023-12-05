@@ -122,10 +122,8 @@ class RequestForm(ModelForm):
     
 
     # validazione fiename, includendo quando checkbox è unchecked
-    # style destination fielrs
+    # style destination fierls
     # ID IN MAIUSCOLO
-    # navbar ha un div dentro uno span e non va bene
-
 
     destination_display = forms.CharField(
         required=False,
