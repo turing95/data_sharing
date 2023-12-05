@@ -5,5 +5,5 @@ accept_content = ['json']
 task_serializer = 'json'
 result_serializer = 'json'
 timezone = 'UTC'
-include = ['celery_app.tasks']
+include = ['web_app.tasks']
 task_alway_eager = False # set to True to wait for tasks as they were synchronous. For debugging
