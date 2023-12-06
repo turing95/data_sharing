@@ -13,7 +13,7 @@ class SpaceDetailFormView(SpaceFormView):
     form_class = SpaceForm
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
+        data = super(SpaceFormView,self).get_context_data(**kwargs)
         if 'status' in self.request.GET:
             data['space_form'] = True
             data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}

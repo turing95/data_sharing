@@ -29,7 +29,7 @@
     {{ config_data |json_script:"config-data"  }}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-    {% if space_form %}
+    {% if space_form is True %}
         <script src="{% static 'src/space_create/request_form.js' %}" ></script>
         <script src="{% static 'src/space_create/email_input_widget.js' %}"></script>
     <script type="text/javascript" src="{% static 'src/google_picker.js' %}"></script>
