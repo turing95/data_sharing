@@ -194,6 +194,13 @@ class RequestForm(ModelForm):
         model = UploadRequest
         fields = ['title', 'file_types', 'file_naming_formula']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance:
+            if self.instance.file_naming_formula is not None:
+                self.fields['rename'].initial = True
+
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
         rename = self.cleaned_data.get('rename')
