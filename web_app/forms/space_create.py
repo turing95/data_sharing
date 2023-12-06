@@ -227,10 +227,6 @@ class RequestForm(ModelForm):
 
             return file_naming_formula
 
-    class Meta:
-        model = UploadRequest
-        fields = ['instructions', 'file_types', 'file_naming_formula']
-
 
 RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=1)
 DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=0)
