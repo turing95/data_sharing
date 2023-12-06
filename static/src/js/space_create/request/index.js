@@ -8,13 +8,19 @@
 // makemigration
 // add allowed files to DB with command from MT in clack
 
-export function initializeEventListeners() {
+export function initRequestForms() {
     // Click event for adding new request forms
     let addButton = document.getElementById('add-request-btn');
     if (addButton) {
         addButton.addEventListener('click', addNewRequestForm);
     }
 
+    const renamePattern = /^id_requests-\d+-rename$/;
+    document.querySelectorAll('[id^="id_requests-"][id$="-rename"]').forEach(element => {
+        if (renamePattern.test(element.id)) {
+            toggleRename(element);
+        }
+    });
 }
 
 function addNewRequestForm() {
@@ -39,27 +45,43 @@ function cloneRequestForm(formCount) {
 
     const newForm = templateForm.cloneNode(true);
 
-    // Update IDs and targets in the new form
-    updateAccordionContentIds(newForm, formCount);
-    updateLabelsForAttribute(newForm, formCount);
+    updateElementIdentifiers(newForm, formCount);
     setupCloseButton(newForm);
 
     return newForm;
 }
 
-function updateAccordionContentIds(newForm, formCount) {
-    newForm.querySelectorAll('div[id^="accordion-open-body-"]').forEach(div => {
-        const newDivId = `accordion-open-body-${formCount}`;
-        div.id = newDivId;
-
-        const buttonSelector = `button[data-accordion-target="#${div.id}"]`;
-        const accordionButton = newForm.querySelector(buttonSelector);
-        if (accordionButton) {
-            accordionButton.setAttribute('data-accordion-target', `#${newDivId}`);
-            accordionButton.addEventListener('click', toggleAccordion);
+function updateElementIdentifiers(newForm, formCount) {
+    // Update IDs and names for inputs, selects, textareas, and accordions
+    newForm.querySelectorAll('input, select, textarea, div[id^="accordion-open-body-"]').forEach(element => {
+        if (element.id) {
+            element.id = element.id.replace(/-\d+-/, `-${formCount}-`);
+        }
+        if (element.name) {
+            element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
+        }
+        if (element.type !== 'checkbox' && element.type !== 'radio') {
+            element.value = ''; // Reset value for text inputs, textareas, and selects
+        }
+        if (element.matches('div[id^="accordion-open-body-"]')) {
+            // Additional handling for accordion elements
+            updateAccordionButton(newForm, element.id);
         }
     });
+
+    // Update labels
+    updateLabelsForAttribute(newForm, formCount);
 }
+
+function updateAccordionButton(newForm, accordionId) {
+    const buttonSelector = `button[data-accordion-target="#${accordionId}"]`;
+    const accordionButton = newForm.querySelector(buttonSelector);
+    if (accordionButton) {
+        accordionButton.setAttribute('data-accordion-target', `#${accordionId}`);
+        accordionButton.addEventListener('click', toggleAccordion);
+    }
+}
+
 
 function toggleAccordion(event) {
     const accordionButton = event.currentTarget;

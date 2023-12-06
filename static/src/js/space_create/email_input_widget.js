@@ -1,6 +1,6 @@
 let addedEmails = new Set();
 
-export function initializeEventListeners(){
+export function initEmailInput(){
     initializeEmailTags();
 
         const emailInput = document.getElementById('id_email_input');
