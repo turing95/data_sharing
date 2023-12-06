@@ -141,7 +141,7 @@ class RequestForm(ModelForm):
                                               f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
                                           widget=forms.TextInput(
                                               attrs={'placeholder': 'Insert file name, use tags for dynamic naming',
-                                                     'class': "file-naming-formula-class placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input}),
+                                                     'class': "file-naming-formula placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input}),
                                           label='File naming formula')
 
     # Preparing the choices for the dropdown
