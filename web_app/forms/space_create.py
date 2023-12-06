@@ -40,7 +40,7 @@ class SpaceForm(ModelForm):
             'class': css_classes.checkbox_input,
         }),
         required=False,
-        label='Publish'
+        label='Make Space active at creation'
     )
     is_public = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
@@ -59,6 +59,7 @@ class SpaceForm(ModelForm):
                                       attrs={'placeholder': 'Type or paste email addresses of invitees',
                                              'class': css_classes.text_input}))
     deadline = forms.DateTimeField(
+        required=False,
         widget=forms.DateTimeInput(attrs={
             'type': 'datetime-local'
         }),
@@ -181,7 +182,7 @@ class RequestForm(ModelForm):
 
     file_types = FileTypeChoiceField(
         queryset=FileType.objects.all(),
-        required=True,
+        required=False,
         widget=forms.CheckboxSelectMultiple,  # or any other suitable widget
         label='File Types',
         help_text='Select one or more file types.'
@@ -192,7 +193,7 @@ class RequestForm(ModelForm):
         rename = self.cleaned_data.get('rename')
         
         if rename is False:
-            file_naming_formula = '' # if chekbox is uncheked the naming formula is empty
+            file_naming_formula = '' # if checkbox is unchecked the naming formula is empty
         else:
             # List of valid tags
             valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
@@ -222,7 +223,7 @@ class RequestForm(ModelForm):
 
     class Meta:
         model = UploadRequest
-        fields = ['instructions', 'file_types', 'file_name']
+        fields = ['instructions', 'file_types', 'file_naming_formula']
 
 
 RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=1)

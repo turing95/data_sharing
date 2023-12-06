@@ -17,7 +17,7 @@ class UploadRequest(BaseModel):
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='requests')
     title = models.CharField(max_length=50, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
-    file_name = models.CharField(max_length=255, null=True, blank=True)
+    file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
 
 
 class FileType(BaseModel):

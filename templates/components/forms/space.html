@@ -66,12 +66,14 @@
     </div>
     {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}
     {% endif %}
-    <div class="flex items-start mb-6">
+
+    <!-- MAKE SPACE ACTIVE AT CREATIONS CHECKBOX-->
+    <div class="flex items-start mb-3">
         <div class="flex items-center h-5">
             {{ form.is_active }}
         </div>
         <label for="{{ form.is_active.id_for_label }}"
-        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_active.label }}</label>
+        class="text-xs font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_active.label }}</label>
     </div>
 
     {% include "components/buttons/submit.html" with button_text="Create space" %}

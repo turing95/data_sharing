@@ -1,7 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeEventListeners();
-});
 
+
+});
+// style destination
+// bottono add request
+// fix border accordion
+// fix bug checkbox name formula checked but not showing field when error in create page
+// chek Maiusc IDs around
+// remove error sentinel in create and request
+// makemigration
+// add allowed files to DB with command from MT in clack
 
     
 
