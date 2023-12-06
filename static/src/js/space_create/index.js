@@ -1,6 +1,5 @@
 import {initEmailInput} from "./emailInputWidget.js";
-import {initRequestForms } from "./request/index.js";
-import {toggleRename,handleTagDropdownChange } from "./request/eventHandlers.js";
+import {initRequestForms,toggleRename,handleTagDropdownChange } from "./request/index.js";
 window.toggleRename = toggleRename;
 window.handleTagDropdownChange = handleTagDropdownChange;
 

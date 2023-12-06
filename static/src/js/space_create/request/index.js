@@ -1,4 +1,5 @@
 import {toggleAccordion,toggleRename} from './eventHandlers.js';
+export {handleTagDropdownChange,toggleRename} from './eventHandlers.js';
 // style destination
 // bottono add request
 // fix border accordion
