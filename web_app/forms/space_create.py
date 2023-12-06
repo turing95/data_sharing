@@ -42,7 +42,7 @@ class SpaceForm(ModelForm):
             'class': css_classes.checkbox_input,
         }),
         required=False,
-        label='Publish'
+        label='Make Space active at creation'
     )
     is_public = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
@@ -199,7 +199,7 @@ class RequestForm(ModelForm):
         rename = self.cleaned_data.get('rename')
 
         if rename is False:
-            file_naming_formula = ''  # if chekbox is uncheked the naming formula is empty
+            file_naming_formula = '' # if checkbox is unchecked the naming formula is empty
         else:
             # List of valid tags
             valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
@@ -226,6 +226,10 @@ class RequestForm(ModelForm):
                 raise forms.ValidationError(error_message)
 
             return file_naming_formula
+
+    class Meta:
+        model = UploadRequest
+        fields = ['instructions', 'file_types', 'file_naming_formula']
 
 
 RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=1)
