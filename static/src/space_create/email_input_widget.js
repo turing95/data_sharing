@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function createTag(email) {
             const tag = document.createElement('span');
-            tag.className = 'inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 ';
+            tag.className = 'inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5';
             tag.textContent = email;
 
             const closeBtn = document.createElement('span');
