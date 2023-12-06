@@ -111,3 +111,33 @@ function toggleRename(checkbox) {
         childDiv1.classList.add('hidden');
     }
 }
+
+// Function to insert text into the corresponding text input
+function insertText(textInput, selectedValue) {
+    let lastCaretPosition = textInput.selectionStart;
+    const currentValue = textInput.value;
+
+    if (lastCaretPosition || currentValue.length === 0) {
+        textInput.value = currentValue.slice(0, lastCaretPosition) + selectedValue + currentValue.slice(lastCaretPosition);
+    } else {
+        textInput.value = selectedValue + currentValue;
+    }
+
+    textInput.focus(); // Focus back on the text input
+}
+
+
+function handleTagDropdownChange(dropdown) {
+    const parentDiv = dropdown.closest('.request-form');
+    const childDiv= parentDiv.querySelector('.file-naming-formula');
+    if (!childDiv) return;
+        const selectedTag = `{${dropdown.value}}`;
+        insertText(childDiv, selectedTag)
+        if (selectedTag) {
+            this.value = ""; // Reset the dropdown
+        }
+}
+
+
+
+
