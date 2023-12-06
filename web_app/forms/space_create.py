@@ -61,6 +61,7 @@ class SpaceForm(ModelForm):
                                       attrs={'placeholder': 'Type or paste email addresses of invitees',
                                              'class': css_classes.text_input}))
     deadline = forms.DateTimeField(
+        required=False,
         widget=forms.DateTimeInput(attrs={
             'type': 'datetime-local'
         }),
@@ -183,7 +184,7 @@ class RequestForm(ModelForm):
 
     file_types = FileTypeChoiceField(
         queryset=FileType.objects.all(),
-        required=True,
+        required=False,
         widget=forms.CheckboxSelectMultiple,  # or any other suitable widget
         label='File Types',
         help_text='Select one or more file types.'
