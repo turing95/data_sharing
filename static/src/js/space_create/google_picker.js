@@ -153,14 +153,5 @@ if (data.action === google.picker.Action.PICKED) {
         currentDestinationDisplayInput.value = folderName;
         currentAccessTokenInput.value = accessToken;
     }
-    // Fetch details about the folder
-    /*const res = await gapi.client.drive.files.get({
-        'fileId': folderId,
-        'fields': '*',
-        'supportsAllDrives': true
-    });
-
-    text += `Drive API response for selected folder: \n${JSON.stringify(res.result, null, 2)}\n`;
-    window.document.getElementById('content').innerText = text;*/
 }
 }
