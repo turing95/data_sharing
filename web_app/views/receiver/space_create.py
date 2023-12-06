@@ -28,11 +28,11 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         data = super().get_context_data(**kwargs)
         data['space_form'] = True
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
-        if self.request.POST:
-            data['requests'] = RequestFormSet(self.request.POST)
-        else:
-            data['requests'] = RequestFormSet()
+        data['requests'] = self.get_formset()
         return data
+
+    def get_formset(self):
+        return RequestFormSet(self.request.POST or None)
 
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""

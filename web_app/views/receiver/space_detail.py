@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 
-from web_app.forms import SpaceForm
+from web_app.forms import SpaceForm, RequestFormSet
+from web_app.forms.space_create import DetailRequestFormSet
 from django.views.generic.edit import FormView
 from web_app.models import Space
 
@@ -25,3 +26,11 @@ class SpaceDetailFormView(SpaceFormView):
         kwargs = super().get_form_kwargs()
         kwargs['instance'] = self.get_space()
         return kwargs
+
+    def get_formset(self):
+        queryset = self.get_space().requests.all()
+        formset = DetailRequestFormSet(self.request.POST or None,
+                                       queryset=queryset,
+                                       instance=self.get_space(),
+                                       initial=[{"title": req.title} for req in queryset])
+        return formset
