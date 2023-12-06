@@ -34,7 +34,7 @@ document.getElementById('signout_button').style.visibility = 'hidden';
 /**
 * Callback after api.js is loaded.
 */
-function gapiLoaded() {
+export function gapiLoaded() {
 gapi.load('client:picker', initializePicker);
 }
 
@@ -51,7 +51,7 @@ maybeEnableButtons();
 /**
 * Callback after Google Identity Services are loaded.
 */
-function gisLoaded() {
+export function gisLoaded() {
 tokenClient = google.accounts.oauth2.initTokenClient({
   client_id: config_data.googleClientId,
   scope: config_data.googleScopes.join(' '),
@@ -73,7 +73,7 @@ if (pickerInited && gisInited) {
 /**
 *  Sign in the user upon button click.
 */
-function handleAuthClick(buttonElement) {
+export function handleAuthClick(buttonElement) {
 const parentDiv = buttonElement.closest('.mb-6');
 
 // Find the input within this div
@@ -109,7 +109,7 @@ createPicker();
 /**
 *  Sign out the user upon button click.
 */
-function handleSignoutClick() {
+export function handleSignoutClick() {
 if (accessToken) {
   accessToken = null;
   google.accounts.oauth2.revoke(accessToken);

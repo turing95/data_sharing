@@ -1,8 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
-    initializeEventListeners();
 
-
-});
 // style destination
 // bottono add request
 // fix border accordion
@@ -12,11 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // makemigration
 // add allowed files to DB with command from MT in clack
 
-    
-
-
-
-function initializeEventListeners() {
+export function initializeEventListeners() {
     // Click event for adding new request forms
     let addButton = document.getElementById('add-request-btn');
     if (addButton) {
@@ -39,77 +31,71 @@ function addNewRequestForm() {
 }
 
 function cloneRequestForm(formCount) {
-    let templateForm = document.querySelector('.request-form');
+    const templateForm = document.querySelector('.request-form');
     if (!templateForm) {
         console.error('Request form template not found!');
         return null;
     }
 
-    let newForm = templateForm.cloneNode(true);
+    const newForm = templateForm.cloneNode(true);
 
-    // Update Accordion Content IDs and Button targets
+    // Update IDs and targets in the new form
+    updateAccordionContentIds(newForm, formCount);
+    updateLabelsForAttribute(newForm, formCount);
+    setupCloseButton(newForm);
+
+    return newForm;
+}
+
+function updateAccordionContentIds(newForm, formCount) {
     newForm.querySelectorAll('div[id^="accordion-open-body-"]').forEach(div => {
-        // Generate the new ID for the accordion content
-        let oldDivId = div.id;
-        let newDivId = `accordion-open-body-${formCount}`;
+        const newDivId = `accordion-open-body-${formCount}`;
         div.id = newDivId;
 
-        // Find the corresponding button in the newForm and update its data-accordion-target attribute
-        let buttonSelector = `button[data-accordion-target="#${oldDivId}"]`;
-        let accordionButton = newForm.querySelector(buttonSelector);
+        const buttonSelector = `button[data-accordion-target="#${div.id}"]`;
+        const accordionButton = newForm.querySelector(buttonSelector);
         if (accordionButton) {
             accordionButton.setAttribute('data-accordion-target', `#${newDivId}`);
-            accordionButton.addEventListener('click', function() {
-                toggleAccordion(this);
-            });
+            accordionButton.addEventListener('click', toggleAccordion);
         }
     });
+}
 
-    function toggleAccordion(accordionButton) {
-        let targetId = accordionButton.getAttribute('data-accordion-target');
-        let targetElement = document.querySelector(targetId);
-    
-        if (targetElement) {
-            targetElement.classList.toggle('hidden'); // Toggle visibility
-            let isExpanded = accordionButton.getAttribute('aria-expanded') === 'true';
-            accordionButton.setAttribute('aria-expanded', String(!isExpanded));
-        }
+function toggleAccordion(event) {
+    const accordionButton = event.currentTarget;
+    const targetId = accordionButton.getAttribute('data-accordion-target');
+    const targetElement = document.querySelector(targetId);
+
+    if (targetElement) {
+        targetElement.classList.toggle('hidden');
+        accordionButton.setAttribute('aria-expanded', String(targetElement.classList.contains('hidden')));
     }
+}
 
-
-
-
-    // Update 'for' attribute of labels
+function updateLabelsForAttribute(newForm, formCount) {
     newForm.querySelectorAll('label').forEach(label => {
         if (label.htmlFor) {
             label.htmlFor = label.htmlFor.replace(/-\d+-/, `-${formCount}-`);
         }
     });
+}
 
-    // Remove any unwanted elements (like error messages) from the cloned form
-    // newForm.querySelectorAll('.error-message').forEach(msg => msg.remove());
-
-    // Reinitialize event listeners or plugins here, if necessary
-
-    // Add event listener to the existing close button in the cloned form
-    let closeButton = newForm.querySelector('.request-close-button'); // Replace '.close-button' with the correct class or ID of your close button
+function setupCloseButton(newForm) {
+    const closeButton = newForm.querySelector('.request-close-button');
     if (closeButton) {
-        // Remove 'hidden' class to make the button visible
         closeButton.classList.remove('invisible');
-
         closeButton.addEventListener('click', function() {
             this.closest('.request-form').remove();
-            let totalForms = document.getElementById('id_requests-TOTAL_FORMS');
+            const totalForms = document.getElementById('id_requests-TOTAL_FORMS');
             if (totalForms) {
                 totalForms.value = parseInt(totalForms.value) - 1;
             }
         });
     }
-
-    return newForm;
 }
 
-function toggleRename(checkbox) {
+
+export function toggleRename(checkbox) {
     const parentDiv = checkbox.closest('.request-form');
     const childDiv1= parentDiv.querySelector('.file-name-container');
     if (!childDiv1) return;
@@ -136,7 +122,7 @@ function insertText(textInput, selectedValue) {
 }
 
 
-function handleTagDropdownChange(dropdown) {
+export function handleTagDropdownChange(dropdown) {
     const parentDiv = dropdown.closest('.request-form');
     const childDiv= parentDiv.querySelector('.file-naming-formula');
     if (!childDiv) return;
