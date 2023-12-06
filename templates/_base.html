@@ -31,6 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     {% if space_form is True %}
         <script type="module" src="{% static 'src/js/space_create/main.js' %}" ></script>
+        <script src="{% static 'src/js/space_create/google_picker.js' %}" ></script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
         <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 
