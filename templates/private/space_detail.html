@@ -1,4 +1,12 @@
 {% extends "private/_base.html" %}
 {% block private_content %}
-{% include 'components/forms/space.html' with action='edit' %}
+    <div>
+<a href="{{ request.path }}">Summary</a>
+<a href="?status=edit">Edit</a>
+    </div>
+    {% if status == 'edit' %}
+    {% include 'components/forms/space.html' with action='edit' %}
+    {% else %}
+        summary
+    {% endif %}
 {% endblock %}

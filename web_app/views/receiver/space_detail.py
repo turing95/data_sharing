@@ -1,9 +1,9 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
 from web_app.forms import SpaceForm, RequestFormSet
 from web_app.forms.space_create import DetailRequestFormSet
 from django.views.generic.edit import FormView
-from web_app.models import Space
+from web_app.models import Space, UploadRequest
 
 from web_app.views import SpaceFormView
 
@@ -11,6 +11,17 @@ from web_app.views import SpaceFormView
 class SpaceDetailFormView(SpaceFormView):
     template_name = "private/space_detail.html"
     form_class = SpaceForm
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if 'status' in self.request.GET:
+            data['space_form'] = True
+            data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
+            data['requests'] = self.get_formset()
+            data['status'] = self.request.GET.get('status')
+        else:
+            data['space'] = self.get_space()
+        return data
 
     def get_success_url(self):
         return self.request.path
