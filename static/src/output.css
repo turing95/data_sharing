@@ -1216,8 +1216,16 @@ input:checked + .toggle-bg {
   margin-inline-end: 1rem;
 }
 
+.ml-1 {
+  margin-left: 0.25rem;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
 }
 
 .mr-3 {
@@ -1325,6 +1333,10 @@ input:checked + .toggle-bg {
 
 .max-h-\[42px\] {
   max-height: 42px;
+}
+
+.min-h-\[42px\] {
+  min-height: 42px;
 }
 
 .min-h-screen {
@@ -1550,6 +1562,10 @@ input:checked + .toggle-bg {
   white-space: nowrap;
 }
 
+.rounded {
+  border-radius: 0.25rem;
+}
+
 .rounded-full {
   border-radius: 9999px;
 }
@@ -1595,10 +1611,6 @@ input:checked + .toggle-bg {
   border-bottom-width: 1px;
 }
 
-.border-b-0 {
-  border-bottom-width: 0px;
-}
-
 .border-l-2 {
   border-left-width: 2px;
 }
@@ -1609,6 +1621,30 @@ input:checked + .toggle-bg {
 
 .border-t-0 {
   border-top-width: 0px;
+}
+
+.border-b-0 {
+  border-bottom-width: 0px;
+}
+
+.border-b-8 {
+  border-bottom-width: 8px;
+}
+
+.border-b-\[3px\] {
+  border-bottom-width: 3px;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
+}
+
+.border-r {
+  border-right-width: 1px;
+}
+
+.border-s-0 {
+  border-inline-start-width: 0px;
 }
 
 .border-none {
@@ -1730,6 +1766,16 @@ input:checked + .toggle-bg {
 .bg-yellow-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(252 233 106 / var(--tw-bg-opacity));
+}
+
+.bg-marian-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 56 136 / var(--tw-bg-opacity));
+}
+
+.bg-marian-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 46 110 / var(--tw-bg-opacity));
 }
 
 .p-1 {
@@ -2129,6 +2175,36 @@ input:checked + .toggle-bg {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-gray-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(164 202 254 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-marian-blue-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(18 34 83 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-marian-blue-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(12 23 55 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-marian-blue-400:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 46 110 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-marian-blue-800:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(143 165 230 / var(--tw-bg-opacity));
+}
+
 .hover\:text-4xl:hover {
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -2152,6 +2228,16 @@ input:checked + .toggle-bg {
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.hover\:text-gray-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
@@ -2222,6 +2308,11 @@ input:checked + .toggle-bg {
   --tw-ring-color: rgb(18 34 83 / var(--tw-ring-opacity));
 }
 
+.focus-visible\:outline-none:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
 .active\:bg-gray-400:active {
   --tw-bg-opacity: 1;
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
@@ -2254,6 +2345,11 @@ input:checked + .toggle-bg {
 :is(.dark .dark\:divide-gray-600) > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-divide-opacity));
+}
+
+:is(.dark .dark\:divide-gray-700) > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgb(55 65 81 / var(--tw-divide-opacity));
 }
 
 :is(.dark .dark\:border-blue-500) {
@@ -2368,6 +2464,11 @@ input:checked + .toggle-bg {
   background-color: rgb(87 120 218 / var(--tw-bg-opacity));
 }
 
+:is(.dark .dark\:hover\:bg-gray-700:hover) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
 :is(.dark .dark\:hover\:text-blue-500:hover) {
   --tw-text-opacity: 1;
   color: rgb(63 131 248 / var(--tw-text-opacity));
@@ -2416,6 +2517,14 @@ input:checked + .toggle-bg {
 @media (min-width: 640px) {
   .sm\:mt-0 {
     margin-top: 0px;
+  }
+
+  .sm\:flex {
+    display: flex;
+  }
+
+  .sm\:hidden {
+    display: none;
   }
 
   .sm\:text-center {

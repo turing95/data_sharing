@@ -2,6 +2,7 @@
 {% block private_content %}
 
     <!-- TAB SELECTOR -->
+
     <ul class="hidden text-sm font-medium text-center text-gray-500 border border-gray-300 sm:flex dark:divide-gray-700 dark:text-gray-400">
         <li class="w-full">
             <a href="{{ request.path }}" class="inline-block w-full p-2.5 {% if status != 'edit' %}text-white bg-marian-blue-600{% else %}bg-white hover:text-white hover:bg-marian-blue-800{% endif %} border-r border-gray-300 dark:border-gray-700 focus:outline-none dark:bg-gray-700 dark:text-white">Summary</a>
@@ -14,7 +15,7 @@
     {% if status == 'edit' %}
     {% include 'components/forms/space.html' with action='edit' %}
     {% else %}
-        summary
+        {% include 'components/space_summary.html'%}
     {% endif %}
 {% endblock %}
 
