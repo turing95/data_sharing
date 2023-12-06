@@ -192,7 +192,7 @@ class RequestForm(ModelForm):
 
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_types', 'file_name']
+        fields = ['title', 'file_types', 'file_naming_formula']
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
