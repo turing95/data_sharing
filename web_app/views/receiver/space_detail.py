@@ -1,8 +1,6 @@
 from django.shortcuts import get_object_or_404, render
-
-from web_app.forms import SpaceForm, RequestFormSet
-from web_app.forms.space_create import DetailRequestFormSet
-from web_app.models import Space, UploadRequest
+from web_app.forms import SpaceForm,DetailRequestFormSet
+from web_app.models import Space, UploadRequest, Sender
 
 from web_app.views import SpaceFormView
 
@@ -22,6 +20,22 @@ class SpaceDetailFormView(SpaceFormView):
             data['space'] = self.get_space()
         return data
 
+    def handle_senders(self, senders_emails, space_instance):
+
+        existing_senders = {sender.email: sender for sender in space_instance.senders.all()}
+
+        # Add or update senders
+        for email in senders_emails:
+            email = email.strip()
+            if email in existing_senders:
+                del existing_senders[email]
+            else:
+                Sender.objects.create(email=email, space=space_instance)
+        print('existing_sender',existing_senders)
+        # Delete removed emails
+        for email, sender in existing_senders.items():
+            print('deleting', email, sender)
+            sender.delete()
     def get_success_url(self):
         return self.request.path
 

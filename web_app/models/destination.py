@@ -2,6 +2,10 @@ from django.contrib.contenttypes.models import ContentType
 
 from web_app.models import PolymorphicRelationModel, BaseModel
 from django.db import models
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseUpload
+from google.oauth2.credentials import Credentials
+from io import BytesIO
 
 
 class GenericDestination(PolymorphicRelationModel):
@@ -32,3 +36,43 @@ class GoogleDrive(BaseModel):
         google_drive_destination.save()
 
         return generic_destination
+
+    def get_credentials(self):
+        credentials = Credentials(token=self.token)
+        return credentials
+
+    def get_service(self):
+        return build('drive', 'v3', credentials=self.get_credentials())
+
+    def get_name(self):
+        service = self.get_service()
+        file = service.files().get(fileId=self.folder_id,
+                                   fields='name').execute()
+        return file.get('name')
+
+    def refresh_token(self):
+        credentials = self.get_credentials()
+        credentials.refresh(Request())
+        self.token = credentials.token
+        self.save()
+    def upload_file(self, file, file_name):
+        service = self.get_service()
+
+        # Build the Drive service
+
+        # File to be uploaded
+        file_stream = BytesIO(file.read())
+        file_stream.seek(0)
+
+        # File to be uploaded
+        file_metadata = {'name': file_name,
+                         'parents': [self.folder_id]}
+        media = MediaIoBaseUpload(file_stream,
+                                  mimetype=file.content_type,
+                                  resumable=True)
+
+        # Upload the file
+        file = service.files().create(body=file_metadata,
+                                      media_body=media,
+                                      fields='id').execute()
+        return file

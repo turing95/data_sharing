@@ -30,15 +30,6 @@ class SpaceDetailFormView(FormView):
                 # Use the stored access token
                 google_drive_destination: GoogleDrive = GenericDestination.objects.get(request=space_req).related_object
 
-                credentials = Credentials(token=google_drive_destination.token)
-
-                # Build the Drive service
-                service = build('drive', 'v3', credentials=credentials)
-
-                # File to be uploaded
-                file_stream = BytesIO(uploaded_file.read())
-                file_stream.seek(0)
-
                 if space_req.file_name is not None:
                     if sender is None:
                         file_name = space_req.file_name.format(date=time.time(), original_name=uploaded_file.name)
@@ -47,18 +38,8 @@ class SpaceDetailFormView(FormView):
                                                                email=sender.email)
                 else:
                     file_name = uploaded_file.name
-                # File to be uploaded
-                file_metadata = {'name': file_name,
-                                 'parents': [google_drive_destination.folder_id]}
-                media = MediaIoBaseUpload(file_stream,
-                                          mimetype=uploaded_file.content_type,
-                                          resumable=True)
 
-                # Upload the file
-                file = service.files().create(body=file_metadata,
-                                              media_body=media,
-                                              fields='id').execute()
-
+                google_drive_destination.upload_file(uploaded_file, file_name)
         return super().form_valid(form)
 
     def get_space(self):

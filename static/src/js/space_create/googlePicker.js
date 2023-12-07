@@ -53,9 +53,11 @@ maybeEnableButtons();
 */
 function gisLoaded() {
 tokenClient = google.accounts.oauth2.initTokenClient({
-  client_id: config_data.googleClientId,
-  scope: config_data.googleScopes.join(' '),
-  callback: '', // defined later
+    client_id: config_data.googleClientId,
+    scope: config_data.googleScopes.join(' '),
+    access_type: 'offline', // Request a refresh token.
+    prompt: 'consent',      // Force the consent prompt to ensure a refresh token is returned.
+    callback: '', // defined later
 });
 gisInited = true;
 maybeEnableButtons();
