@@ -1,0 +1,92 @@
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3 min-w-[200px]">
+                    Invitee Email
+                </th>
+                <th scope="col" class="px-6 py-3 min-w-[200px]">
+                    Space Link
+                </th>
+                <th scope="col" class="px-6 py-3 min-w-[300px]">
+                    <div class="flex items-center">            
+                        <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >Requests recap</span>
+                        <a href="#" class="inline-flex items-center ml-2 text-gray-600 transition-colors duration-300 hover:text-gray-800 group">
+                            <!-- Slightly Thinner Folder Icon with Hover Effect -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="transition-transform duration-300 bi bi-folder group-hover:scale-110" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z" stroke="#4a5568" stroke-width="1.2"/>
+                            </svg>
+                        </a> 
+                    </div>
+                </th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="max-w-xs px-6 py-4 font-medium text-gray-900 break-words whitespace-normal dark:text-white">
+                    ziopinedro@hotmail.com ............................. ..................................... ........................
+                </th>
+                <td class="px-6 py-4">
+                    <div class="inline-flex items-center">
+                        {% with link='https://www.wikipedia.com' %}
+                        <a href="{{ link }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
+                            link to the space
+                        </a>
+                        <button 
+                            class="p-1 ml-2 transition-all duration-75 border border-gray-300 rounded hover:bg-gray-100 active:bg-white active:ring-2 active:ring-offset-2 active:ring-gray-300"
+                            onclick="navigator.clipboard.writeText('{{ link }}')"
+                            title="Copy Link">
+                            Copy
+                        </button>
+                        {% endwith %}
+
+                    </div>
+                </td>
+                <td class="px-6 py-4 ">
+                    <div class="">
+                        <ul>
+<li>request titolo1: 10 files</li>
+<li>request titolo2: 7 files</li>
+<li>request titolo3: 5 files</li>
+                        
+                        </ul>
+                    </div>
+                </td>
+
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    ziopoppolino@hotmail.com
+                </th>
+                <td class="px-6 py-4">
+                    White
+                </td>
+                <td class="px-6 py-4">
+                        <ul>
+<li>request titolo1: 10 files</li>
+<li>request titolo2: 7 files</li>
+<li>request titolo3: 5 files</li>
+                        
+                        </ul>                </td>
+            </tr>
+            <tr class="bg-white dark:bg-gray-800">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Magic Mouse 2
+                </th>
+                <td class="px-6 py-4">
+                    Black
+                </td>
+                <td class="px-6 py-4">
+                                            <ul>
+<li>request titolo1: 10 files</li>
+<li>request titolo2: 7 files</li>
+<li>request titolo3: 5 files</li>
+                        
+                        </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
