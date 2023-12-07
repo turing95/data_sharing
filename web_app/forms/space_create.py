@@ -1,5 +1,6 @@
+from django.contrib.contenttypes.models import ContentType
 from django.forms import ModelForm, inlineformset_factory
-from web_app.models import Space, UploadRequest, FileType
+from web_app.models import Space, UploadRequest, FileType, GoogleDrive, GenericDestination
 from web_app.forms import css_classes
 from django import forms
 from django.core.validators import validate_email
@@ -124,6 +125,7 @@ class FileTypeChoiceField(forms.ModelMultipleChoiceField):
 
 
 class RequestForm(ModelForm):
+    instance: UploadRequest
     FILE_NAME_INSTRUCTIONS = "Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:"
     FILE_NAME_TAGS = "<br>" + "<br>".join([
         f"- <strong>{{{tag[1]}}}</strong> - \"{'spiegazione va qui'}\""
@@ -198,15 +200,19 @@ class RequestForm(ModelForm):
         super().__init__(*args, **kwargs)
 
         if self.instance:
+            destination:GoogleDrive = self.instance.genericdestination_set.filter(content_type=ContentType.objects.get_for_model(
+                                                            GoogleDrive)).first().related_object
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
+            self.fields['destination'].initial = destination.folder_id
+            self.fields['token'].initial = destination.token
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
         rename = self.cleaned_data.get('rename')
 
         if rename is False:
-            file_naming_formula = '' # if checkbox is unchecked the naming formula is empty
+            file_naming_formula = ''  # if checkbox is unchecked the naming formula is empty
         else:
             # List of valid tags
             valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
@@ -232,7 +238,7 @@ class RequestForm(ModelForm):
                 error_message = 'The following tags are not valid: ' + ', '.join(invalid_tags)
                 raise forms.ValidationError(error_message)
 
-            return file_naming_formula
+        return file_naming_formula
 
 
 RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=1)
