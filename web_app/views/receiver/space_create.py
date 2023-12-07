@@ -42,7 +42,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-        formset = RequestFormSet(request.POST)
+        formset = self.get_formset()
 
         if form.is_valid():
             space_instance = form.save(commit=False)

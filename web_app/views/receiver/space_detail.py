@@ -54,7 +54,5 @@ class SpaceDetailFormView(SpaceFormView):
     def get_formset(self):
         queryset = self.get_space().requests.all()
         formset = DetailRequestFormSet(self.request.POST or None,
-                                       queryset=queryset,
-                                       instance=self.get_space(),
-                                       initial=[{"title": req.title} for req in queryset])
+                                       instance=self.get_space())
         return formset
