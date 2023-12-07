@@ -2,16 +2,16 @@
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 min-w-[200px]">
                     Invitee Email
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 min-w-[200px]">
                     Space Link
                 </th>
-                <th scope="col" class="px-6 py-3 ">
+                <th scope="col" class="px-6 py-3 min-w-[300px]">
                     <div class="flex items-center">            
-                        <span class="max-w-[120px] line-clamp-2" >Request  lomg long long long Title 1</span>
-                        <a href="#" class="inline-flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-300 ml-2 group"> <!-- Added group class for hover effect -->
+                        <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >Request  lomg long long long Title 1</span>
+                        <a href="#" class="inline-flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-300 ml-2 group">
                             <!-- Slightly Thinner Folder Icon with Hover Effect -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder group-hover:scale-110 transition-transform duration-300" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z" stroke="#4a5568" stroke-width="1.2"/>
@@ -22,29 +22,42 @@
                 
                 
                 
-                <th scope="col" class="px-6 py-3 min-w-[450px]">
-                    Price
+                <th scope="col" class="px-6 py-3 min-w-[200px]">
+                    next request, to be added in a loop or kind of
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-normal break-words dark:text-white max-w-xs">
+                    ziopinedro@hotmail.com ............................. ..................................... ........................
                 </th>
                 <td class="px-6 py-4">
-                    Silver
+                    <div class="inline-flex items-center">
+                        {% with link='https://www.wikipedia.com' %}
+                        <a href="{{ link }}" target = "_blank" class="text-blue-600 underline hover:text-blue-800 transition-colors duration-300">
+                            link to the space
+                        </a>
+                        <button 
+                            class="ml-2 p-1 border border-gray-300 rounded hover:bg-gray-100 active:bg-white active:ring-2 active:ring-offset-2 active:ring-gray-300 transition-all duration-75"
+                            onclick="navigator.clipboard.writeText('{{ link }}')"
+                            title="Copy Link">
+                            Copy
+                        </button>
+                        {% endwith %}
+
+                    </div>
                 </td>
                 <td class="px-6 py-4">
-                    Laptop
+                    averyyyylooonnngggmaaaiiiilll@gggmmmmaaaiiilll.com
                 </td>
                 <td class="px-6 py-4">
-                    $2999
+                    short@h.o
                 </td>
             </tr>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
+                    ziopoppolino@hotmail.com
                 </th>
                 <td class="px-6 py-4">
                     White
