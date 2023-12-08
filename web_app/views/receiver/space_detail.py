@@ -16,6 +16,7 @@ class SpaceDetailFormView(SpaceFormView):
             data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
             data['requests'] = self.get_formset()
             data['status'] = self.request.GET.get('status')
+            data['submit_text'] = 'Save space'
         else:
             data['space'] = self.get_space()
         return data

@@ -67,10 +67,10 @@
     <div class="flex items-start mb-6">
         <div class="flex items-center h-5">
             {{ form.is_active }}
-        </div>
-        <label for="{{ form.is_active.id_for_label }}"
+                    <label for="{{ form.is_active.id_for_label }}"
         class="text-xs font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_active.label }}</label>
-    </div>
+        </div>
 
-    {% include "components/buttons/submit.html" with button_text="Create space" %}
+    </div>
+    {% include "components/buttons/submit.html" with button_text=submit_text %}
 </form>

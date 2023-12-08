@@ -41,7 +41,7 @@ class SpaceForm(ModelForm):
             'class': css_classes.checkbox_input,
         }),
         required=False,
-        label='Make Space active at creation'
+        label='Activate space'
     )
     is_public = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={

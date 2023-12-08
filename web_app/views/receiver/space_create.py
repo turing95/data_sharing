@@ -29,6 +29,8 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         data['space_form'] = True
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         data['requests'] = self.get_formset()
+        data['submit_text'] = 'Create space'
+
         return data
 
     def get_formset(self):
