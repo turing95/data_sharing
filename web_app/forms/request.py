@@ -145,8 +145,7 @@ class DetailRequestForm(RequestForm):
                 self.fields['destination_display'].initial = destination.get_name()
             except RefreshError:
                 self.fields['destination_display'].initial = "Error: refresh token"
-
-
+            self.fields['file_types'].initial = [f.extension for f in self.instance.file_types.all()]
 
 
 RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=1)

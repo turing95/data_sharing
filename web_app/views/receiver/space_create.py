@@ -77,9 +77,6 @@ class SpaceFormView(LoginRequiredMixin, FormView):
     def handle_formset(formset):
         formset.save()
         for req in formset:
-            # TODO change when more than one possible type of dest
             GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
                                               req.cleaned_data.get('token'))
-            selected_file_types = req.cleaned_data['file_types']
-            for file_type in selected_file_types:
-                UploadRequestFileType.objects.create(upload_request=req.instance, file_type=file_type)
+

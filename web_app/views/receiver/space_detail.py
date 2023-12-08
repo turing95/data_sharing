@@ -32,7 +32,6 @@ class SpaceDetailFormView(SpaceFormView):
                 del existing_senders[email]
             else:
                 Sender.objects.create(email=email, space=space_instance)
-        print('existing_sender', existing_senders)
         # Delete removed emails
         for email, sender in existing_senders.items():
             print('deleting', email, sender)

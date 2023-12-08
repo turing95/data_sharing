@@ -18,12 +18,13 @@ class UploadRequest(BaseModel):
     title = models.CharField(max_length=50, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
+    file_types = models.ManyToManyField('FileType', through='UploadRequestFileType')
 
 
 class FileType(BaseModel):
     extension = models.CharField(max_length=50, unique=True)
-
+    upload_requests = models.ManyToManyField('UploadRequest', through='UploadRequestFileType')
 
 class UploadRequestFileType(BaseModel):
-    upload_request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE, related_name='file_types')
-    file_type = models.ForeignKey('FileType', on_delete=models.CASCADE, related_name='upload_requests')
+    upload_request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE)
+    file_type = models.ForeignKey('FileType', on_delete=models.CASCADE)
