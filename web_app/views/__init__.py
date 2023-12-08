@@ -1,6 +1,6 @@
 from web_app.views.receiver.space.list import SpacesView
 from web_app.views.receiver.space.create import SpaceFormView
-from web_app.views.receiver.space.delete import delete_space
+from web_app.views.receiver.space.delete import DeleteSpaceView
 from web_app.views.receiver.authentication.signup import SignupView
 from web_app.views.receiver.authentication.login import LoginView
 from web_app.views.receiver.authentication.reset_password import PasswordResetView
