@@ -38,7 +38,7 @@ class SpaceDetailFormView(SpaceFormView):
             sender.delete()
 
     def get_success_url(self):
-        return self.request.path
+        return self.request.get_full_path()
 
     def get_space(self):
         if not self._space:
