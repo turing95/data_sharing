@@ -50,11 +50,6 @@ class GoogleDrive(BaseModel):
                                    fields='name').execute()
         return file.get('name')
 
-    def refresh_token(self):
-        credentials = self.get_credentials()
-        credentials.refresh(Request())
-        self.token = credentials.token
-        self.save()
     def upload_file(self, file, file_name):
         service = self.get_service()
 

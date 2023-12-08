@@ -1,32 +1,29 @@
-/* exported gapiLoaded */
-/* exported gisLoaded */
-/* exported handleAuthClick */
-/* exported handleSignoutClick */
-/**
-* @typedef {Object} ConfigData
-* @property {string} googleApiKey - The API key for the application.
-* @property {string} googleClientId - The client ID for the OAuth provider.
-* @property {string} googleAppId - The application ID.
-* @property {string[]} googleScopes - The authorization scopes required by the API.
-*/
-// Authorization scopes required by the API; multiple scopes can be
-// included, separated by spaces.
-
-/**
-* @type {ConfigData}
-*/
-const config_data = JSON.parse(document.getElementById('config-data').textContent);
-config_data.googleScopes = ['https://www.googleapis.com/auth/drive'];
+import { configData } from '../data.js';
 
 let currentDestinationInput = null;
 let currentDestinationDisplayInput = null;
 let currentAccessTokenInput = null;
 let tokenClient;
 let accessToken = null;
+let refreshToken = null;
 let responseGoogle = null;
 let pickerInited = false;
 let gisInited = false;
+function loadScript(url, callback) {
+    const script = document.createElement('script');
+    script.src = url;
+    script.onload = callback;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+}
 
+// Export an init function to load external scripts
+export function initGooglePicker() {
+    loadScript('https://apis.google.com/js/api.js', gapiLoaded);
+    loadScript('https://accounts.google.com/gsi/client', gisLoaded);
+    // ... [any other initialization code]
+}
 
 //document.getElementById('authorize_button').style.visibility = 'hidden';
 document.getElementById('signout_button').style.visibility = 'hidden';
@@ -53,8 +50,8 @@ maybeEnableButtons();
 */
 function gisLoaded() {
 tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: config_data.googleClientId,
-    scope: config_data.googleScopes.join(' '),
+    client_id: configData.googleClientId,
+    scope: configData.googleScopes.join(' '),
     access_type: 'offline', // Request a refresh token.
     prompt: 'consent',      // Force the consent prompt to ensure a refresh token is returned.
     callback: '', // defined later
@@ -75,22 +72,23 @@ if (pickerInited && gisInited) {
 /**
 *  Sign in the user upon button click.
 */
-function handleAuthClick(buttonElement) {
+export function handleAuthClick(buttonElement) {
 const parentDiv = buttonElement.closest('.mb-6');
 
 // Find the input within this div
 // Store the reference to this specific destinationInput
-const regex_destination = /^id_requests-\d+-destination$/;
-const regex_destination_display = /^id_requests-\d+-destination_display$/;
-const regex_token = /^id_requests-\d+-token$/;
-currentDestinationInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex_destination.test(input.id));
-currentDestinationDisplayInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex_destination_display.test(input.id));
-currentAccessTokenInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regex_token.test(input.id));
+const regexDestination = /^id_requests-\d+-destination$/;
+const regexDestinationDisplay = /^id_requests-\d+-destination_display$/;
+const regexToken = /^id_requests-\d+-token$/;
+currentDestinationInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regexDestination.test(input.id));
+currentDestinationDisplayInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regexDestinationDisplay.test(input.id));
+currentAccessTokenInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regexToken.test(input.id));
 
 tokenClient.callback = async (response) => {
   if (response.error !== undefined) {
     throw (response);
   }
+  refreshToken = response.refresh_token;
   accessToken = response.access_token;
   responseGoogle = response
   document.getElementById('signout_button').style.visibility = 'visible';
@@ -111,7 +109,7 @@ createPicker();
 /**
 *  Sign out the user upon button click.
 */
-function handleSignoutClick() {
+export function handleSignoutClick() {
 if (accessToken) {
   accessToken = null;
   google.accounts.oauth2.revoke(accessToken);
@@ -126,8 +124,8 @@ function createPicker() {
   const picker = new google.picker.PickerBuilder()
     .enableFeature(google.picker.Feature.NAV_HIDDEN)
     .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-    .setDeveloperKey(config_data.googleApiKey)
-    .setAppId(config_data.googleAppId)
+    .setDeveloperKey(configData.googleApiKey)
+    .setAppId(configData.googleAppId)
     .setOAuthToken(accessToken)
     .addView(new google.picker.DocsView(google.picker.ViewId.FOLDERS)
         .setSelectFolderEnabled(true))
@@ -143,7 +141,6 @@ picker.setVisible(true);
 async function pickerCallback(data) {
 if (data.action === google.picker.Action.PICKED) {
     let text = `Picker response: \n${JSON.stringify(data, null, 2)}\n`;
-    console.log(responseGoogle)
     // Assuming the first selected item is a folder
     const folder = data[google.picker.Response.DOCUMENTS][0];
     const folderId = folder[google.picker.Document.ID];
