@@ -50,16 +50,12 @@ class SpaceFormView(LoginRequiredMixin, FormView):
             formset.instance = space_instance
 
             if formset.is_valid():
-                print('valid')
                 with transaction.atomic():
                     space_instance.save()
                     self._space = space_instance
                     self.handle_senders(form.cleaned_data.get('senders_emails', []), space_instance)
                     self.handle_formset(formset)
                 return self.form_valid(form)
-            else:
-                print('invalid')
-                print(formset.errors)
 
         return self.form_invalid(form)
 
