@@ -84,7 +84,6 @@ class SpaceForm(ModelForm):
             space = self.instance
             self.fields['senders_emails'].initial = ','.join([sender.email for sender in space.senders.all()])
 
-
     def clean_title(self):
         title = self.cleaned_data.get("title")
         user = self.user
@@ -118,6 +117,3 @@ class SpaceForm(ModelForm):
         instance = super().save()
         instance.timezone = dj_timezone.get_current_timezone_name()
         return instance
-
-
-

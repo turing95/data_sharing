@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.models import ContentType
-from django.forms import ModelForm, inlineformset_factory
 from google.auth.exceptions import RefreshError
-
+from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
+from django.core.exceptions import ValidationError
 from web_app.models import Space, UploadRequest, FileType, GoogleDrive
 from web_app.forms import css_classes
 from django import forms
@@ -148,5 +148,30 @@ class DetailRequestForm(RequestForm):
             self.fields['file_types'].initial = [f.extension for f in self.instance.file_types.all()]
 
 
-RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, extra=1)
-DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, extra=0)
+class UniqueTitleFormSet(BaseInlineFormSet):
+    def clean(self):
+        """
+        Add validation to ensure that each request has a unique title within the set.
+        """
+        super().clean()
+
+        # Skip further validation if any form already has errors
+        if any(self.errors):
+            return
+
+        titles = set()
+        for form in self.forms:
+            # Ignore empty forms and forms marked for deletion
+            if self.can_delete and self._should_delete_form(form):
+                continue
+
+            title = form.cleaned_data.get('title', None)
+            if title and title in titles:
+                raise ValidationError("Each request must have a unique title.")
+            titles.add(title)
+
+
+# Replace the standard formset with the custom one
+RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, formset=UniqueTitleFormSet, extra=1)
+DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, formset=UniqueTitleFormSet,
+                                             extra=0)

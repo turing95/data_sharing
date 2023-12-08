@@ -20,6 +20,12 @@ class UploadRequest(BaseModel):
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
     file_types = models.ManyToManyField('FileType', through='UploadRequestFileType')
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint('title', 'space', name='unique_request_title')
+        ]
+        ordering = ['-created_at']
+
 
 class FileType(BaseModel):
     extension = models.CharField(max_length=50, unique=True)
