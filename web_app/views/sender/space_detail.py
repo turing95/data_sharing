@@ -2,15 +2,11 @@ from django.http import Http404
 
 from web_app.forms import SpaceDetailForm
 from django.views.generic.edit import FormView
-from web_app.models import Space, GenericDestination, GoogleDrive, Sender
+from web_app.models import Space, GenericDestination, GoogleDrive, Sender, SenderEvent
 from django.urls import reverse_lazy
 
 from django import forms
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseUpload
-from google.oauth2.credentials import Credentials
 import time
-from io import BytesIO
 
 
 class SpaceDetailFormView(FormView):
@@ -40,6 +36,12 @@ class SpaceDetailFormView(FormView):
                     file_name = uploaded_file.name
 
                 google_drive_destination.upload_file(uploaded_file, file_name)
+                SenderEvent.objects.create(sender=sender,
+                                           request=space_req,
+                                           event_type=SenderEvent.EventType.FILE_UPLOADED,
+                                           data={'file_name': file_name,
+                                                 'file_type': uploaded_file.content_type,
+                                                 'size': uploaded_file.size})
         return super().form_valid(form)
 
     def get_space(self):
