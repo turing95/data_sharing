@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from web_app.forms import SpaceForm,DetailRequestFormSet
+from web_app.forms import SpaceForm, DetailRequestFormSet
 from web_app.models import Space, UploadRequest, Sender
 
 from web_app.views import SpaceFormView
@@ -10,7 +10,7 @@ class SpaceDetailFormView(SpaceFormView):
     form_class = SpaceForm
 
     def get_context_data(self, **kwargs):
-        data = super(SpaceFormView,self).get_context_data(**kwargs)
+        data = super(SpaceFormView, self).get_context_data(**kwargs)
         if 'status' in self.request.GET:
             data['space_form'] = True
             data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
@@ -31,11 +31,12 @@ class SpaceDetailFormView(SpaceFormView):
                 del existing_senders[email]
             else:
                 Sender.objects.create(email=email, space=space_instance)
-        print('existing_sender',existing_senders)
+        print('existing_sender', existing_senders)
         # Delete removed emails
         for email, sender in existing_senders.items():
             print('deleting', email, sender)
             sender.delete()
+
     def get_success_url(self):
         return self.request.path
 
