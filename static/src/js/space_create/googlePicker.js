@@ -2,7 +2,6 @@ import { configData,googleUserData } from '../data.js';
 
 let currentDestinationInput = null;
 let currentDestinationDisplayInput = null;
-let currentAccessTokenInput = null;
 let tokenClient;
 let accessToken = googleUserData.accessToken;
 let responseGoogle = null;
@@ -76,10 +75,8 @@ const parentDiv = buttonElement.closest('.mb-6');
 // Store the reference to this specific destinationInput
 const regexDestination = /^id_requests-\d+-destination$/;
 const regexDestinationDisplay = /^id_requests-\d+-destination_display$/;
-const regexToken = /^id_requests-\d+-token$/;
 currentDestinationInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regexDestination.test(input.id));
 currentDestinationDisplayInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regexDestinationDisplay.test(input.id));
-currentAccessTokenInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regexToken.test(input.id));
 
 tokenClient.callback = async (response) => {
   if (response.error !== undefined) {
@@ -136,7 +133,6 @@ picker.setVisible(true);
 */
 async function pickerCallback(data) {
 if (data.action === google.picker.Action.PICKED) {
-    let text = `Picker response: \n${JSON.stringify(data, null, 2)}\n`;
     // Assuming the first selected item is a folder
     const folder = data[google.picker.Response.DOCUMENTS][0];
     const folderId = folder[google.picker.Document.ID];
@@ -146,7 +142,6 @@ if (data.action === google.picker.Action.PICKED) {
     if (currentDestinationInput) {
         currentDestinationInput.value = folderId;
         currentDestinationDisplayInput.value = folderName;
-        currentAccessTokenInput.value = accessToken;
     }
 }
 }
