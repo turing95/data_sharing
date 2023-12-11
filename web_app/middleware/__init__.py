@@ -1,1 +1,2 @@
 from web_app.middleware.timezone import TimezoneMiddleware
+from web_app.middleware.custom_user import CustomUserMiddleware
