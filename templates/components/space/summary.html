@@ -71,16 +71,7 @@
         </div>
     </div>
 {% endif %}
-    {% if space.is_public %}
-        <div class= "flex mb-3">
-            Public link: 
-            <div class="flex justify-between ml-1 items-left">
-                <a href="{% url 'sender_space_detail_public' space.uuid %}"  >Public Link</a>
 
-            </div>
-        </div>
-{% endif %}
-     
 
 
     <!-- UPLOAD STATUS -->
