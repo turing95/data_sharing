@@ -50,6 +50,10 @@ class GoogleDrive(BaseModel):
                                    fields='name').execute()
         return file.get('name')
 
+    @property
+    def url(self):
+        return f'https://drive.google.com/drive/folders/{self.folder_id}'
+
     def upload_file(self, file, file_name):
         service = self.get_service()
 
