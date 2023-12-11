@@ -12,11 +12,7 @@ class SpaceDetailFormView(SpaceFormView):
     def get_context_data(self, **kwargs):
         data = super(SpaceFormView, self).get_context_data(**kwargs)
         if 'status' in self.request.GET:
-            data['space_form'] = True
-            data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
-            data['requests'] = self.get_formset()
-            data['status'] = self.request.GET.get('status')
-            data['submit_text'] = 'Save space'
+            data = self.get_context_for_form(data, button_text='Update space', status=self.request.GET.get('status'))
         else:
             data['space'] = self.get_space()
         return data
@@ -53,7 +49,6 @@ class SpaceDetailFormView(SpaceFormView):
         return kwargs
 
     def get_formset(self):
-        queryset = self.get_space().requests.all()
         formset = DetailRequestFormSet(self.request.POST or None,
                                        instance=self.get_space())
         return formset

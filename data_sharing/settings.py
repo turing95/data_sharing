@@ -167,7 +167,10 @@ SOCIALACCOUNT_PROVIDERS = {
             'profile',
             'email',
             'https://www.googleapis.com/auth/drive'
-        ]
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
     }
 }
 

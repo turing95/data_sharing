@@ -1,3 +1,5 @@
+from allauth.socialaccount.models import SocialAccount, SocialToken
+
 from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
@@ -24,14 +26,18 @@ class SpaceFormView(LoginRequiredMixin, FormView):
             return reverse_lazy('receiver_space_detail', kwargs={'space_uuid': self._space.uuid})
         return super().get_success_url()
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
+    def get_context_for_form(self, data, button_text='Create space', **kwargs):
         data['space_form'] = True
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         data['requests'] = self.get_formset()
-        data['submit_text'] = 'Create space'
-
+        data['submit_text'] = button_text
+        data['google_user_data'] = {'accessToken': self.get_google_access_token()}
+        data.update(kwargs)
         return data
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        return self.get_context_for_form(data)
 
     def get_formset(self):
         return RequestFormSet(self.request.POST or None)
@@ -80,3 +86,15 @@ class SpaceFormView(LoginRequiredMixin, FormView):
             GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
                                               req.cleaned_data.get('token'))
 
+    def get_google_access_token(self):
+        try:
+            # Assuming 'google' is the provider name you have used with allauth
+            social_account = SocialAccount.objects.get(user=self.request.user, provider='google')
+            token = SocialToken.objects.get(account=social_account)
+            return token.token  # token.token is the access token
+        except SocialAccount.DoesNotExist:
+            # Handle the case where the user does not have a Google social account
+            return None
+        except SocialToken.DoesNotExist:
+            # Handle the case where the token does not exist
+            return None

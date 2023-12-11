@@ -30,6 +30,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     {% if space_form is True %}
+        {{ google_user_data |json_script:"google-user-data"  }}
         <script type="module" src="{% static 'src/js/space_create/index.js' %}" ></script>
 
     {% endif %}

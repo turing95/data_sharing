@@ -1,11 +1,10 @@
-import { configData } from '../data.js';
+import { configData,googleUserData } from '../data.js';
 
 let currentDestinationInput = null;
 let currentDestinationDisplayInput = null;
 let currentAccessTokenInput = null;
 let tokenClient;
-let accessToken = null;
-let refreshToken = null;
+let accessToken = googleUserData.accessToken;
 let responseGoogle = null;
 let pickerInited = false;
 let gisInited = false;
@@ -52,8 +51,6 @@ function gisLoaded() {
 tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: configData.googleClientId,
     scope: configData.googleScopes.join(' '),
-    access_type: 'offline', // Request a refresh token.
-    prompt: 'consent',      // Force the consent prompt to ensure a refresh token is returned.
     callback: '', // defined later
 });
 gisInited = true;
@@ -88,7 +85,6 @@ tokenClient.callback = async (response) => {
   if (response.error !== undefined) {
     throw (response);
   }
-  refreshToken = response.refresh_token;
   accessToken = response.access_token;
   responseGoogle = response
   document.getElementById('signout_button').style.visibility = 'visible';
