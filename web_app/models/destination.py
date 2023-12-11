@@ -41,7 +41,7 @@ class GoogleDrive(BaseModel):
 
     @property
     def name(self):
-        file = self.service.files().get(fileId=self.folder_id,
+        file = self.service.files().get(supportsAllDrives=True,  fileId=self.folder_id,
                                         fields='name').execute()
         return file.get('name')
 
