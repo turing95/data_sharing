@@ -51,9 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
-    'web_app.middleware.TimezoneMiddleware'
+    'web_app.middleware.TimezoneMiddleware',
+    'web_app.middleware.CustomUserMiddleware',
+
 ]
 
 ROOT_URLCONF = 'data_sharing.urls'

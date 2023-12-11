@@ -37,15 +37,17 @@ class GoogleDrive(BaseModel):
 
         return generic_destination
 
-    def get_credentials(self):
-        credentials = Credentials(token=self.token)
+    @staticmethod
+    def get_credentials(access_token):
+        credentials = Credentials(token=access_token)
         return credentials
 
-    def get_service(self):
-        return build('drive', 'v3', credentials=self.get_credentials())
+    def get_service(self, access_token=None):
+        return build('drive', 'v3', credentials=self.get_credentials(access_token=access_token))
 
-    def get_name(self):
-        service = self.get_service()
+    def get_name(self, access_token):
+        print(access_token)
+        service = self.get_service(access_token=access_token)
         file = service.files().get(fileId=self.folder_id,
                                    fields='name').execute()
         return file.get('name')
