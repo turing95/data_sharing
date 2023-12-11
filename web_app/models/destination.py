@@ -35,14 +35,14 @@ class GoogleDrive(BaseModel):
 
         return generic_destination
 
-    def get_service(self):
+    @property
+    def service(self):
         return build('drive', 'v3', credentials=self.custom_user.google_credentials)
 
     @property
     def name(self):
-        service = self.get_service()
-        file = service.files().get(fileId=self.folder_id,
-                                   fields='name').execute()
+        file = self.service.files().get(fileId=self.folder_id,
+                                        fields='name').execute()
         return file.get('name')
 
     @property
@@ -50,8 +50,6 @@ class GoogleDrive(BaseModel):
         return f'https://drive.google.com/drive/folders/{self.folder_id}'
 
     def upload_file(self, file, file_name):
-        service = self.get_service()
-
         # Build the Drive service
 
         # File to be uploaded
@@ -66,9 +64,9 @@ class GoogleDrive(BaseModel):
                                   resumable=True)
 
         # Upload the file
-        file = service.files().create(body=file_metadata,
-                                      media_body=media,
-                                      fields='id').execute()
+        file = self.service.files().create(body=file_metadata,
+                                           media_body=media,
+                                           fields='id').execute()
         return file
 
     @property

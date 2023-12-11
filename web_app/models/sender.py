@@ -11,6 +11,7 @@ class Sender(BaseModel, ActiveModel):
     @property
     def link(self):
         return reverse('sender_space_detail_private', kwargs={'space_uuid': self.space.uuid, 'sender_uuid': self.uuid})
+
     @property
     def requests(self):
         return self.space.requests.all()

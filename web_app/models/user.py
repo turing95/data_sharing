@@ -20,13 +20,13 @@ class CustomUser(User):
                 refresh_token=token.token_secret,
                 token_uri='https://accounts.google.com/o/oauth2/token',
                 client_id=config.GOOGLE_CLIENT_ID,
-                client_secret=config.GOOGLE_CLIENT_SECRET
+                client_secret=config.GOOGLE_CLIENT_SECRET,
+                expiry=token.expires_at
             )
 
             if credentials.valid is False:
                 credentials.refresh(Request())
                 token.token = credentials.token
-                token.token_secret = credentials.refresh_token
                 token.expires_at = credentials.expiry
                 token.save()  # Update the token in the database
 
