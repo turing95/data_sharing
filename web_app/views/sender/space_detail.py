@@ -64,7 +64,6 @@ class SpaceDetailFormView(FormView):
                 'pk': space_id,
                 'is_active': True,
                 'senders__uuid': sender.pk if sender else None,
-                'is_public': not sender
             }
 
             try:
