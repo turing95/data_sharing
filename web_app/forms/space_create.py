@@ -5,7 +5,8 @@ from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.utils import timezone as dj_timezone
-from django.utils.timezone import is_aware, make_aware, utc
+from django.utils.timezone import is_aware, make_aware
+from datetime import timezone
 import arrow
 
 
@@ -105,7 +106,7 @@ class SpaceForm(ModelForm):
                 deadline = make_aware(deadline)
 
             # Convert to UTC
-            deadline = deadline.astimezone(utc)
+            deadline = deadline.astimezone(timezone.utc)
             if deadline < arrow.utcnow():
                 raise forms.ValidationError(
                     "Deadline must be in the future."

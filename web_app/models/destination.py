@@ -4,9 +4,7 @@ from web_app.models import PolymorphicRelationModel, BaseModel
 from django.db import models
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
-from google.oauth2.credentials import Credentials
 from io import BytesIO
-import config
 
 
 class GenericDestination(PolymorphicRelationModel):
@@ -37,16 +35,8 @@ class GoogleDrive(BaseModel):
 
         return generic_destination
 
-    def get_credentials(self):
-        credentials = Credentials(token=self.token.token,
-                                  refresh_token=self.token.token_secret,
-                                  token_uri='https://accounts.google.com/o/oauth2/token',
-                                  client_id=config.GOOGLE_CLIENT_ID,
-                                  client_secret=config.GOOGLE_CLIENT_SECRET)
-        return credentials
-
-    def get_service(self, access_token=None):
-        return build('drive', 'v3', credentials=self.get_credentials())
+    def get_service(self):
+        return build('drive', 'v3', credentials=self.custom_user.google_credentials)
 
     @property
     def name(self):
@@ -96,7 +86,3 @@ class GoogleDrive(BaseModel):
     def custom_user(self):
         from web_app.models import CustomUser
         return CustomUser.objects.get(pk=self.user.pk)
-
-    @property
-    def token(self):
-        return self.custom_user.get_google_token()
