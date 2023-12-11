@@ -1,4 +1,3 @@
-from django.contrib.contenttypes.models import ContentType
 from google.auth.exceptions import RefreshError
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from django.core.exceptions import ValidationError
@@ -133,14 +132,12 @@ class DetailRequestForm(RequestForm):
             )
             self.fields['uuid'].initial = self.instance.uuid
 
-            destination: GoogleDrive = self.instance.genericdestination_set.filter(
-                content_type=ContentType.objects.get_for_model(
-                    GoogleDrive)).first().related_object
+            destination: GoogleDrive = self.instance.destinations.filter(tag=GoogleDrive.TAG).first().related_object
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
             self.fields['destination'].initial = destination.folder_id
             try:
-                self.fields['destination_display'].initial = destination.get_name()
+                self.fields['destination_display'].initial = destination.name
             except RefreshError:
                 self.fields['destination_display'].initial = "Error: refresh token"
             self.fields['file_types'].initial = [f.extension for f in self.instance.file_types.all()]

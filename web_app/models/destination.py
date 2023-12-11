@@ -10,7 +10,7 @@ from io import BytesIO
 
 class GenericDestination(PolymorphicRelationModel):
     tag = models.CharField(max_length=50)
-    request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE)
+    request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE, related_name='destinations')
 
     def __str__(self):
         return self.tag
@@ -43,7 +43,8 @@ class GoogleDrive(BaseModel):
     def get_service(self, access_token=None):
         return build('drive', 'v3', credentials=self.get_credentials())
 
-    def get_name(self):
+    @property
+    def name(self):
         service = self.get_service()
         file = service.files().get(fileId=self.folder_id,
                                    fields='name').execute()

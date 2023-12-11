@@ -48,7 +48,7 @@
                             </a> 
                                 <div data-popover id="popover-no-arrow" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
                                     <div class="px-3 py-2">
-                                        <p>Go to: Name_of_the_destination_folder</p>
+                                        <p>Go to: {{ event.request.destination.name }}</p>
                                     </div>
                                 </div>
                         </div>

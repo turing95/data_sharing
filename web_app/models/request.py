@@ -26,10 +26,18 @@ class UploadRequest(BaseModel):
         ]
         ordering = ['-created_at']
 
+    @property
+    def google_drive_destination(self):
+        from web_app.models import GenericDestination, GoogleDrive
+        generic_destination: GenericDestination = self.destinations.filter(tag=GoogleDrive.TAG).first()
+        google_drive_destination: GoogleDrive = generic_destination.related_object
+        return google_drive_destination
+
 
 class FileType(BaseModel):
     extension = models.CharField(max_length=50, unique=True)
     upload_requests = models.ManyToManyField('UploadRequest', through='UploadRequestFileType')
+
 
 class UploadRequestFileType(BaseModel):
     upload_request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE)
