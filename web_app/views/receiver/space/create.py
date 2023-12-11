@@ -29,7 +29,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         data['requests'] = self.get_formset()
         data['submit_text'] = button_text
-        data['google_user_data'] = {'accessToken': self.request.custom_user.get_google_token().token}
+        data['google_user_data'] = {'accessToken': self.request.custom_user.google_token.token}
         data.update(kwargs)
         return data
 
