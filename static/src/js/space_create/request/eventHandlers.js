@@ -5,7 +5,7 @@ export function handleTagDropdownChange(dropdown) {
         const selectedTag = `{${dropdown.value}}`;
         insertText(childDiv, selectedTag)
         if (selectedTag) {
-            this.value = ""; // Reset the dropdown
+            dropdown.value = ""; // Reset the dropdown
         }
 }
 
