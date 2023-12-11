@@ -6,6 +6,7 @@ export function handleTagDropdownChange(dropdown) {
         insertText(childDiv, selectedTag)
         if (selectedTag) {
             dropdown.value = ""; // Reset the dropdown
+            dropdown.options[0].disabled = true;
         }
 }
 
