@@ -4,7 +4,8 @@ module.exports = {
         './templates/**/*.html',
         './node_modules/flowbite/**/*.js',
         './web_app/forms/css_classes/*.py',
-        './static/**/*.js'
+        './static/**/*.js',
+        './static/**/*.svg'
     ],
     plugins: [
         require('flowbite/plugin')

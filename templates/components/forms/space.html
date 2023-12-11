@@ -6,7 +6,7 @@
     {% csrf_token %}
 
     <!-- TITLE -->
-    <div class="mb-6 mt-2">
+    <div class="mt-2 mb-6">
         <label for="{{ form.title.id_for_label }}"
         class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
         {{ form.title }}
@@ -68,7 +68,7 @@
         <div class="flex items-center h-5">
             {{ form.is_active }}
                     <label for="{{ form.is_active.id_for_label }}"
-        class="text-xs font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_active.label }}</label>
+        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_active.label }}</label>
         </div>
 
     </div>
