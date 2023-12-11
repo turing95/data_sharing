@@ -8,5 +8,5 @@ class SenderEvent(BaseModel):
 
     sender = models.ForeignKey('Sender', on_delete=models.CASCADE)
     request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE)
+    file = models.OneToOneField('File', on_delete=models.CASCADE,null=True)
     event_type = models.CharField(max_length=100, choices=EventType.choices)
-    data = models.JSONField()

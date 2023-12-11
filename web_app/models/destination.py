@@ -6,6 +6,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 from google.oauth2.credentials import Credentials
 from io import BytesIO
+import config
 
 
 class GenericDestination(PolymorphicRelationModel):
@@ -37,7 +38,11 @@ class GoogleDrive(BaseModel):
         return generic_destination
 
     def get_credentials(self):
-        credentials = Credentials(token=self.token.token, refresh_token=self.token.token_secret)
+        credentials = Credentials(token=self.token.token,
+                                  refresh_token=self.token.token_secret,
+                                  token_uri='https://accounts.google.com/o/oauth2/token',
+                                  client_id=config.GOOGLE_CLIENT_ID,
+                                  client_secret=config.GOOGLE_CLIENT_SECRET)
         return credentials
 
     def get_service(self, access_token=None):
