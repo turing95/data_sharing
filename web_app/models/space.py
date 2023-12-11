@@ -16,6 +16,11 @@ class Space(BaseModel, ActiveModel):
         max_length=50,
         choices=TIMEZONE_CHOICES
     )
+    
+    @property
+    def upload_events(self):
+        from web_app.models import SenderEvent
+        return SenderEvent.objects.filter(sender__space=self, event_type=SenderEvent.EventType.FILE_UPLOADED)
 
     class Meta:
         constraints = [

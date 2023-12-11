@@ -20,52 +20,53 @@
         </thead>
         
         <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <!-- Timestamp-->
-                <th scope="row" class="px-6 py-4">
-                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
-                        2023-11-22
-                    </span>
-                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                        18:38
-                    </span>
-                </th>
+            {% for event in space.upload_events %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <!-- Timestamp-->
+                    <th scope="row" class="px-6 py-4">
+                        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
+                            {{ event.created_at|date:"Y-m-d" }}
+                        </span>
+                        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
+                            {{ event.created_at|time:"H:i" }}
+                        </span>
+                    </th>
 
-                <!-- Sender email, can be unknown for public links-->
-                <td class="px-6 py-4">
-                    theemailoftheuploader@gmaail.com
-                </td>
+                    <!-- Sender email, can be unknown for public links-->
+                    <td class="px-6 py-4">
+                        {{ event.sender.email }}
+                    </td>
 
-                <!-- Request title, with link to destination folder with popover with name of folder-->
-                <td class="px-6 py-4">
-                    <div class="flex items-center">            
-                        <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >Request  lomg long long lon sdfs  sdfs df sdf ss df sdf sdf sds df ssd fs dfg Title 1</span>
-                        <a data-popover-target="popover-no-arrow" href="#" class="inline-flex items-center ml-2 text-gray-600 transition-colors duration-300 hover:text-gray-800 group">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="transition-transform duration-300 bi bi-folder group-hover:scale-110" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z" stroke="#4a5568" stroke-width="1.2"/>
-                            </svg>
-                        </a> 
-                            <div data-popover id="popover-no-arrow" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-                                <div class="px-3 py-2">
-                                    <p>Go to: Name_of_the_destination_folder</p>
+                    <!-- Request title, with link to destination folder with popover with name of folder-->
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">            
+                            <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >{{ event.request.title }}</span>
+                            <a data-popover-target="popover-no-arrow" href="#" class="inline-flex items-center ml-2 text-gray-600 transition-colors duration-300 hover:text-gray-800 group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="transition-transform duration-300 bi bi-folder group-hover:scale-110" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z" stroke="#4a5568" stroke-width="1.2"/>
+                                </svg>
+                            </a> 
+                                <div data-popover id="popover-no-arrow" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                    <div class="px-3 py-2">
+                                        <p>Go to: Name_of_the_destination_folder</p>
+                                    </div>
                                 </div>
-                            </div>
-                    </div>
-                </td>
-                <!-- file name with link to file-->
-                <td class="px-6 py-4">
-                    <div class="flex items-center">  
-                        <div class="inline-flex items-center">
-                            {% with link='https://www.wikipedia.com' %}
-                            <a href="{{ link }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
-                                File name as assigned upon upload, with link to the file
-                            </a>
-                            {% endwith %}
                         </div>
-                    </div>
-                </td>                
-            </tr>
-
+                    </td>
+                    <!-- file name with link to file-->
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">  
+                            <div class="inline-flex items-center">
+                                {% with link='https://www.wikipedia.com' %}
+                                <a href="{{ event.data.file_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
+                                    {{ event.data.file_name }}
+                                </a>
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </td>                
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
