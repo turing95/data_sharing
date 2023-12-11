@@ -29,7 +29,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         data['requests'] = self.get_formset()
         data['submit_text'] = button_text
-        data['google_user_data'] = {'accessToken': self.request.custom_user.get_google_access_token()}
+        data['google_user_data'] = {'accessToken': self.request.custom_user.get_google_token().token}
         data.update(kwargs)
         return data
 
@@ -81,5 +81,4 @@ class SpaceFormView(LoginRequiredMixin, FormView):
     def handle_formset(formset):
         formset.save()
         for req in formset:
-            GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'),
-                                              req.cleaned_data.get('token'))
+            GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))

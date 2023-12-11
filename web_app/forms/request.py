@@ -62,8 +62,6 @@ class RequestForm(ModelForm):
     destination = forms.CharField(
         widget=forms.HiddenInput(),
         label="Destination folder")
-    token = forms.CharField(
-        widget=forms.HiddenInput())
 
     rename = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={
@@ -141,9 +139,8 @@ class DetailRequestForm(RequestForm):
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
             self.fields['destination'].initial = destination.folder_id
-            self.fields['token'].initial = self.access_token
             try:
-                self.fields['destination_display'].initial = destination.get_name(access_token=self.access_token)
+                self.fields['destination_display'].initial = destination.get_name()
             except RefreshError:
                 self.fields['destination_display'].initial = "Error: refresh token"
             self.fields['file_types'].initial = [f.extension for f in self.instance.file_types.all()]

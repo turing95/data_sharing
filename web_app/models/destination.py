@@ -19,11 +19,10 @@ class GenericDestination(PolymorphicRelationModel):
 class GoogleDrive(BaseModel):
     TAG = 'GOOGLE_DRIVE'
     folder_id = models.CharField(max_length=255)
-    token = models.CharField(max_length=255)
 
     @classmethod
-    def create_from_folder_id(cls, upload_request, folder_id, token):
-        google_drive_destination = cls(folder_id=folder_id, token=token)
+    def create_from_folder_id(cls, upload_request, folder_id):
+        google_drive_destination = cls(folder_id=folder_id)
 
         generic_destination = GenericDestination(
             request=upload_request,
@@ -37,17 +36,15 @@ class GoogleDrive(BaseModel):
 
         return generic_destination
 
-    @staticmethod
-    def get_credentials(access_token):
-        credentials = Credentials(token=access_token)
+    def get_credentials(self):
+        credentials = Credentials(token=self.token.token, refresh_token=self.token.token_secret)
         return credentials
 
     def get_service(self, access_token=None):
-        return build('drive', 'v3', credentials=self.get_credentials(access_token=access_token))
+        return build('drive', 'v3', credentials=self.get_credentials())
 
-    def get_name(self, access_token):
-        print(access_token)
-        service = self.get_service(access_token=access_token)
+    def get_name(self):
+        service = self.get_service()
         file = service.files().get(fileId=self.folder_id,
                                    fields='name').execute()
         return file.get('name')
@@ -73,3 +70,23 @@ class GoogleDrive(BaseModel):
                                       media_body=media,
                                       fields='id').execute()
         return file
+
+    @property
+    def generic_destination(self):
+        return GenericDestination.objects.get(
+            content_type=ContentType.objects.get_for_model(self.__class__),
+            object_id=self.pk,
+        )
+
+    @property
+    def user(self):
+        return self.generic_destination.request.space.user
+
+    @property
+    def custom_user(self):
+        from web_app.models import CustomUser
+        return CustomUser.objects.get(pk=self.user.pk)
+
+    @property
+    def token(self):
+        return self.custom_user.get_google_token()
