@@ -51,6 +51,15 @@
                         {% include 'components/forms/error_widget.html' with errors=req.destination.errors %}                       
                     </div>
                 </div>
+
+                <!-- REQUEST INSTRUCTIONS -->
+                <div class="mb-6">
+                    <label for="{{ req.instructions.id_for_label }}"
+                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">{{ req.instructions.label }} </label>      
+                    {{ req.instructions }}
+                    {% include 'components/forms/error_widget.html' with errors=req.instructions.errors %}                       
+                </div>
+
                 
                 <!-- CUSTOM FILE NAME -->
                 <div class="mb-6">

@@ -78,10 +78,19 @@ class RequestForm(ModelForm):
         label='File Types',
         help_text='Select one or more file types.'
     )
+    
+  
 
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_types', 'file_naming_formula']
+        fields = ['title', 'file_types', 'file_naming_formula', 'instructions']
+        widgets = {
+            'instructions': forms.Textarea(
+                attrs={'placeholder': 'Add request-specific instructions here',
+                       'rows': 3,
+                       'class': css_classes.text_area,
+                       'label': 'Instructions'}) 
+        }
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
