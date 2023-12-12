@@ -54,8 +54,9 @@ class RequestForm(ModelForm):
         label='Non-editable Field',
         widget=forms.TextInput(
             attrs={'placeholder': 'Click to select a folder',
-                   'class': css_classes.text_input + ' cursor-not-allowed',
-                   'onclick': 'handleAuthClick(this)'})
+                   'class': css_classes.text_input + ' cursor-pointer',
+                   'onclick': 'handleAuthClick(this)',
+                   'readonly': 'readonly'})
     )
 
     destination = forms.CharField(
