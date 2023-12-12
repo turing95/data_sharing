@@ -33,8 +33,8 @@ class SpaceDetailFormView(TemplateView):
             sender = self.get_sender()
             for form in formset:
                 upload_request = UploadRequest.objects.get(pk=form.cleaned_data.get('request_uuid'))
-                uploaded_file = form.cleaned_data.get('file')
-                if uploaded_file:
+                uploaded_files = form.cleaned_data.get('files')
+                for uploaded_file in uploaded_files:
                     # Use the stored access token
                     google_drive_destination: GoogleDrive = upload_request.google_drive_destination
 
