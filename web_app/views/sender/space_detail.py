@@ -40,10 +40,10 @@ class SpaceDetailFormView(TemplateView):
 
                     if upload_request.file_naming_formula is not None:
                         if sender is None:
-                            file_name = upload_request.file_name.format(date=time.time(),
+                            file_name = upload_request.file_naming_formula.format(date=time.time(),
                                                                         original_name=uploaded_file.name)
                         else:
-                            file_name = upload_request.file_name.format(date=time.time(),
+                            file_name = upload_request.file_naming_formula.format(date=time.time(),
                                                                         original_name=uploaded_file.name,
                                                                         email=sender.email)
                     else:
