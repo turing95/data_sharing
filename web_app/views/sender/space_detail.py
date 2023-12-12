@@ -5,7 +5,7 @@ from django.forms import formset_factory
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView
-from web_app.models import Space, GenericDestination, GoogleDrive, Sender, SenderEvent, UploadRequest
+from web_app.models import Space, GenericDestination, GoogleDrive, Sender, SenderEvent, UploadRequest,File
 from web_app.forms import FileForm, BaseFileFormSet
 
 
@@ -53,9 +53,8 @@ class SpaceDetailFormView(TemplateView):
                     SenderEvent.objects.create(sender=sender,
                                                request=upload_request,
                                                event_type=SenderEvent.EventType.FILE_UPLOADED,
-                                               data={'file_name': file_name,
-                                                     'file_type': uploaded_file.content_type,
-                                                     'size': uploaded_file.size})
+                                               file=File.objects.create(original_name=uploaded_file.name,name=file_name, size=uploaded_file.size,
+                                                                        file_type=uploaded_file.content_type))
             return redirect(reverse('spaces'))
         return self.render_to_response(self.get_context_data(formset=formset))
 

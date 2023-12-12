@@ -64,7 +64,7 @@ class GoogleDrive(BaseModel):
                                   resumable=True)
 
         # Upload the file
-        file = self.service.files().create(body=file_metadata,
+        file = self.service.files().create(supportsAllDrives=True,body=file_metadata,
                                            media_body=media,
                                            fields='id').execute()
         return file
