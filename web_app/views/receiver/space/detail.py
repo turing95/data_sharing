@@ -19,7 +19,7 @@ class SpaceDetailFormView(SpaceFormView):
 
     def handle_senders(self, senders_emails, space_instance):
 
-        existing_senders = {sender.email: sender for sender in space_instance.senders.all()}
+        existing_senders = {sender.email: sender for sender in space_instance.senders.filter(is_active=True)}
 
         # Add or update senders
         for email in senders_emails:
@@ -27,11 +27,12 @@ class SpaceDetailFormView(SpaceFormView):
             if email in existing_senders:
                 del existing_senders[email]
             else:
-                Sender.objects.create(email=email, space=space_instance)
+                Sender.objects.update_or_create(email=email, space=space_instance, defaults={'is_active': True})
         # Delete removed emails
         for email, sender in existing_senders.items():
-            print('deleting', email, sender)
-            sender.delete()
+            print('deactivating', email, sender)
+            sender.is_active = False
+            sender.save()
 
     def get_success_url(self):
         return self.request.get_full_path()
@@ -50,5 +51,6 @@ class SpaceDetailFormView(SpaceFormView):
 
     def get_formset(self):
         formset = DetailRequestFormSet(self.request.POST or None,
-                                       instance=self.get_space(),form_kwargs={'access_token': self.request.custom_user.google_token.token})
+                                       instance=self.get_space(),
+                                       form_kwargs={'access_token': self.request.custom_user.google_token.token})
         return formset
