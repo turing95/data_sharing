@@ -11,7 +11,9 @@ class FileForm(Form):
         self.request_index = kwargs.pop('request_index')
         self.space = kwargs.pop('space')
         super().__init__(**kwargs)
-        self.fields['request_uuid'].initial = self.space.requests.all()[self.request_index].uuid
+        upload_request = self.space.requests.all()[self.request_index]
+        self.fields['request_uuid'].initial = upload_request.pk
+        self.upload_request = upload_request
 
 
 class BaseFileFormSet(BaseFormSet):
