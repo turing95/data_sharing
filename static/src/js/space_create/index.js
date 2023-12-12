@@ -8,8 +8,7 @@ window.handleAuthClick = handleAuthClick;
 document.addEventListener('DOMContentLoaded', function() {
     initGooglePicker();
     initRequestForms();
-    initEmailInput();    document.addEventListener('DOMContentLoaded', () => {
-    });
+    initEmailInput();
 
 
 
