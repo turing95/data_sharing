@@ -107,8 +107,7 @@
     <div class="w-full max-w-4xl p-4 pl-10 mx-auto">
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-                {{ form.as_p }}
-
+{{ formset.as_p }}
         {% include "components/buttons/submit.html" with button_text="Confirm and upload" %}
     </form>
     </div>
