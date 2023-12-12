@@ -1,13 +1,13 @@
 from django.contrib.contenttypes.models import ContentType
 
-from web_app.models import PolymorphicRelationModel, BaseModel
+from web_app.models import PolymorphicRelationModel, BaseModel,ActiveModel
 from django.db import models
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 from io import BytesIO
 
 
-class GenericDestination(PolymorphicRelationModel):
+class GenericDestination(PolymorphicRelationModel,ActiveModel):
     tag = models.CharField(max_length=50)
     request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE, related_name='destinations')
 

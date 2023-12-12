@@ -142,7 +142,7 @@ class DetailRequestForm(RequestForm):
             )
             self.fields['uuid'].initial = self.instance.uuid
 
-            destination: GoogleDrive = self.instance.destinations.filter(tag=GoogleDrive.TAG).first().related_object
+            destination: GoogleDrive = self.instance.google_drive_destination
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
             self.fields['destination'].initial = destination.folder_id

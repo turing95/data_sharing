@@ -1,54 +1,63 @@
+import time
 from django.http import Http404
 
-from web_app.forms import SpaceDetailForm
-from django.views.generic.edit import FormView
-from web_app.models import Space, GenericDestination, GoogleDrive, Sender, SenderEvent
-from django.urls import reverse_lazy
+from django.forms import formset_factory
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.views.generic import TemplateView
+from web_app.models import Space, GenericDestination, GoogleDrive, Sender, SenderEvent, UploadRequest
+from web_app.forms import FileForm, BaseFileFormSet
 
-from django import forms
-import time
 
-
-class SpaceDetailFormView(FormView):
+class SpaceDetailFormView(TemplateView):
     template_name = "public/sender_space_detail.html"
-    form_class = SpaceDetailForm
-    success_url = reverse_lazy('spaces')
+
     _space = None
     _sender = None
+
+    def get_formset(self):
+        FileFormset = formset_factory(FileForm, formset=BaseFileFormSet, extra=self.get_space().requests.count())
+        return FileFormset(self.request.POST or None, self.request.FILES or None,
+                           form_kwargs={'space': self.get_space()})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['space'] = self.get_space()
         context['sender'] = self.get_sender()
+        context['formset'] = self.get_formset()
         return context
 
-    def form_valid(self, form):
-        space = self.get_space()
-        sender = self.get_sender()
-        for space_req in space.requests.all():
-            field_name = f'file_{space_req.pk}'
-            uploaded_file = form.cleaned_data.get(field_name)
-            if uploaded_file:
-                # Use the stored access token
-                google_drive_destination: GoogleDrive = GenericDestination.objects.get(request=space_req).related_object
+    def post(self, request, *args, **kwargs):
+        formset = self.get_formset()
+        if formset.is_valid():
+            sender = self.get_sender()
+            for form in formset:
+                upload_request = UploadRequest.objects.get(pk=form.cleaned_data.get('request_uuid'))
+                uploaded_file = form.cleaned_data.get('file')
+                if uploaded_file:
+                    # Use the stored access token
+                    google_drive_destination: GoogleDrive = upload_request.google_drive_destination
 
-                if space_req.file_name is not None:
-                    if sender is None:
-                        file_name = space_req.file_name.format(date=time.time(), original_name=uploaded_file.name)
+                    if upload_request.file_naming_formula is not None:
+                        if sender is None:
+                            file_name = upload_request.file_name.format(date=time.time(),
+                                                                        original_name=uploaded_file.name)
+                        else:
+                            file_name = upload_request.file_name.format(date=time.time(),
+                                                                        original_name=uploaded_file.name,
+                                                                        email=sender.email)
                     else:
-                        file_name = space_req.file_name.format(date=time.time(), original_name=uploaded_file.name,
-                                                               email=sender.email)
-                else:
-                    file_name = uploaded_file.name
+                        file_name = uploaded_file.name
 
-                google_drive_destination.upload_file(uploaded_file, file_name)
-                SenderEvent.objects.create(sender=sender,
-                                           request=space_req,
-                                           event_type=SenderEvent.EventType.FILE_UPLOADED,
-                                           data={'file_name': file_name,
-                                                 'file_type': uploaded_file.content_type,
-                                                 'size': uploaded_file.size})
-        return super().form_valid(form)
+                    google_drive_destination.upload_file(uploaded_file, file_name)
+                    SenderEvent.objects.create(sender=sender,
+                                               request=upload_request,
+                                               event_type=SenderEvent.EventType.FILE_UPLOADED,
+                                               data={'file_name': file_name,
+                                                     'file_type': uploaded_file.content_type,
+                                                     'size': uploaded_file.size})
+            return redirect(reverse('spaces'))
+        return self.render_to_response(self.get_context_data(formset=formset))
 
     def get_space(self):
         if not self._space:
@@ -79,12 +88,3 @@ class SpaceDetailFormView(FormView):
                     raise Http404(f"Sender with id '{sender_id}' not found")
 
         return self._sender
-
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        space: Space = self.get_space()
-
-        for index, space_req in enumerate(space.requests.all()):
-            form.fields[f'file_{space_req.pk}'] = forms.FileField()
-
-        return form
