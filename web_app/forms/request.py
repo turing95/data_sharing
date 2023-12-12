@@ -85,10 +85,10 @@ class RequestForm(ModelForm):
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
-        rename = self.cleaned_data.get('rename')
+        rename = self.cleaned_data.get('rename', False)
 
         if rename is False:
-            file_naming_formula = ''  # if checkbox is unchecked the naming formula is empty
+            file_naming_formula = None
         else:
             # List of valid tags
             valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
