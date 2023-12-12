@@ -45,27 +45,16 @@ class SpaceDetailFormView(FormView):
         return super().form_valid(form)
 
     def get_space(self):
-        """
-                Retrieves an active Space instance associated with the sender or public.
-                If the sender is identified, it fetches a non-public, active Space.
-                Otherwise, it retrieves a public, active Space.
-
-                Returns:
-                    Space: An instance of the Space model.
-                Raises:
-                    Http404: If no matching Space instance is found.
-                """
         if not self._space:
             space_id = self.kwargs.get('space_uuid')
             sender = self.get_sender()
 
-            # Constructing filter criteria based on sender presence
             filter_criteria = {
                 'pk': space_id,
-                'is_active': True,
-                'senders__uuid': sender.pk if sender else None,
+                'is_active': True
             }
-
+            if sender is not None:
+                filter_criteria['senders__uuid'] = sender.pk
             try:
                 self._space = Space.objects.get(**filter_criteria)
             except Space.DoesNotExist:
