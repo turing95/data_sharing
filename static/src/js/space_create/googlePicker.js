@@ -23,8 +23,6 @@ export function initGooglePicker() {
     // ... [any other initialization code]
 }
 
-//document.getElementById('authorize_button').style.visibility = 'hidden';
-document.getElementById('signout_button').style.visibility = 'hidden';
 
 /**
 * Callback after api.js is loaded.
@@ -84,7 +82,6 @@ tokenClient.callback = async (response) => {
   }
   accessToken = response.access_token;
   responseGoogle = response
-  document.getElementById('signout_button').style.visibility = 'visible';
   await createPicker();
 };
 if (!accessToken) {
@@ -92,23 +89,12 @@ if (!accessToken) {
 
 } else {
 // If the token is available, use it and proceed to create the picker
-document.getElementById('signout_button').style.visibility = 'visible';
 createPicker();
 }
 
 
 }
 
-/**
-*  Sign out the user upon button click.
-*/
-export function handleSignoutClick() {
-if (accessToken) {
-  accessToken = null;
-  google.accounts.oauth2.revoke(accessToken);
-  document.getElementById('signout_button').style.visibility = 'hidden';
-}
-}
 
 /**
 *  Create and render a Picker object for searching images.
