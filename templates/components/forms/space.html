@@ -57,11 +57,12 @@
         {% include 'components/forms/error_widget.html' with errors=form.deadline.errors %}
     </div>
     {{ requests.management_form }}
-    <div id="requests-container">
+    <div id="accordion-open" data-accordion="open">
         <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Requests</h3>
         {% for req in requests %}
             {% include "components/forms/request.html" with req=req action=action %}
         {% endfor %}
+    
     </div>
     {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}
     <div class="flex items-start mb-6">
