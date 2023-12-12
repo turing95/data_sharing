@@ -8,8 +8,12 @@
     <!-- TITLE -->
     <div class="mt-2 mb-6">
         <label for="{{ form.title.id_for_label }}"
-        class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
-        {{ form.title }}
+        class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
+        {% if action == 'edit' %}
+            <input type="text" value="{{ form.title.value }}" class="{{ form.title.field.widget.attrs.class }} cursor-not-allowed opacity-80"  title="Space Title is not editable" disabled>
+        {% else %}
+            {{ form.title }}
+        {% endif %}
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
 
