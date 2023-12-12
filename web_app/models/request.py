@@ -29,7 +29,7 @@ class UploadRequest(BaseModel):
     @property
     def google_drive_destination(self):
         from web_app.models import GenericDestination, GoogleDrive
-        generic_destination: GenericDestination = self.destinations.filter(tag=GoogleDrive.TAG).first()
+        generic_destination: GenericDestination = self.destinations.filter(tag=GoogleDrive.TAG,is_active=True).first()
         google_drive_destination: GoogleDrive = generic_destination.related_object
         return google_drive_destination
 
