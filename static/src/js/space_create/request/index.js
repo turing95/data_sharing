@@ -1,13 +1,6 @@
 import {toggleAccordion,toggleRename} from './eventHandlers.js';
 export {handleTagDropdownChange,toggleRename} from './eventHandlers.js';
-// style destination
-// bottono add request
-// fix border accordion
-// fix bug checkbox name formula checked but not showing field when error in create page
-// chek Maiusc IDs around
-// remove error sentinel in create and request
-// makemigration
-// add allowed files to DB with command from MT in clack
+
 
 export function initRequestForms() {
     // Click event for adding new request forms
@@ -32,7 +25,7 @@ function addNewRequestForm() {
     let newForm = cloneRequestForm(formCount);
 
     if (newForm) {
-        document.getElementById('requests-container').appendChild(newForm);
+        document.getElementById('accordion-open').appendChild(newForm);
         totalForms.value = formCount + 1;
     }
 }
@@ -54,19 +47,37 @@ function cloneRequestForm(formCount) {
 
 function updateElementIdentifiers(newForm, formCount) {
     // Update IDs and names for inputs, selects, textareas, and accordions
-    newForm.querySelectorAll('input, select, textarea, div[id^="accordion-open-body-"]').forEach(element => {
+    newForm.querySelectorAll('input, select, textarea, [id^="accordion-"]').forEach(element => {
         if (element.id) {
-            element.id = element.id.replace(/-\d+-/, `-${formCount}-`);
+            // Replace the form number in the ID
+            const newId = element.id.replace(/-\d+-/, `-${formCount}-`);
+            element.id = newId;
+
+            // Update accordion button target for accordion body
+            if (element.id.includes('-open-body')) {
+                const buttonSelector = `button[data-accordion-target="#${element.id.replace(/-\d+-/, '-0-')}"]`;
+                const accordionButton = newForm.querySelector(buttonSelector);
+                if (accordionButton) {
+                    accordionButton.setAttribute('data-accordion-target', `#${newId}`);
+                    accordionButton.setAttribute('aria-controls', `#${newId}`);
+                    accordionButton.addEventListener('click', toggleAccordion);
+                }
+            }
+
+            // Update aria-labelledby for accordion body
+            if (element.id.includes('-open-heading')) {
+                const accordionBodySelector = `div[aria-labelledby="${element.id.replace(/-\d+-/, '-0-')}"]`;
+                const accordionBody = newForm.querySelector(accordionBodySelector);
+                if (accordionBody) {
+                    accordionBody.setAttribute('aria-labelledby', newId);
+                }
+            }
         }
         if (element.name) {
             element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
         }
         if (element.type !== 'checkbox' && element.type !== 'radio') {
             element.value = ''; // Reset value for text inputs, textareas, and selects
-        }
-        if (element.matches('div[id^="accordion-open-body-"]')) {
-            // Additional handling for accordion elements
-            updateAccordionButton(newForm, element.id);
         }
     });
 
