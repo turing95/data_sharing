@@ -16,6 +16,12 @@ class SpaceDetailFormView(FormView):
     _space = None
     _sender = None
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['space'] = self.get_space()
+        context['sender'] = self.get_sender()
+        return context
+
     def form_valid(self, form):
         space = self.get_space()
         sender = self.get_sender()
@@ -68,7 +74,7 @@ class SpaceDetailFormView(FormView):
 
             if sender_id is not None:
                 try:
-                    self._sender = Sender.objects.get(pk=sender_id,is_active=True)
+                    self._sender = Sender.objects.get(pk=sender_id, is_active=True)
                 except Sender.DoesNotExist:
                     raise Http404(f"Sender with id '{sender_id}' not found")
 
