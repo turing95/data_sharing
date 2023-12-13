@@ -31,14 +31,15 @@
             <p class="text-sm">{{ space.instructions }}</p>
         </div>
 
-        
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}    
                     <div id="accordion-open" data-accordion="open">
 
         {% for form in formset.forms %}
         <!-- SEPARATOR -->
         <div class="flex-grow mt-4 mb-2 border-t border-gray-300"></div>
         
-            <div id="accordion-open-heading-{{forloop.counter}}">         
+            <div id="accordion-open-heading-{{forloop.counter}}">
                 
                 <div  class="flex items-center justify-between w-full font-medium bg-gray-200 border border-gray-200 border-b-3 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 ">                    
                     
@@ -117,16 +118,10 @@
                     </div>
         {% include "components/buttons/submit.html" with button_text="Confirm and upload" %}
             
+                        </form>
+
             
             
-            
-            
-        <div class="w-full max-w-4xl p-4 pl-10 mx-auto">
-            <form action="" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ formset.as_p }}
-                {% include "components/buttons/submit.html" with button_text="Confirm and upload" %}
-            </form>
-        </div>
+    
     </div>
 {% endblock %}
