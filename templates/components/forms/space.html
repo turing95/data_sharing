@@ -60,7 +60,7 @@
     <div id="accordion-open" data-accordion="open">
         <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Requests</h3>
         {% for req in requests %}
-            {% include "components/forms/request.html" with req=req action=action %}
+            {% include "components/forms/request.html" with req=req action=action counter=forloop.counter0 %}
         {% endfor %}
     
     </div>
