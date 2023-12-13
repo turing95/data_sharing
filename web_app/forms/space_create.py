@@ -84,6 +84,7 @@ class SpaceForm(ModelForm):
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
             space = self.instance
             self.fields['senders_emails'].initial = ','.join([sender.email for sender in space.senders.filter(is_active=True)])
+            self.fields['title'].disabled = True
 
     def clean_title(self):
         title = self.cleaned_data.get("title")
