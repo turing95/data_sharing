@@ -34,8 +34,12 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}    
                     <div id="accordion-open" data-accordion="open">
-
+                    {{ formset.non_form_errors  }}
+                    {{ formset.management_form }}
         {% for form in formset.forms %}
+            {{ form.errors }}
+            {{ form.request_uuid }}
+
         <!-- SEPARATOR -->
         <div class="flex-grow mt-4 mb-2 border-t border-gray-300"></div>
         
@@ -45,7 +49,7 @@
                     
                     <!-- TITLE -->
                     <div class="w-full py-1 pl-5"> 
-                        <span class="block text-xs text-gray-900 font-meidum dark:text-white"> Request {{forloop.counter}}:</span>
+                        <span class="block text-xs text-gray-900 font-meidum dark:text-white"> Request {{forloop.counter0}}:</span>
                         <span class="font-bold"> {{form.upload_request.title}}</span>
                     </div>
                     
@@ -73,7 +77,7 @@
                             {% if form.upload_request.file_types.count %}
                                 <p class="mb-2 ">Restrictions:</p>
                                 <ul class="pl-5 list-disc">
-                                        <li class="text-sm"><strong>Allowed file extensions:</strong> {{form.upload_request.file_types.count}}</li>
+                                        <li class="text-sm"><strong>Allowed file extensions:</strong> {{form.upload_request.file_types.all}}</li>
                                 </ul>
                             {% else %}
                                 <div class="text-sm"> No restrictions apply</div>
@@ -81,17 +85,16 @@
                                 
                         </div>
                     </div>
-                    
                     <div class="col-span-1 p-1">
                         <div class="flex items-center justify-center w-full">
-                            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <label for="{{ form.files.id_for_label }}" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                                     </svg>
                                     <p class="mb-2 text-sm text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                 </div>
-                                <input id="dropzone-file" type="file" class="hidden" multiple/>
+                                {{ form.files }}
                             </label>
 
                         </div>
@@ -118,8 +121,8 @@
         {% include "components/buttons/submit.html" with button_text="Confirm and upload" %}
             
                         </form>
-
-            
+    
+    
             
     
     </div>

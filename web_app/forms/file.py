@@ -2,13 +2,14 @@ from django.forms import Form
 from django.forms import BaseFormSet
 from django import forms
 
+
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 
 
 class MultipleFileField(forms.FileField):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput())
+        kwargs.setdefault("widget", MultipleFileInput(attrs={'hidden': True}))
         super().__init__(*args, **kwargs)
 
     def clean(self, data, initial=None):
@@ -18,8 +19,10 @@ class MultipleFileField(forms.FileField):
         else:
             result = single_file_clean(data, initial)
         return result
+
+
 class FileForm(Form):
-    files = MultipleFileField(label='File')
+    files = MultipleFileField(label='Files')
     request_uuid = forms.CharField(widget=forms.HiddenInput())
 
     def __init__(self, **kwargs):
