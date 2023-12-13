@@ -9,12 +9,7 @@
     <div class="mt-2 mb-6">
         <label for="{{ form.title.id_for_label }}"
         class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
-        {% if action == 'edit' %}
-            <input type="text" value="{{ form.title.value }}" class="{{ form.title.field.widget.attrs.class }} cursor-not-allowed opacity-80"  title="Space Title is not editable" disabled>
-            <div class="hidden">{{ form.title }}</div>
-        {% else %}
-            {{ form.title }}
-        {% endif %}
+        {{ form.title }}
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
 
@@ -78,18 +73,5 @@
         </div>
 
     </div>
-    {% if action == 'edit' %}    
-        <div class="sticky bottom-4">
-            <div class="flex justify-center">
-                <div id="stickyButtonContainer" class= "w-[300px] mx auto">
-                    {% include "components/buttons/submit.html" with button_text=submit_text %}
-                </div>
-            </div>
-        </div>
-    {% else %}
-        {% include "components/buttons/submit.html" with button_text=submit_text %}    
-    {% endif %}
-    
+    {% include "components/buttons/submit.html" with button_text=submit_text %}
 </form>
-
-
