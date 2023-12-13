@@ -9,7 +9,7 @@ export function handleFilesUpload(inputElement) { //function to call onchange on
     if(!tagContainer) return;
     
     // add title paragraph  
-    var titleParagraph = document.createElement('p');
+    let titleParagraph = document.createElement('p');
     titleParagraph.className = 'mb-2 text-sm';
     titleParagraph.textContent = 'Files ready to be uploaded:';
     tagContainer.appendChild(titleParagraph);
