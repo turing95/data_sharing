@@ -16,9 +16,10 @@
     </div>
 </div>
     
-    <!-- Title Bar with Background Image -->
+    <!-- Title Bar  -->
     <div class="bg-center bg-cover h-25 bg-marian-blue-800">
         <div class="flex-col max-w-4xl pl-10 mx-auto">
+            <img src="{% static 'images/logo.png' %}" alt="logo" class="w-[120px] mt-2">
             <label for="{{ space.title.id_for_label }}" class="block pt-3 text-xs font-bold text-gray-900 dark:text-white">Upload Space:</label>
             <h1 class="pb-3 text-3xl font-bold text-black">{{ space.title }}</h1>
         </div>

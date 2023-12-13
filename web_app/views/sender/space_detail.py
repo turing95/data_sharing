@@ -26,6 +26,7 @@ class SpaceDetailFormView(TemplateView):
         context['space'] = self.get_space()
         context['sender'] = self.get_sender()
         context['formset'] = self.get_formset()
+        context['remove_navbar'] = True
         return context
 
     def post(self, request, *args, **kwargs):
