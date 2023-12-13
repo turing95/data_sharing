@@ -66,7 +66,7 @@ class GoogleDrive(BaseModel):
         # Upload the file
         file = self.service.files().create(supportsAllDrives=True,body=file_metadata,
                                            media_body=media,
-                                           fields='id').execute()
+                                           fields='id,webViewLink').execute()
         return file
 
     @property

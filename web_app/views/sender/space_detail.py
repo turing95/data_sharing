@@ -50,12 +50,13 @@ class SpaceDetailFormView(TemplateView):
                     else:
                         file_name = uploaded_file.name
 
-                    google_drive_destination.upload_file(uploaded_file, file_name)
+                    google_drive_file = google_drive_destination.upload_file(uploaded_file, file_name)
+
                     SenderEvent.objects.create(sender=sender,
                                                request=upload_request,
                                                event_type=SenderEvent.EventType.FILE_UPLOADED,
                                                file=File.objects.create(original_name=uploaded_file.name,name=file_name, size=uploaded_file.size,
-                                                                        file_type=uploaded_file.content_type))
+                                                                        file_type=uploaded_file.content_type,google_drive_url=google_drive_file.get('webViewLink')))
             return redirect(reverse('spaces'))
         return self.render_to_response(self.get_context_data(formset=formset))
 
