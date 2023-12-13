@@ -9,7 +9,8 @@ class MultipleFileInput(forms.ClearableFileInput):
 
 class MultipleFileField(forms.FileField):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput(attrs={'hidden': True}))
+        kwargs.setdefault("widget", MultipleFileInput(attrs={'hidden': True,
+                                                             'onchange': ' handleFilesUpload(this)'}))
         super().__init__(*args, **kwargs)
 
     def clean(self, data, initial=None):

@@ -32,8 +32,12 @@
     {% if space_form is True %}
         {{ google_user_data |json_script:"google-user-data"  }}
         <script type="module" src="{% static 'src/js/space_create/index.js' %}" ></script>
-
     {% endif %}
+
+    {% if is_sender_detail_page is True %}            
+        <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
+    {% endif %}
+    
 <script>
     // Timezone settings
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // e.g. "America/New_York"

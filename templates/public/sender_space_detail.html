@@ -1,5 +1,7 @@
 {% extends 'public/_base.html' %}
 {% load static %}
+{% load custom_tags %}
+
 {% block public_content %}
     <!-- Top Bar -->
     <div class="p-1 bg-gray-100">
@@ -36,7 +38,9 @@
                     <div id="accordion-open" data-accordion="open">
                     {{ formset.non_form_errors  }}
                     {{ formset.management_form }}
-        {% for form in formset.forms %}
+     
+                    
+        {% for form in formset.forms reversed%}
             {{ form.errors }}
             {{ form.request_uuid }}
 
@@ -49,7 +53,7 @@
                     
                     <!-- TITLE -->
                     <div class="w-full py-1 pl-5"> 
-                        <span class="block text-xs text-gray-900 font-meidum dark:text-white"> Request {{forloop.counter0}}:</span>
+                        <span class="block text-xs text-gray-900 font-meidum dark:text-white"> Request {{forloop.counter}}:</span>
                         <span class="font-bold"> {{form.upload_request.title}}</span>
                     </div>
                     
@@ -61,7 +65,7 @@
                 </div>
             </div>
             
-            <div id="accordion-open-body-{{forloop.counter0}}" class="border border-b-2 border-gray-200" aria-labelledby="accordion-open-heading-{{forloop.counter0}}">
+            <div id="accordion-open-body-{{forloop.counter0}}" class="border border-b-2 border-gray-200 request-accordion-body" aria-labelledby="accordion-open-heading-{{forloop.counter0}}">
                 <div class="grid grid-cols-1 p-5 pt-2 border border-b-0 border-gray-200 md:grid-cols-3 dark:border-gray-700 dark:bg-gray-900">
                     <div class="col-span-1 pl-1 md:col-span-2">
                         {% if form.upload_request.instructions %}
@@ -79,11 +83,38 @@
                                 <ul class="pl-5 list-disc">
                                         <li class="text-sm"><strong>Allowed file extensions:</strong> {{form.upload_request.file_types.all}}</li>
                                 </ul>
-                            {% else %}
-                                <div class="text-sm"> No restrictions apply</div>
-                            {% endif %}
-                                
+                            {% endif %}                                
                         </div>
+
+
+                        <!-- show files already uploaded-->
+                        <div class="flex flex-col mb-2">
+                            {% get_list_of_uploaded_files_per_request sender form.upload_request as uploaded_files %}
+                            <p class="mb-2">Uploaded files:</p>
+                            {% if uploaded_files %}                                
+                                <ul>
+                                    {% for file_info in uploaded_files %}
+                                        <li class="my-1">
+                                            <!-- File Name Tag -->
+                                            <span title="{{ file_info.file.name }}" class="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 break-all max-w-[66%]">
+                                                <span class ="line-clamp-2">{{ file_info.file.name }}</span>
+                                            </span>
+                                            <!-- Date Tag -->
+                                            <span title="upload date" class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium ml-2 px-2 py-0.5">
+                                                {{ file_info.date }}
+                                            </span>
+                                            <!-- Time Tag -->
+                                            <span title="upload time" class="inline-flex items-center bg-purple-100 text-purple-800 text-xs font-medium ml-2 px-2 py-0.5">
+                                                {{ file_info.time }}
+                                            </span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-xs italic text-gray-500"> No files uploaded yet</p>
+                            {% endif %}
+                        </div>
+
                     </div>
                     <div class="col-span-1 p-1">
                         <div class="flex items-center justify-center w-full">
@@ -99,19 +130,9 @@
 
                         </div>
                         <!-- files ready to be uploaded:-->
-                        <div>
-                            <p class="mb-2 ">Files ready to be uploaded:</p>
-                            
-                            <span class="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 mb-[3px]">                            
-                                <span class="mr-2 cursor-pointer" >×</span>
-                                First File Name.pdf
-                            </span>
-                            
-                            <span class="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5">                            
-                                <span class="mr-2 cursor-pointer" >×</span>
-                                Second File Name with a very long file name that extends a bit mote than the fisrt.pdf
-                            </span>
+                        <div class="flex flex-col file-tags-container"> <!--tags container filled by js-->
                         </div>
+                        
                         
                     </div>
                 </div>
