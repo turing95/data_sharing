@@ -7,3 +7,4 @@ class File(BaseModel):
     name = models.CharField(max_length=255)
     size = models.IntegerField()
     file_type = models.CharField(max_length=255)
+    google_drive_url = models.CharField(max_length=255, null=True, blank=True)
