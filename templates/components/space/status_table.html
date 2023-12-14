@@ -21,10 +21,15 @@
         </thead>
         <tbody>
             <!-- If the space has a public link add a row with its info-->
-            {% if space.is_public %}
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal dark:text-white">
+            {% if space.is_public or space.public_upload_events %}
+            <tr class="border-b dark:bg-gray-800 dark:border-gray-700 {% if space.is_public is False %} bg-orange-100 {%else%} bg-white{% endif %}">
+                <th scope="row" class="max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal dark:text-white ">
                     Everyone (public)
+                    {% if space.is_public is False %}
+                    <div class="bg-orange-200 text-orange-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
+                        inactive
+                    </div>
+                    {% endif %}
                 </th>
                 <td class="px-3 py-2">
                     <div class="inline-flex items-center">
@@ -89,7 +94,7 @@
             <td class="px-3 py-2 ">
                 <div class="">
                     <ul>
-                        {% for req in space.requests.all %}
+                        {% for req in space.requests.all reversed%}
                         <li class="flex items-center justify-start">
                             <span class="inline-block max-w-[120px] overflow-hidden text-ellipsis whitespace-normal flex-grow mb-1 border-r border-gray-300 pr-1">
                                 {{ req.title }}

@@ -22,6 +22,10 @@ class Space(BaseModel, ActiveModel):
         from web_app.models import SenderEvent
         return SenderEvent.objects.filter(request__space=self, event_type=SenderEvent.EventType.FILE_UPLOADED)
 
+    @property
+    def public_upload_events(self):
+        return self.upload_events.filter(sender__isnull=True)
+    
     class Meta:
         constraints = [
             models.UniqueConstraint('user', 'title', name='unique_space_title')

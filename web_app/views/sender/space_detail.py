@@ -63,6 +63,8 @@ class SpaceDetailView(TemplateView):
             }
             if sender is not None:
                 filter_criteria['senders__uuid'] = sender.pk
+            else: 
+                filter_criteria['is_public'] = True
             try:
                 self._space = Space.objects.get(**filter_criteria)
             except Space.DoesNotExist:
