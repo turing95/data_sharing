@@ -1,3 +1,5 @@
+import re
+
 from google.auth.exceptions import RefreshError
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from django.core.exceptions import ValidationError
@@ -95,31 +97,20 @@ class RequestForm(ModelForm):
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
-        # List of valid tags
         valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
 
-        # Parsing the file_naming_formula for content in curly brackets
-        invalid_tags = []
-        start_index = file_naming_formula.find('{')
-        while start_index != -1:
-            end_index = file_naming_formula.find('}', start_index)
-            if end_index == -1:
-                # No closing bracket found - break out of the loop
-                break
+        # Regular expression to find content within curly brackets
+        regex_pattern = r"\{([^}]+)\}"
+        found_tags = re.findall(regex_pattern, file_naming_formula)
 
-            # Extracting the tag
-            tag = file_naming_formula[start_index + 1:end_index]
-            if tag not in valid_tags:
-                invalid_tags.append(tag)
-
-            # Update start_index for next iteration
-            start_index = file_naming_formula.find('{', end_index)
+        # Filtering out invalid tags
+        invalid_tags = [tag for tag in found_tags if tag not in valid_tags]
 
         if invalid_tags:
             error_message = 'The following tags are not valid: ' + ', '.join(invalid_tags)
             raise forms.ValidationError(error_message)
-        return file_naming_formula
 
+        return file_naming_formula
     def clean(self):
         cleaned_data = super().clean()
         rename = cleaned_data.get('rename', False)
