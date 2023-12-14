@@ -70,33 +70,7 @@
         </div>
     </section>
 
-        <div class="flex flex-col items-center mx-auto mt-2">
-            <!-- Pagination Info -->
-            <span class="text-sm text-gray-700 dark:text-gray-400">
-                Showing <span class="font-semibold text-gray-900 dark:text-white">{{ page_obj.start_index }}</span> to <span class="font-semibold text-gray-900 dark:text-white">{{ page_obj.end_index }}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ page_obj.paginator.count }}</span> Spaces
-            </span>
-            <div class="inline-flex mt-2 xs:mt-0">
-                <!-- Previous Page Button -->
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}" class="flex items-center justify-center px-3 h-6 text-xs font-medium text-black bg-white border border-black hover:bg-gray-200">
-                        <svg class="w-3 h-3 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-                        </svg>
-                        Prev
-                    </a>
-                {% endif %}
-                
-                <!-- Next Page Button -->
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="flex items-center justify-center px-3 h-6 text-xs font-medium text-black bg-white border border-black hover:bg-gray-200">
-                        Next
-                        <svg class="w-3 h-3 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
-                {% endif %}
-            </div>
-        </div>
+        {% include 'components/pagination.html' with objs_name='Spaces' %}
         {% else %}
         <div class="mt-10 flex flex-col items-center justify-center">
             <p class="text-gray-500 text-2xl text-center mb-3">You have not created any spaces yet</p>
