@@ -4,18 +4,18 @@
 
 {% block public_content %}
 
-    <!-- Top Bar -->
-    <div class="p-1 bg-gray-100">
-        <div class="flex justify-center max-w-4xl mx-auto">
-            {% if sender %}
-                <p class="pr-3 text-xs text-gray-700"> <strong>Accessing as:</strong> {{sender.email}}</p>    
-            {% else %}
-                <p class="pr-3 text-xs text-gray-700"> <strong>Accessing via public link</strong></p>
-            {% endif %}
-            <p class="text-xs text-gray-700"><strong>Invited by:</strong> {{space.user.email}}</p>
-        </div>
+<!-- Top Bar -->
+<div class="p-1 bg-gray-100">
+    <div class="flex justify-center max-w-4xl mx-auto">
+        {% if sender %}
+            <p class="pr-3 text-xs text-gray-700"> <strong>Accessing as:</strong> {{sender.email}}</p>    
+        {% else %}
+            <p class="pr-3 text-xs text-gray-700"> <strong>Accessing via public link</strong></p>
+        {% endif %}
+        <p class="text-xs text-gray-700"><strong>Invited by:</strong> {{space.user.email}}</p>
     </div>
-        
+</div>
+    
     <!-- Title Bar  -->
     <div class="bg-center bg-cover h-25 bg-marian-blue-800">
         <div class="flex-col max-w-4xl pl-10 mx-auto">
@@ -24,11 +24,7 @@
             <h1 class="pb-3 text-3xl font-bold text-black">{{ space.title }}</h1>
         </div>
     </div>
-
-    {% if sender.is_active is False %}
-        {% include 'components/custom_error.html' with slug='Inactive Link' description='At the moment, your link is not valid to access this upload space' %}
-    {%else%}
-
+    
     <!-- Main Content -->
     <div class="w-full max-w-4xl px-10 mx-auto">
         
@@ -165,5 +161,4 @@
         
         
     </div>
-{% endif %}
-{% endblock %}
+    {% endblock %}

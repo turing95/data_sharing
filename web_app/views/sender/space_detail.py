@@ -76,7 +76,7 @@ class SpaceDetailView(TemplateView):
 
             if sender_id is not None:
                 try:
-                    self._sender = Sender.objects.get(pk=sender_id)
+                    self._sender = Sender.objects.get(pk=sender_id, is_active=True)
                 except Sender.DoesNotExist:
                     raise Http404(f"Sender with id '{sender_id}' not found")
 
