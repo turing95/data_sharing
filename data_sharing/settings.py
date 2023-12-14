@@ -86,7 +86,6 @@ STATICFILES_FINDERS = ("django.contrib.staticfiles.finders.FileSystemFinder",
                        'compressor.finders.CompressorFinder',)
 
 STATICFILES_DIRS = [
-    BASE_DIR / "templates",
     BASE_DIR / "static"
 
 ]
