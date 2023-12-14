@@ -21,6 +21,7 @@
         {% if not sender_area %}
             {% include 'components/navbar.html' %}
         {% endif %}
+    {% include 'components/messages.html' %}
 
         <div {% if not sender_area %}class="pt-14"{% endif %}>
             {% block content %}
