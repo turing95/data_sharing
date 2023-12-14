@@ -95,37 +95,41 @@ class RequestForm(ModelForm):
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
-        rename = self.cleaned_data.get('rename', False)
+        # List of valid tags
+        valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
 
-        if rename is False:
-            file_naming_formula = None
-        else:
-            # List of valid tags
-            valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
+        # Parsing the file_naming_formula for content in curly brackets
+        invalid_tags = []
+        start_index = file_naming_formula.find('{')
+        while start_index != -1:
+            end_index = file_naming_formula.find('}', start_index)
+            if end_index == -1:
+                # No closing bracket found - break out of the loop
+                break
 
-            # Parsing the file_naming_formula for content in curly brackets
-            invalid_tags = []
-            start_index = file_naming_formula.find('{')
-            while start_index != -1:
-                end_index = file_naming_formula.find('}', start_index)
-                if end_index == -1:
-                    # No closing bracket found - break out of the loop
-                    break
+            # Extracting the tag
+            tag = file_naming_formula[start_index + 1:end_index]
+            if tag not in valid_tags:
+                invalid_tags.append(tag)
 
-                # Extracting the tag
-                tag = file_naming_formula[start_index + 1:end_index]
-                if tag not in valid_tags:
-                    invalid_tags.append(tag)
+            # Update start_index for next iteration
+            start_index = file_naming_formula.find('{', end_index)
 
-                # Update start_index for next iteration
-                start_index = file_naming_formula.find('{', end_index)
-
-            if invalid_tags:
-                error_message = 'The following tags are not valid: ' + ', '.join(invalid_tags)
-                raise forms.ValidationError(error_message)
-
+        if invalid_tags:
+            error_message = 'The following tags are not valid: ' + ', '.join(invalid_tags)
+            raise forms.ValidationError(error_message)
         return file_naming_formula
 
+    def clean(self):
+        cleaned_data = super().clean()
+        rename = cleaned_data.get('rename', False)
+        file_naming_formula = cleaned_data.get('file_naming_formula', None)
+        if rename is False:
+            cleaned_data.pop('file_naming_formula')
+        else:
+            if file_naming_formula is None:
+                raise forms.ValidationError('You must provide a file naming formula if you want to rename the files.')
+        return cleaned_data
 
 class DetailRequestForm(RequestForm):
     uuid = forms.UUIDField(

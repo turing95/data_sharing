@@ -36,13 +36,13 @@ class UploadRequest(BaseModel):
 
     def get_name_format_params(self, sender, original_file_name):
         format_params = {
-            'date': arrow.utcnow().date(),
-            'original_name': original_file_name,
+            'upload_date': arrow.utcnow().date(),
+            'original_file_name': original_file_name,
             'space_title': self.space.title,
             'request_title': self.title
         }
         if sender is not None:
-            format_params['email'] = sender.email
+            format_params['sender_email'] = sender.email
         return format_params
 
     def get_file_name_from_formula(self, sender, original_file_name):
