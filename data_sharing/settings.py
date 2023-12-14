@@ -56,6 +56,8 @@ MIDDLEWARE = [
     'web_app.middleware.CustomUserMiddleware',
 
 ]
+if DEBUG is True:
+    MIDDLEWARE.append('web_app.middleware.QueryLoggingMiddleware')
 
 ROOT_URLCONF = 'data_sharing.urls'
 
@@ -86,7 +88,6 @@ STATICFILES_FINDERS = ("django.contrib.staticfiles.finders.FileSystemFinder",
                        'compressor.finders.CompressorFinder',)
 
 STATICFILES_DIRS = [
-    BASE_DIR / "templates",
     BASE_DIR / "static"
 
 ]
