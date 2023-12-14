@@ -1438,6 +1438,10 @@ input:checked + .toggle-bg {
   height: 100%;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .max-h-\[42px\] {
   max-height: 42px;
 }
@@ -1528,6 +1532,10 @@ input:checked + .toggle-bg {
 
 .w-5 {
   width: 1.25rem;
+}
+
+.w-\[60px\] {
+  width: 60px;
 }
 
 .min-w-\[10px\] {
@@ -2252,6 +2260,14 @@ input:checked + .toggle-bg {
   padding-top: 0.25rem;
 }
 
+.pt-\[200px\] {
+  padding-top: 200px;
+}
+
+.pt-\[300px\] {
+  padding-top: 300px;
+}
+
 .text-left {
   text-align: left;
 }
@@ -2298,6 +2314,11 @@ input:checked + .toggle-bg {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
 }
 
 .font-bold {
@@ -2616,6 +2637,11 @@ input:checked + .toggle-bg {
 .hover\:bg-yellow-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(252 233 106 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-blue-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(28 100 242 / var(--tw-bg-opacity));
 }
 
 .hover\:text-4xl:hover {

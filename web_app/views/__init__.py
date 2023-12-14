@@ -8,3 +8,5 @@ from web_app.views.sender.space_detail import SpaceDetailView as SpaceDetailForm
 from web_app.views.receiver.space.detail import SpaceDetailFormView as SpaceDetailFormViewReceiver
 from web_app.views.receiver.terms_of_service import TermsOfServiceView
 from web_app.views.receiver.privacy_policy import PrivacyPolicyView
+from web_app.views.custom_http_errors import custom_page_not_found, custom_server_error
+

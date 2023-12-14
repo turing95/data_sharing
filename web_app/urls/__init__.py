@@ -1,7 +1,7 @@
 from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     PasswordResetView,SignupView, LoginView,SpaceDetailFormViewSender, \
-    TermsOfServiceView, PrivacyPolicyView,DeleteSpaceView
+    TermsOfServiceView, PrivacyPolicyView,DeleteSpaceView, custom_page_not_found, custom_server_error
 
 urlpatterns = [
     path('', SpacesView.as_view(), name='spaces'),
@@ -15,4 +15,6 @@ urlpatterns = [
     path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_private'),
     path('terms_of_service/', TermsOfServiceView.as_view(), name='terms_of_service'),
     path('privacy_policy/', PrivacyPolicyView.as_view(), name='privacy_policy'),
+    path("404/", custom_page_not_found),
+    path("500/", custom_server_error)
 ]
