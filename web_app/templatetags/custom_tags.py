@@ -13,9 +13,8 @@ def split(value, key):
 
 
 @register.simple_tag
-def get_count_uploaded_files(sender: Sender, upload_request: UploadRequest):
-    return SenderEvent.objects.filter(sender=sender, request=upload_request).count()
-
+def get_count_uploaded_files(upload_request: UploadRequest, sender: Sender = None):
+        return SenderEvent.objects.filter(sender=sender, request=upload_request).count()
 
 @register.simple_tag
 def get_list_of_upload_events_per_request(sender, upload_request):
