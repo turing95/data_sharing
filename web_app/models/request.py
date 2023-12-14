@@ -33,17 +33,17 @@ class UploadRequest(BaseModel):
         google_drive_destination: GoogleDrive = generic_destination.related_object
         return google_drive_destination
 
-    def get_file_name_from_formula(self, sender, origina_file_name):
+    def get_file_name_from_formula(self, sender, original_file_name):
         if self.file_naming_formula is not None:
             if sender is None:
                 file_name = self.file_naming_formula.format(date=time.time(),
-                                                            original_name=origina_file_name)
+                                                            original_name=original_file_name)
             else:
                 file_name = self.file_naming_formula.format(date=time.time(),
                                                             original_name=origina_file_name,
                                                             email=sender.email)
         else:
-            file_name = origina_file_name
+            file_name = original_file_name
         return file_name
 
 
