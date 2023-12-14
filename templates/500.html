@@ -1,18 +1,5 @@
 {% extends 'public/_base.html' %}
 {% load static %}
 {% block public_content %}
-    <div class="flex flex-col justify-between pt-[200px] px-10"> <!-- Full height screen -->
-        <div class="flex-grow"> <!-- This div will grow to take available space -->
-            <div class="flex items-center justify-center h-full"> <!-- Center content vertically and horizontally -->
-                <div class="text-center">
-                    <h1 class="text-6xl font-bold text-gray-800">500</h1>
-                    <p class="text-2xl text-gray-600">Internal Server Error</p>
-                    <p class="mt-4 text-gray-600">Something went wrong on our end. Please try again later or contact support if the problem persists.</p>
-                    <a href="{% url 'spaces' %}" class="my-2 inline-flex justify-center items-center text-white bg-marian-blue hover:bg-marian-blue-700 focus:outline-none focus:ring-marian-blue-300 font-medium text-sm px-5 py-2.5 text-center dark:bg-marian-blue-600 dark:hover:bg-marian-blue-700 dark:focus:ring-marian-blue-800 w-[180px]">
-                        Go to homepage
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div> 
+        {% include 'components/custom_error.html' with code=500 slug='Internal Server Error' description='Something went wrong on our end. Please try again later or contact support if the problem persists.' %}
 {% endblock public_content %}
