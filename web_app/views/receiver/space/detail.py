@@ -35,7 +35,7 @@ class SpaceDetailFormView(SpaceFormView):
             sender.save()
 
     def get_success_url(self):
-        return self.request.get_full_path()
+        return self.request.path # to summary page
 
     def get_space(self):
         if not self._space:
