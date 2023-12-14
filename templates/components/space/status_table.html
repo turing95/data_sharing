@@ -4,13 +4,13 @@
     <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3 min-w-[200px]">
+                <th scope="col" class="px-3 py-3 min-w-[200px]">
                     Invitee
                 </th>
-                <th scope="col" class="px-6 py-3 min-w-[200px]">
+                <th scope="col" class="px-3 py-3 min-w-[200px]">
                     Space Link
                 </th>
-                <th scope="col" class="px-6 py-3 min-w-[200px]">
+                <th scope="col" class="px-3 py-3 min-w-[200px]">
                     <div class="flex items-center">            
                         <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >Requests recap</span>
                     </div>
@@ -23,10 +23,10 @@
             <!-- If the space has a public link add a row with its info-->
             {% if space.is_public %}
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="max-w-xs px-6 py-4 font-medium text-gray-900 break-words whitespace-normal dark:text-white">
+                <th scope="row" class="max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal dark:text-white">
                     Everyone (public)
                 </th>
-                <td class="px-6 py-4">
+                <td class="px-3 py-2">
                     <div class="inline-flex items-center">
                         <a href="{% url 'sender_space_detail_public' space.uuid %}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
                             link to public space
@@ -40,7 +40,7 @@
                     
                 </div>
             </td>
-            <td class="px-6 py-4 ">
+            <td class="px-3 py-2 ">
                 <div class="">
                     <ul>
                         {% for req in space.requests.all reversed %}
@@ -62,17 +62,23 @@
 
             {% endif %}
             {% for sender in space.senders.all %}
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="max-w-xs px-6 py-4 font-medium text-gray-900 break-words whitespace-normal dark:text-white">
+            <tr class=" border-b dark:bg-gray-800 dark:border-gray-700 {% if sender.is_active is False %} bg-orange-100 {%else%} bg-white{% endif %}">
+                <th scope="row" class="max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal dark:text-white">
                     {{ sender.email }}
+                    {% if sender.is_active is False %}
+                    <div class="bg-orange-200 text-orange-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
+                        inactive
+                    </div>
+                    {% endif %}
+
                 </th>
-                <td class="px-6 py-4">
+                <td class="px-3 py-2">
                     <div class="inline-flex items-center">
                         <a href="{{ sender.link}}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
                             link to the space
                         </a>
                         <button 
-                        class="p-1 ml-2 transition-all duration-75 border border-gray-300 rounded hover:bg-gray-100 active:bg-white active:ring-2 active:ring-offset-2 active:ring-gray-300"
+                        class="p-1 ml-2 transition-all duration-75 bg-white border border-gray-300 rounded hover:bg-gray-100 active:bg-white active:ring-2 active:ring-offset-2 active:ring-gray-300"
                         onclick="navigator.clipboard.writeText('{{ sender.link}}')"
                         title="Copy Link">
                         Copy
@@ -80,7 +86,7 @@
                     
                 </div>
             </td>
-            <td class="px-6 py-4 ">
+            <td class="px-3 py-2 ">
                 <div class="">
                     <ul>
                         {% for req in space.requests.all %}
