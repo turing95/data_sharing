@@ -52,6 +52,12 @@
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // e.g. "America/New_York"
     document.cookie = "django_timezone=" + timezone;
 </script>
-
+{% if log_queries %}
+    <ul>
+        {% for query in sql_queries %}
+            <li>{{ query }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </body>
 </html>
