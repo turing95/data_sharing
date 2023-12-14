@@ -35,20 +35,9 @@ class SpaceDetailFormView(TemplateView):
             for form in formset:
                 upload_request = UploadRequest.objects.get(pk=form.cleaned_data.get('request_uuid'))
                 uploaded_files = form.cleaned_data.get('files')
+                google_drive_destination: GoogleDrive = upload_request.google_drive_destination
                 for uploaded_file in uploaded_files:
-                    # Use the stored access token
-                    google_drive_destination: GoogleDrive = upload_request.google_drive_destination
-
-                    if upload_request.file_naming_formula is not None:
-                        if sender is None:
-                            file_name = upload_request.file_naming_formula.format(date=time.time(),
-                                                                        original_name=uploaded_file.name)
-                        else:
-                            file_name = upload_request.file_naming_formula.format(date=time.time(),
-                                                                        original_name=uploaded_file.name,
-                                                                        email=sender.email)
-                    else:
-                        file_name = uploaded_file.name
+                    file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
 
                     google_drive_file = google_drive_destination.upload_file(uploaded_file, file_name)
 
