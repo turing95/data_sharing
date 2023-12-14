@@ -48,7 +48,7 @@ class SpaceDetailView(TemplateView):
                                                event_type=SenderEvent.EventType.FILE_UPLOADED,
                                                file=File.objects.create(original_name=uploaded_file.name,name=file_name, size=uploaded_file.size,
                                                                         file_type=uploaded_file.content_type,google_drive_url=google_drive_file.get('webViewLink')))
-                    messages.success(request, "Your upload has been processed successfully") #  http request here
+                    messages.success(request, "Your upload was successful") #  http request here
             return redirect(request.path)
         return self.render_to_response(self.get_context_data(formset=formset))
 
