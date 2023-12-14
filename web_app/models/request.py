@@ -1,6 +1,7 @@
 from django.db import models
 from web_app.models import BaseModel
-import time
+import arrow
+
 
 class UploadRequest(BaseModel):
     class FileType(models.TextChoices):
@@ -29,19 +30,25 @@ class UploadRequest(BaseModel):
     @property
     def google_drive_destination(self):
         from web_app.models import GenericDestination, GoogleDrive
-        generic_destination: GenericDestination = self.destinations.filter(tag=GoogleDrive.TAG,is_active=True).first()
+        generic_destination: GenericDestination = self.destinations.filter(tag=GoogleDrive.TAG, is_active=True).first()
         google_drive_destination: GoogleDrive = generic_destination.related_object
         return google_drive_destination
 
+    def get_name_format_params(self, sender, original_file_name):
+        format_params = {
+            'upload_date': arrow.utcnow().date(),
+            'original_file_name': original_file_name,
+            'space_title': self.space.title,
+            'request_title': self.title
+        }
+        if sender is not None:
+            format_params['sender_email'] = sender.email
+        return format_params
+
     def get_file_name_from_formula(self, sender, original_file_name):
+        format_params = self.get_name_format_params(sender, original_file_name)
         if self.file_naming_formula is not None:
-            if sender is None:
-                file_name = self.file_naming_formula.format(date=time.time(),
-                                                            original_name=original_file_name)
-            else:
-                file_name = self.file_naming_formula.format(date=time.time(),
-                                                            original_name=origina_file_name,
-                                                            email=sender.email)
+            file_name = self.file_naming_formula.format(**format_params)
         else:
             file_name = original_file_name
         return file_name
