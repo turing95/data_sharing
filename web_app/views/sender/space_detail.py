@@ -11,7 +11,7 @@ from web_app.models import Space, GenericDestination, GoogleDrive, Sender, Sende
 from web_app.forms import FileForm, BaseFileFormSet
 
 
-class SpaceDetailFormView(TemplateView):
+class SpaceDetailView(TemplateView):
     template_name = "public/sender_space_detail.html"
 
     _space = None
