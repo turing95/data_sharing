@@ -52,5 +52,6 @@ class SpaceDetailFormView(SpaceFormView):
     def get_formset(self):
         formset = DetailRequestFormSet(self.request.POST or None,
                                        instance=self.get_space(),
+                                       queryset=self.get_space().requests.order_by('created_at'),
                                        form_kwargs={'access_token': self.request.custom_user.google_token.token})
         return formset
