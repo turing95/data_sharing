@@ -42,6 +42,10 @@
     {% if sender_area %}            
         <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
     {% endif %}
+
+    {% if messages %}
+        <script src="{% static 'src/js/message_box.js' %}"></script>
+    {% endif %}
     
 <script>
     // Timezone settings

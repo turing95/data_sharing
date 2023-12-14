@@ -35,7 +35,11 @@
 
                         <!-- Sender email, can be unknown for public links-->
                         <td class="px-6 py-4">
-                            {{ event.sender.email }}
+                            {% if event.sender %}
+                                {{ event.sender.email }}
+                            {% else %}
+                                <p class='italic'>from public ink</p>
+                            {% endif %}
                         </td>
                         <!-- Request title, with link to destination folder with popover with name of folder-->
                         <td class="px-6 py-4">
