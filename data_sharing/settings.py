@@ -56,6 +56,8 @@ MIDDLEWARE = [
     'web_app.middleware.CustomUserMiddleware',
 
 ]
+if DEBUG is True:
+    MIDDLEWARE.append('web_app.middleware.QueryLoggingMiddleware')
 
 ROOT_URLCONF = 'data_sharing.urls'
 
