@@ -1394,6 +1394,14 @@ input:checked + .toggle-bg {
   height: 100%;
 }
 
+.h-56 {
+  height: 14rem;
+}
+
+.h-\[20px\] {
+  height: 20px;
+}
+
 .max-h-\[42px\] {
   max-height: 42px;
 }
@@ -1472,6 +1480,14 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
+}
+
+.w-56 {
+  width: 14rem;
+}
+
+.w-\[20px\] {
+  width: 20px;
 }
 
 .min-w-\[10px\] {
@@ -1582,6 +1598,16 @@ input:checked + .toggle-bg {
 
 .transform-none {
   transform: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 .cursor-default {
@@ -1993,12 +2019,29 @@ input:checked + .toggle-bg {
   background-color: rgb(254 236 220 / var(--tw-bg-opacity));
 }
 
+.bg-marian-blue-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(87 120 218 / var(--tw-bg-opacity));
+}
+
 .bg-cover {
   background-size: cover;
 }
 
 .bg-center {
   background-position: center;
+}
+
+.fill-blue-600 {
+  fill: #1C64F2;
+}
+
+.fill-marian-blue-500 {
+  fill: #1e3888;
+}
+
+.fill-marian-blue {
+  fill: #1e3888;
 }
 
 .p-1 {
@@ -2103,6 +2146,11 @@ input:checked + .toggle-bg {
 .py-\[4px\] {
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .pb-3 {
@@ -2350,6 +2398,16 @@ input:checked + .toggle-bg {
 .text-orange-800 {
   --tw-text-opacity: 1;
   color: rgb(138 44 13 / var(--tw-text-opacity));
+}
+
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
+.text-marian-blue-700 {
+  --tw-text-opacity: 1;
+  color: rgb(87 120 218 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -2824,6 +2882,11 @@ input:checked + .toggle-bg {
   background-color: rgb(43 80 194 / var(--tw-bg-opacity));
 }
 
+:is(.dark .dark\:bg-marian-blue-700) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(87 120 218 / var(--tw-bg-opacity));
+}
+
 :is(.dark .dark\:text-blue-400) {
   --tw-text-opacity: 1;
   color: rgb(118 169 250 / var(--tw-text-opacity));
@@ -2867,6 +2930,11 @@ input:checked + .toggle-bg {
 :is(.dark .dark\:text-yellow-400) {
   --tw-text-opacity: 1;
   color: rgb(227 160 8 / var(--tw-text-opacity));
+}
+
+:is(.dark .dark\:text-gray-600) {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 
 :is(.dark .dark\:placeholder-gray-400)::-moz-placeholder {

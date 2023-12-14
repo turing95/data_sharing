@@ -46,6 +46,11 @@
     {% if messages %}
         <script src="{% static 'src/js/message_box.js' %}"></script>
     {% endif %}
+
+    <script type="module">
+        import { activateLoading } from './src/js/submit_button.js';
+        window.activateLoading = activateLoading;
+    </script>
     
 <script>
     // Timezone settings
