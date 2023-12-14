@@ -33,7 +33,7 @@
                         </a>
                         <button 
                         class="p-1 ml-2 transition-all duration-75 border border-gray-300 rounded hover:bg-gray-100 active:bg-white active:ring-2 active:ring-offset-2 active:ring-gray-300"
-                        onclick="navigator.clipboard.writeText('{% url 'sender_space_detail_public' space.uuid %}')"
+                        onclick="navigator.clipboard.writeText('{{ request.build_absolute_uri }}{% url 'sender_space_detail_public' space.uuid %}')"
                         title="Copy Link">
                         Copy
                     </button>
