@@ -18,11 +18,11 @@
 </head>
 <body class="flex flex-col min-h-screen">
     <div class="flex-grow">
-        {% if remove_navbar|default:"False" == "False" %}
+        {% if not sender_area %}
             {% include 'components/navbar.html' %}
         {% endif %}
 
-        <div class="{% if remove_navbar|default:"False" == "False" %}pt-14{% endif %}">
+        <div {% if not sender_area %}class="pt-14"{% endif %}>
             {% block content %}
             {% endblock %}
         </div>
@@ -33,12 +33,12 @@
     {{ config_data |json_script:"config-data"  }}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-    {% if space_form is True %}
+    {% if space_form %}
         {{ google_user_data |json_script:"google-user-data"  }}
         <script type="module" src="{% static 'src/js/space_create/index.js' %}" ></script>
     {% endif %}
 
-    {% if is_sender_detail_page is True %}            
+    {% if sender_area %}            
         <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
     {% endif %}
     
