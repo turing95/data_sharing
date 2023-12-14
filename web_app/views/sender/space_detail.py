@@ -20,13 +20,12 @@ class SpaceDetailFormView(TemplateView):
         return FileFormset(self.request.POST or None, self.request.FILES or None,
                            form_kwargs={'space': self.get_space()})
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self,formset=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['is_sender_detail_page'] = True
+        context['sender_area'] = True
         context['space'] = self.get_space()
         context['sender'] = self.get_sender()
-        context['formset'] = self.get_formset()
-        context['remove_navbar'] = True
+        context['formset'] = formset or self.get_formset()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -36,20 +35,9 @@ class SpaceDetailFormView(TemplateView):
             for form in formset:
                 upload_request = UploadRequest.objects.get(pk=form.cleaned_data.get('request_uuid'))
                 uploaded_files = form.cleaned_data.get('files')
+                google_drive_destination: GoogleDrive = upload_request.google_drive_destination
                 for uploaded_file in uploaded_files:
-                    # Use the stored access token
-                    google_drive_destination: GoogleDrive = upload_request.google_drive_destination
-
-                    if upload_request.file_naming_formula is not None:
-                        if sender is None:
-                            file_name = upload_request.file_naming_formula.format(date=time.time(),
-                                                                        original_name=uploaded_file.name)
-                        else:
-                            file_name = upload_request.file_naming_formula.format(date=time.time(),
-                                                                        original_name=uploaded_file.name,
-                                                                        email=sender.email)
-                    else:
-                        file_name = uploaded_file.name
+                    file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
 
                     google_drive_file = google_drive_destination.upload_file(uploaded_file, file_name)
 
@@ -58,7 +46,7 @@ class SpaceDetailFormView(TemplateView):
                                                event_type=SenderEvent.EventType.FILE_UPLOADED,
                                                file=File.objects.create(original_name=uploaded_file.name,name=file_name, size=uploaded_file.size,
                                                                         file_type=uploaded_file.content_type,google_drive_url=google_drive_file.get('webViewLink')))
-            return redirect(reverse('spaces'))
+            return redirect(request.path)
         return self.render_to_response(self.get_context_data(formset=formset))
 
     def get_space(self):
