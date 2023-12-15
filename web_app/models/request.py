@@ -39,10 +39,9 @@ class UploadRequest(BaseModel):
             'upload_date': arrow.utcnow().date(),
             'original_file_name': original_file_name,
             'space_title': self.space.title,
-            'request_title': self.title
+            'request_title': self.title,
+            'sender_email': sender.email if sender is not None else ''
         }
-        if sender is not None:
-            format_params['sender_email'] = sender.email
         return format_params
 
     def get_file_name_from_formula(self, sender, original_file_name):

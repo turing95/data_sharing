@@ -20,7 +20,10 @@ class Space(BaseModel, ActiveModel):
     @property
     def upload_events(self):
         from web_app.models import SenderEvent
-        return SenderEvent.objects.filter(request__space=self, event_type=SenderEvent.EventType.FILE_UPLOADED)
+        return SenderEvent.objects.filter(
+            request__space=self,
+            event_type=SenderEvent.EventType.FILE_UPLOADED
+        ).select_related('sender').prefetch_related('request','request__destinations')
 
     @property
     def public_upload_events(self):
