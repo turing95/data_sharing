@@ -1,5 +1,5 @@
 
-export function activateLoading(button) {
+function activateLoading(button) {
         const form = button.form; // Assuming the button is within the form
         if (form.checkValidity()) {
             const spinner = button.querySelector('.spinner');
@@ -13,4 +13,12 @@ export function activateLoading(button) {
                 button.disabled = true;
             }, 10);
         }
-    }
+}
+export function initSubmitButtons() {
+    const submitButtons = document.querySelectorAll('button[type="submit"]');
+    submitButtons.forEach((button) => {
+        button.onclick = function() {
+            activateLoading(button);
+        }
+    });
+}

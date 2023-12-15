@@ -43,14 +43,8 @@
         <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
     {% endif %}
 
-    {% if messages %}
-        <script src="{% static 'src/js/message_box.js' %}"></script>
-    {% endif %}
+        <script type="module" src="{% static 'src/js/index.js' %}"></script>
 
-    <script type="module">
-        import { activateLoading } from './src/js/submit_button.js';
-        window.activateLoading = activateLoading;
-    </script>
     
 <script>
     // Timezone settings

@@ -1,4 +1,3 @@
-
 function closeMessage() {
     let messageBar = document.getElementById('messageBar');
     if (messageBar) {
@@ -10,7 +9,14 @@ function closeMessage() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    // Automatically close the message bar after 5 seconds
+export function initMessageBox() {
+    let messageBox = document.getElementById('messageBox');
+    if (messageBox) {
+        let button = messageBox.querySelector('button[type="button"]');
+        button.addEventListener('click', function() {
+            closeMessage();
+        });
+    }
     setTimeout(closeMessage, 5000);
-});
+
+}
