@@ -4,7 +4,7 @@
 
 <form id="space-form" action="" method="POST">
     {% csrf_token %}
-
+    {{ form.as_p }}
     <!-- TITLE -->
     <div class="mt-2 mb-6">
         <label for="{{ form.title.id_for_label }}"

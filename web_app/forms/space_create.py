@@ -8,6 +8,7 @@ from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware
 from datetime import timezone
 import arrow
+from web_app.forms.toggle_widget import ToggleSwitchWidget
 
 
 class CommaSeparatedEmailField(forms.CharField):
@@ -33,6 +34,16 @@ class CommaSeparatedEmailField(forms.CharField):
 
 
 class SpaceForm(ModelForm):
+    toggle_switch = forms.BooleanField(
+        widget=ToggleSwitchWidget(
+            color_on='green', 
+            color_off='orange', 
+            text_on='siiii', 
+            text_off='Nooooo'
+        ),
+        required=False
+    )
+    
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
                                                           'class': css_classes.text_space_title_input}),
                             label='Space title')

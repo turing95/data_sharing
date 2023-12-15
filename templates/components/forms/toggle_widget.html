@@ -1,0 +1,30 @@
+<label class="relative inline-flex items-center cursor-pointer">
+    <div id="toggle-background-{{ widget.name }}" class="bg-{{ widget.color_off }}-200 rounded-full text-sm px-[6px] py-[2px] inline-flex items-center justify-center">
+
+        <input type="checkbox" id="toggle-checkbox-{{ widget.name }}" name="{{ widget.name }}" value="1" class="sr-only peer" {% if widget.value %} checked {% endif %}>
+        <div class="w-9 h-5 bg-{{ widget.color_off }}-400 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-{{ widget.color_on }}-300 dark:peer-focus:ring-{{ widget.color_on }}-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-gray-300 after:content-[''] after:absolute after:top-[6px] after:start-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{ widget.color_on }}-500"></div>
+
+        <!-- Text for "active" state -->
+        <div class="mb-1 ml-2 text-{{ widget.color_on }}-800 align-middle peer-checked:inline-block hidden">{{ widget.text_on }}</div>
+
+        <!-- Text for "inactive" state -->
+        <div class="mb-1 ml-2 text-{{ widget.color_off }}-800 align-middle peer-checked:hidden inline-block">{{ widget.text_off }}</div>
+    </div>
+</label>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var checkbox = document.getElementById('toggle-checkbox-{{ widget.name }}');
+        var background = document.getElementById('toggle-background-{{ widget.name }}');
+
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                background.classList.remove('bg-{{ widget.color_off }}-200');
+                background.classList.add('bg-{{ widget.color_on }}-200');
+            } else {
+                background.classList.remove('bg-{{ widget.color_on }}-200');
+                background.classList.add('bg-{{ widget.color_off }}-200');
+            }
+        });
+    });
+</script>
