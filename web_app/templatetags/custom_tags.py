@@ -12,9 +12,21 @@ def split(value, key):
     return value.split(key)
 
 
+@register.filter(name='get_message_color')
+def get_message_color(value):
+    colors = {
+        "success": "green",
+        "error": "red",
+        "warning": "yellow",
+        "info": "blue",
+    }
+    return colors.get(value, "gray")
+
+
 @register.simple_tag
 def get_count_uploaded_files(upload_request: UploadRequest, sender: Sender = None):
-        return SenderEvent.objects.filter(sender=sender, request=upload_request).count()
+    return SenderEvent.objects.filter(sender=sender, request=upload_request).count()
+
 
 @register.simple_tag
 def get_list_of_upload_events_per_request(sender, upload_request):
