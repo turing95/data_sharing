@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from web_app.models import Space
 from web_app.forms import css_classes
+from web_app.forms.widgets import ToggleWidget
 from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -38,9 +39,7 @@ class SpaceForm(ModelForm):
                             label='Space title')
 
     is_active = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={
-            'class': css_classes.checkbox_input,
-        }),
+        widget=ToggleWidget(color='red'),
         required=False,
         label='Activate space'
     )

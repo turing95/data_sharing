@@ -116,7 +116,7 @@ class RequestForm(ModelForm):
         rename = cleaned_data.get('rename', False)
         file_naming_formula = cleaned_data.get('file_naming_formula', None)
         if rename is False:
-            cleaned_data.pop('file_naming_formula')
+            cleaned_data['file_naming_formula'] = None
         else:
             if file_naming_formula is None:
                 raise forms.ValidationError('You must provide a file naming formula if you want to rename the files.')
