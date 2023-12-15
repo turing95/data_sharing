@@ -40,7 +40,14 @@ def get_list_of_upload_events_per_request(sender, upload_request):
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
-def render_toggle(sender, name, value):
+def render_sender_activate_toggle(sender, name, value):
     return ToggleWidget().get_context(name, value,
                                       {'hx-post': reverse('toggle_sender_active', kwargs={'sender_uuid': sender.pk}),
-                                       'hx-trigger': 'click','hx-swap': 'outerHTML'})
+                                       'hx-trigger': 'click', 'hx-swap': 'outerHTML'})
+
+
+@register.inclusion_tag("forms/widgets/toggle.html")
+def render_space_activate_toggle(space, name, value):
+    return ToggleWidget().get_context(name, value,
+                                      {'hx-post': reverse('toggle_space_active', kwargs={'space_uuid': space.pk}),
+                                       'hx-trigger': 'click', 'hx-swap': 'outerHTML'})
