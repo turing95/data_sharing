@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_tags %} <!-- for toggle buttons-->
 
     <!-- TITLE -->
     <div class="mt-2 mb-3">
@@ -32,6 +33,7 @@
                 </div>
                 {% endif %}
             </div>
+            {% build_toggle %}
         </div>
 
         <!-- created at-->
