@@ -1,5 +1,6 @@
 from django import template
 from web_app.models import Sender, SenderEvent, UploadRequest, File
+from web_app.forms.widgets.toggle import ToggleWidget
 
 register = template.Library()
 
@@ -37,21 +38,6 @@ def get_list_of_upload_events_per_request(sender, upload_request):
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
-def build_toggle(**kwargs):
+def render_toggle(name, value):
     """ to render a toggle button in a template"""
-    # Define default values for the keys
-    defaults = {
-        'color_on': 'blue',
-        'color_off': 'gray',
-        'label_on': '',
-        'label_off': '',
-        'label_colored': False,
-        'soft_off_label': False,
-        'label_wrap': False,
-        'label_wrap_mono': False
-    }
-
-    # Update defaults with provided kwargs
-    defaults.update(kwargs)
-
-    return defaults
+    return ToggleWidget().get_context(name, value, {})
