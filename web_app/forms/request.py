@@ -7,6 +7,7 @@ from web_app.models import Space, UploadRequest, FileType, GoogleDrive
 from web_app.forms import css_classes
 from django import forms
 from django.utils.safestring import mark_safe
+from web_app.forms.widgets import ToggleWidget
 
 
 class FileTypeChoiceField(forms.ModelMultipleChoiceField):
@@ -65,14 +66,29 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(),
         label="Destination folder")
 
-    rename = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={
-            'class': css_classes.checkbox_input,
-            'onclick': 'toggleRename(this);'
-        }),
+    rename =  forms.BooleanField(
+        widget=ToggleWidget(color_on='marian-blue',
+                            color_off='gray',
+                            label_on='apply custom file names',
+                            label_off='do not apply custom file names',
+                            label_colored=False,
+                            soft_off_label=True,
+                            label_wrap=False,
+                            label_wrap_mono=False,
+                            attrs={
+                                    'onclick':'toggleRename(this)'
+                                    }),
         required=False,
         label='Apply custom file name'
     )
+    # forms.BooleanField(
+    #     widget=forms.CheckboxInput(attrs={
+    #         'class': css_classes.checkbox_input,
+    #         'onclick': 'toggleRename(this);'
+    #     }),
+    #     required=False,
+    #     label='Apply custom file name'
+    # )
 
     file_types = FileTypeChoiceField(
         queryset=FileType.objects.all(),

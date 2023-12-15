@@ -32,7 +32,7 @@
                 <div class="flex items-center h-5">
             {{ form.is_public }}
                                     <label for="{{ form.is_public.id_for_label }}"
-        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_public.label }}</label>
+        class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_public.label }}</label>
         </div>
 
     </div>
@@ -67,14 +67,15 @@
     
     </div>
     {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}
-    <div class="flex items-start mb-6">
-        <div class="flex items-center h-5">
-            {{ form.is_active }}
-                    <label for="{{ form.is_active.id_for_label }}"
-        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_active.label }}</label>
+    
+    <div class="mb-6">
+        <div class="flex-col">
+            <label for="{{ form.is_active.id_for_label }}"
+            class="text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_active.label }}</label>
+            <div>{{ form.is_active }}</div>        
         </div>
-
     </div>
+
     {% if action == 'edit' %}    
     <div class="sticky bottom-4">
         <div class="flex justify-center">

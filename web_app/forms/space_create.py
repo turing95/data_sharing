@@ -39,14 +39,28 @@ class SpaceForm(ModelForm):
                             label='Space title')
 
     is_active = forms.BooleanField(
-        widget=ToggleWidget(color='red'),
+        widget=ToggleWidget(color_on='marian-blue',
+                            color_off='gray',
+                            label_on='active at creation',
+                            label_off='inactive at creation',
+                            label_colored=False,
+                            soft_off_label=True,
+                            label_wrap=False,
+                            label_wrap_mono=False),
         required=False,
         label='Activate space'
     )
-    is_public = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={
-            'class': css_classes.checkbox_input,
-        }),
+  
+  
+    is_public =  forms.BooleanField(
+        widget=ToggleWidget(color_on='marian-blue',
+                            color_off='gray',
+                            label_on='generate public link',
+                            label_off='do not generate public link',
+                            label_colored=False,
+                            soft_off_label=True,
+                            label_wrap=False,
+                            label_wrap_mono=False),
         required=False,
         label='Generate public link'
     )
