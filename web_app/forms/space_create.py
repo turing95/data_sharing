@@ -39,28 +39,17 @@ class SpaceForm(ModelForm):
                             label='Space title')
 
     is_active = forms.BooleanField(
-        widget=ToggleWidget(color_on='marian-blue',
-                            color_off='gray',
-                            label_on='active at creation',
+        widget=ToggleWidget(label_on='active at creation',
                             label_off='inactive at creation',
-                            label_colored=False,
-                            soft_off_label=True,
-                            label_wrap=False,
-                            label_wrap_mono=False),
+                            soft_off_label=True),
         required=False,
         label='Activate space'
     )
-  
-  
-    is_public =  forms.BooleanField(
-        widget=ToggleWidget(color_on='marian-blue',
-                            color_off='gray',
-                            label_on='generate public link',
+
+    is_public = forms.BooleanField(
+        widget=ToggleWidget(label_on='generate public link',
                             label_off='do not generate public link',
-                            label_colored=False,
-                            soft_off_label=True,
-                            label_wrap=False,
-                            label_wrap_mono=False),
+                            soft_off_label=True),
         required=False,
         label='Generate public link'
     )
@@ -96,7 +85,8 @@ class SpaceForm(ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
             space = self.instance
-            self.fields['senders_emails'].initial = ','.join([sender.email for sender in space.senders.filter(is_active=True)])
+            self.fields['senders_emails'].initial = ','.join(
+                [sender.email for sender in space.senders.filter(is_active=True)])
             self.fields['title'].disabled = True
 
     def clean_title(self):

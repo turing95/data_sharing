@@ -66,18 +66,12 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(),
         label="Destination folder")
 
-    rename =  forms.BooleanField(
-        widget=ToggleWidget(color_on='marian-blue',
-                            color_off='gray',
-                            label_on='apply custom file names',
+    rename = forms.BooleanField(
+        widget=ToggleWidget(label_on='apply custom file names',
                             label_off='do not apply custom file names',
-                            label_colored=False,
-                            soft_off_label=True,
-                            label_wrap=False,
-                            label_wrap_mono=False,
                             attrs={
-                                    'onclick':'toggleRename(this)'
-                                    }),
+                                'onclick': 'toggleRename(this)'
+                            }),
         required=False,
         label='Apply custom file name'
     )
@@ -97,8 +91,6 @@ class RequestForm(ModelForm):
         label='File Types',
         help_text='Select one or more file types.'
     )
-    
-  
 
     class Meta:
         model = UploadRequest
@@ -108,7 +100,7 @@ class RequestForm(ModelForm):
                 attrs={'placeholder': 'Add request-specific instructions here',
                        'rows': 3,
                        'class': css_classes.text_area,
-                       'label': 'Instructions'}) 
+                       'label': 'Instructions'})
         }
 
     def clean_file_naming_formula(self):
@@ -127,6 +119,7 @@ class RequestForm(ModelForm):
             raise forms.ValidationError(error_message)
 
         return file_naming_formula
+
     def clean(self):
         cleaned_data = super().clean()
         rename = cleaned_data.get('rename', False)
@@ -137,6 +130,7 @@ class RequestForm(ModelForm):
             if file_naming_formula is None:
                 raise forms.ValidationError('You must provide a file naming formula if you want to rename the files.')
         return cleaned_data
+
 
 class DetailRequestForm(RequestForm):
     uuid = forms.UUIDField(

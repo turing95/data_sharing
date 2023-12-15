@@ -8,7 +8,6 @@ class Sender(BaseModel, ActiveModel):
     email = models.CharField(max_length=50)
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='senders')
 
-
     @property
     def requests(self):
         return self.space.requests.all()
