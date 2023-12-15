@@ -2068,6 +2068,26 @@ input:checked + .toggle-bg {
   background-color: rgb(255 138 76 / var(--tw-bg-opacity));
 }
 
+.bg-marian-blue-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(12 23 55 / var(--tw-bg-opacity));
+}
+
+.bg-marian-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 56 136 / var(--tw-bg-opacity));
+}
+
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 82 82 / var(--tw-bg-opacity));
+}
+
+.bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+}
+
 .bg-cover {
   background-size: cover;
 }
@@ -2471,6 +2491,11 @@ input:checked + .toggle-bg {
 .text-marian-blue-700 {
   --tw-text-opacity: 1;
   color: rgb(87 120 218 / var(--tw-text-opacity));
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -3113,6 +3138,11 @@ input:checked + .toggle-bg {
 .peer:checked ~ .peer-checked\:bg-green-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(14 159 110 / var(--tw-bg-opacity));
+}
+
+.peer:checked ~ .peer-checked\:bg-marian-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 56 136 / var(--tw-bg-opacity));
 }
 
 .peer:checked ~ .peer-checked\:after\:translate-x-full::after {
