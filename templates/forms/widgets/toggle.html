@@ -1,29 +1,26 @@
 
     <label class="relative inline-flex items-center cursor-pointer h-7">
+
         {% include 'django/forms/widgets/input.html' %}
 
-            <div class="w-9 h-5 ml-1 bg-{{ widget.color_off }}-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-gray-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:left-[6px] after:-translate-y-1/2 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{ widget.color_on }}-500"></div>
-            
-            {% if widget.label_wrap and widget.label_wrap_mono %}
-                <!-- mono wrap on -->
-                <div class="absolute inset-0 bg-{{widget.color_on}}-300 z-[-1] peer-checked:inline-block hidden rounded-full"></div>
-                <!-- mono wrap off -->
-                <div class="absolute inset-0 bg-{{widget.color_off}}-300 z-[-1] peer-checked:hidden rounded-full"></div>
-            {% endif %}
-            <!-- Text for "active" state -->
-            <span class="ml-2 text-sm text-{{ widget.label_on_color }}-800 align-middle peer-checked:inline-block hidden {% if widget.label_wrap %} bg-{{widget.color_on}}-300 rounded-full px-[6px] inline-block items-center justify-center{%endif%}">{{ widget.label_on}}</span>                             
+        <div class="w-9 h-5 ml-1 bg-{{ widget.color_off }}-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-gray-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:left-[6px] after:-translate-y-1/2 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{ widget.color_on }}-500"></div>
+        
+        {% if widget.label_wrap and widget.label_wrap_mono %}
+            <!-- mono wrap on -->
+            <div class="absolute inset-0 bg-{{widget.color_on}}-300 z-[-1] peer-checked:inline-block hidden rounded-full"></div>
+            <!-- mono wrap off -->
+            <div class="absolute inset-0 bg-{{widget.color_off}}-300 z-[-1] peer-checked:hidden rounded-full"></div>
+        {% endif %}
+        <!-- Text for "active" state -->
+        <span class="ml-2 text-sm text-{{ widget.label_on_color }}-800 align-middle peer-checked:inline-block hidden {% if widget.label_wrap %} bg-{{widget.color_on}}-300 rounded-full px-[6px] inline-block items-center justify-center{%endif%}">{{ widget.label_on}}</span>                             
 
 
-            <!-- Text for "inactive" state -->
-            <span class="inline-block ml-2 text-sm {% if widget.soft_off_label %} text-{{ widget.label_off_color }}-400 {% else %} text-{{ widget.label_off_color }}-800 {% endif %} align-middle peer-checked:hidden {% if widget.label_wrap %} bg-{{widget.color_off}}-300 rounded-full px-[6px] inline-block items-center justify-center{%endif%}">{{ widget.label_off}}</span>   
+        <!-- Text for "inactive" state -->
+        <span class="inline-block ml-2 text-sm {% if widget.soft_off_label %} text-{{ widget.label_off_color }}-400 {% else %} text-{{ widget.label_off_color }}-800 {% endif %} align-middle peer-checked:hidden {% if widget.label_wrap %} bg-{{widget.color_off}}-300 rounded-full px-[6px] inline-block items-center justify-center{%endif%}">{{ widget.label_off}}</span>   
 
     </label>
 
-{% if false %}
-<div class="hidden">
-    <div class="bg-gray-400 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:bg-green-500"></div>
-</div>
-
+{% if False %}
 <!-- Hidden div with specific color classes for purge -->
 <div class="hidden">
     <div id="background_off" class="bg-gray-200 bg-red-200 bg-orange-200 bg-green-200 bg-blue-200 bg-marian-blue-200"></div>
@@ -32,6 +29,4 @@
     <div id="soft_label_off" class="text-gray-400 text-red-400 text-orange-400 text-green-400 text-blue-400 text-marian-blue-400"></div>
     <div id="background_wrap" class="bg-gray-300 bg-red-300 bg-orange-300 bg-green-300 bg-blue-300 bg-marian-blue-300"></div>
 </div>
-<!--<div class="w-9 h-5 bg-{{ widget.color_off }}-400 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-{{ widget.color_on }}-300 dark:peer-focus:ring-{{ widget.color_on }}-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-gray-300 after:content-[''] after:absolute after:top-[6px] after:start-[8px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{ widget.color_on }}-500"></div>
--->
 {% endif %}
