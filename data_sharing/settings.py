@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -58,6 +59,7 @@ MIDDLEWARE = [
 ]
 if DEBUG is True:
     MIDDLEWARE.append('web_app.middleware.QueryLoggingMiddleware')
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 ROOT_URLCONF = 'data_sharing.urls'
 
