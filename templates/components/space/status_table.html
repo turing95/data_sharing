@@ -38,7 +38,7 @@
                         </a>
                         <button 
                         class="p-1 ml-2 transition-all duration-75 border border-gray-300 rounded hover:bg-gray-100 active:bg-white active:ring-2 active:ring-offset-2 active:ring-gray-300"
-                        onclick="navigator.clipboard.writeText('{{ request.build_absolute_uri }}{% url 'sender_space_detail_public' space.uuid %}')"
+                        onclick="navigator.clipboard.writeText('{{ request.get_host }}{% url 'sender_space_detail_public' space.uuid %}')"
                         title="Copy Link">
                         Copy
                     </button>
@@ -79,12 +79,14 @@
                 </th>
                 <td class="px-3 py-2">
                     <div class="inline-flex items-center">
-                        <a href="{{ sender.link}}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
+                        {% url 'sender_space_detail_private' space.uuid sender.uuid as sender_path%}
+
+                        <a href="{{ sender_path }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
                             link to the space
                         </a>
                         <button 
                         class="p-1 ml-2 transition-all duration-75 bg-white border border-gray-300 rounded hover:bg-gray-100 active:bg-white active:ring-2 active:ring-offset-2 active:ring-gray-300"
-                        onclick="navigator.clipboard.writeText('{{ sender.link}}')"
+                        onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
                         title="Copy Link">
                         Copy
                     </button>

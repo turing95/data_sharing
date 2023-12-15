@@ -8,9 +8,6 @@ class Sender(BaseModel, ActiveModel):
     email = models.CharField(max_length=50)
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='senders')
 
-    @property
-    def link(self):
-        return reverse('sender_space_detail_private', kwargs={'space_uuid': self.space.uuid, 'sender_uuid': self.uuid})
 
     @property
     def requests(self):
