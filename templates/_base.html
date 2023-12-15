@@ -16,7 +16,7 @@
 
 
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <div class="flex-grow">
         {% if not sender_area %}
             {% include 'components/navbar.html' %}

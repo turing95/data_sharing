@@ -81,61 +81,7 @@
 
             {% endif %}
             {% for sender in space.senders.all %}
-            <tr class=" border-b dark:bg-gray-800 dark:border-gray-700 {% if sender.is_active is False %} bg-orange-100 {%else%} bg-white{% endif %}">
-                <th scope="row" class="max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal dark:text-white">
-                    {{ sender.email }}
-                </th>
-                {% url 'sender_space_detail_private' space.uuid sender.uuid as sender_path%}
-                <td class="px-3 py-2">
-                    <div class="inline-flex items-center">
-                        <a href="{{ sender_path}}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
-                            space link
-                        </a>
-                        <button 
-                            class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
-                            onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
-                            title="Copy Link">
-                            <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
-                        </button>
-          
-                    </div>
-                </td>
-                <td class="px-3 py-2">
-
-                        {% if sender.is_active is False %}
-                            {% render_toggle 'sender_toggle' False %}
-
-                            <div class="bg-orange-200 text-orange-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                                inactive
-                            </div>
-                        {% else %}
-                            {% render_toggle 'sender_toggle' True %}
-
-                            <div class="bg-green-200 text-green-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                                active
-                            </div>
-                        {% endif %}
-   
-                </td>
-            <td class="px-3 py-2 ">
-                <div class="">
-                    <ul>
-                        {% for req in space.requests.all reversed%}
-                        <li class="flex items-center justify-start">
-                            <span class="inline-block max-w-[120px] overflow-hidden text-ellipsis whitespace-normal flex-grow mb-1 border-r border-gray-300 pr-1">
-                                {{ req.title }}
-                            </span>
-                            <span class="flex-shrink-0 ml-1 text-center" title="number of uploaded files">
-                                {% get_count_uploaded_files req sender %}
-                            </span>
-                        </li>
-                        {% endfor %}
-                            
-                        </ul>
-                    </div>
-                </td>
-                
-            </tr>
+            {% include 'components/space/sender_row.html' with sender=sender space=space %}
             {% endfor %}
             
         </tbody>
