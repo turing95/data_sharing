@@ -11,6 +11,6 @@ def toggle_space_active(request, space_uuid):
     space.save()
     return render(
         request,
-        'components/space/status.html',
+        'private/space_detail/components/status.html',
         {'space': space}
     )
