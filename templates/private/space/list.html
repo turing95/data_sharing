@@ -3,34 +3,36 @@
     {% if page_obj %}
 
     <!-- title and new space button -->
-    <div class="flex justify-between items-center mb-2">
+    <div class="flex items-center justify-between mb-2">
         <h1 class="text-2xl font-bold text-gray-800">Your Spaces</h1>
-        <a href="{% url 'space_create' %}" class="px-6 py-2.5 bg-marian-blue-600 font-medium text-sm text-white leading-tight uppercase shadow-md hover:bg-marian-blue-700 hover:shadow-lg focus:outline-none focus:ring-0 active:bg-marian-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+        <a href="{% url 'space_create' %}" cslass="px-6 py-2.5 bg-marian-blue-600 font-medium text-sm text-white leading-tight uppercase shadow-md hover:bg-marian-blue-700 hover:shadow-lg focus:outline-none focus:ring-0 active:bg-marian-blue-800 active:shadow-lg transition duration-150 ease-in-out">
             New space
         </a>            
     </div>
     
-    <div class="w-full border-t border-gray-300 py-1 mb-2"></div>
+    <div class="w-full py-1 mb-2 border-t border-gray-300"></div>
     
-    <section class="text-gray-600 body-font flex">
+    <section class="flex text-gray-600 body-font">
         <div class="container px-5 mx-auto">
             <div class="flex flex-wrap -m-4">
                 <!-- For Loop for spaces cards -->
                 {% for space in page_obj %}
-                <div class="xl:w-1/3 md:w-1/2 p-4 flex w-full"> 
-                    <div class="border border-gray-200 p-5 shadow-md flex flex-col grow"> <!-- card -->               
-                        <div class="flex justify-end mt-auto">
-                                    {% include 'private/space/components/delete_form.html' with space=space %}
+                <div class="flex w-full p-4 xl:w-1/3 md:w-1/2"> 
+                    <div class="flex flex-col p-5 border border-gray-200 shadow-md grow"> <!-- card --> 
 
+                        <!-- space settings dropdown -->              
+                        <div class="flex justify-end mt-auto">
+                            {% include 'private/space/components/space_settings_dropdown.html' with space=space space_num=forloop.counter %}
                         </div>
+
                         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ space.title }}</h5>
                         
                         
-                        <div class="line-clamp-3 text-sm text-gray-500 font-medium border-l-2 border-gray-300 pl-2 my-2">
+                        <div class="pl-2 my-2 text-sm font-medium text-gray-500 border-l-2 border-gray-300 line-clamp-3">
                             {{ space.instructions }}                                
                         </div>
                         
-                        <div class="flex items-left justify-between">
+                        <div class="flex justify-between items-left">
                             {% if space.is_active %}
                             <div class="bg-green-200 text-green-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
                                 active
@@ -42,11 +44,11 @@
                             {% endif %}
                         </div>
                         
-                        <div class="flex  justify-end mt-auto">
-                            <a href="{% url 'receiver_space_detail' space.uuid %}" class="m-2 px-3 py-2 bg-marian-blue-600 font-medium text-sm text-white leading-tight uppercase shadow-md hover:bg-marian-blue-700 hover:shadow-lg focus:outline-none focus:ring-0 active:bg-marian-blue-800 active:shadow-lg transition duration-150 ease-in-out flex">
+                        <div class="flex justify-end mt-auto">
+                            <a href="{% url 'receiver_space_detail' space.uuid %}" class="flex px-3 py-2 m-2 text-sm font-medium leading-tight text-white uppercase transition duration-150 ease-in-out shadow-md bg-marian-blue-600 hover:bg-marian-blue-700 hover:shadow-lg focus:outline-none focus:ring-0 active:bg-marian-blue-800 active:shadow-lg">
                                 Summary
                             </a>
-                            <a href="{% url 'receiver_space_detail' space.uuid %}?status=edit" class="m-2 px-3 py-2 bg-marian-blue-600 font-medium text-sm text-white leading-tight uppercase shadow-md hover:bg-marian-blue-700 hover:shadow-lg focus:outline-none focus:ring-0 active:bg-marian-blue-800 active:shadow-lg transition duration-150 ease-in-out flex">
+                            <a href="{% url 'receiver_space_detail' space.uuid %}?status=edit" class="flex px-3 py-2 m-2 text-sm font-medium leading-tight text-white uppercase transition duration-150 ease-in-out shadow-md bg-marian-blue-600 hover:bg-marian-blue-700 hover:shadow-lg focus:outline-none focus:ring-0 active:bg-marian-blue-800 active:shadow-lg">
                                 Edit
                             </a>
                         </div> 
@@ -64,8 +66,8 @@
 
         {% include 'components/pagination.html' with objs_name='Spaces' %}
         {% else %}
-        <div class="mt-10 flex flex-col items-center justify-center">
-            <p class="text-gray-500 text-2xl text-center mb-3">You have not created any spaces yet</p>
+        <div class="flex flex-col items-center justify-center mt-10">
+            <p class="mb-3 text-2xl text-center text-gray-500">You have not created any spaces yet</p>
             <a href="{% url 'space_create' %}" class="px-6 py-2.5 bg-marian-blue-600 font-medium text-sm text-white leading-tight uppercase  shadow-md hover:bg-marian-blue-700 hover:shadow-lg focus:outline-none focus:ring-0 active:bg-marian-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                 Create your first space
             </a>  
