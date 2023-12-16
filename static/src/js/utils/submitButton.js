@@ -18,7 +18,12 @@ export function initSubmitButtons() {
     const submitButtons = document.querySelectorAll('button[type="submit"]');
     submitButtons.forEach((button) => {
         button.onclick = function() {
+            if (!button.classList.contains('delete-space-button')) {
             activateLoading(button);
+
+            }else{
+                return confirm('Are you sure you want to delete this?');
+            }
         }
     });
 }
