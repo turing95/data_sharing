@@ -12,6 +12,6 @@ def toggle_sender_active(request, sender_uuid):
     sender.save()
     return render(
         request,
-        'components/space/sender_row.html',
+        'private/space/detail/components/sender_row.html',
         {'sender': sender, 'space': sender.space}
     )

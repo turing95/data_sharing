@@ -67,8 +67,8 @@ class RequestForm(ModelForm):
         label="Destination folder")
 
     rename = forms.BooleanField(
-        widget=ToggleWidget(label_on='apply custom file names',
-                            label_off='do not apply custom file names',
+        widget=ToggleWidget(label_on='Enabled custom file names',
+                            label_off='Disabled custom file names',
                             attrs={
                                 'onclick': 'toggleRename(this)'
                             }),

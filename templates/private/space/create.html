@@ -5,5 +5,5 @@
 <!-- Display non-field errors -->
     {{ file_name_tags |json_script:"file-name-tags"  }}
 
-{% include 'components/forms/space.html' with action='create' %}
+{% include 'private/space/components/form.html' with action='create' %}
 {% endblock %}

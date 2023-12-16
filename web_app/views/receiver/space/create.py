@@ -8,7 +8,7 @@ from web_app.tasks.notifications import sender_invite
 
 
 class SpaceFormView(LoginRequiredMixin, FormView):
-    template_name = "private/space_create.html"
+    template_name = "private/space/create.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
     _space = None  # Placeholder for the cached object

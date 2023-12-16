@@ -39,16 +39,16 @@ class SpaceForm(ModelForm):
                             label='Space title')
 
     is_active = forms.BooleanField(
-        widget=ToggleWidget(label_on='active at creation',
-                            label_off='inactive at creation',
+        widget=ToggleWidget(label_on='Active',
+                            label_off='Inactive',
                             soft_off_label=True),
         required=False,
         label='Activate space'
     )
 
     is_public = forms.BooleanField(
-        widget=ToggleWidget(label_on='generate public link',
-                            label_off='do not generate public link',
+        widget=ToggleWidget(label_on='Enabled public link',
+                            label_off='Disabled public link',
                             soft_off_label=True),
         required=False,
         label='Generate public link'

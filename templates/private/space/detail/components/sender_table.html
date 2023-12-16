@@ -81,7 +81,7 @@
 
             {% endif %}
             {% for sender in space.senders.all %}
-            {% include 'components/space/sender_row.html' with sender=sender space=space %}
+            {% include 'private/space/detail/components/sender_row.html' with sender=sender space=space %}
             {% endfor %}
             
         </tbody>
