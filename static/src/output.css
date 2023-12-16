@@ -2598,6 +2598,10 @@ input:checked + .toggle-bg {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
+.first-letter\:inline-flex::first-letter {
+  display: inline-flex;
+}
+
 .after\:absolute::after {
   content: var(--tw-content);
   position: absolute;
