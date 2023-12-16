@@ -2,18 +2,8 @@
 <div class= "flex mb-3" hx-target="this">
             Status: 
             <div class="flex justify-between ml-1 items-left">
-                {% if space.is_active %}
-                    {% render_space_activate_toggle space 'space_toggle' True %}
-
-                <div class="bg-green-200 text-green-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                    active
-                </div>
-                {% else %}
-                    {% render_space_activate_toggle space 'space_toggle' False %}
-
-                <div class="bg-yellow-200 text-yellow-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                    paused
-                </div>
-                {% endif %}
+                    {% render_space_activate_toggle space 'space_toggle' space.is_active %}
+                
+                
             </div>
 </div>
