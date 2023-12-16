@@ -10,7 +10,7 @@ class ToggleWidget(forms.CheckboxInput):
         self.label_on = kwargs.pop('label_on', '')
         self.label_off = kwargs.pop('label_off', '')
         self.label_colored = kwargs.pop('label_colored', False)
-        self.soft_off_label = kwargs.pop('soft_off_label', False)
+        self.soft_off_label = kwargs.pop('soft_off_label', True)
         self.label_wrap = kwargs.pop('label_wrap', False)
         self.label_wrap_mono = kwargs.pop('label_wrap_mono', False)
         super().__init__(*args, **kwargs)
