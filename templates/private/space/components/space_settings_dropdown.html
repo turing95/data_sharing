@@ -13,17 +13,7 @@
                 onclick="this.nextElementSibling.querySelector('.delete-space-button').click();">
                     Delete
             </button>
-                <div class=hidden> {% include 'private/space/components/delete_form.html' with space=space hide_icon=True%}<div>
-            </li>
-            <li>
-                <a href="{% url 'receiver_space_detail' space.uuid %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    Summary
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'receiver_space_detail' space.uuid %}?status=edit"  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                   Edit
-                </a>
+                <div class=hidden> {% include 'private/space/components/delete_form.html' with space=space hide_icon=True%}</div>
             </li>
         </ul>
     </div>
