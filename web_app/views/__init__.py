@@ -9,6 +9,7 @@ from web_app.views.receiver.terms_of_service import TermsOfServiceView
 from web_app.views.receiver.privacy_policy import PrivacyPolicyView
 from web_app.views.sender.space_detail import SpaceDetailView as SpaceDetailFormViewSender
 from web_app.views.api.sender import toggle_sender_active
+from web_app.views.receiver.settings import SettingsView
 from web_app.views.api.space import toggle_space_active
 from web_app.views.custom_http_errors import custom_page_not_found, custom_server_error
 
