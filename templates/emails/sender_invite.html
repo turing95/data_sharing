@@ -1,1 +1,6 @@
-{{ sender.email }}
+{% extends "emails/_base.html" %}
+{% block content %}
+    <p>Hi {{ sender.email }},</p>
+    <a href="{{ calendar_url }}">Add the deadline to calendar</a>
+    
+{% endblock %}

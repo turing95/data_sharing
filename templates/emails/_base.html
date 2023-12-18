@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Email Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333333;
+            background-color: #ffffff;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .footer {
+            font-size: 12px;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <!-- Logo or Header Text -->
+            <h1>FileFetch</h1>
+        </div>
+        <div class="content">
+            <!-- Email Content -->
+            {% block content %}{% endblock %}
+        </div>
+        <div class="footer">
+            <!-- Footer Information -->
+            <p>&copy; 2023} Company Name. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
