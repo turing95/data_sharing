@@ -44,6 +44,12 @@ class SpaceForm(ModelForm):
         required=False,
         label='Activate space'
     )
+    notify_deadline = forms.BooleanField(
+        widget=ToggleWidget(label_on='Notify',
+                            label_off='Notify'),
+        required=False,
+        label='Notify deadline'
+    )
 
     is_public = forms.BooleanField(
         widget=ToggleWidget(label_on='Enabled public link',
@@ -69,7 +75,7 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline']
+        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline']
         widgets = {
             'instructions': forms.Textarea(
                 attrs={'placeholder': 'Explain what files you are requesting',

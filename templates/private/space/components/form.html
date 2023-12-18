@@ -55,8 +55,13 @@
         class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
         {{ form.deadline }}
         {% include 'components/forms/error_widget.html' with errors=form.deadline.errors %}
-    </div>
+        <label for="{{ form.notify_deadline.id_for_label }}"
+        class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.notify_deadline.label }} </label>
+        {{ form.notify_deadline }}
+        {% include 'components/forms/error_widget.html' with errors=form.notify_deadline.errors %}
+        
 
+    </div>
 
     {{ requests.management_form }}
     <div id="accordion-open" data-accordion="open">

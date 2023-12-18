@@ -11,10 +11,9 @@ def sender_invite(sender_pk):
     context = {
         'sender': sender,
     }
-    if sender.space.notify_deadline is True:
-        calendar_url, ics_content = sender.space.get_deadline_url_ics(sender)
+    calendar_url, ics_content = sender.space.get_deadline_url_ics(sender)
 
-        context['calendar_url'] = calendar_url
+    context['calendar_url'] = calendar_url
 
     email_html = render_to_string('emails/sender_invite.html', context)
     from_email = 'marco1491995@gmail.com'  # TODO: change to config
@@ -28,7 +27,7 @@ def sender_invite(sender_pk):
         headers={'Return-Path': from_email}
     )
     msg.attach_alternative(email_html, 'text/html')
-    if sender.space.notify_deadline is True:
+    if ics_content is not None:
         msg.attach('event.ics', ics_content, 'text/calendar')
 
     msg.send()
