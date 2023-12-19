@@ -12,6 +12,7 @@
         {{ form.title }}
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
+    {% include 'components/tooltip.html' with content=form.title.field.tooltip%}
 
     <!-- INVITATIONS -->
     <div class="mb-6">

@@ -32,11 +32,16 @@ class CommaSeparatedEmailField(forms.CharField):
             else:
                 raise ValidationError(f"{', '.join(invalid_emails)} are not valid email addresses")
 
+class TitleField(forms.CharField):
+    def __init__(self, *args, **kwargs):
+        self.tooltip = kwargs.pop('tooltip', None)
+        super().__init__(*args, **kwargs)
 
 class SpaceForm(ModelForm):
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
+    title = TitleField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
                                                           'class': css_classes.text_space_title_input}),
-                            label='Space title')
+                            label='Space title',
+                            tooltip='This is the title of your space. It will be visible to your invitees.')
 
     is_active = forms.BooleanField(
         widget=ToggleWidget(label_on='Active',
