@@ -63,15 +63,7 @@
 
     </div>
 
-    {{ requests.management_form }}
-    <div id="accordion-open" data-accordion="open">
-        <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Requests</h3>
-        {% for req in requests %}
-            {% include "private/space/components/request_form.html" with req=req action=action counter=forloop.counter0 %}
-        {% endfor %}
-    
-    </div>
-    {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}
+        {% include 'private/space/components/request_form.html' with action=action %}
     
     <div class="mb-6">
         <div class="flex-col">

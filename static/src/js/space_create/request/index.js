@@ -1,4 +1,5 @@
-import {toggleAccordion,toggleRename} from './eventHandlers.js';
+import {toggleAccordion, toggleRename} from './eventHandlers.js';
+
 export {handleTagDropdownChange,toggleRename} from './eventHandlers.js';
 
 
@@ -47,6 +48,7 @@ function cloneRequestForm(formCount) {
 
 function updateElementIdentifiers(newForm, formCount) {
     // Update IDs and names for inputs, selects, textareas, and accordions
+    newForm.id = newForm.id.replace(/-\d+/, `-${formCount}`);
     newForm.querySelectorAll('input, select, textarea, [id^="accordion-"]').forEach(element => {
         if (element.id) {
             // Replace the form number in the ID
@@ -109,12 +111,32 @@ function setupCloseButton(newForm) {
     if (closeButton) {
         closeButton.classList.remove('invisible');
         closeButton.addEventListener('click', function() {
-            this.closest('.request-form').remove();
+            let form = this.closest('.request-form')
+            let forms = document.querySelectorAll('.request-form');
+            let lastForm = forms[forms.length - 1];
+            if (form !== lastForm) {
+                    // Extract the form number from the ID of the form being removed
+                let formNumber = parseInt(form.id.replace('form-', ''));
+                // Update the IDs of the lastForm
+                updateElementIdentifiers(lastForm, formNumber);
+            }
+            form.remove();
             const totalForms = document.getElementById('id_requests-TOTAL_FORMS');
             if (totalForms) {
                 totalForms.value = parseInt(totalForms.value) - 1;
             }
         });
+    }
+}
+function check_delete(form){
+    let checkboxElement = form.querySelector('input[id^="id_requests-"][id$="-DELETE"]');
+
+    if (checkboxElement) {
+        // Checkbox found, you can now manipulate it
+        checkboxElement.checked = true;
+    } else {
+        // No checkbox found with the given pattern
+        console.log("No checkbox found with the given pattern");
     }
 }
 

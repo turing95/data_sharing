@@ -81,4 +81,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
     def handle_formset(formset):
         formset.save()
         for req in formset:
+            print(req.__dict__)
+        for req in formset:
+            print(req.instance)
             GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))

@@ -2,7 +2,7 @@ from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     PasswordResetView, SignupView, LoginView, SpaceDetailFormViewSender, \
     TermsOfServiceView, PrivacyPolicyView, DeleteSpaceView, SettingsView, \
-    custom_page_not_found, custom_server_error, toggle_sender_active, toggle_space_active
+    custom_page_not_found, custom_server_error, toggle_sender_active, toggle_space_active,delete_request
 
 urlpatterns = [
     path('', SpacesView.as_view(), name='spaces'),
@@ -17,6 +17,8 @@ urlpatterns = [
     path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(),
          name='sender_space_detail_private'),
     path('spaces(<uuid:space_uuid>/toggle_active/', toggle_space_active, name='toggle_space_active'),
+    path('requests/delete/<uuid:request_uuid>/', delete_request, name='request_delete'),
+
     path('senders(<uuid:sender_uuid>/toggle_active/', toggle_sender_active, name='toggle_sender_active'),
     path('terms_of_service/', TermsOfServiceView.as_view(), name='terms_of_service'),
     path('privacy_policy/', PrivacyPolicyView.as_view(), name='privacy_policy'),
