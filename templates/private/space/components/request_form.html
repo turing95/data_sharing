@@ -1,4 +1,4 @@
-    <div id="accordion-open" data-accordion="open" hx-target="this">
+<div id="accordion-open" data-accordion="open" hx-target="this">
         {{ requests.management_form }}
 
         <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Requests</h3>
@@ -22,10 +22,16 @@
             
             
             <div  class="flex items-center justify-between w-full font-medium bg-gray-200 border border-gray-200 border-b-3 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 ">       
-                {% if action == 'edit' and forloop.counter0 > 0 %}
+                {% if action == 'edit' %}
+                    {% if requests.total_form_count > 1 %}
                     <button type="button"  hx-confirm="Are you sure you want to delete this?" hx-post="{% url 'request_delete' req.instance.uuid %}"  hx-swap="outerHTML"  class="h-full px-4 transition duration-300 ease-in-out bg-transparent border-none cursor-pointer request-close-button hover:bg-gray-300 active:bg-gray-400" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+                        {% else %}
+                        <button type="button" class="invisible h-full px-4 transition duration-300 ease-in-out bg-transparent border-none cursor-pointer request-close-button hover:bg-gray-300 active:bg-gray-400" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                        {% endif %}
 
                 {% else %}
                     <button type="button" class="invisible h-full px-4 transition duration-300 ease-in-out bg-transparent border-none cursor-pointer request-close-button hover:bg-gray-300 active:bg-gray-400" aria-label="Close">
@@ -117,12 +123,9 @@
         </div>
 </div>
         {% endfor %}
-        {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}
+        
 
     </div>
-
-
-
 
 
 
