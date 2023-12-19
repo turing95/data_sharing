@@ -110,6 +110,9 @@ function setupCloseButton(newForm) {
     const closeButton = newForm.querySelector('.request-close-button');
     if (closeButton) {
         closeButton.classList.remove('invisible');
+        closeButton.removeAttribute('hx-confirm')
+        closeButton.removeAttribute('hx-swap')
+        closeButton.removeAttribute('hx-post')
         closeButton.addEventListener('click', function() {
             let form = this.closest('.request-form')
             let forms = document.querySelectorAll('.request-form');
