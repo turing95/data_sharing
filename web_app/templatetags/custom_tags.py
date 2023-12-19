@@ -48,6 +48,19 @@ def render_sender_activate_toggle(sender, name, value):
 
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_space_activate_toggle(space, name, value):
-    return ToggleWidget(label_on='Active',label_off='Inactive').get_context(name, value,
-                                      {'hx-post': reverse('toggle_space_active', kwargs={'space_uuid': space.pk}),
-                                       'hx-trigger': 'click', 'hx-swap': 'outerHTML'})
+    return ToggleWidget(label_on='Active', label_off='Inactive').get_context(name, value,
+                                                                             {'hx-post': reverse('toggle_space_active',
+                                                                                                 kwargs={
+                                                                                                     'space_uuid': space.pk}),
+                                                                              'hx-swap': 'outerHTML'})
+
+
+@register.inclusion_tag("forms/widgets/toggle.html")
+def render_space_public_link_toggle(space, name, value):
+    return ToggleWidget(label_on='Enabled public link', label_off='Disabled public link').get_context(name, value,
+                                                                                                      {
+                                                                                                          'hx-post': reverse(
+                                                                                                              'toggle_space_public',
+                                                                                                              kwargs={
+                                                                                                                  'space_uuid': space.pk}),
+                                                                                                          'hx-swap': 'outerHTML'})
