@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.http import HttpResponse
 from django.views.decorators.http import require_POST
-
+from utils.render_block import render_block_to_string
 from web_app.models import Space
 
 
@@ -9,8 +9,4 @@ def toggle_space_active(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
     space.is_active = not space.is_active
     space.save()
-    return render(
-        request,
-        'private/space/detail/components/status.html',
-        {'space': space}
-    )
+    return HttpResponse(render_block_to_string('private/space/detail/components/summary.html', 'details', {'space': space},request))

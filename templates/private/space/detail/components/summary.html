@@ -16,12 +16,19 @@
 
     <!-- DETAILS -->
     <div class="mb-6 mt-2 pl-2.5" >
-
-
+    {% block details %}
+        <div hx-target="this">
 
 
         <!-- Active / inactive -->
-        {% include 'private/space/detail/components/status.html' %}
+        <div class= "flex mb-3" >
+            Status: 
+            <div class="flex justify-between ml-1 items-left">
+                    {% render_space_activate_toggle space 'space_toggle' space.is_active %}
+                
+                
+            </div>
+        </div>
 
         <!-- created at-->
         <div class="mb-2 text-base">
@@ -58,8 +65,8 @@
         <h3 class="mb-3 text-xl font-semibold">Status Summary</h3>
         {% include "private/space/detail/components/sender_table.html" %}
     </div>
-
-    
+    </div>
+    {% endblock %}
 
     <!-- EVENTS HISTORY -->
     <div class="mt-6 mb-6">
