@@ -76,12 +76,15 @@
     </div>
     </div>
     {% endblock %}
+    <div class="mt-6 mb-6" hx-get="{% url 'upload_events' space.uuid %}" hx-trigger="intersect" hx-target="#history-table">
+    <h3 class="mb-3 text-xl font-semibold">Uploads History</h3>
+        <div id="history-table">
+            
+        </div>
+        </div>
 
-    <!-- EVENTS HISTORY -->
-    <div class="mt-6 mb-6">
-        <h3 class="mb-3 text-xl font-semibold">Uploads History</h3>
-        {% include "private/space/detail/components/history_table.html" %}
-    </div>
+
+
 
     
 </div>
