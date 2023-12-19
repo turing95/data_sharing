@@ -7,8 +7,9 @@ from web_app.forms import DetailRequestFormSet
 @require_POST
 def delete_request(request, request_uuid):
     req = UploadRequest.objects.get(pk=request_uuid)
+    req.is_deleted = True
+    req.save()
     space = req.space
-    req.delete()
     print(space.requests.count())
     space.refresh_from_db()
     print(space.requests.count())

@@ -1,9 +1,9 @@
 from django.db import models
-from web_app.models import BaseModel
+from web_app.models import BaseModel,DeleteModel
 import arrow
 
 
-class UploadRequest(BaseModel):
+class UploadRequest(BaseModel,DeleteModel):
     class FileType(models.TextChoices):
         CSV = 'CSV', 'CSV'
         PDF = 'PDF', 'PDF'

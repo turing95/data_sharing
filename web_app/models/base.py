@@ -21,6 +21,13 @@ class ActiveModel(models.Model):
         abstract = True
 
 
+class DeleteModel(models.Model):
+    is_deleted = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+
 class PolymorphicRelationModel(BaseModel):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.UUIDField()

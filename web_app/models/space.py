@@ -1,12 +1,10 @@
-from datetime import timedelta
-
 from django.db import models
-from web_app.models import BaseModel, ActiveModel
+from web_app.models import BaseModel, ActiveModel, DeleteModel
 from django.conf import settings
 import pytz
 
 
-class Space(BaseModel, ActiveModel):
+class Space(BaseModel, ActiveModel,DeleteModel):
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
 
     title = models.CharField(max_length=250)
