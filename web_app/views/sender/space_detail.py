@@ -59,7 +59,8 @@ class SpaceDetailView(TemplateView):
 
             filter_criteria = {
                 'pk': space_id,
-                'is_active': True
+                'is_active': True,
+                'is_deleted': False
             }
             if sender is not None:
                 filter_criteria['senders__uuid'] = sender.pk
