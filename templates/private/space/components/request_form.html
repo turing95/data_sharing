@@ -96,6 +96,13 @@
                                 {{ req.file_naming_formula }}
                                 {% include 'components/forms/error_widget.html' with errors=req.file_naming_formula.errors %}
                                 {{ req.file_naming_formula.help_text }}
+                                
+
+                                {% include 'components/tooltip.html' with content=req.file_naming_formula.help_text target=req.file_naming_formula.label num=forloop.counter0 %}
+
+                            
+
+
                             </div>
                             <!-- Dropdown for Valid Tags -->
                             {{ req.available_tags_dropdown }}

@@ -49,7 +49,7 @@ function cloneRequestForm(formCount) {
 function updateElementIdentifiers(newForm, formCount) {
     // Update IDs and names for inputs, selects, textareas, and accordions
     newForm.id = newForm.id.replace(/-\d+/, `-${formCount}`);
-    newForm.querySelectorAll('input, select, textarea, [id^="accordion-"]').forEach(element => {
+    newForm.querySelectorAll('input, select, textarea, [id^="accordion-"], [id^="tooltip-"], [data-tooltip-target^="tooltip-"]').forEach(element => {
         if (element.id) {
             // Replace the form number in the ID
             const newId = element.id.replace(/-\d+-/, `-${formCount}-`);
@@ -74,6 +74,20 @@ function updateElementIdentifiers(newForm, formCount) {
                     accordionBody.setAttribute('aria-labelledby', newId);
                 }
             }
+
+            // New logic for tooltip
+            if (element.id.startsWith('tooltip-')) {
+                const newId = element.id.replace(/-\d+-/, `-${formCount}-`);
+                element.id = newId;
+
+                // Update the tooltip-target for the corresponding button
+                const buttonSelector = `button[data-tooltip-target="${element.id.replace(/-\d+-/, '-0-')}"]`;
+                const tooltipButton = newForm.querySelector(buttonSelector);
+                if (tooltipButton) {
+                    tooltipButton.setAttribute('data-tooltip-target', `${newId}`);
+                }
+            }
+
         }
         if (element.name) {
             element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
@@ -81,6 +95,7 @@ function updateElementIdentifiers(newForm, formCount) {
         if (element.type !== 'checkbox' && element.type !== 'radio') {
             element.value = ''; // Reset value for text inputs, textareas, and selects
         }
+
     });
 
     // Update labels

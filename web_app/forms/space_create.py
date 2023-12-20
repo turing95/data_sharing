@@ -7,6 +7,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware
+from django.utils.safestring import mark_safe
 from datetime import timezone
 import arrow
 
@@ -32,16 +33,13 @@ class CommaSeparatedEmailField(forms.CharField):
             else:
                 raise ValidationError(f"{', '.join(invalid_emails)} are not valid email addresses")
 
-class TitleField(forms.CharField):
-    def __init__(self, *args, **kwargs):
-        self.tooltip = kwargs.pop('tooltip', None)
-        super().__init__(*args, **kwargs)
+
 
 class SpaceForm(ModelForm):
-    title = TitleField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
                                                           'class': css_classes.text_space_title_input}),
                             label='Space title',
-                            tooltip='This is the title of your space. It will be visible to your invitees.')
+                            help_text=mark_safe('<strong>Space title</strong> is the name of your space.'))
 
     is_active = forms.BooleanField(
         widget=ToggleWidget(label_on='Active',
@@ -65,7 +63,8 @@ class SpaceForm(ModelForm):
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
         label='Senders emails',
-        required=False
+        required=False,
+        help_text=mark_safe('<strong>Invitees</strong> each invitee will have its private access link to your space and will upload its own files. Invitees do not see each others and do not need an account.')
     )
     email_input = forms.CharField(required=False,
                                   widget=forms.TextInput(
