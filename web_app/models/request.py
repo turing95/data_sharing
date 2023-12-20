@@ -54,6 +54,7 @@ class UploadRequest(BaseModel,DeleteModel):
 
 
 class FileType(BaseModel):
+    slug = models.CharField(max_length=50, unique=True)
     extension = models.CharField(max_length=50, unique=True)
     upload_requests = models.ManyToManyField('UploadRequest', through='UploadRequestFileType')
 

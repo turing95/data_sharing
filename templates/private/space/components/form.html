@@ -12,7 +12,7 @@
         {{ form.title }}
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
-    {% include 'components/tooltip.html' with content=form.title.help_text target=form.title.label %}
+    {% include 'components/tooltip.html' with content=form.title.help_text target=form.title.name %}
 
     <!-- INVITATIONS -->
     <div class="mb-6">
@@ -28,7 +28,7 @@
             <!-- Hidden input for form submission -->
             {{ form.senders_emails }}
 
-            {% include 'components/tooltip.html' with content=form.senders_emails.help_text target=form.senders_emails.label%}
+            {% include 'components/tooltip.html' with content=form.senders_emails.help_text target=form.senders_emails.name%}
 
         </div>
 
