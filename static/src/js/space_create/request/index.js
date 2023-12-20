@@ -49,7 +49,7 @@ function cloneRequestForm(formCount) {
 function updateElementIdentifiers(newForm, formCount) {
     // Update IDs and names for inputs, selects, textareas, and accordions
     newForm.id = newForm.id.replace(/-\d+/, `-${formCount}`);
-    newForm.querySelectorAll('input, select, textarea, [id^="accordion-"], [id^="tooltip-"], [data-tooltip-target^="tooltip-"]').forEach(element => {
+    newForm.querySelectorAll('input, select, textarea, [id^="accordion-"], [id^="tooltip-"]').forEach(element => {
         if (element.id) {
             // Replace the form number in the ID
             const newId = element.id.replace(/-\d+-/, `-${formCount}-`);
@@ -86,6 +86,11 @@ function updateElementIdentifiers(newForm, formCount) {
                 if (tooltipButton) {
                     tooltipButton.setAttribute('data-tooltip-target', `${newId}`);
                 }
+                // set the tooltip content element
+                const $targetEl = buttonSelector
+                // set the element that trigger the tooltip 
+                const $triggerEl = tooltipButton
+                const tooltip = new Tooltip($targetEl, $triggerEl);
             }
 
         }

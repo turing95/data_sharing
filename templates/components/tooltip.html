@@ -1,10 +1,9 @@
 {% load static %}
-<button data-tooltip-target="tooltip-{{num|default:0}}-{{target}}" data-tooltip-style="light" type="button"
-class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group"
->
+<button data-tooltip-target="tooltip-{{num|default:0}}-{{target}}" data-tooltip-style="light" data-tooltip-placement={{placement|default:"top"}} type="button"
+class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group">
 <img src="{% static 'images/icons/tooltip.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
 </button>
 
-<div id="tooltip-{{num|default:0}}-{{target}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+<div id="tooltip-{{num|default:0}}-{{target}}" role="tooltip" class="max-w-[300px] absolute z-50 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip -translate-x-1/2 left-1/2 bottom-full mb-2">
     {{ content }}
 </div>

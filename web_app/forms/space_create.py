@@ -39,7 +39,9 @@ class SpaceForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
                                                           'class': css_classes.text_space_title_input}),
                             label='Space title',
-                            help_text=mark_safe('<strong>Space title</strong> is the name of your space.'))
+                            help_text = mark_safe('''   <p class="mb-1 font-bold">Space Title</p> 
+                                                        <p>It will be displayed to your invitees.</p>
+                                                '''))
 
     is_active = forms.BooleanField(
         widget=ToggleWidget(label_on='Active',
@@ -53,23 +55,27 @@ class SpaceForm(ModelForm):
         required=False,
         label='Notify deadline'
     )
-
-    is_public = forms.BooleanField(
-        widget=ToggleWidget(label_on='Enabled public link',
-                            label_off='Disabled public link'),
-        required=False,
-        label='Generate public link'
-    )
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
         label='Senders emails',
         required=False,
-        help_text=mark_safe('<strong>Invitees</strong> each invitee will have its private access link to your space and will upload its own files. Invitees do not see each others and do not need an account.')
-    )
+        help_text = mark_safe('''   <p class="mb-1 font-bold">Invitations</p> 
+                                    <p>Each invitee will have their own access link and will not be able to see any other invitee in the list.</p>
+                            '''))
     email_input = forms.CharField(required=False,
                                   widget=forms.TextInput(
                                       attrs={'placeholder': 'Type or paste email addresses of invitees',
                                              'class': css_classes.text_input}))
+    is_public = forms.BooleanField(
+        widget=ToggleWidget(label_on='Enabled public link',
+                            label_off='Disabled public link'),
+        required=False,
+        label='Generate public link',
+        help_text = mark_safe('''   <p class="mb-1 font-bold">Public Link</p> 
+                                    <p>The public link will not be tied to a specific email address and can be used to collect inputs from the general public, when there is not the need to distinguish one upload from another.</p>
+                                    <p>The link can be enabled and disabled at any time, and can coexist with the invitees links.</p>
+                              '''))
+
     deadline = forms.DateTimeField(
         required=False,
         widget=forms.DateTimeInput(attrs={
