@@ -137,7 +137,7 @@ class RequestForm(ModelForm):
 
         if invalid_tags:
             error_message = 'The following tags are not valid: ' + ', '.join(invalid_tags)
-            raise forms.ValidationError(error_message)
+            self.add_error('file_naming_formula', error_message)
 
         return file_naming_formula
 
