@@ -24,8 +24,7 @@
             {% include 'components/tooltip.html' with content=form.senders_emails.help_text target=form.senders_emails.name%}
         </div>
         <div id="email-input-container" class="my-1 border-0">
-            <!-- Text input field
-            <input type="text" id="email-input" class="placeholder-gray-500 my-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type or paste emails addressess of invitees" />-->
+            <!-- Text input field -->
             {{ form.email_input }}
             <!-- Tags will appear here, below the input field -->
             <div id="tags" class="flex flex-wrap gap-2 my-1"></div>
@@ -41,14 +40,17 @@
                 class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_public.label }}</label>
             </div>
             {% include 'components/tooltip.html' with content=form.is_public.help_text target=form.is_public.name%}
-
+        </div>
     </div>
 
 
 
     <!-- INSTRUCTIONS -->
     <div class="mb-6">
-        <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Instructions</h3>
+        <div class="flex items-center mb-2 space-x-2">
+            <h3 class="text-xl font-medium text-gray-900 dark:text-white">Instructions</h3>
+            {% include 'components/tooltip.html' with content=form.instructions.help_text target=form.instructions.name%}
+        </div>
         <label for="{{ form.instructions.id_for_label }}"
         class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
         {{ form.instructions }}
@@ -57,18 +59,28 @@
 
     <!-- DEADLINE -->
     <div class="mb-6">
-        <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Deadline</h3>
-        <label for="{{ form.deadline.id_for_label }}"
-        class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
-        {{ form.deadline }}
-        {% include 'components/forms/error_widget.html' with errors=form.deadline.errors %}
-        <label for="{{ form.notify_deadline.id_for_label }}"
-        class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.notify_deadline.label }} </label>
-        {{ form.notify_deadline }}
+        <div class="flex items-center mb-2 space-x-2">
+            <h3 class="text-xl font-medium text-gray-900 dark:text-white">Dealine</h3>
+            {% include 'components/tooltip.html' with content=form.deadline.help_text target=form.deadline.name%}
+        </div>
+        <div id="deadline-input-container" class="my-1 border-0">
+            <label for="{{ form.deadline.id_for_label }}"
+            class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
+            {{ form.deadline }}
+            {% include 'components/forms/error_widget.html' with errors=form.deadline.errors %}
+        </div>
+        <div class="flex items-center mb-2 space-x-2">
+            <div class="flex items-center h-5">
+                {{ form.notify_deadline }}
+                <label for="{{ form.notify_deadline.id_for_label }}"
+                class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.notify_deadline.label }}</label>
+            </div>
+            {% include 'components/tooltip.html' with content=form.notify_deadline.help_text target=form.notify_deadline.name%}
+        </div>
         {% include 'components/forms/error_widget.html' with errors=form.notify_deadline.errors %}
+    </div>
         
 
-    </div>
 
         {% include 'private/space/components/request_form.html' with action=action %}
 {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn" %}

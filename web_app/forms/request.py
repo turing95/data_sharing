@@ -27,7 +27,11 @@ class RequestForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled request',
                                                           'required': 'required',
                                                           'class': css_classes.text_request_title_input}),
-                            label='Request title')
+                            label='Request title',
+                            help_text = mark_safe(
+                                ''' <p class="mb-1 font-bold">Request Title</p> 
+                                    <p>This will be displayed to your invitees.</p>
+                                '''))
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
@@ -64,8 +68,26 @@ class RequestForm(ModelForm):
 
     destination = forms.CharField(
         widget=forms.HiddenInput(),
-        label="Destination folder")
-
+        label="Destination folder",
+                            help_text = mark_safe(
+                                ''' <p class="mb-1 font-bold">Destination Folder</p> 
+                                    <p>Select a destination folder from inside your cloud storage system. All files uploaded for this request will directly be uploaded to your selected folder.</p>
+                                    <p>You will be able to change it at any time but be aware that this may lead to files uploaded for the same request to be in different folders</p>  
+                                '''))
+    
+    instructions = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': 'Add request-specific instructions here',
+            'rows': 2,
+            'class': css_classes.text_area,
+        }),
+        label='Instructions',
+        help_text=mark_safe('''<p class="mb-1 font-bold">Request Instructions</p>
+                                <p>Use this to provide additional information for your invitees that are specific to the request.</p>
+                                <p>Leave blank if not necessary.</p>
+                            '''))
+        
     rename = forms.BooleanField(
         widget=ToggleWidget(label_on='Enabled custom file names',
                             label_off='Disabled custom file names',
@@ -73,35 +95,34 @@ class RequestForm(ModelForm):
                                 'onclick': 'toggleRename(this)'
                             }),
         required=False,
-        label='Apply custom file name'
-    )
-    # forms.BooleanField(
-    #     widget=forms.CheckboxInput(attrs={
-    #         'class': css_classes.checkbox_input,
-    #         'onclick': 'toggleRename(this);'
-    #     }),
-    #     required=False,
-    #     label='Apply custom file name'
-    # )
+        label='Apply custom file name',
+        help_text = mark_safe(
+            ''' <p class="mb-1 font-bold">File Naming</p> 
+                <p>By default, files are saved to your destination folder with the name they have been uploaded with.</p>
+                <p>You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized</p>
+            '''))
+
 
     file_types = FileTypeChoiceField(
         queryset=FileType.objects.all(),
         required=False,
         widget=forms.CheckboxSelectMultiple,  # or any other suitable widget
-        label='File Types',
-        help_text='Select one or more file types.'
-    )
-
+        label='Allowed File Types',
+        help_text = mark_safe(
+            ''' <p class="mb-1 font-bold">File Types</p> 
+                <p>Leave blank to allow all extensions to be uploaded or select specific file extensions to forbid all the others.</p>
+            '''))
+    
     class Meta:
         model = UploadRequest
         fields = ['title', 'file_types', 'file_naming_formula', 'instructions']
-        widgets = {
-            'instructions': forms.Textarea(
-                attrs={'placeholder': 'Add request-specific instructions here',
-                       'rows': 3,
-                       'class': css_classes.text_area,
-                       'label': 'Instructions'})
-        }
+        # widgets = {
+        #     'instructions': forms.Textarea(
+        #         attrs={'placeholder': 'Add request-specific instructions here',
+        #                'rows': 3,
+        #                'class': css_classes.text_area,
+        #                'label': 'Instructions'})
+        # }
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
