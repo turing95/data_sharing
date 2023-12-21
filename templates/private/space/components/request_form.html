@@ -46,9 +46,10 @@
                         <label for="{{ req.title.id_for_label }}"
                         class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.title.label }} </label>
                         {{ req.title }}
-                        {% include 'components/forms/error_widget.html' with errors=req.title.errors %}
+                        
                         {% include 'components/tooltip.html' with content=req.title.help_text target=req.title.name placement="bottom" %}
                     </div>
+                    {% include 'components/forms/error_widget.html' with errors=req.title.errors %}
                 </div>
                 
                 <button type="button" class="flex items-center justify-end w-1/3 h-full py-2 pr-2 bg-transparent focus:outline-none focus:ring-0 hover:bg-transparent active:bg-transparent" data-accordion-target="#accordion-{{ forloop.counter0 }}-open-body" aria-expanded="true" aria-controls="accordion-{{ forloop.counter0 }}-open-body">
@@ -108,7 +109,7 @@
                             <!-- Hidden input for form submission -->
                             <div class="flex-col grow">
                                 {{ req.file_naming_formula }}
-                                {% include 'components/forms/error_widget.html' with errors=req.file_naming_formula.errors %}
+                                
 
                             </div>
                             <!-- Dropdown for Valid Tags -->
@@ -116,6 +117,7 @@
                             {% include 'components/tooltip.html' with content=req.file_naming_formula.help_text target=req.file_naming_formula.name num=forloop.counter0 placement="left" %}
                             
                         </div>
+                        <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=req.file_naming_formula.errors %}</div>
                     </div>
                 </div>
                 
