@@ -63,7 +63,7 @@
                 <div class="">
                     <ul>
                         {% for req in space.requests.all reversed %}
-                        <li class="flex items-center justify-start">
+                        <li class="flex items-center justify-start {% if req.is_deleted is True %} bg-red-300 {% endif %}">
                             <span class="inline-block max-w-[120px] overflow-hidden text-ellipsis whitespace-normal flex-grow mb-1 border-r border-gray-300 pr-1">
                                 {{ req.title }}
                             </span>
