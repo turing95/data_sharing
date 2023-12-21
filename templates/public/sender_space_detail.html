@@ -98,7 +98,11 @@
                                 {% if form.upload_request.file_types.count %}
                                 <p class="mb-2 ">Restrictions:</p>
                                 <ul class="pl-5 list-disc">
-                                    <li class="text-sm"><strong>Allowed file extensions:</strong> {{form.upload_request.file_types.all}}</li>
+                                    <li class="text-sm"><strong>Allowed file extensions:</strong>
+                                        {% for file_type in form.upload_request.file_types.all %}
+                                        {{ file_type.extension }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </li>
                                 </ul>
                                 {% endif %}                                
                             </div>
