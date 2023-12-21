@@ -75,12 +75,20 @@
     </div>
     </div>
     {% endblock %}
-    <div class="mt-6 mb-6" hx-get="{% url 'upload_events' space.uuid %}" hx-trigger="intersect" hx-target="#history-table">
-    <h3 class="mb-3 text-xl font-semibold">Uploads History</h3>
-        <div id="history-table">
-            
+    <div class="mt-6 mb-6" hx-get="{% url 'upload_events' space.uuid %}" hx-trigger="intersect" hx-target="#history-table" hx-indicator="#loading-indicator">
+        <div class="flex items-center mb-3">
+            <h3 class="text-xl font-semibold ">Uploads History</h3>
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="items-center justify-center opacity-0 htmx-indicator">
+                <div role="status" class="ml-2 spinner">
+                    {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
+        <div id="history-table">            
         </div>
+    </div>
 
 
 
