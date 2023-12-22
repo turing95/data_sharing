@@ -47,7 +47,7 @@
                         class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.title.label }} </label>
                         {{ req.title }}
                         
-                        {% include 'components/tooltip.html' with content=req.title.help_text target=req.title.name placement="bottom" %}
+                        {% include 'components/tooltip.html' with content=req.title.help_text target_prefix='requests' target=req.title.name placement="bottom" %}
                     </div>
                     {% include 'components/forms/error_widget.html' with errors=req.title.errors %}
                 </div>
@@ -69,7 +69,7 @@
                     <div class="flex items-center mb-2 space-x-2">
                         <label for="{{ req.destination.id_for_label }}"
                         class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.destination.label }} </label>
-                        {% include 'components/tooltip.html' with content=req.destination.help_text target=req.destination.name%}
+                        {% include 'components/tooltip.html' with content=req.destination.help_text target_prefix='requests' target=req.destination.name%}
                     </div>     
                     {{ req.destination }}
                     <div class="flex flex-col">
@@ -83,7 +83,7 @@
                     <div class="flex items-center mb-2 space-x-2">
                         <label for="{{ req.instructions.id_for_label }}"
                         class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.instructions.label }} </label>
-                        {% include 'components/tooltip.html' with content=req.instructions.help_text target=req.instructions.name%}
+                        {% include 'components/tooltip.html' with content=req.instructions.help_text target_prefix='requests' target=req.instructions.name%}
                     </div>
                     {{ req.instructions }}
                     {% include 'components/forms/error_widget.html' with errors=req.instructions.errors %}                       
@@ -94,7 +94,7 @@
                 <div class="mb-6">
                     <div class="flex items-center mb-2 space-x-2">
                         <h3 class = "block text-sm font-medium text-gray-900 dark:text-white">File Naming</h3>
-                        {% include 'components/tooltip.html' with content=req.rename.help_text target=req.rename.name%}
+                        {% include 'components/tooltip.html' with target_prefix='requests' content=req.rename.help_text target=req.rename.name%}
                     </div>
                     <div class = "flex items-center mb-2 nl-1">
                         {{ req.rename }}
@@ -114,7 +114,7 @@
                             </div>
                             <!-- Dropdown for Valid Tags -->
                             {{ req.available_tags_dropdown }}
-                            {% include 'components/tooltip.html' with content=req.file_naming_formula.help_text target=req.file_naming_formula.name num=forloop.counter0 placement="left" %}
+                            {% include 'components/tooltip.html' with content=req.file_naming_formula.help_text target_prefix='requests' target=req.file_naming_formula.name num=forloop.counter0 placement="left" %}
                             
                         </div>
                         <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=req.file_naming_formula.errors %}</div>
@@ -135,7 +135,7 @@
                     <div class="flex items-center mb-2 space-x-2">
                         <label for="{{ req.file_types.id_for_label }}"
                         class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.file_types.label }} </label>
-                        {% include 'components/tooltip.html' with content=req.file_types.help_text target=req.file_types.name%}
+                        {% include 'components/tooltip.html' with target_prefix='requests' content=req.file_types.help_text target=req.file_types.name%}
                     </div>
                     {{ req.file_types }}
                     {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
