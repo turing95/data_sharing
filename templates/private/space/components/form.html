@@ -11,7 +11,7 @@
             <label for="{{ form.title.id_for_label }}"
             class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
             {{ form.title }}
-            {% include 'components/tooltip.html' with content=form.title.help_text target=form.title.name placement="bottom" %}
+            {% include 'components/tooltip.html' with title=form.title.label content=form.title.help_text target=form.title.name placement="bottom" %}
         </div>
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
@@ -21,7 +21,7 @@
     <div class="mb-6">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Invitations</h3>
-            {% include 'components/tooltip.html' with content=form.senders_emails.help_text target=form.senders_emails.name%}
+            {% include 'components/tooltip.html' with title=form.senders_emails.label content=form.senders_emails.help_text target=form.senders_emails.name%}
         </div>
         <div id="email-input-container" class="my-1 border-0">
             <!-- Text input field -->

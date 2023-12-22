@@ -28,10 +28,8 @@ class RequestForm(ModelForm):
                                                           'required': 'required',
                                                           'class': css_classes.text_request_title_input}),
                             label='Request title',
-                            help_text = mark_safe(
-                                ''' <p class="mb-1 font-bold">Request Title</p> 
-                                    <p>This will be displayed to your invitees.</p>
-                                '''))
+                            help_text = mark_safe("""This will be displayed to your invitees.
+                                """))
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
@@ -70,10 +68,9 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(),
         label="Destination folder",
                             help_text = mark_safe(
-                                ''' <p class="mb-1 font-bold">Destination Folder</p> 
-                                    <p>Select a destination folder from inside your cloud storage system. All files uploaded for this request will directly be uploaded to your selected folder.</p>
-                                    <p>You will be able to change it at any time but be aware that this may lead to files uploaded for the same request to be in different folders</p>  
-                                '''))
+            """Select a destination folder from inside your cloud storage system. All files uploaded for this request will directly be uploaded to your selected folder.
+            You will be able to change it at any time but be aware that this may lead to files uploaded for the same request to be in different folders  
+            """))
     
     instructions = forms.CharField(
         required=False,
@@ -83,10 +80,9 @@ class RequestForm(ModelForm):
             'class': css_classes.text_area,
         }),
         label='Instructions',
-        help_text=mark_safe('''<p class="mb-1 font-bold">Request Instructions</p>
-                                <p>Use this to provide additional information for your invitees that are specific to the request.</p>
-                                <p>Leave blank if not necessary.</p>
-                            '''))
+        help_text=mark_safe("""Use this to provide additional information for your invitees that are specific to the request.
+                                Leave blank if not necessary.
+                            """))
         
     rename = forms.BooleanField(
         widget=ToggleWidget(label_on='Enabled custom file names',
@@ -96,11 +92,10 @@ class RequestForm(ModelForm):
                             }),
         required=False,
         label='Apply custom file name',
-        help_text = mark_safe(
-            ''' <p class="mb-1 font-bold">File Naming</p> 
-                <p>By default, files are saved to your destination folder with the name they have been uploaded with.</p>
-                <p>You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized</p>
-            '''))
+        help_text = mark_safe("""
+                By default, files are saved to your destination folder with the name they have been uploaded with.
+                You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
+            """))
 
 
     file_types = FileTypeChoiceField(
@@ -108,21 +103,14 @@ class RequestForm(ModelForm):
         required=False,
         widget=forms.CheckboxSelectMultiple,  # or any other suitable widget
         label='Allowed File Types',
-        help_text = mark_safe(
-            ''' <p class="mb-1 font-bold">File Types</p> 
-                <p>Leave blank to allow all extensions to be uploaded or select specific file extensions to forbid all the others.</p>
-            '''))
+        help_text = mark_safe(""" 
+                Leave blank to allow all extensions to be uploaded or select specific file extensions to forbid all the others.
+            """))
     
     class Meta:
         model = UploadRequest
         fields = ['title', 'file_types', 'file_naming_formula', 'instructions']
-        # widgets = {
-        #     'instructions': forms.Textarea(
-        #         attrs={'placeholder': 'Add request-specific instructions here',
-        #                'rows': 3,
-        #                'class': css_classes.text_area,
-        #                'label': 'Instructions'})
-        # }
+
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
