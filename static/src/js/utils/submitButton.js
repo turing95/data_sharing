@@ -6,7 +6,8 @@ function activateLoading(button) {
             const buttonTextSpan = button.querySelector('.button-content');
             spinner.classList.remove('hidden');
             buttonTextSpan.classList.add('hidden');
-            button.classList.add('bg-marian-blue-700');
+            button.classList.remove('bg-marian-blue-400');
+            button.classList.add('bg-marian-blue-300');
 
             // Allow form submission
             setTimeout(() => {
