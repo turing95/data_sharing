@@ -28,8 +28,8 @@ class RequestForm(ModelForm):
                                                           'required': 'required',
                                                           'class': css_classes.text_request_title_input}),
                             label='Request title',
-                            help_text = mark_safe("""This will be displayed to your invitees.
-                                """))
+                            help_text = """This will be displayed to your invitees.
+                                """)
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
@@ -67,10 +67,10 @@ class RequestForm(ModelForm):
     destination = forms.CharField(
         widget=forms.HiddenInput(),
         label="Destination folder",
-                            help_text = mark_safe(
+                            help_text = 
             """Select a destination folder from inside your cloud storage system. All files uploaded for this request will directly be uploaded to your selected folder.
             You will be able to change it at any time but be aware that this may lead to files uploaded for the same request to be in different folders  
-            """))
+            """)
     
     instructions = forms.CharField(
         required=False,
@@ -80,9 +80,9 @@ class RequestForm(ModelForm):
             'class': css_classes.text_area,
         }),
         label='Request Instructions',
-        help_text=mark_safe("""Use this to provide additional information for your invitees that are specific to the request.
+        help_text="""Use this to provide additional information for your invitees that are specific to the request.
                                 Leave blank if not necessary.
-                            """))
+                            """)
         
     rename = forms.BooleanField(
         widget=ToggleWidget(label_on='Enabled custom file names',
@@ -92,10 +92,10 @@ class RequestForm(ModelForm):
                             }),
         required=False,
         label='File Naming',
-        help_text = mark_safe("""
+        help_text = """
                 By default, files are saved to your destination folder with the name they have been uploaded with.
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
-            """))
+            """)
 
 
     file_types = FileTypeChoiceField(
@@ -103,9 +103,9 @@ class RequestForm(ModelForm):
         required=False,
         widget=forms.CheckboxSelectMultiple,  # or any other suitable widget
         label='Allowed File Types',
-        help_text = mark_safe(""" 
+        help_text = """ 
                 Leave blank to allow all extensions to be uploaded or select specific file extensions to forbid all the others.
-            """))
+            """)
     
     class Meta:
         model = UploadRequest

@@ -7,7 +7,6 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware
-from django.utils.safestring import mark_safe
 from datetime import timezone
 import arrow
 
@@ -38,22 +37,22 @@ class SpaceForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
                                                           'class': css_classes.text_space_title_input}),
                             label='Space title',
-                            help_text=mark_safe("It will be displayed to your invitees"))
+                            help_text="It will be displayed to your invitees")
 
     is_active = forms.BooleanField(
         widget=ToggleWidget(label_on='Active',
                             label_off='Inactive'),
         required=False,
         label='Activate space',
-        help_text=mark_safe("""Set the space to 'inactive' at creation if you want to double check its properties before making it accessible to invitees.
+        help_text="""Set the space to 'inactive' at creation if you want to double check its properties before making it accessible to invitees.
                             Set it to 'active' to make it immediately accessible to invitees and trigger the creation notifications if any.
-                             """))
+                             """)
 
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
         label='Senders emails',
         required=False,
-        help_text=mark_safe("Each invitee will have their own access link and will not be able to see any other invitee in the list."))
+        help_text="Each invitee will have their own access link and will not be able to see any other invitee in the list.")
     
     email_input = forms.CharField(required=False,
                                   widget=forms.TextInput(
@@ -64,9 +63,9 @@ class SpaceForm(ModelForm):
                             label_off='Disabled public link'),
         required=False,
         label='Generate public link',
-        help_text=mark_safe("""The public link will not be tied to a specific email address and can be used to collect inputs from the general public, when there is not the need to distinguish one upload from another.
+        help_text="""The public link will not be tied to a specific email address and can be used to collect inputs from the general public, when there is not the need to distinguish one upload from another.
                             The link can be enabled and disabled at any time, and can coexist with the invitees links.
-                            """))
+                            """)
 
     instructions = forms.CharField(
         required=False,
@@ -76,24 +75,24 @@ class SpaceForm(ModelForm):
             'class': css_classes.text_area,
         }),
         label='Instructions',
-        help_text=mark_safe("""These instructions will be displayed to your invitees. They refer to all the file requests in the space.
-                            """))
+        help_text="""These instructions will be displayed to your invitees. They refer to all the file requests in the space.
+                            """)
 
     deadline = forms.DateTimeField(
         required=False,
         widget=forms.DateTimeInput(attrs={
             'type': 'datetime-local'
         }),
-        help_text=mark_safe("""The deadline applies to all invitees and is visible in their upload page.
+        help_text="""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
-                                """))
+                                """)
 
     notify_deadline = forms.BooleanField(
         widget=ToggleWidget(label_on='Notify',
                             label_off='Notify'),
         required=False,
         label='Notify deadline',
-        help_text=mark_safe("""..."""))
+        help_text="""...""")
 
     class Meta:
         model = Space
