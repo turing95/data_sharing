@@ -86,11 +86,9 @@ function updateElementIdentifiers(newForm, formCount) {
                 if (tooltipButton) {
                     tooltipButton.setAttribute('data-tooltip-target', `${newId}`);
                 }
-                // set the tooltip content element
-                const $targetEl = buttonSelector
-                // set the element that trigger the tooltip 
-                const $triggerEl = tooltipButton
-                const tooltip = new Tooltip($targetEl, $triggerEl);
+
+
+                const tooltip = new Tooltip(element, tooltipButton);
             }
 
         }
