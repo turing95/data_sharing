@@ -59,11 +59,11 @@
                         </div>
                     </td>
                     <!-- file name with link to file-->
-                    <td class="px-6 py-2 max-w-[250px] word-break">
+                    <td class="px-6 py-2 max-w-[250px]">
                         <div class="flex items-center">  
-                            <div class="inline-flex items-center">
+                            <div class="inline-flex items-center overflow-wrap-anywhere">
                                 <a href="{{ event.file.google_drive_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
-                                    {{ event.file.name }}
+                                    <span class="min-w-0">{{ event.file.name }}</span>
                                 </a>
                             </div>
                         </div>

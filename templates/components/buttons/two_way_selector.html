@@ -1,0 +1,15 @@
+    <!-- TAB SELECTOR -->
+    <div class="max-w-2xl mx-auto">
+        <ul class="flex text-sm font-medium text-center text-gray-500 border border-gray-300 dark:divide-gray-700 dark:text-gray-400">
+            <li class="flex-1">
+                <a href="{{path_left}}" class="inline-block w-full p-2.5 {% if status != 'edit' %}text-white bg-marian-blue-400{% else %}bg-white hover:text-white hover:bg-marian-blue-200{% endif %} border-r border-gray-300 dark:border-gray-700 focus:outline-none dark:bg-gray-700 dark:text-white">
+                    {{text_left}}
+                </a>
+            </li>
+            <li class="flex-1">
+                <a href="{{path_rigth}}" class="inline-block w-full p-2.5 {% if status == 'edit' %}text-white bg-marian-blue-400{% else %}bg-white hover:text-white hover:bg-marian-blue-200{% endif %} border-s-0 border-gray-300 dark:border-gray-700 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">
+                    {{text_right}}
+                </a>
+            </li>
+        </ul>
+    </div>
