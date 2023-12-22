@@ -180,7 +180,8 @@ class DetailRequestForm(RequestForm):
 
 
 class UniqueTitleFormSet(BaseInlineFormSet):
-    def clean(self):
+    pass
+    '''def clean(self):
         """
         Add validation to ensure that each request has a unique title within the set.
         """
@@ -199,7 +200,7 @@ class UniqueTitleFormSet(BaseInlineFormSet):
             title = form.cleaned_data.get('title', None)
             if title and title in titles:
                 raise ValidationError("Each request must have a unique title.")
-            titles.add(title)
+            titles.add(title)'''
 
 
 # Replace the standard formset with the custom one
