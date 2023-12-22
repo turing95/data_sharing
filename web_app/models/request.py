@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Q
+
 from web_app.models import BaseModel,DeleteModel
 import arrow
 
@@ -22,9 +24,9 @@ class UploadRequest(BaseModel,DeleteModel):
     file_types = models.ManyToManyField('FileType', through='UploadRequestFileType')
 
     class Meta:
-        constraints = [
+        '''constraints = [
             models.UniqueConstraint('title', 'space', name='unique_request_title')
-        ]
+        ]'''
         ordering = ['-created_at']
 
     @property
