@@ -76,8 +76,7 @@ class SpaceForm(ModelForm):
             'class': css_classes.text_area,
         }),
         label='Instructions',
-        help_text=mark_safe("""class="mb-1 font-bold">Instructions
-                            These instructions will be displayed to your invitees. They refer to all the file requests in the space.
+        help_text=mark_safe("""These instructions will be displayed to your invitees. They refer to all the file requests in the space.
                             """))
 
     deadline = forms.DateTimeField(
@@ -94,9 +93,7 @@ class SpaceForm(ModelForm):
                             label_off='Notify'),
         required=False,
         label='Notify deadline',
-        help_text=mark_safe('''   <p class="mb-1 font-bold">Deadline notification</p> 
-                                    <p>...</p>
-                              '''))
+        help_text=mark_safe("""..."""))
 
     class Meta:
         model = Space

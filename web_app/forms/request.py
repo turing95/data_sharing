@@ -79,7 +79,7 @@ class RequestForm(ModelForm):
             'rows': 2,
             'class': css_classes.text_area,
         }),
-        label='Instructions',
+        label='Request Instructions',
         help_text=mark_safe("""Use this to provide additional information for your invitees that are specific to the request.
                                 Leave blank if not necessary.
                             """))
@@ -91,7 +91,7 @@ class RequestForm(ModelForm):
                                 'onclick': 'toggleRename(this)'
                             }),
         required=False,
-        label='Apply custom file name',
+        label='File Naming',
         help_text = mark_safe("""
                 By default, files are saved to your destination folder with the name they have been uploaded with.
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
