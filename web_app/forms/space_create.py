@@ -34,12 +34,11 @@ class CommaSeparatedEmailField(forms.CharField):
                 raise ValidationError(f"{', '.join(invalid_emails)} are not valid email addresses")
 
 
-
 class SpaceForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
                                                           'class': css_classes.text_space_title_input}),
                             label='Space title',
-                            help_text = mark_safe('''   <p class="mb-1 font-bold">Space Title</p> 
+                            help_text=mark_safe('''   <p class="mb-1 font-bold">Space Title</p> 
                                                         <p>It will be displayed to your invitees.</p>
                                                 '''))
 
@@ -48,17 +47,16 @@ class SpaceForm(ModelForm):
                             label_off='Inactive'),
         required=False,
         label='Activate space',
-        help_text = mark_safe('''   <p class="mb-1 font-bold">Space State at Creation</p> 
+        help_text=mark_safe('''   <p class="mb-1 font-bold">Space State at Creation</p> 
                                     <p>Set the space to 'inactive' at creation if you want to double check its properties before making it accessible to invitees.</p>
                                     <p>Set it to 'active' to make it immediately accessible to invitees and trigger the creation notifications if any.</p>
                               '''))
 
-    
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
         label='Senders emails',
         required=False,
-        help_text = mark_safe('''   <p class="mb-1 font-bold">Invitations</p> 
+        help_text=mark_safe('''   <p class="mb-1 font-bold">Invitations</p> 
                                     <p>Each invitee will have their own access link and will not be able to see any other invitee in the list.</p>
                             '''))
     email_input = forms.CharField(required=False,
@@ -70,11 +68,11 @@ class SpaceForm(ModelForm):
                             label_off='Disabled public link'),
         required=False,
         label='Generate public link',
-        help_text = mark_safe('''   <p class="mb-1 font-bold">Public Link</p> 
+        help_text=mark_safe('''   <p class="mb-1 font-bold">Public Link</p> 
                                     <p>The public link will not be tied to a specific email address and can be used to collect inputs from the general public, when there is not the need to distinguish one upload from another.</p>
                                     <p>The link can be enabled and disabled at any time, and can coexist with the invitees links.</p>
                               '''))
-    
+
     instructions = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={
@@ -92,33 +90,23 @@ class SpaceForm(ModelForm):
         widget=forms.DateTimeInput(attrs={
             'type': 'datetime-local'
         }),
-        help_text = mark_safe('''   <p class="mb-1 font-bold">Deadline</p> 
+        help_text=mark_safe('''   <p class="mb-1 font-bold">Deadline</p> 
                                     <p>The deadline applies to all invitees and is visible in their upload page.</p>
                                     <p>You can customize what happens once the deadline is reached.</p>
                               '''))
-    
+
     notify_deadline = forms.BooleanField(
         widget=ToggleWidget(label_on='Notify',
                             label_off='Notify'),
         required=False,
         label='Notify deadline',
-        help_text = mark_safe('''   <p class="mb-1 font-bold">Deadline notification</p> 
+        help_text=mark_safe('''   <p class="mb-1 font-bold">Deadline notification</p> 
                                     <p>...</p>
                               '''))
-
-        
 
     class Meta:
         model = Space
         fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline']
-        # widgets = {
-        #     'instructions': forms.Textarea(
-        #         attrs={'placeholder': 'Explain what files you are requesting',
-        #                'rows': 4,
-        #                'class': css_classes.text_area,
-        #                'label': 'Instructions'})
-        # }
-        
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
