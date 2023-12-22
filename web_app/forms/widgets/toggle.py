@@ -8,6 +8,9 @@ class ToggleWidget(forms.CheckboxInput):
                 # see template for supported colors, if color do not show probably they are missing in output.css, check out the template!
         self.color_on = kwargs.pop('color_on', 'marian-blue') # color of toggle when clicked 
         self.color_off = kwargs.pop('color_off', 'gray') # color of toggle when not clicked
+        self.toggle_color_on = kwargs.pop('toggle_color_on', '') # background color when on, if empty color_on is used
+        self.toggle_color_off = kwargs.pop('toggle_color_off', '') # background color when off, if empty color_off is used
+        self.toggle_color_off_soft = kwargs.pop('toggle_color_off_soft', True) # if true the background color when off is lighter
         self.label_on = kwargs.pop('label_on', '') # label on the right of the toggle when clicked (leave blank to not apply label)
         self.label_off = kwargs.pop('label_off', '') # label on the right of the toggle when not clicked (leave blank to not apply label)
         self.label_colored =  kwargs.pop('label_colored', False) # apply color_on and color_off to the text of the label
@@ -21,6 +24,9 @@ class ToggleWidget(forms.CheckboxInput):
         context = super().get_context(name, value, attrs)
         context['widget']['color_on'] = self.color_on
         context['widget']['color_off'] = self.color_off
+        context['widget']['toggle_color_on'] = self.toggle_color_on if self.toggle_color_on else self.color_on
+        context['widget']['toggle_color_off'] = self.toggle_color_off if self.toggle_color_off else self.color_off
+        context['widget']['toggle_color_off_soft'] = self.toggle_color_off_soft
         context['widget']['label_on'] = self.label_on
         context['widget']['label_off'] = self.label_off
         context['widget']['label_on_color'] = self.color_on if self.label_colored else 'gray'  # default color for labels is gray
