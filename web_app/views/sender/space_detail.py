@@ -18,7 +18,7 @@ class SpaceDetailView(TemplateView):
     _sender = None
 
     def get_formset(self):
-        FileFormset = formset_factory(FileForm, formset=BaseFileFormSet, extra=self.get_space().requests.count())
+        FileFormset = formset_factory(FileForm, formset=BaseFileFormSet, extra=self.get_space().requests.filter(is_deleted=False).count())
         return FileFormset(self.request.POST or None, self.request.FILES or None,
                            form_kwargs={'space': self.get_space()})
 
