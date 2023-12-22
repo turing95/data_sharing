@@ -149,7 +149,7 @@ class RequestForm(ModelForm):
             cleaned_data['file_naming_formula'] = None
         else:
             if file_naming_formula is file_naming_formula is None or file_naming_formula == '':
-                self.add_error('file_naming_formula', 'You must provide a file naming formula if you want to rename the files.')
+                self.add_error('file_naming_formula', 'You must provide a file name if you want to rename the files.')
         return cleaned_data
 
 

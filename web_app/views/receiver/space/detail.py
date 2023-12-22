@@ -12,7 +12,7 @@ class SpaceDetailFormView(SpaceFormView):
     def get_context_data(self, **kwargs):
         data = super(SpaceFormView, self).get_context_data(**kwargs)
         if 'status' in self.request.GET:
-            data = self.get_context_for_form(data, button_text='Update space', status=self.request.GET.get('status'))
+            data = self.get_context_for_form(data, button_text='Save space', status=self.request.GET.get('status'))
         else:
             data['space'] = self.get_space()
         return data
