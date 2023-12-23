@@ -17,18 +17,22 @@
             </div>
             <!-- Modal body -->
             <div class="p-4 space-y-4 md:p-5">
-                <div class="mt-6 mb-6" hx-get="{% url 'filtered_upload_events' space.uuid sender.uuid req.uuid %}?hide_sender=True&hide_request=True" hx-trigger="intersect" hx-target="#history-table-{{req_counter}}-{{sender.uuid}}" hx-indicator="#loading-indicator">
-                    <div class="flex items-center mb-3">
-                        <!-- Loading Indicator -->
-                        <div id="loading-indicator" class="items-center justify-center opacity-0 htmx-indicator">
-                            <div role="status" class="ml-2 spinner">
-                                {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
-                                <span class="sr-only">Loading...</span>
+                <div class="mt-6 mb-6" 
+                    hx-get="{% url 'upload_events' space.uuid %}?sender_uuid={{ sender.uuid }}&request_uuid={{ req.uuid }}&hide_sender=True&hide_request=True" 
+                    hx-trigger="intersect" 
+                    hx-target="#history-table-{{ req_counter }}-{{ sender.uuid }}" 
+                    hx-indicator="#loading-indicator">
+                        <div class="flex items-center mb-3">
+                            <!-- Loading Indicator -->
+                            <div id="loading-indicator" class="items-center justify-center opacity-0 htmx-indicator">
+                                <div role="status" class="ml-2 spinner">
+                                    {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                    <span class="sr-only">Loading...</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="history-table-{{req_counter}}-{{sender.uuid}}">            
-                    </div>
+                        <div id="history-table-{{req_counter}}-{{sender.uuid}}">            
+                        </div>
                 </div>
             </div>
         </div>
