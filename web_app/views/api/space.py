@@ -31,7 +31,13 @@ def toggle_space_public(request, space_uuid):
 @require_GET
 def upload_events(request, space_uuid, sender_uuid=None, request_uuid=None):
     space = Space.objects.get(pk=space_uuid)
-    events = space.get_filtered_upload_events(request_uuid=request_uuid, sender_uuid=sender_uuid)
+    events = space.upload_events
+
+    if request_uuid:
+        events = events.filter(request__uuid=request_uuid)
+    
+    if sender_uuid:
+        events = events.filter(sender__uuid=sender_uuid)
     
         # Get the additional parameters from the request
     hide_sender = request.GET.get('hide_sender', False) 
