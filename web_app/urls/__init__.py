@@ -18,7 +18,10 @@ urlpatterns = [
          name='sender_space_detail_private'),
     path('spaces(<uuid:space_uuid>/toggle_active/', toggle_space_active, name='toggle_space_active'),
     path('spaces(<uuid:space_uuid>/toggle_public/', toggle_space_public, name='toggle_space_public'),
-    path('spaces(<uuid:space_uuid>/upload_events/', upload_events, name='upload_events'),
+    # path('spaces(<uuid:space_uuid>/upload_events/', upload_events, name='upload_events'), # original url
+    path('spaces/<uuid:space_uuid>/upload_events/', upload_events, name='upload_events'),
+    path('spaces/<uuid:space_uuid>/upload_events/<uuid:sender_uuid>/<uuid:request_uuid>/', upload_events, name='filtered_upload_events'),
+
     path('requests/delete/<uuid:request_uuid>/', delete_request, name='request_delete'),
 
     path('senders(<uuid:sender_uuid>/toggle_active/', toggle_sender_active, name='toggle_sender_active'),
