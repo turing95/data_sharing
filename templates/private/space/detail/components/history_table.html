@@ -12,14 +12,14 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3 min-w-[200px]">
-                    Timestamp
+                    Upload Timestamp
                 </th>
-                {% if hide_sender is False%}
+                {% if hide_sender is True %}{% else %}
                 <th scope="col" class="px-6 py-3 min-w-[200px]">
                     Uploader email
                 </th>
                 {% endif %}
-                {% if hide_request is False%}
+                {% if hide_request is True%}{% else %}
                 <th scope="col" class="px-6 py-3 min-w-[200px]">
                     Request
                 </th>
@@ -42,8 +42,8 @@
                             {{ event.created_at|time:"H:i" }}
                         </span>
                     </th>
-
-                    {% if hide_sender is False%}
+                    
+                    {% if hide_sender is True %} {% else %}
                         <!-- Sender email, can be unknown for public links-->
                         <td class="px-6 py-2">
                             {% if event.sender %}
@@ -54,7 +54,7 @@
                         </td>
                     {% endif %}
 
-                    {% if hide_request is False%}
+                    {% if hide_request is True %}{% else %}
                         <!-- Request title, with link to destination folder with popover with name of folder-->
                         <td class="px-6 py-2">
                             <div class="flex items-center">            
