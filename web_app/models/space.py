@@ -24,7 +24,7 @@ class Space(BaseModel, ActiveModel,DeleteModel):
         return SenderEvent.objects.filter(
             request__space=self,
             event_type=SenderEvent.EventType.FILE_UPLOADED
-        ).select_related('sender').prefetch_related('request', 'request__destinations')
+        )
 
     @property
     def public_upload_events(self):
