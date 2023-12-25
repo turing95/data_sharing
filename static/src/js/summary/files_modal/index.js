@@ -8,7 +8,6 @@ document.body.addEventListener('htmx:afterSwap', function(event) {
         }
 });
 
-
 export function initModal(id) {
     const modalElement = document.getElementById(id);
     if (!modalElement) {
@@ -17,21 +16,19 @@ export function initModal(id) {
     }
     const modal = new Modal(modalElement, {
         onHide: () => {
-            console.log('Modal is being hidden');
             modalElement.remove();
-            // Reset the flag
-            modalElement.dataset.initialized = 'false';
         },
+        backdropClasses:
+        'bg-gray-900/70 dark:bg-gray-900/80 fixed inset-0 z-40',
     });
 
-    // Find the close button within the modal
     const closeButton = modalElement.querySelector('[data-modal-hide]');
     if (closeButton) {
         closeButton.addEventListener('click', function(event) {
-            modal.hide(); // Use Flowbite's hide method
+            modal.hide(); // Flowbite's hide method
         });
     }
 
-    // Immediately show the modal upon initialization
+    // show the modal upon initialization
     modal.show();
 }
