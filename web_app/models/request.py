@@ -1,11 +1,11 @@
 from django.db import models
 from django.db.models import Q
 
-from web_app.models import BaseModel,DeleteModel
+from web_app.models import BaseModel, DeleteModel
 import arrow
 
 
-class UploadRequest(BaseModel,DeleteModel):
+class UploadRequest(BaseModel, DeleteModel):
     class FileType(models.TextChoices):
         CSV = 'CSV', 'CSV'
         PDF = 'PDF', 'PDF'
@@ -36,6 +36,20 @@ class UploadRequest(BaseModel,DeleteModel):
         google_drive_destination: GoogleDrive = generic_destination.related_object
         return google_drive_destination
 
+    @property
+    def extensions(self):
+        extensions = [file_type.extension for file_type in self.file_types.filter(group=False)]
+        for file_type in self.file_types.filter(group=True):
+            extensions += file_type.extensions
+        return extensions
+
+    @property
+    def formatted_extensions(self):
+        extensions = [file_type.formatted_extension for file_type in self.file_types.filter(group=False)]
+        for file_type in self.file_types.filter(group=True):
+            extensions += file_type.formatted_extensions
+        return extensions
+
     def get_name_format_params(self, sender, original_file_name):
         format_params = {
             'upload_date': arrow.utcnow().date(),
@@ -56,9 +70,26 @@ class UploadRequest(BaseModel,DeleteModel):
 
 
 class FileType(BaseModel):
+    group = models.BooleanField(default=False)
     slug = models.CharField(max_length=50, unique=True)
-    extension = models.CharField(max_length=50, unique=True)
+    extension = models.CharField(max_length=50, null=True, blank=True)
     upload_requests = models.ManyToManyField('UploadRequest', through='UploadRequestFileType')
+    group_type = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL,
+                                   limit_choices_to={"group": True})
+
+    @property
+    def extensions(self):
+        return [file_type.extension for file_type in self.filetype_set.all()]
+
+    @property
+    def formatted_extensions(self):
+        return [file_type.formatted_extension for file_type in self.filetype_set.all()]
+
+    @property
+    def formatted_extension(self):
+        if self.group is False:
+            return f".{self.extension}"
+        return None
 
 
 class UploadRequestFileType(BaseModel):

@@ -99,9 +99,7 @@
                                 <p class="mb-2 ">Restrictions:</p>
                                 <ul class="pl-5 list-disc">
                                     <li class="text-sm"><strong>Allowed file extensions:</strong>
-                                        {% for file_type in form.upload_request.file_types.all %}
-                                        {{ file_type.extension }}{% if not forloop.last %}, {% endif %}
-                                        {% endfor %}
+                                        {{ form.upload_request.formatted_extensions|join:", " }}
                                     </li>
                                 </ul>
                                 {% endif %}                                

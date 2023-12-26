@@ -34,9 +34,7 @@ class FileForm(Form):
         self.fields['request_uuid'].initial = upload_request.pk
         self.upload_request = upload_request
         if upload_request.file_types.exists():
-            self.fields['files'].widget.attrs['accept'] = ','.join(
-                [f'.{file_type.extension}' for file_type in upload_request.file_types.all()]
-            )
+            self.fields['files'].widget.attrs['accept'] = ','.join(upload_request.formatted_extensions)
 
     def clean_files(self):
         super().clean()
@@ -44,9 +42,10 @@ class FileForm(Form):
         if self.upload_request.file_types.exists() is True:
             for file in files:
                 extension = file.name.split('.')[-1]
-                if self.upload_request.file_types.filter(extension=extension).exists() is False:
+                if extension in self.upload_request.extensions is False:
                     self.add_error('files', f'Extension {extension}  is not allowed.')
         return files
+
 
 class BaseFileFormSet(BaseFormSet):
     def get_form_kwargs(self, index):

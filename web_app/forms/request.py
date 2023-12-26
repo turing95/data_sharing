@@ -13,7 +13,7 @@ from web_app.forms.widgets import ToggleWidget
 class FileTypeChoiceField(forms.ModelMultipleChoiceField):
     def label_from_instance(self, obj):
         # Return the string you want to display for each object
-        return obj.extension
+        return obj.slug
 
 
 class RequestForm(ModelForm):
