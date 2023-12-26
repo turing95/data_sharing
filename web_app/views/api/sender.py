@@ -1,10 +1,11 @@
-from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 
 from web_app.models import Sender
 
 
+@login_required
 @require_POST
 def toggle_sender_active(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)

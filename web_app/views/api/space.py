@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -7,6 +8,7 @@ from web_app.models import Space, SenderEvent
 from django.contrib.postgres.search import SearchVector, SearchQuery, TrigramSimilarity
 
 
+@login_required
 @require_POST
 def toggle_space_active(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)

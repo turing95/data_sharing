@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from web_app.models import UploadRequest
 from web_app.forms import DetailRequestFormSet
 
 
+@login_required
 @require_POST
 def delete_request(request, request_uuid):
     req = UploadRequest.objects.get(pk=request_uuid)
