@@ -103,7 +103,7 @@ class RequestForm(ModelForm):
         required=False,
         widget=forms.CheckboxSelectMultiple,  # or any other suitable widget
         label='Allowed File Types',
-        help_text = """ 
+        help_text=""" 
                 Leave blank to allow all extensions to be uploaded or select specific file extensions to forbid all the others.
             """)
     

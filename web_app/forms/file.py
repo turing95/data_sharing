@@ -41,10 +41,11 @@ class FileForm(Form):
     def clean_files(self):
         super().clean()
         files = self.cleaned_data.get('files')
-        for file in files:
-            extension = file.name.split('.')[-1]
-            if self.upload_request.file_types.filter(extension=extension).exists() is False:
-                self.add_error('files', f'Extension {extension}  is not allowed.')
+        if self.upload_request.file_types.exists() is True:
+            for file in files:
+                extension = file.name.split('.')[-1]
+                if self.upload_request.file_types.filter(extension=extension).exists() is False:
+                    self.add_error('files', f'Extension {extension}  is not allowed.')
         return files
 
 class BaseFileFormSet(BaseFormSet):
