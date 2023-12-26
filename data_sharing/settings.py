@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -119,13 +120,13 @@ WSGI_APPLICATION = 'data_sharing.wsgi.application'
 }'''
 
 DATABASES = {
-   "default": {
+    "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "alebbio11",
-       "HOST": "localhost",
-        "PORT": 5432,
+        "NAME": config.POSTGRES_DB,
+        "USER": config.POSTGRES_USER,
+        "PASSWORD": config.POSTGRES_PASSWORD,
+        "HOST": config.POSTGRES_HOST,
+        "PORT": config.POSTGRES_PORT,
     }
 }
 
@@ -168,7 +169,6 @@ LOGIN_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         # For each OAuth based provider, either add a ``SocialApp``
@@ -191,7 +191,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # TODO: this is against security best practices, according to allauth docs
-SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
