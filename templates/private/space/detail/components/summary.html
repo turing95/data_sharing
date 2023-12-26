@@ -75,7 +75,11 @@
     </div>
     </div>
     {% endblock %}
-    {% if space.upload_events.count > 0 %}
+
+    <div class="mt-6 mb-6" hx-get="{% url 'history_table' space.uuid %}" hx-trigger="intersect once" hx-target="#history-table" hx-indicator="#loading-indicator">
+        <div class="flex items-center mb-3">
+            <h3 class="text-xl font-semibold ">Uploads History</h3>
+                {% if space.upload_events.count > 0 %}
         <input class="form-control" type="search" 
        name="search" placeholder="Begin Typing To Search ..." 
        hx-post="{% url 'history_table' space.uuid %}" 
@@ -83,9 +87,6 @@
        hx-target="#history-table" 
        hx-indicator="#loading-indicator">
     {% endif %}
-    <div class="mt-6 mb-6" hx-get="{% url 'history_table' space.uuid %}" hx-trigger="intersect once" hx-target="#history-table" hx-indicator="#loading-indicator">
-        <div class="flex items-center mb-3">
-            <h3 class="text-xl font-semibold ">Uploads History</h3>
             <!-- Loading Indicator -->
             <div id="loading-indicator" class="items-center justify-center opacity-0 htmx-indicator">
                 <div role="status" class="ml-2 spinner">
