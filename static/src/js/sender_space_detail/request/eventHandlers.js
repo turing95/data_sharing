@@ -1,26 +1,37 @@
 import {createFileTag} from './filesUploadWidget.js'
 
-export function handleFilesUpload(inputElement) { //function to call onchange on the inputElement
-    
-    // retrieve the tag container to which to add tags
-    const parentDiv = inputElement.closest('.request-accordion-body'); //add class to form
-    const tagContainer= parentDiv.querySelector('.file-tags-container'); 
-    tagContainer.innerHTML = ''; //remove all children
-    if(!tagContainer) return;
-    
-    // add title paragraph  
-    let titleParagraph = document.createElement('p');
-    titleParagraph.className = 'mb-2 text-sm';
-    titleParagraph.textContent = 'Files ready to be uploaded:';
-    tagContainer.appendChild(titleParagraph);
-    
+export let selectedFiles = {}; // Global object to store files for each input
 
-    const fileList = inputElement.files; // list of files from the input
+export function handleFilesUpload(inputElement) {
+    const inputId = inputElement.id; // Unique identifier for the input field
+    selectedFiles[inputId] = selectedFiles[inputId] || []; // Initialize array for this input if not already done
 
-    // these are the files currently added in the input Field
-    for (let i = 0; i < fileList.length; i++) {        
-        const tag = createFileTag(fileList[i].name);
-        tagContainer.appendChild(tag)
+    // Retrieve the tag container to add tags
+    const parentDiv = inputElement.closest('.request-accordion-body');
+    const tagContainer = parentDiv.querySelector('.file-tags-container');
+    if (!tagContainer) return;
+
+    // Add title paragraph if not already there
+    if (tagContainer.querySelectorAll('.mb-2.text-sm').length === 0) {
+        let titleParagraph = document.createElement('p');
+        titleParagraph.className = 'mb-2 text-sm';
+        titleParagraph.textContent = 'Files ready to be uploaded:';
+        tagContainer.appendChild(titleParagraph);
+    }
+
+    // Get the current set of filenames for this input
+    let currentFileNames = Array.from(tagContainer.querySelectorAll(`.tag-${inputId}`)).map(tag => tag.title);
+
+    // Add new files to the specific input's array and update the UI
+    for (let file of inputElement.files) {
+        // Check if file is already in the list to avoid duplication
+        if (!currentFileNames.includes(file.name)) {
+            selectedFiles[inputId].push(file);
+
+            const tag = createFileTag(file.name);
+            tag.classList.add(`tag-${inputId}`); // Add a class to identify tags for this input
+            tagContainer.appendChild(tag);
+        }
     }
 }
 

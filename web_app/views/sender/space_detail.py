@@ -29,14 +29,17 @@ class SpaceDetailView(TemplateView):
         context['sender'] = self.get_sender()
         context['formset'] = formset or self.get_formset()
         return context
-
+                
     def post(self, request, *args, **kwargs):
         formset = self.get_formset()
+                
         if formset.is_valid():
             sender = self.get_sender()
             for form in formset:
                 upload_request = UploadRequest.objects.get(pk=form.cleaned_data.get('request_uuid'))
-                uploaded_files = form.cleaned_data.get('files')
+                input_id =  str(form.prefix) + '-files'  # e.g., 'form-2-files'
+                uploaded_files = request.FILES.getlist(input_id)
+              
                 google_drive_destination: GoogleDrive = upload_request.google_drive_destination
                 for uploaded_file in uploaded_files:
                     file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
@@ -50,6 +53,8 @@ class SpaceDetailView(TemplateView):
                                                                         file_type=uploaded_file.content_type,google_drive_url=google_drive_file.get('webViewLink')))
                     messages.success(request, "Your upload was successful") #  http request here
             return redirect(request.path)
+        else:
+            print(formset.errors)  # Add this line to see what the errors are
         return self.render_to_response(self.get_context_data(formset=formset))
 
     def get_space(self):

@@ -50,7 +50,7 @@
             </div>
         {% endif %}
         
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form id="upload_form" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}    
             <div id="accordion-open" data-accordion="open">
                 {{ formset.non_form_errors  }}
