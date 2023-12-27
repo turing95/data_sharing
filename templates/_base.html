@@ -49,6 +49,10 @@
     <!-- should be included only then needed -->
     <script type="module" src="{% static 'src/js/summary/files_modal/index.js' %}"></script>
 
+    {% if includeSidebar %}
+        <script type="module" src="{% static 'src/js/documentation/index.js' %}"></script>
+    {% endif %}
+
     
 <script>
     // Timezone settings

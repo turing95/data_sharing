@@ -1,6 +1,6 @@
 {% load static %}
 <nav class="fixed top-0 left-0 z-50 w-full bg-white border-gray-200 dark:bg-gray-900 h-14">
-    <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
+    <div id="main-navbar" class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
         <a href="{% url 'spaces' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="{% static 'images/logo.png' %}" class="h-8" alt="FileFetch Logo" />
         </a>
@@ -27,6 +27,9 @@
                     </li>
                     <li>
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'documentation'  article_name='the_default' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Documentation</a>
                     </li>
                     <li>
                         <form action="{% url 'account_logout' %}" method="POST">

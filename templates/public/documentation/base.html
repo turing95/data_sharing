@@ -1,0 +1,72 @@
+{% extends 'public/_base.html' %}
+{% load static %}
+{% block content %}
+<div class="relative max-w-screen-xl p-5 mx-auto border-t ">
+    <div id="sidebar-button-container" class="fixed top-0 left-0 z-40 w-12 h-full overflow-hidden bg-white border-t border-r border-gray-200 pt-14 pb-14 dark:bg-gray-800 dark:border-gray-700">
+        <div class="ml-1">
+            <button  data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="items-center p-2 text-sm text-gray-500 rounded-lg ml-1inline-flex sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-full ml-20 overflow-hidden transition-transform -translate-x-full bg-white border-t border-r border-gray-200 pt-14 pb-14 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+        <div class="h-full px-3 pt-4 overflow-y-auto bg-white border-t dark:bg-gray-800 custom-scrollbar">
+            <ul class="space-y-2 font-medium ">
+                {% for item in structured_articles %}
+                    {% if item.is_group %}
+                        <li>
+                            <button type="button" class="flex items-center w-full p-2 py-1 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-{{ forloop.counter0 }}" data-collapse-toggle="dropdown-{{ forloop.counter0 }}">
+                                <!-- Group Icon and Title -->
+                                <span class="flex-1 font-bold text-left ms-1 rtl:text-right whitespace-nowrap">{{ item.title }}</span>
+                                <!-- Dropdown Arrow Icon -->
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-{{ forloop.counter0 }}" class="hidden py-1 pl-4 space-y-2">
+                                {% for article in item.articles %}
+                                    <li>
+                                        <a class="flex items-center w-full p-2 py-1 pl-8 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 {% if request.path == '/documentation/'|add:article.filename %}bg-red-100{% endif %}" href="#" hx-get="{% url 'get_article' article_name=article.filename %}" hx-trigger="click" hx-target="#article-content" hx-indicator="#loading-indicator-full-{{article.filename}}">
+                                            <span>{{ article.title }}</span>
+                                            <!-- Loading Indicator for Second-Level Article -->
+                                            <div id="loading-indicator-full-{{article.filename}}" class="items-center justify-center opacity-0 htmx-indicator">
+                                                <div role="status" class="ml-2 spinner">
+                                                    {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="flex items-center w-full p-2 py-1 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 {% if request.path == '/documentation/'|add:article.filename %}bg-red-100{% endif %}" href="#" hx-get="{% url 'get_article' article_name=item.filename %}" hx-trigger="click" hx-target="#article-content" hx-indicator="#loading-indicator-full-{{item.filename}}">
+                                <span class="flex-1 text-left ms-1 rtl:text-right whitespace-nowrap">{{ item.title }}</span>
+                                <!-- Loading Indicator for First-Level Article -->
+                                <div id="loading-indicator-full-{{item.filename}}" class="items-center justify-center opacity-0 htmx-indicator">
+                                    <div role="status" class="ml-2 spinner">
+                                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+    
+     <div class="p-4 ml-12 sm:ml-64">
+        <div id="article-content" class="article-content">
+            {% include article_template %}
+        </div>      
+    </div>
+</div>
+{% endblock content %}
