@@ -2,7 +2,7 @@ export function handleTagDropdownChange(dropdown) {
     const parentDiv = dropdown.closest('.request-form');
     const childDiv= parentDiv.querySelector('.file-naming-formula');
     if (!childDiv) return;
-        const selectedTag = `{${dropdown.value}}`;
+        const selectedTag = `{{${dropdown.value}}}`;
         insertText(childDiv, selectedTag)
         if (selectedTag) {
             dropdown.value = ""; // Reset the dropdown
