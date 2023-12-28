@@ -36,8 +36,8 @@
         <tbody>
             <!-- If the space has a public link add a row with its info-->
             {% if space.is_public or space.public_upload_events %}
-            <tr class="border-b dark:bg-gray-800 dark:border-gray-700 {% if space.is_public is False %} bg-orange-100 {%else%} bg-white{% endif %}">
-                <th scope="row" class="sticky left-0 z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal {% if space.is_public is False %} bg-orange-100 {%else%} bg-white{% endif %} dark:text-white">
+            <tr class="border-b dark:bg-gray-800 dark:border-gray-700 bg-white">
+                <th scope="row" class="sticky left-0 z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
                     Everyone (public)
                     
                 </th>
