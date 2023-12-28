@@ -8,6 +8,7 @@ module.exports = {
         './static/**/*.svg'
     ],
     plugins: [
+        require('flowbite/plugin')
     ],
     theme: {
         extend: {
