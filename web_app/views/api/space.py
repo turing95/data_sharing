@@ -75,8 +75,8 @@ def sender_request_files(request, space_uuid):
 @require_GET
 def sender_request_modal(request, space_uuid, request_uuid, sender_uuid):
     space = Space.objects.get(pk=space_uuid)
-    upload_request = UploadRequest.get(pk=request_uuid, space=space)  
-    sender = Sender.get(pk=sender_uuid, space=space)  
+    upload_request = UploadRequest.objects.get(pk=request_uuid, space=space)  
+    sender = Sender.objects.get(pk=sender_uuid, space=space)  
     
     events = space.upload_events
 
@@ -86,5 +86,5 @@ def sender_request_modal(request, space_uuid, request_uuid, sender_uuid):
 
 
     return render(request, 'private/space/detail/components/sender_request_files_modal.html', 
-                  {'space': space, 'req': upload_request, 'sender': sender, 'events': events})
+                  {'space': space, 'req': upload_request, 'sender': sender, 'upload_events': events})
 

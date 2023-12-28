@@ -15,6 +15,6 @@ from web_app.views.custom_http_errors import custom_page_not_found, custom_serve
 
 from web_app.views.api.sender import toggle_sender_active
 from web_app.views.api.space import toggle_space_active,toggle_space_public,history_table
-from web_app.views.api.space import toggle_space_active,toggle_space_public,upload_events, sender_request_modal, sender_request_files
+from web_app.views.api.space import toggle_space_active,toggle_space_public, sender_request_modal, sender_request_files
 from web_app.views.api.request import delete_request
 
