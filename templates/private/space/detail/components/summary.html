@@ -70,7 +70,7 @@
 
     <!-- UPLOAD STATUS -->
     <div class="mt-6 mb-6">
-        <h3 class="mb-3 text-xl font-semibold">Status Summary</h3>
+        <h3 class="mb-3 text-2xl font-semibold">Status Summary</h3>
         {% include "private/space/detail/components/sender_table.html" %}
     </div>
     </div>
@@ -78,15 +78,8 @@
 
     <div class="mt-6 mb-6" hx-get="{% url 'history_table' space.uuid %}" hx-trigger="intersect once" hx-target="#history-table" hx-indicator="#loading-indicator">
         <div class="flex items-center mb-3">
-            <h3 class="text-xl font-semibold ">Uploads History</h3>
-                {% if space.upload_events.count > 0 %}
-        <input class="form-control" type="search" 
-       name="search" placeholder="Begin Typing To Search ..." 
-       hx-post="{% url 'history_table' space.uuid %}" 
-       hx-trigger="input[target.value.length > 1 || target.value.length == 0] changed delay:500ms, search" 
-       hx-target="#history-table" 
-       hx-indicator="#loading-indicator">
-    {% endif %}
+            <h3 class="text-2xl font-semibold ">Uploads History</h3>
+                
             <!-- Loading Indicator -->
             <div id="loading-indicator" class="items-center justify-center opacity-0 htmx-indicator">
                 <div role="status" class="ml-2 spinner">
@@ -95,6 +88,31 @@
                 </div>
             </div>
         </div>
+        {% if space.upload_events.count > 0 %}
+            <!-- Search bar -->
+            <div class="inline-flex pb-4 bg-white dark:bg-gray-900">
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative flex mt-1 iems-centered">
+                    <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
+                        <img src="{% static 'images/icons/magnifying_lense.svg' %}" alt="Search Icon" class="w-[18px] h-[18px] text-gray-500">
+                    </div>
+                    <input class="outline-none block py-1.5 text-sm text-gray-900 border border-gray-300 form-control ps-10 w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="search" 
+                        name="search" placeholder="Type to search..." 
+                        hx-post="{% url 'history_table' space.uuid %}" 
+                        hx-trigger="input[target.value.length > 1 || target.value.length == 0] changed delay:500ms, search" 
+                        hx-target="#history-table" 
+                        hx-indicator="#search-loading-indicator">
+                </div>
+                <!-- Search Loading Indicator -->
+                <div id="search-loading-indicator" class="flex items-center justify-center my-auto opacity-0 htmx-indicator">
+                    <div role="status" class="ml-2 spinner">
+                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+                
         <div id="history-table">            
         </div>
     </div>
