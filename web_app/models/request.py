@@ -1,6 +1,5 @@
 from django.db import models
-from django.db.models import Q
-
+from utils.strings import fill_template
 from web_app.models import BaseModel, DeleteModel
 import arrow
 
@@ -63,7 +62,7 @@ class UploadRequest(BaseModel, DeleteModel):
     def get_file_name_from_formula(self, sender, original_file_name):
         format_params = self.get_name_format_params(sender, original_file_name)
         if self.file_naming_formula is not None:
-            file_name = self.file_naming_formula.format(**format_params)
+            file_name = fill_template(self.file_naming_formula,format_params)
         else:
             file_name = original_file_name
         return file_name

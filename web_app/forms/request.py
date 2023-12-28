@@ -115,7 +115,7 @@ class RequestForm(ModelForm):
         valid_tags = [tag.label for tag in UploadRequest.FileNameTag]
 
         # Regular expression to find content within curly brackets
-        regex_pattern = r"\{([^}]+)\}"
+        regex_pattern = r"\{{([^}]+)\}}"
         found_tags = re.findall(regex_pattern, file_naming_formula)
 
         # Filtering out invalid tags
