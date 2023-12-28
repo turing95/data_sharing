@@ -9,3 +9,29 @@
         overflow-wrap: anywhere;
     }
 }
+
+/* Custom Scrollbar Class */
+.custom-scrollbar {
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #f1f1f1; /* For Firefox */
+  }
+  
+  /* For Webkit browsers like Chrome, Safari, and newer versions of Edge */
+  .custom-scrollbar::-webkit-scrollbar {
+      width: 10px; /* Width of the vertical scrollbar */
+      height: 10px; /* Height of the horizontal scrollbar */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 5px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #555;
+  }
+  

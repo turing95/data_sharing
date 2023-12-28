@@ -8,7 +8,6 @@ module.exports = {
         './static/**/*.svg'
     ],
     plugins: [
-        require('flowbite/plugin')
     ],
     theme: {
         extend: {
@@ -76,7 +75,10 @@ module.exports = {
                     200: '#fef6c1',
                     100: '#fefae0'
                 }
+            },
+            backgroundColor: {
+                'red-300-40': 'rgba(248, 180, 180, 0.4)',
             }
-        },
+        }
     }
 }

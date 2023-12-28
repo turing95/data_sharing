@@ -2,7 +2,8 @@ from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     PasswordResetView, SignupView, LoginView, SpaceDetailFormViewSender, \
     TermsOfServiceView, PrivacyPolicyView, DeleteSpaceView, SettingsView, \
-    custom_page_not_found, custom_server_error, toggle_sender_active, toggle_space_active,delete_request,toggle_space_public,history_table
+    custom_page_not_found, custom_server_error, toggle_sender_active, toggle_space_active,delete_request,toggle_space_public,history_table, \
+    sender_request_modal, sender_request_files
 
 urlpatterns = [
     path('', SpacesView.as_view(), name='spaces'),
@@ -16,9 +17,14 @@ urlpatterns = [
     path('spaces/<uuid:space_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
     path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(),
          name='sender_space_detail_private'),
+
     path('spaces(<uuid:space_uuid>/toggle_active/', toggle_space_active, name='toggle_space_active'),
     path('spaces/<uuid:space_uuid>/toggle_public/', toggle_space_public, name='toggle_space_public'),
     path('spaces/<uuid:space_uuid>/history_table/', history_table, name='history_table'),
+
+    path('spaces/<uuid:space_uuid>/sender_request_files/', sender_request_files, name='sender_request_files'),
+    path('space/<uuid:space_uuid>/request/<uuid:request_uuid>/sender/<uuid:sender_uuid>/', sender_request_modal, name='sender_request_modal'),
+
     path('requests/delete/<uuid:request_uuid>/', delete_request, name='request_delete'),
 
     path('senders/<uuid:sender_uuid>/toggle_active/', toggle_sender_active, name='toggle_sender_active'),

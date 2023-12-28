@@ -1,11 +1,11 @@
 {% load custom_tags %}
 {% load static %}
 
-<div class="relative overflow-x-auto">
-    <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
+<div class="relative overflow-x-auto custom-scrollbar">
+    <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-3 py-3 min-w-[100px]">
+                <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-0 z-10 bg-gray-100">
                     Invitee
                 </th>
                 <th scope="col" class="px-3 py-3 min-w-[200px]">
@@ -14,11 +14,21 @@
                 <th scope="col" class="px-3 py-3 min-w-[200px]">
                     Link Status
                 </th>
-                <th scope="col" class="px-3 py-3 min-w-[200px]">
-                    <div class="flex items-center">            
-                        <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >Requests recap</span>
+
+                {% for req in space.requests.all reversed %}
+                
+                <th scope="col" class="px-3 py-1.5 min-w-[150px] {% if req.is_deleted is True %} bg-red-300-40 {% endif %}">
+                    <div class="flex flex-col justify-start">
+
+                        <span class="text-xs font-normal normal-case">         
+                            Request {{ forloop.counter }} {% if req.is_deleted is True %} (deleted) {% endif %}:
+                        </span>    
+                        <a href="{{ req.google_drive_destination.url }}" target="_blank" class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">   
+                            <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >{{ req.title }} </span>
+                        <a>
                     </div>
                 </th>
+                {% endfor%}
                 
                 
             </tr>
@@ -27,7 +37,7 @@
             <!-- If the space has a public link add a row with its info-->
             {% if space.is_public or space.public_upload_events %}
             <tr class="border-b dark:bg-gray-800 dark:border-gray-700 {% if space.is_public is False %} bg-orange-100 {%else%} bg-white{% endif %}">
-                <th scope="row" class="max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal dark:text-white ">
+                <th scope="row" class="sticky left-0 z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal {% if space.is_public is False %} bg-orange-100 {%else%} bg-white{% endif %} dark:text-white">
                     Everyone (public)
                     
                 </th>
@@ -59,23 +69,15 @@
                         {% endif %}              
                     </div>
                 </td>
-            <td class="px-3 py-2 ">
-                <div class="">
-                    <ul>
-                        {% for req in space.requests.all reversed %}
-                        <li class="flex items-center justify-start {% if req.is_deleted is True %} bg-red-300 {% endif %}">
-                            <span class="inline-block max-w-[120px] overflow-hidden text-ellipsis whitespace-normal flex-grow mb-1 border-r border-gray-300 pr-1">
-                                {{ req.title }}
-                            </span>
-                            <span class="flex-shrink-0 ml-1 text-center" title="number of uploaded files">
-                                {% get_count_uploaded_files req %} <!-- no sender events count -->
-                            </span>
-                        </li>
-                        {% endfor %}
-                            
-                        </ul>
-                    </div>
+                {% for req in space.requests.all reversed%}
+                <td class="px-3 py-2 {% if req.is_deleted is True %} bg-red-300-40 {% endif %}">
+                    <div class="">                  
+                                <span class="flex-shrink-0 ml-1 text-center" title="number of uploaded files">
+                                    {% get_count_uploaded_files req %} files
+                                </span> 
+                        </div>
                 </td>
+                {% endfor %}
                 
             </tr>
 

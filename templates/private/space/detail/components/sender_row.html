@@ -1,6 +1,6 @@
 {% load custom_tags static %}
 <tr class=" border-b dark:bg-gray-800 dark:border-gray-700 {% if sender.is_active is False %} bg-orange-100 {%else%} bg-white{% endif %}" hx-target="this">
-                <th scope="row" class="max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal dark:text-white">
+                <th scope="row" class="sticky left-0 z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal {% if sender.is_active is False %} bg-orange-100 {%else%} bg-white{% endif %} dark:text-white">
                     {{ sender.email }}
                 </th>
                 {% url 'sender_space_detail_private' space.uuid sender.uuid as sender_path%}
@@ -20,24 +20,33 @@
                 </td>
                 <td class="px-3 py-2">
                         {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active  color_on="green" color_off="orange" toggle_color_on="marian-blue" toggle_color_off="gray" label_on="active" label_off="inactive" soft_off_label=False   label_colored=True label_wrap=True%}
-       
-   
                 </td>
-            <td class="px-3 py-2 ">
-                <div class="">
-                    <ul>
-                        {% for req in space.requests.all reversed%}
-                        <li class="flex items-center justify-start {% if req.is_deleted is True %} bg-red-300 {% endif %}">
-                            <span class="inline-block max-w-[120px] overflow-hidden text-ellipsis whitespace-normal flex-grow mb-1 border-r border-gray-300 pr-1">
-                                {{ req.title }}
-                            </span>
-                            <span class="flex-shrink-0 ml-1 text-center" title="number of uploaded files">
-                                {% get_count_uploaded_files req sender %}
-                            </span>
-                        </li>
-                        {% endfor %}
-                            
-                        </ul>
-                    </div>
-                </td>
+           
+            {% for req in space.requests.all reversed%}
+            <td class="px-3 py-2 {% if req.is_deleted is True %} bg-red-300-40  {% endif %}">
+                <div class="flex" 
+                    hx-get="{% url 'sender_request_modal' space.uuid  req.uuid sender.uuid %}" 
+                    hx-trigger="click" 
+                    hx-target="#modal-{{req.uuid}}-{{ sender.uuid }}" 
+                    hx-swap="innerHTML"
+                    hx-indicator="#loading-indicator-{{req.uuid}}-{{ sender.uuid }}">                 
+                        <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline" title="number of uploaded files" >
+                            {% get_count_uploaded_files req sender %} files
+                        </span> 
+                        <div class="flex items-center mb-3">
+                            <!-- Loading Indicator -->
+                            <div id="loading-indicator-{{req.uuid}}-{{ sender.uuid }}" class="items-center justify-center opacity-0 htmx-indicator">
+                                <div role="status" class="ml-2 spinner">
+                                    {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                </div>
+                <div id="modal-{{req.uuid}}-{{sender.uuid}}" >            
+                </div>
+            </td>
+            {% endfor %}
 </tr>
