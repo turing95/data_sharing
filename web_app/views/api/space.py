@@ -54,22 +54,6 @@ def history_table(request, space_uuid):
     return render(request, 'private/space/detail/components/history_table.html',
                   {'space': space, 'upload_events': upload_events, 'hide_request': False, 'hide_sender': False})
 
-@require_GET
-def sender_request_files(request, space_uuid):
-    space = Space.objects.get(pk=space_uuid)
-    events = space.upload_events
-
-    # Filter the events by request and sender
-    events = events.filter(request__uuid=request.GET.get('request_uuid'),
-                           sender__uuid=request.GET.get('sender_uuid'))
-
-    
-        # Get the additional parameters from the request
-    hide_sender = request.GET.get('hide_sender', 'False') == 'True'
-    hide_request = request.GET.get('hide_request', 'False') == 'True'
-
-    return render(request, 'private/space/detail/components/history_table.html',
-                  {'events': events, 'hide_sender': hide_sender, 'hide_request': hide_request})
 
     
 @require_GET
