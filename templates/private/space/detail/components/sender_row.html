@@ -23,9 +23,9 @@
                 </td>
            
             {% for req in space.requests.all reversed%}
-            <td class="px-3 py-2 {% if req.is_deleted is True %} bg-red-300-40  {% endif %}">
+            <td class="px-3 py-2">
                 <div class="flex" 
-                    hx-get="{% url 'sender_request_modal' space.uuid  req.uuid sender.uuid %}" 
+                    hx-get="{% url 'request_modal'  req.uuid %}?sender_uuid={{sender.uuid}}"
                     hx-trigger="click" 
                     hx-target="#modal-{{req.uuid}}-{{ sender.uuid }}" 
                     hx-swap="innerHTML"

@@ -70,7 +70,7 @@
                     </div>
                 </td>
                 {% for req in space.requests.all reversed%}
-                <td class="px-3 py-2 {% if req.is_deleted is True %} bg-red-300-40 {% endif %}">
+                <td class="px-3 py-2">
                     <div class="">                  
                                 <span class="flex-shrink-0 ml-1 text-center" title="number of uploaded files">
                                     {% get_count_uploaded_files req %} files

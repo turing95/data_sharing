@@ -20,6 +20,7 @@ def toggle_space_active(request, space_uuid):
         render_block_to_string('private/space/detail/components/summary.html', 'details', {'space': space}, request))
 
 
+@login_required
 @require_POST
 def toggle_space_public(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
@@ -29,6 +30,7 @@ def toggle_space_public(request, space_uuid):
         render_block_to_string('private/space/detail/components/summary.html', 'details', {'space': space}, request))
 
 
+@login_required
 def history_table(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
 
@@ -55,20 +57,16 @@ def history_table(request, space_uuid):
                   {'space': space, 'upload_events': upload_events, 'hide_request': False, 'hide_sender': False})
 
 
-    
+@login_required
 @require_GET
-def sender_request_modal(request, space_uuid, request_uuid, sender_uuid):
-    space = Space.objects.get(pk=space_uuid)
-    upload_request = UploadRequest.objects.get(pk=request_uuid, space=space)  
-    sender = Sender.objects.get(pk=sender_uuid, space=space)  
-    
-    events = space.upload_events
+def request_modal(request, request_uuid):
+    upload_request = UploadRequest.objects.get(pk=request_uuid)
 
-    # Filter the events by request and sender
-    events = events.filter(request__uuid=request_uuid,
-                           sender__uuid=sender_uuid)
+    events = upload_request.events
+    if request.GET.get('sender_uuid'):
+        sender_uuid = request.GET.get('sender_uuid')
+        sender = Sender.objects.get(pk=sender_uuid)
+        events = events.filter(sender__uuid=sender_uuid)
 
-
-    return render(request, 'private/space/detail/components/sender_request_files_modal.html', 
-                  {'space': space, 'req': upload_request, 'sender': sender, 'upload_events': events})
-
+    return render(request, 'private/space/detail/components/request_modal.html',
+                  {'req': upload_request, 'sender': sender, 'upload_events': events})
