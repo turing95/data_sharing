@@ -62,7 +62,8 @@ def history_table(request, space_uuid):
 def request_modal(request, request_uuid):
     upload_request = UploadRequest.objects.get(pk=request_uuid)
 
-    events = upload_request.events
+    events = upload_request.events.all()
+    sender = None
     if request.GET.get('sender_uuid'):
         sender_uuid = request.GET.get('sender_uuid')
         sender = Sender.objects.get(pk=sender_uuid)

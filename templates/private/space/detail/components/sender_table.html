@@ -36,7 +36,7 @@
         <tbody>
             <!-- If the space has a public link add a row with its info-->
             {% if space.is_public or space.public_upload_events %}
-            <tr class="border-b dark:bg-gray-800 dark:border-gray-700 bg-white">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="sticky left-0 z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
                     Everyone (public)
                     
@@ -70,12 +70,31 @@
                     </div>
                 </td>
                 {% for req in space.requests.all reversed%}
+                
                 <td class="px-3 py-2">
-                    <div class="">                  
-                                <span class="flex-shrink-0 ml-1 text-center" title="number of uploaded files">
-                                    {% get_count_uploaded_files req %} files
-                                </span> 
-                        </div>
+                    <div class="flex" 
+                        hx-get="{% url 'request_modal'  req.uuid %}"
+                        hx-trigger="click" 
+                        hx-target="#modal-{{req.uuid}}-public" 
+                        hx-swap="innerHTML"
+                        hx-indicator="#loading-indicator-{{req.uuid}}-public">                 
+                            <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline" title="number of uploaded files" >
+                                {% get_count_uploaded_files req %} files
+                            </span> 
+                            <div class="flex items-center mb-3">
+                                <!-- Loading Indicator -->
+                                <div id="loading-indicator-{{req.uuid}}-public" class="items-center justify-center opacity-0 htmx-indicator">
+                                    <div role="status" class="ml-2 spinner">
+                                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+    
+                    </div>
+                    <div id="modal-{{req.uuid}}-public" >            
+                    </div>
                 </td>
                 {% endfor %}
                 
