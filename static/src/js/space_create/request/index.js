@@ -96,7 +96,9 @@ function updateElementIdentifiers(newForm, formCount) {
             element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
         }
         if (element.type !== 'checkbox' && element.type !== 'radio') {
-            element.value = ''; // Reset value for text inputs, textareas, and selects
+            if (!element.id.includes('-destination_display') && !element.id.includes('-destination')) {
+                element.value = ''; // Reset value for text inputs, textareas, and selects
+            }
         }
 
     });
