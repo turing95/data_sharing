@@ -25,6 +25,7 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         return super().get_success_url()
 
     def get_context_for_form(self, data, button_text='Create space', **kwargs):
+        data['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back'}
         data['space_form'] = True
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         data['requests'] = self.get_formset()

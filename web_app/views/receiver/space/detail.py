@@ -1,4 +1,6 @@
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
+
 from web_app.forms import SpaceForm, DetailRequestFormSet
 from web_app.models import Space, UploadRequest, Sender
 
@@ -11,6 +13,7 @@ class SpaceDetailFormView(SpaceFormView):
 
     def get_context_data(self, **kwargs):
         data = super(SpaceFormView, self).get_context_data(**kwargs)
+        data['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back'}
         if 'status' in self.request.GET:
             data = self.get_context_for_form(data, button_text='Save space', status=self.request.GET.get('status'))
         else:
