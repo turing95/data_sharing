@@ -28,6 +28,14 @@ class SpaceFormView(LoginRequiredMixin, FormView):
         data['space_form'] = True
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         data['requests'] = self.get_formset()
+        file_types_initial = []
+        for form in data['requests']:
+            if hasattr(form, 'instance') and form.instance.pk:
+                file_types_initial.append([ft.uuid for ft in form.instance.file_types.all()])
+
+        # Now add these initial values to the context
+        data['file_types_initial'] = file_types_initial
+    
         data['submit_text'] = button_text
         data['google_user_data'] = {'accessToken': self.request.custom_user.google_token.token}
         data.update(kwargs)

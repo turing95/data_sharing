@@ -1,0 +1,28 @@
+{% for group in widget.optgroups %}
+    {% for option in group.1 %}
+        <div class="p-4">
+            {% if option.attrs.data-group == 'group' %}
+                <!-- Group Checkbox -->
+                <div class="form-check">
+                    <input {{ option.tag }} id="id_requests-0-group_{{ option.attrs.data-uuid }}" class="w-4 h-4 text-blue-600 border-gray-300 rounded group-checkbox focus:ring-blue-500" data-group-id="{{ option.attrs.data-uuid }}" onchange="handleCheckboxChange(this)">
+                    <label for="id_requests-0-group_{{ option.attrs.data-uuid }}" class="ml-2 text-sm font-medium text-gray-900">{{ option.label }}</label>
+                </div>
+                <div class="pt-2 pl-6">
+                    <!-- Sub-checkboxes for this group -->
+                    {% for sub_option in option.sub_widgets %}
+                        <div>
+                            <input {{ sub_option.tag }} id="id_requests-0-checkbox_{{ sub_option.attrs.data-uuid }}" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" data-group-id="{{ option.attrs.data-uuid }}" onchange="handleCheckboxChange(this)">
+                            <label for="id_requests-0-checkbox_{{ sub_option.attrs.data-uuid }}" class="ml-2 text-sm text-gray-700">{{ sub_option.label }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <!-- Individual Checkbox -->
+                <div>
+                    <input {{ option.tag }} id="id_requests-0-checkbox_{{ option.attrs.data-uuid }}" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" onchange="handleCheckboxChange(this)">
+                    <label for="id_requests-0-checkbox_{{ option.attrs.data-uuid }}" class="ml-2 text-sm text-gray-700">{{ option.label }}</label>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endfor %}

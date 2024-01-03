@@ -7,7 +7,7 @@ from web_app.models import Space, UploadRequest, FileType, GoogleDrive
 from web_app.forms import css_classes
 from django import forms
 from django.utils.safestring import mark_safe
-from web_app.forms.widgets import ToggleWidget
+from web_app.forms.widgets import ToggleWidget, CustomCheckboxSelectMultiple
 
 
 class FileTypeChoiceField(forms.ModelMultipleChoiceField):
@@ -96,11 +96,25 @@ class RequestForm(ModelForm):
                 By default, files are saved to your destination folder with the name they have been uploaded with.
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """)
+    
+    file_type_restrict = forms.BooleanField(
+        widget=ToggleWidget(label_on='Apply file restrictions',
+                            label_off='No file type restrictions',
+                            attrs={
+                                'onclick': 'toggleFileTypeRestrict(this)'
+                            }),
+        required=False,
+        label='File Type Restrictions',
+        help_text="""
+                ...
+            """)
 
     file_types = FileTypeChoiceField(
         queryset=FileType.objects.all(),
         required=False,
-        widget=forms.CheckboxSelectMultiple,  # or any other suitable widget
+        widget=forms.CheckboxSelectMultiple(attrs={
+            'onchange': 'handleCheckboxChange(this)',
+        }),
         label='Restrict File Types',
         help_text=""" 
                 Leave blank to allow all extensions to be uploaded or select specific file extensions to forbid all the others.
@@ -136,6 +150,15 @@ class RequestForm(ModelForm):
         else:
             if file_naming_formula is file_naming_formula is None or file_naming_formula == '':
                 self.add_error('file_naming_formula', 'You must provide a file name if you want to rename the files.')
+        
+        
+        file_type_restrict = cleaned_data.get('file_type_restrict', False)
+        file_types = cleaned_data.get('file_types', [])
+
+        if file_type_restrict is False:
+            # Uncheck all file types if the file_type_restrict is False
+            cleaned_data['file_types'] = []
+        
         return cleaned_data
 
 
@@ -157,12 +180,41 @@ class DetailRequestForm(RequestForm):
             destination: GoogleDrive = self.instance.google_drive_destination
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
+                
+
+                
             self.fields['destination'].initial = destination.folder_id
             try:
                 self.fields['destination_display'].initial = destination.name
             except RefreshError:
                 self.fields['destination_display'].initial = "Error: refresh token"
-            self.fields['file_types'].initial = [f.extension for f in self.instance.file_types.all()]
+            
+            if self.instance.file_types.exists():
+                self.fields['file_type_restrict'].initial = True
+                
+            
+            initial_file_types = self.instance.file_types.all()
+            self.fields['file_types'].initial = initial_file_types
+            # # Step 1: Fetch the related FileType instances from the current UploadRequest instance
+            # related_file_types = self.instance.file_types.all()
+
+            # # Step 2: Initialize an empty list to hold the primary keys
+            # file_type_pks = []
+
+            # # Step 2.1: Loop through each FileType instance
+            # for file_type in related_file_types:
+            #     # Step 2.2: Extract the primary key of the FileType instance
+            #     file_type_pk = file_type.pk
+
+            #     # Step 2.3: Add the primary key to the list
+            #     file_type_pks.append(file_type_pk)
+
+            #     # Debugging: Check the value of file_type_pk and ensure it's correct
+
+            # # Step 3: Set the initial value of the 'file_types' field to the list of primary keys
+            # self.fields['file_types'].initial = file_type_pks
+            a=1
+
 
 
 class UniqueTitleFormSet(BaseInlineFormSet):

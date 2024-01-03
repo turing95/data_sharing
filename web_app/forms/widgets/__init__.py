@@ -1,1 +1,2 @@
 from web_app.forms.widgets.toggle import ToggleWidget
+from web_app.forms.widgets.restricted_files_checklist import CustomCheckboxSelectMultiple

@@ -68,7 +68,7 @@ class UploadRequest(BaseModel, DeleteModel):
         return file_name
 
 
-class FileType(BaseModel):
+class FileType(BaseModel): 
     group = models.BooleanField(default=False)
     slug = models.CharField(max_length=50, unique=True)
     extension = models.CharField(max_length=50, null=True, blank=True)

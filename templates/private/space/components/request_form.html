@@ -130,7 +130,7 @@
                     {{ req.number_of_files }}
                 </div> {% endcomment %}
                 
-                <!-- ALLOWED EXTENSIONS -->
+                {% comment %} <!-- ALLOWED EXTENSIONS -->
                 <div class="mb-6">
                     <div class="flex items-center mb-2 space-x-2">
                         <label for="{{ req.file_types.id_for_label }}"
@@ -139,7 +139,64 @@
                     </div>
                     {{ req.file_types }}
                     {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
+                </div> {% endcomment %}
+
+                <!-- ALLOWED EXTENSIONS -->
+                <div class="mb-6">
+                    <div class="flex items-center mb-2 space-x-2">
+                        <label for="{{ req.file_types.id_for_label }}"
+                        class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.file_types.label }} </label>
+                        {% include 'components/tooltip.html' with title=req.tile_types.label target_prefix='requests' content=req.file_types.help_text target=req.file_types.name%}
+                    </div>
+                    <div class = "flex items-center mb-2 nl-1">
+                        {{ req.file_type_restrict }}
+                        <label for="{{ req.rename.id_for_label }}"
+                        class="hidden block ml-2 text-xs font-medium text-gray-900 dark:text-white">{{ req.file_type_restrict.label }} </label>
+                    </div>
+                    <div class="hidden p-2 overflow-y-auto max-h-32 custom-scrollbar file-type-restriction-container">
+                        {% with outer_counter=forloop.counter0 %}
+                            {% for file_type in req.file_types.field.queryset %}
+                                {% if file_type.group %}
+                                    <div class="p-4">
+                                        <div class="form-check">
+                                            <input id="id_requests-{{outer_counter}}-group_{{ file_type.uuid }}" 
+                                                type="checkbox" 
+                                                class="w-4 h-4 text-blue-600 border-gray-300 rounded group-checkbox focus:ring-blue-500" 
+                                                data-group-id="{{ file_type.uuid }}" 
+                                                onchange="handleCheckboxChange(this)"
+                                                name="requests-{{outer_counter}}-file_types" 
+                                                value="{{ file_type.uuid }}" 
+                                                {% if file_type.uuid|stringformat:"s" in file_types_initial.0 %} checked {% endif %}> 
+                                            <label for="id_requests-{{outer_counter}}-group_{{ file_type.uuid }}" class="ml-2 text-sm font-medium text-gray-900">{{ file_type.slug }}</label>
+                                        </div>
+                                        <div class="pt-2 pl-6">
+                                            {% for sub_file_type in file_type.filetype_set.all %}
+                                                <div>
+                                                    <input type="checkbox" 
+                                                        id="id_requests-{{outer_counter}}-checkbox_{{ sub_file_type.uuid }}" 
+                                                        class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
+                                                        data-group-id="{{ file_type.uuid }}" 
+                                                        onchange="handleCheckboxChange(this)"
+                                                        name="requests-{{outer_counter}}-file_types"  
+                                                        value="{{ sub_file_type.uuid }}" 
+                                                        {% if sub_file_type.uuid|stringformat:"s" in file_types_initial.0 %} checked {% endif %}
+                                                        > 
+                                                    <label for="id_requests-{{outer_counter}}-checkbox_{{ sub_file_type.uuid }}" class="ml-2 text-sm text-gray-700">{{ sub_file_type.formatted_extension }}</label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endwith %}
+                    
+                    </div>
+                    
+                    {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
                 </div>
+
+
+                
             </div>
             
             

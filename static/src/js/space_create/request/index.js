@@ -1,6 +1,6 @@
-import {toggleAccordion, toggleRename} from './eventHandlers.js';
+import {toggleAccordion, toggleRename, handleCheckboxChange, toggleFileTypeRestrict} from './eventHandlers.js';
 
-export {handleTagDropdownChange,toggleRename} from './eventHandlers.js';
+export {handleTagDropdownChange,toggleRename, handleCheckboxChange, toggleFileTypeRestrict} from './eventHandlers.js';
 
 
 export function initRequestForms() {
@@ -15,6 +15,14 @@ export function initRequestForms() {
         if (renamePattern.test(element.id)) {
             toggleRename(element);
         }
+    });
+
+    const fileTypePattern = /^id_requests-\d+-file_type_restrict$/;
+    document.querySelectorAll('[id^="id_requests-"][id$="-file_type_restrict"]').forEach(element => {
+        if (fileTypePattern.test(element.id)) {
+            toggleFileTypeRestrict(element);
+        }
+
     });
 }
 
@@ -55,6 +63,10 @@ function updateElementIdentifiers(newForm, formCount) {
             const newId = element.id.replace(/-\d+-/, `-${formCount}-`);
             element.id = newId;
 
+            if(element.id.includes('-group_') || element.id.includes('-checkbox_')) {
+                element.addEventListener('change', () => handleCheckboxChange(element));
+            }
+            
             // Update accordion button target for accordion body
             if (element.id.includes('-open-body')) {
                 const buttonSelector = `button[data-accordion-target="#${element.id.replace(/-\d+-/, '-0-')}"]`;
@@ -102,6 +114,9 @@ function updateElementIdentifiers(newForm, formCount) {
         }
 
     });
+
+    // Bind events to group and sub-checkboxes
+    //bindCheckboxEvents(newForm);
 
     // Update labels
     updateLabelsForAttribute(newForm, formCount);
@@ -163,6 +178,17 @@ function check_delete(form){
     }
 }
 
+function bindCheckboxEvents(form) {
+    const groupCheckboxes = form.querySelectorAll('.group-checkbox');
+    groupCheckboxes.forEach(groupCheckbox => {
+        groupCheckbox.addEventListener('change', () => handleCheckboxGroup(groupCheckbox));
+    });
+
+    const subCheckboxes = form.querySelectorAll('[class*="-item"]');
+    subCheckboxes.forEach(subCheckbox => {
+        subCheckbox.addEventListener('change', () => handleSubCheckboxChange(subCheckbox));
+    });
+}
 
 
 
