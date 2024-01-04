@@ -1,8 +1,8 @@
-import {initMessageBox} from "./utils/messageBox.js";
+import {initMessageBar} from "./utils/messageBar.js";
 import { initSubmitButtons } from './utils/submitButton.js';
 document.addEventListener('DOMContentLoaded', function() {
         initSubmitButtons();
-        initMessageBox();
+        initMessageBar();
 
 
 

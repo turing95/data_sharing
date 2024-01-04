@@ -9,14 +9,7 @@ function closeMessage() {
     }
 }
 
-export function initMessageBox() {
-    let messageBox = document.getElementById('messageBox');
-    if (messageBox) {
-        let button = messageBox.querySelector('button[type="button"]');
-        button.addEventListener('click', function() {
-            closeMessage();
-        });
-    }
+export function initMessageBar() {
     setTimeout(closeMessage, 5000);
 
 }
