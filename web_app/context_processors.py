@@ -11,3 +11,17 @@ def account_pages_context(request):
         return {'account_page': True}
     else:
         return {'account_page': False}
+
+def upload_pages_context(request):
+    # Check if '/accounts/' is in the first part of the URL path
+    if 'upload' in request.path.split('/')[1]:
+        return {'upload_page': True}
+    else:
+        return {'upload_page': False}
+    
+def spaces_pages_context(request):
+    # Check if '/accounts/' is in the first part of the URL path
+    if 'spaces' in request.path.split('/')[1]:
+        return {'spaces_page': True}
+    else:
+        return {'spaces_page': False}

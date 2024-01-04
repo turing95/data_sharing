@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from web_app.views.unrestricted_page import UnrestrictedAccessMixin
 
-class TermsOfServiceView(UnrestrictedAccessMixin, TemplateView):
+
+class TermsOfServiceView(TemplateView):
     template_name = 'public/terms_of_service.html'

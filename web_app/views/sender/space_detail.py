@@ -24,7 +24,6 @@ class SpaceDetailView(TemplateView):
 
     def get_context_data(self,formset=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sender_area'] = True
         context['space'] = self.get_space()
         context['sender'] = self.get_sender()
         context['formset'] = formset or self.get_formset()

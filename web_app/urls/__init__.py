@@ -6,7 +6,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     request_modal
 
 urlpatterns = [
-    path('', SpacesView.as_view(), name='spaces'),
+    path('spaces/', SpacesView.as_view(), name='spaces'),
     path('accounts/signup/', SignupView.as_view(), name='account_signup'),
     path('accounts/login/', LoginView.as_view(), name='account_login'),
     path('accounts/password/reset/', PasswordResetView.as_view(), name='account_reset_password'),
@@ -14,7 +14,7 @@ urlpatterns = [
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
     path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
     path('spaces/delete/<uuid:space_uuid>/', DeleteSpaceView.as_view(), name='space_delete'),
-    path('spaces/<uuid:space_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
+    path('upload/<uuid:space_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
     path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(),
          name='sender_space_detail_private'),
 
@@ -29,7 +29,7 @@ urlpatterns = [
     path('senders/<uuid:sender_uuid>/toggle_active/', toggle_sender_active, name='toggle_sender_active'),
     path('terms_of_service/', TermsOfServiceView.as_view(), name='terms_of_service'),
     path('privacy_policy/', PrivacyPolicyView.as_view(), name='privacy_policy'),
-    path('home/', PublicLandingView.as_view(), name='home'),
+    path('', PublicLandingView.as_view(), name='home'),
     path("404/", custom_page_not_found),
     path("500/", custom_server_error)
 ]
