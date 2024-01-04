@@ -5,8 +5,9 @@ from web_app.views.receiver.authentication.signup import SignupView
 from web_app.views.receiver.authentication.login import LoginView
 from web_app.views.receiver.authentication.reset_password import PasswordResetView
 from web_app.views.receiver.space.detail import SpaceDetailFormView as SpaceDetailFormViewReceiver
-from web_app.views.receiver.terms_of_service import TermsOfServiceView
-from web_app.views.receiver.privacy_policy import PrivacyPolicyView
+from web_app.views.terms_of_service import TermsOfServiceView
+from web_app.views.privacy_policy import PrivacyPolicyView
+from web_app.views.public_landing import PublicLandingView
 from web_app.views.receiver.settings import SettingsView
 
 from web_app.views.sender.space_detail import SpaceDetailView as SpaceDetailFormViewSender
