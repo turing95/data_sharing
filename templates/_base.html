@@ -23,7 +23,7 @@
         {% include 'components/navbar.html' %}
         {% include 'components/messages.html' %}
 
-        <div {% if not sender_area %}class="pt-14"{% endif %}>
+        <div {% if not upload_page %}class="pt-14"{% endif %}>
             {% block content %}
             {% endblock %}
         </div>
@@ -39,7 +39,7 @@
         <script type="module" src="{% static 'src/js/space_create/index.js' %}" ></script>
     {% endif %}
 
-    {% if sender_area %}            
+    {% if upload_pager %}            
         <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
     {% endif %}
 
