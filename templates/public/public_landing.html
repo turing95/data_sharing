@@ -65,14 +65,24 @@
                    </div>
                    <p class="flex items-center my-auto mt-1 text-xs text-gray-500">No credit card required.</p>
                </div>
-               <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-                    <img src="{% static 'images/hero_image.png' %}"  alt="hero image"/>
+               <div class="lg:mt-0 lg:col-span-5 lg:flex">
+                    <img src="{% static 'images/hero_image.png' %}"  alt="hero image"/> 
+                    
                </div>                
            </div>
         </section>
         <!-- End block -->
 
         <!-- Video Section -->
+        <section>
+            <div class="max-w-screen-lg px-4 pt-12 mx-auto pb-14 lg:gap-8 xl:gap-0 lg:pb-16 lg:grid-cols-12 lg:pt-20">
+                <div class="relative p-8 overflow-auto rounded-xl">
+                    <iframe class="w-full shadow-lg aspect-video" src="https://www.youtube.com/embed/DKOARDVHo6g?si=AkYbs9mP0YRZnApP" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </section>
+
+       
         <!-- End Video Section-->
 
         <!-- Features Section -->
@@ -166,9 +176,9 @@
                             {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
                         <!-- card -->
                             <!--title-->
-                            {% with "Multiple file requests via one link" as title %}
+                            {% with "Space dashboard" as title %}
                             <!--description-->
-                            {% with "Never ask to send the missing file again. Ad multiple file requests to each upload space and set dedicated instructions and rules" as description %}
+                            {% with "Don't go through your email to see what's missing, the space dashboard has everything you need" as description %}
                             <!--asset link-->
                             {% with "images/gifs/disable_sender_link_quality.gif" as asset_link %}
                             <!--asset description-->
@@ -177,12 +187,19 @@
                             {% with "some_anchor" as learn_more_href %}
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
                             {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
-
-                        {% comment %} {% include 'public/feature_card.html' with title="Predefined file destinations" description="Chose in which drive folder you want to receive each file" learn_more_href="some_anchor"%} {% endcomment %}
-                        
-                       
-                        
-                            
+                        <!-- card -->
+                            <!--title-->
+                            {% with "Upload Space, no more wrong files" as title %}
+                            <!--description-->
+                            {% with "Counterparties upload files in one dedicated space. Each file is instantly validated by your rules, making progress transparent to all" as description %}
+                            <!--asset link-->
+                            {% with "images/gifs/disable_sender_link_quality.gif" as asset_link %}
+                            <!--asset description-->
+                            {% with "disable sender link gif" as asset_description %}
+                            <!-- learn more link-->
+                            {% with "some_anchor" as learn_more_href %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}   
                     </div>
                 </div>
             </div>
