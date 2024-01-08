@@ -11,23 +11,16 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import config
-
+from config import *
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--#y=_qluh6k!afw272om^rvw)-kh3o0b^2szptdeu95)s#i(g='
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+APP_NAME = os.environ.get("FLY_APP_NAME")
+ALLOWED_HOSTS = [f"{APP_NAME}.fly.dev"]
 # Application definition
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -111,7 +104,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 WSGI_APPLICATION = 'data_sharing.wsgi.application'
-
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -125,11 +118,11 @@ WSGI_APPLICATION = 'data_sharing.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": config.POSTGRES_DB,
-        "USER": config.POSTGRES_USER,
-        "PASSWORD": config.POSTGRES_PASSWORD,
-        "HOST": config.POSTGRES_HOST,
-        "PORT": config.POSTGRES_PORT,
+        "NAME": POSTGRES_DB,
+        "USER": POSTGRES_USER,
+        "PASSWORD": POSTGRES_PASSWORD,
+        "HOST": POSTGRES_HOST,
+        "PORT": POSTGRES_PORT,
     }
 }
 
@@ -178,8 +171,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': config.GOOGLE_CLIENT_ID,
-            'secret': config.GOOGLE_CLIENT_SECRET,
+            'client_id': GOOGLE_CLIENT_ID,
+            'secret': GOOGLE_CLIENT_SECRET,
             'key': ''
         },
         'SCOPE': [
@@ -204,6 +197,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config.GMAIL_USERNAME  # Your Google email address
-EMAIL_HOST_PASSWORD = config.GMAIL_PASSWORD  # Your Google App Password or password
+EMAIL_HOST_USER = GMAIL_USERNAME
+EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
 EMAIL_USE_TLS = True
