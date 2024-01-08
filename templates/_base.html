@@ -20,10 +20,13 @@
 </head>
 <body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <div class="flex-grow">
+    
+    {% if sender_area is False %}
         {% include 'components/navbar.html' %}
+    {% endif %}
         {% include 'components/messages.html' %}
 
-        <div {% if not upload_page %}class="pt-14"{% endif %}>
+        <div {% if not sender_area %}class="pt-14"{% endif %}>
             {% block content %}
             {% endblock %}
         </div>
@@ -39,7 +42,7 @@
         <script type="module" src="{% static 'src/js/space_create/index.js' %}" ></script>
     {% endif %}
 
-    {% if upload_page %}            
+    {% if sender_area %}            
         <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
     {% endif %}
 
