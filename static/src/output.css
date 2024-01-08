@@ -1265,6 +1265,11 @@ input:checked + .toggle-bg {
   margin-bottom: auto;
 }
 
+.mx-20 {
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1623,6 +1628,10 @@ input:checked + .toggle-bg {
   width: 100%;
 }
 
+.w-\[250px\] {
+  width: 250px;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -1671,6 +1680,10 @@ input:checked + .toggle-bg {
   max-width: 30px;
 }
 
+.max-w-\[420px\] {
+  max-width: 420px;
+}
+
 .max-w-\[66\%\] {
   max-width: 66%;
 }
@@ -1693,6 +1706,10 @@ input:checked + .toggle-bg {
 
 .max-w-screen-xl {
   max-width: 1280px;
+}
+
+.max-w-sm {
+  max-width: 24rem;
 }
 
 .max-w-xs {
@@ -2364,10 +2381,6 @@ input:checked + .toggle-bg {
   fill: #2b50c2;
 }
 
-.p-0 {
-  padding: 0px;
-}
-
 .p-1 {
   padding: 0.25rem;
 }
@@ -2497,6 +2510,16 @@ input:checked + .toggle-bg {
 .py-\[4px\] {
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.px-7 {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 .pb-14 {
@@ -3872,6 +3895,10 @@ input[type="search"]::-webkit-search-cancel-button {
     margin-top: 0px;
   }
 
+  .md\:mt-40 {
+    margin-top: 10rem;
+  }
+
   .md\:flex {
     display: flex;
   }
@@ -3973,6 +4000,10 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .md\:p-3 {
     padding: 0.75rem;
+  }
+
+  .md\:p-5 {
+    padding: 1.25rem;
   }
 
   .md\:p-8 {

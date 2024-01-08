@@ -43,13 +43,34 @@
                         </li>
                     </ul>
                 </div>
+                <ul class="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                        <a href="{% url 'spaces' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Spaces</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'account_settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">User Settings</a>
+                    </li>
+                    <li>
+                        <a href="https://buy.stripe.com/4gweWAciJ0O6ezefYY" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Upgrade</a>
+                    </li>
+                    <li>
+                        <a href="https://billing.stripe.com/p/login/5kA01WayM3vnaRO7ss" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                    </li>
+                    <li>
+                        <form action="{% url 'account_logout' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Sign out" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                        </form>
+                    </li>
+                </ul>
+            </div>
             {% else %}
                 <!-- Login and gest started only if user not logged-->
                     <div class="inline-flex md:me-0">
                     
                         
-                        {% include "components/buttons/generic.html" with button_text="Get Started" data_modal_target="sign_in-modal" data_modal_toggle="sign_in-modal" %}
-                        
+                        {% url 'account_login' as get_started_url %}
+                        {% include "components/buttons/generic.html" with button_text="Get Started" href=get_started_url %}
 
   
                     </div>
