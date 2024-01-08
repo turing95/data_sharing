@@ -14,8 +14,8 @@ urlpatterns = [
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
     path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
     path('spaces/delete/<uuid:space_uuid>/', DeleteSpaceView.as_view(), name='space_delete'),
-    path('upload/<uuid:space_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
-    path('upload/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(),
+    path('spaces/<uuid:space_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
+    path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(),
          name='sender_space_detail_private'),
 
     path('spaces/<uuid:space_uuid>/toggle_active/', toggle_space_active, name='toggle_space_active'),
