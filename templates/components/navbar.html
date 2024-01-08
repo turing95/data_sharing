@@ -45,11 +45,9 @@
             {% else %}
             <!-- Login and gest started only if user not logged-->
                 <div class="inline-flex md:me-0">
-        
-                        <a href="{% url 'account_login' %}" class="block p-0 my-auto mr-2 text-blue-700 bg-transparent hover:underline dark:text-blue-500">Sign in</a>
-            
-                    {% url 'account_signup' as signup_url %}
-                    {% include "components/buttons/generic.html" with button_text="Get Started" href=signup_url extra_classes="" %}
+                
+                    {% url 'account_login' as get_started_url %}
+                    {% include "components/buttons/generic.html" with button_text="Get Started" href=get_started_url %}
                 </div>
             {% endif %}
             {% if generic_area %} <!-- Show top menue only when the user is not in spaces pages or login pages-->

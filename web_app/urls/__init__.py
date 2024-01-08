@@ -13,9 +13,7 @@ urlpatterns = [
     path('', PublicLandingView.as_view(), name='generic_home'),
     # Receiver views
     path('spaces/', SpacesView.as_view(), name='spaces'),
-    path('accounts/signup/', SignupView.as_view(), name='account_signup'),
     path('accounts/login/', LoginView.as_view(), name='account_login'),
-    path('accounts/password/reset/', PasswordResetView.as_view(), name='account_reset_password'),
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
     path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),

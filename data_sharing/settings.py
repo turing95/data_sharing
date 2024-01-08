@@ -163,6 +163,8 @@ LOGIN_REDIRECT_URL = 'spaces'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+ACCOUNT_ADAPTER = 'web_app.adapters.AccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'web_app.adapters.SocialAccountAdapter'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         # For each OAuth based provider, either add a ``SocialApp``
