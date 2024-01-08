@@ -1,5 +1,6 @@
 {% load static %}
-<nav id="navbar" class="fixed top-0 left-0 z-50 w-full bg-white border-gray-200 dark:bg-gray-900 h-14">
+{% include "public/authentication/login_modal.html" %}
+<nav id="navbar" class="fixed top-0 left-0 z-50 w-full pb-2 bg-white border-gray-200 dark:bg-gray-900 h-14">
     
     <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
         <!-- company logo-->
@@ -9,46 +10,49 @@
 
         <div class="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
             {% if request.user.is_authenticated %}
-            <!-- User avatar and menue only if user is logged -->
-            <div class="flex justify-end md:min-w-[110px]">
-                <button type="button" class="flex text-sm rounded-full me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-                    <span class="sr-only">Open user menu</span>
-                    <span class="flex items-center justify-center w-8 h-8 text-sm text-white bg-blue-500 rounded-full">
-                        {{ request.user.email|first|upper }}
-                    </span>
-                </button>
-            </div>
-            <!-- Dropdown menu -->
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-                <div class="px-4 py-3">
-                    <span class="block text-sm text-gray-900 dark:text-white">Logged in as:</span>
-                    <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ request.user.email }}</span>
+                <!-- User avatar and menue only if user is logged -->
+                <div class="flex justify-end md:min-w-[110px]">
+                    <button type="button" class="flex text-sm rounded-full me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                        <span class="sr-only">Open user menu</span>
+                        <span class="flex items-center justify-center w-8 h-8 text-sm text-white bg-blue-500 rounded-full">
+                            {{ request.user.email|first|upper }}
+                        </span>
+                    </button>
                 </div>
-                <ul class="py-2" aria-labelledby="user-menu-button">
-                    <li>
-                        <a href="{% url 'spaces' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Spaces</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'account_settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">User Settings</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
-                    </li>
-                    <li>
-                        <form action="{% url 'account_logout' %}" method="POST">
-                            {% csrf_token %}
-                            <input type="submit" value="Sign out" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        </form>
-                    </li>
-                </ul>
-            </div>
+                <!-- Dropdown menu -->
+                <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+                    <div class="px-4 py-3">
+                        <span class="block text-sm text-gray-900 dark:text-white">Logged in as:</span>
+                        <span class="block text-sm text-gray-500 truncate dark:text-gray-400">{{ request.user.email }}</span>
+                    </div>
+                    <ul class="py-2" aria-labelledby="user-menu-button">
+                        <li>
+                            <a href="{% url 'spaces' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Spaces</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'account_settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">User Settings</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                        </li>
+                        <li>
+                            <form action="{% url 'account_logout' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" value="Sign out" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             {% else %}
-            <!-- Login and gest started only if user not logged-->
-                <div class="inline-flex md:me-0">
-                
-                    {% url 'account_login' as get_started_url %}
-                    {% include "components/buttons/generic.html" with button_text="Get Started" href=get_started_url %}
-                </div>
+                <!-- Login and gest started only if user not logged-->
+                    <div class="inline-flex md:me-0">
+                    
+                        
+                        {% include "components/buttons/generic.html" with button_text="Get Started" data_modal_target="sign_in-modal" data_modal_toggle="sign_in-modal" %}
+                        
+
+  
+                    </div>
             {% endif %}
             {% if generic_area %} <!-- Show top menue only when the user is not in spaces pages or login pages-->
 
