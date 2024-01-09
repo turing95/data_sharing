@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FileFetch</title>
+<title>Kezyy</title>
 <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
     {% compress css %}
@@ -20,7 +20,7 @@
 </head>
 <body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <div class="flex-grow">
-    
+
     {% if sender_area is False %}
         {% include 'components/navbar.html' %}
     {% endif %}
@@ -42,7 +42,7 @@
         <script type="module" src="{% static 'src/js/space_create/index.js' %}" ></script>
     {% endif %}
 
-    {% if sender_area %}            
+    {% if sender_area %}
         <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
     {% endif %}
 

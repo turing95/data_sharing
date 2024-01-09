@@ -18,7 +18,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com"]
 # Application definition
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
