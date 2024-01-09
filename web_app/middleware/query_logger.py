@@ -9,5 +9,6 @@ class QueryLoggingMiddleware(MiddlewareMixin):
 
     def process_template_response(self, request, response):
         # Add the queries to the context
-        response.context_data['sql_queries'] = connection.queries
+        if response.context_data is not None:
+            response.context_data['sql_queries'] = connection.queries
         return response
