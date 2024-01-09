@@ -1,6 +1,6 @@
 export function initNav()  {
     // Handle click event on navbar links
-    const navLinks = document.querySelectorAll('#navbar a');
+    const navLinks = document.querySelectorAll('#navbar-menu a:not(.signin)');
     navLinks.forEach(link => {
         link.addEventListener('click', function () {
             navLinks.forEach(link => {
@@ -33,5 +33,25 @@ export function initNav()  {
                 link.classList.remove('text-gray-900');
             }
         });
+    });
+
+    const navbarMenu = document.getElementById('navbar-menu');
+    const navButton = document.getElementById('navbar-menu-button');
+
+    // Toggle the navbar menu on button click
+    navButton.addEventListener('click', function () {
+        // This checks if the navbar is hidden and toggles the display
+        navbarMenu.classList.toggle('hidden');
+    });
+
+    // Close the navbar menu when clicking outside of it
+    document.addEventListener('click', function (event) {
+        const isClickInsideMenu = navbarMenu.contains(event.target);
+        const isClickOnButton = navButton.contains(event.target);
+
+        if (!isClickInsideMenu && !isClickOnButton && !navbarMenu.classList.contains('hidden')) {
+            navbarMenu.classList.add('hidden');
+            
+        }
     });
 }

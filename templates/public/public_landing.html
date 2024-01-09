@@ -53,16 +53,21 @@
                     </h1>
                     <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                         Effortless file collection with custom links. Set instructions, rules, automate reminders, and receive files neatly named in your drive.
-                    </p>
-                   <div class="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-
-                    {% include "components/buttons/generic.html" with button_text="Get Started for free" data_modal_target="sign_in-modal" data_modal_toggle="sign_in-modal" %}
-
-                        <a href="#target-section" class="flex items-center justify-center my-auto text-lg text-blue-700 hover:text-blue-500">View all features
-                            <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                        </a>
+                    </p>                    
+                   <div class="sm:flex sm:space-x-4">
+                        {% if request.user.is_authenticated is False %}
+                            <div class="flex flex-col">
+                                {% include "components/buttons/generic.html" with button_text="Access beta for free" href="link_to_form" %}
+                                <p class="flex items-center my-auto mt-1 text-xs text-gray-500">No credit card required.</p>
+                            </div>
+                        {% endif %}
+                        <div class="flex my-4 sm:my-0 sm:mb-5" >
+                            <a href="#target-section" class="flex items-center justify-center mx-auto my-auto text-lg text-blue-700 hover:text-blue-500">View all features
+                                <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </a>
+                        </div>
                    </div>
-                   <p class="flex items-center my-auto mt-1 text-xs text-gray-500">No credit card required.</p>
+                  
                </div>
                <div class="lg:mt-0 lg:col-span-5 lg:flex">
                     <img src="{% static 'images/hero_image.png' %}"  alt="hero image"/> 
