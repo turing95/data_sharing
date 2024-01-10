@@ -18,7 +18,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com","2566-2001-a61-3bca-ff01-793e-ed8a-2fa2-3d07.ngrok-free.app"]
 # Application definition
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'compressor',
-    'web_app'
+    'web_app',
+    'djstripe'
 ]
 
 MIDDLEWARE = [
@@ -200,3 +201,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = GMAIL_USERNAME
 EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
 EMAIL_USE_TLS = True
+DJSTRIPE_USE_NATIVE_JSONFIELD = True  # We recommend setting to True for new installations
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"

@@ -1,9 +1,10 @@
 from django.views.generic import ListView
 from web_app.models import Space
 from django.contrib.auth.mixins import LoginRequiredMixin
+from web_app.mixins import SubscriptionMixin
 
 
-class SpacesView(LoginRequiredMixin, ListView):
+class SpacesView(LoginRequiredMixin,SubscriptionMixin, ListView):
     model = Space
     template_name = "private/space/list.html"
     paginate_by = 12

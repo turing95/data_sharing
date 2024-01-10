@@ -1,3 +1,7 @@
+from django.shortcuts import redirect
+from djstripe.models import Customer
+from djstripe.settings import djstripe_settings
+
 from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
@@ -5,9 +9,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from web_app.models import Sender, GoogleDrive, UploadRequest
 from django.db import transaction
 from web_app.tasks.notifications import sender_invite
+from web_app.mixins import SubscriptionMixin
 
 
-class SpaceFormView(LoginRequiredMixin, FormView):
+class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
     template_name = "private/space/create.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
@@ -16,6 +21,12 @@ class SpaceFormView(LoginRequiredMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         # Call the parent dispatch method
         response = super().dispatch(request, *args, **kwargs)
+        '''
+        customer, _created = Customer.get_or_create(
+            subscriber=djstripe_settings.subscriber_request_callback(self.request)
+        )
+        if not customer.subscription and request.user.spaces.count() >= 1:
+            return redirect('create_checkout_session')'''
         response["Cross-Origin-Opener-Policy"] = "unsafe-none"
         return response
 

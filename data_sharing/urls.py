@@ -20,6 +20,7 @@ from web_app.urls import urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include(urlpatterns)),
-    path('accounts/', include('allauth.urls'))
+    path('accounts/', include('allauth.urls')),
+    path("stripe/", include("djstripe.urls", namespace="djstripe")),
 
 ]
