@@ -189,7 +189,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # TODO: this is against security best practices, according to allauth docs
 SOCIALACCOUNT_LOGIN_ON_GET = True
-
+MAX_FREE_SPACES = 100
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True

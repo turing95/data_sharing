@@ -23,6 +23,12 @@ class SpaceDetailFormView(SpaceFormView):
             context['deadline_expired'] = bool(context['space'].deadline) and context['space'].deadline < arrow.utcnow()
         return context
 
+    def dispatch(self, request, *args, **kwargs):
+        # Call the parent dispatch method
+        response = super(SpaceFormView, self).dispatch(request, *args, **kwargs)
+        response["Cross-Origin-Opener-Policy"] = "unsafe-none"
+        return response
+
     def handle_senders(self, senders_emails, space_instance):
 
         existing_senders = {sender.email: sender for sender in space_instance.senders.filter(is_active=True)}
@@ -41,7 +47,7 @@ class SpaceDetailFormView(SpaceFormView):
             sender.save()
 
     def get_success_url(self):
-        return self.request.path # to summary page
+        return self.request.path  # to summary page
 
     def get_space(self):
         if not self._space:
@@ -58,6 +64,7 @@ class SpaceDetailFormView(SpaceFormView):
     def get_formset(self):
         formset = DetailRequestFormSet(self.request.POST or None,
                                        instance=self.get_space(),
-                                       queryset=self.get_space().requests.filter(is_deleted=False).order_by('created_at'),
+                                       queryset=self.get_space().requests.filter(is_deleted=False).order_by(
+                                           'created_at'),
                                        form_kwargs={'access_token': self.request.custom_user.google_token.token})
         return formset

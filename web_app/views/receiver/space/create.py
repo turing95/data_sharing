@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import redirect
 from djstripe.models import Customer
 from djstripe.settings import djstripe_settings
@@ -21,12 +22,11 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         # Call the parent dispatch method
         response = super().dispatch(request, *args, **kwargs)
-        '''
         customer, _created = Customer.get_or_create(
             subscriber=djstripe_settings.subscriber_request_callback(self.request)
         )
-        if not customer.subscription and request.user.spaces.count() >= 1:
-            return redirect('create_checkout_session')'''
+        if not customer.subscription and request.user.spaces.count() >= settings.MAX_FREE_SPACES:
+            return redirect('create_checkout_session')
         response["Cross-Origin-Opener-Policy"] = "unsafe-none"
         return response
 
@@ -63,13 +63,11 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         formset = self.get_formset()
 
         if form.is_valid():
-            print('form valid')
             space_instance = form.save(commit=False)
             space_instance.user = request.user
             formset.instance = space_instance
 
             if formset.is_valid():
-                print('formset valid')
 
                 with transaction.atomic():
                     space_instance.save()
@@ -77,10 +75,6 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
                     self.handle_senders(form.cleaned_data.get('senders_emails', []), space_instance)
                     self.handle_formset(formset)
                 return self.form_valid(form)
-        else:
-            print('form invalid')
-            print(form.errors)
-            print(formset.errors)
         return self.form_invalid(form)
 
     @staticmethod
@@ -93,7 +87,4 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
     def handle_formset(formset):
         formset.save()
         for req in formset:
-            print(req.__dict__)
-        for req in formset:
-            print(req.instance)
             GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))

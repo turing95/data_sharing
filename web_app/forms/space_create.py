@@ -133,15 +133,14 @@ class SpaceForm(ModelForm):
             # Ensure the datetime is timezone-aware
             if not is_aware(deadline):
                 deadline = make_aware(deadline)
-
             # Convert to UTC
-            deadline = deadline.astimezone(timezone.utc)
+            deadline = arrow.get(deadline).to('UTC')
             if deadline < arrow.utcnow():
                 raise forms.ValidationError(
                     "Deadline must be in the future."
                 )
 
-        return deadline
+        return deadline.isoformat()
 
     def save(self, commit=True):
         instance = super().save()
