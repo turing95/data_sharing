@@ -36,22 +36,25 @@ export function initNav()  {
     });
 
     const navbarMenu = document.getElementById('navbar-menu');
-    const navButton = document.getElementById('navbar-menu-button');
+    if (navbarMenu) {
 
-    // Toggle the navbar menu on button click
-    navButton.addEventListener('click', function () {
-        // This checks if the navbar is hidden and toggles the display
-        navbarMenu.classList.toggle('hidden');
-    });
+        const navButton = document.getElementById('navbar-menu-button');
 
-    // Close the navbar menu when clicking outside of it
-    document.addEventListener('click', function (event) {
-        const isClickInsideMenu = navbarMenu.contains(event.target);
-        const isClickOnButton = navButton.contains(event.target);
+        // Toggle the navbar menu on button click
+        navButton.addEventListener('click', function () {
+            // This checks if the navbar is hidden and toggles the display
+            navbarMenu.classList.toggle('hidden');
+        });
 
-        if (!isClickInsideMenu && !isClickOnButton && !navbarMenu.classList.contains('hidden')) {
-            navbarMenu.classList.add('hidden');
-            
-        }
-    });
+        // Close the navbar menu when clicking outside of it
+        document.addEventListener('click', function (event) {
+            const isClickInsideMenu = navbarMenu.contains(event.target);
+            const isClickOnButton = navButton.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnButton && !navbarMenu.classList.contains('hidden')) {
+                navbarMenu.classList.add('hidden');
+                
+            }
+        });
+    }
 }
