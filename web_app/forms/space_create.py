@@ -86,7 +86,14 @@ class SpaceForm(ModelForm):
         help_text="""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
                                 """)
-
+    deadline_enforced = forms.BooleanField(
+        widget=ToggleWidget(label_on='Uploads after deadline not allowed',
+                            label_off='Uploads after deadline allowed'),
+        required=False,
+        label='Enforce deadline',
+        help_text="""Your invitees will not be able to upload files after the deadline if this is enabled.
+        You can change this setting at any time.""")
+    
     notify_deadline = forms.BooleanField(
         widget=ToggleWidget(label_on='Notify',
                             label_off='Notify'),
@@ -96,7 +103,7 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline']
+        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'deadline_enforced']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
