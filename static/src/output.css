@@ -2512,11 +2512,6 @@ input:checked + .toggle-bg {
   padding-bottom: 4px;
 }
 
-.py-10 {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-}
-
 .pb-14 {
   padding-bottom: 3.5rem;
 }
@@ -3124,10 +3119,6 @@ input[type="search"]::-webkit-search-cancel-button {
 .after\:content-\[\'\'\]::after {
   --tw-content: '';
   content: var(--tw-content);
-}
-
-.focus-within\:flex:focus-within {
-  display: flex;
 }
 
 .hover\:border-t-\[6px\]:hover {
@@ -3819,12 +3810,12 @@ input[type="search"]::-webkit-search-cancel-button {
     margin-bottom: 0px;
   }
 
-  .sm\:mt-0 {
-    margin-top: 0px;
-  }
-
   .sm\:mb-5 {
     margin-bottom: 1.25rem;
+  }
+
+  .sm\:mt-0 {
+    margin-top: 0px;
   }
 
   .sm\:flex {
@@ -3851,12 +3842,6 @@ input[type="search"]::-webkit-search-cancel-button {
     --tw-space-x-reverse: 0;
     margin-right: calc(1rem * var(--tw-space-x-reverse));
     margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
-  }
-
-  .sm\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-y-reverse: 0;
-    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
-    margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 
   .sm\:text-center {
@@ -3901,10 +3886,6 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .md\:mt-0 {
     margin-top: 0px;
-  }
-
-  .md\:block {
-    display: block;
   }
 
   .md\:flex {
