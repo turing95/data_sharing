@@ -24,7 +24,7 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         customer, _created = Customer.get_or_create(
             subscriber=djstripe_settings.subscriber_request_callback(self.request)
         )
-        if not customer.subscription and request.user.spaces.count() >= 1:
+        if not customer.subscription and request.user.spaces.count() >= 100:
             return redirect('create_checkout_session')
         response["Cross-Origin-Opener-Policy"] = "unsafe-none"
         return response
