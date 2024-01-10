@@ -20,7 +20,6 @@ class SpaceDetailFormView(SpaceFormView):
             context = self.get_context_for_form(context, button_text='Save space', status=self.request.GET.get('status'))
         else:
             context['space'] = self.get_space()
-            context['deadline_expired'] = bool(context['space'].deadline) and context['space'].deadline < arrow.utcnow()
         return context
 
     def dispatch(self, request, *args, **kwargs):

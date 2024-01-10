@@ -2,6 +2,7 @@ from django.db import models
 from web_app.models import BaseModel, ActiveModel, DeleteModel
 from django.conf import settings
 import pytz
+import arrow
 
 
 class Space(BaseModel, ActiveModel,DeleteModel):
@@ -19,6 +20,10 @@ class Space(BaseModel, ActiveModel,DeleteModel):
         choices=TIMEZONE_CHOICES
     )
 
+    @property
+    def deadline_expired(self):
+        return bool(self.deadline) and self.deadline < arrow.utcnow()
+    
     @property
     def upload_events(self):
         from web_app.models import SenderEvent

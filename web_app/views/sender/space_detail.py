@@ -26,7 +26,6 @@ class SpaceDetailView(TemplateView):
     def get_context_data(self,formset=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['space'] = self.get_space()
-        context['deadline_expired'] = bool(context['space'].deadline) and context['space'].deadline < arrow.utcnow()
         context['sender'] = self.get_sender()
         context['formset'] = formset or self.get_formset()
         return context

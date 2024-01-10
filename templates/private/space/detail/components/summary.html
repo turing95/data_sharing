@@ -63,7 +63,7 @@
                 <img src="{% static 'images/icons/clock-blue.svg' %}" alt="clock icon" class="w-[13px] h-[13px] mr-1">
                 {{ space.deadline|time:"H:i" }}
             </span>
-            {% if deadline_expired %}
+            {% if space.deadline_expired %}
                 <span class="inline-flex items-center  bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
                     Deadline expired!
                 </span>
