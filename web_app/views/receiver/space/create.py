@@ -7,7 +7,7 @@ from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, GoogleDrive, UploadRequest
+from web_app.models import Sender, GoogleDrive, UploadRequest, FileType
 from django.db import transaction
 from web_app.tasks.notifications import sender_invite
 from web_app.mixins import SubscriptionMixin
@@ -39,6 +39,7 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         data['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back'}
         data['space_form'] = True
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
+        data['file_types'] = FileType.objects.filter(group=False)
         data['requests'] = self.get_formset()
         data['submit_text'] = button_text
         data['google_user_data'] = {'accessToken': self.request.custom_user.google_token.token}
@@ -88,3 +89,5 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         formset.save()
         for req in formset:
             GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))
+            for file_type in req.cleaned_data.get('file_types'):
+                req.instance.file_types.add(file_type)

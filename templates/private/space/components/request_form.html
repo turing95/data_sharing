@@ -128,7 +128,7 @@
                         {% include 'components/tooltip.html' with content=req.number_of_files.help_text target=req.number_of_files.name%}
                     </div>
                     {{ req.number_of_files }}
-                </div> {% endcomment %}
+                </div> 
                 
                 <!-- ALLOWED EXTENSIONS -->
                 <div class="mb-6">
@@ -139,8 +139,27 @@
                     </div>
                     {{ req.file_types }}
                     {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
+                </div>{% endcomment %}
+                
+                <input class="form-control" type="search"
+                       id="id_search-file-types-{{ forloop.counter0 }}-"
+       name="search-file-types-{{ forloop.counter0 }}-" placeholder="Begin Typing To Search File Types..." 
+       hx-post="{% url 'search_file_types' %}" 
+       hx-trigger="input changed delay:500ms, search" 
+                       hx-params="search-file-types-{{ forloop.counter0 }}-"
+       hx-target="next .file-types-search-results" 
+                autocomplete="off">
+                <div class="file-types-search-results">
+
+
                 </div>
+                <div class="file-type-tags">
+
+
+                </div>
+                {{ req.file_types }}
             </div>
+            
             
             
         </div>

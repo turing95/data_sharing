@@ -1,0 +1,9 @@
+{% if file_types %}
+    <ul class="file-types-list">
+        {% for file_type in file_types %}
+            <li onclick="addFileTypeTag(this,'{{ file_type.slug }}')"><span>{{ file_type.slug }}</span></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found</p>
+{% endif %}

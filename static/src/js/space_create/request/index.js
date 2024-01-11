@@ -1,6 +1,7 @@
 import {toggleAccordion, toggleRename} from './eventHandlers.js';
-
+import {initializeFileTypes} from './fileTypeInput.js';
 export {handleTagDropdownChange,toggleRename} from './eventHandlers.js';
+export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
 
 
 export function initRequestForms() {
@@ -12,10 +13,13 @@ export function initRequestForms() {
 
     const renamePattern = /^id_requests-\d+-rename$/;
     document.querySelectorAll('[id^="id_requests-"][id$="-rename"]').forEach(element => {
-        if (renamePattern.test(element.id)) {
-            toggleRename(element);
-        }
-    });
+    if (/^id_requests-\d+-rename$/.test(element.id)) {
+        toggleRename(element);
+    }
+});
+    document.querySelectorAll('.request-form').forEach(form=>{
+        initializeFileTypes(form);
+    })
 }
 
 function addNewRequestForm() {
@@ -75,6 +79,7 @@ function updateElementIdentifiers(newForm, formCount) {
                 }
             }
 
+
             // New logic for tooltip
             if (element.id.startsWith('tooltip-')) {
                 const newId = element.id.replace(/-\d+-/, `-${formCount}-`);
@@ -96,10 +101,14 @@ function updateElementIdentifiers(newForm, formCount) {
             element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
         }
         if (element.type !== 'checkbox' && element.type !== 'radio') {
-            if (!element.id.includes('-destination_display') && !element.id.includes('-destination')) {
+            if (!element.id.includes('-destination_display') && !element.id.includes('-destination') && !element.id.includes('file_types')) {
                 element.value = ''; // Reset value for text inputs, textareas, and selects
             }
         }
+        if (element.id.startsWith('id_search-file-types')){
+            element.setAttribute('hx-params', element.name)
+                htmx.process(element);
+            }
 
     });
 
