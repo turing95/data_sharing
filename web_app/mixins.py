@@ -16,7 +16,5 @@ class SubscriptionMixin(PaymentsContextMixin):
                 subscriber=djstripe_settings.subscriber_request_callback(self.request)
             )
             context["subscription"] = context["customer"].subscription
-            
-            if context["subscription"] is None:
-                context['user_maxed_spaces'] = self.request.user.spaces.count() >= settings.MAX_FREE_SPACES                
+            context["user_maxed_spaces"] = context["customer"].subscription is None and self.request.user.spaces.count() >= settings.MAX_FREE_SPACES
         return context
