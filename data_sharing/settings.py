@@ -189,7 +189,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # TODO: this is against security best practices, according to allauth docs
 SOCIALACCOUNT_LOGIN_ON_GET = True
-MAX_FREE_SPACES = 100
+MAX_FREE_SPACES = 4
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -203,3 +203,6 @@ EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
 EMAIL_USE_TLS = True
 DJSTRIPE_USE_NATIVE_JSONFIELD = True  # We recommend setting to True for new installations
 DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
+
+CONTACT_EMAIL = "service@kezyy.com"
+

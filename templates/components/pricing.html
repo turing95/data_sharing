@@ -1,0 +1,120 @@
+
+
+             
+                
+
+
+<div class="max-w-screen-xl px-4 py-6 mx-auto md:py-6 md:px-6">
+   
+    <div class="space-y-8 md:grid {%if subscription %} md:grid-cols-1 {% else%} md:grid-cols-2 {% endif %}sm:gap-6 xl:gap-10 md:space-y-0">
+        {% if not subscription %} <!-- show free plan only to non-subscribed users -->
+            <!-- Pricing Card -->
+            <div class="flex flex-col w-full h-full p-4 mx-auto text-center text-gray-900 bg-gray-100 border border-gray-200 rounded-lg shadow sm:w-3/4 md:w-full dark:border-gray-600 xl:p-4 dark:bg-gray-800 dark:text-white">
+                <h3 class="mb-3 text-2xl font-semibold">Basic</h3>
+                <p class="h-10 font-light text-gray-500 dark:text-gray-400">Test out what Kezyy can do to streamline your file collection</p>
+                <div class="flex items-baseline justify-center my-5">
+                    <span class="mr-2 text-5xl font-extrabold">Free</span>
+                </div>
+                <!-- List -->
+                <ul role="list" class="mb-5 space-y-4 text-left">
+                    <li class="flex items-center mb-1 space-x-3 font-bold">                   
+                        <span>Key features:</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span>Max active spaces: <span class="font-semibold">3 spaces</span></span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span>Google Drive integration</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span>Deadlines and reminders</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span>Unlimited invitees per space</span></span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span>Unlimited file requests per space</span></span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span>Self service knowledge base</span></span>
+                    </li>
+                </ul>
+                <div class="mt-auto">
+                    {% if user.is_authenticated %}
+                        <div class="flex items-center justify-center px-5 py-2 font-medium text-center text-gray-800 bg-gray-200">Current plan</div>
+                    {% else %}
+                        {% url 'account_login' as login_url %}          
+                        {% include 'components/buttons/generic.html' with href=login_url button_text="Get started"%}
+                    {% endif %}
+                </div>   
+            </div>
+        {% endif %}
+        
+        <!-- Pricing Card -->
+        <div class="flex flex-col w-full p-4 mx-auto text-center text-gray-900 bg-gray-200 border border-gray-300 rounded-lg shadow sm:w-3/4 md:w-full dark:border-gray-600 xl:p-4 dark:bg-gray-800 dark:text-white">
+            <h3 class="mb-3 text-2xl font-semibold">Professional</h3>
+            <p class="h-10 font-light text-gray-500 dark:text-gray-400">Make Kezyy your file collection companion</p>
+            <div class="flex items-baseline justify-center my-5">
+                <span class="mr-2 text-5xl font-extrabold">$29</span>
+                <span class="text-gray-500 dark:text-gray-400" dark:text-gray-400>/month</span>
+            </div>
+            <!-- List -->
+            <ul role="list" class="mb-5 space-y-4 text-left">
+                <li class="flex items-center mb-1 space-x-3 font-bold">                   
+                    <span>All basic featues, plus:</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                    <!-- Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                    <span class="font-semibold">Unlimited active spaces</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                    <!-- Icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                    <span>Email support</span>
+                </li>
+            </ul>
+            <div class="mt-auto">
+            {% if subscription %}
+                <div class="flex items-center justify-center px-5 py-2 font-medium text-center text-gray-800 bg-gray-200">Current plan</div>
+            {% else %}
+                {% if user.is_authenticated %}
+                    {% url 'create_checkout_session'  as subscribe_url %}        
+                    {% include 'components/buttons/generic.html' with href=subscribe_url button_text="Upgrade"%}
+                {% else %}
+                    {% url 'account_login' as login_url %}          
+                    {% include 'components/buttons/generic.html' with href=login_url button_text="Get started"%}
+                {% endif %}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-center mt-2">
+        <p class="text-sm text-gray-700">
+            Need Enterprise features? Contact us at: 
+            <a href="mailto:{{contact_email| safe}}" class="font-semibold cursor-pointer hover:underline">
+                {{contact_email| safe}}
+            </a>
+        </p>
+    </div>
+    
+</div>
+
+
+
+
+
+

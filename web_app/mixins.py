@@ -1,6 +1,7 @@
 from djstripe.mixins import PaymentsContextMixin
 from djstripe.models import Plan, Customer
 from djstripe.settings import djstripe_settings
+from django.conf import settings
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -15,4 +16,7 @@ class SubscriptionMixin(PaymentsContextMixin):
                 subscriber=djstripe_settings.subscriber_request_callback(self.request)
             )
             context["subscription"] = context["customer"].subscription
+            
+            if context["subscription"] is None:
+                context['user_maxed_spaces'] = self.request.user.spaces.count() >= settings.MAX_FREE_SPACES                
         return context
