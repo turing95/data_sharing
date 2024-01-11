@@ -140,7 +140,8 @@ class SpaceForm(ModelForm):
                     "Deadline must be in the future."
                 )
 
-        return deadline.isoformat()
+            return deadline.isoformat()
+        return deadline
 
     def save(self, commit=True):
         instance = super().save()
