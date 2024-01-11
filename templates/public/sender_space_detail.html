@@ -47,31 +47,36 @@
                     <img src="{% static 'images/icons/clock-blue.svg' %}" alt="clock icon" class="w-[13px] h-[13px] mr-1">
                     {{ space.deadline|time:"H:i" }}
                 </span>
-                {% if space.deadline_enforced and not space.deadline_expired %}
-                    <span class="inline-flex items-center text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                        You will not be able to upload files after the deadline.
-                    </span>
-                {% endif %}
                 {% if space.deadline_expired %}
                     <span class="inline-flex items-center  bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
                         Deadline expired!
                     </span>
+                {% else %}
+                    {% if space.upload_after_deadline is False %}
+                        <span class="inline-flex items-center text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
+                        You will not be able to upload files after the deadline.
+                    </span>
+                    {% endif %}
                 {% endif %}
+
+     
+
             </div>
+            {% if space.upload_after_deadline is False and space.deadline_expired %}
+
+            <!-- Deadline Expired Message -->
+            <div class="flex items-center justify-center w-4/5 mx-auto my-8">
+                <div class="p-4 text-center bg-red-100 border border-red-300 shadow-lg">
+                    <h2 class="mt-2 text-xl font-bold text-red-800">Deadline Expired</h2>
+                    <p class="mt-2 text-red-700 text-md">
+                        It is not possible to upload files anymore. For any inquiries, contact:<br> <a href="mailto:{{ space.user.email }}" class="text-blue-500 underline">{{ space.user.email }}</a>
+                    </p>
+                </div>
+            </div>
+            {% endif %}
         {% endif %}
 
-        {% if space.deadline_enforced and space.deadline_expired %}
 
-        <!-- Deadline Expired Message -->
-        <div class="flex items-center justify-center w-4/5 mx-auto my-8">
-            <div class="p-4 text-center bg-red-100 border border-red-300 shadow-lg">
-                <h2 class="mt-2 text-xl font-bold text-red-800">Deadline Expired</h2>
-                <p class="mt-2 text-red-700 text-md">
-                    It is not possible to upload files anymore. For any inquiries, contact:<br> <a href="mailto:{{ space.user.email }}" class="text-blue-500 underline">{{ space.user.email }}</a>
-                </p>
-            </div>
-        </div>
-        {% endif %}
 
         
             <form action="" method="POST" enctype="multipart/form-data">
@@ -165,7 +170,7 @@
                                 
                             </div>
                             <div class="col-span-1 p-1">
-                                {% if  not space.deadline_enforced or not space.deadline_expired %}
+                                {% if space.upload_after_deadline or not space.deadline_expired %}
                                     <div class="flex items-center justify-center w-full">
                                         <label for="{{ form.files.id_for_label }}" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -188,7 +193,7 @@
                     </div>
                     {% endfor %}
                 </div>
-                {% if not space.deadline_enforced or not space.deadline_expired %}
+                {% if space.upload_after_deadline or not space.deadline_expired %}
                     <div class="sticky bottom-4">
                         <div class="flex justify-center">
                             <div class= "w-[300px] mx auto">

@@ -39,7 +39,11 @@ export function addFileTypeTag(liElement,fileTypeSlug) {
     if (!addedFileTypes.has(fileTypeSlug)) {
         const tag = createTag(fileTypeSlug,fileTypeInput);
         form.querySelector('.file-type-tags').appendChild(tag);
-        fileTypeInput.value += ',' + fileTypeSlug ;
+        if (fileTypeInput.value === '') {
+            fileTypeInput.value = fileTypeSlug;
+        } else {
+            fileTypeInput.value += ',' + fileTypeSlug;
+        }
     }
 }
 

@@ -2,11 +2,10 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 
 from web_app.forms import SpaceForm, DetailRequestFormSet
-from web_app.models import Space, UploadRequest, Sender
+from web_app.models import Space, UploadRequest, Sender, GoogleDrive
 
 from web_app.views import SpaceFormView
 import arrow
-
 
 
 class SpaceDetailFormView(SpaceFormView):
@@ -17,7 +16,8 @@ class SpaceDetailFormView(SpaceFormView):
         context = super(SpaceFormView, self).get_context_data(**kwargs)
         context['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back'}
         if 'status' in self.request.GET:
-            context = self.get_context_for_form(context, button_text='Save space', status=self.request.GET.get('status'))
+            context = self.get_context_for_form(context, button_text='Save space',
+                                                status=self.request.GET.get('status'))
         else:
             context['space'] = self.get_space()
         return context
@@ -67,3 +67,15 @@ class SpaceDetailFormView(SpaceFormView):
                                            'created_at'),
                                        form_kwargs={'access_token': self.request.custom_user.google_token.token})
         return formset
+
+    @staticmethod
+    def handle_formset(formset):
+        formset.save()
+        for req in formset:
+            if req.instance.google_drive_destination is not None and req.instance.google_drive_destination.folder_id != req.cleaned_data.get(
+                    'destination'):
+                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))
+            if req.instance.file_types.exists():
+                req.instance.file_types.clear()
+            for file_type in req.cleaned_data.get('file_types'):
+                req.instance.file_types.add(file_type)

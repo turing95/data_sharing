@@ -86,11 +86,11 @@ class SpaceForm(ModelForm):
         help_text="""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
                                 """)
-    deadline_enforced = forms.BooleanField(
-        widget=ToggleWidget(label_on='Uploads after deadline not allowed',
-                            label_off='Uploads after deadline allowed'),
+    upload_after_deadline = forms.BooleanField(
+        widget=ToggleWidget(label_on='Uploads after deadline allowed',
+                            label_off='Uploads after deadline not allowed'),
         required=False,
-        label='Enforce deadline',
+        label='Allow uploads after deadline',
         help_text="""Your invitees will not be able to upload files after the deadline if this is enabled.
         You can change this setting at any time.""")
     
@@ -103,7 +103,7 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'deadline_enforced']
+        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'upload_after_deadline']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -136,9 +136,10 @@ class SpaceForm(ModelForm):
             # Convert to UTC
             deadline = arrow.get(deadline).to('UTC')
             if deadline < arrow.utcnow():
-                raise forms.ValidationError(
-                    "Deadline must be in the future."
-                )
+                if self.instance is None or self.instance.deadline != deadline:
+                    raise forms.ValidationError(
+                        "Deadline must be in the future."
+                    )
 
             return deadline.isoformat()
         return deadline

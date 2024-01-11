@@ -69,7 +69,7 @@
                 </span>
             {% endif %}
             <span class="inline-flex items-center  bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2" title="To change this setting edit the space">
-                {%if space.deadline_enforced %}Uploads forbidden after the deadline{% else %}Uploads allowed after the deadline{% endif %}
+                {%if space.upload_after_deadline %}Uploads allowed after the deadline{% else %}Uploads forbidden after the deadline{% endif %}
             </span>
         </div>
     {% endif %}

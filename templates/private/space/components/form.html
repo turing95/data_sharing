@@ -80,12 +80,12 @@
         </div>
         <div class="flex items-center mb-2 space-x-2">
             <div class="flex items-center h-5">
-                {{ form.deadline_enforced }}
-                <label for="{{ form.deadline_enforced.id_for_label }}"
-                class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.deadline_enforced.label }}</label>
+                {{ form.upload_after_deadline }}
+                <label for="{{ form.upload_after_deadline.id_for_label }}"
+                class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.upload_after_deadline.label }}</label>
             </div>
-            {% include 'components/tooltip.html' with title="Enforce deadline" content=form.deadline_enforced.help_text target=form.deadline_enforced.name%}
-            {% include 'components/forms/error_widget.html' with errors=form.deadline_enforced.errors %}
+            {% include 'components/tooltip.html' with title="Allow uploads after deadline" content=form.upload_after_deadline.help_text target=form.upload_after_deadline.name%}
+            {% include 'components/forms/error_widget.html' with errors=form.upload_after_deadline.errors %}
         </div>
         
     </div>

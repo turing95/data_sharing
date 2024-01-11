@@ -13,7 +13,7 @@ class Space(BaseModel, ActiveModel,DeleteModel):
     is_public = models.BooleanField(default=True)
     instructions = models.TextField(null=True, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
-    deadline_enforced = models.BooleanField(default=False)
+    upload_after_deadline = models.BooleanField(default=False)
     notify_deadline = models.BooleanField(default=False)
     timezone = models.CharField(
         max_length=50,
