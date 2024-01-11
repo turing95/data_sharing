@@ -16,6 +16,20 @@ class FileTypeChoiceField(forms.ModelMultipleChoiceField):
         return obj.slug
 
 
+class CommaSeparatedFileTypeField(forms.CharField):
+
+    def to_python(self, value):
+        if not value:
+            return []
+        file_types = []
+        for slug in value.split(','):
+            file_type = FileType.objects.filter(slug=slug).first()
+            if file_type is None:
+                raise ValidationError(f"{slug} is not a valid file type")
+            file_types.append(file_type)
+        return file_types
+
+
 class RequestForm(ModelForm):
     instance: UploadRequest
     FILE_NAME_INSTRUCTIONS = "Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:"
@@ -53,6 +67,10 @@ class RequestForm(ModelForm):
                                    'onchange': 'handleTagDropdownChange(this)'
                                    })
     )
+    file_types = CommaSeparatedFileTypeField(
+        widget=forms.HiddenInput(attrs={'class': 'file-types'}),
+        label='File types',
+        required=False)
 
     destination_display = forms.CharField(
         required=False,
@@ -97,18 +115,9 @@ class RequestForm(ModelForm):
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """)
 
-    file_types = FileTypeChoiceField(
-        queryset=FileType.objects.all(),
-        required=False,
-        widget=forms.CheckboxSelectMultiple,  # or any other suitable widget
-        label='Restrict File Types',
-        help_text=""" 
-                Leave blank to allow all extensions to be uploaded or select specific file extensions to forbid all the others.
-            """)
-
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_types', 'file_naming_formula', 'instructions']
+        fields = ['title', 'file_naming_formula', 'instructions']
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
@@ -162,7 +171,9 @@ class DetailRequestForm(RequestForm):
                 self.fields['destination_display'].initial = destination.name
             except RefreshError:
                 self.fields['destination_display'].initial = "Error: refresh token"
-            self.fields['file_types'].initial = [f.extension for f in self.instance.file_types.all()]
+
+            self.fields['file_types'].initial = ','.join(
+                [file_type.slug for file_type in self.instance.filetype_set.all()])
 
 
 class UniqueTitleFormSet(BaseInlineFormSet):
