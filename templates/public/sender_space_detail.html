@@ -138,11 +138,10 @@
                                 <!-- show files already uploaded-->
                                 <div class="flex flex-col mb-2">
                                     {% get_list_of_upload_events_per_request sender form.upload_request as upload_events %}
+                                                                    {% if sender %}
                                     <p class="mb-2">Uploaded files:</p>
 
-                                    {% if not sender %}
-                                        <p class="text-xs italic text-gray-500"> you cannot see previously uploaded files accessing via public link</p>
-                                    {% else %}
+                                                                        
                                         {% if upload_events %}                                
                                         <ul>
                                             {% for event in upload_events %}
