@@ -31,3 +31,8 @@ def sender_invite(sender_pk):
         msg.attach('event.ics', ics_content, 'text/calendar')
 
     msg.send()
+
+
+@app.task
+def notify_deadline(sender_pk):
+    return None
