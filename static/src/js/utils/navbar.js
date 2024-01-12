@@ -72,27 +72,30 @@ export function initNav()  {
    
     // set the modal menu element
     const pricingModalEl = document.getElementById('plan_pricing_modal');
+    if (pricingModalEl) {
 
-    // options with default values
-    const options = {
-        backdropClasses:
-            'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-[51]',
-    };
-    // instance options object
-    const instanceOptions = {
-        override: true
-    };
+        // options with default values
+        const options = {
+            backdropClasses:
+                'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-[51]',
+        };
+        // instance options object
+        const instanceOptions = {
+            override: true
+        };
 
-    const modal = new Modal(pricingModalEl, options, instanceOptions);
+        const modal = new Modal(pricingModalEl, options, instanceOptions);
+    }
 
     // setup all the buttons that open the modal
     const pricingModalButtons = document.querySelectorAll('[id^="plan_pricing_modal_button"]');
-
-    // Iterate over each button and add the click event listener
-    pricingModalButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            modal.show();
+    if (pricingModalButtons) {
+        // Iterate over each button and add the click event listener
+        pricingModalButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                modal.show();
+            });
         });
-    });
+    }
 
 }

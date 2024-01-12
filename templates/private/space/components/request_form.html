@@ -129,17 +129,7 @@
                             </div>
                             {{ req.number_of_files }}
                         </div> 
-                        
-                        <!-- ALLOWED EXTENSIONS -->
-                        <div class="mb-6">
-                            <div class="flex items-center mb-2 space-x-2">
-                                <label for="{{ req.file_types.id_for_label }}"
-                                class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.file_types.label }} </label>
-                                {% include 'components/tooltip.html' with title=req.tile_types.label target_prefix='requests' content=req.file_types.help_text target=req.file_types.name%}
-                            </div>
-                            {{ req.file_types }}
-                            {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
-                        </div>{% endcomment %}
+                        {% endcomment %}
 
                         <!-- ALLOWED EXTENSIONS -->
                         <div class="mb-6">
