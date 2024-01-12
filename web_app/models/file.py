@@ -1,4 +1,4 @@
-from web_app.models import BaseModel
+from web_app.models import BaseModel, SenderEvent
 from django.db import models
 
 
@@ -8,6 +8,7 @@ class File(BaseModel):
     size = models.IntegerField()
     file_type = models.CharField(max_length=255)
     google_drive_url = models.CharField(max_length=255, null=True, blank=True)
+    sender_event = models.ForeignKey('SenderEvent', on_delete=models.CASCADE, related_name='files')
 
 
 class FileType(BaseModel):

@@ -7,7 +7,7 @@ from django.forms import formset_factory
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView
-from web_app.models import Space, GenericDestination, GoogleDrive, Sender, SenderEvent, UploadRequest,File
+from web_app.models import Space, GenericDestination, GoogleDrive, Sender, SenderEvent, UploadRequest, File
 from web_app.forms import FileForm, BaseFileFormSet
 import arrow
 
@@ -19,11 +19,12 @@ class SpaceDetailView(TemplateView):
     _sender = None
 
     def get_formset(self):
-        FileFormset = formset_factory(FileForm, formset=BaseFileFormSet, extra=self.get_space().requests.filter(is_deleted=False).count())
+        FileFormset = formset_factory(FileForm, formset=BaseFileFormSet,
+                                      extra=self.get_space().requests.filter(is_deleted=False).count())
         return FileFormset(self.request.POST or None, self.request.FILES or None,
                            form_kwargs={'space': self.get_space()})
 
-    def get_context_data(self,formset=None, **kwargs):
+    def get_context_data(self, formset=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['space'] = self.get_space()
         context['sender'] = self.get_sender()
@@ -38,17 +39,20 @@ class SpaceDetailView(TemplateView):
                 upload_request = UploadRequest.objects.get(pk=form.cleaned_data.get('request_uuid'))
                 uploaded_files = form.cleaned_data.get('files')
                 google_drive_destination: GoogleDrive = upload_request.google_drive_destination
+                sender_event = SenderEvent.objects.create(sender=sender,
+                                                          request=upload_request,
+                                                          event_type=SenderEvent.EventType.FILE_UPLOADED,notes=form.cleaned_data.get('notes'))
                 for uploaded_file in uploaded_files:
                     file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
 
                     google_drive_file = google_drive_destination.upload_file(uploaded_file, file_name)
-
-                    SenderEvent.objects.create(sender=sender,
-                                               request=upload_request,
-                                               event_type=SenderEvent.EventType.FILE_UPLOADED,
-                                               file=File.objects.create(original_name=uploaded_file.name,name=file_name, size=uploaded_file.size,
-                                                                        file_type=uploaded_file.content_type,google_drive_url=google_drive_file.get('webViewLink')))
-                    messages.success(request, "Your upload was successful") #  http request here
+                    File.objects.create(original_name=uploaded_file.name, name=file_name,
+                                        size=uploaded_file.size,
+                                        file_type=uploaded_file.content_type,
+                                        google_drive_url=google_drive_file.get(
+                                            'webViewLink'),
+                                        sender_event=sender_event)
+                messages.success(request, "Your upload was successful")  # http request here
             return redirect(request.path)
         return self.render_to_response(self.get_context_data(formset=formset))
 
@@ -64,7 +68,7 @@ class SpaceDetailView(TemplateView):
             }
             if sender is not None:
                 filter_criteria['senders__uuid'] = sender.pk
-            else: 
+            else:
                 filter_criteria['is_public'] = True
             try:
                 self._space = Space.objects.get(**filter_criteria)

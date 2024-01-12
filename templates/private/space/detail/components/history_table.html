@@ -51,7 +51,7 @@
                             {% if event.sender %}
                                 {{ event.sender.email }}
                             {% else %}
-                                <p class='italic'>from public ink</p>
+                                <p class='italic'>from public link</p>
                             {% endif %}
                         </td>
                     {% endif %}
@@ -76,11 +76,14 @@
                     <!-- file name with link to file-->
                     <td class="px-6 py-2 max-w-[250px]">
                         <div class="flex items-center">  
+                                            {% for file in event.files.all %}
+
                             <div class="inline-flex items-center overflow-wrap-anywhere">
-                                <a href="{{ event.file.google_drive_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
-                                    <span class="min-w-0">{{ event.file.name }}</span>
+                                <a href="{{ file.google_drive_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
+                                    <span class="min-w-0">{{ file.name }}</span>
                                 </a>
                             </div>
+                                                {% endfor %}
                         </div>
                     </td>                
                 </tr>

@@ -138,18 +138,18 @@
                                 <!-- show files already uploaded-->
                                 <div class="flex flex-col mb-2">
                                     {% get_list_of_upload_events_per_request sender form.upload_request as upload_events %}
+                                                                    {% if sender %}
                                     <p class="mb-2">Uploaded files:</p>
 
-                                    {% if not sender %}
-                                        <p class="text-xs italic text-gray-500"> you cannot see previously uploaded files accessing via public link</p>
-                                    {% else %}
+                                                                        
                                         {% if upload_events %}                                
                                         <ul>
                                             {% for event in upload_events %}
+                                                {% for file in event.files.all %}
                                             <li class="my-1">
                                                 <!-- File Name Tag -->
-                                                <span title="{{ event.file.original_name }}" class="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 break-all max-w-[66%]">
-                                                    <span class ="line-clamp-2">{{ event.file.original_name }}</span>
+                                                <span title="{{ file.original_name }}" class="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 break-all max-w-[66%]">
+                                                    <span class ="line-clamp-2">{{ file.original_name }}</span>
                                                 </span>
                                                 <!-- Date Tag -->
                                                 <span title="upload date" class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium ml-2 px-2 py-0.5">
@@ -160,6 +160,7 @@
                                                     {{ event.created_at|time:"H:i" }}
                                                 </span>
                                             </li>
+                                                    {% endfor %}
                                             {% endfor %}
                                         </ul>
                                         {% else %}
@@ -182,6 +183,7 @@
                                             {{ form.files }}
                                         </label>                                    
                                     </div>
+                                    {{ form.notes }}
                                 {% endif %}
                                 <!-- files ready to be uploaded:-->
                                 <div class="flex flex-col file-tags-container"> <!--tags container filled by js-->

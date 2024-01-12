@@ -25,6 +25,7 @@ class MultipleFileField(forms.FileField):
 class FileForm(Form):
     files = MultipleFileField(label='Files')
     request_uuid = forms.CharField(widget=forms.HiddenInput())
+    notes = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
 
     def __init__(self, **kwargs):
         self.request_index = kwargs.pop('request_index')
@@ -42,8 +43,7 @@ class FileForm(Form):
         if self.upload_request.file_types.exists() is True:
             for file in files:
                 extension = file.name.split('.')[-1]
-                extension_is_valid = extension in self.upload_request.extensions
-                if extension_is_valid is False:
+                if (extension in self.upload_request.extensions) is False:
                     self.add_error('files', f'Extension {extension}  is not allowed.')
         return files
 
