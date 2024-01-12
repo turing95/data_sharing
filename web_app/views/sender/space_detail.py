@@ -41,7 +41,7 @@ class SpaceDetailView(TemplateView):
                 google_drive_destination: GoogleDrive = upload_request.google_drive_destination
                 sender_event = SenderEvent.objects.create(sender=sender,
                                                           request=upload_request,
-                                                          event_type=SenderEvent.EventType.FILE_UPLOADED)
+                                                          event_type=SenderEvent.EventType.FILE_UPLOADED,notes=form.cleaned_data.get('notes'))
                 for uploaded_file in uploaded_files:
                     file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
 

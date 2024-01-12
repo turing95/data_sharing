@@ -25,6 +25,7 @@ class MultipleFileField(forms.FileField):
 class FileForm(Form):
     files = MultipleFileField(label='Files')
     request_uuid = forms.CharField(widget=forms.HiddenInput())
+    notes = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
 
     def __init__(self, **kwargs):
         self.request_index = kwargs.pop('request_index')
