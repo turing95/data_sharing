@@ -67,9 +67,22 @@ class RequestForm(ModelForm):
                                    'onchange': 'handleTagDropdownChange(this)'
                                    })
     )
+    
+    
+    file_type_restrict = forms.BooleanField(
+        widget=ToggleWidget(label_on='Apply file restrictions',
+                            label_off='No file type restrictions',
+                            attrs={
+                                'onclick': 'toggleFileTypeRestrict(this)'
+                            }),
+        required=False,
+        label='File Type Restrictions',
+        help_text="""
+                ...
+            """)
     file_types = CommaSeparatedFileTypeField(
         widget=forms.HiddenInput(attrs={'class': 'file-types'}),
-        label='File types',
+        label='File type restrictions',
         required=False)
 
     destination_display = forms.CharField(
@@ -145,6 +158,11 @@ class RequestForm(ModelForm):
         else:
             if file_naming_formula is file_naming_formula is None or file_naming_formula == '':
                 self.add_error('file_naming_formula', 'You must provide a file name if you want to rename the files.')
+        
+    
+        file_type_restrict = cleaned_data.get('file_type_restrict', False)
+        if file_type_restrict is False:
+            cleaned_data['file_types'] = []
         return cleaned_data
 
 
@@ -174,6 +192,9 @@ class DetailRequestForm(RequestForm):
 
             self.fields['file_types'].initial = ','.join(
                 [file_type.slug for file_type in self.instance.filetype_set.all()])
+            
+            if self.fields['file_types'].initial != '':
+                self.fields['file_type_restrict'].initial = True
 
 
 class UniqueTitleFormSet(BaseInlineFormSet):

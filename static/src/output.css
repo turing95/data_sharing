@@ -1220,6 +1220,10 @@ input:checked + .toggle-bg {
   margin: -1rem;
 }
 
+.m-1 {
+  margin: 0.25rem;
+}
+
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -1245,6 +1249,11 @@ input:checked + .toggle-bg {
   margin-bottom: 1rem;
 }
 
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -1263,11 +1272,6 @@ input:checked + .toggle-bg {
 .my-auto {
   margin-top: auto;
   margin-bottom: auto;
-}
-
-.my-5 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
 }
 
 .mb-1 {
@@ -1406,6 +1410,10 @@ input:checked + .toggle-bg {
   margin-top: auto;
 }
 
+.mr-5 {
+  margin-right: 1.25rem;
+}
+
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -1466,6 +1474,10 @@ input:checked + .toggle-bg {
 
 .h-14 {
   height: 3.5rem;
+}
+
+.h-20 {
+  height: 5rem;
 }
 
 .h-3 {
@@ -1536,6 +1548,18 @@ input:checked + .toggle-bg {
   max-height: 100%;
 }
 
+.max-h-\[500px\] {
+  max-height: 500px;
+}
+
+.max-h-\[50px\] {
+  max-height: 50px;
+}
+
+.max-h-\[150px\] {
+  max-height: 150px;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1554,10 +1578,6 @@ input:checked + .toggle-bg {
 
 .w-3 {
   width: 0.75rem;
-}
-
-.w-3\/4 {
-  width: 75%;
 }
 
 .w-4 {
@@ -2365,11 +2385,6 @@ input:checked + .toggle-bg {
   background-color: rgb(253 253 234 / var(--tw-bg-opacity));
 }
 
-.bg-gray-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
-}
-
 .bg-cover {
   background-size: cover;
 }
@@ -2416,10 +2431,6 @@ input:checked + .toggle-bg {
 
 .p-5 {
   padding: 1.25rem;
-}
-
-.p-6 {
-  padding: 1.5rem;
 }
 
 .p-8 {
@@ -2624,6 +2635,10 @@ input:checked + .toggle-bg {
 
 .pt-\[200px\] {
   padding-top: 200px;
+}
+
+.pr-1 {
+  padding-right: 0.25rem;
 }
 
 .text-left {
@@ -3931,6 +3946,10 @@ input[type="search"]::-webkit-search-cancel-button {
     width: 100%;
   }
 
+  .md\:w-2\/3 {
+    width: 66.666667%;
+  }
+
   .md\:min-w-\[110px\] {
     min-width: 110px;
   }
@@ -4013,16 +4032,6 @@ input[type="search"]::-webkit-search-cancel-button {
   .md\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-  }
-
-  .md\:py-24 {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-
-  .md\:py-12 {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
   }
 
   .md\:py-6 {
@@ -4215,10 +4224,6 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .xl\:gap-24 {
     gap: 6rem;
-  }
-
-  .xl\:p-8 {
-    padding: 2rem;
   }
 
   .xl\:p-4 {

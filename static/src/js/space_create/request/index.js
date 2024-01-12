@@ -1,6 +1,6 @@
-import {toggleAccordion, toggleRename} from './eventHandlers.js';
+import {toggleAccordion, toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 import {initializeFileTypes} from './fileTypeInput.js';
-export {handleTagDropdownChange,toggleRename} from './eventHandlers.js';
+export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
 
 
@@ -19,7 +19,15 @@ export function initRequestForms() {
 });
     document.querySelectorAll('.request-form').forEach(form=>{
         initializeFileTypes(form);
-    })
+    });
+
+    const fileTypePattern = /^id_requests-\d+-file_type_restrict$/;
+    document.querySelectorAll('[id^="id_requests-"][id$="-file_type_restrict"]').forEach(element => {
+        if (fileTypePattern.test(element.id)) {
+            toggleFileTypeRestrict(element);
+        }
+
+    });
 }
 
 function addNewRequestForm() {
