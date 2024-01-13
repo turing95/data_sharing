@@ -15,17 +15,17 @@ from stripe import api_key
 
 logger = logging.getLogger(__name__)
 
-User = get_user_model()
-if djstripe_settings.djstripe_settings.STRIPE_LIVE_MODE is True:
-    stripe.api_key = APIKey.objects.get(name='STRIPE_LIVE_SECRET_KEY').secret
-else:
-    stripe.api_key = APIKey.objects.get(name='STRIPE_TEST_SECRET_KEY').secret
+
 
 
 
 @login_required
 @require_GET
 def create_checkout_session(request):
+    if djstripe_settings.djstripe_settings.STRIPE_LIVE_MODE is True:
+        stripe.api_key = APIKey.objects.get(name='STRIPE_LIVE_SECRET_KEY').secret
+    else:
+        stripe.api_key = APIKey.objects.get(name='STRIPE_TEST_SECRET_KEY').secret
     """
             Creates and returns a Stripe Checkout Session
             """
