@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='file',
             name='sender_event',
-            field=models.ForeignKey(default=uuid.UUID('a892143c-bbc9-4848-99d2-a32003f05680'), on_delete=django.db.models.deletion.CASCADE, related_name='files', to='web_app.senderevent'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='files', to='web_app.senderevent'),
         ),
     ]
