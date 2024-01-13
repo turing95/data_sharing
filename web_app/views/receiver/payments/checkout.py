@@ -16,7 +16,11 @@ from stripe import api_key
 logger = logging.getLogger(__name__)
 
 User = get_user_model()
-stripe.api_key = APIKey.objects.get(name='STRIPE_TEST_SECRET_KEY').secret
+if djstripe_settings.djstripe_settings.STRIPE_LIVE_MODE is True:
+    stripe.api_key = APIKey.objects.get(name='STRIPE_LIVE_SECRET_KEY').secret
+else:
+    stripe.api_key = APIKey.objects.get(name='STRIPE_TEST_SECRET_KEY').secret
+
 
 
 @login_required
