@@ -86,7 +86,14 @@ class SpaceForm(ModelForm):
         help_text="""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
                                 """)
-
+    upload_after_deadline = forms.BooleanField(
+        widget=ToggleWidget(label_on='Uploads after deadline allowed',
+                            label_off='Uploads after deadline not allowed'),
+        required=False,
+        label='Allow uploads after deadline',
+        help_text="""Your invitees will not be able to upload files after the deadline if this is enabled.
+        You can change this setting at any time.""")
+    
     notify_deadline = forms.BooleanField(
         widget=ToggleWidget(label_on='Notify',
                             label_off='Notify'),
@@ -96,7 +103,7 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline']
+        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'upload_after_deadline']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -126,14 +133,15 @@ class SpaceForm(ModelForm):
             # Ensure the datetime is timezone-aware
             if not is_aware(deadline):
                 deadline = make_aware(deadline)
-
             # Convert to UTC
-            deadline = deadline.astimezone(timezone.utc)
+            deadline = arrow.get(deadline).to('UTC')
             if deadline < arrow.utcnow():
-                raise forms.ValidationError(
-                    "Deadline must be in the future."
-                )
+                if self.instance is None or self.instance.deadline != deadline:
+                    raise forms.ValidationError(
+                        "Deadline must be in the future."
+                    )
 
+            return deadline.isoformat()
         return deadline
 
     def save(self, commit=True):

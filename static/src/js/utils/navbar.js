@@ -36,22 +36,66 @@ export function initNav()  {
     });
 
     const navbarMenu = document.getElementById('navbar-menu');
-    const navButton = document.getElementById('navbar-menu-button');
+    if (navbarMenu) {
 
-    // Toggle the navbar menu on button click
-    navButton.addEventListener('click', function () {
-        // This checks if the navbar is hidden and toggles the display
-        navbarMenu.classList.toggle('hidden');
-    });
+        const navButton = document.getElementById('navbar-menu-button');
 
-    // Close the navbar menu when clicking outside of it
-    document.addEventListener('click', function (event) {
-        const isClickInsideMenu = navbarMenu.contains(event.target);
-        const isClickOnButton = navButton.contains(event.target);
+        // Toggle the navbar menu on button click
+        navButton.addEventListener('click', function () {
+            // This checks if the navbar is hidden and toggles the display
+            navbarMenu.classList.toggle('hidden');
+        });
 
-        if (!isClickInsideMenu && !isClickOnButton && !navbarMenu.classList.contains('hidden')) {
-            navbarMenu.classList.add('hidden');
-            
-        }
-    });
+        // Close the navbar menu when clicking outside of it
+        document.addEventListener('click', function (event) {
+            const isClickInsideMenu = navbarMenu.contains(event.target);
+            const isClickOnButton = navButton.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnButton && !navbarMenu.classList.contains('hidden')) {
+                navbarMenu.classList.add('hidden');
+                
+            }
+        });
+    }
+    // close  the navbar user menu when the price modal is opened
+    const priceModalButton = document.getElementById('plan_pricing_modal_navbar_button');
+    if (priceModalButton) {
+        const userDropdown = document.getElementById('user-dropdown');
+
+         // Toggle the navbar menu on button click
+         priceModalButton.addEventListener('click', function () {
+            // This checks if the navbar is hidden and toggles the display
+            userDropdown.classList.toggle('hidden');
+        });
+
+    }
+   
+    // set the modal menu element
+    const pricingModalEl = document.getElementById('plan_pricing_modal');
+    if (pricingModalEl) {
+
+        // options with default values
+        const options = {
+            backdropClasses:
+                'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-[51]',
+        };
+        // instance options object
+        const instanceOptions = {
+            override: true
+        };
+
+        const modal = new Modal(pricingModalEl, options, instanceOptions);
+    }
+
+    // setup all the buttons that open the modal
+    const pricingModalButtons = document.querySelectorAll('[id^="plan_pricing_modal_button"]');
+    if (pricingModalButtons) {
+        // Iterate over each button and add the click event listener
+        pricingModalButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                modal.show();
+            });
+        });
+    }
+
 }

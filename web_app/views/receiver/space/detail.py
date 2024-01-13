@@ -2,9 +2,10 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 
 from web_app.forms import SpaceForm, DetailRequestFormSet
-from web_app.models import Space, UploadRequest, Sender
+from web_app.models import Space, UploadRequest, Sender, GoogleDrive
 
 from web_app.views import SpaceFormView
+import arrow
 
 
 class SpaceDetailFormView(SpaceFormView):
@@ -12,13 +13,20 @@ class SpaceDetailFormView(SpaceFormView):
     form_class = SpaceForm
 
     def get_context_data(self, **kwargs):
-        data = super(SpaceFormView, self).get_context_data(**kwargs)
-        data['back'] = {'url': reverse_lazy('spaces'), 'text': 'Spaces'}
+        context = super(SpaceFormView, self).get_context_data(**kwargs)
+        context['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back'}
         if 'status' in self.request.GET:
-            data = self.get_context_for_form(data, button_text='Save space', status=self.request.GET.get('status'))
+            context = self.get_context_for_form(context, button_text='Save space',
+                                                status=self.request.GET.get('status'))
         else:
-            data['space'] = self.get_space()
-        return data
+            context['space'] = self.get_space()
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        # Call the parent dispatch method
+        response = super(SpaceFormView, self).dispatch(request, *args, **kwargs)
+        response["Cross-Origin-Opener-Policy"] = "unsafe-none"
+        return response
 
     def handle_senders(self, senders_emails, space_instance):
 
@@ -38,7 +46,7 @@ class SpaceDetailFormView(SpaceFormView):
             sender.save()
 
     def get_success_url(self):
-        return self.request.path # to summary page
+        return self.request.path  # to summary page
 
     def get_space(self):
         if not self._space:
@@ -55,6 +63,19 @@ class SpaceDetailFormView(SpaceFormView):
     def get_formset(self):
         formset = DetailRequestFormSet(self.request.POST or None,
                                        instance=self.get_space(),
-                                       queryset=self.get_space().requests.filter(is_deleted=False).order_by('created_at'),
+                                       queryset=self.get_space().requests.filter(is_deleted=False).order_by(
+                                           'created_at'),
                                        form_kwargs={'access_token': self.request.custom_user.google_token.token})
         return formset
+
+    @staticmethod
+    def handle_formset(formset):
+        formset.save()
+        for req in formset:
+            if req.instance.google_drive_destination is not None and req.instance.google_drive_destination.folder_id != req.cleaned_data.get(
+                    'destination'):
+                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))
+            if req.instance.file_types.exists():
+                req.instance.file_types.clear()
+            for file_type in req.cleaned_data.get('file_types'):
+                req.instance.file_types.add(file_type)

@@ -1,16 +1,17 @@
 {% load static %}
+{% include 'components/pricing_modal.html' %}
 <nav id="navbar" class="fixed top-0 left-0 z-50 w-full bg-white border-gray-200 dark:bg-gray-900 h-14">
     
-    <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
+    <div class="flex flex-wrap items-center justify-between h-full max-w-screen-xl px-4 py-2 mx-auto">
         <!-- company logo-->
         <a href="{% url 'generic_home' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="{% static 'images/logo.png' %}" class="h-8" alt="FileFetch Logo" />
+            <img src="{% static 'images/logo.png' %}" class="h-8" alt="Kezyy Logo" />
         </a>
 
         <div class="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
             {% if request.user.is_authenticated %}
                 <!-- User avatar and menue only if user is logged -->
-                <div class="flex justify-end md:min-w-[110px]">
+                <div class="justify-end md:min-w-[110px] md:me-0 md:inline-flex">
                     <button type="button" class="flex text-sm rounded-full me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
                         <span class="flex items-center justify-center w-8 h-8 text-sm text-white bg-blue-500 rounded-full">
@@ -31,19 +32,26 @@
                         <li>
                             <a href="{% url 'account_settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">User Settings</a>
                         </li>
+                        {% if not subscription %} <!-- Show upgrade plan only if the user is not subscribed -->
                         <li>
-                            <a href="https://buy.stripe.com/4gweWAciJ0O6ezefYY" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Upgrade</a>
+                            <!-- Pricing plan modal -->
+                            <a id="plan_pricing_modal_button_navbar"  class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" type="button">
+                                Upgrade plan
+                            </a>
                         </li>
+                        {% endif %}
+
                         <li>
-                            <a href="https://billing.stripe.com/p/login/5kA01WayM3vnaRO7ss" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                            <a href="https://billing.stripe.com/p/login/test_9AQ8yQ9oS19QbPG8ww" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
                         </li>
                         <li>
                             <form action="{% url 'account_logout' %}" method="POST">
                                 {% csrf_token %}
-                                <input type="submit" value="Sign out" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <input type="submit" value="Sign out" class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                             </form>
                         </li>
                     </ul>
+                </div>
             {% else %}
                 
                     <div class="hidden md:inline-flex md:me-0">            
@@ -54,7 +62,7 @@
             {% endif %}
             {% if generic_area %} <!-- Show top menue only when the user is not in spaces pages or login pages-->
 
-            <button id="navbar-menu-button"type="button" class="inline-flex items-center justify-center w-8 h-8 p-1 my-auto text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+            <button id="navbar-menu-button"type="button" class="inline-flex items-center justify-center w-8 h-8 p-1 my-auto text-sm text-gray-500 md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                 <span class="sr-only">Open main menu</span>
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
@@ -64,7 +72,7 @@
         </div>
         {% if generic_area %}
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-menu">
-            <ul class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul class="flex flex-col p-4 mt-4 font-medium border border-gray-100 md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li><div class="text-blue-500"></div> <!-- to add lass to output css-->
                 <a href="{% url 'generic_home' %}#hero_section" class="block px-3 py-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</a>
             </li>
@@ -75,14 +83,16 @@
                 <a href="{% url 'generic_home' %}#features_section" class="block px-3 py-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Features</a>
             </li>
             <li>
-                <a href="#" class="block px-3 py-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+                <a href="{% url 'generic_home' %}#pricing_section" class="block px-3 py-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pricing</a>
             </li>
+                {% if request.user.is_authenticated is False%}
             <li class="flex flex-col items-center justify-center py-2 md:hidden">
                 <a href="{% url 'account_login' %}" class="px-10 py-1 text-blue-700 bg-transparent signin hover:underline dark:text-blue-500">Sign in</a>
                 <!-- Include other elements as needed -->
                 {% include "components/buttons/generic.html" with button_text="Request beta access" href="the_form_link" extra_classes="px-10" %}
                     
             </li>
+                {% endif %}
             </ul>
         </div>
         {% endif %}

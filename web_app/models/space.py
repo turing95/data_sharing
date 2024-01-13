@@ -2,6 +2,7 @@ from django.db import models
 from web_app.models import BaseModel, ActiveModel, DeleteModel
 from django.conf import settings
 import pytz
+import arrow
 
 
 class Space(BaseModel, ActiveModel,DeleteModel):
@@ -12,12 +13,17 @@ class Space(BaseModel, ActiveModel,DeleteModel):
     is_public = models.BooleanField(default=True)
     instructions = models.TextField(null=True, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
+    upload_after_deadline = models.BooleanField(default=False)
     notify_deadline = models.BooleanField(default=False)
     timezone = models.CharField(
         max_length=50,
         choices=TIMEZONE_CHOICES
     )
 
+    @property
+    def deadline_expired(self):
+        return bool(self.deadline) and self.deadline < arrow.utcnow()
+    
     @property
     def upload_events(self):
         from web_app.models import SenderEvent

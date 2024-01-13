@@ -23,6 +23,17 @@ function insertText(textInput, selectedValue) {
     textInput.focus(); // Focus back on the text input
 }
 
+export function toggleFileTypeRestrict(checkbox){
+    const parentDiv = checkbox.closest('.request-form');
+    const childDiv1= parentDiv.querySelector('.file-type-restriction-container');
+    if (!childDiv1) return;
+
+    if (checkbox.checked) {
+        childDiv1.classList.remove('hidden');
+    } else {
+        childDiv1.classList.add('hidden');
+    }
+}
 
 export function toggleRename(checkbox) {
     const parentDiv = checkbox.closest('.request-form');

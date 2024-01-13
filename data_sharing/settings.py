@@ -18,7 +18,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com","2566-2001-a61-3bca-ff01-793e-ed8a-2fa2-3d07.ngrok-free.app", "5393-2-35-119-2.ngrok-free.app"]
 # Application definition
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'django.forms',
@@ -36,12 +37,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'compressor',
-    'web_app'
+    'web_app',
+    'djstripe'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,13 +79,9 @@ TEMPLATES = [
     },
 ]
 
-COMPRESS_ROOT = BASE_DIR / 'static'
-
-COMPRESS_ENABLED = True
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_FINDERS = ("django.contrib.staticfiles.finders.FileSystemFinder",
-                       "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-                       'compressor.finders.CompressorFinder',)
+                       "django.contrib.staticfiles.finders.AppDirectoriesFinder")
 
 STATICFILES_DIRS = [
     BASE_DIR / "static"
@@ -156,6 +154,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 SOCIALACCOUNT_STORE_TOKENS = True
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = 'static/'
 LOGIN_REDIRECT_URL = 'spaces'
 # Default primary key field type
@@ -188,7 +187,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # TODO: this is against security best practices, according to allauth docs
 SOCIALACCOUNT_LOGIN_ON_GET = True
-
+MAX_FREE_SPACES = 4
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -200,3 +199,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = GMAIL_USERNAME
 EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
 EMAIL_USE_TLS = True
+DJSTRIPE_USE_NATIVE_JSONFIELD = True  # We recommend setting to True for new installations
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
+
+CONTACT_EMAIL = "service@kezyy.com"
+

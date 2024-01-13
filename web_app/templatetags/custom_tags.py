@@ -28,7 +28,12 @@ def get_message_color(value):
 
 @register.simple_tag
 def get_count_uploaded_files(upload_request: UploadRequest, sender: Sender = None):
-    return SenderEvent.objects.filter(sender=sender, request=upload_request).count()
+    if sender:
+        files = File.objects.filter(sender_event__request=upload_request,sender_event__sender=sender)
+    else:
+        files = File.objects.filter(sender_event__request=upload_request, sender_event__sender=None)
+
+    return files.count()
 
 
 @register.simple_tag
@@ -40,10 +45,11 @@ def get_list_of_upload_events_per_request(sender, upload_request):
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
-def render_sender_activate_toggle(sender, name, value,**kwargs):
+def render_sender_activate_toggle(sender, name, value, **kwargs):
     return ToggleWidget(**kwargs).get_context(name, value,
-                                      {'hx-post': reverse('toggle_sender_active', kwargs={'sender_uuid': sender.pk}),
-                                       'hx-trigger': 'click', 'hx-swap': 'outerHTML'})
+                                              {'hx-post': reverse('toggle_sender_active',
+                                                                  kwargs={'sender_uuid': sender.pk}),
+                                               'hx-trigger': 'click', 'hx-swap': 'outerHTML'})
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
