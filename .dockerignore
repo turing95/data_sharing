@@ -1,4 +1,5 @@
 fly.toml
 .git/
 *.sqlite3
-docs
+docs/
+staticfiles/
