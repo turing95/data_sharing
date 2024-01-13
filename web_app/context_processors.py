@@ -11,5 +11,5 @@ def custom_context(request):
             context['sender_area'] = True if 'sender' in url_name else False
             context['generic_area'] = True if 'generic' in url_name else False
     context['config_data'] = config.get_js_config()
-    context['contact_email'] = ''.join(f'&#{ord(char)};' for char in settings.CONTACT_EMAIL)
+    context['contact_email'] = settings.CONTACT_EMAIL
     return context
