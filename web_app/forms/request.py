@@ -169,9 +169,6 @@ class DetailRequestForm(RequestForm):
         self.access_token = kwargs.pop('access_token', None)
         super().__init__(*args, **kwargs)
         if self.instance and UploadRequest.objects.filter(pk=self.instance.pk).exists():
-            self.fields['uuid'] = forms.CharField(
-                widget=forms.HiddenInput()
-            )
             self.fields['uuid'].initial = self.instance.uuid
 
             destination: GoogleDrive = self.instance.google_drive_destination
