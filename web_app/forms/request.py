@@ -178,10 +178,7 @@ class DetailRequestForm(RequestForm):
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
             self.fields['destination'].initial = destination.folder_id
-            try:
-                self.fields['destination_display'].initial = destination.name
-            except RefreshError:
-                self.fields['destination_display'].initial = "Error: refresh token"
+            self.fields['destination_display'].initial = destination.name
             if self.instance.filetype_set.exists():
                 self.fields['file_types'].initial = ','.join(
                     [file_type.slug for file_type in self.instance.filetype_set.all()])
