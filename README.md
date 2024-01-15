@@ -10,4 +10,12 @@ _secret.py
 redis
  - docker container with 6379:6379
 postgresql
- - docker container with 5432:5432 
+ - docker container with 5432:5432
+ - set POSTGRES_PASSWORD to the same as in _secret.py
+
+ stripe
+ - requires ngrok
+ - requires setting in django amin under model Api keys:
+    - STRIPE_TEST_SECRET_KEY
+    - STRIPE_LIVE_SECRET_KEY
+ - run: python manage.py djstripe_sync_models
