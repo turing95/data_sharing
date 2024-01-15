@@ -1,5 +1,5 @@
 function closeMessage() {
-    let messageBar = document.getElementById('messageBar');
+    let messageBar = document.getElementById('django-messages');
     if (messageBar) {
         messageBar.style.opacity = '0';
         messageBar.style.transform = 'translateY(-100%)';
