@@ -2,7 +2,7 @@
 <tr class=" border-b dark:bg-gray-800 dark:border-gray-700 bg-white" hx-target="this">
                 <th scope="row" class="sticky left-0 z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
                     {{ sender.email }}
-                    {% include 'private/space/components/sender_settings_dropdown.html' with sender_num=sender.pk  sender=sender%}
+                    {% include 'private/space/detail/components/sender_settings_dropdown.html' with sender_num=sender.pk  sender=sender%}
                 </th>
                 {% url 'sender_space_detail_private' space.uuid sender.uuid as sender_path%}
                 <td class="px-3 py-2">

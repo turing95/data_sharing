@@ -14,7 +14,7 @@ from web_app.mixins import SubscriptionMixin
 
 
 class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
-    template_name = "private/space/create.html"
+    template_name = "private/space/create/base.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
     _space = None  # Placeholder for the cached object

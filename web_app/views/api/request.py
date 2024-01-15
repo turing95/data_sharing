@@ -20,6 +20,6 @@ def delete_request(request, request_uuid):
                                     form_kwargs={'access_token': request.custom_user.google_token.token})
     return render(
         request,
-        'private/space/components/request_form.html',
+        'private/space/create/components/request_form.html',
         {'requests': requests, 'action': 'edit'}
     )
