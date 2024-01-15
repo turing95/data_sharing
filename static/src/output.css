@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Lato';
 
-  src: url('./fonts/Lato-Regular.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Regular.ttf') format('truetype');
 }
 
 @font-face {
@@ -13,7 +13,7 @@
 
   font-weight: bold;
 
-  src: url('./fonts/Lato-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -25,7 +25,7 @@
 
   font-weight: 600;
 
-  src: url('./fonts/Lato-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -35,7 +35,7 @@
 
   font-style: bold;
 
-  src: url('./fonts/Poppins-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Poppins-Bold.ttf') format('truetype');
 }
 
 /*
@@ -1220,10 +1220,6 @@ input:checked + .toggle-bg {
   margin: -1rem;
 }
 
-.m-1 {
-  margin: 0.25rem;
-}
-
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -1410,10 +1406,6 @@ input:checked + .toggle-bg {
   margin-top: auto;
 }
 
-.mr-5 {
-  margin-right: 1.25rem;
-}
-
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -1476,10 +1468,6 @@ input:checked + .toggle-bg {
   height: 3.5rem;
 }
 
-.h-20 {
-  height: 5rem;
-}
-
 .h-3 {
   height: 0.75rem;
 }
@@ -1540,24 +1528,16 @@ input:checked + .toggle-bg {
   height: 100%;
 }
 
+.max-h-\[150px\] {
+  max-height: 150px;
+}
+
 .max-h-\[42px\] {
   max-height: 42px;
 }
 
 .max-h-full {
   max-height: 100%;
-}
-
-.max-h-\[500px\] {
-  max-height: 500px;
-}
-
-.max-h-\[50px\] {
-  max-height: 50px;
-}
-
-.max-h-\[150px\] {
-  max-height: 150px;
 }
 
 .min-h-screen {
@@ -2635,10 +2615,6 @@ input:checked + .toggle-bg {
 
 .pt-\[200px\] {
   padding-top: 200px;
-}
-
-.pr-1 {
-  padding-right: 0.25rem;
 }
 
 .text-left {
@@ -3938,16 +3914,16 @@ input[type="search"]::-webkit-search-cancel-button {
     width: 3rem;
   }
 
+  .md\:w-2\/3 {
+    width: 66.666667%;
+  }
+
   .md\:w-auto {
     width: auto;
   }
 
   .md\:w-full {
     width: 100%;
-  }
-
-  .md\:w-2\/3 {
-    width: 66.666667%;
   }
 
   .md\:min-w-\[110px\] {
