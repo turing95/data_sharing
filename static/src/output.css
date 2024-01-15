@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Lato';
 
-  src: url('./Lato-Regular.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Regular.ttf') format('truetype');
 }
 
 @font-face {
@@ -13,7 +13,7 @@
 
   font-weight: bold;
 
-  src: url('./Lato-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -25,7 +25,7 @@
 
   font-weight: 600;
 
-  src: url('./Lato-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -35,7 +35,7 @@
 
   font-style: bold;
 
-  src: url('./Poppins-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Poppins-Bold.ttf') format('truetype');
 }
 
 /*
@@ -1712,12 +1712,12 @@ input:checked + .toggle-bg {
   max-width: 1280px;
 }
 
-.max-w-xs {
-  max-width: 20rem;
-}
-
 .max-w-sm {
   max-width: 24rem;
+}
+
+.max-w-xs {
+  max-width: 20rem;
 }
 
 .flex-1 {

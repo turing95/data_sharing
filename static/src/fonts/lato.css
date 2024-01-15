@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Lato';
-  src: url('./Lato-Regular.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Regular.ttf') format('truetype');
 }
 
 @font-face {
@@ -8,7 +8,7 @@
   font-display: swap;
   font-style: normal;
   font-weight: bold;
-  src: url('./Lato-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -16,5 +16,5 @@
   font-display: swap;
   font-style: normal;
   font-weight: 600;
-  src: url('./Lato-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Lato-Bold.ttf') format('truetype');
 }
