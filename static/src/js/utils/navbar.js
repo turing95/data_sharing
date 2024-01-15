@@ -69,6 +69,7 @@ export function initNav()  {
         });
 
     }
+    let modal;
    
     // set the modal menu element
     const pricingModalEl = document.getElementById('plan_pricing_modal');
@@ -84,7 +85,7 @@ export function initNav()  {
             override: true
         };
 
-        const modal = new Modal(pricingModalEl, options, instanceOptions);
+        modal = new Modal(pricingModalEl, options, instanceOptions);
     }
 
     // setup all the buttons that open the modal
