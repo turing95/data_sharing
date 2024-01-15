@@ -44,7 +44,7 @@ class FileForm(Form):
             for file in files:
                 extension = file.name.split('.')[-1]
                 if (extension in self.upload_request.extensions) is False:
-                    self.add_error('files', f'Extension {extension}  is not allowed.')
+                    self.add_error('files', f'{file.name} has extension {extension}, which is not allowed.')
         return files
 
 
