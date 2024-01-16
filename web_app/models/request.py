@@ -32,6 +32,8 @@ class UploadRequest(BaseModel, DeleteModel):
     def google_drive_destination(self):
         from web_app.models import GenericDestination, GoogleDrive
         generic_destination: GenericDestination = self.destinations.filter(tag=GoogleDrive.TAG, is_active=True).first()
+        if generic_destination is None:
+            return None
         google_drive_destination: GoogleDrive = generic_destination.related_object
         return google_drive_destination
 
