@@ -26,6 +26,9 @@
                 </th>
                 {% endif %}
                 <th scope="col" class="px-6 py-3 min-w-[200px]">
+                    Notes
+                </th>
+                <th scope="col" class="px-6 py-3 min-w-[200px]">
                     File
                 </th>                
             </tr>
@@ -73,17 +76,24 @@
                         </td>
                     {% endif %}
 
+                    {% if event.notes %}
+                    <td class="px-6 py-2">
+                        <div class="flex">            
+                            <span class=" min-w-[25px] max-w-[250px] " >{{ event.notes }}</span>                            
+                        </div>
+                    </td>
+                    {% endif %}
+
                     <!-- file name with link to file-->
                     <td class="px-6 py-2 max-w-[250px]">
-                        <div class="flex items-center">  
-                                            {% for file in event.files.all %}
-
-                            <div class="inline-flex items-center overflow-wrap-anywhere">
-                                <a href="{{ file.google_drive_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
-                                    <span class="min-w-0">{{ file.name }}</span>
-                                </a>
-                            </div>
-                                                {% endfor %}
+                        <div class="flex flex-col items-center">  
+                            {% for file in event.files.all %}
+                                <div class="inline-flex overflow-wrap-anywhere">
+                                    <a href="{{ file.google_drive_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
+                                        <span class="min-w-0">{{ file.name }}</span>
+                                    </a>
+                                </div>
+                            {% endfor %}
                         </div>
                     </td>                
                 </tr>
