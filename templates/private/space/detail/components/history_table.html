@@ -76,25 +76,29 @@
                         </td>
                     {% endif %}
 
-                    {% if event.notes %}
+                    
                     <td class="px-6 py-2">
                         <div class="flex">            
-                            <span class=" min-w-[25px] max-w-[250px] " >{{ event.notes }}</span>                            
+                            <span class=" min-w-[25px] max-w-[250px] " >
+                                {% if event.notes %}
+                                    {{ event.notes }}
+                                {% endif %}
+                            </span>                            
                         </div>
                     </td>
-                    {% endif %}
+                    
 
                     <!-- file name with link to file-->
                     <td class="px-6 py-2 max-w-[250px]">
-                        <div class="flex flex-col items-center">  
+                        <ul class="flex flex-col">  
                             {% for file in event.files.all %}
-                                <div class="inline-flex overflow-wrap-anywhere">
+                                <li class="inline-flex overflow-wrap-anywhere">
                                     <a href="{{ file.google_drive_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
                                         <span class="min-w-0">{{ file.name }}</span>
                                     </a>
-                                </div>
+                                </li>
                             {% endfor %}
-                        </div>
+                            </ul>
                     </td>                
                 </tr>
             {% endfor %}
