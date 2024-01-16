@@ -19,3 +19,7 @@ postgresql
     - STRIPE_TEST_SECRET_KEY
     - STRIPE_LIVE_SECRET_KEY
  - run: python manage.py djstripe_sync_models
+
+documentation
+ - npm i docsify-cli -g
+ - docsify serve docs
