@@ -41,6 +41,8 @@ function addNewRequestForm() {
         document.getElementById('accordion-open').appendChild(newForm);
         totalForms.value = formCount + 1;
     }
+    document.dispatchEvent(new Event("initSearch"));
+
 }
 
 function cloneRequestForm(formCount) {
@@ -115,7 +117,8 @@ function updateElementIdentifiers(newForm, formCount) {
         }
         if (element.id.startsWith('id_search-file-types')){
             element.setAttribute('hx-params', element.name)
-                htmx.process(element);
+            htmx.process(element);
+
             }
 
     });
@@ -168,17 +171,7 @@ function setupCloseButton(newForm) {
         });
     }
 }
-function check_delete(form){
-    let checkboxElement = form.querySelector('input[id^="id_requests-"][id$="-DELETE"]');
 
-    if (checkboxElement) {
-        // Checkbox found, you can now manipulate it
-        checkboxElement.checked = true;
-    } else {
-        // No checkbox found with the given pattern
-        console.log("No checkbox found with the given pattern");
-    }
-}
 
 
 
