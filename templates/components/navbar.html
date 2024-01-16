@@ -29,9 +29,6 @@
                         <li>
                             <a href="{% url 'spaces' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Spaces</a>
                         </li>
-                        <li>
-                            <a href="{% url 'account_settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">User Settings</a>
-                        </li>
                         {% if not subscription %} <!-- Show upgrade plan only if the user is not subscribed -->
                         <li>
                             <!-- Pricing plan modal -->
