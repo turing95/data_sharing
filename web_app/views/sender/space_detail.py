@@ -38,21 +38,22 @@ class SpaceDetailView(TemplateView):
             for form in formset:
                 upload_request = UploadRequest.objects.get(pk=form.cleaned_data.get('request_uuid'))
                 uploaded_files = form.cleaned_data.get('files')
-                google_drive_destination: GoogleDrive = upload_request.google_drive_destination
-                sender_event = SenderEvent.objects.create(sender=sender,
-                                                          request=upload_request,
-                                                          event_type=SenderEvent.EventType.FILE_UPLOADED,notes=form.cleaned_data.get('notes'))
-                for uploaded_file in uploaded_files:
-                    file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
+                if uploaded_files:
+                    google_drive_destination: GoogleDrive = upload_request.google_drive_destination
+                    sender_event = SenderEvent.objects.create(sender=sender,
+                                                              request=upload_request,
+                                                              event_type=SenderEvent.EventType.FILE_UPLOADED,notes=form.cleaned_data.get('notes'))
+                    for uploaded_file in uploaded_files:
+                        file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
 
-                    google_drive_file = google_drive_destination.upload_file(uploaded_file, file_name)
-                    File.objects.create(original_name=uploaded_file.name, name=file_name,
-                                        size=uploaded_file.size,
-                                        file_type=uploaded_file.content_type,
-                                        google_drive_url=google_drive_file.get(
-                                            'webViewLink'),
-                                        sender_event=sender_event)
-                messages.success(request, "Your upload was successful")  # http request here
+                        google_drive_file = google_drive_destination.upload_file(uploaded_file, file_name)
+                        File.objects.create(original_name=uploaded_file.name, name=file_name,
+                                            size=uploaded_file.size,
+                                            file_type=uploaded_file.content_type,
+                                            google_drive_url=google_drive_file.get(
+                                                'webViewLink'),
+                                            sender_event=sender_event)
+                    messages.success(request, "Your upload was successful")  # http request here
             return redirect(request.path)
         return self.render_to_response(self.get_context_data(formset=formset))
 
