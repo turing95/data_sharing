@@ -185,9 +185,6 @@
                                     </div>
                                     {% include 'components/forms/error_widget.html' with errors=form.files.errors %}
 
-                                    {{ form.notes }}
-                                    {% include 'components/forms/error_widget.html' with errors=form.files.notes %}
-
                                 {% endif %}
                                 <!-- files ready to be uploaded:-->
                                 <div class="flex flex-col file-tags-container"> <!--tags container filled by js-->
@@ -195,6 +192,15 @@
                                 
                                 
                             </div>
+                        </div>
+                        <!-- UPLOAD NOTES -->
+                        <div class="p-5 pt-2 dark:border-gray-700 dark:bg-gray-900">
+                            <div class="flex items-center mb-2 space-x-2">
+                                <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{form.notes.label}}</h4>
+                                {% include 'components/tooltip.html' with title=form.notes.label content=form.notes.help_text target=form.notes.name%}
+                            </div>
+                            {{ form.notes }}
+                            {% include 'components/forms/error_widget.html' with errors=form.notes.errors %}                       
                         </div>
                     </div>
                     {% endfor %}

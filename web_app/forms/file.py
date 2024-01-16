@@ -1,6 +1,7 @@
 from django.forms import Form
 from django.forms import BaseFormSet
 from django import forms
+from web_app.forms import css_classes
 
 
 class MultipleFileInput(forms.ClearableFileInput):
@@ -25,7 +26,17 @@ class MultipleFileField(forms.FileField):
 class FileForm(Form):
     files = MultipleFileField(label='Files')
     request_uuid = forms.CharField(widget=forms.HiddenInput())
-    notes = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
+    
+    notes = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': 'Add a note to your upload...',
+            'rows': 2,
+            'class': css_classes.text_area + "text-sm",
+        }),
+        label='Note',
+        help_text="""Add a note to clarify what you are uploading, if needed. Notes do not substitute the upload of the requested files.
+                            """)
 
     def __init__(self, **kwargs):
         self.request_index = kwargs.pop('request_index')
