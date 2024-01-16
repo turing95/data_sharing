@@ -1,12 +1,12 @@
 {% load static %}
 
-    <button type="button" class="inline-flex items-center ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group" id="sender_settings_dropdown_button_{{sender_num}}" aria-expanded="false" data-dropdown-toggle="sender_settings_dropdown_{{sender_num}}" data-dropdown-placement="bottom">
+    <button type="button" class="inline-flex items-center duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group" id="sender_settings_dropdown_button_{{sender_num}}" aria-expanded="false" data-dropdown-toggle="sender_settings_dropdown_{{sender_num}}" data-dropdown-placement="right">
         <span class="sr-only">Open sender dropdown</span>
-        <img src="{% static 'images/icons/settings-gear.svg' %}" alt="settings gear icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+        <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
     </button>
 
     <!-- Dropdown menu -->
-    <div class="z-50 hidden my-4 text-base list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600" id="sender_settings_dropdown_{{sender_num}}">
+    <div class="z-[100] hidden my-4 text-base list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600" id="sender_settings_dropdown_{{sender_num}}">
         <ul class="py-2" aria-labelledby="user-menu-button-{{sender_num}}">
             <li>
                 <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" 

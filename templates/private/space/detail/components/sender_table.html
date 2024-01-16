@@ -5,7 +5,10 @@
     <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-0 z-10 bg-gray-100">
+                <th scope="col" class="px-3 py-3 w-[30px] max-w-[30px] sticky left-0 z-10 bg-gray-100">
+                     
+                </th>
+                <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
                     Invitee
                 </th>
                 <th scope="col" class="px-3 py-3 min-w-[200px]">
@@ -37,7 +40,10 @@
             <!-- If the space has a public link add a row with its info-->
             {% if space.is_public or space.public_upload_events %}
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="sticky left-0 z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
+                <th scope="row" class="sticky left-0 z-10 w-[30px] px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
+                    
+                </th>
+                <th scope="row" class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
                     Everyone (public)
                     
                 </th>
