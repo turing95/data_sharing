@@ -114,18 +114,6 @@ class SpaceForm(ModelForm):
                 [sender.email for sender in space.senders.filter(is_active=True)])
             self.fields['title'].disabled = True
 
-    def clean_title(self):
-        title = self.cleaned_data.get("title")
-        user = self.user
-        spaces = Space.objects.filter(user=user, title=title)
-        if self.instance is not None:
-            spaces = spaces.exclude(pk=self.instance.pk)
-        if spaces.exists():
-            raise forms.ValidationError(
-                "Title already exists."
-            )
-        return title
-
     def clean_deadline(self):
         deadline = self.cleaned_data.get('deadline', None)
 

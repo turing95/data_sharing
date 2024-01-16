@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.forms import Form
 from django.forms import BaseFormSet
 from django import forms
@@ -24,9 +25,9 @@ class MultipleFileField(forms.FileField):
 
 
 class FileForm(Form):
-    files = MultipleFileField(label='Files')
+    files = MultipleFileField(label='Files',required=False)
     request_uuid = forms.CharField(widget=forms.HiddenInput())
-    
+
     notes = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={
@@ -60,6 +61,18 @@ class FileForm(Form):
 
 
 class BaseFileFormSet(BaseFormSet):
+    def is_valid(self):
+        result = super().is_valid()
+        if result is False:
+            return result
+            # Check if at least one form has non-empty 'files'
+        if any(form.cleaned_data.get('files') for form in self.forms):
+            return True
+        else:
+            # Add an error message to the formset
+            self.non_form_errors().append(ValidationError("You need to upload at least one file."))
+            return False
+
     def get_form_kwargs(self, index):
         kwargs = super().get_form_kwargs(index)
         kwargs["request_index"] = index
