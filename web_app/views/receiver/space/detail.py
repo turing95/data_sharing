@@ -38,10 +38,10 @@ class SpaceDetailFormView(SpaceFormView):
             if email in existing_senders:
                 del existing_senders[email]
             else:
-                Sender.objects.update_or_create(email=email, space=space_instance, defaults={'is_active': True})
+                sender,created = Sender.objects.update_or_create(email=email, space=space_instance, defaults={'is_active': True})
+                sender.notify_invitation()
         # Delete removed emails
         for email, sender in existing_senders.items():
-            print('deactivating', email, sender)
             sender.is_active = False
             sender.save()
 

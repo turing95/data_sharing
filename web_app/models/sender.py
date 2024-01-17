@@ -11,3 +11,7 @@ class Sender(BaseModel, ActiveModel):
     def notify_deadline(self):
         from web_app.tasks import notify_deadline
         notify_deadline.delay(self.pk)
+
+    def notify_invitation(self):
+        from web_app.tasks import sender_invite
+        sender_invite.delay(self.pk)
