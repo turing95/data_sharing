@@ -9,6 +9,7 @@ from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware
 from datetime import timezone
 import arrow
+from decimal import Decimal
 
 
 class CommaSeparatedEmailField(forms.CharField):
@@ -86,6 +87,38 @@ class SpaceForm(ModelForm):
         help_text="""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
                                 """)
+    deadline_notice_days = forms.DecimalField(
+        required=False,
+        min_value=Decimal('0'),
+        max_value=Decimal('15'),
+        decimal_places=1,
+        max_digits=3,
+        widget=forms.NumberInput(attrs={
+            'placeholder': 'Days', 
+            'step': '1',  # Set step for increments
+            'value': '1',  # Default value
+            'class': css_classes.inline_num_input
+        }),
+        label='Days before deadline',
+        help_text='Number of days before the deadline to send notifications.'
+    )
+
+    deadline_notice_hours = forms.DecimalField(
+        required=False,
+        min_value=Decimal('0'),
+        max_value=Decimal('23.9'),
+        decimal_places=1,
+        max_digits=4,
+        widget=forms.NumberInput(attrs={
+            'placeholder': 'Hours', 
+            'step': '0.5',  # Set step for increments
+            'value': '0',  # Default value
+            'class': css_classes.inline_num_input
+        }),
+        label='Hours before deadline',
+        help_text='Number of hours before the deadline to send notifications.'
+    )
+    
     upload_after_deadline = forms.BooleanField(
         widget=ToggleWidget(label_on='Uploads after deadline allowed',
                             label_off='Uploads after deadline not allowed'),
@@ -103,7 +136,7 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'upload_after_deadline']
+        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -131,6 +164,36 @@ class SpaceForm(ModelForm):
 
             return deadline.isoformat()
         return deadline
+    
+    def clean(self):
+        cleaned_data = super().clean()
+
+        # Assuming you have a field for deadline in your form
+        deadline = cleaned_data.get('deadline')
+        deadline_notice_days = cleaned_data.get('deadline_notice_days')
+        deadline_notice_hours = cleaned_data.get('deadline_notice_hours')
+
+        if not deadline:
+            cleaned_data['deadline_notice_days'] = None
+            cleaned_data['deadline_notice_hours'] = None
+        else:
+            # Convert Decimal values to float
+            notice_days = float(deadline_notice_days) if deadline_notice_days is not None else 0
+            notice_hours = float(deadline_notice_hours) if deadline_notice_hours is not None else 0
+
+            # Calculate notification datetime in the server timezone
+            notification_dt = arrow.get(deadline).shift(days=-notice_days, hours=-notice_hours)
+
+            # Get the current time in the server timezone
+            current_dt = arrow.now()
+
+            # Check if current time is past the notification time
+            if current_dt > notification_dt:
+                error_message = "Current time is past the deadline notification time."
+                self.add_error('deadline_notice_days', error_message)
+                self.add_error('deadline_notice_hours', error_message)
+
+        return cleaned_data
 
     def save(self, commit=True):
         instance = super().save()

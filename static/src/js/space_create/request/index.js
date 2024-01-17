@@ -13,10 +13,10 @@ export function initRequestForms() {
 
     const renamePattern = /^id_requests-\d+-rename$/;
     document.querySelectorAll('[id^="id_requests-"][id$="-rename"]').forEach(element => {
-    if (/^id_requests-\d+-rename$/.test(element.id)) {
-        toggleRename(element);
-    }
-});
+        if (/^id_requests-\d+-rename$/.test(element.id)) {
+            toggleRename(element);
+        }
+    });
     document.querySelectorAll('.request-form').forEach(form=>{
         initializeFileTypes(form);
     });

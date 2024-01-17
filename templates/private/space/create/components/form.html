@@ -58,7 +58,7 @@
     </div>
 
     <!-- DEADLINE -->
-    <div class="mb-6">
+    <div class="mb-6" id="deadline-section">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Dealine</h3>
             {% include 'components/tooltip.html' with title=form.deadline.label content=form.deadline.help_text target=form.deadline.name%}
@@ -69,24 +69,53 @@
             {{ form.deadline }}
             {% include 'components/forms/error_widget.html' with errors=form.deadline.errors %}
         </div>
-        <div class="flex items-center mb-2 space-x-2">
-            <div class="flex items-center h-5">
-                {{ form.notify_deadline }}
-                <label for="{{ form.notify_deadline.id_for_label }}"
-                class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.notify_deadline.label }}</label>
+        <div class="hidden deadline-settings-container">
+
+            <div class="flex items-center my-2 space-x-2">
+                <div class="flex items-center h-5">
+                    {{ form.notify_deadline }}
+                    <label for="{{ form.notify_deadline.id_for_label }}"
+                    class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.notify_deadline.label }}</label>
+                </div>
+                {% include 'components/tooltip.html' with title="Deadline Notification" content=form.notify_deadline.help_text target=form.notify_deadline.name%}
+                {% include 'components/forms/error_widget.html' with errors=form.notify_deadline.errors %}
             </div>
-            {% include 'components/tooltip.html' with title="Deadline Notification" content=form.notify_deadline.help_text target=form.notify_deadline.name%}
-            {% include 'components/forms/error_widget.html' with errors=form.notify_deadline.errors %}
-        </div>
-        <div class="flex items-center mb-2 space-x-2">
-            <div class="flex items-center h-5">
-                {{ form.upload_after_deadline }}
-                <label for="{{ form.upload_after_deadline.id_for_label }}"
-                class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.upload_after_deadline.label }}</label>
+
+            <div class="container flex-col items-center hidden mb-2 space-x-2 deadline-notice-container">
+                <div class="flex flex-wrap items-center mx-1">
+                    <span class="mr-0.5">Notifications</span>
+                    <span class="mx-0.5">will</span>
+                    <span class="mx-0.5">be</span>
+                    <span class="mx-0.5">sent</span>
+                    <span class="mx-0.5">{{ form.deadline_notice_days }}</span>
+                    <span class="mx-0.5">days</span>
+                    <span class="mx-0.5">and</span>
+                    <span class="mx-0.5">{{ form.deadline_notice_hours }}</span>
+                    <span class="mx-0.5">hours</span>
+                    <span class="mx-0.5">before</span>
+                    <span class="mx-0.5">the</span>
+                    <span class="mx-0.5">deadline.</span>
+                    <span class="ml-0.5 px-2" id="deadline-notification-date-container"></span> <!-- filled via JS-->
+                </div>            
+                
             </div>
-            {% include 'components/tooltip.html' with title="Allow uploads after deadline" content=form.upload_after_deadline.help_text target=form.upload_after_deadline.name%}
-            {% include 'components/forms/error_widget.html' with errors=form.upload_after_deadline.errors %}
+            {% include 'components/forms/error_widget.html' with errors=form.deadline_notice_days.errors %}
+
+
+
+
+
+            <div class="flex items-center mb-2 space-x-2">
+                <div class="flex items-center h-5">
+                    {{ form.upload_after_deadline }}
+                    <label for="{{ form.upload_after_deadline.id_for_label }}"
+                    class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.upload_after_deadline.label }}</label>
+                </div>
+                {% include 'components/tooltip.html' with title="Allow uploads after deadline" content=form.upload_after_deadline.help_text target=form.upload_after_deadline.name%}
+                {% include 'components/forms/error_widget.html' with errors=form.upload_after_deadline.errors %}
+            </div>
         </div>
+
         
     </div>
         

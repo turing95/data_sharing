@@ -1,8 +1,11 @@
 from django.db import models
 from web_app.models import BaseModel, ActiveModel, DeleteModel
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 import pytz
+from datetime import timedelta
 import arrow
+from decimal import Decimal
 
 
 class Space(BaseModel, ActiveModel,DeleteModel):
@@ -15,11 +18,46 @@ class Space(BaseModel, ActiveModel,DeleteModel):
     deadline = models.DateTimeField(null=True, blank=True)
     upload_after_deadline = models.BooleanField(default=False)
     notify_deadline = models.BooleanField(default=False)
+    deadline_notice_days = models.DecimalField(
+        max_digits=3,
+        decimal_places=1,
+        null=True,
+        blank=True,
+        validators=[
+            MinValueValidator(Decimal('0')),
+            MaxValueValidator(Decimal('15'))
+        ]
+    )
+
+    deadline_notice_hours = models.DecimalField(
+        max_digits=4,
+        decimal_places=1,
+        null=True,
+        blank=True,
+        validators=[
+            MinValueValidator(Decimal('0')),
+            MaxValueValidator(Decimal('23.9'))
+        ]
+    )
     timezone = models.CharField(
         max_length=50,
         choices=TIMEZONE_CHOICES
     )
 
+    @property
+    def deadline_notification_datetime(self):
+        if not self.deadline or self.deadline_notice_days is None or self.deadline_notice_hours is None:
+            return None
+        
+        # Convert Decimal values to float
+        notice_days = float(self.deadline_notice_days) if self.deadline_notice_days is not None else 0
+        notice_hours = float(self.deadline_notice_hours) if self.deadline_notice_hours is not None else 0
+
+
+        # Calculate notification datetime in the server timezone
+        notification_dt = arrow.get(self.deadline).shift(days=-notice_days, hours=-notice_hours)
+        return notification_dt.datetime
+    
     @property
     def deadline_expired(self):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
