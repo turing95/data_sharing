@@ -232,3 +232,4 @@ dist
 .pnp.*
 
 config/_secret.py
+config/_secret/
