@@ -58,7 +58,7 @@ export function initNav()  {
         });
     }
     // close  the navbar user menu when the price modal is opened
-    const priceModalButton = document.getElementById('plan_pricing_modal_navbar_button');
+    const priceModalButton = document.getElementById('plan_pricing_modal_button_navbar');
     if (priceModalButton) {
         const userDropdown = document.getElementById('user-dropdown');
 
