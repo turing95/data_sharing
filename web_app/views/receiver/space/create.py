@@ -20,6 +20,8 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
     _space = None  # Placeholder for the cached object
 
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
         # Call the parent dispatch method
         customer, _created = Customer.get_or_create(
             subscriber=djstripe_settings.subscriber_request_callback(self.request)
