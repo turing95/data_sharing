@@ -21,12 +21,13 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         # Call the parent dispatch method
-        response = super().dispatch(request, *args, **kwargs)
         customer, _created = Customer.get_or_create(
             subscriber=djstripe_settings.subscriber_request_callback(self.request)
         )
         if not customer.subscription and request.user.spaces.filter(is_deleted=False).count() >= settings.MAX_FREE_SPACES:
             return redirect('create_checkout_session')
+        response = super().dispatch(request, *args, **kwargs)
+
         response["Cross-Origin-Opener-Policy"] = "unsafe-none"
         return response
 
