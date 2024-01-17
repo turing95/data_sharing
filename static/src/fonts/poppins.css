@@ -2,5 +2,5 @@
   font-family: 'Poppins';
   font-display: swap;
   font-style: bold;
-  src: url('./Poppins-Bold.ttf') format('truetype');
+  src: url('/static/src/fonts/Poppins-Bold.ttf') format('truetype');
 }

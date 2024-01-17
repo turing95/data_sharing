@@ -11,3 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initNav();
 });
 
+document.addEventListener('htmx:afterRequest', function(evt) {
+        initMessageBar();
+
+});

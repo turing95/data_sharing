@@ -87,7 +87,6 @@
                     
                     
                     {% for form in formset.forms reversed%}
-                    {{ form.errors }}
                     {{ form.request_uuid }}
                     
                     <!-- SEPARATOR -->
@@ -138,31 +137,43 @@
                                 <!-- show files already uploaded-->
                                 <div class="flex flex-col mb-2">
                                     {% get_list_of_upload_events_per_request sender form.upload_request as upload_events %}
-                                                                    {% if sender %}
-                                    <p class="mb-2">Uploaded files:</p>
+                                    {% if sender %}
+                                    <p class="mb-2">Previous uploads:</p>
 
                                                                         
                                         {% if upload_events %}                                
-                                        <ul>
+                                        
                                             {% for event in upload_events %}
-                                                {% for file in event.files.all %}
-                                            <li class="my-1">
-                                                <!-- File Name Tag -->
-                                                <span title="{{ file.original_name }}" class="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 break-all max-w-[66%]">
-                                                    <span class ="line-clamp-2">{{ file.original_name }}</span>
-                                                </span>
-                                                <!-- Date Tag -->
-                                                <span title="upload date" class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium ml-2 px-2 py-0.5">
-                                                    {{ event.created_at|date:"Y-m-d" }}
-                                                </span>
-                                                <!-- Time Tag -->
-                                                <span title="upload time" class="inline-flex items-center bg-purple-100 text-purple-800 text-xs font-medium ml-2 px-2 py-0.5">
-                                                    {{ event.created_at|time:"H:i" }}
-                                                </span>
-                                            </li>
-                                                    {% endfor %}
+                                                <ul class="mb-3">
+                                                    <li>
+                                                        <!-- Date Tag -->
+                                                        <span title="upload date" class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium ml-2 px-2 py-0.5">
+                                                            {{ event.created_at|date:"Y-m-d" }}
+                                                        </span>
+                                                        <!-- Time Tag -->
+                                                        <span title="upload time" class="inline-flex items-center bg-purple-100 text-purple-800 text-xs font-medium ml-2 px-2 py-0.5">
+                                                            {{ event.created_at|time:"H:i" }}
+                                                        </span>
+                                                        {% if event.notes %}
+                                                            <div class="my-2 ml-2 text-xs">
+                                                                <span class="font-semibold">Note:</span> {{ event.notes }}
+                                                            </div>
+                                                        {% endif %}
+                                                        <ul class="ml-5">
+                                                            {% for file in event.files.all %}
+
+                                                                <li class="my-1">
+                                                                    <!-- File Name Tag -->
+                                                                    <span title="{{ file.original_name }}" class="inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 break-all">
+                                                                        <span class ="line-clamp-2">{{ file.original_name }}</span>
+                                                                    </span>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>                                                        
+                                                    </li>
+                                                </ul>
                                             {% endfor %}
-                                        </ul>
+
                                         {% else %}
                                             <p class="text-xs italic text-gray-500"> No files uploaded yet</p>
                                         {% endif %}
@@ -181,9 +192,11 @@
                                                 <p class="mb-2 text-sm text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
                                             </div>
                                             {{ form.files }}
-                                        </label>                                    
+                                        </label>       
+
                                     </div>
-                                    {{ form.notes }}
+                                    {% include 'components/forms/error_widget.html' with errors=form.files.errors %}
+
                                 {% endif %}
                                 <!-- files ready to be uploaded:-->
                                 <div class="flex flex-col file-tags-container"> <!--tags container filled by js-->
@@ -191,6 +204,15 @@
                                 
                                 
                             </div>
+                        </div>
+                        <!-- UPLOAD NOTES -->
+                        <div class="p-5 pt-2 dark:border-gray-700 dark:bg-gray-900">
+                            <div class="flex items-center mb-2 space-x-2">
+                                <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{form.notes.label}}</h4>
+                                {% include 'components/tooltip.html' with title=form.notes.label content=form.notes.help_text target=form.notes.name%}
+                            </div>
+                            {{ form.notes }}
+                            {% include 'components/forms/error_widget.html' with errors=form.notes.errors %}                       
                         </div>
                     </div>
                     {% endfor %}

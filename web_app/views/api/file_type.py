@@ -3,6 +3,7 @@ from django.shortcuts import render
 from web_app.models import FileType
 import re
 
+
 @login_required
 def search_file_types(request):
     if request.method == 'POST':
@@ -16,5 +17,6 @@ def search_file_types(request):
         if search_query:
             file_types = file_types.filter(slug__icontains=search_query)
 
-    return render(request, 'private/space/components/file_type_search_results.html',
+    return render(request,
+                  'private/space/create/components/file_type_search_results.html',
                   {'file_types': file_types})

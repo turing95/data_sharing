@@ -10,11 +10,6 @@ from django.utils.safestring import mark_safe
 from web_app.forms.widgets import ToggleWidget
 
 
-class FileTypeChoiceField(forms.ModelMultipleChoiceField):
-    def label_from_instance(self, obj):
-        # Return the string you want to display for each object
-        return obj.slug
-
 
 class CommaSeparatedFileTypeField(forms.CharField):
 
@@ -67,8 +62,7 @@ class RequestForm(ModelForm):
                                    'onchange': 'handleTagDropdownChange(this)'
                                    })
     )
-    
-    
+
     file_type_restrict = forms.BooleanField(
         widget=ToggleWidget(label_on='Apply file restrictions',
                             label_off='No file type restrictions',
@@ -158,8 +152,7 @@ class RequestForm(ModelForm):
         else:
             if file_naming_formula is file_naming_formula is None or file_naming_formula == '':
                 self.add_error('file_naming_formula', 'You must provide a file name if you want to rename the files.')
-        
-    
+
         file_type_restrict = cleaned_data.get('file_type_restrict', False)
         if file_type_restrict is False:
             cleaned_data['file_types'] = []
@@ -176,52 +169,20 @@ class DetailRequestForm(RequestForm):
         self.access_token = kwargs.pop('access_token', None)
         super().__init__(*args, **kwargs)
         if self.instance and UploadRequest.objects.filter(pk=self.instance.pk).exists():
-            self.fields['uuid'] = forms.CharField(
-                widget=forms.HiddenInput()
-            )
             self.fields['uuid'].initial = self.instance.uuid
 
             destination: GoogleDrive = self.instance.google_drive_destination
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
             self.fields['destination'].initial = destination.folder_id
-            try:
-                self.fields['destination_display'].initial = destination.name
-            except RefreshError:
-                self.fields['destination_display'].initial = "Error: refresh token"
-
-            self.fields['file_types'].initial = ','.join(
-                [file_type.slug for file_type in self.instance.filetype_set.all()])
-            
-            if self.fields['file_types'].initial != '':
+            self.fields['destination_display'].initial = destination.name
+            if self.instance.filetype_set.exists():
+                self.fields['file_types'].initial = ','.join(
+                    [file_type.slug for file_type in self.instance.filetype_set.all()])
                 self.fields['file_type_restrict'].initial = True
 
 
-class UniqueTitleFormSet(BaseInlineFormSet):
-    pass
-    '''def clean(self):
-        """
-        Add validation to ensure that each request has a unique title within the set.
-        """
-        super().clean()
-
-        # Skip further validation if any form already has errors
-        if any(self.errors):
-            return
-
-        titles = set()
-        for form in self.forms:
-            # Ignore empty forms and forms marked for deletion
-            if self.can_delete and self._should_delete_form(form):
-                continue
-
-            title = form.cleaned_data.get('title', None)
-            if title and title in titles:
-                raise ValidationError("Each request must have a unique title.")
-            titles.add(title)'''
-
-
 # Replace the standard formset with the custom one
-RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, formset=UniqueTitleFormSet, extra=1)
-DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, formset=UniqueTitleFormSet,
+RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, formset=BaseInlineFormSet, extra=1)
+DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, formset=BaseInlineFormSet,
                                              extra=0)

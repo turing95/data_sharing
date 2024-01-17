@@ -188,7 +188,10 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': [
             'profile',
             'email',
-            'https://www.googleapis.com/auth/drive'
+            'https://www.googleapis.com/auth/drive.file',
+            'https://www.googleapis.com/auth/drive.install',
+            'https://www.googleapis.com/auth/drive.readonly'
+
         ],
         'AUTH_PARAMS': {
             'access_type': 'offline',
@@ -205,11 +208,11 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = GMAIL_USERNAME
-EMAIL_HOST_PASSWORD = GMAIL_PASSWORD
+RESEND_SMTP_PORT = 587
+RESEND_SMTP_USERNAME = 'resend'
+RESEND_SMTP_HOST = 'smtp.resend.com'
 EMAIL_USE_TLS = True
+NO_REPLY_EMAIL = 'noreply@kezyy.com'
 DJSTRIPE_USE_NATIVE_JSONFIELD = True  # We recommend setting to True for new installations
 DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 

@@ -42,10 +42,10 @@ def history_table(request, space_uuid):
         if search_query:
             search_query = request.POST.get('search')
             upload_events = upload_events.annotate(
-                name_similarity=TrigramSimilarity('file__name', search_query),
+                name_similarity=TrigramSimilarity('files__name', search_query),
                 email_similarity=TrigramSimilarity('sender__email', search_query),
                 title_similarity=TrigramSimilarity('request__title', search_query),
-                original_name_similarity=TrigramSimilarity('file__original_name', search_query),
+                original_name_similarity=TrigramSimilarity('files__original_name', search_query),
             ).filter(
                 Q(name_similarity__gt=0.1) |
                 Q(email_similarity__gt=0.1) |

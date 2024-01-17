@@ -6,7 +6,7 @@
 
     {% if status == 'edit' %}
         {% include 'private/space/components/delete_form.html' with space=form.instance %}
-        {% include 'private/space/components/form.html' with action='edit' %}
+        {% include 'private/space/create/components/form.html' with action='edit' %}
     {% else %}
         {% include 'private/space/detail/components/summary.html' %}
     {% endif %}

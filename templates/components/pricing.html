@@ -9,7 +9,7 @@
     <div class="space-y-8 md:grid {%if subscription %} md:grid-cols-1 {% else%} md:grid-cols-2 {% endif %}sm:gap-6 xl:gap-10 md:space-y-0">
         {% if not subscription %} <!-- show free plan only to non-subscribed users -->
             <!-- Pricing Card -->
-            <div class="flex flex-col w-full h-full p-4 mx-auto text-center text-gray-900 bg-gray-100 border border-gray-200 rounded-lg shadow sm:w-3/4 md:w-full dark:border-gray-600 xl:p-4 dark:bg-gray-800 dark:text-white">
+            <div class="flex flex-col w-full h-full max-w-sm p-4 mx-auto text-center text-gray-900 bg-gray-100 border border-gray-200 rounded-lg shadow sm:w-3/4 md:w-full dark:border-gray-600 xl:p-4 dark:bg-gray-800 dark:text-white">
                 <h3 class="mb-3 text-2xl font-semibold">Basic</h3>
                 <p class="h-10 font-light text-gray-500 dark:text-gray-400">Test out what Kezyy can do to streamline your file collection</p>
                 <div class="flex items-baseline justify-center my-5">
@@ -63,7 +63,7 @@
         {% endif %}
         
         <!-- Pricing Card -->
-        <div class="flex flex-col w-full p-4 mx-auto text-center text-gray-900 bg-gray-200 border border-gray-300 rounded-lg shadow sm:w-3/4 md:w-full dark:border-gray-600 xl:p-4 dark:bg-gray-800 dark:text-white">
+        <div class="flex flex-col w-full max-w-sm p-4 mx-auto text-center text-gray-900 bg-gray-200 border border-gray-300 rounded-lg shadow sm:w-3/4 md:w-full dark:border-gray-600 xl:p-4 dark:bg-gray-800 dark:text-white">
             <h3 class="mb-3 text-2xl font-semibold">Professional</h3>
             <p class="h-10 font-light text-gray-500 dark:text-gray-400">Make Kezyy your file collection companion</p>
             <div class="flex items-baseline justify-center my-5">
@@ -88,7 +88,7 @@
             </ul>
             <div class="mt-auto">
             {% if subscription %}
-                <div class="flex items-center justify-center px-5 py-2 font-medium text-center text-gray-800 bg-gray-200">Current plan</div>
+                <div class="flex items-center justify-center px-5 py-2 font-medium text-center text-gray-800 bg-gray-300">Current plan</div>
             {% else %}
                 {% if user.is_authenticated %}
                     {% url 'create_checkout_session'  as subscribe_url %}        

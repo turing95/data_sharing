@@ -1,6 +1,8 @@
+from django.core.exceptions import ValidationError
 from django.forms import Form
 from django.forms import BaseFormSet
 from django import forms
+from web_app.forms import css_classes
 
 
 class MultipleFileInput(forms.ClearableFileInput):
@@ -23,9 +25,19 @@ class MultipleFileField(forms.FileField):
 
 
 class FileForm(Form):
-    files = MultipleFileField(label='Files')
+    files = MultipleFileField(label='Files',required=False)
     request_uuid = forms.CharField(widget=forms.HiddenInput())
-    notes = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), required=False)
+
+    notes = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': 'Add a note to your upload...',
+            'rows': 2,
+            'class': css_classes.text_area + "text-sm",
+        }),
+        label='Note',
+        help_text="""Add a note to clarify what you are uploading, if needed. Notes do not substitute the upload of the requested files.
+                            """)
 
     def __init__(self, **kwargs):
         self.request_index = kwargs.pop('request_index')
@@ -44,11 +56,23 @@ class FileForm(Form):
             for file in files:
                 extension = file.name.split('.')[-1]
                 if (extension in self.upload_request.extensions) is False:
-                    self.add_error('files', f'Extension {extension}  is not allowed.')
+                    self.add_error('files', f'{file.name} has extension {extension}, which is not allowed.')
         return files
 
 
 class BaseFileFormSet(BaseFormSet):
+    def is_valid(self):
+        result = super().is_valid()
+        if result is False:
+            return result
+            # Check if at least one form has non-empty 'files'
+        if any(form.cleaned_data.get('files') for form in self.forms):
+            return True
+        else:
+            # Add an error message to the formset
+            self.non_form_errors().append(ValidationError("You need to upload at least one file."))
+            return False
+
     def get_form_kwargs(self, index):
         kwargs = super().get_form_kwargs(index)
         kwargs["request_index"] = index
