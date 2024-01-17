@@ -15,18 +15,17 @@ export function initializeFileTypes(requestForm) {
 
 function createTag(fileType,fileTypeInput) {
     const tag = document.createElement('span');
-    tag.className = 'inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 mr-1 mb-1';
+    tag.className = 'file-type-tag-span inline-flex items-center bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 mr-1 mb-1';
     tag.textContent = fileType;
 
     const closeBtn = document.createElement('span');
     closeBtn.innerHTML = '&times;';
     closeBtn.className = 'ml-2 cursor-pointer';
     closeBtn.onclick = () => {
-                console.log(tag)
         if (tag.parentElement.children.length === 1) {
             tag.parentElement.parentElement.querySelector('.file-type-title').classList.add('hidden');
             tag.parentElement.parentElement.querySelector('.no-file-types').classList.remove('hidden');
-        };
+        }
         tag.remove();
         let addedFileTypes = new Set(fileTypeInput.value.split(',').filter(x => x));
         addedFileTypes.delete(fileType);
@@ -44,7 +43,7 @@ export function addFileTypeTag(liElement,fileTypeSlug) {
     let addedFileTypes = new Set(fileTypeInput.value.split(',').filter(x => x));
     if (!addedFileTypes.has(fileTypeSlug)) {
         const tag = createTag(fileTypeSlug,fileTypeInput);
-        
+
         if (fileTypeInput.value === '') {
             fileTypeInput.value = fileTypeSlug;
             form.querySelector('.file-type-title').classList.remove('hidden')
@@ -56,3 +55,20 @@ export function addFileTypeTag(liElement,fileTypeSlug) {
     }
 }
 
+export function setupFileTypeCloseButton(requestForm) {
+    requestForm.querySelectorAll('.file-type-tags .file-type-tag-span').forEach(tag => {
+        const closeBtn = tag.querySelector('span');
+        closeBtn.onclick = () => {
+            if (tag.parentElement.children.length === 1) {
+                tag.parentElement.parentElement.querySelector('.file-type-title').classList.add('hidden');
+                tag.parentElement.parentElement.querySelector('.no-file-types').classList.remove('hidden');
+            }
+            tag.remove();
+            let addedFileTypes = new Set(requestForm.querySelector('.file-types').value.split(',').filter(x => x));
+            addedFileTypes.delete(tag.childNodes[0].textContent.trim());
+            addedFileTypes = Array.from(addedFileTypes).join(',');
+            requestForm.querySelector('.file-types').value = addedFileTypes
+
+        };
+    });
+}

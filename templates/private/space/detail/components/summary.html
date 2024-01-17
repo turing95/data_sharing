@@ -114,7 +114,7 @@
                     <input class="outline-none block py-1.5 text-sm text-gray-900 border border-gray-300 form-control ps-10 w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="search" 
                         name="search" placeholder="Type to search..." 
                         hx-post="{% url 'history_table' space.uuid %}" 
-                        hx-trigger="input[target.value.length > 1 || target.value.length == 0] changed delay:500ms, search" 
+                        hx-trigger="input changed delay:500ms, search" 
                         hx-target="#history-table" 
                         hx-indicator="#search-loading-indicator">
                 </div>
