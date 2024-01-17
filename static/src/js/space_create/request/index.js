@@ -58,7 +58,7 @@ function cloneRequestForm(formCount) {
 
     updateElementIdentifiers(newForm, formCount);
     setupCloseButton(newForm);
-
+    htmx.process(newForm);
     return newForm;
 }
 
@@ -119,7 +119,6 @@ function updateElementIdentifiers(newForm, formCount) {
         }
         if (element.id.startsWith('id_search-file-types')){
             element.setAttribute('hx-params', element.name)
-            htmx.process(element);
 
             }
 
