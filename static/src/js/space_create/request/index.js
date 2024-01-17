@@ -1,5 +1,5 @@
 import {toggleAccordion, toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
-import {initializeFileTypes} from './fileTypeInput.js';
+import {initializeFileTypes, setupFileTypeCloseButton} from './fileTypeInput.js';
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
 
@@ -40,8 +40,10 @@ function addNewRequestForm() {
     if (newForm) {
         document.getElementById('accordion-open').appendChild(newForm);
         totalForms.value = formCount + 1;
+        document.dispatchEvent(new Event("initSearch"));
+        setupFileTypeCloseButton(newForm);
+
     }
-    document.dispatchEvent(new Event("initSearch"));
 
 }
 
