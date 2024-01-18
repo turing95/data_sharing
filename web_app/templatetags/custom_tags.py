@@ -52,13 +52,7 @@ def render_sender_activate_toggle(sender, name, value, **kwargs):
                                                'hx-trigger': 'click', 'hx-swap': 'outerHTML','hx-target':'closest .cursor-pointer'})
 
 
-@register.inclusion_tag("forms/widgets/toggle.html")
-def render_space_activate_toggle(space, name, value):
-    return ToggleWidget(label_on='Active', label_off='Inactive').get_context(name, value,
-                                                                             {'hx-post': reverse('toggle_space_active',
-                                                                                                 kwargs={
-                                                                                                     'space_uuid': space.pk}),
-                                                                              'hx-swap': 'outerHTML'})
+
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")

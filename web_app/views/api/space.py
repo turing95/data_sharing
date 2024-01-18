@@ -10,14 +10,7 @@ from django.views.decorators.http import require_POST, require_GET
 from web_app.models import Space, Sender, UploadRequest, SenderEvent
 
 
-@login_required
-@require_POST
-def toggle_space_active(request, space_uuid):
-    space = Space.objects.get(pk=space_uuid)
-    space.is_active = not space.is_active
-    space.save()
-    return HttpResponse(
-        render_block_to_string('private/space/detail/components/summary.html', 'details', {'space': space}, request))
+
 
 
 @login_required

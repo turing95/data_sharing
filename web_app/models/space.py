@@ -8,7 +8,7 @@ import arrow
 from decimal import Decimal
 
 
-class Space(BaseModel, ActiveModel,DeleteModel):
+class Space(BaseModel,DeleteModel):
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
 
     title = models.CharField(max_length=250)

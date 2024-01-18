@@ -40,14 +40,6 @@ class SpaceForm(ModelForm):
                             label='Space title',
                             help_text="It will be displayed to your invitees")
 
-    is_active = forms.BooleanField(
-        widget=ToggleWidget(label_on='Active',
-                            label_off='Inactive'),
-        required=False,
-        label='Activate space',
-        help_text="""Set the space to 'inactive' at creation if you want to double check its properties before making it accessible to invitees.
-                            Set it to 'active' to make it immediately accessible to invitees and trigger the creation notifications if any.
-                             """)
 
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
@@ -136,7 +128,7 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'is_active', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
+        fields = ['title', 'is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)

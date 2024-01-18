@@ -124,17 +124,6 @@
         {% include 'private/space/create/components/request_form.html' with action=action %}
 {% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn"  extra_classes="my-2"%}
 
-    
-    <div class="mb-6">
-        <div class="flex-col">
-            <div class="flex items-center mb-2 space-x-2">
-                <label for="{{ form.is_active.id_for_label }}"
-                class="text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.is_active.label }}</label>
-                {% include 'components/tooltip.html' with title="Active Space at Creation" content=form.is_active.help_text target=form.is_active.name%}
-            </div>
-            <div>{{ form.is_active }}</div>        
-        </div>
-    </div>
 
     {% if action == 'edit' %}    
     <div class="sticky bottom-4">

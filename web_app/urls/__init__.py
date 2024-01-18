@@ -2,7 +2,7 @@ from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     PasswordResetView, SignupView, LoginView, SpaceDetailFormViewSender, \
     TermsOfServiceView, PrivacyPolicyView, DeleteSpaceView, SettingsView, PublicLandingView, \
-    custom_page_not_found, custom_server_error, toggle_sender_active, toggle_space_active, delete_request, \
+    custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
     request_modal, create_checkout_session, search_file_types,notify_sender
 
@@ -28,7 +28,6 @@ urlpatterns = [
     path("500/", custom_server_error),
     # Ajax views
     path('file-types/search/', search_file_types, name='search_file_types'),
-    path('spaces/<uuid:space_uuid>/toggle-active/', toggle_space_active, name='toggle_space_active'),
     path('spaces/<uuid:space_uuid>/toggle-public/', toggle_space_public, name='toggle_space_public'),
     path('spaces/<uuid:space_uuid>/history-table/', history_table, name='history_table'),
     path('request/<uuid:request_uuid>/modal/', request_modal, name='request_modal'),
