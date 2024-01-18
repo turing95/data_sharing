@@ -4,7 +4,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     TermsOfServiceView, PrivacyPolicyView, DeleteSpaceView, SettingsView, PublicLandingView, \
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
-    request_modal, create_checkout_session, search_file_types,notify_sender_deadline
+    request_modal, create_checkout_session, search_file_types,notify_deadline,notify_invitation
 
 urlpatterns = [
     # Generic views
@@ -33,5 +33,6 @@ urlpatterns = [
     path('request/<uuid:request_uuid>/modal/', request_modal, name='request_modal'),
     path('requests/<uuid:request_uuid>/delete/', delete_request, name='request_delete'),
     path('senders/<uuid:sender_uuid>/toggle-active/', toggle_sender_active, name='toggle_sender_active'),
-    path('senders/<uuid:sender_uuid>/notify_deadline/', notify_sender_deadline, name='notify_sender_deadline'),
+    path('senders/<uuid:sender_uuid>/notify_deadline/', notify_deadline, name='notify_deadline'),
+    path('senders/<uuid:sender_uuid>/notify_invitation/', notify_invitation, name='notify_invitation'),
 ]
