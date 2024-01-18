@@ -8,7 +8,7 @@ import arrow
 from decimal import Decimal
 
 
-class Space(BaseModel, ActiveModel,DeleteModel):
+class Space(BaseModel,DeleteModel):
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
 
     title = models.CharField(max_length=250)
@@ -18,6 +18,7 @@ class Space(BaseModel, ActiveModel,DeleteModel):
     deadline = models.DateTimeField(null=True, blank=True)
     upload_after_deadline = models.BooleanField(default=False)
     notify_deadline = models.BooleanField(default=False)
+    notify_invitation = models.BooleanField(default=False)
     deadline_notice_days = models.DecimalField(
         max_digits=3,
         decimal_places=1,

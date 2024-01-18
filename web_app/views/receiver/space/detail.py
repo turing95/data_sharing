@@ -1,11 +1,9 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-
 from web_app.forms import SpaceForm, DetailRequestFormSet
-from web_app.models import Space, UploadRequest, Sender, GoogleDrive
-
+from web_app.models import Space, Sender, GoogleDrive
 from web_app.views import SpaceFormView
-import arrow
+from web_app.tasks.notifications import notify_invitation
 
 
 class SpaceDetailFormView(SpaceFormView):
@@ -38,8 +36,10 @@ class SpaceDetailFormView(SpaceFormView):
             if email in existing_senders:
                 del existing_senders[email]
             else:
-                sender,created = Sender.objects.update_or_create(email=email, space=space_instance, defaults={'is_active': True})
-                sender.notify_invitation()
+                sender, created = Sender.objects.update_or_create(email=email, space=space_instance, defaults={'is_active': True})
+                if space_instance.notify_invitation is True:
+                    notify_invitation.delay(sender.pk)
+
         # Delete removed emails
         for email, sender in existing_senders.items():
             sender.is_active = False
