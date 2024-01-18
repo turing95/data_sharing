@@ -7,7 +7,7 @@ from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, GoogleDrive, UploadRequest, FileType
+from web_app.models import Sender, GoogleDrive, UploadRequest, FileType, Space
 from django.db import transaction
 from web_app.tasks.notifications import notify_invitation
 from web_app.mixins import SubscriptionMixin
@@ -82,10 +82,11 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         return self.form_invalid(form)
 
     @staticmethod
-    def handle_senders(emails, space_instance):
+    def handle_senders(emails, space_instance:Space):
         for email in emails:
             sender = Sender.objects.create(email=email, space=space_instance)
-            notify_invitation.delay(sender.pk)
+            if space_instance.notify_invitation is True:
+                notify_invitation.delay(sender.pk)
 
     @staticmethod
     def handle_formset(formset):

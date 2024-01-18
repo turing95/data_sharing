@@ -18,6 +18,7 @@ class Space(BaseModel,DeleteModel):
     deadline = models.DateTimeField(null=True, blank=True)
     upload_after_deadline = models.BooleanField(default=False)
     notify_deadline = models.BooleanField(default=False)
+    notify_invitation = models.BooleanField(default=False)
     deadline_notice_days = models.DecimalField(
         max_digits=3,
         decimal_places=1,

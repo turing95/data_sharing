@@ -40,13 +40,12 @@ class SpaceForm(ModelForm):
                             label='Space title',
                             help_text="It will be displayed to your invitees")
 
-
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
         label='Senders emails',
         required=False,
         help_text="Each invitee will have their own access link and will not be able to see any other invitee in the list.")
-    
+
     email_input = forms.CharField(required=False,
                                   widget=forms.TextInput(
                                       attrs={'placeholder': 'Type or paste email addresses of invitees',
@@ -86,7 +85,7 @@ class SpaceForm(ModelForm):
         decimal_places=1,
         max_digits=3,
         widget=forms.NumberInput(attrs={
-            'placeholder': 'Days', 
+            'placeholder': 'Days',
             'step': '1',  # Set step for increments
             'value': '1',  # Default value
             'class': css_classes.inline_num_input
@@ -102,7 +101,7 @@ class SpaceForm(ModelForm):
         decimal_places=1,
         max_digits=4,
         widget=forms.NumberInput(attrs={
-            'placeholder': 'Hours', 
+            'placeholder': 'Hours',
             'step': '0.5',  # Set step for increments
             'value': '0',  # Default value
             'class': css_classes.inline_num_input
@@ -110,7 +109,7 @@ class SpaceForm(ModelForm):
         label='Hours before deadline',
         help_text='Number of hours before the deadline to send notifications.'
     )
-    
+
     upload_after_deadline = forms.BooleanField(
         widget=ToggleWidget(label_on='Uploads after deadline allowed',
                             label_off='Uploads after deadline not allowed'),
@@ -118,17 +117,24 @@ class SpaceForm(ModelForm):
         label='Allow uploads after deadline',
         help_text="""Your invitees will not be able to upload files after the deadline if this is enabled.
         You can change this setting at any time.""")
-    
+
     notify_deadline = forms.BooleanField(
         widget=ToggleWidget(label_on='Notify',
                             label_off='Notify'),
         required=False,
         label='Notify deadline',
         help_text="""...""")
+    notify_invitation = forms.BooleanField(
+        widget=ToggleWidget(label_on='Notify Invitation',
+                            label_off='Notify Invitation'),
+        required=False,
+        label='Notify invitation',
+        help_text="""...""")
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline', 'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
+        fields = ['title', 'is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline','notify_invitation',
+                  'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -156,7 +162,7 @@ class SpaceForm(ModelForm):
 
             return deadline.isoformat()
         return deadline
-    
+
     def clean(self):
         cleaned_data = super().clean()
 
