@@ -73,7 +73,8 @@ class SpaceForm(ModelForm):
     deadline = forms.DateTimeField(
         required=False,
         widget=forms.DateTimeInput(attrs={
-            'type': 'datetime-local'
+            'type': 'datetime-local',
+            'class':css_classes.datetime_input
         }),
         help_text="""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
