@@ -29,7 +29,7 @@
 
                         <!-- space settings dropdown -->              
                         <div class="flex justify-end mt-auto">
-                            {% include 'private/space/components/space_settings_dropdown.html' with space=space space_num=forloop.counter %}
+                            {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=forloop.counter %}
                         </div>
 
                         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ space.title }}</h5>
