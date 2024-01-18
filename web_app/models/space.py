@@ -20,7 +20,6 @@ class Space(BaseModel,DeleteModel):
     notify_deadline = models.BooleanField(default=False)
     notify_invitation = models.BooleanField(default=False)
     deadline_notice_days = models.PositiveSmallIntegerField(blank=True,null=True)
-
     deadline_notice_hours = models.PositiveSmallIntegerField(blank=True,null=True)
     timezone = models.CharField(
         max_length=50,
@@ -31,10 +30,8 @@ class Space(BaseModel,DeleteModel):
     def deadline_notification_datetime(self):
         if not self.deadline or self.deadline_notice_days is None or self.deadline_notice_hours is None:
             return None
-        
-        # Convert Decimal values to float
-        notice_days = float(self.deadline_notice_days) if self.deadline_notice_days is not None else 0
-        notice_hours = float(self.deadline_notice_hours) if self.deadline_notice_hours is not None else 0
+        notice_days = self.deadline_notice_days or 0
+        notice_hours = self.deadline_notice_hours or 0
 
 
         # Calculate notification datetime in the server timezone

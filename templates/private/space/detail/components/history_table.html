@@ -1,3 +1,4 @@
+{% load l10n %}
 
 {% load static %}
 
@@ -40,12 +41,14 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <!-- Timestamp-->
                     <th scope="row" class="px-3 py-2">
+                        {% localize %}
                         <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
-                            {{ event.created_at|date:"Y-m-d" }}
+                            {{ event.created_at|date }}
                         </span>
                         <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                            {{ event.created_at|time:"H:i" }}
+                            {{ event.created_at|time }}
                         </span>
+                        {% endlocalize %}
                     </th>
                     
                     {% if hide_sender is False %}
