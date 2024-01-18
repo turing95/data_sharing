@@ -87,7 +87,7 @@ class SpaceForm(ModelForm):
             'placeholder': 'Days',
             'step': '1',  # Set step for increments
             'value': '1',  # Default value
-            'class': css_classes.inline_num_input
+            'class': css_classes.text_input
         }),
         label='Days before deadline',
         help_text='Number of days before the deadline to send notifications.'
@@ -102,7 +102,7 @@ class SpaceForm(ModelForm):
             'placeholder': 'Hours',
             'step': '1',  # Set step for increments
             'value': '0',  # Default value
-            'class': css_classes.inline_num_input
+            'class': css_classes.text_input
         }),
         label='Hours before deadline',
         help_text='Number of hours before the deadline to send notifications.'
