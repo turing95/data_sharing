@@ -1,17 +1,12 @@
 import logging
 import stripe
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.decorators.http import require_GET
 from djstripe import models
 from djstripe import settings as djstripe_settings
-from djstripe.models import APIKey
-from stripe import api_key
+from djstripe.models import APIKey, Product
 
 logger = logging.getLogger(__name__)
 
@@ -26,10 +21,6 @@ def create_checkout_session(request):
         stripe.api_key = APIKey.objects.get(name='STRIPE_LIVE_SECRET_KEY').secret
     else:
         stripe.api_key = APIKey.objects.get(name='STRIPE_TEST_SECRET_KEY').secret
-    """
-            Creates and returns a Stripe Checkout Session
-            """
-    # Get Parent Context
 
     success_url = request.build_absolute_uri(
         reverse("generic_home")
@@ -46,23 +37,20 @@ def create_checkout_session(request):
     metadata = {
         f"{djstripe_settings.djstripe_settings.SUBSCRIBER_CUSTOMER_KEY}": _id
     }
-
+    line_items = [
+                {
+                    "price": Product.objects.get(name="Pro").default_price.id,
+                    "quantity": 1,
+                },
+            ]
     try:
         # retreive the Stripe Customer.
         customer = models.Customer.objects.get(subscriber=request.user)
-
-        print("Customer Object in DB.")
-
         # ! Note that Stripe will always create a new Customer Object if customer id not provided
         # ! even if customer_email is provided!
         session = stripe.checkout.Session.create(
             customer=customer.id,
-            line_items=[
-                {
-                    "price": "price_1OU7F0Fp43jm0b8rXRzNw9y6",
-                    "quantity": 1,
-                },
-            ],
+            line_items=line_items,
             mode="subscription",
             success_url=success_url,
             cancel_url=cancel_url,
@@ -73,12 +61,7 @@ def create_checkout_session(request):
         print("Customer Object not in DB.")
 
         session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    "price": "price_1OU7F0Fp43jm0b8rXRzNw9y6",
-                    "quantity": 1,
-                },
-            ],
+            line_items=line_items,
             mode="subscription",
             success_url=success_url,
             cancel_url=cancel_url,
