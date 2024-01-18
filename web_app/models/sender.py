@@ -4,11 +4,13 @@ from django.template.loader import render_to_string
 from data_sharing import settings
 from utils.emails import html_to_text
 from web_app.models import BaseModel, ActiveModel
+import arrow
 
 
 class Sender(BaseModel, ActiveModel):
     email = models.CharField(max_length=50)
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='senders')
+    notified_at = models.DateTimeField(null=True, blank=True)
 
     def notify_deadline(self):
         context = {
@@ -35,6 +37,8 @@ class Sender(BaseModel, ActiveModel):
             msg.attach_alternative(email_html, 'text/html')
 
             msg.send()
+        self.notified_at = arrow.utcnow().datetime
+        self.save()
 
     def notify_invitation(self):
         context = {

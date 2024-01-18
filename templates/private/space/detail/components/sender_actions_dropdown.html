@@ -1,4 +1,4 @@
-{% load static %}
+{% load static l10n %}
 
     <button type="button" class="inline-flex items-center duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group" id="sender_actions_dropdown_button_{{sender_num}}" aria-expanded="false" data-dropdown-toggle="sender_actions_dropdown_{{sender_num}}" data-dropdown-placement="right">
         <span class="sr-only">Open sender dropdown</span>
@@ -13,7 +13,7 @@
                         hx-post="{% url 'notify_deadline' sender.pk %}"
                         hx-target="#messageBar"
                         hx-swap="outerHTML">
-                    Notify
+                    Notify {% if sender.notified_at %}(last: {{sender.notified_at|localize}}){% endif %}
             </button>
             </li>
                         <li>
