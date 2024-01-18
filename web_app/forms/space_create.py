@@ -165,11 +165,7 @@ class SpaceForm(ModelForm):
             return deadline.isoformat()
         return deadline
     
-    def clean_instructions(self):
-        instructions = self.cleaned_data.get('instructions', None)
-        if instructions is not None:
-            return instructions
-        return instructions
+
     
     def clean(self):
         cleaned_data = super().clean()
