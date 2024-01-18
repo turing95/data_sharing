@@ -82,7 +82,8 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}    
                 <div id="accordion-open" data-accordion="open">
-                    {{ formset.non_form_errors  }}
+                    {% include 'components/forms/error_widget.html' with errors=formset.non_form_errors %}  
+
                     {{ formset.management_form }}
                     
                     
