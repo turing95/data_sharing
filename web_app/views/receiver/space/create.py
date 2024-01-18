@@ -85,7 +85,7 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
     def handle_senders(emails, space_instance):
         for email in emails:
             sender = Sender.objects.create(email=email, space=space_instance)
-            sender.notify_invitation()
+            sender_invite.delay(sender.pk)
 
     @staticmethod
     def handle_formset(formset):
