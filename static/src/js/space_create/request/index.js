@@ -43,8 +43,8 @@ function addNewRequestForm() {
         document.dispatchEvent(new Event("initSearch"));
         setupFileTypeCloseButton(newForm);
         //remove errors from the new form
-        newForm.querySelectorAll('.error-message').forEach(errorlist => {
-            errorlist.remove();
+        newForm.querySelectorAll('.error-message').forEach(errorEl => {
+            errorEl.remove();
         });
 
     }

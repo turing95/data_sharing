@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const form = document.querySelector('#space-form');
     if (form) {
         form.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && e.target.matches('input:not([type="submit"]):not([type="button"]):not([type="hidden"]), select, textarea')) {
+            if (e.key === 'Enter' && e.target.matches('input:not([type="submit"]):not([type="button"]):not([type="hidden"]):not([class*="email-input"]), select')) {
                 e.preventDefault(); // Prevent form submission
 
                 const formInputs = Array.from(form.querySelectorAll('input:not([type="submit"]):not([type="button"]):not([type="hidden"]), select, textarea'));

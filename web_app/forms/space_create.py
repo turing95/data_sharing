@@ -58,7 +58,7 @@ class SpaceForm(ModelForm):
     email_input = forms.CharField(required=False,
                                   widget=forms.TextInput(
                                       attrs={'placeholder': 'Type or paste email addresses of invitees',
-                                             'class': css_classes.text_input}))
+                                             'class': css_classes.text_input + "email-input"}))
     is_public = forms.BooleanField(
         widget=ToggleWidget(label_on='Enabled public link',
                             label_off='Disabled public link'),
