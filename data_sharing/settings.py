@@ -29,7 +29,7 @@ if DEBUG is False:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com","2566-2001-a61-3bca-ff01-793e-ed8a-2fa2-3d07.ngrok-free.app", "5393-2-35-119-2.ngrok-free.app"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com","e02c-2001-a61-3bca-ff01-35d6-e315-4d90-6fc2.ngrok-free.app", "5393-2-35-119-2.ngrok-free.app"]
 # Application definition
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
