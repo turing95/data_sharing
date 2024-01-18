@@ -35,7 +35,7 @@ def toggle_sender_active(request, sender_uuid):
 
 @login_required
 @require_POST
-def notify_sender(request, sender_uuid):
+def notify_sender_deadline(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
     notify_deadline.delay(sender.pk)
     messages.success(request, f"Sender {sender.email} notified")
