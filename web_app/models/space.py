@@ -19,27 +19,9 @@ class Space(BaseModel,DeleteModel):
     upload_after_deadline = models.BooleanField(default=False)
     notify_deadline = models.BooleanField(default=False)
     notify_invitation = models.BooleanField(default=False)
-    deadline_notice_days = models.DecimalField(
-        max_digits=3,
-        decimal_places=1,
-        null=True,
-        blank=True,
-        validators=[
-            MinValueValidator(Decimal('0')),
-            MaxValueValidator(Decimal('15'))
-        ]
-    )
+    deadline_notice_days = models.PositiveSmallIntegerField(blank=True,null=True)
 
-    deadline_notice_hours = models.DecimalField(
-        max_digits=4,
-        decimal_places=1,
-        null=True,
-        blank=True,
-        validators=[
-            MinValueValidator(Decimal('0')),
-            MaxValueValidator(Decimal('23.9'))
-        ]
-    )
+    deadline_notice_hours = models.PositiveSmallIntegerField(blank=True,null=True)
     timezone = models.CharField(
         max_length=50,
         choices=TIMEZONE_CHOICES

@@ -78,12 +78,11 @@ class SpaceForm(ModelForm):
         help_text="""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
                                 """)
-    deadline_notice_days = forms.DecimalField(
+    deadline_notice_days = forms.IntegerField(
         required=False,
-        min_value=Decimal('0'),
-        max_value=Decimal('15'),
-        decimal_places=1,
-        max_digits=3,
+        min_value=0,
+        max_value=15,
+        localize=True,
         widget=forms.NumberInput(attrs={
             'placeholder': 'Days',
             'step': '1',  # Set step for increments
@@ -94,15 +93,14 @@ class SpaceForm(ModelForm):
         help_text='Number of days before the deadline to send notifications.'
     )
 
-    deadline_notice_hours = forms.DecimalField(
+    deadline_notice_hours = forms.IntegerField(
         required=False,
-        min_value=Decimal('0'),
-        max_value=Decimal('23.9'),
-        decimal_places=1,
-        max_digits=4,
+        localize=True,
+        min_value=0,
+        max_value=23,
         widget=forms.NumberInput(attrs={
             'placeholder': 'Hours',
-            'step': '0.5',  # Set step for increments
+            'step': '1',  # Set step for increments
             'value': '0',  # Default value
             'class': css_classes.inline_num_input
         }),
@@ -133,7 +131,8 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline','notify_invitation',
+        fields = ['title', 'is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline',
+                  'notify_invitation',
                   'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
 
     def __init__(self, *args, **kwargs):
@@ -162,27 +161,22 @@ class SpaceForm(ModelForm):
 
             return deadline.isoformat()
         return deadline
-    
 
-    
     def clean(self):
         cleaned_data = super().clean()
 
         # Assuming you have a field for deadline in your form
         deadline = cleaned_data.get('deadline')
+        notify_deadline = cleaned_data.get('notify_deadline')
         deadline_notice_days = cleaned_data.get('deadline_notice_days')
         deadline_notice_hours = cleaned_data.get('deadline_notice_hours')
 
-        if not deadline:
+        if not deadline or not notify_deadline:
             cleaned_data['deadline_notice_days'] = None
             cleaned_data['deadline_notice_hours'] = None
         else:
-            # Convert Decimal values to float
-            notice_days = float(deadline_notice_days) if deadline_notice_days is not None else 0
-            notice_hours = float(deadline_notice_hours) if deadline_notice_hours is not None else 0
-
             # Calculate notification datetime in the server timezone
-            notification_dt = arrow.get(deadline).shift(days=-notice_days, hours=-notice_hours)
+            notification_dt = arrow.get(deadline).shift(days=-deadline_notice_days, hours=-deadline_notice_hours)
 
             # Get the current time in the server timezone
             current_dt = arrow.now()
