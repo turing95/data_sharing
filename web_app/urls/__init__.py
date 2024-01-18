@@ -33,5 +33,5 @@ urlpatterns = [
     path('request/<uuid:request_uuid>/modal/', request_modal, name='request_modal'),
     path('requests/<uuid:request_uuid>/delete/', delete_request, name='request_delete'),
     path('senders/<uuid:sender_uuid>/toggle-active/', toggle_sender_active, name='toggle_sender_active'),
-    path('senders/<uuid:sender_uuid>/notify_deadline/', notify_sender_deadline, name='notify_sender'),
+    path('senders/<uuid:sender_uuid>/notify_deadline/', notify_sender_deadline, name='notify_sender_deadline'),
 ]

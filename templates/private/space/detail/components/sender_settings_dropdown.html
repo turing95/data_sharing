@@ -10,7 +10,7 @@
         <ul class="py-2" aria-labelledby="user-menu-button-{{sender_num}}">
             <li>
                 <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" 
-                        hx-post="{% url 'notify_sender' sender.pk %}"
+                        hx-post="{% url 'notify_sender_deadline' sender.pk %}"
                         hx-target="#messageBar"
                         hx-swap="outerHTML">
                     Notify
