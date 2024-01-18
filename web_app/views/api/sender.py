@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 
 from web_app.forms.widgets import ToggleWidget
 from web_app.models import Sender
+from web_app.tasks.notifications import notify_deadline
 
 
 @login_required
@@ -36,7 +37,7 @@ def toggle_sender_active(request, sender_uuid):
 @require_POST
 def notify_sender(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
-    sender.notify_deadline()
+    notify_deadline.delay(sender.pk)
     messages.success(request, f"Sender {sender.email} notified")
     return render(
         request,

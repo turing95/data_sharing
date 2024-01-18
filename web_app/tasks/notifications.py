@@ -16,27 +16,4 @@ def sender_invite(sender_pk):
 def notify_deadline(sender_pk):
     from web_app.models import Sender
     sender = Sender.objects.get(pk=sender_pk)
-    context = {
-        'sender': sender,
-    }
-    email_html = render_to_string('emails/deadline_notification.html', context)
-    from_email = settings.NO_REPLY_EMAIL
-    with get_connection(
-            host=settings.RESEND_SMTP_HOST,
-            port=settings.RESEND_SMTP_PORT,
-            username=settings.RESEND_SMTP_USERNAME,
-            password=settings.RESEND_API_KEY,
-            use_tls=True,
-    ) as connection:
-        msg = EmailMultiAlternatives(
-            subject='Deadline notification',
-            body=html_to_text(email_html),
-            from_email=from_email,
-            to=[sender.email],
-            reply_to=[from_email],
-            connection=connection,
-            headers={'Return-Path': from_email}
-        )
-        msg.attach_alternative(email_html, 'text/html')
-
-        msg.send()
+    sender.notify_deadline()
