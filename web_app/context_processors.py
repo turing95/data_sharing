@@ -1,4 +1,4 @@
-from djstripe.models import Product,PR
+from djstripe.models import Product
 
 import config
 from django.conf import settings
