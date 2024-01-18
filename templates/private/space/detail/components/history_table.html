@@ -81,7 +81,7 @@
                         <div class="flex">            
                             <span class=" min-w-[25px] max-w-[250px] text-sm " >
                                 {% if event.notes %}
-                                    {{ event.notes }}
+                                    {{ event.notes|linebreaks }}
                                 {% endif %}
                             </span>                            
                         </div>
