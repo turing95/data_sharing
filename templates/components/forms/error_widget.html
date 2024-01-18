@@ -1,7 +1,7 @@
 {% if errors %}
-    <div>
+    <div class="error-message">
         {% for error in errors %}
-            <p class="bg-red-300 text-sm my-1 p-1">{{ error }}</p>
+            <p class="p-1 my-1 text-sm bg-red-300">{{ error }}</p>
         {% endfor %}
     </div>
 {% endif %}
