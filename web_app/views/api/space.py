@@ -10,9 +10,6 @@ from django.views.decorators.http import require_POST, require_GET
 from web_app.models import Space, Sender, UploadRequest, SenderEvent
 
 
-
-
-
 @login_required
 @require_POST
 def toggle_space_public(request, space_uuid):
