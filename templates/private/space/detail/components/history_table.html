@@ -82,7 +82,7 @@
                     
                     <td class="px-3 py-2">
                         <div class="flex">            
-                            <span class=" min-w-[25px] max-w-[250px] text-sm line-clamp-5" title="{% if event.notes %}{{ event.notes }}{% endif %}" >
+                            <span class=" min-w-[25px] max-w-[250px] text-sm line-clamp-5" title="{{ event.notes|default_if_none:'' }}" >
                                 {% if event.notes %}
                                     {{ event.notes|linebreaks }}
                                 {% endif %}
