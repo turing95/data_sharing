@@ -1,6 +1,5 @@
 import {initEmailInput} from "./emailInputWidget.js";
-import {initRequestForms,toggleRename,handleTagDropdownChange,addFileTypeTag, toggleFileTypeRestrict } from "./request/index.js";
-import { initGooglePicker,handleAuthClick } from './googlePicker.js'
+import {initRequestForms,toggleRename,handleTagDropdownChange,addFileTypeTag, toggleFileTypeRestrict,handleAuthClick } from "./request/index.js";
 import {toggleDeadlineNotify, setNotificationDatetime, toggleDeadlineSettings} from './eventHandlers.js';
 
 window.toggleRename = toggleRename;
@@ -9,7 +8,6 @@ window.handleTagDropdownChange = handleTagDropdownChange;
 window.handleAuthClick = handleAuthClick;
 window.addFileTypeTag = addFileTypeTag;
 document.addEventListener('DOMContentLoaded', function() {
-    initGooglePicker();
     initRequestForms();
     initEmailInput();
 

@@ -1,10 +1,14 @@
 import {toggleAccordion, toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 import {initializeFileTypes, setupFileTypeCloseButton} from './fileTypeInput.js';
+import { initGooglePicker } from './googlePicker.js'
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
+export { handleAuthClick } from './googlePicker.js'
+
 
 
 export function initRequestForms() {
+    initGooglePicker();
     // Click event for adding new request forms
     let addButton = document.getElementById('add-request-btn');
     if (addButton) {

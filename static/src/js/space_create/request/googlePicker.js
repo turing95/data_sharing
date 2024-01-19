@@ -1,4 +1,4 @@
-import { configData,googleUserData } from '../data.js';
+import { configData,googleUserData } from '../../data.js';
 
 let currentDestinationInput = null;
 let currentDestinationDisplayInput = null;
