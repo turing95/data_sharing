@@ -25,6 +25,7 @@ class Space(BaseModel,DeleteModel):
         max_length=50,
         choices=TIMEZONE_CHOICES
     )
+    locale = models.CharField(max_length=10, null=True, blank=True,default='en-us')
 
     @property
     def deadline_notification_datetime(self):

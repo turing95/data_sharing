@@ -7,7 +7,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware
-from datetime import timezone
+from django.utils import translation
 import arrow
 from decimal import Decimal
 
@@ -193,4 +193,5 @@ class SpaceForm(ModelForm):
     def save(self, commit=True):
         instance = super().save()
         instance.timezone = dj_timezone.get_current_timezone_name()
+        instance.locale = translation.get_language()
         return instance

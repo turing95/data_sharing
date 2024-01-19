@@ -52,8 +52,9 @@ class UploadRequest(BaseModel, DeleteModel):
         return extensions
 
     def get_name_format_params(self, sender, original_file_name):
+
         format_params = {
-            'upload_date': arrow.utcnow().date(),
+            'upload_date': arrow.utcnow().format('YYYY-MM-DD', locale=self.space.locale),
             'original_file_name': original_file_name,
             'space_title': self.space.title,
             'request_title': self.title,
