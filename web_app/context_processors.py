@@ -14,6 +14,5 @@ def custom_context(request):
             context['generic_area'] = True if 'generic' in url_name else False
     context['config_data'] = config.get_js_config()
     context['contact_email'] = settings.CONTACT_EMAIL
-    context['stripe_billing_link'] = settings.STRIPE_BILLING_LINK
     context['pro_product'] = Product.objects.filter(name="Pro").first()
     return context
