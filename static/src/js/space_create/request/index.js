@@ -42,10 +42,6 @@ function addNewRequestForm() {
         totalForms.value = formCount + 1;
         document.dispatchEvent(new Event("initSearch"));
         setupFileTypeCloseButton(newForm);
-        //remove errors from the new form
-        newForm.querySelectorAll('.error-message').forEach(errorEl => {
-            errorEl.remove();
-        });
 
     }
 
@@ -59,7 +55,7 @@ function cloneRequestForm(formCount) {
     }
 
     const newForm = templateForm.cloneNode(true);
-
+    cleanErrors(newForm);
     updateElementIdentifiers(newForm, formCount);
     setupCloseButton(newForm);
     htmx.process(newForm);
@@ -177,7 +173,12 @@ function setupCloseButton(newForm) {
     }
 }
 
-
+function cleanErrors(newForm) {
+    //remove errors from the new form
+    newForm.querySelectorAll('.error-message').forEach(errorEl => {
+        errorEl.remove();
+    });
+}
 
 
 
