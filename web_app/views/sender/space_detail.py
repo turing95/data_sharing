@@ -43,6 +43,7 @@ class SpaceDetailView(TemplateView):
                     sender_event = SenderEvent.objects.create(sender=sender,
                                                               request=upload_request,
                                                               event_type=SenderEvent.EventType.FILE_UPLOADED,notes=form.cleaned_data.get('notes'))
+                    uploaded_files = uploaded_files if isinstance(uploaded_files, list) else [uploaded_files]
                     for uploaded_file in uploaded_files:
                         file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
 
