@@ -1,10 +1,14 @@
 import {toggleAccordion, toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 import {initializeFileTypes, setupFileTypeCloseButton} from './fileTypeInput.js';
+import { initGooglePicker } from './googlePicker.js'
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
+export { handleAuthClick } from './googlePicker.js'
+
 
 
 export function initRequestForms() {
+    initGooglePicker();
     // Click event for adding new request forms
     let addButton = document.getElementById('add-request-btn');
     if (addButton) {
@@ -42,10 +46,6 @@ function addNewRequestForm() {
         totalForms.value = formCount + 1;
         document.dispatchEvent(new Event("initSearch"));
         setupFileTypeCloseButton(newForm);
-        //remove errors from the new form
-        newForm.querySelectorAll('.error-message').forEach(errorEl => {
-            errorEl.remove();
-        });
 
     }
 
@@ -59,7 +59,7 @@ function cloneRequestForm(formCount) {
     }
 
     const newForm = templateForm.cloneNode(true);
-
+    cleanErrors(newForm);
     updateElementIdentifiers(newForm, formCount);
     setupCloseButton(newForm);
     htmx.process(newForm);
@@ -177,7 +177,12 @@ function setupCloseButton(newForm) {
     }
 }
 
-
+function cleanErrors(newForm) {
+    //remove errors from the new form
+    newForm.querySelectorAll('.error-message').forEach(errorEl => {
+        errorEl.remove();
+    });
+}
 
 
 
