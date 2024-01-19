@@ -121,10 +121,17 @@ class RequestForm(ModelForm):
                 By default, files are saved to your destination folder with the name they have been uploaded with.
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """)
-
+    multiple_files = forms.BooleanField(
+        widget=ToggleWidget(label_on='Enabled multiple files',
+                            label_off='Disabled multiple files'),
+        required=False,
+        label='Multiple Files',
+        help_text="""
+                By default, each request can only contain one file. You can choose to enable multiple files upload for this request.
+            """)
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_naming_formula', 'instructions']
+        fields = ['title', 'file_naming_formula', 'instructions','multiple_files']
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')

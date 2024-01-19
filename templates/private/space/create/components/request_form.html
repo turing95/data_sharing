@@ -169,6 +169,17 @@
                                 {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
                             </div>
                         </div>
+                        
+                                                <!-- REQUEST INSTRUCTIONS -->
+                        <div class="mb-6">
+                            <div class="flex items-center mb-2 space-x-2">
+                                <label for="{{ req.multiple_files.id_for_label }}"
+                                class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.multiple_files.label }} </label>
+                                {% include 'components/tooltip.html' with title=req.multiple_files.label content=req.multiple_files.help_text target_prefix='requests' target=req.multiple_files.name%}
+                            </div>
+                            {{ req.multiple_files }}
+                            {% include 'components/forms/error_widget.html' with errors=req.multiple_files.errors %}                       
+                        </div>
                     </div>
                     
                     

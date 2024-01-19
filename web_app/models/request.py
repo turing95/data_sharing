@@ -21,11 +21,9 @@ class UploadRequest(BaseModel, DeleteModel):
     instructions = models.TextField(null=True, blank=True)
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
     file_types = models.ManyToManyField('FileType', through='UploadRequestFileType')
+    multiple_files = models.BooleanField(default=False)
 
     class Meta:
-        '''constraints = [
-            models.UniqueConstraint('title', 'space', name='unique_request_title')
-        ]'''
         ordering = ['-created_at']
 
     @property
