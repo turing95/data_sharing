@@ -1,11 +1,17 @@
 {% extends 'private/_base.html' %}
-        {% load socialaccount %}
+        {% load socialaccount static %}
 
     {% block private_content %}
-
-SETTINGS
-{{ request.user.email }}
+        
         {% if not request.custom_user.google_account %}
 <p><a href="{% provider_login_url "google" process="connect" %}">Connect a Google account</a></p>
         {% endif %}
+        
+<form action="{% url 'account_delete' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="account-delete-alert items-center ml-2 text-gray-600 transition duration-300 first-letter:inline-flex hover:text-gray-800 group flex" >                       
+            <img src="{% static 'images/icons/trashcan.svg' %}" alt="trashcan icon" class=" w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+    Delete account    
+    </button>
+</form> 
 {% endblock %}

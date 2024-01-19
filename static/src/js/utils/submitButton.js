@@ -19,11 +19,16 @@ export function initSubmitButtons() {
     const submitButtons = document.querySelectorAll('button[type="submit"]');
     submitButtons.forEach((button) => {
         button.onclick = function() {
-            if (!button.classList.contains('delete-space-button')) {
-            activateLoading(button);
+            if (button.classList.contains('space-delete-alert')) {
+                return confirm('Are you sure you want to delete this space?');
 
-            }else{
-                return confirm('Are you sure you want to delete this?');
+            }
+            if (button.classList.contains('account-delete-alert')) {
+                return confirm('Are you sure you want to delete your account?');
+
+            }
+            if (button.classList.contains('requires-loading')) {
+            activateLoading(button);
             }
         }
     });

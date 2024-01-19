@@ -43,6 +43,9 @@
                         </li>
                             {% endif %}
                         <li>
+                            <a href="{% url 'account_settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                        </li>
+                        <li>
                             <form action="{% url 'account_logout' %}" method="POST">
                                 {% csrf_token %}
                                 <input type="submit" value="Sign out" class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
