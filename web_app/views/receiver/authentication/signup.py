@@ -1,5 +1,5 @@
 from allauth.account.views import SignupView as AllauthSignupView
-from web_app.forms.signup import SignupForm
+from web_app.forms.authentication.signup import SignupForm
 from django.urls import reverse_lazy
 
 

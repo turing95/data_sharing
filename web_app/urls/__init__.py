@@ -4,7 +4,8 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     TermsOfServiceView, PrivacyPolicyView, DeleteSpaceView, SettingsView, PublicLandingView, \
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
-    request_modal, create_checkout_session, search_file_types,notify_deadline,notify_invitation
+    request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
+    create_billing_session, AccountDeleteView
 
 urlpatterns = [
     # Generic views
@@ -15,10 +16,12 @@ urlpatterns = [
     path('spaces/', SpacesView.as_view(), name='spaces'),
     path('accounts/login/', LoginView.as_view(), name='account_login'),
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
+    path('accounts/delete/', AccountDeleteView.as_view(), name='account_delete'),
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
     path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
     path('spaces/delete/<uuid:space_uuid>/', DeleteSpaceView.as_view(), name='space_delete'),
-    path('create-checkout-session/', create_checkout_session, name='create_checkout_session'),
+    path('stripe/create-checkout-session/', create_checkout_session, name='create_checkout_session'),
+    path('stripe/create-billing-session/', create_billing_session, name='create_billing_session'),
     # Sender views
     path('spaces/<uuid:space_uuid>/', SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
     path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', SpaceDetailFormViewSender.as_view(),
