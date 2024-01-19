@@ -63,4 +63,4 @@ def render_space_public_link_toggle(space, name, value):
                                                                                                               'toggle_space_public',
                                                                                                               kwargs={
                                                                                                                   'space_uuid': space.pk}),
-                                                                                                          'hx-swap': 'outerHTML'})
+                                                                                                          'hx-swap': 'morph:outerHTML'})

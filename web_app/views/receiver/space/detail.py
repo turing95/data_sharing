@@ -18,6 +18,7 @@ class SpaceDetailFormView(SpaceFormView):
                                                 status=self.request.GET.get('status'))
         else:
             context['space'] = self.get_space()
+            context['space_summary'] = True
         return context
 
     def dispatch(self, request, *args, **kwargs):
