@@ -16,7 +16,7 @@ from web_app.views.sender.space_detail import SpaceDetailView as SpaceDetailForm
 from web_app.views.custom_http_errors import custom_page_not_found, custom_server_error
 
 from web_app.views.api.sender import toggle_sender_active,notify_deadline,notify_invitation
-from web_app.views.api.space import toggle_space_public,history_table,request_modal
+from web_app.views.api.space import toggle_space_public,history_table,request_modal, sender_modal
 from web_app.views.api.request import delete_request
 from web_app.views.receiver.payments.checkout import create_checkout_session
 from web_app.views.receiver.payments.billing import create_billing_session

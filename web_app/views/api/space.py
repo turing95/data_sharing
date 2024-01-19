@@ -63,3 +63,11 @@ def request_modal(request, request_uuid):
 
     return render(request, 'private/space/detail/components/request_modal.html',
                   {'req': upload_request, 'sender': sender, 'upload_events': events})
+    
+@login_required
+@require_GET
+def sender_modal(request, sender_uuid):
+    sender = Sender.objects.get(pk=sender_uuid)
+
+    return render(request, 'private/space/detail/components/sender_modal.html',
+                  {'sender': sender})

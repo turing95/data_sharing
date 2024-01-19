@@ -1,5 +1,4 @@
 import {initModal} from "./files_modal/index.js";
-import {initSenderDropdowns} from "./senderActionsDropdown.js";
 
 document.body.addEventListener('htmx:afterSwap', function(event) {
 
@@ -11,9 +10,7 @@ document.body.addEventListener('htmx:afterSwap', function(event) {
         }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    initSenderDropdowns()
-});
+
 
 
 
