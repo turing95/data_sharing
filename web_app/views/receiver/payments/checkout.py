@@ -57,6 +57,7 @@ def create_checkout_session(request):
             metadata=metadata,
         )
 
+
     except models.Customer.DoesNotExist:
         print("Customer Object not in DB.")
 

@@ -36,11 +36,12 @@
                                 Upgrade plan
                             </a>
                         </li>
-                        {% endif %}
+                        {% else %}
 
                         <li>
-                            <a href="https://billing.stripe.com/p/login/test_9AQ8yQ9oS19QbPG8ww" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
+                            <a href="{% url 'create_billing_session' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Billing</a>
                         </li>
+                            {% endif %}
                         <li>
                             <form action="{% url 'account_logout' %}" method="POST">
                                 {% csrf_token %}
