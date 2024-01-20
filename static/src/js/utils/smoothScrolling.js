@@ -25,7 +25,7 @@ export function initSmoothScrolling() {
     });
 }
 
-export function adjustScrollPositionOnPageLoad() {
+export function adjustScrollPosition() {
     setTimeout(function() {
         const navbar = document.getElementById('navbar');
         const navbarHeight = navbar ? navbar.offsetHeight : 0;
