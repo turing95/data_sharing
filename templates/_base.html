@@ -46,7 +46,10 @@
     {% if sender_area %}
         <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
     {% endif %}
-
+     
+    {% if generic_home %}
+            <script type="module" src="{% static 'src/js/home/index.js' %}"></script>
+    {% endif %}
     <script type="module" src="{% static 'src/js/index.js' %}"></script>
     <!-- should be included only when needed -->
 
