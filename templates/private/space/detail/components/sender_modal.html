@@ -6,10 +6,10 @@
             <div class="flex items-center justify-between p-2 border-b md:p-3 dark:border-gray-600">
                 <div class="w-full text-center">
                     <h3 class="text-xl font-bold text-gray-900 uppercase dark:text-white">
-                        TITILE
+                        {% if sender %}{{sender.email}}{% else %}Public Link{% endif %}
                     </h3>
                     <p class="text-sm text-gray-600 dark:text-gray-300">
-                        {% if sender %}Uploads by: {{sender.email}}{% else %}Uploads via public link {% endif %}
+                        <!-- subtitle-->
                     </p>
                 </div>
                 <button type="button" class="inline-flex items-center justify-center w-6 h-6 text-sm text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="sender-modal-{% if sender %}{{sender.uuid}}{% else%}public{%endif%}">
@@ -19,21 +19,36 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <div class="p-3 space-y-4 md:p-2">
-            <button class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" 
-                hx-post="{% url 'notify_deadline' sender.pk %}"
-                hx-target="#messageBar"
-                hx-swap="outerHTML">
-    
-                    Notify {% if sender.notified_at %}(last: {{sender.notified_at|localize}}){% endif %}
-
-            </button>
-            <button class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" 
-                hx-post="{% url 'notify_invitation' sender.pk %}"
-                hx-target="#messageBar"
-                hx-swap="outerHTML">
-                    Send Invite
-        </button>
+            <div class="p-3 md:p-2">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div class="flex flex-col items-center">
+                    <button class="w-[150px] px-5 py-2 font-medium text-center text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200" 
+                        hx-post="{% url 'notify_deadline' sender.pk %}"
+                        hx-target="#messageBar"
+                        hx-swap="outerHTML">
+                      Send reminder 
+                    </button>
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-0.5 mt-2">
+                      {% if sender.notified_at %}last notification: {{sender.notified_at|localize}}{% else %}Never notified{% endif %}
+                    </span>
+                  </div>
+                  <div class="flex flex-col items-center">
+                    <button class="w-[150px] px-5 py-2 font-medium text-center text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200" 
+                        hx-post="{% url 'notify_invitation' sender.pk %}"
+                        hx-target="#messageBar"
+                        hx-swap="outerHTML">
+                      Send Invitation
+                    </button>
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-0.5 mt-2">
+                      {% if sender.notified_at %}last invitation: {{sender.notified_at|localize}}{% else %}Never invited{% endif %}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+                  
+                  
+            
             </div>
         </div>
     </div>
