@@ -22,7 +22,7 @@ document.body.addEventListener('htmx:afterSwap', function(event) {
         if (event.target.id.startsWith('htmx-modal')) {
             const modalElement = event.target.children[0]; 
             if (modalElement) {
-                initHtmxModal(modalElement.id);
+                initHtmxModal(modalElement);
             }
         }
 });

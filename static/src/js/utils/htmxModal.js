@@ -1,10 +1,5 @@
 
-export function initHtmxModal(id) {
-    const modalElement = document.getElementById(id);
-    if (!modalElement) {
-        console.error('Modal element not found');
-        return;
-    }
+export function initHtmxModal(modalElement) {
     const modal = new Modal(modalElement, {
         onHide: () => {
             modalElement.remove();
