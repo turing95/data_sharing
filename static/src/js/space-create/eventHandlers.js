@@ -19,7 +19,6 @@ export function toggleDeadlineNotify(checkboxOrEvent) {
 
     if (checkbox.checked) {
         childDiv1.classList.remove('hidden');
-        setNotificationDatetime()
     } else {
         childDiv1.classList.add('hidden');
     }
