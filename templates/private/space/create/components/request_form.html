@@ -3,7 +3,6 @@
 
     <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Requests</h3>
     {% for req in requests %}
-        {{ req.errors }} <!-- TODO: REMOVE AND APPLY TO SINGLE FIELDS-->
 
         {{ file_name_tags |json_script:"file-name-tags"  }}
 
