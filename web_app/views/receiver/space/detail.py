@@ -12,7 +12,7 @@ class SpaceDetailFormView(SpaceFormView):
 
     def get_context_data(self, **kwargs):
         context = super(SpaceFormView, self).get_context_data(**kwargs)
-        context['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back'}
+        context['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back to Spaces'}
         if 'status' in self.request.GET:
             context = self.get_context_for_form(context, button_text='Save space',
                                                 status=self.request.GET.get('status'))

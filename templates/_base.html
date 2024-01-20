@@ -40,13 +40,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     {% if space_form %}
         {{ google_user_data |json_script:"google-user-data"  }}
-        <script type="module" src="{% static 'src/js/space_create/index.js' %}" ></script>
+        <script type="module" src="{% static 'src/js/space-create/index.js' %}" ></script>
     {% endif %}
 
     {% if sender_area %}
-        <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
+        <script type="module" src="{% static 'src/js/sender-space-detail/index.js' %}"></script>
     {% endif %}
-
+     
+    {% if generic_home %}
+            <script type="module" src="{% static 'src/js/home/index.js' %}"></script>
+    {% endif %}
     <script type="module" src="{% static 'src/js/index.js' %}"></script>
     <!-- should be included only when needed -->
 

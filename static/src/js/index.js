@@ -1,14 +1,11 @@
 import {initMessageBar} from "./utils/messageBar.js";
 import { initSubmitButtons } from './utils/submitButton.js';
-import { initSmoothScrolling, adjustScrollPosition } from './utils/smoothScrolling.js';
 import { initNav } from './utils/navbar.js';
 import {initHtmxModal} from "./utils/htmxModal.js";
 
 document.addEventListener('DOMContentLoaded', function() {
         initSubmitButtons();
         initMessageBar();
-        initSmoothScrolling();
-        adjustScrollPosition()
         initNav();
 });
 
