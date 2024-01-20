@@ -1,11 +1,11 @@
 {% load custom_tags static %}
-<div id="modal-sender-{{ sender.uuid }}" ></div>
+
 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="sticky left-0 z-[15] w-[30px] px-1 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white items-center">
                     <div class="flex" 
                         hx-get="{% url 'sender_modal'  sender.uuid %}"
                         hx-trigger="click" 
-                        hx-target="#modal-sender-{{ sender.uuid }}" 
+                        hx-target="#htmx-modal" 
                         hx-swap="innerHTML"
                         hx-indicator="#loading-indicator-{{ sender.uuid }}">                 
                         <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
@@ -50,7 +50,7 @@
                 <div class="flex" 
                     hx-get="{% url 'request_modal'  req.uuid %}?sender_uuid={{sender.uuid}}"
                     hx-trigger="click" 
-                    hx-target="#modal-{{req.uuid}}-{{ sender.uuid }}" 
+                    hx-target="#htmx-modal" 
                     hx-swap="innerHTML"
                     hx-indicator="#loading-indicator-{{req.uuid}}-{{ sender.uuid }}">                 
                         <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline" title="number of uploaded files" >
@@ -68,7 +68,7 @@
                         
 
                 </div>
-                <div id="modal-{{req.uuid}}-{{sender.uuid}}" >            
+                      
                 </div>
             </td>
             {% endfor %}

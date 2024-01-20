@@ -1,5 +1,5 @@
 
-export function initModal(id) {
+export function initHtmxModal(id) {
     const modalElement = document.getElementById(id);
     if (!modalElement) {
         console.error('Modal element not found');
@@ -19,7 +19,6 @@ export function initModal(id) {
             modal.hide(); // Flowbite's hide method
         });
     }
-
     // show the modal upon initialization
     modal.show();
 }

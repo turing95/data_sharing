@@ -81,7 +81,7 @@
                         <div class="flex" 
                             hx-get="{% url 'request_modal'  req.uuid %}"
                             hx-trigger="click" 
-                            hx-target="#modal-{{req.uuid}}-public" 
+                            hx-target="#htmx-modal" 
                             hx-swap="innerHTML"
                             hx-indicator="#loading-indicator-{{req.uuid}}-public">                 
                                 <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline" title="number of uploaded files" >
@@ -98,8 +98,7 @@
                                 </div>
                                 
         
-                        </div>
-                        <div id="modal-{{req.uuid}}-public" >            
+                        </div>          
                         </div>
                     </td>
                     {% endfor %}
