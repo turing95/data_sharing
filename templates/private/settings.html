@@ -6,6 +6,9 @@
         {% if not request.custom_user.google_account %}
 <p><a href="{% provider_login_url "google" process="connect" %}">Connect a Google account</a></p>
         {% endif %}
+                {% if not request.custom_user.microsoft_account %}
+<p><a href="{% provider_login_url "microsoft" process="connect" %}">Connect a Microsoft account</a></p>
+        {% endif %}
 
 <form action="{% url 'account_delete' %}" method="post">
     {% csrf_token %}

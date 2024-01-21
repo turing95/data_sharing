@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from google.auth.transport.requests import Request
 import arrow
 from google.oauth2.credentials import Credentials
+from msal import ConfidentialClientApplication
+
 import config
 
 
@@ -13,6 +15,12 @@ class CustomUser(User):
     def google_account(self):
         try:
             return SocialAccount.objects.get(user=self, provider='google')
+        except SocialAccount.DoesNotExist:
+            return None
+
+    def microsoft_account(self):
+        try:
+            return SocialAccount.objects.get(user=self, provider='microsoft')
         except SocialAccount.DoesNotExist:
             return None
 
@@ -40,9 +48,46 @@ class CustomUser(User):
             # or the token does not exist
             return None
 
+    def refresh_microsoft_token(self):
+        social_account = self.microsoft_account()
+        if social_account is None:
+            return None
+
+        token = SocialToken.objects.get(account=social_account)
+        if arrow.get(token.expires_at) < arrow.utcnow():
+            # Create a Confidential Client Application
+            app = ConfidentialClientApplication(
+                config.AZURE_CLIENT_ID,
+                client_credential=config.AZURE_CLIENT_SECRET,
+                authority=f'https://login.microsoftonline.com/{config.AZURE_TENANT_ID}',
+                validate_authority=True
+            )
+            result = app.acquire_token_by_refresh_token(
+                refresh_token=token.token_secret,
+                scopes=[
+                    "User.Read",  # access to user's account information
+                    "Files.ReadWrite.All",  # access to user's files
+                ],  # Specify the required scopes
+            )
+            if 'access_token' in result:
+                # Update token details from result
+                token.token = result['access_token']
+                token.expires_at = arrow.utcnow().shift(seconds=result['expires_in']).datetime
+                token.save()  # Update the token in the database
+
+                return token
+            else:
+                # Handle error or no new token returned
+                return None
+        return token
+
     @property
     def google_token(self):
         return self.refresh_google_token()
+
+    @property
+    def microsoft_token(self):
+        return self.refresh_microsoft_token()
 
     @property
     def google_credentials(self):

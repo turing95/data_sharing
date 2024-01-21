@@ -3,10 +3,15 @@
 * @property {string} googleApiKey - The API key for the application.
 * @property {string} googleClientId - The client ID for the OAuth provider.
 * @property {string} googleAppId - The application ID.
+* @property {string} azureClientId - The application ID.
 * @property {string[]} googleScopes - The authorization scopes required by the API.
 */
 /**
 * @typedef {Object} GoogleUserData
+* @property {string} accessToken - The API key for the application.
+*/
+/**
+* @typedef {Object} MicrosoftUserData
 * @property {string} accessToken - The API key for the application.
 */
 /**
@@ -18,3 +23,7 @@ configData.googleScopes = ['https://www.googleapis.com/auth/drive'];
 * @type {GoogleUserData}
 */
 export const googleUserData = JSON.parse(document.getElementById('google-user-data').textContent);
+/**
+* @type {MicrosoftUserData}
+*/
+export const microsoftUserData = JSON.parse(document.getElementById('microsoft-user-data').textContent);
