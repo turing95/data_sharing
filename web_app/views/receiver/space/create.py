@@ -7,7 +7,7 @@ from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, GoogleDrive, UploadRequest, FileType, Space
+from web_app.models import Sender, GoogleDrive, UploadRequest, FileType, Space, OneDrive
 from django.db import transaction
 from web_app.tasks.notifications import notify_invitation
 from web_app.mixins import SubscriptionMixin
@@ -95,6 +95,8 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
     def handle_formset(formset):
         formset.save()
         for req in formset:
-            GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))
+            GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('google_destination'))
+            if req.cleaned_data.get('one_drive_destination'):
+                OneDrive.create_from_folder_id(req.instance, req.cleaned_data.get('one_drive_destination'))
             for file_type in req.cleaned_data.get('file_types'):
                 req.instance.file_types.add(file_type)

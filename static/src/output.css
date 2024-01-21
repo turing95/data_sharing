@@ -1700,6 +1700,18 @@ input:checked + .toggle-bg {
   width: 150px;
 }
 
+.w-1 {
+  width: 0.25rem;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }

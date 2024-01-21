@@ -38,9 +38,10 @@ class CustomUser(User):
         if folder_name:
             url += f"search(q='{folder_name}')"
         else:
-            url += "children"
+            url += 'children'
 
         response = requests.get(url, headers=headers)
+        print(response.json())
         if response.status_code == 200:
             folders = [item for item in response.json().get('value', []) if 'folder' in item]
             return folders
@@ -92,6 +93,7 @@ class CustomUser(User):
                     "Files.ReadWrite.All",  # access to user's files
                 ],  # Specify the required scopes
             )
+            print(result)
             if 'access_token' in result:
                 # Update token details from result
                 token.token = result['access_token']

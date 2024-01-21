@@ -71,8 +71,8 @@ const parentDiv = buttonElement.closest('.mb-6');
 
 // Find the input within this div
 // Store the reference to this specific destinationInput
-const regexDestination = /^id_requests-\d+-destination$/;
-const regexDestinationDisplay = /^id_requests-\d+-destination_display$/;
+const regexDestination = /^id_requests-\d+-google_destination$/;
+const regexDestinationDisplay = /^id_requests-\d+-google_destination_display$/;
 currentDestinationInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regexDestination.test(input.id));
 currentDestinationDisplayInput = Array.from(parentDiv.querySelectorAll('input')).find(input => regexDestinationDisplay.test(input.id));
 

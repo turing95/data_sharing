@@ -206,7 +206,7 @@ SOCIALACCOUNT_PROVIDERS = {
             },
 
         ],
-# modify scopes requested during login
+    # modify scopes requested during login
         'SCOPE': [
             "User.Read",  # access to user's account information
             "Files.ReadWrite.All",  # access to user's files

@@ -74,8 +74,8 @@ class SpaceDetailFormView(SpaceFormView):
         formset.save()
         for req in formset:
             if (req.instance.google_drive_destination is not None and req.instance.google_drive_destination.folder_id != req.cleaned_data.get(
-                    'destination')) or req.instance.google_drive_destination is None:
-                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('destination'))
+                    'google_destination')) or req.instance.google_drive_destination is None:
+                GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('google_destination'))
             if req.instance.file_types.exists():
                 req.instance.file_types.clear()
             for file_type in req.cleaned_data.get('file_types'):

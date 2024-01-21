@@ -4,7 +4,7 @@ import { initGooglePicker } from './googlePicker.js'
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
 export { handleAuthClick } from './googlePicker.js'
-
+export {selectOneDriveFolder}  from './oneDrivePicker.js'
 
 
 export function initRequestForms() {
@@ -117,7 +117,7 @@ function updateElementIdentifiers(newForm, formCount) {
             element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
         }
         if (element.type !== 'checkbox' && element.type !== 'radio') {
-            if (!element.id.includes('-destination_display') && !element.id.includes('-destination') && !element.id.includes('file_types')) {
+            if (!element.id.includes('-google_destination_display') && !element.id.includes('-google_destination') && !element.id.includes('file_types')) {
                 element.value = ''; // Reset value for text inputs, textareas, and selects
             }
         }

@@ -79,7 +79,7 @@ class RequestForm(ModelForm):
         label='File type restrictions',
         required=False)
 
-    destination_display = forms.CharField(
+    google_destination_display = forms.CharField(
         required=False,
         label='Non-editable Field',
         widget=forms.TextInput(
@@ -89,13 +89,26 @@ class RequestForm(ModelForm):
                    'readonly': 'readonly'})
     )
 
-    destination = forms.CharField(
+    google_destination = forms.CharField(
         widget=forms.HiddenInput(),
         label="Destination folder",
         help_text=
         """Select a destination folder from inside your cloud storage system. All files uploaded for this request will directly be uploaded to your selected folder.
             You will be able to change it at any time but be aware that this may lead to files uploaded for the same request to be in different folders  
             """)
+
+    one_drive_destination_display = forms.CharField(
+        required=False,
+        label='Non-editable Field',
+        widget=forms.TextInput(
+            attrs={'class': css_classes.text_input+' one-drive-destination-display',
+                   'readonly': 'readonly'})
+    )
+
+    one_drive_destination = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput(attrs={'class': 'one-drive-destination'}),
+        label="Destination folder")
 
     instructions = forms.CharField(
         required=False,
@@ -181,8 +194,8 @@ class DetailRequestForm(RequestForm):
             destination: GoogleDrive = self.instance.google_drive_destination
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
-            self.fields['destination'].initial = destination.folder_id
-            self.fields['destination_display'].initial = destination.name
+            self.fields['google_destination'].initial = destination.folder_id
+            self.fields['google_destination_display'].initial = destination.name
             if self.instance.filetype_set.exists():
                 self.fields['file_types'].initial = ','.join(
                     [file_type.slug for file_type in self.instance.filetype_set.all()])

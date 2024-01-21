@@ -1,8 +1,8 @@
 from django.contrib import admin
-from web_app.models import Sender, Space, UploadRequest, GoogleDrive, FileType, UploadRequestFileType, SenderEvent
+from web_app.models import Sender, Space, UploadRequest, GoogleDrive, FileType, UploadRequestFileType, SenderEvent, OneDrive
 
 
-@admin.register(Sender, Space, GoogleDrive, FileType, SenderEvent)
+@admin.register(Sender, Space, GoogleDrive, FileType, SenderEvent, OneDrive)
 class BaseAdmin(admin.ModelAdmin):
     pass
 
