@@ -5,7 +5,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
-    create_billing_session, AccountDeleteView, sender_modal
+    create_billing_session, AccountDeleteView, sender_modal,search_one_drive
 
 urlpatterns = [
     # Generic views
@@ -31,6 +31,7 @@ urlpatterns = [
     path("500/", custom_server_error),
     # Ajax views
     path('file-types/search/', search_file_types, name='search_file_types'),
+    path('one-drive/search/', search_one_drive, name='search_one_drive'),
     path('spaces/<uuid:space_uuid>/toggle-public/', toggle_space_public, name='toggle_space_public'),
     path('spaces/<uuid:space_uuid>/history-table/', history_table, name='history_table'),
     path('request/<uuid:request_uuid>/modal/', request_modal, name='request_modal'),

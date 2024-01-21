@@ -1,0 +1,11 @@
+{% if folders %}
+    <ul class="folders-list">
+        {% for folder in folders %}
+            <li class="ml-2 cursor-pointer hover:bg-gray-200">
+                <span folder-id="{{ folder.id }}">{{ folder.name }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="ml-2 text-sm">No results found</p>
+{% endif %}

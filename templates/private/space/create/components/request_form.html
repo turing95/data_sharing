@@ -76,6 +76,23 @@
                                 {% include 'components/forms/error_widget.html' with errors=req.destination.errors %}                       
                             </div>
                         </div>
+                        {% if request.custom_user.microsoft_account %}
+                        <div class="p-2 md:w-2/3">
+                        
+                                <input class="w-full form-control 'bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block Sp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'" type="search"
+                                    id="id_search-one-drive-{{ forloop.counter0 }}-"
+                                    name="search-one-drive-{{ forloop.counter0 }}-" placeholder="Search and select one drive folder..." 
+                                    hx-post="{% url 'search_one_drive' %}" 
+                                    hx-trigger="input changed delay:500ms, search"
+                                    hx-params="search-one-drive-{{ forloop.counter0 }}-"
+                                    hx-target="next .one-drive-search-results"
+                                    autocomplete="off">
+                                <div class="inline-flex w-full my-1">
+                                    <div class="w-1/2 overflow-y-auto max-h-[150px] one-drive-search-results custom-scrollbar mr-2 bg-gray-100"></div>
+                                </div>
+                                {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
+                        </div>
+                        {% endif %}
 
                         <!-- REQUEST INSTRUCTIONS -->
                         <div class="mb-6">

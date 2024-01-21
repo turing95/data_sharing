@@ -4,7 +4,7 @@ from google.auth.transport.requests import Request
 import arrow
 from google.oauth2.credentials import Credentials
 from msal import ConfidentialClientApplication
-
+import requests
 import config
 
 
@@ -23,6 +23,29 @@ class CustomUser(User):
             return SocialAccount.objects.get(user=self, provider='microsoft')
         except SocialAccount.DoesNotExist:
             return None
+
+    def get_one_drive_folders(self,folder_name=None):
+        token = self.microsoft_token
+        print(token)
+        if not token:
+            return None  # or handle the error as required
+
+        headers = {
+            'Authorization': f'Bearer {token.token}',
+            'Content-Type': 'application/json'
+        }
+        url = "https://graph.microsoft.com/v1.0/me/drive/root/"
+        if folder_name:
+            url += f"search(q='{folder_name}')"
+        else:
+            url += "children"
+
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            folders = [item for item in response.json().get('value', []) if 'folder' in item]
+            return folders
+        else:
+            return None  # or handle the error as required
 
     def refresh_google_token(self):
         try:
