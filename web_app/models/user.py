@@ -83,7 +83,6 @@ class CustomUser(User):
             app = ConfidentialClientApplication(
                 config.AZURE_CLIENT_ID,
                 client_credential=config.AZURE_CLIENT_SECRET,
-                authority=f'https://login.microsoftonline.com/{config.AZURE_TENANT_ID}',
                 validate_authority=True
             )
             result = app.acquire_token_by_refresh_token(
