@@ -82,8 +82,33 @@
                         <span class="mr-2">Link status:</span>
                         {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active color_on="green" color_off="orange" toggle_color_on="marian-blue" toggle_color_off="gray" label_on="active" label_off="inactive" soft_off_label=False label_colored=True label_wrap=True %}
                     </div>
+                </div>
+
+                <div  class="flex flex-col">
+                    <div class="flex items-center mt-4 mb-1 border-b border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                            Uploads
+                        </h3> 
+                            
+                        <!-- Loading Indicator -->
+                        <div id="loading-indicator-sender-modal" class="items-center justify-center opacity-0 htmx-indicator">
+                            <div role="status" class="ml-2 spinner">
+                                {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+            
+                    <div class="" hx-get="{% url 'history_table' space.uuid %}?sender_uuid={{sender.uuid}}"
+                        hx-trigger="intersect once"
+                        hx-target="#history-table-sender-modal"
+                        hx-indicator="#loading-indicator-sender-modal">
                     
 
+                    </div>
+                    <div id="history-table-sender-modal">            
+                    </div>
                 </div>
             
               
