@@ -14,7 +14,7 @@
                 <th scope="row" class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
                     <div class="inline-flex items-center justify-center ml-2 duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
                         hx-get="{% url 'sender_modal'  space.uuid sender.uuid %}"
-                        hx-trigger="click" 
+                        hx-trigger="click"
                         hx-target="#htmx-modal" 
                         hx-swap="innerHTML"> 
                     {{ sender.email }}

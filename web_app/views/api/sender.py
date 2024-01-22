@@ -56,3 +56,5 @@ def notify_invitation(request, sender_uuid):
         'components/messages.html'
     )
 
+
+
