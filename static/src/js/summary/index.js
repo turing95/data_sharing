@@ -5,6 +5,12 @@ export function handleSenderUpdated(evt) {
         const eventName = "senderUpdated-" + senderUuid;
         document.dispatchEvent(new Event(eventName));
 
+        const infoEl = document.getElementById('sender-info-container');
+        htmx.process(infoEl);
+
+        const senderRowEl = document.getElementById("sender-row-container-"+senderUuid);
+        htmx.process(senderRowEl);
+
     }
 
 }
