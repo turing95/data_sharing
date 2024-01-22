@@ -27,7 +27,6 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
     def url(self):
         return self.related_object.url
 
-    @property
     def upload_file(self, file, file_name):
         return self.related_object.upload_file(file, file_name)
 
