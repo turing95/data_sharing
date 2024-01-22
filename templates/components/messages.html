@@ -1,9 +1,7 @@
 {% load custom_tags %}
 <div id="messageBar">
 {% if messages %}
-        <div id="django-messages" class="fixed left-0 z-[1000] w-full transition-all duration-500 ease-in pointer-events-none top-2" style="transform: translateY(0%); opacity: 1;">
-    
-
+    <div id="django-messages" class="fixed left-0 z-[1000] w-full transition-all duration-500 ease-in pointer-events-none top-2" style="transform: translateY(0%); opacity: 1;">
         <ul class="messages">
             {% for message in messages %}
                 <li class="flex justify-center">
@@ -24,9 +22,8 @@
                 </li>
             {% endfor %}
         </ul>
-
     </div>
-    {% endif %}
+{% endif %}
 
 </div>
 
