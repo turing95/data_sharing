@@ -82,8 +82,7 @@ class CustomUser(User):
             # Create a Confidential Client Application
             app = ConfidentialClientApplication(
                 config.AZURE_CLIENT_ID,
-                client_credential=config.AZURE_CLIENT_SECRET,
-                validate_authority=True
+                client_credential=config.AZURE_CLIENT_SECRET
             )
             result = app.acquire_token_by_refresh_token(
                 refresh_token=token.token_secret,
