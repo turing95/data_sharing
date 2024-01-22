@@ -52,7 +52,6 @@ class CustomUser(User):
             url += 'children'
 
         response = requests.get(url, headers=headers)
-        print(response.json())
         if response.status_code == 200:
             folders = [item for item in response.json().get('value', []) if 'folder' in item]
             return folders

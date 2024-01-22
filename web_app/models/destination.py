@@ -1,3 +1,4 @@
+import requests
 from django.contrib.contenttypes.models import ContentType
 
 from web_app.models import PolymorphicRelationModel, BaseModel, ActiveModel
@@ -14,16 +15,24 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
     def __str__(self):
         return self.tag
 
+    @property
     def folder_id(self):
         return self.related_object.folder_id
 
+    @property
     def name(self):
         return self.related_object.name
+
+    @property
+    def url(self):
+        return self.related_object.url
+
+    @property
     def upload_file(self, file, file_name):
         return self.related_object.upload_file(file, file_name)
 
     @classmethod
-    def create_from_folder_id(cls, request_instance,destination_type, folder_id):
+    def create_from_folder_id(cls, request_instance, destination_type, folder_id):
         if destination_type == GoogleDrive.TAG:
             return GoogleDrive.create_from_folder_id(request_instance, folder_id)
         elif destination_type == OneDrive.TAG:
@@ -131,7 +140,33 @@ class OneDrive(BaseModel):
         )
 
     def upload_file(self, file, file_name):
-        raise NotImplementedError
+        # Ensure you have a valid access token
+        token = self.custom_user.microsoft_token
+        if not token:
+            raise Exception("No valid Microsoft token available.")
+
+        # Set up headers for the request
+        headers = {
+            'Authorization': f'Bearer {token.token}',
+            'Content-Type': file.content_type,  # Assuming 'file' is a Django UploadedFile object
+        }
+
+        # Prepare the file stream
+        file_stream = BytesIO(file.read())
+        file_stream.seek(0)
+
+        # Construct the URL for the file upload
+        url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}:/{file_name}:/content"
+
+        # Send the request to upload the file
+        response = requests.put(url, headers=headers, data=file_stream)
+
+        # Check if the upload was successful
+        if response.status_code in [200, 201]:
+            return response.json().get('webUrl')  # Returns the URL of the uploaded file
+        else:
+            # Handle any errors that occur during the upload
+            raise Exception(f"Failed to upload file: {response.json()}")
 
     @property
     def user(self):
@@ -144,8 +179,40 @@ class OneDrive(BaseModel):
 
     @property
     def url(self):
-        return None
+        print('getting url')
+        token = self.custom_user.microsoft_token
+        if not token:
+            return None
+
+        headers = {
+            'Authorization': f'Bearer {token.token}'
+        }
+        url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
+
+        response = requests.get(url, headers=headers)
+        print(response.json())
+        if response.status_code == 200:
+            data = response.json()
+            return data.get('webUrl')  # The URL of the folder
+        else:
+            return None
 
     @property
     def name(self):
-        return None
+        print('getting name')
+
+        token = self.custom_user.microsoft_token
+        if not token:
+            return None
+
+        headers = {
+            'Authorization': f'Bearer {token.token}'
+        }
+        url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
+
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            return data.get('name')  # The name of the folder
+        else:
+            return None

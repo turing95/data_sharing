@@ -9,7 +9,7 @@ def search_folder(request):
     if request.method == 'POST':
         search_query = None
         search_type = None
-        search_pattern = re.compile(r'search-folder-\d+-')
+        search_pattern = re.compile(r'search-folders-\d+-')
         type_pattern = re.compile(r'.*destination_type.*')
 
         for key in request.POST.keys():
@@ -20,5 +20,5 @@ def search_folder(request):
         folders = request.custom_user.get_folders(search_type,search_query)
 
     return render(request,
-                  'private/space/create/components/one_drive_search_results.html',
+                  'private/space/create/components/folders_search_results.html',
                   {'folders': folders})

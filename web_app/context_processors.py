@@ -12,7 +12,8 @@ def custom_context(request):
         if url_name is not None:
             context['sender_area'] = True if 'sender' in url_name else False
             context['generic_area'] = True if 'generic' in url_name else False
-    context['config_data'] = config.get_js_config()
+    # TODO REMOVE - PICKER LEGACY
+    #context['config_data'] = config.get_js_config()
     context['contact_email'] = settings.CONTACT_EMAIL
     context['pro_product'] = Product.objects.filter(name="Pro").first()
     return context

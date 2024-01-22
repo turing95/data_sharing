@@ -11,10 +11,6 @@
 * @property {string} accessToken - The API key for the application.
 */
 /**
-* @typedef {Object} MicrosoftUserData
-* @property {string} accessToken - The API key for the application.
-*/
-/**
 * @type {ConfigData}
 */
 export const configData = JSON.parse(document.getElementById('config-data').textContent);
@@ -23,7 +19,3 @@ configData.googleScopes = ['https://www.googleapis.com/auth/drive'];
 * @type {GoogleUserData}
 */
 export const googleUserData = JSON.parse(document.getElementById('google-user-data').textContent);
-/**
-* @type {MicrosoftUserData}
-*/
-export const microsoftUserData = JSON.parse(document.getElementById('microsoft-user-data').textContent);
