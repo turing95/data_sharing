@@ -5,7 +5,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
-    create_billing_session, AccountDeleteView, sender_modal,search_one_drive
+    create_billing_session, AccountDeleteView, sender_modal, search_one_drive, ConnectionsView
 
 urlpatterns = [
     # Generic views
@@ -17,6 +17,7 @@ urlpatterns = [
     path('accounts/login/', LoginView.as_view(), name='account_login'),
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
     path('accounts/delete/', AccountDeleteView.as_view(), name='account_delete'),
+    path('accounts/social/connections/', ConnectionsView.as_view(), name='socialaccount_connections'),
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
     path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
     path('spaces/delete/<uuid:space_uuid>/', DeleteSpaceView.as_view(), name='space_delete'),

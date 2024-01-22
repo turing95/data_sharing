@@ -1,15 +1,40 @@
 {% extends 'private/_base.html' %}
-        {% load socialaccount static %}
+        {% load socialaccount static allauth %}
 
     {% block private_content %}
+            {% url 'account_settings' as next %}
 
         {% if not request.custom_user.google_account %}
-<p><a href="{% provider_login_url "google" process="connect" %}">Connect a Google account</a></p>
+<p><a href="{% provider_login_url "google" process="connect" next=next %}">Connect a Google account</a></p>
         {% endif %}
                 {% if not request.custom_user.microsoft_account %}
-<p><a href="{% provider_login_url "microsoft" process="connect" %}">Connect a Microsoft account</a></p>
+<p><a href="{% provider_login_url "microsoft" process="connect" next=next %}">Connect a Microsoft account</a></p>
         {% endif %}
-
+        {% if disconnect_form.accounts.count > 1 %}
+    <form action="{% url 'socialaccount_connections' %}" method="POST">
+    {% csrf_token %}
+        
+        {% for acc in disconnect_form.fields.account.choices %}
+                    {% with account=acc.0.instance.get_provider_account %}
+                        {% setvar radio_id %}
+                            id_account_{{ account.account.pk }}
+                        {% endsetvar %}
+                        {% setvar tags %}
+                            socialaccount,{{ account.account.provider }}
+                        {% endsetvar %}
+                        {% element field id=radio_id type="radio" name="account" value=account.account.pk %}
+                            {% slot label %}
+                                {{ account }}
+                                {% element badge tags=tags %}
+                                    {{ account.get_brand.name }}
+                                {% endelement %}
+                            {% endslot %}
+                        {% endelement %}
+                    {% endwith %}
+                {% endfor %}
+        {% include 'components/buttons/submit.html' with button_text="Disconnect" %}
+    </form>
+        {% endif %}
 <form action="{% url 'account_delete' %}" method="post">
     {% csrf_token %}
     <button type="submit" class="account-delete-alert items-center ml-2 text-gray-600 transition duration-300 first-letter:inline-flex hover:text-gray-800 group flex" >
