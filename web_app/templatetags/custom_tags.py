@@ -46,10 +46,12 @@ def get_list_of_upload_events_per_request(sender, upload_request):
 
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_sender_activate_toggle(sender, name, value, **kwargs):
+    kwargs['id'] = 'sender-toggle-container-' + str(sender.uuid)
+    a= f"click, senderUpdated-{str(sender.uuid)} from:document"
     return ToggleWidget(**kwargs).get_context(name, value,
                                               {'hx-post': reverse('toggle_sender_active',
                                                                   kwargs={'sender_uuid': sender.pk}),
-                                               'hx-trigger': "click", 'hx-swap': 'outerHTML','hx-target':'closest .cursor-pointer'})
+                                               'hx-trigger': f"click, senderUpdated-{str(sender.uuid)} from:document", 'hx-swap': 'outerHTML','hx-target':'#sender-toggle-container-'+str(sender.uuid)})
 
 
 

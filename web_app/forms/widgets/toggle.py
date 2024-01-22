@@ -17,6 +17,8 @@ class ToggleWidget(forms.CheckboxInput):
         self.soft_off_label = kwargs.pop('soft_off_label', True) # make label text lighter when not clicked
         self.label_wrap = kwargs.pop('label_wrap',False) # add a tag looking wrapping to the the labels, respective color is applied
         self.label_wrap_mono = kwargs.pop('label_wrap_mono', False) # if True the label wrap includes the toggle in a single visual element
+        
+        self.id=kwargs.pop('id','')
         super().__init__(*args, **kwargs)
         self.attrs.update({'class': 'sr-only peer'})
 
@@ -34,5 +36,7 @@ class ToggleWidget(forms.CheckboxInput):
         context['widget']['soft_off_label'] = self.soft_off_label
         context['widget']['label_wrap'] = self.label_wrap
         context['widget']['label_wrap_mono'] = self.label_wrap_mono
+        
+        context['widget']['id'] = self.id
 
         return context

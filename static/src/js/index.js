@@ -13,7 +13,10 @@ document.addEventListener('htmx:afterRequest', function(evt) {
         initMessageBar();
 
         if (evt.detail.elt.classList.contains('sender-updating')) {
+            const senderUuid = evt.detail.elt.getAttribute('sender-uuid')
             document.dispatchEvent(new Event("senderUpdated"));
+            const eventName = "senderUpdated-" + senderUuid;
+            document.dispatchEvent(new Event(eventName));
 
         }
 
