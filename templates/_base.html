@@ -35,12 +35,9 @@
     {% include 'components/footer.html' %}
 
 
-    {{ config_data |json_script:"config-data"  }}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     {% if space_form %}
-        {{ google_user_data |json_script:"google-user-data"  }}
-        {{ microsoft_user_data |json_script:"microsoft-user-data"  }}
         <script type="module" src="{% static 'src/js/space-create/index.js' %}" ></script>
 
     {% endif %}

@@ -48,10 +48,6 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         data['file_types'] = FileType.objects.filter(group=False)
         data['requests'] = self.get_formset()
         data['submit_text'] = button_text
-        if self.request.custom_user.google_token is not None:
-            data['google_user_data'] = {'accessToken': self.request.custom_user.google_token.token}
-        if self.request.custom_user.microsoft_token is not None:
-            data['microsoft_user_data'] = {'accessToken': self.request.custom_user.microsoft_token.token}
         data.update(kwargs)
         return data
 
