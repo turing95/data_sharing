@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('htmx:afterRequest', function(evt) {
         initMessageBar();
 
+        if (evt.detail.elt.classList.contains('sender-updating')) {
+            document.dispatchEvent(new Event("updatedSender"));
+
+        }
+
+
+
 });
 
 document.body.addEventListener('htmx:afterSwap', function(event) {
