@@ -34,13 +34,12 @@
                                 Last invitation:
                                 <span class="ml-2 text-xs underline">
                                 {% localize on %}
-
                                     {% if sender.invited_at %}{{sender.invited_at}}{% else %}Never invited{% endif %}
                                 {% endlocalize %}
                                 </span>
                             </span>
         
-                            <button class="my-2 ml-2 w-[140px] text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400" 
+                            <button class="my-2 ml-2 w-[140px] text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400 sender-updating" 
                                 hx-post="{% url 'notify_invitation' sender.pk %}"
                                 hx-target="#messageBar"
                                 hx-swap="outerHTML">
@@ -63,7 +62,7 @@
                                 {% endlocalize %}
                                 </span>
                             </span>
-                            <button class="my-2 ml-2 w-[140px]  text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400" 
+                            <button class="my-2 ml-2 w-[140px]  text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400 sender-updating" 
                                 hx-post="{% url 'notify_deadline' sender.pk %}"
                                 hx-target="#messageBar"
                                 hx-swap="outerHTML">
@@ -122,7 +121,7 @@
                         </div>
                     </div>
 
-                    <div class="inline-flex items-center my-1 ml-2 text-xs">
+                    <div class="inline-flex items-center my-1 ml-2 text-xs sender-updating">
                         <span class="mr-2">Link status:</span>
                         {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active color_on="green" color_off="orange" toggle_color_on="marian-blue" toggle_color_off="gray" label_on="active" label_off="inactive" soft_off_label=False label_colored=True label_wrap=True %}
                     </div>
