@@ -1,15 +1,25 @@
 {% extends 'private/_base.html' %}
-        {% load socialaccount static allauth %}
+{% load i18n socialaccount static allauth %}
 
     {% block private_content %}
-            {% url 'account_settings' as next %}
+        {% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+                {% url 'account_settings' as next %}
 
-        {% if not request.custom_user.google_account %}
-<p><a href="{% provider_login_url "google" process="connect" next=next %}">Connect a Google account</a></p>
-        {% endif %}
-                {% if not request.custom_user.microsoft_account %}
-<p><a href="{% provider_login_url "microsoft" process="connect" next=next %}">Connect a Microsoft account</a></p>
-        {% endif %}
+    {% element provider_list %}
+        {% for provider in socialaccount_providers %}
+            {% if provider.id == "google" and not request.custom_user.google_account %}
+                <p><a href="{% provider_login_url provider process="connect" scope=scope auth_params=auth_params next=next %}">Connect a
+                    {{ provider.id|title }} account</a></p>
+            {% elif provider.id == "microsoft" and not request.custom_user.microsoft_account %}
+                <p><a href="{% provider_login_url provider process="connect" scope=scope auth_params=auth_params next=next %}">Connect a
+                    {{ provider.id|title }} account</a></p>
+           {% endif %}
+        {% endfor %}
+    {% endelement %}
+{% endif %}
+        
+        
         {% if disconnect_form.accounts.count > 1 %}
     <form action="{% url 'socialaccount_connections' %}" method="POST">
     {% csrf_token %}
