@@ -36,6 +36,10 @@ class UploadRequest(BaseModel, DeleteModel):
         return google_drive_destination
 
     @property
+    def destination(self):
+        return self.destinations.filter(is_active=True).first()
+
+    @property
     def extensions(self):
         extensions = [file_type.extension for file_type in self.file_types.filter(group=False)]
         for file_type in self.file_types.filter(group=True):
@@ -63,12 +67,10 @@ class UploadRequest(BaseModel, DeleteModel):
     def get_file_name_from_formula(self, sender, original_file_name):
         format_params = self.get_name_format_params(sender, original_file_name)
         if self.file_naming_formula is not None:
-            file_name = fill_template(self.file_naming_formula,format_params)
+            file_name = fill_template(self.file_naming_formula, format_params)
         else:
             file_name = original_file_name
         return file_name
-
-
 
 
 class UploadRequestFileType(BaseModel):
