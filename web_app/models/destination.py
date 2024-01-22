@@ -116,6 +116,9 @@ class OneDrive(BaseModel):
             object_id=self.pk,
         )
 
+    def upload_file(self, file, file_name):
+        raise NotImplementedError
+
     @property
     def user(self):
         return self.generic_destination.request.space.user
@@ -124,3 +127,7 @@ class OneDrive(BaseModel):
     def custom_user(self):
         from web_app.models import CustomUser
         return CustomUser.objects.get(pk=self.user.pk)
+
+    @property
+    def url(self):
+        return None
