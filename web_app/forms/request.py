@@ -30,10 +30,10 @@ class RequestForm(ModelForm):
         for tag in UploadRequest.FileNameTag.choices
     ])
 
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled request',
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled request*',
                                                           'required': 'required',
                                                           'class': css_classes.text_request_title_input}),
-                            label='Request title',
+                            label='Request title - MANDATORY',
                             help_text="""This will be displayed to your invitees.
                                 """)
 
@@ -69,7 +69,7 @@ class RequestForm(ModelForm):
         required=False,
         label='File Type Restrictions',
         help_text="""
-                ...
+                Only selected file types will be accepted. Leave blank to accept all file types.
             """)
     file_types = CommaSeparatedFileTypeField(
         widget=forms.HiddenInput(attrs={'class': 'file-types'}),

@@ -35,9 +35,9 @@ class CommaSeparatedEmailField(forms.CharField):
 
 
 class SpaceForm(ModelForm):
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space',
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled Space*',
                                                           'class': css_classes.text_space_title_input}),
-                            label='Space title',
+                            label='Space title - MANDATORY',
                             help_text="It will be displayed to your invitees")
 
     senders_emails = CommaSeparatedEmailField(
