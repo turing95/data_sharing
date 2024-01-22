@@ -1,15 +1,10 @@
-import time
-
 from django.contrib import messages
 from django.http import Http404
-
 from django.forms import formset_factory
 from django.shortcuts import redirect
-from django.urls import reverse
 from django.views.generic import TemplateView
-from web_app.models import Space, GenericDestination, GoogleDrive, Sender, SenderEvent, UploadRequest, File
+from web_app.models import Space, GenericDestination, Sender, SenderEvent, UploadRequest, File
 from web_app.forms import FileForm, BaseFileFormSet
-import arrow
 
 
 class SpaceDetailView(TemplateView):
@@ -39,7 +34,7 @@ class SpaceDetailView(TemplateView):
                 upload_request = UploadRequest.objects.get(pk=form.cleaned_data.get('request_uuid'))
                 uploaded_files = form.cleaned_data.get('files')
                 if uploaded_files:
-                    google_drive_destination: GoogleDrive = upload_request.google_drive_destination
+                    destination: GenericDestination = upload_request.destination
                     sender_event = SenderEvent.objects.create(sender=sender,
                                                               request=upload_request,
                                                               event_type=SenderEvent.EventType.FILE_UPLOADED,notes=form.cleaned_data.get('notes'))
@@ -47,12 +42,11 @@ class SpaceDetailView(TemplateView):
                     for uploaded_file in uploaded_files:
                         file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
 
-                        google_drive_file = google_drive_destination.upload_file(uploaded_file, file_name)
+                        file_url = destination.upload_file(uploaded_file, file_name)
                         File.objects.create(original_name=uploaded_file.name, name=file_name,
                                             size=uploaded_file.size,
                                             file_type=uploaded_file.content_type,
-                                            google_drive_url=google_drive_file.get(
-                                                'webViewLink'),
+                                            url=file_url,
                                             sender_event=sender_event)
                     messages.success(request, "Your upload was successful")  # http request here
             return redirect(request.path)

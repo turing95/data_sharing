@@ -14,6 +14,9 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
     def __str__(self):
         return self.tag
 
+    def upload_file(self, file, file_name):
+        return self.related_object.upload_file(file, file_name)
+
 
 class GoogleDrive(BaseModel):
     TAG = 'GOOGLE_DRIVE'
@@ -67,7 +70,7 @@ class GoogleDrive(BaseModel):
         file = self.service.files().create(supportsAllDrives=True, body=file_metadata,
                                            media_body=media,
                                            fields='id,webViewLink').execute()
-        return file
+        return file.get('webViewLink')
 
     @property
     def generic_destination(self):

@@ -96,7 +96,7 @@
                         <ul class="flex flex-col">  
                             {% for file in event.files.all %}
                                 <li class="inline-flex overflow-wrap-anywhere">
-                                    <a href="{{ file.google_drive_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
+                                    <a href="{{ file.url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
                                         <span class="min-w-0">{{ file.name }}</span>
                                     </a>
                                 </li>

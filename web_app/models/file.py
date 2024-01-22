@@ -7,7 +7,7 @@ class File(BaseModel):
     name = models.CharField(max_length=255)
     size = models.IntegerField()
     file_type = models.CharField(max_length=255)
-    google_drive_url = models.CharField(max_length=255, null=True, blank=True)
+    url = models.CharField(max_length=255, null=True, blank=True)
     sender_event = models.ForeignKey('SenderEvent', on_delete=models.CASCADE, related_name='files')
 
 
