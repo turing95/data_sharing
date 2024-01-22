@@ -2,8 +2,8 @@
 
 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="sticky left-0 z-[15] w-[30px] px-1 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white items-center">
-                    <div class="flex" 
-                        hx-get="{% url 'sender_modal'  sender.uuid %}"
+                    <div class="inline-flex items-center ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
+                        hx-get="{% url 'sender_modal'  space.uuid sender.uuid %}"
                         hx-trigger="click" 
                         hx-target="#htmx-modal" 
                         hx-swap="innerHTML"

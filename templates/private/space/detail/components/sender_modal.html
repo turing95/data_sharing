@@ -1,4 +1,5 @@
 {% load static l10n %}
+{% load custom_tags static %}
 
 <div id="sender-modal-{% if sender %}{{sender.uuid}}{% else%}public{%endif%}" tabindex="-1" class="fixed top-0 left-0 right-0 z-[100] w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full h-auto max-w-2xl border border-gray-300 md:max-h-full"> 
@@ -19,32 +20,72 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <div class="p-3 md:p-2">
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div class="flex flex-col items-center">
-                    <button class="w-[150px] px-5 py-2 font-medium text-center text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200" 
-                        hx-post="{% url 'notify_deadline' sender.pk %}"
-                        hx-target="#messageBar"
-                        hx-swap="outerHTML">
-                      Send reminder 
-                    </button>
-                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-0.5 mt-2">
-                      {% if sender.notified_at %}last notification: {{sender.notified_at|localize}}{% else %}Never notified{% endif %}
+            <div class="flex flex-col p-3 md:p-2">
+                <div class="flex flex-col">
+                    <h3 class="mb-2 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
+                        Invitation
+                    </h3>
+                    <span class="my-1 ml-2 text-xs">
+                        Last invitation:
+                        <span class="ml-2 text-xs underline">
+                            {% if sender.notified_at %}{{sender.notified_at|localize}}{% else %}Never invited{% endif %}
+                        </span>
                     </span>
-                  </div>
-                  <div class="flex flex-col items-center">
-                    <button class="w-[150px] px-5 py-2 font-medium text-center text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200" 
+
+                    <button class="my-2 ml-2 w-[150px] px-5 py-2 font-medium text-center text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200" 
                         hx-post="{% url 'notify_invitation' sender.pk %}"
                         hx-target="#messageBar"
                         hx-swap="outerHTML">
-                      Send Invitation
+                        Send Invitation
                     </button>
-                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2.5 py-0.5 mt-2">
-                      {% if sender.notified_at %}last invitation: {{sender.notified_at|localize}}{% else %}Never invited{% endif %}
-                    </span>
-                  </div>
                 </div>
-              </div>
+                
+                <div  class="flex flex-col">
+                    <h3 class="mt-4 mb-1 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
+                        Deadline Reminder
+                    </h3>
+                    <span class="my-1 ml-2 text-xs">
+                        Last notification:
+                        <span class="ml-2 text-xs underline">
+                            {% if sender.notified_at %}{{sender.notified_at|localize}}{% else %}Never notified{% endif %}
+                        </span>
+                    </span>
+                    <button class="ml-2 my-1 w-[150px] px-5 py-2 font-medium text-center text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200" 
+                        hx-post="{% url 'notify_deadline' sender.pk %}"
+                        hx-target="#messageBar"
+                        hx-swap="outerHTML">
+                            Send reminder 
+                    </button>
+                </div>
+
+                <div  class="flex flex-col">
+                    <h3 class="mt-4 mb-1 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
+                        Space link
+                    </h3>
+                    {% url 'sender_space_detail_private' space.uuid sender.uuid as sender_path%}
+                    <div class="my-1 ml-2 text-xs">
+                        Link to space:
+                        <div class="inline-flex items-center">
+                            <a href="{{ sender_path}}" target = "_blank" class="ml-1 text-blue-600 transition-colors duration-300 hover:text-blue-800">
+                                space link
+                            </a>
+                            <button 
+                                class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
+                                onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
+                                title="Copy Link">
+                                <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
+                            </button>              
+                        </div>
+                    </div>
+
+                    <div class="inline-flex items-center my-1 ml-2 text-xs">
+                        <span class="mr-2">Link status:</span>
+                        {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active color_on="green" color_off="orange" toggle_color_on="marian-blue" toggle_color_off="gray" label_on="active" label_off="inactive" soft_off_label=False label_colored=True label_wrap=True %}
+                    </div>
+                    
+
+                </div>
+            
               
                   
                   

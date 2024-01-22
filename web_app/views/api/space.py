@@ -66,8 +66,9 @@ def request_modal(request, request_uuid):
     
 @login_required
 @require_GET
-def sender_modal(request, sender_uuid):
+def sender_modal(request, space_uuid, sender_uuid,):
     sender = Sender.objects.get(pk=sender_uuid)
+    space = Space.objects.get(pk=space_uuid)
 
     return render(request, 'private/space/detail/components/sender_modal.html',
-                  {'sender': sender})
+                  {'sender': sender, 'space': space})

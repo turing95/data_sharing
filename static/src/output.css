@@ -1236,6 +1236,16 @@ input:checked + .toggle-bg {
   margin: -1rem;
 }
 
+.mx-0 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.mx-0\.5 {
+  margin-left: 0.125rem;
+  margin-right: 0.125rem;
+}
+
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -1496,10 +1506,6 @@ input:checked + .toggle-bg {
   display: grid;
 }
 
-.contents {
-  display: contents;
-}
-
 .hidden {
   display: none;
 }
@@ -1696,20 +1702,16 @@ input:checked + .toggle-bg {
   width: 100%;
 }
 
+.w-\[145px\] {
+  width: 145px;
+}
+
 .w-\[150px\] {
   width: 150px;
 }
 
-.w-1 {
-  width: 0.25rem;
-}
-
 .w-2\/3 {
   width: 66.666667%;
-}
-
-.w-2 {
-  width: 0.5rem;
 }
 
 .min-w-0 {
@@ -2037,6 +2039,10 @@ input:checked + .toggle-bg {
   overflow: hidden;
 }
 
+.overflow-visible {
+  overflow: visible;
+}
+
 .overflow-x-auto {
   overflow-x: auto;
 }
@@ -2212,21 +2218,6 @@ input:checked + .toggle-bg {
 .border-yellow-300 {
   --tw-border-opacity: 1;
   border-color: rgb(250 202 21 / var(--tw-border-opacity));
-}
-
-.border-red-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(251 213 213 / var(--tw-border-opacity));
-}
-
-.border-red-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(249 128 128 / var(--tw-border-opacity));
-}
-
-.border-red-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(240 82 82 / var(--tw-border-opacity));
 }
 
 .border-b-black {
@@ -3221,6 +3212,10 @@ input[type="search"]::-webkit-search-cancel-button {
   content: var(--tw-content);
 }
 
+.hover\:cursor-pointer:hover {
+  cursor: pointer;
+}
+
 .hover\:border-t-\[6px\]:hover {
   border-top-width: 6px;
 }
@@ -4055,6 +4050,10 @@ input[type="search"]::-webkit-search-cancel-button {
     align-items: center;
   }
 
+  .md\:justify-center {
+    justify-content: center;
+  }
+
   .md\:justify-between {
     justify-content: space-between;
   }
@@ -4079,6 +4078,12 @@ input[type="search"]::-webkit-search-cancel-button {
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+
+  .md\:space-x-4 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(1rem * var(--tw-space-x-reverse));
+    margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
   .md\:border-0 {
