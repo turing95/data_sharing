@@ -1,5 +1,4 @@
-{% load static l10n %}
-{% load custom_tags static %}
+{% load custom_tags static l10n %}
 
 <div id="sender-modal-{% if sender %}{{sender.uuid}}{% else%}public{%endif%}" tabindex="-1" class="fixed top-0 left-0 right-0 z-[100] w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full h-auto max-w-2xl border border-gray-300 md:max-h-full"> 
@@ -34,7 +33,9 @@
                             <span class="my-1 ml-2 text-xs">
                                 Last invitation:
                                 <span class="ml-2 text-xs underline">
-                                    {% if sender.notified_at %}{{sender.notified_at|localize}}{% else %}Never invited{% endif %}
+                                {% localize on %}
+                                    {% if sender.notified_at %}{{sender.notified_at}}{% else %}Never invited{% endif %}
+                                {% endlocalize %}
                                 </span>
                             </span>
         
@@ -55,7 +56,10 @@
                             <span class="my-1 ml-2 text-xs">
                                 Last notification:
                                 <span class="ml-2 text-xs underline">
-                                    {% if sender.notified_at %}{{sender.notified_at|localize}}{% else %}Never notified{% endif %}
+                                    {% localize on %}
+
+                                    {% if sender.notified_at %}{{sender.notified_at}}{% else %}Never notified{% endif %}
+                                {% endlocalize %}
                                 </span>
                             </span>
                             <button class="my-2 ml-2 w-[140px]  text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400" 
