@@ -1766,10 +1766,6 @@ input:checked + .toggle-bg {
   width: 140px;
 }
 
-.w-\[140px\] {
-  width: 140px;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -2283,11 +2279,6 @@ input:checked + .toggle-bg {
 .border-marian-blue-500 {
   --tw-border-opacity: 1;
   border-color: rgb(30 56 136 / var(--tw-border-opacity));
-}
-
-.border-marian-blue-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(43 80 194 / var(--tw-border-opacity));
 }
 
 .border-marian-blue-400 {

@@ -38,7 +38,7 @@ def toggle_sender_active(request, sender_uuid):
 def notify_deadline(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
     notify_deadline_task.delay(sender.pk)
-    messages.success(request, f"Sender {sender.email} notified")
+    messages.success(request, f"{sender.email} notified")
     return render(
         request,
         'components/messages.html'
@@ -50,7 +50,7 @@ def notify_deadline(request, sender_uuid):
 def notify_invitation(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
     notify_invitation_task.delay(sender.pk)
-    messages.success(request, f"Sender {sender.email} notified")
+    messages.success(request, f"{sender.email} invited")
     return render(
         request,
         'components/messages.html'
