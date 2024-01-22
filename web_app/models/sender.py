@@ -11,6 +11,7 @@ class Sender(BaseModel, ActiveModel):
     email = models.CharField(max_length=50)
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='senders')
     notified_at = models.DateTimeField(null=True, blank=True)
+    invited_at = models.DateTimeField(null=True, blank=True)
 
     def notify_deadline(self):
         context = {
@@ -71,3 +72,5 @@ class Sender(BaseModel, ActiveModel):
                 msg.attach('event.ics', ics_content, 'text/calendar')
 
             msg.send()
+        self.invited_at = arrow.utcnow().datetime
+        self.save()
