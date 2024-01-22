@@ -30,6 +30,7 @@ required for stripe
 ## celery
 required for sending email
  - ```celery -A web_app worker -l INFO```
+ - for windows use: ```celery -A web_app worker -l INFO --pool=solo```
 
 
 
@@ -64,6 +65,6 @@ required for sending email
     - Base url: url from ngrok found under "forwarding" in the terminal 
     - Version: 2023-10-16
 1. run celery
-1. access app at http://127.0.0.1:8000 
+1. access app at localhost:8000
 
 
