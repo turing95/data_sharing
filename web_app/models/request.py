@@ -37,7 +37,7 @@ class UploadRequest(BaseModel, DeleteModel):
 
     @property
     def destination(self):
-        return self.destinations.filter(is_active=True).first()
+        return self.destinations.filter(is_active=True).order_by('-created_at').first()
 
     @property
     def extensions(self):

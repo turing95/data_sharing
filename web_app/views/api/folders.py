@@ -20,5 +20,5 @@ def search_folder(request):
         folders = request.custom_user.get_folders(search_type,search_query)
 
     return render(request,
-                  'private/space/create/components/one_drive_search_results.html',
+                  'private/space/create/components/folders_search_results.html',
                   {'folders': folders})
