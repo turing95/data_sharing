@@ -1,14 +1,11 @@
 import re
-
-from google.auth.exceptions import RefreshError
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from django.core.exceptions import ValidationError
-from web_app.models import Space, UploadRequest, FileType, GoogleDrive
+from web_app.models import Space, UploadRequest, FileType, GoogleDrive, OneDrive
 from web_app.forms import css_classes
 from django import forms
 from django.utils.safestring import mark_safe
 from web_app.forms.widgets import ToggleWidget
-
 
 
 class CommaSeparatedFileTypeField(forms.CharField):
@@ -78,37 +75,17 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(attrs={'class': 'file-types'}),
         label='File type restrictions',
         required=False)
-
-    google_destination_display = forms.CharField(
-        required=False,
-        label='Non-editable Field',
-        widget=forms.TextInput(
-            attrs={'placeholder': 'Click to select a folder',
-                   'class': css_classes.text_input + ' cursor-pointer',
-                   'onclick': 'handleAuthClick(this)',
-                   'readonly': 'readonly'})
-    )
-
-    google_destination = forms.CharField(
-        widget=forms.HiddenInput(),
-        label="Destination folder",
-        help_text=
-        """Select a destination folder from inside your cloud storage system. All files uploaded for this request will directly be uploaded to your selected folder.
-            You will be able to change it at any time but be aware that this may lead to files uploaded for the same request to be in different folders  
-            """)
-
-    one_drive_destination_display = forms.CharField(
-        required=False,
-        label='Non-editable Field',
-        widget=forms.TextInput(
-            attrs={'class': css_classes.text_input+' one-drive-destination-display',
-                   'readonly': 'readonly'})
-    )
-
-    one_drive_destination = forms.CharField(
-        required=False,
-        widget=forms.HiddenInput(attrs={'class': 'one-drive-destination'}),
+    destination_type = forms.ChoiceField(
         label="Destination folder")
+    destination_id = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination'}),
+                                     label="Destination folder ID")
+    destination_display = forms.CharField(
+        required=False,
+        label='Non-editable Field',
+        widget=forms.TextInput(
+            attrs={'class': css_classes.text_input + ' destination-display',
+                   'readonly': 'readonly'})
+    )
 
     instructions = forms.CharField(
         required=False,
@@ -142,9 +119,21 @@ class RequestForm(ModelForm):
         help_text="""
                 By default, each request can only contain one file. You can choose to enable multiple files upload for this request.
             """)
+
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_naming_formula', 'instructions','multiple_files']
+        fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files']
+
+    def __init__(self, *args, **kwargs):
+        custom_user = kwargs.pop('custom_user', None)
+        super().__init__(*args, **kwargs)
+        choices = []
+        if custom_user.google_account:
+            choices.append((GoogleDrive.TAG, 'Google Drive'))
+        if custom_user.microsoft_account is not None:
+            print(custom_user.microsoft_account)
+            choices.append((OneDrive.TAG, 'One Drive'))
+        self.fields['destination_type'].choices = choices
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
@@ -191,11 +180,12 @@ class DetailRequestForm(RequestForm):
         if self.instance and UploadRequest.objects.filter(pk=self.instance.pk).exists():
             self.fields['uuid'].initial = self.instance.uuid
 
-            destination: GoogleDrive = self.instance.google_drive_destination
+            destination = self.instance.destination
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
-            self.fields['google_destination'].initial = destination.folder_id
-            self.fields['google_destination_display'].initial = destination.name
+            self.fields['destination_id'].initial = destination.folder_id
+            self.fields['destination_display'].initial = destination.name
+            self.fields['destination_type'].initial = destination.tag
             if self.instance.filetype_set.exists():
                 self.fields['file_types'].initial = ','.join(
                     [file_type.slug for file_type in self.instance.filetype_set.all()])

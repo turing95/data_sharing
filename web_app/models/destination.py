@@ -14,8 +14,22 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
     def __str__(self):
         return self.tag
 
+    def folder_id(self):
+        return self.related_object.folder_id
+
+    def name(self):
+        return self.related_object.name
     def upload_file(self, file, file_name):
         return self.related_object.upload_file(file, file_name)
+
+    @classmethod
+    def create_from_folder_id(cls, request_instance,destination_type, folder_id):
+        if destination_type == GoogleDrive.TAG:
+            return GoogleDrive.create_from_folder_id(request_instance, folder_id)
+        elif destination_type == OneDrive.TAG:
+            return OneDrive.create_from_folder_id(request_instance, folder_id)
+        else:
+            raise NotImplementedError
 
 
 class GoogleDrive(BaseModel):
@@ -130,4 +144,8 @@ class OneDrive(BaseModel):
 
     @property
     def url(self):
+        return None
+
+    @property
+    def name(self):
         return None

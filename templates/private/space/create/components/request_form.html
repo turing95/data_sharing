@@ -63,43 +63,30 @@
                 <div id="accordion-{{ forloop.counter0 }}-open-body" class="border border-b-2 border-gray-200" aria-labelledby="accordion-{{ forloop.counter0 }}-open-heading">
                     <div class="p-5 pt-2 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                         
-                        <!-- DESTINATION -->
-                        <div class="mb-6">
-                            <div class="flex items-center mb-2 space-x-2">
-                                <label for="{{ req.google_destination.id_for_label }}"
-                                class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.google_destination.label }} </label>
-                                {% include 'components/tooltip.html' with title="Destination Folder" content=req.google_destination.help_text target_prefix='requests' target=req.google_destination.name%}
-                            </div>     
-                            {{ req.google_destination }}
-                            <div class="flex flex-col">
-                                {{ req.google_destination_display }}
-                                {% include 'components/forms/error_widget.html' with errors=req.google_destination.errors %}                       
-                            </div>
-                        </div>
-                        {% if request.custom_user.microsoft_account %}
+
                         <div class="mb-6">
                             <div class="inline-flex w-full">
+                                {{ req.destination_type }}
                                 <div class="w-2/3 my-1">                             
                                     <input class="w-full form-control 'bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block Sp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'" type="search"
-                                    id="id_search-one-drive-{{ forloop.counter0 }}-"
-                                    name="search-one-drive-{{ forloop.counter0 }}-" placeholder="Search and select one drive folder..." 
-                                    hx-post="{% url 'search_one_drive' %}" 
+                                    id="id_search-folder-{{ forloop.counter0 }}-"
+                                    name="search-folder-{{ forloop.counter0 }}-" placeholder="Search and select folder..." 
+                                    hx-post="{% url 'search_folders' %}" 
                                     hx-trigger="input changed delay:500ms, search"
-                                    hx-params="search-one-drive-{{ forloop.counter0 }}-"
-                                    hx-target="next .one-drive-search-results"
+                                    hx-params="search-folder-{{ forloop.counter0 }}-, requests-{{ forloop.counter0 }}-destination_type"
+                                    hx-target="next .search-results"
                                     autocomplete="off">
                                 </div>
                                 <div class="w-1/3 my-1">
-                                    {{ req.one_drive_destination_display }}
-                                    {{ req.one_drive_destination }}
+                                    {{ req.destination_display }}
+                                    {{ req.destination_id }}
                                 </div>
                         </div>
                                 <div class="inline-flex w-full my-1">
-                                    <div class="overflow-y-auto max-h-[150px] one-drive-search-results custom-scrollbar mr-2 bg-gray-100"></div>
+                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar mr-2 bg-gray-100"></div>
                                 </div>
                                 {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
                         </div>
-                        {% endif %}
 
                         <!-- REQUEST INSTRUCTIONS -->
                         <div class="mb-6">

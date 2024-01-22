@@ -4,17 +4,20 @@ import re
 
 
 @login_required
-def search_one_drive(request):
+def search_folder(request):
     folders = None
     if request.method == 'POST':
         search_query = None
-        pattern = re.compile(r'search-one-drive-\d+-')
+        search_type = None
+        search_pattern = re.compile(r'search-folder-\d+-')
+        type_pattern = re.compile(r'.*destination_type.*')
 
         for key in request.POST.keys():
-            if re.match(pattern, key):
+            if re.match(search_pattern, key):
                 search_query = request.POST[key]
-                break
-        folders = request.custom_user.get_one_drive_folders(search_query)
+            elif re.match(type_pattern, key):
+                search_type = request.POST[key]
+        folders = request.custom_user.get_folders(search_type,search_query)
 
     return render(request,
                   'private/space/create/components/one_drive_search_results.html',

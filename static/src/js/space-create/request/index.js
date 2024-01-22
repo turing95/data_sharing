@@ -1,21 +1,17 @@
 import {toggleAccordion, toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 import {initializeFileTypes, setupFileTypeCloseButton} from './fileTypeInput.js';
-import { initGooglePicker } from './googlePicker.js'
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
-export { handleAuthClick } from './googlePicker.js'
-export {selectOneDriveFolder}  from './oneDrivePicker.js'
+export {selectFolder}  from './folderPicker.js'
 
 
 export function initRequestForms() {
-    initGooglePicker();
     // Click event for adding new request forms
     let addButton = document.getElementById('add-request-btn');
     if (addButton) {
         addButton.addEventListener('click', addNewRequestForm);
     }
 
-    const renamePattern = /^id_requests-\d+-rename$/;
     document.querySelectorAll('[id^="id_requests-"][id$="-rename"]').forEach(element => {
         if (/^id_requests-\d+-rename$/.test(element.id)) {
             toggleRename(element);

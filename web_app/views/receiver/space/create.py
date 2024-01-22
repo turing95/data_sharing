@@ -7,7 +7,7 @@ from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, GoogleDrive, UploadRequest, FileType, Space, OneDrive
+from web_app.models import Sender, GoogleDrive, UploadRequest, FileType, Space, OneDrive, GenericDestination
 from django.db import transaction
 from web_app.tasks.notifications import notify_invitation
 from web_app.mixins import SubscriptionMixin
@@ -38,6 +38,9 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
             return reverse_lazy('receiver_space_detail', kwargs={'space_uuid': self._space.uuid})
         return super().get_success_url()
 
+    def get_formset_kwargs(self):
+        kwargs = {'custom_user':self.request.custom_user}
+        return kwargs
     def get_context_for_form(self, data, button_text='Create space', **kwargs):
         data['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back to Spaces'}
         data['space_form'] = True
@@ -57,7 +60,7 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         return self.get_context_for_form(data)
 
     def get_formset(self):
-        return RequestFormSet(self.request.POST or None)
+        return RequestFormSet(self.request.POST or None,form_kwargs=self.get_formset_kwargs())
 
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
@@ -95,8 +98,6 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
     def handle_formset(formset):
         formset.save()
         for req in formset:
-            GoogleDrive.create_from_folder_id(req.instance, req.cleaned_data.get('google_destination'))
-            if req.cleaned_data.get('one_drive_destination'):
-                OneDrive.create_from_folder_id(req.instance, req.cleaned_data.get('one_drive_destination'))
+            GenericDestination.create_from_folder_id(req.instance,req.cleaned_data.get('destination_type'), req.cleaned_data.get('destination_id'))
             for file_type in req.cleaned_data.get('file_types'):
                 req.instance.file_types.add(file_type)
