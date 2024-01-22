@@ -121,6 +121,10 @@ function updateElementIdentifiers(newForm, formCount) {
             element.setAttribute('hx-params', element.name)
 
             }
+        if (element.id.startsWith('id_search-folders')){
+            element.setAttribute('hx-params', `${element.name}, requests-${formCount}-destination_type`)
+
+            }
 
     });
 

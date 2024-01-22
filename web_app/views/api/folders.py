@@ -9,7 +9,7 @@ def search_folder(request):
     if request.method == 'POST':
         search_query = None
         search_type = None
-        search_pattern = re.compile(r'search-folder-\d+-')
+        search_pattern = re.compile(r'search-folders-\d+-')
         type_pattern = re.compile(r'.*destination_type.*')
 
         for key in request.POST.keys():
