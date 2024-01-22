@@ -1,7 +1,7 @@
 {% if folders %}
     <ul class="folders-list">
         {% for folder in folders %}
-            <li class="ml-2 cursor-pointer hover:bg-gray-200" onclick="selectOneDriveFolder(this,'{{ folder.name }}','{{ folder.id }}')">
+            <li class="ml-2 cursor-pointer hover:bg-gray-200" onclick="selectFolder(this,'{{ folder.name }}','{{ folder.id }}')">
                 <span>{{ folder.name }}</span>
             </li>
         {% endfor %}

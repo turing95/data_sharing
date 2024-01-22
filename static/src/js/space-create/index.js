@@ -1,12 +1,11 @@
-import {initRequestForms,toggleRename,handleTagDropdownChange,addFileTypeTag, toggleFileTypeRestrict,handleAuthClick,selectOneDriveFolder } from "./request/index.js";
+import {initRequestForms,toggleRename,handleTagDropdownChange,addFileTypeTag, toggleFileTypeRestrict,selectFolder } from "./request/index.js";
 import {initForm} from "./form.js";
 
 window.toggleRename = toggleRename;
 window.toggleFileTypeRestrict= toggleFileTypeRestrict
 window.handleTagDropdownChange = handleTagDropdownChange;
-window.handleAuthClick = handleAuthClick;
 window.addFileTypeTag = addFileTypeTag;
-window.selectOneDriveFolder = selectOneDriveFolder;
+window.selectFolder = selectFolder;
 document.addEventListener('DOMContentLoaded', function() {
     initForm();
     initRequestForms();

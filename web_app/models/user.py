@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from google.auth.transport.requests import Request
 import arrow
 from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
 from msal import ConfidentialClientApplication
 import requests
 import config
@@ -12,21 +13,31 @@ class CustomUser(User):
     class Meta:
         proxy = True
 
+    @property
     def google_account(self):
         try:
             return SocialAccount.objects.get(user=self, provider='google')
         except SocialAccount.DoesNotExist:
             return None
 
+    @property
     def microsoft_account(self):
         try:
             return SocialAccount.objects.get(user=self, provider='microsoft')
         except SocialAccount.DoesNotExist:
             return None
 
-    def get_one_drive_folders(self,folder_name=None):
+    def get_folders(self, destination_type, folder_name=None):
+        from web_app.models import OneDrive, GoogleDrive
+        if destination_type == GoogleDrive.TAG:
+            return self.get_google_drive_folders(folder_name)
+        elif destination_type == OneDrive.TAG:
+            return self.get_one_drive_folders(folder_name)
+        else:
+            return None
+
+    def get_one_drive_folders(self, folder_name=None):
         token = self.microsoft_token
-        print(token)
         if not token:
             return None  # or handle the error as required
 
@@ -50,7 +61,7 @@ class CustomUser(User):
 
     def refresh_google_token(self):
         try:
-            social_account = self.google_account()
+            social_account = self.google_account
             if social_account is not None:
                 token = SocialToken.objects.get(account=social_account)
                 if arrow.get(token.expires_at) < arrow.utcnow():
@@ -73,7 +84,7 @@ class CustomUser(User):
             return None
 
     def refresh_microsoft_token(self):
-        social_account = self.microsoft_account()
+        social_account = self.microsoft_account
         if social_account is None:
             return None
 
@@ -91,7 +102,6 @@ class CustomUser(User):
                     "Files.ReadWrite.All",  # access to user's files
                 ],  # Specify the required scopes
             )
-            print(result)
             if 'access_token' in result:
                 # Update token details from result
                 token.token = result['access_token']
@@ -125,3 +135,24 @@ class CustomUser(User):
             )
         else:
             return None
+
+    @property
+    def google_service(self):
+        return build('drive', 'v3', credentials=self.google_credentials)
+
+    def get_google_drive_folders(self, folder_name):
+        credentials = self.google_credentials
+        if not credentials:
+            return None
+        response = (
+            self.google_service.files()
+            .list(
+                q="mimeType='application/vnd.google-apps.folder' and name contains '" + folder_name + "'",
+                spaces="drive",
+                fields="files(id, name)",
+                supportsAllDrives=True
+            )
+            .execute()
+        )
+        print(response)
+        return response.get('files', [])
