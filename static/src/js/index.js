@@ -2,6 +2,7 @@ import {initMessageBar} from "./utils/messageBar.js";
 import { initSubmitButtons } from './utils/submitButton.js';
 import { initNav } from './utils/navbar.js';
 import {initHtmxModal} from "./utils/htmxModal.js";
+import {handleSenderUpdated} from "./summary/index.js";
 
 document.addEventListener('DOMContentLoaded', function() {
         initSubmitButtons();
@@ -11,17 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('htmx:afterRequest', function(evt) {
         initMessageBar();
-
-        if (evt.detail.elt.classList.contains('sender-updating')) {
-            const senderUuid = evt.detail.elt.getAttribute('sender-uuid')
-            document.dispatchEvent(new Event("senderUpdated"));
-            const eventName = "senderUpdated-" + senderUuid;
-            document.dispatchEvent(new Event(eventName));
-
-        }
-
-
-
+        handleSenderUpdated(evt);
 });
 
 document.body.addEventListener('htmx:afterSwap', function(event) {

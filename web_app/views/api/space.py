@@ -83,9 +83,18 @@ def sender_modal(request, space_uuid, sender_uuid,):
 
 @login_required
 @require_GET
-def update_sender_info(request, space_uuid, sender_uuid,):
+def sender_info(request, space_uuid, sender_uuid,):
     sender= Sender.objects.get(pk=sender_uuid)
     space = Space.objects.get(pk=space_uuid)
     
     return render(request, 'private/space/detail/components/sender_info.html',
+         {'sender': sender, 'space': space})
+    
+@login_required
+@require_GET
+def sender_row(request, space_uuid, sender_uuid,):
+    sender= Sender.objects.get(pk=sender_uuid)
+    space = Space.objects.get(pk=space_uuid)
+    
+    return render(request, 'private/space/detail/components/sender_row.html',
          {'sender': sender, 'space': space})
