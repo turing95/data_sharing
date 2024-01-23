@@ -74,7 +74,6 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
             formset.instance = space_instance
 
             if formset.is_valid():
-
                 with transaction.atomic():
                     space_instance.save()
                     self._space = space_instance
@@ -89,6 +88,9 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
             sender = Sender.objects.create(email=email, space=space_instance)
             if space_instance.notify_invitation is True:
                 notify_invitation.delay(sender.pk)
+            if space_instance.deadline_notification_datetime is not None:
+                sender.schedule_deadline_notification()
+
 
     @staticmethod
     def handle_formset(formset):

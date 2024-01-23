@@ -75,15 +75,13 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(attrs={'class': 'file-types'}),
         label='File type restrictions',
         required=False)
-    
-    # DESTINATION FOLDER
-    
-    destination_type = forms.ChoiceField(
+    destination_type_select = forms.ChoiceField(
         label="Destination folder")
     
     destination_id = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination'}),
                                      label="Destination folder ID")
-    
+    destination_type = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination-type'}),
+                                       label="Destination type")
     destination_display = forms.CharField(
         required=False,
         label='Non-editable Field',
@@ -142,11 +140,8 @@ class RequestForm(ModelForm):
             choices.append((GoogleDrive.TAG, 'Google Drive (not connected)'))
             
         if custom_user.microsoft_account is not None:
-            print(custom_user.microsoft_account)
             choices.append((OneDrive.TAG, 'One Drive'))
-        else:
-            choices.append((OneDrive.TAG, 'One Drive (not connected)'))
-        self.fields['destination_type'].choices = choices
+        self.fields['destination_type_select'].choices = choices
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
@@ -199,6 +194,7 @@ class DetailRequestForm(RequestForm):
             self.fields['destination_id'].initial = destination.folder_id
             self.fields['destination_display'].initial = destination.name
             self.fields['destination_type'].initial = destination.tag
+            self.fields['destination_type_select'].initial = destination.tag
             if self.instance.filetype_set.exists():
                 self.fields['file_types'].initial = ','.join(
                     [file_type.slug for file_type in self.instance.filetype_set.all()])

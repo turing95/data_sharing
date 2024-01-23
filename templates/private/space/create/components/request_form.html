@@ -160,20 +160,21 @@
                             
                             
                             <div class="inline-flex w-full">
-                                {{ req.destination_type }}
+                                {{ req.destination_type_select }}
                                 <div class="w-2/3 my-1">                             
                                     <input class="w-full form-control 'bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block Sp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'" type="search"
                                     id="id_search-folders-{{ forloop.counter0 }}-"
                                     name="search-folders-{{ forloop.counter0 }}-" placeholder="Search and select folder..." 
                                     hx-post="{% url 'search_folders' %}" 
                                     hx-trigger="input changed delay:500ms, search"
-                                    hx-params="search-folders-{{ forloop.counter0 }}-, requests-{{ forloop.counter0 }}-destination_type"
+                                    hx-params="search-folders-{{ forloop.counter0 }}-, requests-{{ forloop.counter0 }}-destination_type_select"
                                     hx-target="next .search-results"
                                     autocomplete="off">
                                 </div>
                                 <div class="w-1/3 my-1">
                                     {{ req.destination_display }}
                                     {{ req.destination_id }}
+                                    {{ req.destination_type }}
                                 </div>
                         </div>
                                 <div class="inline-flex w-full my-1">

@@ -45,6 +45,9 @@ class SpaceDetailFormView(SpaceFormView):
         for email, sender in existing_senders.items():
             sender.is_active = False
             sender.save()
+        for sender in space_instance.senders.all():
+            if space_instance.deadline_notification_datetime is not None:
+                sender.schedule_deadline_notification()
 
     def get_success_url(self):
         return self.request.path  # to summary page
