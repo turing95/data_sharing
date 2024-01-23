@@ -1,5 +1,5 @@
 asgiref~=3.7.2
-Django~=5.0
+Django~=4.2.9
 sqlparse~=0.4.4
 django-allauth~=0.59.0
 django-compressor~=4.4
