@@ -3,20 +3,32 @@
 
 <div id="destination-search-container" class="w-full sm:w-2/3 h-[36px] destination-search">
     {% if provider_available is True %}
-        <div class="inline-flex w-full border-r border-gray-300 border-y sm:border">
+        <div class="inline-flex w-full border-r border-gray-300 border-y border-l  sm:border-l-0 h-[36px]">
             <div id="destination-search-bar" class="flex-grow">
-                <input type="text" class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm" placeholder="Type to search" readonly/>
+                                  
+                    <input class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm focus:ring-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent " type="search"
+                        placeholder="Type to search"
+                        id="id_search-folders-{{ forloop.counter0 }}-"
+                        name="search-folders-{{ forloop.counter0 }}-" placeholder="Search and select folder..." 
+                        hx-post="{% url 'search_folders' %}" 
+                        hx-trigger="input changed delay:500ms, search, keyup"
+                        hx-params="search-folders-{{ forloop.counter0 }}-, requests-{{ forloop.counter0 }}-destination_type_select"
+                        hx-target="next .search-results"
+                        autocomplete="off">
+
+
+
+                {% comment %} <input type="text" class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm" placeholder="Type to search" readonly/> {% endcomment %}
             </div>
             <button id="destination-search-button" class="flex items-center justify-center p-1">
                 <img src="{% static 'images/icons/magnifying-lense.svg' %}" alt="Search button icon" class="w-6 h-6 transition-transform duration-300 hover:scale-[1.15]">
             </button>
         </div>
     {% else %}
-        {% url 'spaces' as next %}
         <div class="flex flex-col items-center justify-center pl-3 h-9">
-            <span class="text-xs text-gray-700">To access OneDrive folders,</sapan>
-            <a href="{% provider_login_url missing_provider target='_blank' process='connect' scope=scope auth_params=auth_params next=next %}" class=class="text-sm px-1.5 py-[1.5px] text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400">
-                Connect a {{ missing_provider.id|title }} Account
+            <span class="text-xs text-gray-700">To access {{service_name}}:</span>
+            <a href="{% provider_login_url missing_provider process='connect' scope=scope auth_params=auth_params next=request.path %}" class="text-sm px-1.5 py-[1.5px] text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400">
+                Connect a {{provider_name }} Account
             </a>
         </div>
         

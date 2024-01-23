@@ -45,6 +45,8 @@ def selected_provider(request):
         else:
             adapter= get_adapter()
             missing_provider = adapter.get_provider(request,GoogleDrive.PROVIDER_ID)
+            provider_name = GoogleDrive.PROVIDER_SLAG
+            service_name = GoogleDrive.SLAG
             
     elif provider_type == OneDrive.TAG:
         if custom_user.microsoft_account is not None:
@@ -52,6 +54,8 @@ def selected_provider(request):
         else:
             adapter= get_adapter()
             missing_provider = adapter.get_provider(request,OneDrive.PROVIDER_ID)
+            provider_name = OneDrive.PROVIDER_SLAG
+            service_name = OneDrive.SLAG
 
         
     
@@ -60,4 +64,8 @@ def selected_provider(request):
     
     return render(request,
                   'private/space/create/components/destination_search.html',
-                  {'provider_available': provider_available, 'missing_provider': missing_provider })
+                  {'provider_available': provider_available,
+                   'missing_provider': missing_provider,
+                   'provider_name':provider_name,
+                   'service_name':service_name,
+                   'provider_name':provider_name })

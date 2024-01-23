@@ -76,31 +76,44 @@
                             <section id="destination-selection-container" class="w-full my-2">
 
                                 <div class="flex flex-col-reverse gap-4 md:flex-row">
-                                  <div class="flex-1 w-full">
-                                    <div id="destination-selcted-folder-and-search-container" class="flex flex-col sm:flex-row">
+                                    <div class="flex-1 w-full">
+                                        <div id="destination-selcted-folder-and-search-container" class="flex flex-col sm:flex-row">
 
-                                        <div id="destination-selected-folder-container" class="flex flex-col w-full sm:w-1/3 h-[36px]">
-                                            <div class="inline-flex border-l border-gray-300 bg-marian-blue-100 border-y sm:border">
-                                                <div id="destination-selected-folder-logo" class="flex items-center justify-center p-1">
-                                                    <img src="{% static 'images/drive_providers/google-drive-logo.svg' %}" alt="Drive Provider Icon" class="w-6 h-6">
-                                                </div>
-                                                <div id="destination-selected-folder-name" class="w-full">
-                                                    {{ req.destination_display }}
-                                                    {% comment %} <input type="text" class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm" placeholder="No folder selected yet" readonly/> {% endcomment %}
+                                            <div id="destination-selected-folder-container" class="flex flex-col w-full sm:w-1/3 h-[36px]">
+                                                <div class="inline-flex border-l border-gray-300 bg-marian-blue-100 border-y sm:border h-[36px]">
+                                                    <div id="destination-selected-folder-logo" class="flex items-center justify-center p-1">
+                                                        <img src="{% static 'images/drive_providers/google-drive-logo.svg' %}" alt="Drive Provider Icon" class="w-6 h-6">
+                                                    </div>
+                                                    <div id="destination-selected-folder-name" class="w-full">
+                                                        {{ req.destination_display }}
+                                                        {% comment %} <input type="text" class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm" placeholder="No folder selected yet" readonly/> {% endcomment %}
+                                                    </div>
                                                 </div>
                                             </div>
+                                                
+                                            {% include 'private/space/create/components/destination_search.html' with provider_available=True %}
                                         </div>
-                                            
-                                        {% include 'private/space/create/components/destination_search.html' with provider_available=True %}
-                                      </div>
-                                  </div>
-                                  <div class="w-48 h-full ml-auto shrink-0 md:h-[36px]">
+                                    </div>
+                                  <div class="w-full sm:w-1/3 md:w-48 h-full  shrink-0 md:h-[36px]">
                                     {{ req.destination_type_select }}
                                   </div>
                                 </div>
                                  <!-- Search Results Section -->
-                                 <div id="destination-search-results-container"class="mt-4">
-                                    <!-- Sample Table for Search Results -->
+                                 <div id="destination-search-results-container"class="">
+                                    <div class="flex flex-col-reverse gap-4 md:flex-row">
+                                        <div class="flex-1 w-full">
+                                            <div id="spacer" class="flex flex-col sm:flex-row">
+                                                <div id="spacer" class="hidden sm:flex flex-col w-full sm:w-1/3 h-[36px]">
+                                                </div>
+                                                <div id="spacer" class="w-full sm:w-2/3 destination-search">
+                                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hidden h-full ml-auto shrink-0 md:flex md:w-48">
+                                        </div>
+                                    </div>
+                                    {% comment %} <!-- Sample Table for Search Results -->
                                     <table class="w-full">
                                         <tr>
                                             <th>Column 1</th>
@@ -113,11 +126,13 @@
                                             <td>Data 3</td>
                                         </tr>
                                         <!-- Add more rows as needed -->
-                                    </table>
+                                    </table> {% endcomment %}
                                 </div>
+                                {{ req.destination_id }}
+                                {{ req.destination_type }}
                             </section>
 
-
+{% comment %} 
                             <select class="flex-grow w-full h-full">
                                 <option>
                                     <div class="inline-flex">
@@ -144,7 +159,7 @@
                                     </div>
                                 </option>
                                 <option>Provider 3</option>
-                            </select>
+                            </select> {% endcomment %}
                               
                               
                               
@@ -152,29 +167,28 @@
 
                             
                             
-                            <div class="inline-flex w-full">
-                                {{ req.destination_type_select }}
+                            {% comment %} <div class="inline-flex w-full">
+                                {{ req.destination_type_select }} 
                                 <div class="w-2/3 my-1">                             
-                                    <input class="w-full form-control 'bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block Sp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'" type="search"
+                                     <input class="w-full form-control 'bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block Sp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'" type="search"
                                     id="id_search-folders-{{ forloop.counter0 }}-"
                                     name="search-folders-{{ forloop.counter0 }}-" placeholder="Search and select folder..." 
                                     hx-post="{% url 'search_folders' %}" 
                                     hx-trigger="input changed delay:500ms, search"
                                     hx-params="search-folders-{{ forloop.counter0 }}-, requests-{{ forloop.counter0 }}-destination_type_select"
                                     hx-target="next .search-results"
-                                    autocomplete="off">
+                                    autocomplete="off"> 
                                 </div>
                                 <div class="w-1/3 my-1">
-                                    {{ req.destination_display }}
-                                    {{ req.destination_id }}
-                                    {{ req.destination_type }}
+                                    {{ req.destination_display }} 
+
                                 </div>
                         </div>
                                 <div class="inline-flex w-full my-1">
-                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar mr-2 bg-gray-100"></div>
+                                     <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar mr-2 bg-gray-100"></div> 
                                 </div>
                                 {% include 'components/forms/error_widget.html' with errors=req.file_types.errors %}
-                        </div>
+                        </div> {% endcomment %}
 
                         <!-- REQUEST INSTRUCTIONS -->
                         <div class="mb-6">
