@@ -6,7 +6,7 @@
     <!-- htmx get to update sender info -->
     <div
         hx-trigger="senderUpdated-{{sender.uuid}} from:document"
-        hx-get="{% url 'sender_info'  space.uuid sender.uuid %}"
+        hx-get="{% url 'sender_info'  sender.uuid %}"
         hx-target="#sender-info-container">
     </div>
 
@@ -94,7 +94,7 @@
         <h3 class="mt-4 mb-1 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
             Space link
         </h3>
-        {% url 'sender_space_detail_private' space.uuid sender.uuid as sender_path%}
+        {% url 'sender_space_detail_private' sender.space.uuid sender.uuid as sender_path%}
         <div class="my-1 ml-2 text-xs">
             Link to space:
             <div class="inline-flex items-center">

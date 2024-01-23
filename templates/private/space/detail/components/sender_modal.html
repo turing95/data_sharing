@@ -20,7 +20,7 @@
                 </button>
             </div>
             <div class="flex flex-col p-3 overflow-x-auto md:p-2 custom-scrollbar max-h-[calc(100vh-103px)]">
-                {% include 'private/space/detail/components/sender_info.html' with sender=sender space=space%}
+                {% include 'private/space/detail/components/sender_info.html' with sender=sender %}
 
 
                 <div  class="flex flex-col">
@@ -39,7 +39,7 @@
                     </div>
                     
             
-                    <div class="" hx-get="{% url 'history_table' space.uuid %}?sender_uuid={{sender.uuid}}"
+                    <div class="" hx-get="{% url 'history_table' sender.space.uuid %}?sender_uuid={{sender.uuid}}"
                         hx-trigger="intersect once"
                         hx-target="#history-table-sender-modal"
                         hx-indicator="#loading-indicator-sender-modal">

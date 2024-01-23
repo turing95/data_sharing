@@ -71,30 +71,3 @@ def request_modal(request, request_uuid):
     return render(request, 'private/space/detail/components/request_modal.html',
                   {'req': upload_request, 'sender': sender, 'upload_events': events})
     
-@login_required
-@require_GET
-def sender_modal(request, space_uuid, sender_uuid,):
-    sender = Sender.objects.get(pk=sender_uuid)
-    space = Space.objects.get(pk=space_uuid)
-
-    return render(request, 'private/space/detail/components/sender_modal.html',
-                  {'sender': sender, 'space': space})
-
-
-@login_required
-@require_GET
-def sender_info(request, space_uuid, sender_uuid,):
-    sender= Sender.objects.get(pk=sender_uuid)
-    space = Space.objects.get(pk=space_uuid)
-    
-    return render(request, 'private/space/detail/components/sender_info.html',
-         {'sender': sender, 'space': space})
-    
-@login_required
-@require_GET
-def sender_row(request, space_uuid, sender_uuid,):
-    sender= Sender.objects.get(pk=sender_uuid)
-    space = Space.objects.get(pk=space_uuid)
-    
-    return render(request, 'private/space/detail/components/sender_row.html',
-         {'sender': sender, 'space': space})

@@ -2,11 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 
 from web_app.forms.widgets import ToggleWidget
-from web_app.models import Sender
-from web_app.tasks.notifications import notify_deadline as notify_deadline_task,notify_invitation as notify_invitation_task
+from web_app.models import Sender, Space
+from web_app.tasks.notifications import notify_deadline as notify_deadline_task, \
+    notify_invitation as notify_invitation_task
 
 
 @login_required
@@ -27,9 +28,10 @@ def toggle_sender_active(request, sender_uuid):
                      soft_off_label=False,
                      label_colored=True,
                      label_wrap=True).get_context('sender_toggle', sender.is_active,
-                                           {'hx-post': reverse('toggle_sender_active',
-                                                               kwargs={'sender_uuid': sender.pk}),
-                                            'hx-trigger': 'click', 'hx-swap': 'outerHTML','hx-target':'closest .cursor-pointer'})
+                                                  {'hx-post': reverse('toggle_sender_active',
+                                                                      kwargs={'sender_uuid': sender.pk}),
+                                                   'hx-trigger': 'click', 'hx-swap': 'outerHTML',
+                                                   'hx-target': 'closest .cursor-pointer'})
     )
 
 
@@ -57,4 +59,28 @@ def notify_invitation(request, sender_uuid):
     )
 
 
+@login_required
+@require_GET
+def sender_modal(request, sender_uuid):
+    sender = Sender.objects.get(pk=sender_uuid)
 
+    return render(request, 'private/space/detail/components/sender_modal.html',
+                  {'sender': sender})
+
+
+@login_required
+@require_GET
+def sender_info(request, sender_uuid):
+    sender = Sender.objects.get(pk=sender_uuid)
+
+    return render(request, 'private/space/detail/components/sender_info.html',
+                  {'sender': sender})
+
+
+@login_required
+@require_GET
+def sender_row(request, sender_uuid):
+    sender = Sender.objects.get(pk=sender_uuid)
+
+    return render(request, 'private/space/detail/components/sender_row.html',
+                  {'sender': sender})
