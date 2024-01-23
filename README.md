@@ -28,11 +28,13 @@ required for stripe
  - ```ngrok http http://localhost:8000```
 
 ## celery
-required for sending email
+required for async tasks
  - ```celery -A web_app worker -l INFO```
  - for windows use: ```celery -A web_app worker -l INFO --pool=solo```
 
-
+## celery beat
+required for scheduled async tasks
+ - ```celery -A web_app beat -l INFO```
 
 ## redis
  - docker container with 6379:6379

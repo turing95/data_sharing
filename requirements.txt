@@ -17,3 +17,4 @@ dj-stripe~=2.8.3
 whitenoise~=6.6.0
 sentry-sdk~=1.39.2
 msal~=1.26.0
+django-celery-beat~=2.5.0

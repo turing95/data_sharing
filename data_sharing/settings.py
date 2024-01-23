@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.microsoft',
     'web_app',
-    'djstripe'
+    'djstripe',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -219,6 +220,8 @@ SOCIALACCOUNT_PROVIDERS = {
 # TODO: this is against security best practices, according to allauth docs
 SOCIALACCOUNT_LOGIN_ON_GET = True
 MAX_FREE_SPACES = 4
+MAX_FREE_INVITEES = 4
+MAX_FREE_REQUESTS = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
