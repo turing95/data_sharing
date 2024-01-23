@@ -1,8 +1,10 @@
+import { initDestinationTypeSelect } from './destination/index.js';
 import {toggleAccordion, toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 import {initializeFileTypes, setupFileTypeCloseButton} from './fileTypeInput.js';
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
 export {selectFolder}  from './folderPicker.js'
+
 
 
 export function initRequestForms() {
@@ -28,6 +30,8 @@ export function initRequestForms() {
         }
 
     });
+
+    initDestinationTypeSelect();
 }
 
 function addNewRequestForm() {

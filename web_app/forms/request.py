@@ -3,9 +3,12 @@ from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from django.core.exceptions import ValidationError
 from web_app.models import Space, UploadRequest, FileType, GoogleDrive, OneDrive
 from web_app.forms import css_classes
+from django.urls import reverse_lazy
 from django import forms
+
 from django.utils.safestring import mark_safe
 from web_app.forms.widgets import ToggleWidget
+
 
 
 class CommaSeparatedFileTypeField(forms.CharField):
@@ -75,20 +78,41 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(attrs={'class': 'file-types'}),
         label='File type restrictions',
         required=False)
+    
+    # DESTINATION FOLDER FIELDS
+    # providers dropdown
+
     destination_type_select = forms.ChoiceField(
-        label="Destination folder")
+        choices = [
+            (GoogleDrive.TAG, 'Google Drive'),
+            (OneDrive.TAG, 'One Drive'),
+        ],
+        label="Destination folder",
+        widget=forms.Select(attrs={'class':  "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full",
+                                   'hx-trigger':"change",
+                                   'hx-get': reverse_lazy('selected_provider'),
+                                   'hx-target': "previous .destination-search",
+                                   'hx-swap':"outerHTML"
+                                   })
+        )
     
     destination_id = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination'}),
                                      label="Destination folder ID")
+    
     destination_type = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination-type'}),
                                        label="Destination type")
+    
     destination_display = forms.CharField(
-        required=False,
-        label='Non-editable Field',
-        widget=forms.TextInput(
-            attrs={'class': css_classes.text_input + ' destination-display',
-                   'readonly': 'readonly'})
+    required=False,
+    label='Non-editable Field',
+    widget=forms.TextInput(
+        attrs={
+            'class': ' w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm' + ' destination-display',
+            'readonly': 'readonly',
+            'placeholder': 'No folder selected yet'
+        }
     )
+)
 
     # REQUEST INSTRUCTIONS
     instructions = forms.CharField(
@@ -132,16 +156,17 @@ class RequestForm(ModelForm):
         custom_user = kwargs.pop('custom_user', None)
         super().__init__(*args, **kwargs)
         
-        # Generic destination providers options
-        choices = []
-        if custom_user.google_account:
-            choices.append((GoogleDrive.TAG, 'Google Drive'))
-        else:
-            choices.append((GoogleDrive.TAG, 'Google Drive (not connected)'))
+        
+
+        # # Generic destination providers options
+        # choices = []
+        # if custom_user.google_account:
+        #     choices.append((GoogleDrive.TAG, 'Google Drive'))
             
-        if custom_user.microsoft_account is not None:
-            choices.append((OneDrive.TAG, 'One Drive'))
-        self.fields['destination_type_select'].choices = choices
+            
+        # if custom_user.microsoft_account is not None:
+        #     choices.append((OneDrive.TAG, 'One Drive'))
+        # self.fields['destination_type_select'].choices = choices
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')

@@ -1,6 +1,10 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
 from django.shortcuts import render
+from django.conf import settings
 import re
+from web_app.models import GoogleDrive, OneDrive
+from allauth.socialaccount.adapter import get_adapter
 
 
 @login_required
@@ -21,3 +25,39 @@ def search_folder(request):
     return render(request,
                   'private/space/create/components/folders_search_results.html',
                   {'folders': folders,'destination_type':search_type})
+
+@login_required
+@require_GET
+def selected_provider(request):
+    custom_user = request.custom_user
+    type_pattern = re.compile(r'.*destination_type_select.*')
+
+    for key in request.GET.keys():
+        if re.match(type_pattern, key):
+            provider_type = request.GET[key]
+            break
+        
+    provider_available=False
+    missing_provider=None
+    if provider_type == GoogleDrive.TAG:
+        if custom_user.google_account:
+            provider_available=True
+        else:
+            adapter= get_adapter()
+            missing_provider = adapter.get_provider(request,GoogleDrive.PROVIDER_ID)
+            
+    elif provider_type == OneDrive.TAG:
+        if custom_user.microsoft_account is not None:
+            provider_available=True
+        else:
+            adapter= get_adapter()
+            missing_provider = adapter.get_provider(request,OneDrive.PROVIDER_ID)
+
+        
+    
+        
+    
+    
+    return render(request,
+                  'private/space/create/components/destination_search.html',
+                  {'provider_available': provider_available, 'missing_provider': missing_provider })
