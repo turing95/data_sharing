@@ -15,12 +15,22 @@ document.addEventListener('htmx:afterRequest', function(evt) {
         handleSenderUpdated(evt);
 });
 
-document.body.addEventListener('htmx:afterSwap', function(event) {
+document.body.addEventListener('htmx:afterSwap', function(evt) {
 
-        if (event.target.id.startsWith('htmx-modal')) {
-            const modalElement = event.target.children[0]; 
+        if (evt.target.id.startsWith('htmx-modal')) {
+            const modalElement = evt.target.children[0];
             if (modalElement) {
                 initHtmxModal(modalElement);
             }
         }
+
+    if (evt.detail.elt.classList.contains('sender-pull')) {
+            const senderUuid = evt.detail.elt.getAttribute('sender-uuid')
+
+            const infoEl = document.getElementById('sender-info-container'+senderUuid);
+            htmx.process(infoEl);
+
+            const senderRowEl = document.getElementById("sender-row-container-"+senderUuid);
+            htmx.process(senderRowEl);
+    }
 });

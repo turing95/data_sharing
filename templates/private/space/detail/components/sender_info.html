@@ -2,13 +2,13 @@
 
 
 
-<div id="sender-info-container">
-    <!-- htmx get to update sender info -->
-    <div
-        hx-trigger="senderUpdated-{{sender.uuid}} from:document"
-        hx-get="{% url 'sender_info'  sender.uuid %}"
-        hx-target="#sender-info-container">
-    </div>
+<div id="sender-info-container-{{ sender.uuid }}"
+     sender-uuid="{{sender.uuid}}"
+     hx-trigger="senderUpdated-{{sender.uuid}} from:document"
+     hx-get="{% url 'sender_info'  sender.uuid %}"
+     hx-target="this"
+     hx-swap="outerHTML"
+     class="sender-pull">
 
     <div class="flex flex-col ">
         <h3 class="mb-2 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
@@ -28,7 +28,7 @@
                     </span>
                 </span>
 
-                <button  sender-uuid="{{sender.uuid}}" class="my-2 ml-2 w-[140px] text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400 sender-updating" 
+                <button  sender-uuid="{{sender.uuid}}" class="my-2 ml-2 w-[140px] text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400 sender-push" 
                     hx-post="{% url 'notify_invitation' sender.pk %}"
                     hx-target="#messageBar"
                     hx-swap="outerHTML">
@@ -51,7 +51,7 @@
                     {% endlocalize %}
                     </span>
                 </span>
-                <button sender-uuid="{{sender.uuid}}" class="my-2 ml-2 w-[140px]  text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400 sender-updating" 
+                <button sender-uuid="{{sender.uuid}}" class="my-2 ml-2 w-[140px]  text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400 sender-push" 
                     hx-post="{% url 'notify_deadline' sender.pk %}"
                     hx-target="#messageBar"
                     hx-swap="outerHTML">
@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <div sender-uuid="{{sender.uuid}}" class="inline-flex items-center my-1 ml-2 text-xs sender-updating">
+        <div sender-uuid="{{sender.uuid}}" class="inline-flex items-center my-1 ml-2 text-xs sender-push">
             <span class="mr-2">Link status:</span>
             {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active color_on="green" color_off="orange" toggle_color_on="marian-blue" toggle_color_off="gray" label_on="active" label_off="inactive" soft_off_label=False label_colored=True label_wrap=True %}
         </div>
