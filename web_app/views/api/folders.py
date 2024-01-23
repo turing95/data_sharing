@@ -10,7 +10,7 @@ def search_folder(request):
         search_query = None
         search_type = None
         search_pattern = re.compile(r'search-folders-\d+-')
-        type_pattern = re.compile(r'.*destination_type.*')
+        type_pattern = re.compile(r'.*destination_type_select.*')
 
         for key in request.POST.keys():
             if re.match(search_pattern, key):
@@ -18,7 +18,6 @@ def search_folder(request):
             elif re.match(type_pattern, key):
                 search_type = request.POST[key]
         folders = request.custom_user.get_folders(search_type,search_query)
-
     return render(request,
                   'private/space/create/components/folders_search_results.html',
-                  {'folders': folders})
+                  {'folders': folders,'destination_type':search_type})
