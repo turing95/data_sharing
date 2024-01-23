@@ -9,9 +9,4 @@ class Migration(migrations.Migration):
         ('web_app', '0038_space_deadline_notification_datetime'),
     ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='space',
-            name='deadline_notification_datetime',
-        ),
-    ]
+    operations = []

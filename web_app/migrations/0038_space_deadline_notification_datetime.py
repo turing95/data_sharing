@@ -9,10 +9,4 @@ class Migration(migrations.Migration):
         ('web_app', '0037_alter_space_deadline_notice_days_and_more'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='space',
-            name='deadline_notification_datetime',
-            field=models.GeneratedField(db_persist=True, expression=models.F('deadline'), output_field=models.DateTimeField()),
-        ),
-    ]
+    operations = []
