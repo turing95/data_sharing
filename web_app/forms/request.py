@@ -75,10 +75,15 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(attrs={'class': 'file-types'}),
         label='File type restrictions',
         required=False)
+    
+    # DESTINATION FOLDER
+    
     destination_type = forms.ChoiceField(
         label="Destination folder")
+    
     destination_id = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination'}),
                                      label="Destination folder ID")
+    
     destination_display = forms.CharField(
         required=False,
         label='Non-editable Field',
@@ -87,6 +92,7 @@ class RequestForm(ModelForm):
                    'readonly': 'readonly'})
     )
 
+    # REQUEST INSTRUCTIONS
     instructions = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={
@@ -127,12 +133,19 @@ class RequestForm(ModelForm):
     def __init__(self, *args, **kwargs):
         custom_user = kwargs.pop('custom_user', None)
         super().__init__(*args, **kwargs)
+        
+        # Generic destination providers options
         choices = []
         if custom_user.google_account:
             choices.append((GoogleDrive.TAG, 'Google Drive'))
+        else:
+            choices.append((GoogleDrive.TAG, 'Google Drive (not connected)'))
+            
         if custom_user.microsoft_account is not None:
             print(custom_user.microsoft_account)
             choices.append((OneDrive.TAG, 'One Drive'))
+        else:
+            choices.append((OneDrive.TAG, 'One Drive (not connected)'))
         self.fields['destination_type'].choices = choices
 
     def clean_file_naming_formula(self):
