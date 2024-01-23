@@ -131,7 +131,6 @@ class RequestForm(ModelForm):
         if custom_user.google_account:
             choices.append((GoogleDrive.TAG, 'Google Drive'))
         if custom_user.microsoft_account is not None:
-            print(custom_user.microsoft_account)
             choices.append((OneDrive.TAG, 'One Drive'))
         self.fields['destination_type'].choices = choices
 
