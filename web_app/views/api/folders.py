@@ -22,7 +22,10 @@ def search_folder(request):
                 search_query = request.POST[key]
             elif re.match(type_pattern, key):
                 search_type = request.POST[key]
-        folders = request.custom_user.get_folders(search_type, search_query)
+        if search_query == '':
+            folders = None
+        else:
+            folders = request.custom_user.get_folders(search_type, search_query)
         return render(request,
                       'private/space/create/components/folders_search_results.html',
                       {'folders': folders, 'destination_type': search_type})
