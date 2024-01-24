@@ -95,6 +95,8 @@
                                     {{ req.destination_type_select }}
                                   </div>
                                 </div>
+                                                                <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=req.destination_id.errors %}</div>
+
                                  <!-- Search Results Section -->
                                  <div id="destination-search-results-container">
                                     <div class="flex flex-col-reverse gap-4 md:flex-row">
@@ -113,8 +115,9 @@
                                 </div>
                                 {{ req.destination_id }}
                                 {{ req.destination_type }}
-                            </section>
 
+                            </section>
+                            
                         <!-- REQUEST INSTRUCTIONS -->
                         <div class="mb-6">
                             <div class="flex items-center mb-2 space-x-2">
