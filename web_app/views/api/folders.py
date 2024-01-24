@@ -30,20 +30,20 @@ def search_folder(request):
 
 
 @login_required
-@require_POST
+@require_GET
 def select_destination_type(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         custom_user = request.custom_user
         type_pattern = re.compile(r'.*destination_type_select.*')
         provider_available = False
         missing_provider = None
         provider_type = None
 
-        for key in request.POST.keys():
+        for key in request.GET.keys():
             if re.match(type_pattern, key):
-                provider_type = request.POST[key]
+                provider_type = request.GET[key]
                 break
-
+        next_path = request.GET.get('next', None)
         if provider_type == GoogleDrive.TAG:
             if custom_user.google_account:
                 provider_available = True
@@ -63,5 +63,5 @@ def select_destination_type(request):
         return render(request,
                       'private/space/create/components/destination_search.html',
                       {'provider_available': provider_available,
-                       'missing_provider': missing_provider, })
+                       'missing_provider': missing_provider, 'next': next_path})
     return HttpResponseBadRequest()

@@ -90,7 +90,7 @@ class RequestForm(ModelForm):
         widget=forms.Select(
             attrs={'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full",
                    'hx-trigger': "change, load",
-                   'hx-post': reverse_lazy('select_destination_type'),
+                   'hx-get': reverse_lazy('select_destination_type'),
                    'hx-target': "previous .destination-search",
                    'hx-swap': "outerHTML",
 
@@ -154,11 +154,12 @@ class RequestForm(ModelForm):
         fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files']
 
     def __init__(self, *args, **kwargs):
-        custom_user = kwargs.pop('custom_user', None)
+        request = kwargs.pop('request', None)
         index = kwargs.pop('index', None)
         super().__init__(*args, **kwargs)
         self.fields['destination_type_select'].widget.attrs[
             'hx-params'] = f"requests-{index}-destination_type_select"
+        self.fields['destination_type_select'].widget.attrs['hx-get'] += f'?next={request.get_full_path()}'
         # # Generic destination providers options
         # choices = []
         # if custom_user.google_account:

@@ -39,7 +39,7 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         return super().get_success_url()
 
     def get_formset_kwargs(self):
-        kwargs = {'custom_user':self.request.custom_user}
+        kwargs = {'request':self.request}
         return kwargs
     def get_context_for_form(self, data, button_text='Create space', **kwargs):
         data['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back to Spaces'}
