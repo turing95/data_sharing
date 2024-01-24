@@ -2,7 +2,7 @@
 {% load static i18n socialaccount allauth %}
 
 <div id="destination-search-container" class="w-full sm:w-2/3 h-[36px] destination-search">
-    {% if provider_available is True %}
+    {% if not missing_provider  %}
         <div class="inline-flex w-full border-r border-gray-300 border-y border-l  sm:border-l-0 h-[36px]">
             <div id="destination-search-bar" class="flex-grow">
                                   

@@ -73,27 +73,22 @@
                             </div>
 
 
-                            <section id="destination-selection-container" class="w-full my-2">
+                            <section class="w-full my-2">
 
                                 <div class="flex flex-col-reverse gap-4 md:flex-row">
                                     <div class="flex-1 w-full">
-                                        <div id="destination-selcted-folder-and-search-container" class="flex flex-col sm:flex-row">
+                                        <div class="flex flex-col sm:flex-row">
 
-                                            <div id="destination-selected-folder-container" class="flex flex-col w-full sm:w-1/3 h-[36px]">
+                                            <div class="flex flex-col w-full sm:w-1/3 h-[36px]">
                                                 <div class="inline-flex border-l border-gray-300 bg-marian-blue-100 border-y sm:border h-[36px]">
-                                                    <div id="destination-selected-folder-logo" class="flex items-center justify-center p-1 destination-selected-folder-logo">
-                                                        <img src="{% static 'images/drive_providers/google-drive-logo.svg' %}" alt="Drive Provider Icon" class="hidden w-6 h-6 google-image">
-                                                        <img src="{% static 'images/icons/folder-gray.svg' %}" alt="Drive Provider Icon" class="w-6 h-6 std-image">
-                                                        <img src="{% static 'images/drive_providers/one-drive-logo.svg' %}" alt="Drive Provider Icon" class="hidden w-6 h-6 onedrive-image">
-                                                    </div>
-                                                    <div id="destination-selected-folder-name" class="w-full">
+                                                    {% include 'private/space/create/components/destination/destination_logo.html' with tag=req.instance.destination.tag%}
+                                                    <div class="w-full">
                                                         {{ req.destination_display }}
-                                                        {% comment %} <input type="text" class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm" placeholder="No folder selected yet" readonly/> {% endcomment %}
                                                     </div>
                                                 </div>
                                             </div>
                                                 
-                                            {% include 'private/space/create/components/destination_search.html' with provider_available=True request_index=forloop.counter0 %}
+                                            {% include 'private/space/create/components/destination/destination_search.html' with  request_index=forloop.counter0 %}
                                         </div>
                                     </div>
                                   <div class="w-full sm:w-1/3 md:w-48 h-full  shrink-0 md:h-[36px]">
@@ -162,17 +157,7 @@
                                 <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=req.file_naming_formula.errors %}</div>
                             </div>
                         </div>
-                        
-                        {% comment %} <div class="mb-6">
-                            <div class="flex items-center mb-2 space-x-2">
-                                <label for="{{ req.number_of_files.id_for_label }}"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.number_of_files.label }} </label>
-                                {% include 'components/tooltip.html' with content=req.number_of_files.help_text target=req.number_of_files.name%}
-                            </div>
-                            {{ req.number_of_files }}
-                        </div> 
-                        {% endcomment %}
-
+                            
                         <!-- ALLOWED EXTENSIONS -->
                         <div class="mb-6">
                             <div class="flex items-center mb-2 space-x-2">

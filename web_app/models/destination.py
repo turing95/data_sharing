@@ -41,7 +41,7 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
 
 
 class GoogleDrive(BaseModel):
-    TAG = 'GOOGLE_DRIVE'
+    TAG = 'google_drive'
     folder_id = models.CharField(max_length=255)
     PROVIDER_ID = 'google'
 
@@ -113,7 +113,7 @@ class GoogleDrive(BaseModel):
 
 
 class OneDrive(BaseModel):
-    TAG = 'ONE_DRIVE'
+    TAG = 'one_drive'
     folder_id = models.CharField(max_length=255)
     PROVIDER_ID = 'microsoft'
 
