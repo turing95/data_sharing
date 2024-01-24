@@ -200,8 +200,6 @@ class OneDrive(BaseModel):
 
     @property
     def name(self):
-        print('getting name')
-
         token = self.custom_user.microsoft_token
         if not token:
             return None
