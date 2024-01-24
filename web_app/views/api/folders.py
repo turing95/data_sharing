@@ -12,23 +12,17 @@ from django.http import HttpResponseBadRequest  # Import HttpResponseBadRequest
 @require_POST
 def search_folder(request):
     if request.method == 'POST':
-        search_query = None
-        search_type = None
-        search_pattern = re.compile(r'search-folders-\d+-')
-        type_pattern = re.compile(r'.*destination_type_select.*')
-
-        for key in request.POST.keys():
-            if re.match(search_pattern, key):
-                search_query = request.POST[key]
-            elif re.match(type_pattern, key):
-                search_type = request.POST[key]
-        if search_query == '':
-            folders = None
-        else:
-            folders = request.custom_user.get_folders(search_type, search_query)
-        return render(request,
-                      'private/space/create/components/folders_search_results.html',
-                      {'folders': folders, 'destination_type': search_type})
+        request_index = request.GET.get('request_index',None)
+        if request_index is not None:
+            search_query = request.POST.get(f'search-folders-{request_index}-')
+            search_type = request.POST[f'requests-{request_index}-destination_type_select']
+            if search_query == '':
+                folders = None
+            else:
+                folders = request.custom_user.get_folders(search_type, search_query)
+            return render(request,
+                          'private/space/create/components/folders_search_results.html',
+                          {'folders': folders, 'destination_type': search_type})
     return HttpResponseBadRequest()
 
 
@@ -36,36 +30,31 @@ def search_folder(request):
 @require_GET
 def select_destination_type(request):
     if request.method == 'GET':
-        request_index = request.GET.get('request_index', None)
         custom_user = request.custom_user
-        type_pattern = re.compile(r'.*destination_type_select.*')
-        provider_available = False
-        missing_provider = None
-        provider_type = None
+        request_index = request.GET.get('request_index', None)
+        if request_index is not None:
+            provider_available = False
+            missing_provider = None
+            provider_type = request.GET.get(f'requests-{request_index}-destination_type_select')
+            next_path = request.GET.get('next', None)
+            if provider_type == GoogleDrive.TAG:
+                if custom_user.google_account:
+                    provider_available = True
+                else:
+                    adapter = get_adapter()
+                    missing_provider = adapter.get_provider(request, GoogleDrive.PROVIDER_ID)
 
-        for key in request.GET.keys():
-            if re.match(type_pattern, key):
-                provider_type = request.GET[key]
-                break
-        next_path = request.GET.get('next', None)
-        if provider_type == GoogleDrive.TAG:
-            if custom_user.google_account:
-                provider_available = True
+            elif provider_type == OneDrive.TAG:
+                if custom_user.microsoft_account is not None:
+                    provider_available = True
+                else:
+                    adapter = get_adapter()
+                    missing_provider = adapter.get_provider(request, OneDrive.PROVIDER_ID)
             else:
-                adapter = get_adapter()
-                missing_provider = adapter.get_provider(request, GoogleDrive.PROVIDER_ID)
+                return HttpResponseBadRequest()
 
-        elif provider_type == OneDrive.TAG:
-            if custom_user.microsoft_account is not None:
-                provider_available = True
-            else:
-                adapter = get_adapter()
-                missing_provider = adapter.get_provider(request, OneDrive.PROVIDER_ID)
-        else:
-            return HttpResponseBadRequest()
-
-        return render(request,
-                      'private/space/create/components/destination_search.html',
-                      {'provider_available': provider_available,
-                       'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index})
+            return render(request,
+                          'private/space/create/components/destination_search.html',
+                          {'provider_available': provider_available,
+                           'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index})
     return HttpResponseBadRequest()

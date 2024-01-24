@@ -1,4 +1,3 @@
-import { initSelectedFoldersLogo } from './destination/index.js';
 import {toggleAccordion, toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 import {initializeFileTypes, setupFileTypeCloseButton} from './fileTypeInput.js';
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
@@ -31,7 +30,6 @@ export function initRequestForms() {
 
     });
 
-    initSelectedFoldersLogo();
 }
 
 function addNewRequestForm() {
@@ -126,27 +124,48 @@ function updateElementIdentifiers(newForm, formCount) {
             element.setAttribute('hx-params', element.name)
 
             }
-        if (element.id.startsWith('id_search-folders')){
-            element.setAttribute('hx-params', `${element.name}, requests-${formCount}-destination_type`)
-
-            }
 
     });
 
+
+    // New logic to update hx-get and hx-post attributes
+    newForm.querySelectorAll('[hx-get], [hx-post]').forEach(element => {
+        // For hx-get
+        if (element.hasAttribute('hx-get')) {
+            let hxGetUrl = new URL(element.getAttribute('hx-get'), window.location.origin);
+            hxGetUrl.searchParams.set('request_index', formCount);
+            element.setAttribute('hx-get', hxGetUrl.toString());
+        }
+
+        // For hx-post
+        if (element.hasAttribute('hx-post')) {
+            let hxPostUrl = new URL(element.getAttribute('hx-post'), window.location.origin);
+            hxPostUrl.searchParams.set('request_index', formCount);
+            element.setAttribute('hx-post', hxPostUrl.toString());
+        }
+    });
+    // Update hx-get and hx-post attributes
+    updateHxAttributes(newForm, formCount);
     // Update labels
     updateLabelsForAttribute(newForm, formCount);
 }
 
-function updateAccordionButton(newForm, accordionId) {
-    const buttonSelector = `button[data-accordion-target="#${accordionId}"]`;
-    const accordionButton = newForm.querySelector(buttonSelector);
-    if (accordionButton) {
-        accordionButton.setAttribute('data-accordion-target', `#${accordionId}`);
-        accordionButton.addEventListener('click', toggleAccordion);
-    }
+function updateHxAttributes(newForm, formCount) {
+    newForm.querySelectorAll('[hx-get], [hx-post]').forEach(element => {
+        if (element.hasAttribute('hx-get')) {
+            updateHxAttribute(element, 'hx-get', formCount);
+        }
+        if (element.hasAttribute('hx-post')) {
+            updateHxAttribute(element, 'hx-post', formCount);
+        }
+    });
 }
 
-
+function updateHxAttribute(element, attributeName, formCount) {
+    const url = new URL(element.getAttribute(attributeName), window.location.origin);
+    url.searchParams.set('request_index', formCount);
+    element.setAttribute(attributeName, url.toString());
+}
 
 function updateLabelsForAttribute(newForm, formCount) {
     newForm.querySelectorAll('label').forEach(label => {

@@ -157,8 +157,6 @@ class RequestForm(ModelForm):
         request = kwargs.pop('request', None)
         index = kwargs.pop('index', None)
         super().__init__(*args, **kwargs)
-        self.fields['destination_type_select'].widget.attrs[
-            'hx-params'] = f"requests-{index}-destination_type_select"
         self.fields['destination_type_select'].widget.attrs['hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
         # # Generic destination providers options
         # choices = []

@@ -10,9 +10,8 @@
                         placeholder="Type to search a folder"
                         id="id_search-folders-{{ request_index }}-"
                         name="search-folders-{{ request_index }}-" 
-                        hx-post="{% url 'search_folders' %}"
+                        hx-post="{% url 'search_folders' %}?request_index={{ request_index }}"
                         hx-trigger="input changed delay:500ms, search, keyup"
-                        hx-params="search-folders-{{ request_index}}-, requests-{{ request_index }}-destination_type_select"
                         hx-target="next .search-results"
                         autocomplete="off">
 
