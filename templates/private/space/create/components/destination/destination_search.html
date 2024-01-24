@@ -14,14 +14,7 @@
                         hx-trigger="input changed delay:500ms, search, keyup"
                         hx-target="next .search-results"
                         autocomplete="off">
-
-
-
-                {% comment %} <input type="text" class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm" placeholder="Type to search" readonly/> {% endcomment %}
             </div>
-            <button id="destination-search-button" class="flex items-center justify-center p-1">
-                <img src="{% static 'images/icons/magnifying-lense.svg' %}" alt="Search button icon" class="w-6 h-6 transition-transform duration-300 hover:scale-[1.15]">
-            </button>
         </div>
     {% else %}
         <div class="flex flex-col items-center justify-center pl-3 h-9">
