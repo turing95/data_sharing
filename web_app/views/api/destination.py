@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import render
 import re
@@ -17,7 +17,7 @@ def search_folder(request):
             search_query = request.POST.get(f'search-folders-{request_index}-')
             search_type = request.POST[f'requests-{request_index}-destination_type_select']
             if search_query == '':
-                folders = None
+                return HttpResponse()
             else:
                 folders = request.custom_user.get_folders(search_type, search_query)
             return render(request,
