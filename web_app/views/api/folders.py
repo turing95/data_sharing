@@ -39,6 +39,8 @@ def selected_provider(request):
         
     provider_available=False
     missing_provider=None
+    provider_name=None
+    service_name=None
     if provider_type == GoogleDrive.TAG:
         if custom_user.google_account:
             provider_available=True
@@ -56,11 +58,6 @@ def selected_provider(request):
             missing_provider = adapter.get_provider(request,OneDrive.PROVIDER_ID)
             provider_name = OneDrive.PROVIDER_SLAG
             service_name = OneDrive.SLAG
-
-        
-    
-        
-    
     
     return render(request,
                   'private/space/create/components/destination_search.html',

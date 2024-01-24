@@ -1,4 +1,4 @@
-import { initDestinationTypeSelect } from './destination/index.js';
+import { initSelectedFoldersLogo } from './destination/index.js';
 import {toggleAccordion, toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 import {initializeFileTypes, setupFileTypeCloseButton} from './fileTypeInput.js';
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
@@ -31,7 +31,7 @@ export function initRequestForms() {
 
     });
 
-    initDestinationTypeSelect();
+    initSelectedFoldersLogo();
 }
 
 function addNewRequestForm() {
@@ -46,6 +46,7 @@ function addNewRequestForm() {
         totalForms.value = formCount + 1;
         document.dispatchEvent(new Event("initSearch"));
         setupFileTypeCloseButton(newForm);
+        
 
     }
 

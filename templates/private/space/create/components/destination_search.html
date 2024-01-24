@@ -6,10 +6,10 @@
         <div class="inline-flex w-full border-r border-gray-300 border-y border-l  sm:border-l-0 h-[36px]">
             <div id="destination-search-bar" class="flex-grow">
                                   
-                    <input class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm focus:ring-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent " type="search"
-                        placeholder="Type to search"
+                    <input class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm focus:ring-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input" type="search"
+                        placeholder="Type to search a folder"
                         id="id_search-folders-{{ forloop.counter0 }}-"
-                        name="search-folders-{{ forloop.counter0 }}-" placeholder="Search and select folder..." 
+                        name="search-folders-{{ forloop.counter0 }}-" 
                         hx-post="{% url 'search_folders' %}" 
                         hx-trigger="input changed delay:500ms, search, keyup"
                         hx-params="search-folders-{{ forloop.counter0 }}-, requests-{{ forloop.counter0 }}-destination_type_select"

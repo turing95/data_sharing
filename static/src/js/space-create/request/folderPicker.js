@@ -3,12 +3,32 @@ export function selectFolder(liElement,folderName,folderId,destinationType) {
     let selectedInputDisplay = form.querySelector('.destination-display');
     let selectedInput = form.querySelector('.destination');
     let selectedDestinationTypeInput = form.querySelector('.destination-type');
-        selectedInputDisplay.value = folderName;
-        
-        form.dispatchEvent(new Event("selectedFolder"));
+    
+    selectedInputDisplay.value = folderName;
+    selectedInput.value = folderId;
+    selectedDestinationTypeInput.value = destinationType;
+    // set provider folder
+    if (selectedDestinationTypeInput.value === 'GOOGLE_DRIVE') {
+        form.querySelector('.google-image').classList.remove('hidden');
+        form.querySelector('.onedrive-image').classList.add('hidden');
+        form.querySelector('.std-image').classList.add('hidden');
+    } else if (selectedDestinationTypeInput.value === 'ONE_DRIVE') {
+        form.querySelector('.google-image').classList.add('hidden');
+        form.querySelector('.onedrive-image').classList.remove('hidden');
+        form.querySelector('.std-image').classList.add('hidden');
+    } else {
+        form.querySelector('.google-image').classList.add('hidden');
+        form.querySelector('.onedrive-image').classList.add('hidden');
+        form.querySelector('.std-image').classList.remove('hidden');
+    }
 
-        document.dispatchEvent(new Event("initSearch"));
-        selectedInput.value = folderId;
-        selectedDestinationTypeInput.value = destinationType;
+    // clear search results
+    form.querySelector('.search-results').innerHTML = '';
+    form.querySelector('.search-input').value = '';
 
+
+
+    // set chosen folder logo
+    form.dispatchEvent(new Event("selectedFolder"));
+       
     }
