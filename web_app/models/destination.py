@@ -180,7 +180,6 @@ class OneDrive(BaseModel):
 
     @property
     def url(self):
-        print('getting url')
         token = self.custom_user.microsoft_token
         if not token:
             return None
@@ -191,7 +190,6 @@ class OneDrive(BaseModel):
         url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
 
         response = requests.get(url, headers=headers)
-        print(response.json())
         if response.status_code == 200:
             data = response.json()
             return data.get('webUrl')  # The URL of the folder

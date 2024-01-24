@@ -153,5 +153,4 @@ class CustomUser(User):
             )
             .execute()
         )
-        print(response)
         return response.get('files', [])
