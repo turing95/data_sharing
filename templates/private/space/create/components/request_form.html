@@ -191,9 +191,8 @@
                                 <input class="w-full form-control 'bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block Sp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'" type="search"
                                     id="id_search-file-types-{{ forloop.counter0 }}-"
                                     name="search-file-types-{{ forloop.counter0 }}-" placeholder="Search and select file types..." 
-                                    hx-post="{% url 'search_file_types' %}" 
-                                    hx-trigger="input changed delay:500ms, search, revealed, initSearch from:document"
-                                    hx-params="search-file-types-{{ forloop.counter0 }}-"
+                                    hx-post="{% url 'search_file_types' %}?request_index={{ forloop.counter0 }}" 
+                                    hx-trigger="input changed delay:500ms, search, revealed, initRequestForm from:document"
                                     hx-target="next .file-types-search-results"
                                     autocomplete="off">
                                 <div class="inline-flex w-full my-1">
