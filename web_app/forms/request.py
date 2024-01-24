@@ -90,7 +90,7 @@ class RequestForm(ModelForm):
         label="Destination folder",
         widget=forms.Select(attrs={'class':  "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full",
                                    'hx-trigger':"change",
-                                   'hx-get': reverse_lazy('selected_provider'),
+                                   'hx-post': reverse_lazy('select_destination_type'),
                                    'hx-target': "previous .destination-search",
                                    'hx-swap':"outerHTML"
                                    })

@@ -44,9 +44,6 @@ class GoogleDrive(BaseModel):
     TAG = 'GOOGLE_DRIVE'
     folder_id = models.CharField(max_length=255)
     PROVIDER_ID = 'google'
-    SLAG = "GoogleDrive"
-    PROVIDER_SLAG = "Google"
-    LOGO_PATH = "static\images\drive_providers\google-drive-logo.svg"
 
     @classmethod
     def create_from_folder_id(cls, upload_request, folder_id):
@@ -119,9 +116,6 @@ class OneDrive(BaseModel):
     TAG = 'ONE_DRIVE'
     folder_id = models.CharField(max_length=255)
     PROVIDER_ID = 'microsoft'
-    SLAG = "OneDrive"
-    PROVIDER_SLAG = "Microsoft"
-    LOGO_PATH = "static\images\drive_providers\one-drive-logo.svg"
 
     @classmethod
     def create_from_folder_id(cls, upload_request, folder_id):
