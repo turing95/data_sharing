@@ -159,7 +159,7 @@ class RequestForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['destination_type_select'].widget.attrs[
             'hx-params'] = f"requests-{index}-destination_type_select"
-        self.fields['destination_type_select'].widget.attrs['hx-get'] += f'?next={request.get_full_path()}'
+        self.fields['destination_type_select'].widget.attrs['hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
         # # Generic destination providers options
         # choices = []
         # if custom_user.google_account:

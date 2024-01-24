@@ -33,6 +33,7 @@ def search_folder(request):
 @require_GET
 def select_destination_type(request):
     if request.method == 'GET':
+        request_index = request.GET.get('request_index', None)
         custom_user = request.custom_user
         type_pattern = re.compile(r'.*destination_type_select.*')
         provider_available = False
@@ -63,5 +64,5 @@ def select_destination_type(request):
         return render(request,
                       'private/space/create/components/destination_search.html',
                       {'provider_available': provider_available,
-                       'missing_provider': missing_provider, 'next': next_path})
+                       'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index})
     return HttpResponseBadRequest()

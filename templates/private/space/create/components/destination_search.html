@@ -8,11 +8,11 @@
                                   
                     <input class="w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm focus:ring-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input" type="search"
                         placeholder="Type to search a folder"
-                        id="id_search-folders-{{ forloop.counter0 }}-"
-                        name="search-folders-{{ forloop.counter0 }}-" 
-                        hx-post="{% url 'search_folders' %}" 
+                        id="id_search-folders-{{ request_index }}-"
+                        name="search-folders-{{ request_index }}-" 
+                        hx-post="{% url 'search_folders' %}"
                         hx-trigger="input changed delay:500ms, search, keyup"
-                        hx-params="search-folders-{{ forloop.counter0 }}-, requests-{{ forloop.counter0 }}-destination_type_select"
+                        hx-params="search-folders-{{ request_index}}-, requests-{{ request_index }}-destination_type_select"
                         hx-target="next .search-results"
                         autocomplete="off">
 
