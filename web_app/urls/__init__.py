@@ -6,7 +6,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     toggle_space_public, history_table, \
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
-        sender_info, sender_row, selected_provider
+    sender_info, sender_row, select_destination_type
 
 urlpatterns = [
     # Generic views
@@ -33,8 +33,8 @@ urlpatterns = [
     path("500/", custom_server_error),
     # Ajax views
     path('file-types/search/', search_file_types, name='search_file_types'),
-    path('folders/search/', search_folder, name='search_folders'),
-    path('folders/selected/', selected_provider, name='selected_provider'),
+    path('destinations/search-folder/', search_folder, name='search_folders'),
+    path('destinations/select-type/', select_destination_type, name='select_destination_type'),
     path('spaces/<uuid:space_uuid>/toggle-public/', toggle_space_public, name='toggle_space_public'),
     path('spaces/<uuid:space_uuid>/history-table/', history_table, name='history_table'),
     path('request/<uuid:request_uuid>/modal/', request_modal, name='request_modal'),

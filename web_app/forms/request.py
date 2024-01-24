@@ -10,7 +10,6 @@ from django.utils.safestring import mark_safe
 from web_app.forms.widgets import ToggleWidget
 
 
-
 class CommaSeparatedFileTypeField(forms.CharField):
 
     def to_python(self, value):
@@ -78,41 +77,43 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(attrs={'class': 'file-types'}),
         label='File type restrictions',
         required=False)
-    
+
     # DESTINATION FOLDER FIELDS
     # providers dropdown
 
     destination_type_select = forms.ChoiceField(
-        choices = [
+        choices=[
             (GoogleDrive.TAG, 'Google Drive'),
             (OneDrive.TAG, 'One Drive'),
         ],
         label="Destination folder",
-        widget=forms.Select(attrs={'class':  "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full",
-                                   'hx-trigger':"change",
-                                   'hx-get': reverse_lazy('selected_provider'),
-                                   'hx-target': "previous .destination-search",
-                                   'hx-swap':"outerHTML"
-                                   })
-        )
-    
+        widget=forms.Select(
+            attrs={'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full",
+                   'hx-trigger': "change, load",
+                   'hx-get': reverse_lazy('select_destination_type'),
+                   'hx-target': "previous .destination-search",
+                   'hx-swap': "outerHTML",
+
+                   })
+    )
+
     destination_id = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination'}),
                                      label="Destination folder ID")
-    
+
     destination_type = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination-type'}),
                                        label="Destination type")
-    
+
     destination_display = forms.CharField(
-    required=False,
-    label='Non-editable Field',
-    widget=forms.TextInput(
-        attrs={
-            'class': ' w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm' + ' destination-display',
-            'readonly': 'readonly',
-            'placeholder': 'No folder selected yet'
-        }
+        required=False,
+        label='Non-editable Field',
+        widget=forms.TextInput(
+            attrs={
+                'class': ' w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm' + ' destination-display',
+                'readonly': 'readonly',
+                'placeholder': 'No folder selected yet'
+            }
+        )
     )
-)
 
     # REQUEST INSTRUCTIONS
     instructions = forms.CharField(
@@ -153,17 +154,17 @@ class RequestForm(ModelForm):
         fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files']
 
     def __init__(self, *args, **kwargs):
-        custom_user = kwargs.pop('custom_user', None)
+        request = kwargs.pop('request', None)
+        index = kwargs.pop('index', None)
         super().__init__(*args, **kwargs)
-        
-        
-
+        self.fields['destination_type_select'].widget.attrs[
+            'hx-params'] = f"requests-{index}-destination_type_select"
+        self.fields['destination_type_select'].widget.attrs['hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
         # # Generic destination providers options
         # choices = []
         # if custom_user.google_account:
         #     choices.append((GoogleDrive.TAG, 'Google Drive'))
-            
-            
+
         # if custom_user.microsoft_account is not None:
         #     choices.append((OneDrive.TAG, 'One Drive'))
         # self.fields['destination_type_select'].choices = choices
@@ -226,7 +227,14 @@ class DetailRequestForm(RequestForm):
                 self.fields['file_type_restrict'].initial = True
 
 
-# Replace the standard formset with the custom one
-RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, formset=BaseInlineFormSet, extra=1)
-DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, formset=BaseInlineFormSet,
+class CustomInlineFormSet(BaseInlineFormSet):
+
+    def get_form_kwargs(self, index):
+        kwargs = super().get_form_kwargs(index)
+        kwargs["index"] = index
+        return kwargs
+
+
+RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, formset=CustomInlineFormSet, extra=1)
+DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, formset=CustomInlineFormSet,
                                              extra=0)
