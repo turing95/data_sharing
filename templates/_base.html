@@ -54,6 +54,9 @@
     {% if generic_home %}
             <script type="module" src="{% static 'src/js/home/index.js' %}"></script>
     {% endif %}
+    {% if settings_page %}
+    <script type="module" src="{% static 'src/js/settings/index.js' %}"></script>
+    {% endif %}
     <script type="module" src="{% static 'src/js/index.js' %}"></script>
     <!-- should be included only when needed -->
 
