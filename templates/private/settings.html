@@ -1,22 +1,32 @@
 {% extends 'private/_base.html' %}
 {% load i18n socialaccount static allauth %}
 
-    {% block private_content %}
-        {% get_providers as socialaccount_providers %}
-{% if socialaccount_providers %}
-                {% url 'account_settings' as next %}
+{% block private_content %}
+{% get_providers as socialaccount_providers %}
 
+<!-- SOCIAL ACCOUNT MANAGEMENT -->
+
+{% if socialaccount_providers %}
+    {% url 'account_settings' as next %}
     {% element provider_list %}
         {% for provider in socialaccount_providers %}
             {% if provider.id == "google" and not request.custom_user.google_account %}
-                <p><a href="{% provider_login_url provider process="connect" scope=scope auth_params=auth_params next=next %}">Connect a
-                    {{ provider.id|title }} account</a></p>
+                <p>
+                    <a href="{% provider_login_url provider process="connect" scope=scope auth_params=auth_params next=next %}">
+                        Connect a {{ provider.id|title }} account
+                    </a>
+                </p>
             {% elif provider.id == "microsoft" and not request.custom_user.microsoft_account %}
-                <p><a href="{% provider_login_url provider process="connect" scope=scope auth_params=auth_params next=next %}">Connect a
-                    {{ provider.id|title }} account</a></p>
-           {% endif %}
+                <p>
+                    <a href="{% provider_login_url provider process="connect" scope=scope auth_params=auth_params next=next %}">
+                        Connect a {{ provider.id|title }} account
+                    </a>
+                </p>
+            {% endif %}
         {% endfor %}
+
     {% endelement %}
+
 {% endif %}
         
         
