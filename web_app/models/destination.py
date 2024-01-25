@@ -16,6 +16,10 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
         return self.tag
 
     @property
+    def alive(self):
+        return self.related_object.alive
+
+    @property
     def folder_id(self):
         return self.related_object.folder_id
 
@@ -66,10 +70,22 @@ class GoogleDrive(BaseModel):
         return build('drive', 'v3', credentials=self.custom_user.google_credentials)
 
     @property
+    def alive(self):
+        try:
+            file = self.service.files().get(supportsAllDrives=True, fileId=self.folder_id,
+                                            fields='id').execute()
+            return (file.get('id', None) is not None) is True
+        except Exception as e:
+            return False
+
+    @property
     def name(self):
-        file = self.service.files().get(supportsAllDrives=True, fileId=self.folder_id,
-                                        fields='name').execute()
-        return file.get('name')
+        try:
+            file = self.service.files().get(supportsAllDrives=True, fileId=self.folder_id,
+                                            fields='name').execute()
+            return file.get('name')
+        except Exception as e:
+            return None
 
     @property
     def url(self):
@@ -180,36 +196,42 @@ class OneDrive(BaseModel):
 
     @property
     def url(self):
-        token = self.custom_user.microsoft_token
-        if not token:
-            return None
+        try:
+            token = self.custom_user.microsoft_token
+            if not token:
+                return None
 
-        headers = {
-            'Authorization': f'Bearer {token.token}'
-        }
-        url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
+            headers = {
+                'Authorization': f'Bearer {token.token}'
+            }
+            url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
 
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            data = response.json()
-            return data.get('webUrl')  # The URL of the folder
-        else:
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                return data.get('webUrl')  # The URL of the folder
+            else:
+                return None
+        except Exception as e:
             return None
 
     @property
     def name(self):
-        token = self.custom_user.microsoft_token
-        if not token:
-            return None
+        try:
+            token = self.custom_user.microsoft_token
+            if not token:
+                return None
 
-        headers = {
-            'Authorization': f'Bearer {token.token}'
-        }
-        url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
+            headers = {
+                'Authorization': f'Bearer {token.token}'
+            }
+            url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
 
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            data = response.json()
-            return data.get('name')  # The name of the folder
-        else:
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                return data.get('name')  # The name of the folder
+            else:
+                return None
+        except Exception as e:
             return None

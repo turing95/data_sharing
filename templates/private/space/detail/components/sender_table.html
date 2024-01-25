@@ -25,10 +25,15 @@
 
                             <span class="text-xs font-normal normal-case">         
                                 Request {{ forloop.counter }} {% if req.is_deleted is True %} (deleted) {% endif %}:
-                            </span>    
+                            </span> 
+                        {% if req.destination.url %}
                             <a href="{{ req.destination.url }}" target="_blank" class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">   
                                 <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >{{ req.title }} </span>
                             </a>
+                        {% else %}
+                                                            <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >{{ req.title }} </span>
+
+                        {% endif %}
                         </div>
                     </th>
                     {% endfor%}

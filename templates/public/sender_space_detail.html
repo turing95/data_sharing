@@ -91,6 +91,7 @@
                     
                     
                     {% for form in formset.forms reversed%}
+                        {% if form.request.destination.alive %}
                     {{ form.request_uuid }}
                     
                     <!-- SEPARATOR -->
@@ -221,6 +222,7 @@
                             {% include 'components/forms/error_widget.html' with errors=form.notes.errors %}                       
                         </div>
                     </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 {% if space.upload_after_deadline or not space.deadline_expired %}

@@ -67,14 +67,16 @@
                         <td class="px-3 py-2">
                             <div class="flex items-center">            
                                 <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >{{ event.request.title }}</span>
-                                <a data-popover-target="popover-{{ forloop.counter }}" href="{{ event.request.destination.url }}" target="_blank" class="inline-flex items-center ml-2 text-gray-600 transition duration-300 shrink-0 hover:text-gray-800 group">
-                                    <img src="{% static 'images/icons/folder-gray.svg' %}" alt="folder icon" class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
-                                </a> 
-                                    <div data-popover id="popover-{{ forloop.counter }}" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-                                        <div class="px-3 py-2">
-                                            <p>Go to: {{ event.request.destination.name }}</p>
+                                {% if event.request.name %}
+                                    <a data-popover-target="popover-{{ forloop.counter }}" href="{{ event.request.destination.url }}" target="_blank" class="inline-flex items-center ml-2 text-gray-600 transition duration-300 shrink-0 hover:text-gray-800 group">
+                                        <img src="{% static 'images/icons/folder-gray.svg' %}" alt="folder icon" class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+                                    </a> 
+                                        <div data-popover id="popover-{{ forloop.counter }}" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                            <div class="px-3 py-2">
+                                                <p>Go to: {{ event.request.destination.name }}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                             </div>
                         </td>
                     {% endif %}
