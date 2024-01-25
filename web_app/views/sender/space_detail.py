@@ -37,17 +37,21 @@ class SpaceDetailView(TemplateView):
                     destination: GenericDestination = upload_request.destination
                     sender_event = SenderEvent.objects.create(sender=sender,
                                                               request=upload_request,
-                                                              event_type=SenderEvent.EventType.FILE_UPLOADED,notes=form.cleaned_data.get('notes'))
+                                                              event_type=SenderEvent.EventType.FILE_UPLOADED,
+                                                              notes=form.cleaned_data.get('notes'))
                     uploaded_files = uploaded_files if isinstance(uploaded_files, list) else [uploaded_files]
                     for uploaded_file in uploaded_files:
                         file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
-
-                        file_url = destination.upload_file(uploaded_file, file_name)
+                        try:
+                            file_url = destination.upload_file(uploaded_file, file_name)
+                        except Exception:
+                            continue
                         File.objects.create(original_name=uploaded_file.name, name=file_name,
                                             size=uploaded_file.size,
                                             file_type=uploaded_file.content_type,
                                             url=file_url,
                                             sender_event=sender_event)
+
                     messages.success(request, "Your upload was successful")  # http request here
             return redirect(request.path)
         return self.render_to_response(self.get_context_data(formset=formset))

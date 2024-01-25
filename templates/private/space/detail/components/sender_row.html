@@ -42,7 +42,7 @@
         </div>
     </td>
     <td class="px-3 py-2">
-            {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active  color_on="green" color_off="orange" toggle_color_on="marian-blue" toggle_color_off="gray" label_on="active" label_off="inactive" soft_off_label=False   label_colored=True label_wrap=True%}
+            {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active %}
     </td>
 
     {% for req in sender.space.requests.all reversed%}

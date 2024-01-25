@@ -110,9 +110,9 @@
             </div>
         </div>
 
-        <div sender-uuid="{{sender.uuid}}" class="inline-flex items-center my-1 ml-2 text-xs sender-push">
+        <div class="inline-flex items-center my-1 ml-2 text-xs">
             <span class="mr-2">Link status:</span>
-            {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active color_on="green" color_off="orange" toggle_color_on="marian-blue" toggle_color_off="gray" label_on="active" label_off="inactive" soft_off_label=False label_colored=True label_wrap=True %}
+            {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active %}
         </div>
     </div>
 </div>

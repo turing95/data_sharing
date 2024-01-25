@@ -41,6 +41,11 @@
         <script type="module" src="{% static 'src/js/space-create/index.js' %}" ></script>
 
     {% endif %}
+    
+    {% if space_summary %}
+        <script type="module" src="{% static 'src/js/space/detail/index.js' %}" ></script>
+
+    {% endif %}
 
     {% if sender_area %}
         <script type="module" src="{% static 'src/js/sender-space-detail/index.js' %}"></script>
