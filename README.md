@@ -66,7 +66,33 @@ required for scheduled async tasks
 1. add to djstripe webhook the following:
     - Base url: url from ngrok found under "forwarding" in the terminal 
     - Version: 2023-10-16
+1. add the ngrok url without https to the ALLOWED_HOSTS in settings.py
 1. run celery
 1. access app at localhost:8000
+
+# Windows and vs code venv activation
+Giulio: 
+```
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+..\venvs\data_share_venv\Scripts\activate 
+``` 
+
+# useful scripts
+```
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+..\venvs\data_share_venv\Scripts\activate 
+npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
+```
+```
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+..\venvs\data_share_venv\Scripts\activate 
+celery -A web_app worker -l INFO
+```
+```
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+..\venvs\data_share_venv\Scripts\activate 
+celery -A web_app worker -l INFO --pool=solo
+```
+
 
 
