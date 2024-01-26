@@ -25,9 +25,9 @@
                 <tbody>
                     {% for provider in socialaccount_providers %}                                    
                         {% if provider.id == "google" %}
-                            {% include 'private/settings/social_accounts_row.html' with provider=provider logo_url='images/social_account_providers/google-logo-color.svg' drive_logo_url='images/drive_providers/google_drive-logo.svg' drive_name="Google Drive" account_connected=google_account_connected %}
+                            {% include 'private/settings/social_accounts_row.html' with provider=provider logo_url='images/social_account_providers/google-logo-color.svg' drive_logo_url='images/drive_providers/google_drive-logo.svg' drive_name="Google Drive" account=request.custom_user.google_account %}
                         {% elif provider.id == "microsoft" %}
-                            {% include 'private/settings/social_accounts_row.html' with provider=provider logo_url='images/social_account_providers/microsoft-logo-color.svg' drive_logo_url='images/drive_providers/one_drive-logo.svg' drive_name="OneDrive" account_connected=microsoft_account_connected %}
+                            {% include 'private/settings/social_accounts_row.html' with provider=provider logo_url='images/social_account_providers/microsoft-logo-color.svg' drive_logo_url='images/drive_providers/one_drive-logo.svg' drive_name="OneDrive" account=request.custom_user.microsoft_account %}
                         {% endif %}                  
                     {% endfor %}
                 </tbody>
