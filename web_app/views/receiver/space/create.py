@@ -13,7 +13,7 @@ from web_app.tasks.notifications import notify_invitation
 from web_app.mixins import SubscriptionMixin
 
 
-class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
+class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
     template_name = "private/space/create/base.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
@@ -26,7 +26,8 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         customer, _created = Customer.get_or_create(
             subscriber=djstripe_settings.subscriber_request_callback(self.request)
         )
-        if not customer.subscription and request.user.spaces.filter(is_deleted=False).count() >= settings.MAX_FREE_SPACES:
+        if not customer.subscription and request.user.spaces.filter(
+                is_deleted=False).count() >= settings.MAX_FREE_SPACES:
             return redirect('create_checkout_session')
         response = super().dispatch(request, *args, **kwargs)
 
@@ -39,8 +40,9 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         return super().get_success_url()
 
     def get_formset_kwargs(self):
-        kwargs = {'request':self.request}
+        kwargs = {'request': self.request}
         return kwargs
+
     def get_context_for_form(self, data, button_text='Create space', **kwargs):
         data['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back to Spaces'}
         data['space_form'] = True
@@ -56,7 +58,7 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         return self.get_context_for_form(data)
 
     def get_formset(self):
-        return RequestFormSet(self.request.POST or None,form_kwargs=self.get_formset_kwargs())
+        return RequestFormSet(self.request.POST or None, form_kwargs=self.get_formset_kwargs())
 
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
@@ -83,7 +85,7 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
         return self.form_invalid(form)
 
     @staticmethod
-    def handle_senders(emails, space_instance:Space):
+    def handle_senders(emails, space_instance: Space):
         for email in emails:
             sender = Sender.objects.create(email=email, space=space_instance)
             if space_instance.notify_invitation is True:
@@ -91,11 +93,10 @@ class SpaceFormView(LoginRequiredMixin,SubscriptionMixin, FormView):
             if space_instance.deadline_notification_datetime is not None:
                 sender.schedule_deadline_notification()
 
-
-    @staticmethod
-    def handle_formset(formset):
+    def handle_formset(self,formset):
         formset.save()
         for req in formset:
-            GenericDestination.create_from_folder_id(req.instance,req.cleaned_data.get('destination_type'), req.cleaned_data.get('destination_id'))
+            GenericDestination.create_from_folder_id(req.instance, req.cleaned_data.get('destination_type'),
+                                                     req.cleaned_data.get('destination_id'),self.request.custom_user)
             for file_type in req.cleaned_data.get('file_types'):
                 req.instance.file_types.add(file_type)

@@ -1,5 +1,6 @@
 import requests
 from django.contrib.contenttypes.models import ContentType
+from allauth.socialaccount.models import SocialAccount
 
 from web_app.models import PolymorphicRelationModel, BaseModel, ActiveModel
 from django.db import models
@@ -11,6 +12,10 @@ from io import BytesIO
 class GenericDestination(PolymorphicRelationModel, ActiveModel):
     tag = models.CharField(max_length=50)
     request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE, related_name='destinations')
+    social_account = models.ForeignKey(SocialAccount, on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.tag
@@ -35,11 +40,11 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
         return self.related_object.upload_file(file, file_name)
 
     @classmethod
-    def create_from_folder_id(cls, request_instance, destination_type, folder_id):
+    def create_from_folder_id(cls, request_instance, destination_type, folder_id, custom_user):
         if destination_type == GoogleDrive.TAG:
-            return GoogleDrive.create_from_folder_id(request_instance, folder_id)
+            return GoogleDrive.create_from_folder_id(request_instance, folder_id, custom_user)
         elif destination_type == OneDrive.TAG:
-            return OneDrive.create_from_folder_id(request_instance, folder_id)
+            return OneDrive.create_from_folder_id(request_instance, folder_id, custom_user)
         else:
             raise NotImplementedError
 
@@ -50,13 +55,14 @@ class GoogleDrive(BaseModel):
     PROVIDER_ID = 'google'
 
     @classmethod
-    def create_from_folder_id(cls, upload_request, folder_id):
+    def create_from_folder_id(cls, upload_request, folder_id, custom_user):
         google_drive_destination = cls(folder_id=folder_id)
 
         generic_destination = GenericDestination(
             request=upload_request,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=google_drive_destination.pk,
+            social_account=custom_user.google_account,
             tag=cls.TAG,
         )
 
@@ -134,13 +140,14 @@ class OneDrive(BaseModel):
     PROVIDER_ID = 'microsoft'
 
     @classmethod
-    def create_from_folder_id(cls, upload_request, folder_id):
+    def create_from_folder_id(cls, upload_request, folder_id, custom_user):
         one_drive_destination = cls(folder_id=folder_id)
 
         generic_destination = GenericDestination(
             request=upload_request,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=one_drive_destination.pk,
+            social_account=custom_user.microsoft_account,
             tag=cls.TAG,
         )
 
