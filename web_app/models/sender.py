@@ -3,6 +3,8 @@ import json
 from django.core.mail import get_connection, EmailMultiAlternatives
 from django.db import models
 from django.template.loader import render_to_string
+from django.templatetags.static import static
+
 from data_sharing import settings
 from utils.emails import html_to_text
 from web_app.models import BaseModel, ActiveModel
@@ -40,6 +42,7 @@ class Sender(BaseModel, ActiveModel):
         if self.is_active:
             context = {
                 'sender': self,
+                'logo': settings.BASE_URL + static('images/logo.png'),
             }
             email_html = render_to_string('emails/deadline_notification.html', context)
             from_email = settings.NO_REPLY_EMAIL
