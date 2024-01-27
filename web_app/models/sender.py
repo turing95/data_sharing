@@ -37,9 +37,13 @@ class Sender(BaseModel, ActiveModel):
         self.save()
 
     def notify_deadline(self):
+        from web_app.models import UploadRequest
         if self.is_active:
+            upload_requests = UploadRequest.objects.filter(space=self.space)
             context = {
                 'sender': self,
+                'contact_email': settings.CONTACT_EMAIL,
+                'upload_requests': upload_requests,
             }
             email_html = render_to_string('emails/deadline_notification.html', context)
             from_email = settings.NO_REPLY_EMAIL
@@ -51,7 +55,7 @@ class Sender(BaseModel, ActiveModel):
                     use_tls=True,
             ) as connection:
                 msg = EmailMultiAlternatives(
-                    subject='Deadline notification',
+                    subject=f'Files upload reminder for space: {format(self.space.title)}',
                     body=html_to_text(email_html),
                     from_email=from_email,
                     to=[self.email],
