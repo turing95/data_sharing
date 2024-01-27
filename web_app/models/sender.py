@@ -10,6 +10,7 @@ from utils.emails import html_to_text
 from web_app.models import BaseModel, ActiveModel
 import arrow
 from django_celery_beat.models import PeriodicTask, ClockedSchedule
+from django.urls import reverse
 
 
 class Sender(BaseModel, ActiveModel):
@@ -46,10 +47,16 @@ class Sender(BaseModel, ActiveModel):
                 'sender': self,
                 'contact_email': settings.CONTACT_EMAIL,
                 'upload_requests': upload_requests,
+                'homepage_link': settings.BASE_URL,
                 'logo_link': settings.BASE_URL + static('images/logo.png'),
+                'space_link': settings.BASE_URL + reverse('sender_space_detail_private', kwargs={
+                                                        'space_uuid': self.space.uuid,
+                                                        'sender_uuid': self.uuid
+                                                        })
+                
             }
             email_html = render_to_string('emails/deadline_notification.html', context)
-            from_email = settings.NO_REPLY_EMAIL
+            from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
             with get_connection(
                     host=settings.RESEND_SMTP_HOST,
                     port=settings.RESEND_SMTP_PORT,
@@ -58,7 +65,7 @@ class Sender(BaseModel, ActiveModel):
                     use_tls=True,
             ) as connection:
                 msg = EmailMultiAlternatives(
-                    subject=f'Files upload reminder for space: {format(self.space.title)}',
+                    subject=f'Files upload reminder for space: {self.space.title}',
                     body=html_to_text(email_html),
                     from_email=from_email,
                     to=[self.email],
@@ -75,15 +82,26 @@ class Sender(BaseModel, ActiveModel):
         return False
 
     def notify_invitation(self):
+        from web_app.models import UploadRequest
+        upload_requests = UploadRequest.objects.filter(space=self.space)
         context = {
-            'sender': self,
-        }
+                'sender': self,
+                'contact_email': settings.CONTACT_EMAIL,
+                'upload_requests': upload_requests,
+                'homepage_link': settings.BASE_URL,
+                'logo_link': settings.BASE_URL + static('images/logo.png'),
+                'space_link': settings.BASE_URL + reverse('sender_space_detail_private', kwargs={
+                                                        'space_uuid': self.space.uuid,
+                                                        'sender_uuid': self.uuid
+                                                        })
+                
+            }
         calendar_url, ics_content = self.space.get_deadline_url_ics(self)
 
         context['calendar_url'] = calendar_url
 
         email_html = render_to_string('emails/sender_invite.html', context)
-        from_email = settings.NO_REPLY_EMAIL
+        from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
         with get_connection(
                 host=settings.RESEND_SMTP_HOST,
                 port=settings.RESEND_SMTP_PORT,
@@ -92,7 +110,7 @@ class Sender(BaseModel, ActiveModel):
                 use_tls=True,
         ) as connection:
             msg = EmailMultiAlternatives(
-                subject='Invite to space',
+                subject=f'Invitation to upload space: {self.space.title}',
                 body=html_to_text(email_html),
                 from_email=from_email,
                 to=[self.email],

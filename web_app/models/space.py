@@ -6,6 +6,7 @@ import pytz
 from datetime import timedelta
 import arrow
 from decimal import Decimal
+from django.urls import reverse
 
 
 class Space(BaseModel,DeleteModel):
@@ -56,7 +57,7 @@ class Space(BaseModel,DeleteModel):
         return self.upload_events.filter(sender__isnull=True)
 
     def get_deadline_url_ics(self, sender):
-        # Format the deadline as YYYYMMDDTHHMMSSZ
+        # Format the deadline as YYYYMMDDTHHMMSSZ 
         if self.deadline is None or self.notify_deadline is False:
             return None, None
         deadline = self.deadline
@@ -67,7 +68,14 @@ class Space(BaseModel,DeleteModel):
         formatted_reminder_date = reminder_date.strftime('%Y%m%dT%H%M%SZ')'''
 
         # Construct the calendar URL
-        calendar_url = f'https://www.google.com/calendar/render?action=TEMPLATE&text=Reminder:+Deadline+for+{self.title}&dates={formatted_deadline}/{formatted_deadline}&details=Deadline+Reminder&location=Online'
+        space_link = settings.BASE_URL + reverse('sender_space_detail_private', kwargs={
+                                                        'space_uuid': self.uuid,
+                                                        'sender_uuid': sender.uuid
+                                                        })
+        event_details = f"""You have been invited by: {self.user.email}<br><br>Go to Space: <a href="{space_link}">{self.title}</a>"""
+
+        event_title = f"DEADLINE for upload space: {self.title}"
+       
         ics_content = (
                 "BEGIN:VCALENDAR\n"
                 "VERSION:2.0\n"
@@ -77,12 +85,15 @@ class Space(BaseModel,DeleteModel):
                 "DTSTAMP:" + formatted_deadline + "\n"
                                                   "DTSTART:" + formatted_deadline + "\n"
                                                                                          "DTEND:" + formatted_deadline + "\n"
-                                                                                                                         f"SUMMARY:Reminder: Deadline for {self.title}\n"
-                                                                                                                         "DESCRIPTION:Deadline Reminder\n"
+                                                                                                                         f"SUMMARY:{event_title}\n"
+                                                                                                                         f"DESCRIPTION:{event_details}\n"
                                                                                                                          "LOCATION:Online\n"
                                                                                                                          "END:VEVENT\n"
                                                                                                                          "END:VCALENDAR"
         )
+        event_details = event_details.replace(' ', '+')
+        event_title = event_title.replace(' ', '+')
+        calendar_url = f'https://www.google.com/calendar/render?action=TEMPLATE&text={event_title}&dates={formatted_deadline}/{formatted_deadline}&details={event_details}&location=Online'
         return calendar_url, ics_content
 
     class Meta:
