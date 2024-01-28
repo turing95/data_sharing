@@ -22,9 +22,9 @@ def get_message_color(value):
         "success": "green",
         "error": "red",
         "warning": "yellow",
-        "info": "blue",
+        "info": "blue"
     }
-    return colors.get(value, "gray")
+    return colors.get(value, "blue")
 
 
 @register.simple_tag

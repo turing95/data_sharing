@@ -35,24 +35,29 @@ class SpaceDetailView(TemplateView):
                 uploaded_files = form.cleaned_data.get('files')
                 if uploaded_files:
                     destination: GenericDestination = upload_request.destination
-                    sender_event = SenderEvent.objects.create(sender=sender,
-                                                              request=upload_request,
-                                                              event_type=SenderEvent.EventType.FILE_UPLOADED,
-                                                              notes=form.cleaned_data.get('notes'))
+                    sender_event = None
+                    error = False
                     uploaded_files = uploaded_files if isinstance(uploaded_files, list) else [uploaded_files]
                     for uploaded_file in uploaded_files:
+                        if sender_event is None:
+                            sender_event = SenderEvent.objects.create(sender=sender,
+                                                                      request=upload_request,
+                                                                      event_type=SenderEvent.EventType.FILE_UPLOADED,
+                                                                      notes=form.cleaned_data.get('notes'))
                         file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
                         try:
                             file_url = destination.upload_file(uploaded_file, file_name)
                         except Exception:
+                            error = True
+                            messages.error(request, f"An error occurred while uploading file {uploaded_file.name}")
                             continue
                         File.objects.create(original_name=uploaded_file.name, name=file_name,
                                             size=uploaded_file.size,
                                             file_type=uploaded_file.content_type,
                                             url=file_url,
                                             sender_event=sender_event)
-
-                    messages.success(request, "Your upload was successful")  # http request here
+                    if not error:
+                        messages.success(request, f"Your upload has completed")
             return redirect(request.path)
         return self.render_to_response(self.get_context_data(formset=formset))
 

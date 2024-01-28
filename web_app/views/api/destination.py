@@ -17,7 +17,8 @@ def search_folder(request):
             search_query = request.POST.get(f'search-folders-{request_index}-')
             search_type = request.POST[f'requests-{request_index}-destination_type_select']
             if search_query == '':
-                return HttpResponse()
+                return HttpResponse(status=204)
+
             else:
                 folders = request.custom_user.get_folders(search_type, search_query)
             return render(request,

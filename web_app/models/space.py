@@ -68,10 +68,7 @@ class Space(BaseModel,DeleteModel):
         formatted_reminder_date = reminder_date.strftime('%Y%m%dT%H%M%SZ')'''
 
         # Construct the calendar URL
-        space_link = settings.BASE_URL + reverse('sender_space_detail_private', kwargs={
-                                                        'space_uuid': self.uuid,
-                                                        'sender_uuid': sender.uuid
-                                                        })
+        space_link = sender.full_space_link
         event_details = f"""You have been invited by: {self.user.email}<br><br>Go to Space: <a href="{space_link}">{self.title}</a>"""
 
         event_title = f"DEADLINE for upload space: {self.title}"

@@ -17,7 +17,7 @@ export function initMessageBar() {
     if (!messageBar) {
         return;
     }
-    messageBar.querySelectorAll('[id^="alert-"]').forEach(element => {
+    messageBar.querySelectorAll('[role="alert"]').forEach(element => {
         new Dismiss(element, element.querySelector('button'));
     });
     setTimeout(closeMessage, 5000);
