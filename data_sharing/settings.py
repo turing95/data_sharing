@@ -27,7 +27,6 @@ if DEBUG is False:
     )
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_URL = "http://localhost:8000"
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com","b0a5-2001-a61-3bca-ff01-3cdd-e2fa-dd13-3bc1.ngrok-free.app", "5393-2-35-119-2.ngrok-free.app"
