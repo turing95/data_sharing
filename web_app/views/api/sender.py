@@ -16,7 +16,7 @@ def toggle_sender_active(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
     sender.is_active = not sender.is_active
     sender.save()
-    return HttpResponse()
+    return HttpResponse(status=204)
 
 
 @login_required
