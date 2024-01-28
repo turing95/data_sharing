@@ -23,7 +23,7 @@ def create_checkout_session(request):
         stripe.api_key = APIKey.objects.get(name='STRIPE_TEST_SECRET_KEY').secret
 
     success_url = request.build_absolute_uri(
-        reverse("generic_home")
+        reverse("spaces")
     )
     cancel_url = request.build_absolute_uri(reverse("generic_home"))
 
