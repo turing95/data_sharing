@@ -167,13 +167,18 @@ function cleanErrors(newForm) {
     });
 }
 
+function resetDestinationLogo(newForm) {
+    let el = newForm.querySelector('.destination-logo');
+    htmx.ajax('GET', '/destinations/get-logo/', {target:el, swap:'innerHTML'})
+
+}
 function postProcessNewForm(newForm, formCount, totalForms){
         if (newForm) {
         document.getElementById('accordion-open').appendChild(newForm);
         totalForms.value = formCount + 1;
         document.dispatchEvent(new Event("initRequestForm"));
+        resetDestinationLogo(newForm);
         setupFileTypeCloseButton(newForm);
-
 
     }
 }
