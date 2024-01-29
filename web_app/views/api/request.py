@@ -17,7 +17,7 @@ def delete_request(request, request_uuid):
     requests = DetailRequestFormSet(None,
                                     instance=space,
                                     queryset=space.requests.filter(is_deleted=False).order_by('created_at'),
-                                    form_kwargs={'access_token': request.custom_user.google_token.token})
+                                    form_kwargs={'request': request})
     return render(
         request,
         'private/space/create/components/request_form.html',
