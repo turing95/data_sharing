@@ -16,4 +16,4 @@ DEBUG = True
 STRIPE_LIVE_MODE = False  # Change to True in production
 DJSTRIPE_WEBHOOK_SECRET = ""
 RESEND_API_KEY = ""
-BASE_URL = "" # "http://localhost:8000" for local development
+DOC_URL = "" # "http://localhost:3000" for local development

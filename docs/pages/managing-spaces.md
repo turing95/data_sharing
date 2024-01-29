@@ -1,11 +1,11 @@
 # Managing Spaces
 
-the "Your Spaces" page is where you land after logging in. It lists all the Spaces you've created. Initially, this will be empty for new users. Here's what you can do:
+The "Your Spaces" page is where you land after logging in. It lists all the Spaces you've created. Initially, this will be empty for new users. Here's what you can do:
 
 - **View Space Details:**
   - Each Space has a preview of the title and instructions.
   - Direct access to two key areas:
-    - **Summary Page:** Offers detailed information about the Space.
+    - **[Summary Page](pages/space-summary-page):** Offers detailed information about the Space.
     - **Edit Page:** Enables you to modify the Space.
 
 - **Manage Spaces:**

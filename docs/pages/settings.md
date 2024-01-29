@@ -19,6 +19,6 @@ The Settings page in Kezyy allows you to manage your login provider options, cru
 ### Account Deletion
 
 - **Deleting Your Account:** You have the option to delete their account completely from this page.
-- **Note for Subscribed Users:** Deleting your account does not result in a refund for the remaining subscription period. However, it will cancel any subsequent charges. See the [Billing and Subscriptions](billing-and-subscriptions) page for more details.
+- **Note for Subscribed Users:** Deleting your account does not result in a refund for the remaining subscription period. However, it will cancel any subsequent charges. See the [Billing and Subscriptions](pages/billing-and-subscriptions) page for more details.
 
 

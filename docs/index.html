@@ -2,16 +2,24 @@
 <html lang="en">
 
 <head>
+    <style>
+        .sidebar .app-name img {
+          width: 50%;
+        }
+    </style>
+
   <meta charset="utf-8">
   <meta name="viewport"
     content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
 
   <!-- Replace with your own title and description. -->
-  <title>Awesome Docsify Site</title>
-  <meta name="description" content="An awesome docsify site for publishing some content on the web.">
+  <title>Kezyy Help Center</title>
+  <meta name="description" content="Find answers for your questions about Kezyy and become a proficient user">
 
   <!-- Default Theme (see https://docsify.js.org/#/themes) -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/_media/favicon.ico"/>
 
 </head>
 
@@ -21,7 +29,7 @@
   <script>
     // Docsify Configuration (see https://docsify.js.org/#/configuration)
     window.$docsify = {
-      name: 'Kezyy Knowledge Base',
+      name: 'Kezyy Help Center',
 
       // Sidebar Configuration
       auto2top: true,
@@ -36,7 +44,10 @@
         noData: 'No matches found.',
         // Headline depth, 1 - 6
         depth: 2,
-      }
+      },
+      homepage:'home.md', // set homepage 
+
+      logo: '/_media/logo.png',
     };
   </script>
 
@@ -50,6 +61,12 @@
   <!-- Additional-->
   <!-- page navigation-->
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <!-- homepage
+  <script>
+  window.$docsify = {
+    homepage: 'home.md',
+  };
+ </script> -->
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 The destination folder is where the files uploaded by invitees for a request will be stored within your cloud storage system.
 
 - **Selecting the Destination Folder:**
-  - Choose your cloud storage provider (Google Drive or OneDrive) based on your preferences set in the [Settings page](TODO) about the cloud storage providers connections.
+  - Choose your cloud storage provider (Google Drive or OneDrive) based on your preferences set in the [Settings page](pages/settings) about the cloud storage providers connections.
   - Use the search bar to find the folder by title. This search works regardless of the folder's nesting level.
   - Once you have selected the folder, you will see the folder's title on the left of the search bar.
 

@@ -23,4 +23,6 @@ def custom_context(request):
     amount_two_decimals = f"{unit_amount:.2f}"
     formatted_price = f"{sigil}{intcomma(amount_two_decimals)}"
     context['pro_product_formatted_price'] = formatted_price
+    
+    context['doc_url'] = settings.DOC_URL
     return context

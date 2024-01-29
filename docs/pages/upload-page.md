@@ -29,7 +29,7 @@ Invitees access the Upload page via the Space link received in their invitation 
 - **Public Link Limitations:**
   - For uploads via a public link, there is no upload history tracking.
   - This is due to the general and anonymous nature of public link submissions.
-  - You will still be able to see the files uploaded via the [Space Summary](space-summary-page) page.
+  - You will still be able to see the files uploaded via the [Space Summary](pages/space-summary-page) page.
 
 
 ### Dynamic updates and Access Limitations

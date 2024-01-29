@@ -20,7 +20,7 @@ Kezyy offers two primary types of notifications, both aimed at invitees:
 ### Deadline Reminder Notifications
 
 - **Trigger and Content:**
-  - Sent via email based on settings specified during Space creation. (see [Space Deadline](space-deadline) for more details)
+  - Sent via email based on settings specified during Space creation. (see [Space Deadline](pages/space/space-deadline) for more details)
   - Includes:
     - Link to the Space.
     - Preview of the instructions and requests.
@@ -30,5 +30,5 @@ Kezyy offers two primary types of notifications, both aimed at invitees:
 
 ### **Manual Notification Sending:**
   - Both invitation and deadline reminder notifications can be manually sent to an invitee.
-  - This is done on the [Space Summary page](space-summary-page) by clicking on the invitee's email address and choosing the appropriate option from the resulting menu.
+  - This is done on the [Space Summary](pages/space-summary-page) page by clicking on the invitee's email address and choosing the appropriate option from the resulting menu.
 

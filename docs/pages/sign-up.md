@@ -9,7 +9,7 @@ To sign up, there are two methods available:
 <h3><font color="red"><i>Beta Version Notice</i></font></h3>
 <p>
 Kezyy is currently in its beta phase, with a limited number of users who can access the application. If you're interested in the beta version, you'll need to <a href="#TODO-link-to-form">request access</a>. Read more about the beta version
-<a href="#beta-version-access-and-sign-up-process">down below</a>.
+<a href="#/pages/sign-up?id=beta-version-access-and-sign-up-process">down below</a>.
 </p>
 </div>
 

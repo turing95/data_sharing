@@ -1,6 +1,6 @@
 # 3. Space Instructions
 
-Check the [Request Instructions](TODO) article for more details on how to guide invitees on what to upload.
+Check the [Request Instructions](pages/space/request/request-instructions) article for more details on how to guide invitees on what to upload.
 
 - **Purpose of Space Instructions:**
   - For Spaces with multiple file requests, this section is for general instructions applicable to all requests.
