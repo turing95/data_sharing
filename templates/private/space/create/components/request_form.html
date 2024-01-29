@@ -69,7 +69,7 @@
                             <div class="flex items-center mb-2 space-x-2">
                                 <label for="req.some_destinaton_field.id_for_label"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">Destination folder </label>
-                                {% include 'components/tooltip.html' with title="Destination folder - MANDATORY" content="..." target_prefix='requests' target=req.destination_type.name num=forloop.counter0%}
+                                {% include 'components/tooltip.html' with title="Destination folder - MANDATORY" content=req.destination_id.help_text target_prefix='requests' target=req.destination_type.name num=forloop.counter0%}
                             </div>
 
 
@@ -168,7 +168,7 @@
                             <div class="flex items-center mb-2 space-x-2">
                                 <label for="{{ req.file_types.id_for_label }}"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.file_types.label }} </label>
-                                {% include 'components/tooltip.html' with title=req.tile_types.label target_prefix='requests' content=req.file_types.help_text target=req.file_types.name num=forloop.counter0%}
+                                {% include 'components/tooltip.html' with title=req.file_type_restrict.label target_prefix='requests' content=req.file_type_restrict.help_text target=req.file_type_restrict.name num=forloop.counter0%}
                             </div>
 
                             <div class = "flex items-center mb-2 nl-1">

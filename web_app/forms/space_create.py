@@ -122,13 +122,13 @@ class SpaceForm(ModelForm):
                             label_off='Notify'),
         required=False,
         label='Notify deadline',
-        help_text="""...""")
+        help_text="""Set a number of days and hours before the deadline to send a notification to your invitees.""")
     notify_invitation = forms.BooleanField(
         widget=ToggleWidget(label_on='Notify Invitation',
                             label_off='Notify Invitation'),
         required=False,
         label='Notify invitation',
-        help_text="""...""")
+        help_text="""All invitees will receive an email with the link to the space upon creation. You can re-send the invitation at any time.""")
 
     class Meta:
         model = Space

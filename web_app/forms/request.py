@@ -36,8 +36,7 @@ class RequestForm(ModelForm):
                                                           'required': 'required',
                                                           'class': css_classes.text_request_title_input}),
                             label='Request title - MANDATORY',
-                            help_text="""This will be displayed to your invitees.
-                                """)
+                            help_text="""This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for.""")
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
@@ -97,8 +96,10 @@ class RequestForm(ModelForm):
                    })
     )
 
-    destination_id = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination'}),
-                                     label="Destination folder ID")
+    destination_id = forms.CharField(
+        widget=forms.HiddenInput(attrs={'class': 'destination'}),
+        label="Destination folder ID",
+        help_text="""The file uploaded for this request will be sent to the folder selected here. Choose a cloud storage provider and search for a folder and select it.""")
 
     destination_type = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination-type'}),
                                        label="Destination type")
