@@ -1,0 +1,1 @@
+export {handleFilesUpload} from './eventHandlers.js';

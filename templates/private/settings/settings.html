@@ -1,0 +1,58 @@
+{% extends 'private/_base.html' %}
+{% load i18n socialaccount static allauth %}
+
+{% block private_content %}
+{% get_providers as socialaccount_providers %}
+
+<h1 class="text-4xl font-bold mb-8">Settings</h1>
+
+<div class="flex-col mb-8">
+    <h2 class="text-2xl font-bold mb-4 border-b">Connections</h2>
+    <!-- SOCIAL ACCOUNT MANAGEMENT -->
+    {% if socialaccount_providers %}
+    {% url 'account_settings' as next %}
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Provider</th>
+                        <th scope="col" class="px-6 py-3">Cloud Storage</th>
+                        <th scope="col" class="px-6 py-3">Status</th>
+                        <th scope="col" class="px-6 py-3">Options</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for provider in socialaccount_providers %}                                    
+                        {% if provider.id == "google" %}
+                            {% include 'private/settings/social_accounts_row.html' with provider=provider logo_url='images/social_account_providers/google-logo-color.svg' drive_logo_url='images/drive_providers/google_drive-logo.svg' drive_name="Google Drive" account=request.custom_user.google_account %}
+                        {% elif provider.id == "microsoft" %}
+                            {% include 'private/settings/social_accounts_row.html' with provider=provider logo_url='images/social_account_providers/microsoft-logo-color.svg' drive_logo_url='images/drive_providers/one_drive-logo.svg' drive_name="OneDrive" account=request.custom_user.microsoft_account %}
+                        {% endif %}                  
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No providers available.</p>
+    {% endif %}
+</div>
+
+
+<div class="flex-col mb-8">
+    <h2 class="text-2xl font-bold mb-4 border-b">User</h2>
+    <div class=" py-3 inline-flex">
+        <span class="block  text-gray-900 dark:text-white">Logged in as:</span>
+        <span class="block ml-2 text-gray-500 truncate dark:text-gray-400">{{ request.user.email }}</span>
+    </div> 
+
+        
+    <form action="{% url 'account_delete' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class=" ml-auto mr-10 account-delete-alert w-[150px] flex justify-center items-center text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 font-medium   px-3 py-1.5 text-center dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200"> 
+        Delete account
+        </button>
+    </form>
+</div>
+
+{% endblock %}

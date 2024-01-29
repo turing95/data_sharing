@@ -29,7 +29,7 @@
 
                         <!-- space settings dropdown -->              
                         <div class="flex justify-end mt-auto">
-                            {% include 'private/space/components/space_settings_dropdown.html' with space=space space_num=forloop.counter %}
+                            {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=forloop.counter %}
                         </div>
 
                         <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ space.title }}</h5>
@@ -37,19 +37,6 @@
                         
                         <div class="pl-2 my-2 text-sm font-medium text-gray-500 border-l-2 border-gray-300 line-clamp-3">
                             {{ space.instructions }}                                
-                        </div>
-                        <div class="mb-2 grow">
-                            <div class="flex justify-between items-left grow">
-                                {% if space.is_active %}
-                                <div class="bg-green-200 text-green-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                                    active
-                                </div>
-                                {% else %}
-                                <div class="bg-yellow-200 text-yellow-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                                    inactive
-                                </div>
-                                {% endif %}
-                            </div>
                         </div>
                         
        

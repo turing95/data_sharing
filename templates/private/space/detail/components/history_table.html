@@ -1,3 +1,4 @@
+{% load l10n %}
 
 {% load static %}
 
@@ -40,12 +41,14 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <!-- Timestamp-->
                     <th scope="row" class="px-3 py-2">
+                        {% localize on %}
                         <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
-                            {{ event.created_at|date:"Y-m-d" }}
+                            {{ event.created_at|date }}
                         </span>
                         <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                            {{ event.created_at|time:"H:i" }}
+                            {{ event.created_at|time }}
                         </span>
+                        {% endlocalize %}
                     </th>
                     
                     {% if hide_sender is False %}
@@ -64,14 +67,16 @@
                         <td class="px-3 py-2">
                             <div class="flex items-center">            
                                 <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >{{ event.request.title }}</span>
-                                <a data-popover-target="popover-{{ forloop.counter }}" href="{{ event.request.google_drive_destination.url }}" target="_blank" class="inline-flex items-center ml-2 text-gray-600 transition duration-300 shrink-0 hover:text-gray-800 group">
-                                    <img src="{% static 'images/icons/folder-gray.svg' %}" alt="folder icon" class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
-                                </a> 
-                                    <div data-popover id="popover-{{ forloop.counter }}" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-                                        <div class="px-3 py-2">
-                                            <p>Go to: {{ event.request.google_drive_destination.name }}</p>
+                                {% if event.request.destination.name %}
+                                    <a data-popover-target="popover-{{ forloop.counter }}" href="{{ event.request.destination.url }}" target="_blank" class="inline-flex items-center ml-2 text-gray-600 transition duration-300 shrink-0 hover:text-gray-800 group">
+                                        <img src="{% static 'images/icons/folder-gray.svg' %}" alt="folder icon" class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+                                    </a> 
+                                        <div data-popover id="popover-{{ forloop.counter }}" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                            <div class="px-3 py-2">
+                                                <p>Go to: {{ event.request.destination.name }}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                             </div>
                         </td>
                     {% endif %}
@@ -79,9 +84,9 @@
                     
                     <td class="px-3 py-2">
                         <div class="flex">            
-                            <span class=" min-w-[25px] max-w-[250px] text-sm " >
+                            <span class=" min-w-[25px] max-w-[250px] text-sm line-clamp-5" title="{{ event.notes|default_if_none:'' }}" >
                                 {% if event.notes %}
-                                    {{ event.notes }}
+                                    {{ event.notes|linebreaks }}
                                 {% endif %}
                             </span>                            
                         </div>
@@ -93,7 +98,7 @@
                         <ul class="flex flex-col">  
                             {% for file in event.files.all %}
                                 <li class="inline-flex overflow-wrap-anywhere">
-                                    <a href="{{ file.google_drive_url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
+                                    <a href="{{ file.url }}" target = "_blank" class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
                                         <span class="min-w-0">{{ file.name }}</span>
                                     </a>
                                 </li>

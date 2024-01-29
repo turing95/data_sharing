@@ -1,0 +1,10 @@
+{% load static %}
+<div class="flex items-center justify-center p-1 destination-logo">
+    {% if tag %}
+        {% with 'images/drive_providers/'|add:tag|add:'-logo.svg' as logo_static %}
+    <img src="{% static logo_static %}" alt="Drive Provider Icon" class="w-6 h-6 google-image">
+        {% endwith %}
+    {% else %}
+            <img src="{% static 'images/icons/folder-gray.svg' %}" alt="Drive Provider Icon" class="w-6 h-6 std-image">
+    {% endif %}
+</div>

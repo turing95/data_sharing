@@ -1,17 +1,36 @@
 import {initMessageBar} from "./utils/messageBar.js";
 import { initSubmitButtons } from './utils/submitButton.js';
-import { initSmoothScrolling, adjustScrollPositionOnPageLoad } from './utils/smoothScrolling.js';
 import { initNav } from './utils/navbar.js';
+import {initHtmxModal} from "./utils/htmxModal.js";
+import {handleHtmxError} from "./utils/errors.js";
 
 document.addEventListener('DOMContentLoaded', function() {
-        initSubmitButtons();
-        initMessageBar();
-        initSmoothScrolling();
-        adjustScrollPositionOnPageLoad()
-        initNav();
+    initSubmitButtons();
+    initMessageBar();
+    initNav();
 });
 
 document.addEventListener('htmx:afterRequest', function(evt) {
-        initMessageBar();
+    initMessageBar();
+});
+
+document.body.addEventListener('htmx:afterSwap', function(evt) {
+
+    if (evt.target.id.startsWith('htmx-modal')) {
+        const modalElement = evt.target.children[0];
+        if (modalElement) {
+            initHtmxModal(modalElement);
+        }
+    }
+});
+
+
+document.body.addEventListener('htmx:sendError', function(evt) {
+    handleHtmxError(evt);
+
+});
+
+document.body.addEventListener('htmx:responseError', function(evt) {
+    handleHtmxError(evt);
 
 });

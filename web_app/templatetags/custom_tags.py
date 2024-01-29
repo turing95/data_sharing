@@ -1,6 +1,7 @@
 from django import template
 from django.urls import reverse
 
+from web_app.forms.widgets import SenderToggle
 from web_app.models import Sender, SenderEvent, UploadRequest, File
 from web_app.forms.widgets.toggle import ToggleWidget
 
@@ -21,15 +22,15 @@ def get_message_color(value):
         "success": "green",
         "error": "red",
         "warning": "yellow",
-        "info": "blue",
+        "info": "blue"
     }
-    return colors.get(value, "gray")
+    return colors.get(value, "blue")
 
 
 @register.simple_tag
 def get_count_uploaded_files(upload_request: UploadRequest, sender: Sender = None):
     if sender:
-        files = File.objects.filter(sender_event__request=upload_request,sender_event__sender=sender)
+        files = File.objects.filter(sender_event__request=upload_request, sender_event__sender=sender)
     else:
         files = File.objects.filter(sender_event__request=upload_request, sender_event__sender=None)
 
@@ -46,19 +47,10 @@ def get_list_of_upload_events_per_request(sender, upload_request):
 
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_sender_activate_toggle(sender, name, value, **kwargs):
-    return ToggleWidget(**kwargs).get_context(name, value,
+    return SenderToggle(**kwargs).get_context(name, value,
                                               {'hx-post': reverse('toggle_sender_active',
                                                                   kwargs={'sender_uuid': sender.pk}),
-                                               'hx-trigger': 'click', 'hx-swap': 'outerHTML'})
-
-
-@register.inclusion_tag("forms/widgets/toggle.html")
-def render_space_activate_toggle(space, name, value):
-    return ToggleWidget(label_on='Active', label_off='Inactive').get_context(name, value,
-                                                                             {'hx-post': reverse('toggle_space_active',
-                                                                                                 kwargs={
-                                                                                                     'space_uuid': space.pk}),
-                                                                              'hx-swap': 'outerHTML'})
+                                               'hx-trigger': f"click", 'hx-swap': 'none', 'sender-uuid': sender.pk})
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
@@ -69,4 +61,4 @@ def render_space_public_link_toggle(space, name, value):
                                                                                                               'toggle_space_public',
                                                                                                               kwargs={
                                                                                                                   'space_uuid': space.pk}),
-                                                                                                          'hx-swap': 'outerHTML'})
+                                                                                                          'hx-swap': 'morph:outerHTML'})

@@ -1,14 +1,13 @@
 import re
-
-from google.auth.exceptions import RefreshError
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from django.core.exceptions import ValidationError
-from web_app.models import Space, UploadRequest, FileType, GoogleDrive
+from web_app.models import Space, UploadRequest, FileType, GoogleDrive, OneDrive
 from web_app.forms import css_classes
+from django.urls import reverse_lazy
 from django import forms
+
 from django.utils.safestring import mark_safe
 from web_app.forms.widgets import ToggleWidget
-
 
 
 class CommaSeparatedFileTypeField(forms.CharField):
@@ -33,10 +32,10 @@ class RequestForm(ModelForm):
         for tag in UploadRequest.FileNameTag.choices
     ])
 
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled request',
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Untitled request*',
                                                           'required': 'required',
                                                           'class': css_classes.text_request_title_input}),
-                            label='Request title',
+                            label='Request title - MANDATORY',
                             help_text="""This will be displayed to your invitees.
                                 """)
 
@@ -72,31 +71,51 @@ class RequestForm(ModelForm):
         required=False,
         label='File Type Restrictions',
         help_text="""
-                ...
+                Only selected file types will be accepted. Leave blank to accept all file types.
             """)
     file_types = CommaSeparatedFileTypeField(
         widget=forms.HiddenInput(attrs={'class': 'file-types'}),
         label='File type restrictions',
         required=False)
 
+    # DESTINATION FOLDER FIELDS
+    # providers dropdown
+
+    destination_type_select = forms.ChoiceField(
+        choices=[
+            (GoogleDrive.TAG, 'Google Drive'),
+            (OneDrive.TAG, 'One Drive'),
+        ],
+        label="Destination folder",
+        widget=forms.Select(
+            attrs={'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full",
+                   'hx-trigger': "change, load",
+                   'hx-get': reverse_lazy('select_destination_type'),
+                   'hx-target': "previous .destination-search",
+                   'hx-swap': "outerHTML",
+
+                   })
+    )
+
+    destination_id = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination'}),
+                                     label="Destination folder ID")
+
+    destination_type = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination-type'}),
+                                       label="Destination type")
+
     destination_display = forms.CharField(
         required=False,
         label='Non-editable Field',
         widget=forms.TextInput(
-            attrs={'placeholder': 'Click to select a folder',
-                   'class': css_classes.text_input + ' cursor-pointer',
-                   'onclick': 'handleAuthClick(this)',
-                   'readonly': 'readonly'})
+            attrs={
+                'class': ' w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm' + ' destination-display',
+                'readonly': 'readonly',
+                'placeholder': 'No folder selected yet'
+            }
+        )
     )
 
-    destination = forms.CharField(
-        widget=forms.HiddenInput(),
-        label="Destination folder",
-        help_text=
-        """Select a destination folder from inside your cloud storage system. All files uploaded for this request will directly be uploaded to your selected folder.
-            You will be able to change it at any time but be aware that this may lead to files uploaded for the same request to be in different folders  
-            """)
-
+    # REQUEST INSTRUCTIONS
     instructions = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={
@@ -121,10 +140,32 @@ class RequestForm(ModelForm):
                 By default, files are saved to your destination folder with the name they have been uploaded with.
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """)
+    multiple_files = forms.BooleanField(
+        widget=ToggleWidget(label_on='Enabled multiple files',
+                            label_off='Disabled multiple files'),
+        required=False,
+        label='Multiple Files',
+        help_text="""
+                By default, each request can only contain one file. You can choose to enable multiple files upload for this request.
+            """)
 
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_naming_formula', 'instructions']
+        fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files']
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        index = kwargs.pop('index', None)
+        super().__init__(*args, **kwargs)
+        self.fields['destination_type_select'].widget.attrs['hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
+        # # Generic destination providers options
+        # choices = []
+        # if custom_user.google_account:
+        #     choices.append((GoogleDrive.TAG, 'Google Drive'))
+
+        # if custom_user.microsoft_account is not None:
+        #     choices.append((OneDrive.TAG, 'One Drive'))
+        # self.fields['destination_type_select'].choices = choices
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
@@ -171,18 +212,27 @@ class DetailRequestForm(RequestForm):
         if self.instance and UploadRequest.objects.filter(pk=self.instance.pk).exists():
             self.fields['uuid'].initial = self.instance.uuid
 
-            destination: GoogleDrive = self.instance.google_drive_destination
+            destination = self.instance.destination
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
-            self.fields['destination'].initial = destination.folder_id
+            self.fields['destination_id'].initial = destination.folder_id
             self.fields['destination_display'].initial = destination.name
+            self.fields['destination_type'].initial = destination.tag
+            self.fields['destination_type_select'].initial = destination.tag
             if self.instance.filetype_set.exists():
                 self.fields['file_types'].initial = ','.join(
                     [file_type.slug for file_type in self.instance.filetype_set.all()])
                 self.fields['file_type_restrict'].initial = True
 
 
-# Replace the standard formset with the custom one
-RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, formset=BaseInlineFormSet, extra=1)
-DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, formset=BaseInlineFormSet,
+class CustomInlineFormSet(BaseInlineFormSet):
+
+    def get_form_kwargs(self, index):
+        kwargs = super().get_form_kwargs(index)
+        kwargs["index"] = index
+        return kwargs
+
+
+RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, formset=CustomInlineFormSet, extra=1)
+DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, formset=CustomInlineFormSet,
                                              extra=0)

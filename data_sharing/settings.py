@@ -29,7 +29,9 @@ if DEBUG is False:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com","2566-2001-a61-3bca-ff01-793e-ed8a-2fa2-3d07.ngrok-free.app", "5393-2-35-119-2.ngrok-free.app"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com","b0a5-2001-a61-3bca-ff01-3cdd-e2fa-dd13-3bc1.ngrok-free.app", "5393-2-35-119-2.ngrok-free.app"
+                                  'f326-2-36-132-96.ngrok-free.app' # GIULIO
+                 ]
 # Application definition
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -48,8 +50,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.microsoft',
     'web_app',
-    'djstripe'
+    'djstripe',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -195,13 +199,31 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'offline',
+            "prompt": "consent",
         }
+    },
+    "microsoft": {
+        "APPS": [
+            {
+                "client_id": AZURE_CLIENT_ID,
+                "secret": AZURE_CLIENT_SECRET
+            },
+
+        ],
+    # modify scopes requested during login
+        'SCOPE': [
+            "User.Read",  # access to user's account information
+            "Files.ReadWrite.All",  # access to user's files
+            "offline_access"  # provide a refresh_token when the user logs in
+        ],
     }
 }
 
 # TODO: this is against security best practices, according to allauth docs
 SOCIALACCOUNT_LOGIN_ON_GET = True
-MAX_FREE_SPACES = 4
+MAX_FREE_SPACES = 10
+MAX_FREE_INVITEES = 4
+MAX_FREE_REQUESTS = 1
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True

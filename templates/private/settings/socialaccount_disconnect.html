@@ -1,0 +1,7 @@
+<form id="disconnect-{{provider}}" action="{% url 'socialaccount_connections' %}" method="POST">
+    {% csrf_token %}
+    {{disconnect_form.account_to_disconnect}}  
+    {% include 'components/buttons/submit.html' with button_text="Disconnect" %}
+</form>
+
+

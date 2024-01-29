@@ -21,11 +21,9 @@ class UploadRequest(BaseModel, DeleteModel):
     instructions = models.TextField(null=True, blank=True)
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
     file_types = models.ManyToManyField('FileType', through='UploadRequestFileType')
+    multiple_files = models.BooleanField(default=False)
 
     class Meta:
-        '''constraints = [
-            models.UniqueConstraint('title', 'space', name='unique_request_title')
-        ]'''
         ordering = ['-created_at']
 
     @property
@@ -36,6 +34,10 @@ class UploadRequest(BaseModel, DeleteModel):
             return None
         google_drive_destination: GoogleDrive = generic_destination.related_object
         return google_drive_destination
+
+    @property
+    def destination(self):
+        return self.destinations.filter(is_active=True).order_by('-created_at').first()
 
     @property
     def extensions(self):
@@ -52,8 +54,9 @@ class UploadRequest(BaseModel, DeleteModel):
         return extensions
 
     def get_name_format_params(self, sender, original_file_name):
+
         format_params = {
-            'upload_date': arrow.utcnow().date(),
+            'upload_date': arrow.utcnow().format('YYYY-MM-DD', locale=self.space.locale),
             'original_file_name': original_file_name,
             'space_title': self.space.title,
             'request_title': self.title,
@@ -64,12 +67,10 @@ class UploadRequest(BaseModel, DeleteModel):
     def get_file_name_from_formula(self, sender, original_file_name):
         format_params = self.get_name_format_params(sender, original_file_name)
         if self.file_naming_formula is not None:
-            file_name = fill_template(self.file_naming_formula,format_params)
+            file_name = fill_template(self.file_naming_formula, format_params)
         else:
             file_name = original_file_name
         return file_name
-
-
 
 
 class UploadRequestFileType(BaseModel):

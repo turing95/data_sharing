@@ -12,16 +12,6 @@ from web_app.models import Space, Sender, UploadRequest, SenderEvent
 
 @login_required
 @require_POST
-def toggle_space_active(request, space_uuid):
-    space = Space.objects.get(pk=space_uuid)
-    space.is_active = not space.is_active
-    space.save()
-    return HttpResponse(
-        render_block_to_string('private/space/detail/components/summary.html', 'details', {'space': space}, request))
-
-
-@login_required
-@require_POST
 def toggle_space_public(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
     space.is_public = not space.is_public
@@ -36,6 +26,8 @@ def history_table(request, space_uuid):
 
     if request.method == 'GET':
         upload_events = space.upload_events
+        hide_sender = False
+        
     elif request.method == 'POST':
         search_query = request.POST.get('search')
         upload_events = space.upload_events
@@ -52,9 +44,14 @@ def history_table(request, space_uuid):
                 Q(title_similarity__gt=0.1) |
                 Q(original_name_similarity__gt=0.1)
             )
+            
+    if request.GET.get('sender_uuid'):
+            sender_uuid = request.GET.get('sender_uuid')
+            upload_events = upload_events.filter(sender__uuid=sender_uuid)
+            hide_sender = True
 
     return render(request, 'private/space/detail/components/history_table.html',
-                  {'space': space, 'upload_events': upload_events, 'hide_request': False, 'hide_sender': False})
+                  {'space': space, 'upload_events': upload_events, 'hide_request': False, 'hide_sender': hide_sender})
 
 
 @login_required
@@ -73,3 +70,4 @@ def request_modal(request, request_uuid):
 
     return render(request, 'private/space/detail/components/request_modal.html',
                   {'req': upload_request, 'sender': sender, 'upload_events': events})
+    

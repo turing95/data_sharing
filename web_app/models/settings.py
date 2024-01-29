@@ -5,7 +5,7 @@ import pytz
 
 
 class UserSettings(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name='settings')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='settings')
 
     # Timezone choices
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)

@@ -1,0 +1,20 @@
+<tr>
+    {% if sender.space.deadline %}
+        <td style="padding-top:10px; padding-left:20px;font-family:'Helvetica neue', Helvetica, Arial, Verdana, sans-serif;font-weight:bold;font-size:20px;line-height:35px;color:#253858;text-align:center;">
+            <p style="text-decoration:none;color:#253858;font-weight:bold;">
+            You have time untill the {{ sender.space.deadline|date:"Y-m-d" }} {{ sender.space.deadline|time:"H:i" }}</p>
+        </td>
+    {% endif %}
+</tr>
+<tr>
+    {% if sender.space.upload_after_deadline is False %}
+        <td style="padding-top:7px; padding-left:20px; font-family:'Helvetica neue', Helvetica, Arial, Verdana, sans-serif; font-weight:bold; font-size:14px; line-height:20px; color:#FF0000;  text-align:center;  font-style:italic;">
+            Uploads will not be accepted after the deadline
+        </td>                        
+    {% endif %}
+</tr>
+<tr>
+    {% if calendar_url %}
+        <a style="text-align:center;" href="{{ calendar_url }}">Add the deadline to your calendar</a>
+    {% endif %}
+</tr>

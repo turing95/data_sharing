@@ -3,14 +3,12 @@
 {% if socialaccount_providers %}
     {% element provider_list %}
         {% for provider in socialaccount_providers %}
-            {% if provider.id == "google" %}
             {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
-                {% include 'public/snippets/login_google.html' with href=href %}
-
-        {% else %}
-            {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
-            {% element provider name=provider.name provider_id=provider.id href=href %}
-            {% endelement %}
+            {% if provider.id == "google" or provider.id == "microsoft" %}
+                {% include 'public/snippets/custom_login_social.html' with href=href provider_id=provider.id name=provider.name %}
+            {% else %}
+                {% element provider name=provider.name provider_id=provider.id href=href %}
+                {% endelement %}
            {% endif %}
         {% endfor %}
     {% endelement %}

@@ -1,6 +1,6 @@
 from allauth.account.views import LoginView as AllauthLoginView
 from django.urls import reverse_lazy
-from web_app.forms.login import LoginForm
+from web_app.forms.authentication.login import LoginForm
 
 
 class LoginView(AllauthLoginView):

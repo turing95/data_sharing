@@ -1,55 +1,73 @@
 {% load custom_tags static %}
-<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" hx-target="this">
-                <th scope="row" class="sticky left-0 z-[15] w-[30px] px-1 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white items-center">
-                    {% include 'private/space/detail/components/sender_settings_dropdown.html' with sender_num=sender.pk  sender=sender%}
-                </th>            
-                <th scope="row" class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
-                    {{ sender.email }}
-                </th>
-                {% url 'sender_space_detail_private' space.uuid sender.uuid as sender_path%}
-                <td class="px-3 py-2">
-                    <div class="inline-flex items-center">
-                        <a href="{{ sender_path}}" target = "_blank" class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
-                            space link
-                        </a>
-                        <button 
-                            class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
-                            onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
-                            title="Copy Link">
-                            <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
-                        </button>
-          
-                    </div>
-                </td>
-                <td class="px-3 py-2">
-                        {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active  color_on="green" color_off="orange" toggle_color_on="marian-blue" toggle_color_off="gray" label_on="active" label_off="inactive" soft_off_label=False   label_colored=True label_wrap=True%}
-                </td>
-           
-            {% for req in space.requests.all reversed%}
-            <td class="px-3 py-2">
-                <div class="flex" 
-                    hx-get="{% url 'request_modal'  req.uuid %}?sender_uuid={{sender.uuid}}"
-                    hx-trigger="click" 
-                    hx-target="#modal-{{req.uuid}}-{{ sender.uuid }}" 
-                    hx-swap="innerHTML"
-                    hx-indicator="#loading-indicator-{{req.uuid}}-{{ sender.uuid }}">                 
-                        <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline" title="number of uploaded files" >
-                            {% get_count_uploaded_files req sender %} files
-                        </span> 
-                        <div class="flex items-center mb-3">
-                            <!-- Loading Indicator -->
-                            <div id="loading-indicator-{{req.uuid}}-{{ sender.uuid }}" class="items-center justify-center opacity-0 htmx-indicator">
-                                <div role="status" class="ml-2 spinner">
-                                    {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+
+<tr id="sender-row-container-{{sender.uuid}}"
+    sender-uuid="{{sender.uuid}}"
+    class="sender-pull bg-white border-b dark:bg-gray-800 dark:border-gray-700" 
+    hx-trigger="senderUpdated-{{sender.uuid}} from:document"
+    hx-get="{% url 'sender_row' sender.uuid %}"
+    hx-target="this"
+    hx-swap="outerHTML">
+    <th scope="row" class="sticky left-0 z-[15] w-[30px] py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white items-center">
+        <div class="inline-flex  justify-center items-center w-[20px] ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
+            hx-get="{% url 'sender_modal' sender.uuid %}"
+            hx-trigger="click" 
+            hx-target="#htmx-modal" 
+            hx-swap="innerHTML">                 
+            <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
+        </div>
+        
+    </th>            
+    <th scope="row" class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
+        <div class="inline-flex items-center justify-center ml-2 duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
+            hx-get="{% url 'sender_modal'  sender.uuid %}"
+            hx-trigger="click"
+            hx-target="#htmx-modal" 
+            hx-swap="innerHTML"> 
+        {{ sender.email }}
+        </div>
+    </th>
+    {% url 'sender_space_detail_private' sender.space.uuid sender.uuid as sender_path%}
+    <td class="px-3 py-2">
+        <div class="inline-flex items-center">
+            <a href="{{ sender_path}}" target = "_blank" class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
+                space link
+            </a>
+            <button 
+                class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
+                onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
+                title="Copy Link">
+                <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
+            </button>
+
+        </div>
+    </td>
+    <td class="px-3 py-2">
+            {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active %}
+    </td>
+
+    {% for req in sender.space.requests.all reversed%}
+        <td class="px-3 py-2">
+            <div class="flex" 
+                hx-get="{% url 'request_modal'  req.uuid %}?sender_uuid={{sender.uuid}}"
+                hx-trigger="click" 
+                hx-target="#htmx-modal" 
+                hx-swap="innerHTML"
+                hx-indicator="#loading-indicator-{{req.uuid}}-{{ sender.uuid }}">                 
+                    <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline" title="number of uploaded files" >
+                        {% get_count_uploaded_files req sender %} files
+                    </span> 
+                    <div class="flex items-center mb-3">
+                        <!-- Loading Indicator -->
+                        <div id="loading-indicator-{{req.uuid}}-{{ sender.uuid }}" class="items-center justify-center opacity-0 htmx-indicator">
+                            <div role="status" class="ml-2 spinner">
+                                {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                <span class="sr-only">Loading...</span>
                             </div>
                         </div>
-                        
+                    </div>
+                    
 
-                </div>
-                <div id="modal-{{req.uuid}}-{{sender.uuid}}" >            
-                </div>
-            </td>
-            {% endfor %}
+            </div>
+        </td>
+    {% endfor %}
 </tr>

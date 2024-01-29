@@ -10,9 +10,13 @@ class MultipleFileInput(forms.ClearableFileInput):
 
 
 class MultipleFileField(forms.FileField):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput(attrs={'hidden': True,
+    def __init__(self,upload_request, *args, **kwargs):
+        if upload_request.multiple_files is True:
+            kwargs.setdefault("widget", MultipleFileInput(attrs={'hidden': True,
                                                              'onchange': ' handleFilesUpload(this)'}))
+        else:
+            kwargs.setdefault("widget", forms.ClearableFileInput(attrs={'hidden': True,
+                                                                 'onchange': ' handleFilesUpload(this)'}))
         super().__init__(*args, **kwargs)
 
     def clean(self, data, initial=None):
@@ -25,7 +29,6 @@ class MultipleFileField(forms.FileField):
 
 
 class FileForm(Form):
-    files = MultipleFileField(label='Files',required=False)
     request_uuid = forms.CharField(widget=forms.HiddenInput())
 
     notes = forms.CharField(
@@ -44,6 +47,8 @@ class FileForm(Form):
         self.space = kwargs.pop('space')
         super().__init__(**kwargs)
         upload_request = self.space.requests.filter(is_deleted=False)[self.request_index]
+        self.fields['files'] = MultipleFileField(upload_request=upload_request, label='Files', required=False)
+
         self.fields['request_uuid'].initial = upload_request.pk
         self.upload_request = upload_request
         if upload_request.file_types.exists():

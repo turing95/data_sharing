@@ -1,0 +1,60 @@
+{% load custom_tags static l10n %}
+
+<div id="sender-modal-{% if sender %}{{sender.uuid}}{% else%}public{%endif%}" tabindex="-1" class="fixed top-0 left-0 right-0 z-[100] w-full p-4 overflow-x-hidden  overflow-y-hidden md:inset-0 h-[calc(100%)]">
+    <div class="relative w-full h-auto max-w-2xl max-h-full border border-gray-300 "> 
+        <div class="relative bg-white shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between p-2 border-b md:p-3 dark:border-gray-600">
+                <div class="w-full text-center">
+                    <h3 class="text-xl font-bold text-gray-900 uppercase dark:text-white">
+                        {% if sender %}{{sender.email}}{% else %}Public Link{% endif %}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                        <!-- subtitle-->
+                    </p>
+                </div>
+                <button type="button" class="inline-flex items-center justify-center w-6 h-6 text-sm text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="sender-modal-{% if sender %}{{sender.uuid}}{% else%}public{%endif%}">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <div class="flex flex-col p-3 overflow-x-auto md:p-2 custom-scrollbar max-h-[calc(100vh-103px)]">
+                {% include 'private/space/detail/components/sender_info.html' with sender=sender %}
+
+
+                <div  class="flex flex-col">
+                    <div class="flex items-center mt-4 mb-1 border-b border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                            Uploads
+                        </h3> 
+                            
+                        <!-- Loading Indicator -->
+                        <div id="loading-indicator-sender-modal" class="items-center justify-center opacity-0 htmx-indicator">
+                            <div role="status" class="ml-2 spinner">
+                                {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+            
+                    <div class="" hx-get="{% url 'history_table' sender.space.uuid %}?sender_uuid={{sender.uuid}}"
+                        hx-trigger="intersect once"
+                        hx-target="#history-table-sender-modal"
+                        hx-indicator="#loading-indicator-sender-modal">
+                    
+
+                    </div>
+                    <div id="history-table-sender-modal">            
+                    </div>
+                </div>
+            
+              
+                  
+                  
+            
+            </div>
+        </div>
+    </div>
+</div>

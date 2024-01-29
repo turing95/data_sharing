@@ -10,12 +10,16 @@
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
 
     <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/idiomorph/dist/idiomorph-ext.min.js"></script>
 
 
 
 
 </head>
-<body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-ext="morph">
+    <!-- htmx model target-->
+    <div id="htmx-modal" ></div>
+
     <div class="flex-grow">
 
     {% if sender_area is False %}
@@ -31,21 +35,30 @@
     {% include 'components/footer.html' %}
 
 
-    {{ config_data |json_script:"config-data"  }}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
     {% if space_form %}
-        {{ google_user_data |json_script:"google-user-data"  }}
-        <script type="module" src="{% static 'src/js/space_create/index.js' %}" ></script>
+        <script type="module" src="{% static 'src/js/space/create/index.js' %}" ></script>
+
+    {% endif %}
+    
+    {% if space_summary %}
+        <script type="module" src="{% static 'src/js/space/detail/index.js' %}" ></script>
+
     {% endif %}
 
     {% if sender_area %}
-        <script type="module" src="{% static 'src/js/sender_space_detail/index.js' %}"></script>
+        <script type="module" src="{% static 'src/js/sender-space-detail/index.js' %}"></script>
     {% endif %}
-
+     
+    {% if generic_home %}
+            <script type="module" src="{% static 'src/js/home/index.js' %}"></script>
+    {% endif %}
+    {% if settings_page %}
+    <script type="module" src="{% static 'src/js/settings/index.js' %}"></script>
+    {% endif %}
     <script type="module" src="{% static 'src/js/index.js' %}"></script>
     <!-- should be included only when needed -->
-    <script type="module" src="{% static 'src/js/summary/files_modal/index.js' %}"></script>
 
     
 <script>
