@@ -79,7 +79,7 @@ function updateElementIdentifiers(newForm, formCount) {
             element.name = element.name.replace(/-\d+-/, `-${formCount}-`);
         }
         if (element.type !== 'checkbox' && element.type !== 'radio') {
-            if (!element.id.includes('-google_destination_display') && !element.id.includes('-google_destination') && !element.id.includes('file_types')) {
+            if (!element.id.includes('destination_type') && !element.id.includes('file_types')) {
                 element.value = ''; // Reset value for text inputs, textareas, and selects
             }
         }
@@ -167,13 +167,18 @@ function cleanErrors(newForm) {
     });
 }
 
+function resetDestinationLogo(newForm) {
+    let el = newForm.querySelector('.destination-logo');
+    htmx.ajax('GET', '/destinations/get-logo/', {target:el, swap:'innerHTML'})
+
+}
 function postProcessNewForm(newForm, formCount, totalForms){
         if (newForm) {
         document.getElementById('accordion-open').appendChild(newForm);
         totalForms.value = formCount + 1;
         document.dispatchEvent(new Event("initRequestForm"));
+        resetDestinationLogo(newForm);
         setupFileTypeCloseButton(newForm);
-
 
     }
 }

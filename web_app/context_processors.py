@@ -18,11 +18,12 @@ def custom_context(request):
     #context['config_data'] = config.get_js_config()
     context['contact_email'] = settings.CONTACT_EMAIL
     context['pro_product'] = Product.objects.filter(name="Pro").first()
-    unit_amount = (context['pro_product'].default_price.unit_amount or 0) / 100
-    sigil = CURRENCY_SIGILS.get(context['pro_product'].default_price.currency.upper(), "")
-    amount_two_decimals = f"{unit_amount:.2f}"
-    formatted_price = f"{sigil}{intcomma(amount_two_decimals)}"
-    context['pro_product_formatted_price'] = formatted_price
-    
+    if context['pro_product'] is not None:
+        unit_amount = (context['pro_product'].default_price.unit_amount or 0) / 100
+        sigil = CURRENCY_SIGILS.get(context['pro_product'].default_price.currency.upper(), "")
+        amount_two_decimals = f"{unit_amount:.2f}"
+        formatted_price = f"{sigil}{intcomma(amount_two_decimals)}"
+        context['pro_product_formatted_price'] = formatted_price
+        
     context['doc_url'] = settings.DOC_URL
     return context

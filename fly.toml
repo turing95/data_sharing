@@ -10,6 +10,7 @@ console_command = "/code/manage.py shell"
 [processes]  # <-- Updated!
   app = "python -m gunicorn --bind :8000 --workers 2 data_sharing.wsgi"
   worker = "python -m celery -A web_app worker -l INFO"
+  beat = "python -m celery -A web_app beat -l INFO"
 
 [build]
 
