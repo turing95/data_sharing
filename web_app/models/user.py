@@ -1,5 +1,5 @@
 from allauth.socialaccount.models import SocialAccount, SocialToken
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from google.auth.transport.requests import Request
 import arrow
 from google.oauth2.credentials import Credentials
@@ -9,9 +9,7 @@ import requests
 import config
 
 
-class CustomUser(User):
-    class Meta:
-        proxy = True
+class User(AbstractUser):
 
     @property
     def google_account(self):

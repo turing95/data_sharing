@@ -40,11 +40,11 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
         return self.related_object.upload_file(file, file_name)
 
     @classmethod
-    def create_from_folder_id(cls, request_instance, destination_type, folder_id, custom_user):
+    def create_from_folder_id(cls, request_instance, destination_type, folder_id, user):
         if destination_type == GoogleDrive.TAG:
-            return GoogleDrive.create_from_folder_id(request_instance, folder_id, custom_user)
+            return GoogleDrive.create_from_folder_id(request_instance, folder_id, user)
         elif destination_type == OneDrive.TAG:
-            return OneDrive.create_from_folder_id(request_instance, folder_id, custom_user)
+            return OneDrive.create_from_folder_id(request_instance, folder_id, user)
         else:
             raise NotImplementedError
 
@@ -55,14 +55,14 @@ class GoogleDrive(BaseModel):
     PROVIDER_ID = 'google'
 
     @classmethod
-    def create_from_folder_id(cls, upload_request, folder_id, custom_user):
+    def create_from_folder_id(cls, upload_request, folder_id, user):
         google_drive_destination = cls(folder_id=folder_id)
 
         generic_destination = GenericDestination(
             request=upload_request,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=google_drive_destination.pk,
-            social_account=custom_user.google_account,
+            social_account=user.google_account,
             tag=cls.TAG,
         )
 
@@ -73,7 +73,7 @@ class GoogleDrive(BaseModel):
 
     @property
     def service(self):
-        return build('drive', 'v3', credentials=self.custom_user.google_credentials)
+        return build('drive', 'v3', credentials=self.user.google_credentials)
 
     @property
     def alive(self):
@@ -128,10 +128,6 @@ class GoogleDrive(BaseModel):
     def user(self):
         return self.generic_destination.request.space.user
 
-    @property
-    def custom_user(self):
-        from web_app.models import CustomUser
-        return CustomUser.objects.get(pk=self.user.pk)
 
 
 class OneDrive(BaseModel):
@@ -140,14 +136,14 @@ class OneDrive(BaseModel):
     PROVIDER_ID = 'microsoft'
 
     @classmethod
-    def create_from_folder_id(cls, upload_request, folder_id, custom_user):
+    def create_from_folder_id(cls, upload_request, folder_id, user):
         one_drive_destination = cls(folder_id=folder_id)
 
         generic_destination = GenericDestination(
             request=upload_request,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=one_drive_destination.pk,
-            social_account=custom_user.microsoft_account,
+            social_account=user.microsoft_account,
             tag=cls.TAG,
         )
 
@@ -165,7 +161,7 @@ class OneDrive(BaseModel):
 
     def upload_file(self, file, file_name):
         # Ensure you have a valid access token
-        token = self.custom_user.microsoft_token
+        token = self.user.microsoft_token
         if not token:
             raise Exception("No valid Microsoft token available.")
 
@@ -196,15 +192,11 @@ class OneDrive(BaseModel):
     def user(self):
         return self.generic_destination.request.space.user
 
-    @property
-    def custom_user(self):
-        from web_app.models import CustomUser
-        return CustomUser.objects.get(pk=self.user.pk)
 
     @property
     def url(self):
         try:
-            token = self.custom_user.microsoft_token
+            token = self.user.microsoft_token
             if not token:
                 return None
 
@@ -225,7 +217,7 @@ class OneDrive(BaseModel):
     @property
     def name(self):
         try:
-            token = self.custom_user.microsoft_token
+            token = self.user.microsoft_token
             headers = {
                 'Authorization': f'Bearer {token.token}'
             }
@@ -241,7 +233,7 @@ class OneDrive(BaseModel):
     @property
     def alive(self):
         try:
-            token = self.custom_user.microsoft_token
+            token = self.user.microsoft_token
             headers = {
                 'Authorization': f'Bearer {token.token}'
             }

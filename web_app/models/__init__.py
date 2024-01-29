@@ -5,4 +5,4 @@ from web_app.models.request import UploadRequest, UploadRequestFileType
 from web_app.models.destination import GoogleDrive,GenericDestination,OneDrive
 from web_app.models.event import SenderEvent
 from web_app.models.file import File,FileType
-from web_app.models.user import CustomUser
+from web_app.models.user import User
