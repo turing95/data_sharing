@@ -47,7 +47,7 @@
                                 class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.title.label }} </label>
                                 {{ req.title }}
                                 
-                                {% include 'components/tooltip.html' with title=req.title.label content=req.title.help_text target_prefix='requests' target=req.title.name placement="bottom" %}
+                                {% include 'components/tooltip.html' with title=req.title.label content=req.title.help_text target_prefix='requests' target=req.title.name  num=forloop.counter0 placement="bottom" %}
                             </div>
                             {% include 'components/forms/error_widget.html' with errors=req.title.errors %}
                         </div>
@@ -125,7 +125,7 @@
                             <div class="flex items-center mb-2 space-x-2">
                                 <label for="{{ req.instructions.id_for_label }}"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.instructions.label }} </label>
-                                {% include 'components/tooltip.html' with title=req.instructions.label content=req.instructions.help_text target_prefix='requests' target=req.instructions.name%}
+                                {% include 'components/tooltip.html' with title=req.instructions.label content=req.instructions.help_text target_prefix='requests' target=req.instructions.name num=forloop.counter0%}
                             </div>
                             {{ req.instructions }}
                             {% include 'components/forms/error_widget.html' with errors=req.instructions.errors %}                       
@@ -136,7 +136,7 @@
                         <div class="mb-6">
                             <div class="flex items-center mb-2 space-x-2">
                                 <h3 class = "block text-sm font-medium text-gray-900 dark:text-white">File Naming</h3>
-                                {% include 'components/tooltip.html' with title=req.rename.label target_prefix='requests' content=req.rename.help_text target=req.rename.name%}
+                                {% include 'components/tooltip.html' with title=req.rename.label target_prefix='requests' content=req.rename.help_text target=req.rename.name num=forloop.counter0%}
                             </div>
                             <div class = "flex items-center mb-2 nl-1">
                                 {{ req.rename }}
@@ -168,7 +168,7 @@
                             <div class="flex items-center mb-2 space-x-2">
                                 <label for="{{ req.file_types.id_for_label }}"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.file_types.label }} </label>
-                                {% include 'components/tooltip.html' with title=req.tile_types.label target_prefix='requests' content=req.file_types.help_text target=req.file_types.name%}
+                                {% include 'components/tooltip.html' with title=req.tile_types.label target_prefix='requests' content=req.file_types.help_text target=req.file_types.name num=forloop.counter0%}
                             </div>
 
                             <div class = "flex items-center mb-2 nl-1">
@@ -206,7 +206,7 @@
                             <div class="flex items-center mb-2 space-x-2">
                                 <label for="{{ req.multiple_files.id_for_label }}"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">{{ req.multiple_files.label }} </label>
-                                {% include 'components/tooltip.html' with title=req.multiple_files.label content=req.multiple_files.help_text target_prefix='requests' target=req.multiple_files.name%}
+                                {% include 'components/tooltip.html' with title=req.multiple_files.label content=req.multiple_files.help_text target_prefix='requests' target=req.multiple_files.name num=forloop.counter0%}
                             </div>
                             {{ req.multiple_files }}
                             {% include 'components/forms/error_widget.html' with errors=req.multiple_files.errors %}                       
