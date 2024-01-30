@@ -2,6 +2,7 @@ from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     PasswordResetView, SignupView, LoginView, SpaceDetailFormViewSender, \
     TermsOfServiceView, PrivacyPolicyView, DeleteSpaceView, SettingsView, PublicLandingView, \
+    BetaAccessRequestFormView, \
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
@@ -12,6 +13,7 @@ urlpatterns = [
     # Generic views
     path('terms-of-service/', TermsOfServiceView.as_view(), name='generic_terms_of_service'),
     path('privacy-policy/', PrivacyPolicyView.as_view(), name='generic_privacy_policy'),
+    path('beta-access-request/', BetaAccessRequestFormView.as_view(), name='beta_access_request'),
     path('', PublicLandingView.as_view(), name='generic_home'),
     # Receiver views
     path('spaces/', SpacesView.as_view(), name='spaces'),

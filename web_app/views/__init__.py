@@ -11,6 +11,7 @@ from web_app.views.terms_of_service import TermsOfServiceView
 from web_app.views.privacy_policy import PrivacyPolicyView
 from web_app.views.public_landing import PublicLandingView
 from web_app.views.receiver.settings import SettingsView
+from web_app.views.beta_access_request import BetaAccessRequestFormView
 
 from web_app.views.sender.space_detail import SpaceDetailView as SpaceDetailFormViewSender
 

@@ -1,10 +1,11 @@
 from django.contrib import admin
-from web_app.models import Sender, Space, UploadRequest, GoogleDrive, FileType,GenericDestination, UploadRequestFileType, SenderEvent, OneDrive,User
+from web_app.models import Sender, Space, UploadRequest, GoogleDrive, FileType,GenericDestination, \
+    UploadRequestFileType, SenderEvent, OneDrive,User, BetaAccessRequest
 from django.contrib.auth.admin import UserAdmin
 
 admin.site.register(User, UserAdmin)
 
-@admin.register(Sender, Space, GoogleDrive, FileType, SenderEvent, OneDrive,GenericDestination)
+@admin.register(Sender, Space, GoogleDrive, FileType, SenderEvent, OneDrive,GenericDestination, BetaAccessRequest)
 class BaseAdmin(admin.ModelAdmin):
     pass
 
@@ -16,5 +17,5 @@ class UploadRequestFileTypeAdmin(admin.ModelAdmin):
 
 
 @admin.register(UploadRequest)
-class UploadRequestFileTypeAdmin(admin.ModelAdmin):
+class UploadRequestAdmin(admin.ModelAdmin):
     search_fields = ['uuid', 'title', 'space__uuid']

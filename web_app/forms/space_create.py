@@ -9,7 +9,7 @@ from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware
 from django.utils import translation
 import arrow
-from decimal import Decimal
+from decimal import Decimal 
 
 
 class CommaSeparatedEmailField(forms.CharField):

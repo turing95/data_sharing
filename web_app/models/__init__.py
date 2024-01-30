@@ -7,3 +7,4 @@ from web_app.models.event import SenderEvent
 from web_app.models.file import File,FileType
 from web_app.models.user import User
 from web_app.models.organization import Organization
+from web_app.models.beta_access_request import BetaAccessRequest

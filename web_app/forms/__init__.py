@@ -6,3 +6,4 @@ from web_app.forms.authentication.delete import DeleteForm
 from web_app.forms.authentication.reset_password import ResetPasswordForm
 from web_app.forms.authentication.disconnect import CustomSocialDisconnectForm
 from web_app.forms.file import FileForm,BaseFileFormSet
+from web_app.forms.beta_access_request import BetaAccessRequestForm
