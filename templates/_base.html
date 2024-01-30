@@ -2,6 +2,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% if debug is False %}
+    <script type="text/javascript">
+var _iub = _iub || [];
+_iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
+    "enableFadp":true,"enableLgpd":true,
+    "enableUspr":true,
+    "fadpApplies":true,
+    "floatingPreferencesButtonDisplay":"bottom-right",
+    "lang":"en",
+    "perPurposeConsent":true,
+    "siteId":3476393,
+    "usprApplies":true,
+    "whitelabel":false,
+    "cookiePolicyId":54001192,
+    "banner":{ "acceptButtonDisplay":true,
+        "closeButtonDisplay":false,
+        "customizeButtonDisplay":true,
+        "explicitWithdrawal":true,
+        "listPurposes":true,
+        "position":"float-bottom-center",
+        "rejectButtonDisplay":true,
+        "showTitle":false }};
+</script>
+    {% endif %}
+<script type="text/javascript" src="https://cs.iubenda.com/autoblocking/3476393.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
 <meta charset="UTF-8">
     <!-- Ensure proper rendering and touch zooming on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

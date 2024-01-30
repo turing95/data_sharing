@@ -19,6 +19,7 @@ def custom_context(request):
     context['contact_email'] = settings.CONTACT_EMAIL
     context['doc_url'] = settings.DOC_URL
     context['max_free_spaces'] = settings.MAX_FREE_SPACES
+    context['debug'] = settings.DEBUG
     context['pro_product'] = Product.objects.filter(name="Pro").first()
     if context['pro_product'] is not None:
         unit_amount = (context['pro_product'].default_price.unit_amount or 0) / 100
