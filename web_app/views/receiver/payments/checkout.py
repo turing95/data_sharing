@@ -11,9 +11,6 @@ from djstripe.models import APIKey, Product
 logger = logging.getLogger(__name__)
 
 
-
-
-
 @login_required
 @require_GET
 def create_checkout_session(request):
@@ -38,11 +35,11 @@ def create_checkout_session(request):
         f"{djstripe_settings.djstripe_settings.SUBSCRIBER_CUSTOMER_KEY}": _id
     }
     line_items = [
-                {
-                    "price": Product.objects.get(name="Pro").default_price.id,
-                    "quantity": 1,
-                },
-            ]
+        {
+            "price": Product.objects.get(name="Pro").default_price.id,
+            "quantity": 1,
+        },
+    ]
     try:
         # retreive the Stripe Customer.
         customer = models.Customer.objects.get(subscriber=request.user)
