@@ -14,6 +14,9 @@ module.exports = {
     ...
 ```
 
+## django admin url
+50870454-admin/
+
 ## _secret.py
  - secret.py to _secret.py and fill in the blanks
 
@@ -50,6 +53,7 @@ required for scheduled async tasks
 ## documentation
  - npm i docsify-cli -g
  - docsify serve docs
+ - to test images locally use ngrok and expose local host url. add to allowed hosts the url from ngrok (it changes daily)
 
 ## per giulio
 1. clone repo
