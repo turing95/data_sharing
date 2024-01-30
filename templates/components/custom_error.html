@@ -5,9 +5,12 @@
                     <h1 class="text-6xl font-bold text-gray-800">{{ code }}</h1>
                     <p class="text-2xl text-gray-600">{{ slug }}</p>
                     <p class="mt-4 text-gray-600">{{ description }}</p>
-                    <a href="{% if request.user.is_authenticated %} {% url 'spaces' %} {% else %} {% url 'generic_home' %} {% endif %}" class="my-2 inline-flex justify-center items-center text-white bg-marian-blue hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 font-medium text-sm px-5 py-2.5 text-center dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 w-[180px]">
-                        Back to homepage
-                    </a>
+                    {% if request.user.is_authenticated %}
+                        {% url 'spaces' as back_url %}   
+                    {% else %}
+                        {% url 'generic_home' as back_url %}          
+                    {% endif %}       
+                    {% include 'components/buttons/generic.html' with href=back_url button_text="Back to homepage"  extra_classes="max-w-[250px] mx-auto" %}
                 </div>
             </div>
         </div>
