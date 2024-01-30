@@ -9,20 +9,20 @@ Navigate the articles or use the search bar at the top left corner.
 - [Managing Spaces](pages/managing-spaces.md)
 
 ### Space Details
-[Space Overview](pages/space/space-overview.md)
-1. [Space title](pages/space/space-title.md)
-2. [Space Invitations](pages/space/space-invitations.md)
-3. [Space instructions](pages/space/space-instructions.md)
-4. [Space deadline](pages/space/space-deadline.md)
+[Space Overview](pages/space/overview)
+1. [Space title](pages/space/title)
+2. [Space Invitations](pages/space/invitations)
+3. [Space instructions](pages/space/instructions)
+4. [Space deadline](pages/space/deadline)
 
 #### Requests in Space
-[Requests Overview](pages/space/request/request-overview.md)
-1. [Request title](pages/space/request/request-title.md)
-1. [Request destination folder](pages/space/request/request-destination-folder.md)
-1. [Request instructions](pages/space/request/request-instructions.md)
-1. [Request custom file naming](pages/space/request/request-custom-file-naming.md)
-1. [Request File Types Restrictions](pages/space/request/request-file-types-restriction.md)
-1. [Request Multiple Files](pages/space/request/request-multiple-files-restriction.md)
+[Requests Overview](pages/space/request/overview)
+1. [Request title](pages/space/request/title)
+1. [Request destination folder](pages/space/request/destination-folder)
+1. [Request instructions](pages/space/request/instructions)
+1. [Request custom file naming](pages/space/request/custom-file-naming)
+1. [Request File Types Restrictions](pages/space/request/file-types-restriction)
+1. [Request Multiple Files](pages/space/request/multiple-files-restriction)
 
 ### Additional Features
 - [Space Summary Page](pages/space-summary-page.md)
