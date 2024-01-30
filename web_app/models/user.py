@@ -11,6 +11,10 @@ import config
 
 
 class User(AbstractUser):
+    '''
+    Custom user model
+    self.request.session['account_authentication_methods'] to access authentication methods( has social provider)
+    '''
     organization = models.ForeignKey('Organization', on_delete=models.SET_NULL, null=True, blank=True)
 
     @property
