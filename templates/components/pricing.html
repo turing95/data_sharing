@@ -1,7 +1,4 @@
-
-
-             
-                
+{% load l10n %}
 
 
 <div class="max-w-screen-xl px-4 py-6 mx-auto md:py-6 md:px-6">
@@ -23,7 +20,7 @@
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>Max active spaces: <span class="font-semibold">3 spaces</span></span>
+                        <span>Max spaces: <span class="font-semibold">{{ max_free_spaces }} spaces</span></span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
@@ -38,17 +35,17 @@
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>Unlimited invitees per space</span></span>
+                        <span>Unlimited invitees per space</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>Unlimited file requests per space</span></span>
+                        <span>Unlimited file requests per space</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
                         <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        <span>Self service knowledge base</span></span>
+                        <span>Self service knowledge base</span>
                     </li>
                 </ul>
                 <div class="mt-auto">
@@ -78,7 +75,7 @@
                 <li class="flex items-center space-x-3">
                     <!-- Icon -->
                     <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    <span class="font-semibold">Unlimited active spaces</span>
+                    <span class="font-semibold">Unlimited spaces</span>
                 </li>
                 <li class="flex items-center space-x-3">
                     <!-- Icon -->
@@ -89,6 +86,14 @@
             <div class="mt-auto">
             {% if subscription %}
                 <div class="flex items-center justify-center px-5 py-2 font-medium text-center text-gray-800 bg-gray-300">Current plan</div>
+                    {% if subscription.cancel_at_period_end %}
+                        {% localize on %}
+                            
+                            <p class="h-10 font-light text-gray-500 dark:text-gray-400">Will cancel on {{ subscription.cancel_at }}</p>
+                        {% endlocalize %}
+                    {% endif %}
+                <a href="{% url 'create_billing_session' %}" class="block underline px-4 py-2 text-sm text-gray-700">Manage my subscription</a>
+
             {% else %}
                 {% if user.is_authenticated %}
                     {% url 'create_checkout_session'  as subscribe_url %}        

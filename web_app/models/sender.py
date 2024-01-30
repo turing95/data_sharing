@@ -47,13 +47,11 @@ class Sender(BaseModel, ActiveModel):
         })
 
     def notify_deadline(self):
-        from web_app.models import UploadRequest
         if self.is_active:
-            upload_requests = UploadRequest.objects.filter(space=self.space)
             context = {
                 'sender': self,
                 'contact_email': settings.CONTACT_EMAIL,
-                'upload_requests': upload_requests,
+                'upload_requests': self.space.requests.filter(is_deleted=False).order_by('created_at'),
                 'homepage_link': settings.BASE_URL,
                 'logo_link': settings.BASE_URL + static('images/logo.png'),
                 'space_link': self.full_space_link
@@ -87,11 +85,10 @@ class Sender(BaseModel, ActiveModel):
 
     def notify_invitation(self):
         from web_app.models import UploadRequest
-        upload_requests = UploadRequest.objects.filter(space=self.space)
         context = {
             'sender': self,
             'contact_email': settings.CONTACT_EMAIL,
-            'upload_requests': upload_requests,
+            'upload_requests': self.space.requests.filter(is_deleted=False).order_by('created_at'),
             'homepage_link': settings.BASE_URL,
             'logo_link': settings.BASE_URL + static('images/logo.png'),
             'space_link': self.full_space_link

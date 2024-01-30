@@ -159,14 +159,6 @@ class RequestForm(ModelForm):
         index = kwargs.pop('index', None)
         super().__init__(*args, **kwargs)
         self.fields['destination_type_select'].widget.attrs['hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
-        # # Generic destination providers options
-        # choices = []
-        # if custom_user.google_account:
-        #     choices.append((GoogleDrive.TAG, 'Google Drive'))
-
-        # if custom_user.microsoft_account is not None:
-        #     choices.append((OneDrive.TAG, 'One Drive'))
-        # self.fields['destination_type_select'].choices = choices
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')

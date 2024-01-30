@@ -14,6 +14,7 @@ from pathlib import Path
 from config import *
 import os
 import sentry_sdk
+
 if DEBUG is False:
     sentry_sdk.init(
         dsn="https://3b6bbd0cdf536a6d594ea98600b72a0d@o4506563455221760.ingest.sentry.io/4506563455418368",
@@ -28,10 +29,6 @@ if DEBUG is False:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", f"{APP_NAME}.fly.dev", "kezyy.com", "www.kezyy.com","b0a5-2001-a61-3bca-ff01-3cdd-e2fa-dd13-3bc1.ngrok-free.app", "5393-2-35-119-2.ngrok-free.app"
-                                  'f326-2-36-132-96.ngrok-free.app' # GIULIO
-                 ]
 # Application definition
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -67,7 +64,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
     'web_app.middleware.TimezoneMiddleware',
-    'web_app.middleware.CustomUserMiddleware',
 
 ]
 if DEBUG is True:
@@ -136,6 +132,8 @@ DATABASES = {
         "PORT": POSTGRES_PORT,
     }
 }
+
+AUTH_USER_MODEL = 'web_app.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -210,7 +208,7 @@ SOCIALACCOUNT_PROVIDERS = {
             },
 
         ],
-    # modify scopes requested during login
+        # modify scopes requested during login
         'SCOPE': [
             "User.Read",  # access to user's account information
             "Files.ReadWrite.All",  # access to user's files
@@ -239,4 +237,3 @@ DJSTRIPE_USE_NATIVE_JSONFIELD = True  # We recommend setting to True for new ins
 DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
 
 CONTACT_EMAIL = "service@kezyy.com"
-

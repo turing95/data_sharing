@@ -20,7 +20,7 @@ def search_folder(request):
                 return HttpResponse(status=204)
 
             else:
-                folders = request.custom_user.get_folders(search_type, search_query)
+                folders = request.user.get_folders(search_type, search_query)
             return render(request,
                           'private/space/create/components/destination/folders_search_results.html',
                           {'folders': folders, 'destination_type': search_type})
@@ -31,19 +31,18 @@ def search_folder(request):
 @require_GET
 def select_destination_type(request):
     if request.method == 'GET':
-        custom_user = request.custom_user
         request_index = request.GET.get('request_index', None)
         if request_index is not None:
             missing_provider = None
             provider_type = request.GET.get(f'requests-{request_index}-destination_type_select')
             next_path = request.GET.get('next', None)
             if provider_type == GoogleDrive.TAG:
-                if custom_user.google_account is None:
+                if request.user.google_account is None:
                     adapter = get_adapter()
                     missing_provider = adapter.get_provider(request, GoogleDrive.PROVIDER_ID)
 
             elif provider_type == OneDrive.TAG:
-                if custom_user.microsoft_account is None:
+                if request.user.microsoft_account is None:
                     adapter = get_adapter()
                     missing_provider = adapter.get_provider(request, OneDrive.PROVIDER_ID)
             else:
@@ -61,6 +60,6 @@ def select_destination_type(request):
 def get_destination_logo(request):
     if request.method == 'GET':
         return render(request,
-               'private/space/create/components/destination/destination_logo.html',
-               {'tag': request.GET.get('tag')})
+                      'private/space/create/components/destination/destination_logo.html',
+                      {'tag': request.GET.get('tag')})
     return HttpResponseBadRequest()
