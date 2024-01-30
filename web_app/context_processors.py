@@ -17,6 +17,8 @@ def custom_context(request):
     # TODO REMOVE - PICKER LEGACY
     #context['config_data'] = config.get_js_config()
     context['contact_email'] = settings.CONTACT_EMAIL
+    context['doc_url'] = settings.DOC_URL
+    context['max_free_spaces'] = settings.MAX_FREE_SPACES
     context['pro_product'] = Product.objects.filter(name="Pro").first()
     if context['pro_product'] is not None:
         unit_amount = (context['pro_product'].default_price.unit_amount or 0) / 100
@@ -25,5 +27,4 @@ def custom_context(request):
         formatted_price = f"{sigil}{intcomma(amount_two_decimals)}"
         context['pro_product_formatted_price'] = formatted_price
         
-    context['doc_url'] = settings.DOC_URL
     return context
