@@ -36,7 +36,7 @@ def create_checkout_session(request):
     }
     line_items = [
         {
-            "price": Product.objects.get(name="Pro").default_price.id,
+            "price": Product.objects.get(name="Kezyy Pro").default_price.id,
             "quantity": 1,
         },
     ]
