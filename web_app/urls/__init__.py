@@ -1,6 +1,6 @@
 from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
-    PasswordResetView, SignupView, LoginView, SpaceDetailFormViewSender, \
+    PasswordResetView, SignupView, LoginView,LoginCancelledView, SpaceDetailFormViewSender, \
     TermsOfServiceView, privacy_policy,cookie_policy, DeleteSpaceView, SettingsView, PublicLandingView, \
     BetaAccessRequestFormView, \
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
@@ -8,6 +8,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
     sender_info, sender_row, select_destination_type, get_destination_logo
+
 
 urlpatterns = [
     # Generic views
@@ -22,6 +23,7 @@ urlpatterns = [
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
     path('accounts/delete/', AccountDeleteView.as_view(), name='account_delete'),
     path('accounts/social/connections/', ConnectionsView.as_view(), name='socialaccount_connections'),
+    path('accounts/social/login/cancelled/', LoginCancelledView.as_view(), name='socialaccount_login_cancelled'),
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
     path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
     path('spaces/delete/<uuid:space_uuid>/', DeleteSpaceView.as_view(), name='space_delete'),

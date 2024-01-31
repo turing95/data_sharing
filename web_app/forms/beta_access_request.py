@@ -13,11 +13,11 @@ class BetaAccessRequestForm(ModelForm):
                                 help_text="")
 
     user_email = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'jhon.doe@mail.com',
-                                                               'class': css_classes.text_input}),
-
-                                 label='User Email',
-                                 help_text="This email will be used to grant you access to the beta version, pay attention to the spelling or you will no hear from us.")
-
+                                                             'class': css_classes.text_input}),
+                            
+                            label='User Email',
+                            help_text="This email will be used to grant you access to the beta version, pay attention to the spelling or you will not hear from us.")
+    
     industry = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Finance',
                                                              'class': css_classes.text_input}),
                                required=False,
