@@ -104,7 +104,7 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
 <script>
     // Timezone settings
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // e.g. "America/New_York"
-    document.cookie = "django_timezone=" + timezone;
+    document.cookie = "django_timezone=" + timezone + ";path=/;Secure;SameSite=Lax";
 </script>
 {% if log_queries %}
     <ul>

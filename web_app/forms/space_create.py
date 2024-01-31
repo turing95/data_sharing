@@ -149,9 +149,9 @@ class SpaceForm(ModelForm):
         deadline = self.cleaned_data.get('deadline', None)
 
         if deadline is not None:
-            # Ensure the datetime is timezone-aware
+            '''# Ensure the datetime is timezone-aware
             if not is_aware(deadline):
-                deadline = make_aware(deadline)
+                deadline = make_aware(deadline)'''
             # Convert to UTC
             deadline = arrow.get(deadline).to('UTC')
             if deadline < arrow.utcnow():
