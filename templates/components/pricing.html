@@ -52,8 +52,8 @@
                     {% if user.is_authenticated %}
                         <div class="flex items-center justify-center px-5 py-2 font-medium text-center text-gray-800 bg-gray-200">Current plan</div>
                     {% else %}
-                        {% url 'account_login' as login_url %}          
-                        {% include 'components/buttons/generic.html' with href=login_url button_text="Get started"%}
+                        {% url 'generic_beta_access' as form_url %}          
+                        {% include 'components/buttons/generic.html' with href=form_url button_text="Get started"%}
                     {% endif %}
                 </div>   
             </div>
@@ -99,8 +99,8 @@
                     {% url 'create_checkout_session'  as subscribe_url %}        
                     {% include 'components/buttons/generic.html' with href=subscribe_url button_text="Upgrade"%}
                 {% else %}
-                    {% url 'account_login' as login_url %}          
-                    {% include 'components/buttons/generic.html' with href=login_url button_text="Get started"%}
+                    {% url 'generic_beta_access' as form_url %}     
+                    {% include 'components/buttons/generic.html' with href=form_url button_text="Get started"%}
                 {% endif %}
             {% endif %}
             </div>
@@ -109,10 +109,18 @@
 
     <div class="flex justify-center mt-2">
         <p class="text-sm text-gray-700">
-            Need Enterprise features? Contact us at: 
+            Need Enterprise features?
+            {% if request.user.is_authenticated %}
+                Contact us at:
             <a href="mailto:{{contact_email}}" class="font-semibold cursor-pointer hover:underline">
                 {{contact_email}}
             </a>
+
+            {% else %}
+            <a href="{% url 'generic_beta_access' %}" class="font-semibold cursor-pointer hover:underline">
+                Tell us more
+            </a>
+            {% endif %}
         </p>
     </div>
     

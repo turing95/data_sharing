@@ -14,7 +14,7 @@ urlpatterns = [
     path('terms-of-service/', TermsOfServiceView.as_view(), name='generic_terms_of_service'),
     path('privacy-policy/', privacy_policy, name='generic_privacy_policy'),
     path('cookie-policy/', cookie_policy, name='generic_cookie_policy'),
-    path('beta-access-request/', BetaAccessRequestFormView.as_view(), name='beta_access_request'),
+    path('beta/', BetaAccessRequestFormView.as_view(), name='generic_beta_access'),
     path('', PublicLandingView.as_view(), name='generic_home'),
     # Receiver views
     path('spaces/', SpacesView.as_view(), name='spaces'),

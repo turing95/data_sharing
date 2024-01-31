@@ -18,7 +18,7 @@
                    <div class="sm:flex sm:space-x-4">
                         {% if request.user.is_authenticated is False %}
                             <div class="flex flex-col">
-                                {% url 'beta_access_request' as beta_access_request_url %}
+                                {% url 'generic_beta_access' as beta_access_request_url %}
                                 {% include "components/buttons/generic.html" with button_text="Access beta for free" href=beta_access_request_url %}
                                 <p class="flex items-center my-auto mt-1 text-xs text-gray-500">No credit card required.</p>
                             </div>
@@ -304,7 +304,7 @@
                     <p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">Start collecting files on autopilot</p>
 
                     <div class="flex flex-col max-w-[180px] mx-auto">
-                        {% url 'beta_access_request' as beta_access_request_url %}
+                        {% url 'generic_beta_access' as beta_access_request_url %}
                         {% include "components/buttons/generic.html" with button_text="Access beta for free" href=beta_access_request_url %}
                         <p class="flex items-center mx-auto my-auto mt-1 text-xs text-gray-500">No credit card required.</p>
                     </div>
