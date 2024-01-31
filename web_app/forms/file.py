@@ -57,7 +57,7 @@ class FileForm(Form):
     def clean_files(self):
         super().clean()
         files = self.cleaned_data.get('files')
-        if self.upload_request.file_types.exists() is True:
+        if files and self.upload_request.file_types.exists() is True:
             for file in files:
                 extension = file.name.split('.')[-1]
                 if (extension in self.upload_request.extensions) is False:
