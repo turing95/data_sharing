@@ -20,11 +20,12 @@
 {% else %}
 <form id="beta_access_request_form" action="" method="POST">
     {% csrf_token %}
+    {{ form.honeypot }}
 
     <div class="max-w-2xl mx-auto">
         <h1 class="mt-6 text-4xl font-bold text-gray-800">Kezyy's Beta Access Form</h1>
         <p class="mt-2 text-sm text-gray-600">Please, provide your email address and answer these few questions.<br>
-            We review requests every day and you will receive an email once you will be allowed to sign up.<br>
+            We review requests every day, and you will receive an email once you will be allowed to sign up.<br>
         Remember to insert the same email you will use to sign up via your Google or Microsoft account.</p>
 
     <!-- USER NAME -->
