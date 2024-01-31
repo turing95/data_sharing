@@ -4213,6 +4213,11 @@ input[type="search"]::-webkit-search-cancel-button {
     padding-bottom: 6rem;
   }
 
+  .lg\:px-10 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
   .lg\:pb-16 {
     padding-bottom: 4rem;
   }

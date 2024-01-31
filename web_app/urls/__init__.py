@@ -1,7 +1,7 @@
 from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     PasswordResetView, SignupView, LoginView, SpaceDetailFormViewSender, \
-    TermsOfServiceView, PrivacyPolicyView, DeleteSpaceView, SettingsView, PublicLandingView, \
+    TermsOfServiceView, privacy_policy,cookie_policy, DeleteSpaceView, SettingsView, PublicLandingView, \
     BetaAccessRequestFormView, \
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
@@ -12,8 +12,9 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
 urlpatterns = [
     # Generic views
     path('terms-of-service/', TermsOfServiceView.as_view(), name='generic_terms_of_service'),
-    path('privacy-policy/', PrivacyPolicyView.as_view(), name='generic_privacy_policy'),
-    path('beta-access-request/', BetaAccessRequestFormView.as_view(), name='beta_access_request'),
+    path('privacy-policy/', privacy_policy, name='generic_privacy_policy'),
+    path('cookie-policy/', cookie_policy, name='generic_cookie_policy'),
+    path('beta/', BetaAccessRequestFormView.as_view(), name='generic_beta_access'),
     path('', PublicLandingView.as_view(), name='generic_home'),
     # Receiver views
     path('spaces/', SpacesView.as_view(), name='spaces'),

@@ -7,8 +7,9 @@ from web_app.views.receiver.authentication.reset_password import PasswordResetVi
 from web_app.views.receiver.authentication.delete import AccountDeleteView
 from web_app.views.receiver.authentication.connections import ConnectionsView
 from web_app.views.receiver.space.detail import SpaceDetailFormView as SpaceDetailFormViewReceiver
-from web_app.views.terms_of_service import TermsOfServiceView
-from web_app.views.privacy_policy import PrivacyPolicyView
+from web_app.views.legal.terms_of_service import TermsOfServiceView
+from web_app.views.legal.privacy_policy import privacy_policy
+from web_app.views.legal.cookie_policy import cookie_policy
 from web_app.views.public_landing import PublicLandingView
 from web_app.views.receiver.settings import SettingsView
 from web_app.views.beta_access_request import BetaAccessRequestFormView
