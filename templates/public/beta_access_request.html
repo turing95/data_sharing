@@ -3,14 +3,13 @@
 
 {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
 
-{% if submission_successful is True %}
+{% if submission_successful %}
     <div class="flex flex-col justify-between pt-[200px] px-10">
         <div class="flex-grow">
             <div class="flex items-center justify-center h-full">
                 <div class="text-center">
                     <h1 class="text-4xl font-bold text-gray-800">Thanks for requesting access to Kezyy's Beta</h1>
                     <p class="mt-2 text-2xl text-gray-600">We'll get back to you in a few hours after we have reviewed your request.</p>
-                    <p class="mt-4 text-gray-600">{{ description }}</p>
                     {% url 'generic_home' as home_url %}          
                     {% include 'components/buttons/generic.html' with href=home_url button_text="Back to homepage"  extra_classes="max-w-[250px] mx-auto" %}
                 </div>
