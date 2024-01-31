@@ -62,7 +62,7 @@
 </div>
 
 <div id="beta-access-form-container" class="{% if not form.errors %} hidden {%endif%}">
-    <form id="beta_access_request_form" action="{% url 'beta_access_request' %}" method="POST">
+    <form id="beta_access_request_form" action="" method="POST">
         {% csrf_token %}
         {{ form.honeypot }}
 
@@ -113,30 +113,6 @@
                 {{ form.intended_use }}
                 {% include 'components/forms/error_widget.html' with errors=form.intended_use.errors %}
             </div>
-
-            {% comment %} <!-- industry -->
-            <div class="mb-6">
-                <div class="flex items-center mb-2 space-x-2">
-                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">What's your industry?</h3>
-                </div>
-                <label for="{{ form.industry.id_for_label }}"
-                    class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.industry.label }}
-                </label>
-                {{ form.industry }}
-                {% include 'components/forms/error_widget.html' with errors=form.industry.errors %}
-            </div> {% endcomment %}
-
-            {% comment %} <!-- country -->
-            <div class="mb-6">
-                <div class="flex items-center mb-2 space-x-2">
-                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">What country are you from?</h3>
-                </div>
-                <label for="{{ form.country.id_for_label }}"
-                    class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.country.label }}
-                </label>
-                {{ form.country }}
-                {% include 'components/forms/error_widget.html' with errors=form.country.errors %}
-            </div> {% endcomment %}
             
             <div class ="flex mt-4">
                 <!-- company -->
