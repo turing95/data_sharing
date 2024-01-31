@@ -3,11 +3,13 @@ import { initSubmitButtons } from './utils/submitButton.js';
 import { initNav } from './utils/navbar.js';
 import {initHtmxModal} from "./utils/htmxModal.js";
 import {handleHtmxError} from "./utils/errors.js";
+import { initBetaAccessForm } from "./utils/beta-access-form.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     initSubmitButtons();
     initMessageBar();
     initNav();
+    initBetaAccessForm();
 });
 
 document.addEventListener('htmx:afterRequest', function(evt) {

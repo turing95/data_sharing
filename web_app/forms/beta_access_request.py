@@ -15,7 +15,7 @@ class BetaAccessRequestForm(ModelForm):
                                                              'class': css_classes.text_input}),
                             
                             label='User Email',
-                            help_text="This email will be used to grant you access to the beta version, pay attention to the spelling or you will no hear from us.")
+                            help_text="This email will be used to grant you access to the beta version, pay attention to the spelling or you will not hear from us.")
     
     industry = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Finance',
                                                              'class': css_classes.text_input}),
@@ -56,6 +56,12 @@ class BetaAccessRequestForm(ModelForm):
                             required=False,
                             label='First Touchpoint',
                             help_text="")
+    
+    checker = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'come at me bro',
+                                                            'class': "hidden"}),
+                        required=False,
+                        label='are you a bot?',
+                        help_text="")    
 
     class Meta:
         model = BetaAccessRequest
@@ -69,4 +75,10 @@ class BetaAccessRequestForm(ModelForm):
         except ValidationError:
             raise ValidationError(f"{email} is not a valid email address")
         return email
+    
+    def clean_checker(self):
+        checker = self.cleaned_data.get('checker', None)
+        if checker != "":
+            raise ValidationError(f"Are you a bot?")
+        return checker
             

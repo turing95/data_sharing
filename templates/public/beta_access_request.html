@@ -9,7 +9,7 @@
             <div class="flex items-center justify-center h-full">
                 <div class="text-center">
                     <h1 class="text-4xl font-bold text-gray-800">Thanks for requesting access to Kezyy's Beta</h1>
-                    <p class="mt-2 text-2xl text-gray-600">We'll get back to you in a few hours after we have reviewed your request.</p>
+                    <p class="mt-2 mb-2 text-2xl text-gray-600">We'll get back to you in a few hours after we have reviewed your request.</p>
                     {% url 'generic_home' as home_url %}          
                     {% include 'components/buttons/generic.html' with href=home_url button_text="Back to homepage"  extra_classes="max-w-[250px] mx-auto" %}
                 </div>
@@ -18,116 +18,168 @@
     </div> 
 
 {% else %}
-<form id="beta_access_request_form" action="{% url 'beta_access_request' %}" method="POST">
-    {% csrf_token %}
 
-    <div class="max-w-2xl mx-auto">
-        <h1 class="mt-6 text-4xl font-bold text-gray-800">Kezyy's Beta Access Form</h1>
-        <p class="mt-2 text-sm text-gray-600">Please, provide your email address and answer these few questions.<br>
-            We review requests every day and you will receive an email once you will be allowed to sign up.<br>
-        Remember to insert the same email you will use to sign up via your Google or Microsoft account.</p>
 
-    <!-- USER NAME -->
-    <div class="mt-4 mb-6">
-            <div class="inline-flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">What's your name?</h3><p class="ml-3 text-sm text-red-500">required</p>
-            </div>
-            <label for="{{ form.user_name.id_for_label }}"
-            class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.user_name.label }} </label>
-            {{ form.user_name }}
-            {% include 'components/forms/error_widget.html' with errors=form.user_name.errors %}
+<div id="beta-access-intro" class="max-w-2xl mx-auto mt-6 {% if form.errors %} hidden {%endif%}">
+    <h1 class="text-4xl font-bold text-gray-800">Kezyy's Beta Access</h1>
+    <p class="mt-3 text-sm text-gray-600">To access the Beta you need to have your email approved.<br>
+        You can book a Demo and explain your use case or just fill a short form if you prefer.<br>
+        </p>
+
+    <div class="flex mt-6 ">
+        <div id="googleButton">
+            <!-- Google Calendar Appointment Scheduling begin -->
+            <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+            <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+            <script>
+                (function() {
+                    const target = document.currentScript;
+                    window.addEventListener('load', function() {
+                        calendar.schedulingButton.load({
+                            url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3k9PGiMe8EprPS0CWrg03JQGjgEHBl4JEvfNvJZLNUddAbzO3gVXGF_dsHogjKeAUxYDYfb4QO?gv=true',
+                            color: '#2b50c2',
+                            label: 'Book a 15 minutes Demo',
+                            target,
+                        });
+                        // Wait for the Google button to load and then modify its classes
+                        setTimeout(function() {
+                            // get the button with class named qxc3
+                            const googleButton = document.querySelector('.qxCTlb');
+                            if (googleButton) {
+                            googleButton.style.borderRadius = '0';
+                            googleButton.style.fontFamily = 'Arial, sans-serif'; // Arial font
+                            }
+                        }, 0); //timeout
+                    });
+                })();
+            </script>
+            <!-- end Google Calendar Appointment Scheduling -->
         </div>
-
-        <!-- USER EMAIL -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">What email do you want to use to access Kezyy's Beta?</h3>
-                {% include 'components/tooltip.html' with title="Email - MANDATORY" content=form.user_email.help_text target=form.user_email.name%}
-                <p class="ml-3 text-sm text-red-500">required</p>
-            </div>
-            <label for="{{ form.user_email.id_for_label }}"
-                class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.user_email.label }}
-            </label>
-            {{ form.user_email }}
-            {% include 'components/forms/error_widget.html' with errors=form.user_email.errors %}
-        </div>
-
-        <!-- industry -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">What's your industry?</h3>
-            </div>
-            <label for="{{ form.industry.id_for_label }}"
-                class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.industry.label }}
-            </label>
-            {{ form.industry }}
-            {% include 'components/forms/error_widget.html' with errors=form.industry.errors %}
-        </div>
-
-        <!-- country -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">What country are you from?</h3>
-            </div>
-            <label for="{{ form.country.id_for_label }}"
-                class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.country.label }}
-            </label>
-            {{ form.country }}
-            {% include 'components/forms/error_widget.html' with errors=form.country.errors %}
-        </div>
-
-        <!-- company -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">What's your company?</h3>
-            </div>
-            <label for="{{ form.company.id_for_label }}"
-            class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.company.label }} </label>
-            {{ form.company }}
-            {% include 'components/forms/error_widget.html' with errors=form.company.errors %}
-        </div>
-
-        <!-- user_role -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">What's your role?</h3>
-            </div>
-            <label for="{{ form.user_role.id_for_label }}"
-            class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.user_role.label }} </label>
-            {{ form.user_role }}
-            {% include 'components/forms/error_widget.html' with errors=form.user_role.errors %}
-        </div>
-
-        
-
-        <!-- intended_use -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">What do you plan to use Kezyy for?</h3>
-                <p class="ml-3 text-sm text-red-500">required</p>
-            </div>
-            <label for="{{ form.intended_use.id_for_label }}"
-            class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.intended_use.label }} </label>
-            {{ form.intended_use }}
-            {% include 'components/forms/error_widget.html' with errors=form.intended_use.errors %}
-        </div>
-
-        <!-- first_touchpoint -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">How did you hear about Kezyy?</h3>
-            </div>
-            <label for="{{ form.first_touchpoint.id_for_label }}"
-            class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.first_touchpoint.label }} </label>
-            {{ form.first_touchpoint }}
-            {% include 'components/forms/error_widget.html' with errors=form.first_touchpoint.errors %}
-        </div>
-
-        {% include "components/buttons/submit.html" with button_text="Request Access to Beta" extra_classes="max-w-[250px] mx-auto"%}
-
+        <button type="button" id="beta-access-form-button-1" class="flex items-center my-auto ml-auto text-lg text-blue-700 hover:text-blue-500 hover:underline">Fill short form
+            <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </button>
     </div>
+</div>
 
-</form>
+<div id="beta-access-form-container" class="{% if not form.errors %} hidden {%endif%}">
+    <form id="beta_access_request_form" action="{% url 'beta_access_request' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="max-w-2xl mx-auto">
+            <h1 class="mt-6 text-4xl font-bold text-gray-800">Kezyy's Beta Access Form</h1>
+            <p class="mt-2 text-sm text-gray-600">Please, provide your email address and answer these few questions.<br>
+                We review requests every day and you will receive an email once you will be allowed to sign up.<br>
+            Remember to insert the same email you will use to sign up via your Google or Microsoft account.</p>
+            <button type="button" id="beta-access-form-button-2" class="flex items-center my-auto mt-4 ml-auto text-lg text-blue-700 hover:text-blue-500 hover:underline">Book a demo instead
+                <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+
+            <div class ="flex mt-4">
+                <!-- USER NAME -->
+                <div class="w-full mb-6 ">
+                        <div class="inline-flex items-center mb-2 space-x-2">
+                            <h3 class="text-xl font-medium text-gray-900 dark:text-white">Name</h3><p class="ml-3 text-sm text-red-500">required</p>
+                        </div>
+                        <label for="{{ form.user_name.id_for_label }}"
+                        class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.user_name.label }} </label>
+                        {{ form.user_name }}
+                        {% include 'components/forms/error_widget.html' with errors=form.user_name.errors %}
+                </div>
+
+                <!-- USER EMAIL -->
+                <div class="w-full mb-6 ml-4">
+                    <div class="flex items-center mb-2 space-x-2">
+                        <h3 class="text-xl font-medium text-gray-900 dark:text-white">Email</h3>
+                        {% include 'components/tooltip.html' with title="Email - MANDATORY" content=form.user_email.help_text target=form.user_email.name%}
+                        <p class="ml-3 text-sm text-red-500">required</p>
+                    </div>
+                    <label for="{{ form.user_email.id_for_label }}"
+                        class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.user_email.label }}
+                    </label>
+                    {{ form.user_email }}
+                    {% include 'components/forms/error_widget.html' with errors=form.user_email.errors %}
+                </div>
+            </div>
+            
+            <!-- intended_use -->
+            <div class="mb-6">
+                <div class="flex items-center mb-2 space-x-2">
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">Briefly describe how and why you collect files?</h3>
+                    <p class="ml-3 text-sm text-red-500">required</p>
+                </div>
+                <label for="{{ form.intended_use.id_for_label }}"
+                class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.intended_use.label }} </label>
+                {{ form.intended_use }}
+                {% include 'components/forms/error_widget.html' with errors=form.intended_use.errors %}
+            </div>
+
+            {% comment %} <!-- industry -->
+            <div class="mb-6">
+                <div class="flex items-center mb-2 space-x-2">
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">What's your industry?</h3>
+                </div>
+                <label for="{{ form.industry.id_for_label }}"
+                    class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.industry.label }}
+                </label>
+                {{ form.industry }}
+                {% include 'components/forms/error_widget.html' with errors=form.industry.errors %}
+            </div> {% endcomment %}
+
+            {% comment %} <!-- country -->
+            <div class="mb-6">
+                <div class="flex items-center mb-2 space-x-2">
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">What country are you from?</h3>
+                </div>
+                <label for="{{ form.country.id_for_label }}"
+                    class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.country.label }}
+                </label>
+                {{ form.country }}
+                {% include 'components/forms/error_widget.html' with errors=form.country.errors %}
+            </div> {% endcomment %}
+            
+            <div class ="flex mt-4">
+                <!-- company -->
+                <div class="w-full mb-6">
+                    <div class="flex items-center mb-2 space-x-2">
+                            <h3 class="text-xl font-medium text-gray-900 dark:text-white">What's your company?</h3>
+                        </div>
+                        <label for="{{ form.company.id_for_label }}"
+                        class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.company.label }} </label>
+                        {{ form.company }}
+                        {% include 'components/forms/error_widget.html' with errors=form.company.errors %}
+                </div>
+
+                <!-- user_role -->
+                <div class="w-full mb-6 ml-4">
+                    <div class="flex items-center mb-2 space-x-2">
+                        <h3 class="text-xl font-medium text-gray-900 dark:text-white">And role?</h3>
+                    </div>
+                    <label for="{{ form.user_role.id_for_label }}"
+                    class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.user_role.label }} </label>
+                    {{ form.user_role }}
+                    {% include 'components/forms/error_widget.html' with errors=form.user_role.errors %}
+                </div>
+            </div>            
+
+
+
+            <!-- first_touchpoint -->
+            <div class="mb-6">
+                <div class="flex items-center mb-2 space-x-2">
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">How did you hear about Kezyy?</h3>
+                </div>
+                <label for="{{ form.first_touchpoint.id_for_label }}"
+                class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.first_touchpoint.label }} </label>
+                {{ form.first_touchpoint }}
+                {% include 'components/forms/error_widget.html' with errors=form.first_touchpoint.errors %}
+            </div>
+
+            {% include "components/buttons/submit.html" with button_text="Request Access to Beta" extra_classes="max-w-[250px] mx-auto"%}
+
+        </div>
+
+    </form>
+</div>
 {% endif %}
 
 {% endblock %}
