@@ -47,7 +47,7 @@ class Sender(BaseModel, ActiveModel):
         })
 
     def notify_deadline(self):
-        if self.is_active:
+        if self.is_active and self.space.is_deleted is False:
             context = {
                 'pre_header_text': f'Remember to complete the upload for space: {self.space.title}',
                 'sender': self,

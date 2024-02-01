@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
+from web_app.models import Space
+
 
 class AccountDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('generic_home')
@@ -15,6 +17,7 @@ class AccountDeleteView(LoginRequiredMixin, DeleteView):
         user_pk = self.request.user.pk
         logout(self.request)
         User = get_user_model()
+        Space.objects.filter(user_id=user_pk).update(is_deleted=True)
         User.objects.filter(pk=user_pk).delete()
         messages.success(self.request, 'Account successfully deleted')
         return super().form_valid(form)
