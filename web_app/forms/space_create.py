@@ -51,8 +51,8 @@ class SpaceForm(ModelForm):
                                       attrs={'placeholder': 'Type or paste email addresses of invitees',
                                              'class': css_classes.text_input + "email-input"}))
     is_public = forms.BooleanField(
-        widget=ToggleWidget(label_on='Enabled public link',
-                            label_off='Disabled public link'),
+        widget=ToggleWidget(label_on='Enable public link',
+                            label_off='Enable public link'),
         required=False,
         label='Generate public link',
         help_text="""The public link will not be tied to a specific email address and can be used to collect inputs from the general public, when there is not the need to distinguish one upload from another.
@@ -110,8 +110,8 @@ class SpaceForm(ModelForm):
     )
 
     upload_after_deadline = forms.BooleanField(
-        widget=ToggleWidget(label_on='Uploads after deadline allowed',
-                            label_off='Uploads after deadline not allowed'),
+        widget=ToggleWidget(label_on='Allow uploads after deadline',
+                            label_off='Allow uploads after deadline'),
         required=False,
         label='Allow uploads after deadline',
         help_text="""Your invitees will not be able to upload files after the deadline if this is enabled.

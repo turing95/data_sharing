@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -219,9 +220,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # TODO: this is against security best practices, according to allauth docs
 SOCIALACCOUNT_LOGIN_ON_GET = True
-MAX_FREE_SPACES = 10
-MAX_FREE_INVITEES = 4
-MAX_FREE_REQUESTS = 1
+
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
