@@ -49,6 +49,7 @@ class Sender(BaseModel, ActiveModel):
     def notify_deadline(self):
         if self.is_active:
             context = {
+                'pre_header_text': f'Remember to complete the upload for space: {self.space.title}',
                 'sender': self,
                 'contact_email': settings.CONTACT_EMAIL,
                 'upload_requests': self.space.requests.filter(is_deleted=False).order_by('created_at'),
@@ -84,8 +85,8 @@ class Sender(BaseModel, ActiveModel):
         return False
 
     def notify_invitation(self):
-        from web_app.models import UploadRequest
         context = {
+            'pre_header_text': f'{self.space.user.email} invites you to upload files to the space: {self.space.title}',
             'sender': self,
             'contact_email': settings.CONTACT_EMAIL,
             'upload_requests': self.space.requests.filter(is_deleted=False).order_by('created_at'),

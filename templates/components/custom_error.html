@@ -4,7 +4,7 @@
                 <div class="text-center">
                     <h1 class="text-6xl font-bold text-gray-800">{{ code }}</h1>
                     <p class="text-2xl text-gray-600">{{ slug }}</p>
-                    <p class="mt-4 text-gray-600">{{ description }}</p>
+                    <p class="mt-4 mb-4 text-gray-600">{{ description }}</p>
                     {% if request.user.is_authenticated %}
                         {% url 'spaces' as back_url %}   
                     {% else %}

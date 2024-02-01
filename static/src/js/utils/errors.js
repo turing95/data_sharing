@@ -44,7 +44,7 @@ function appendMessageToContainer(container, messageElement) {
 }
 
 export function handleHtmxError() {
-    const errorMessage = "Unexpected error";
+    const errorMessage = "Unexpected error try again";
     const djangoMessagesContainer = createDjangoMessagesContainer();
     const messageElement = createMessageElement(errorMessage);
     appendMessageToContainer(djangoMessagesContainer, messageElement);
