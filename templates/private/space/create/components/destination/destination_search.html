@@ -11,7 +11,7 @@
                         id="id_search-folders-{{ request_index }}-"
                         name="search-folders-{{ request_index }}-" 
                         hx-post="{% url 'search_folders' %}?request_index={{ request_index }}"
-                        hx-trigger="input changed delay:500ms, search, keyup"
+                        hx-trigger="input changed delay:500ms, search"
                         hx-target="next .search-results"
                         autocomplete="off">
             </div>
