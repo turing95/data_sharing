@@ -6,6 +6,8 @@ import {handleHtmxError} from "./utils/errors.js";
 import { initBetaAccessForm } from "./utils/beta-access-form.js";
 
 document.addEventListener('DOMContentLoaded', function() {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // e.g. "America/New_York"
+    document.cookie = "django_timezone=" + timezone + ";path=/;Secure;SameSite=Lax";
     initSubmitButtons();
     initMessageBar();
     initNav();

@@ -63,7 +63,7 @@ class RequestForm(ModelForm):
 
     file_type_restrict = forms.BooleanField(
         widget=ToggleWidget(label_on='Apply file restrictions',
-                            label_off='No file type restrictions',
+                            label_off='Apply file restrictions',
                             attrs={
                                 'onclick': 'toggleFileTypeRestrict(this)'
                             }),
@@ -130,8 +130,8 @@ class RequestForm(ModelForm):
                             """)
 
     rename = forms.BooleanField(
-        widget=ToggleWidget(label_on='Enabled custom file names',
-                            label_off='Disabled custom file names',
+        widget=ToggleWidget(label_on='Enable custom file names',
+                            label_off='Enable custom file names',
                             attrs={
                                 'onclick': 'toggleRename(this)'
                             }),
@@ -142,8 +142,8 @@ class RequestForm(ModelForm):
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """)
     multiple_files = forms.BooleanField(
-        widget=ToggleWidget(label_on='Enabled multiple files',
-                            label_off='Disabled multiple files'),
+        widget=ToggleWidget(label_on='Enable multiple files',
+                            label_off='Enable multiple files'),
         required=False,
         label='Multiple Files',
         help_text="""
