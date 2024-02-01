@@ -1,5 +1,6 @@
 import {initRequestForms,toggleRename,handleTagDropdownChange,addFileTypeTag, toggleFileTypeRestrict,selectFolder } from "./request/index.js";
 import {initForm} from "./form.js";
+import {clickOutsideSearch} from "./eventHandlers.js";
 
 window.toggleRename = toggleRename;
 window.toggleFileTypeRestrict= toggleFileTypeRestrict
@@ -9,6 +10,7 @@ window.selectFolder = selectFolder;
 document.addEventListener('DOMContentLoaded', function() {
     initForm();
     initRequestForms();
+    document.addEventListener('click',clickOutsideSearch);
 });
 
 //handle enter button behavior
