@@ -30,10 +30,14 @@
     <div class="w-full max-w-4xl px-10 mx-auto">
         
         <!-- Instructions Section -->
+    {% if space.instructions %}
         <div class="mt-3">
-            <div class="hidden block mb-2 text-lg font-medium text-gray-700 ">Instructions</div>
-            
             <p class="text-sm">{{ space.instructions|linebreaks }}</p>
+        </div>
+    {% endif %}
+    <div class="mt-3">
+            <div class="mb-2 text-lg font-medium text-gray-700 ">Total max size of uploads: 50MB</div>
+            
         </div>
 
         {% if space.deadline %}
