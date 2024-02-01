@@ -215,6 +215,9 @@ SOCIALACCOUNT_PROVIDERS = {
             "Files.ReadWrite.All",  # access to user's files
             "offline_access"  # provide a refresh_token when the user logs in
         ],
+        'AUTH_PARAMS': {
+            "prompt": "select_account",
+        }
     }
 }
 
