@@ -13,8 +13,8 @@ class SpacesView(LoginRequiredMixin, SubscriptionMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['new_space_button_text'] = 'NEW SPACE' if context[
-                                                              'user_maxed_spaces'] is False else 'UPGRADE TO CREATE MORE SPACES'
+        context['new_space_button_text'] = 'New space' if context[
+                                                              'user_maxed_spaces'] is False else 'Upgrade to create more spaces'
         return context
 
     def get_queryset(self):

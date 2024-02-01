@@ -42,10 +42,10 @@
        
                         <div class="flex justify-end mt-auto">
                             {% url 'receiver_space_detail' space.uuid as space_detail_url %}
-                            {% include "components/buttons/generic.html" with button_text="SUMMARY" href=space_detail_url extra_classes="mr-1.5" %}
+                            {% include "components/buttons/generic.html" with button_text="Summary" href=space_detail_url extra_classes="mr-1.5" %}
 
                                 {% url 'receiver_space_detail' space.uuid as space_detail_url %}
-                                {% include "components/buttons/generic.html" with button_text="EDIT" href=space_detail_url|add:"?status=edit" extra_classes="ml-1.5" %}
+                                {% include "components/buttons/generic.html" with button_text="Edit" href=space_detail_url|add:"?status=edit" extra_classes="ml-1.5" %}
                                 
 
                             </div> 
