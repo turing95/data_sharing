@@ -1,6 +1,8 @@
+import {checkTotalFileSizeWithNewFiles} from "./utils.js";
 
 export function handleFilesUpload(inputElement) { //function to call onchange on the inputElement
-    
+    let sizeOk =checkTotalFileSizeWithNewFiles(inputElement);
+    if (!sizeOk) return;
     // retrieve the tag container to which to add tags
     const parentDiv = inputElement.closest('.request-accordion-body'); //add class to form
     const tagContainer= parentDiv.querySelector('.file-tags-container'); 

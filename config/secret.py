@@ -17,3 +17,4 @@ STRIPE_LIVE_MODE = False  # Change to True in production
 DJSTRIPE_WEBHOOK_SECRET = ""
 RESEND_API_KEY = ""
 DOC_URL = "" # "http://localhost:3000" for local development
+MAX_FREE_SPACES = 1000 # a number here

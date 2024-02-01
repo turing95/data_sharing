@@ -16,3 +16,7 @@
 11. add the ngrok url without https to the ALLOWED_HOSTS in settings.py
 12. run celery
 13. access app at localhost:8000
+
+## google console adding beta tester
+- go to google cloud console
+- add users or remove them from list in 'oauth consent screen' 
