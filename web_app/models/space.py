@@ -1,15 +1,11 @@
 from django.db import models
-from web_app.models import BaseModel, ActiveModel, DeleteModel
-from django.core.validators import MinValueValidator, MaxValueValidator
+from web_app.models import BaseModel, DeleteModel
 from django.conf import settings
 import pytz
-from datetime import timedelta
 import arrow
-from decimal import Decimal
-from django.urls import reverse
 
 
-class Space(BaseModel,DeleteModel):
+class Space(BaseModel, DeleteModel):
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
 
     title = models.CharField(max_length=250)
@@ -20,13 +16,13 @@ class Space(BaseModel,DeleteModel):
     upload_after_deadline = models.BooleanField(default=False)
     notify_deadline = models.BooleanField(default=False)
     notify_invitation = models.BooleanField(default=False)
-    deadline_notice_days = models.PositiveSmallIntegerField(blank=True,null=True)
-    deadline_notice_hours = models.PositiveSmallIntegerField(blank=True,null=True)
+    deadline_notice_days = models.PositiveSmallIntegerField(blank=True, null=True)
+    deadline_notice_hours = models.PositiveSmallIntegerField(blank=True, null=True)
     timezone = models.CharField(
         max_length=50,
         choices=TIMEZONE_CHOICES
     )
-    locale = models.CharField(max_length=10, null=True, blank=True,default='en-us')
+    locale = models.CharField(max_length=10, null=True, blank=True, default='en-us')
 
     @property
     def deadline_notification_datetime(self):
@@ -35,33 +31,31 @@ class Space(BaseModel,DeleteModel):
         notice_days = self.deadline_notice_days or 0
         notice_hours = self.deadline_notice_hours or 0
 
-
         # Calculate notification datetime in the server timezone
         notification_dt = arrow.get(self.deadline).shift(days=-notice_days, hours=-notice_hours)
         return notification_dt.datetime
-    
+
     @property
     def deadline_expired(self):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
-    
+
     @property
     def upload_events(self):
         from web_app.models import SenderEvent
         return SenderEvent.objects.filter(
             request__space=self,
             event_type=SenderEvent.EventType.FILE_UPLOADED
-            ).select_related('sender').prefetch_related('request', 'request__destinations')
-        
+        ).select_related('sender').prefetch_related('request', 'request__destinations')
+
     @property
     def public_upload_events(self):
         return self.upload_events.filter(sender__isnull=True)
 
     def get_deadline_url_ics(self, sender):
         # Format the deadline as YYYYMMDDTHHMMSSZ 
-        if self.deadline is None or self.notify_deadline is False:
+        if self.deadline is None:
             return None, None
-        deadline = self.deadline
-        formatted_deadline = deadline.strftime('%Y%m%dT%H%M%SZ')
+        formatted_deadline = self.deadline.strftime('%Y%m%dT%H%M%SZ')
 
         '''# Calculate the reminder date (one day before the deadline)
         reminder_date = deadline - timedelta(days=self.deadline_reminder)
@@ -72,7 +66,7 @@ class Space(BaseModel,DeleteModel):
         event_details = f"""You have been invited by: {self.user.email}<br><br>Go to Space: <a href="{space_link}">{self.title}</a>"""
 
         event_title = f"DEADLINE for upload space: {self.title}"
-       
+
         ics_content = (
                 "BEGIN:VCALENDAR\n"
                 "VERSION:2.0\n"
@@ -81,12 +75,12 @@ class Space(BaseModel,DeleteModel):
                 f"UID:{formatted_deadline}-space-{sender.uuid}@yourdomain.com\n"
                 "DTSTAMP:" + formatted_deadline + "\n"
                                                   "DTSTART:" + formatted_deadline + "\n"
-                                                                                         "DTEND:" + formatted_deadline + "\n"
-                                                                                                                         f"SUMMARY:{event_title}\n"
-                                                                                                                         f"DESCRIPTION:{event_details}\n"
-                                                                                                                         "LOCATION:Online\n"
-                                                                                                                         "END:VEVENT\n"
-                                                                                                                         "END:VCALENDAR"
+                                                                                    "DTEND:" + formatted_deadline + "\n"
+                                                                                                                    f"SUMMARY:{event_title}\n"
+                                                                                                                    f"DESCRIPTION:{event_details}\n"
+                                                                                                                    "LOCATION:Online\n"
+                                                                                                                    "END:VEVENT\n"
+                                                                                                                    "END:VCALENDAR"
         )
         event_details = event_details.replace(' ', '+')
         event_title = event_title.replace(' ', '+')
