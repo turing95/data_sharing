@@ -73,7 +73,7 @@
                             </div>
 
 
-                            <section class="w-full my-2">
+                            <section class="relative w-full my-2">
 
                                 <div class="flex flex-col-reverse gap-4 md:flex-row">
                                     <div class="flex-1 w-full">
@@ -100,7 +100,7 @@
                                                                 <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=req.destination_id.errors %}</div>
 
                                  <!-- Search Results Section -->
-                                 <div id="destination-search-results-container">
+                                 <div id="destination-search-results-container" class="absolute z-10 w-full">
                                     <div class="flex flex-col-reverse gap-4 md:flex-row">
                                         <div class="flex-1 w-full">
                                             <div id="spacer" class="flex flex-col sm:flex-row">
