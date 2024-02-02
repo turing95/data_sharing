@@ -45,7 +45,7 @@ required for scheduled async tasks
  - requires ngrok if you want to use webhooks
  - requires setting in django admin under model Api keys:
     - STRIPE_TEST_SECRET_KEY
- - run: python manage.py djstripe_sync_models Price Product
+ - run:  ```python manage.py djstripe_sync_models Price Product ```
 
 ## documentation
  - npm i docsify-cli -g

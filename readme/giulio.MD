@@ -8,12 +8,12 @@
 7. add to djstripe api key the following:
     - key name: STRIPE_TEST_SECRET_KEY (there si a bug you may need to update and add the name again after creating the key)
     - secret: take it from somewhere
-8. run: ```python manage.py djstripe_sync_models```
+8. run: ```python manage.py djstripe_sync_models Price Product```
 9. install and run ngrok (not in venv): ```ngrok http http://localhost:8000```
 10. add to djstripe webhook the following:
-     - Base url: url from ngrok found under "forwarding" in the terminal 
+     - Base url: url from ngrok found under "forwarding" in the terminal  
      - Version: 2023-10-16
-11. add the ngrok url without https to the ALLOWED_HOSTS in settings.py
+11. add the ngrok url without https to the ALLOWED_HOSTS in _secret.py WITHOUT HTTPS://
 12. run celery
 13. access app at localhost:8000
 

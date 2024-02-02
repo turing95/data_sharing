@@ -14,7 +14,7 @@ export function checkTotalFileSizeWithNewFiles(inputElement) {
     Array.from(inputElement.files).forEach(file => totalSize += file.size);
 
     if (totalSize > limit) {
-        alert(`Adding these files would exceed the total limit of 50 MB. Please select fewer or smaller files.`);
+        alert(`Adding these files would exceed the total limit of 50 MB. Please select fewer or smaller files.You can submit the form with the current selection and then add more files.`);
         inputElement.value = ''; // Clears the recent selection, not allowing addition
         return false;
     }
