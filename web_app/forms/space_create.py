@@ -9,7 +9,7 @@ from django.utils import timezone as dj_timezone
 from django.utils.timezone import is_aware, make_aware
 from django.utils import translation
 import arrow
-from decimal import Decimal 
+from decimal import Decimal
 
 
 class CommaSeparatedEmailField(forms.CharField):
@@ -74,8 +74,8 @@ class SpaceForm(ModelForm):
         required=False,
         widget=forms.DateTimeInput(attrs={
             'type': 'datetime-local',
-            'class':css_classes.datetime_input
-        }),
+            'class': css_classes.datetime_input
+        }, format='%Y-%m-%dT%H:%M:%S'),
         help_text="""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
                                 """)
