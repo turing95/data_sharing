@@ -11,9 +11,11 @@
         <li>
             <a href="{% url 'generic_terms_of_service' %}" class="hover:underline me-4 md:me-6">Terms of Service</a>
         </li>
+    {% comment %}
         <li>
             <a href="{% url 'generic_cookie_policy' %}" target="_blank" class="hover:underline me-4 md:me-6" title="Cookie Policy ">Cookie Policy</a>
         </li>
+        {% endcomment %}
         {% if request.user.is_authenticated %}
         <li>
             <a href="mailto:{{contact_email}}" class="hover:underline me-4 md:me-6" >
