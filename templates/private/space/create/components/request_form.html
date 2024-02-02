@@ -67,7 +67,7 @@
                         <!-- DESTINATION FOLDER -->
                         <div class="mb-6">
                             <div class="flex items-center mb-2 space-x-2">
-                                <label for="req.some_destinaton_field.id_for_label"
+                                <label for="{{ req.some_destination_field.id_for_label }}"
                                 class="block text-sm font-medium text-gray-900 dark:text-white">Destination folder </label>
                                 {% include 'components/tooltip.html' with title="Destination folder - MANDATORY" content=req.destination_id.help_text target_prefix='requests' target=req.destination_type.name num=forloop.counter0%}
                             </div>
