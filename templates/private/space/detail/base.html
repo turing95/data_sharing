@@ -2,7 +2,7 @@
 {% block private_content %}
 
     <!-- TAB SELECTOR -->
-    {% include 'components/buttons/two_way_selector.html' with path_left=request.path  text_left='Summary' path_rigth="?status=edit" text_right='Edit'  %}
+    {% include 'components/buttons/two_way_selector.html' with path_left=request.path  text_left='Summary' path_right="?status=edit" text_right='Edit'  %}
 
     {% if status == 'edit' %}
         {% include 'private/space/components/delete_form.html' with space=form.instance %}
