@@ -14,6 +14,7 @@
         - [5.4 Request custom file naming](pages/space/request/custom-file-naming)
         - [5.5 Request File Types Restrictions](pages/space/request/file-types-restriction)
         - [5.6 Request Multiple Files](pages/space/request/multiple-files-restriction)
+        - [5.7 Other Limitations](pages/space/request/other-limitations)
 - [Space Summary Page](pages/space-summary-page)
 - [Upload Page](pages/upload-page)
 - [Notifications](pages/notifications)

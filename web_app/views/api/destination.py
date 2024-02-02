@@ -37,11 +37,13 @@ def select_destination_type(request):
             provider_type = request.GET.get(f'requests-{request_index}-destination_type_select')
             next_path = request.GET.get('next', None)
             if provider_type == GoogleDrive.TAG:
+                provider_name = "Google Drive"
                 if request.user.google_account is None:
                     adapter = get_adapter()
                     missing_provider = adapter.get_provider(request, GoogleDrive.PROVIDER_ID)
 
             elif provider_type == OneDrive.TAG:
+                provider_name = "OneDrive"
                 if request.user.microsoft_account is None:
                     adapter = get_adapter()
                     missing_provider = adapter.get_provider(request, OneDrive.PROVIDER_ID)
@@ -51,7 +53,7 @@ def select_destination_type(request):
             return render(request,
                           'private/space/create/components/destination/destination_search.html',
                           {
-                              'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index})
+                              'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index, 'provider_name': provider_name})
     return HttpResponseBadRequest()
 
 
