@@ -6,6 +6,9 @@ export function initNav()  {
             navLinks.forEach(link => {
                 link.classList.remove('text-blue-500');
                 link.classList.add('text-gray-900');
+                // set to hidden element with id navbar-menu
+                const navbarMenu = document.getElementById('navbar-menu');
+                navbarMenu.classList.add('hidden'); 
 
             });
             this.classList.add('text-blue-500');
