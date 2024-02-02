@@ -1,4 +1,6 @@
 import logging
+
+import arrow
 import stripe
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -48,10 +50,14 @@ def create_checkout_session(request):
         session = stripe.checkout.Session.create(
             customer=customer.id,
             line_items=line_items,
+            billing_address_collection='auto',
+            customer_update={'address': 'auto'},
+            automatic_tax={'enabled': True},
             mode="subscription",
             success_url=success_url,
             cancel_url=cancel_url,
             metadata=metadata,
+
         )
 
 
