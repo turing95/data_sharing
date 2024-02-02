@@ -92,7 +92,7 @@ class RequestForm(ModelForm):
                    'hx-get': reverse_lazy('select_destination_type'),
                    'hx-target': "previous .destination-search",
                    'hx-swap': "outerHTML",
-
+                   'onchange': 'providerChanged(this)'
                    })
     )
 
@@ -109,7 +109,7 @@ class RequestForm(ModelForm):
         label='Non-editable Field',
         widget=forms.TextInput(
             attrs={
-                'class': ' w-full h-full px-2 py-1 text-base truncate bg-transparent border-none sm:text-sm' + ' destination-display',
+                'class': ' w-full h-full px-2 py-1 text-base truncate focus:ring-0 focus:outline-none focus:border-0 bg-transparent border-none sm:text-sm' + ' destination-display',
                 'readonly': 'readonly',
                 'placeholder': 'No folder selected yet'
             }

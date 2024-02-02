@@ -80,7 +80,7 @@
                                         <div class="flex flex-col sm:flex-row">
 
                                             <div class="flex flex-col w-full sm:w-1/3 h-[36px]">
-                                                <div class="inline-flex border-l border-gray-300 bg-marian-blue-100 border-y sm:border h-[36px]">
+                                                <div class="inline-flex border-l border-gray-300 bg-gray-200 border-y sm:border h-[36px]">
 
                                                     {% include 'private/space/create/components/destination/destination_logo.html' with tag=req.instance.destination.tag%}
 
@@ -97,7 +97,7 @@
                                     {{ req.destination_type_select }}
                                   </div>
                                 </div>
-                                                                <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=req.destination_id.errors %}</div>
+                                <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=req.destination_id.errors %}</div>
 
                                  <!-- Search Results Section -->
                                  <div id="destination-search-results-container" class="absolute z-10 w-full">
@@ -107,7 +107,7 @@
                                                 <div class="hidden sm:flex flex-col w-full sm:w-1/3 h-[36px]">
                                                 </div>
                                                 <div  class="w-full sm:w-2/3 destination-search">
-                                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-100"></div>
+                                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-100 "></div>
                                                 </div>
                                             </div>
                                         </div>
