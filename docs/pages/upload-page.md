@@ -21,6 +21,7 @@ Invitees access the Upload page via the Space link received in their invitation 
   - invitees can choose files from their PC to upload to a specific request.
   - Selected files are listed and require confirmation before uploading.
   - Files can be uploaded in batches, covering multiple requests in one action.
+  - <u>There is a 50MB limit to the total size of files that can be uploaded in one go. Invitees can upload more files after the first batch but no file larger than 50MB can be uploaded.</u> 
 
 - **Post-Upload Summary:**
   - After uploading, invitees can view a summary of their previously uploaded files.

@@ -23,6 +23,7 @@ Navigate the articles or use the search bar at the top left corner.
 1. [Request custom file naming](pages/space/request/custom-file-naming)
 1. [Request File Types Restrictions](pages/space/request/file-types-restriction)
 1. [Request Multiple Files](pages/space/request/multiple-files-restriction)
+1. [Other Limitations](pages/space/request/other-limitations)
 
 ### Additional Features
 - [Space Summary Page](pages/space-summary-page.md)
