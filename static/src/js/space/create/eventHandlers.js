@@ -24,50 +24,24 @@ export function toggleDeadlineNotify(checkboxOrEvent) {
     }
 }
 
-export function setNotificationDatetime() {
-    // Retrieve values
-    const deadlineValue = document.getElementById('id_deadline').value;
-    const noticeDays = parseFloat(document.getElementById('id_deadline_notice_days').value);
-    const noticeHours = parseFloat(document.getElementById('id_deadline_notice_hours').value);
-    const notificationDateContainer = document.getElementById('deadline-notification-date-container')
 
-    // Parse the deadline value into a Date object
-    const deadlineDate = new Date(deadlineValue);
+export function hideShowSearch(event) {
+    let clickedElement = event.target;
 
-    // Check if the deadline date is valid
-    if (isNaN(deadlineDate.getTime())) {
-        notificationDateContainer.textContent = "Invalid deadline"; // Exit the function if the deadline date is invalid
-        notificationDateContainer.classList.remove('underline');
-        notificationDateContainer.classList.add('text-red-500','bg-red-100', 'mt-0.5');
-        return;
+    // Check if the clicked element doesn't meet the criteria
+    if (!clickedElement.id.startsWith('id_search-folders')) {
+
+        // Find all elements with the class 'search-results'
+        let searchResults = document.querySelectorAll('.search-results');
+
+        // Add the 'hidden' class to each of these elements
+        searchResults.forEach(function(element) {
+            element.classList.add('hidden');
+        });
+    }else{
+        //show only search results next to element
+        let searchResults = clickedElement.closest('.request-form').querySelector('.search-results');
+        searchResults.classList.remove('hidden');
+
     }
-    if (isNaN(noticeDays) || isNaN(noticeHours)) {
-        notificationDateContainer.textContent = "Invalid notice days or hours";
-        notificationDateContainer.classList.remove('underline');
-        notificationDateContainer.classList.add('text-red-500','bg-red-100', 'mt-0.5');
-        return;
-    }
-    notificationDateContainer.classList.remove('text-red-500', 'bg-red-100', 'mt-0.5');
-    notificationDateContainer.classList.add('underline');
-
-    // Calculate the notification datetime
-    // Subtract days and hours from the deadline
-    deadlineDate.setDate(deadlineDate.getDate() - noticeDays);
-    deadlineDate.setMinutes(deadlineDate.getMinutes() - noticeHours*60 );
-
-    // Format the date into "YYYY-MM-DD HH:mm"
-    const formattedDate = formatDateTime(deadlineDate);
-
-    // Set the calculated datetime in the div
-    notificationDateContainer.textContent = formattedDate;
-}
-
-function formatDateTime(date) {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-
-    return `On the ${year}-${month}-${day} at ${hours}:${minutes}.`;
 }
