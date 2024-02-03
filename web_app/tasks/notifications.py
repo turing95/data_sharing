@@ -24,4 +24,4 @@ def notify_deadline(sender_pk):
 def notify_beta_access_request(req_pk):
     from web_app.models import BetaAccessRequest
     req = BetaAccessRequest.objects.get(pk=req_pk)
-    req.notify()
+    return req.notify()

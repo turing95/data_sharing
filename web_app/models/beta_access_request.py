@@ -36,11 +36,12 @@ class BetaAccessRequest(BaseModel):
                 subject=f'New beta access request from {self.user_name} ({self.user_email})',
                 body=txt,
                 from_email=settings.NO_REPLY_EMAIL,
-                to=['beta@kezyy.com'],
+                to=['gc@kezyy.com', 'mt@kezyy.com'],
                 reply_to=[settings.NO_REPLY_EMAIL],
                 connection=connection,
                 headers={'Return-Path': settings.NO_REPLY_EMAIL}
             )
             msg.attach_alternative(txt, 'text/html')
             msg.send()
-        return True
+
+            return True
