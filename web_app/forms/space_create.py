@@ -114,7 +114,7 @@ class SpaceForm(ModelForm):
                             label_off='Allow uploads after deadline'),
         required=False,
         label='Allow uploads after deadline',
-        help_text="""Your invitees will not be able to upload files after the deadline if this is enabled.
+        help_text="""Your invitees will be able to upload files after the deadline if this is enabled.
         You can change this setting at any time.""")
 
     notify_deadline = forms.BooleanField(
