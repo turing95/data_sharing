@@ -8,15 +8,15 @@
     hx-target="this"
     hx-swap="outerHTML">
     <th scope="row" class="sticky left-0 z-[15] w-[30px] py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white items-center">
-        <div class="inline-flex  justify-center items-center w-[20px] ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
+        {% comment %}<div class="inline-flex  justify-center items-center w-[20px] ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
             hx-get="{% url 'sender_modal' sender.uuid %}"
-            hx-trigger="click" 
-            hx-target="#htmx-modal" 
-            hx-swap="innerHTML">                 
+            hx-trigger="click"
+            hx-target="#htmx-modal"
+            hx-swap="innerHTML">
             <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
-        </div>
-        
-    </th>            
+        </div>{% endcomment %}
+
+    </th>
     <th scope="row" class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
         <div class="inline-flex items-center justify-center ml-2 duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
             hx-get="{% url 'sender_modal'  sender.uuid %}"
