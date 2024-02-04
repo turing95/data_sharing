@@ -1622,6 +1622,10 @@ input:checked + .toggle-bg {
   width: 0.75rem;
 }
 
+.w-3\/5 {
+  width: 60%;
+}
+
 .w-4 {
   width: 1rem;
 }
@@ -1682,10 +1686,6 @@ input:checked + .toggle-bg {
   width: 16px;
 }
 
-.w-\[180px\] {
-  width: 180px;
-}
-
 .w-\[18px\] {
   width: 18px;
 }
@@ -1712,6 +1712,14 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
+}
+
+.w-2\/5 {
+  width: 40%;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
 }
 
 .min-w-0 {
