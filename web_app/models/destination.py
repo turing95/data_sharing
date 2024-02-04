@@ -52,7 +52,7 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
 class GoogleDrive(BaseModel):
     TAG = 'google_drive'
     folder_id = models.CharField(max_length=255)
-    PROVIDER_ID = 'google'
+    PROVIDER_ID = 'custom_google'
 
     @classmethod
     def create_from_folder_id(cls, upload_request, folder_id, user):
@@ -133,7 +133,7 @@ class GoogleDrive(BaseModel):
 class OneDrive(BaseModel):
     TAG = 'one_drive'
     folder_id = models.CharField(max_length=255)
-    PROVIDER_ID = 'microsoft'
+    PROVIDER_ID = 'custom_microsoft'
 
     @classmethod
     def create_from_folder_id(cls, upload_request, folder_id, user):

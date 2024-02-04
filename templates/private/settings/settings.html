@@ -23,10 +23,10 @@
                 </thead>
 
                 <tbody>
-                    {% for provider in socialaccount_providers %}                                    
-                        {% if provider.id == "google" %}
+                    {% for provider in socialaccount_providers %}   
+                        {% if provider.id == "custom_google" %}
                             {% include 'private/settings/social_accounts_row.html' with provider=provider logo_url='images/social_account_providers/google-logo-color.svg' drive_logo_url='images/drive_providers/google_drive-logo.svg' drive_name="Google Drive" account=request.user.google_account %}
-                        {% elif provider.id == "microsoft" %}
+                        {% elif provider.id == "custom_microsoft" %}
                             {% include 'private/settings/social_accounts_row.html' with provider=provider logo_url='images/social_account_providers/microsoft-logo-color.svg' drive_logo_url='images/drive_providers/one_drive-logo.svg' drive_name="OneDrive" account=request.user.microsoft_account %}
                         {% endif %}                  
                     {% endfor %}

@@ -20,14 +20,28 @@ class User(AbstractUser):
     @property
     def google_account(self):
         try:
-            return SocialAccount.objects.get(user=self, provider='google')
+            return SocialAccount.objects.get(user=self, provider='custom_google')
+        except SocialAccount.DoesNotExist:
+            return None
+
+    @property
+    def custom_google_account(self):
+        try:
+            return SocialAccount.objects.get(user=self, provider='custom_google')
+        except SocialAccount.DoesNotExist:
+            return None
+
+    @property
+    def custom_microsoft_account(self):
+        try:
+            return SocialAccount.objects.get(user=self, provider='custom_microsoft')
         except SocialAccount.DoesNotExist:
             return None
 
     @property
     def microsoft_account(self):
         try:
-            return SocialAccount.objects.get(user=self, provider='microsoft')
+            return SocialAccount.objects.get(user=self, provider='custom_microsoft')
         except SocialAccount.DoesNotExist:
             return None
 

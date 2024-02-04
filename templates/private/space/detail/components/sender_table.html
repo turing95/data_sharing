@@ -6,8 +6,13 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-3 py-3 w-[30px] max-w-[30px] sticky left-0 z-10 bg-gray-100">
-                        
-                    </th>
+<div class="inline-flex  justify-center items-center w-[20px] duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
+            hx-get="{% url 'all_senders_modal' space.uuid %}"
+            hx-trigger="click"
+            hx-target="#htmx-modal"
+            hx-swap="innerHTML">
+            <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
+        </div>                    </th>
                     <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
                         Invitee
                     </th>
