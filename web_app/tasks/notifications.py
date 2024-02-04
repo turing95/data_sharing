@@ -24,4 +24,22 @@ def notify_deadline(sender_pk):
 def notify_beta_access_request(req_pk):
     from web_app.models import BetaAccessRequest
     req = BetaAccessRequest.objects.get(pk=req_pk)
-    req.notify()
+    return req.notify()
+
+
+@app.task(autoretry_for=(smtplib.SMTPServerDisconnected,),
+          retry_kwargs={'max_retries': 5}, default_retry_delay=5)
+def bulk_notify_invitation(space_pk):
+    from web_app.models import Space
+    space = Space.objects.get(pk=space_pk)
+    for sender in space.senders.all():
+        sender.notify_invitation()
+
+
+@app.task(autoretry_for=(smtplib.SMTPServerDisconnected,),
+          retry_kwargs={'max_retries': 5}, default_retry_delay=5)
+def bulk_notify_deadline(space_pk):
+    from web_app.models import Space
+    space = Space.objects.get(pk=space_pk)
+    for sender in space.senders.all():
+        sender.notify_deadline()

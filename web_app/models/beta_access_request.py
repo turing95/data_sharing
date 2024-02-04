@@ -43,4 +43,5 @@ class BetaAccessRequest(BaseModel):
             )
             msg.attach_alternative(txt, 'text/html')
             msg.send()
-        return True
+
+            return True

@@ -4,10 +4,10 @@ export function initSocialAccountsTable() {
         //get the form id
         const id = input.closest('form').id;
         //if id ends with google, set the value of the input to 'google'
-        if (id.endsWith('-google')) {
-            input.value = 'google';
-        } else if (id.endsWith('-microsoft')) {
-            input.value = 'microsoft';
+        if (id.endsWith('-custom_google')) {
+            input.value = 'custom_google';
+        } else if (id.endsWith('-custom_microsoft')) {
+            input.value = 'custom_microsoft';
         }
     });
 }

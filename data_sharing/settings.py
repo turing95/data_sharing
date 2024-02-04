@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.microsoft',
+    'custom_google_provider',
+    'custom_microsoft_provider',
     'web_app',
     'djstripe',
     'django_celery_beat',
@@ -198,10 +200,49 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'offline',
+        }
+    },
+    'custom_google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': GOOGLE_CLIENT_ID,
+            'secret': GOOGLE_CLIENT_SECRET,
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/drive.file',
+            'https://www.googleapis.com/auth/drive.install',
+            'https://www.googleapis.com/auth/drive.readonly'
+
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
             "prompt": "consent",
         }
     },
     "microsoft": {
+        "APPS": [
+            {
+                "client_id": AZURE_CLIENT_ID,
+                "secret": AZURE_CLIENT_SECRET
+            },
+
+        ],
+        # modify scopes requested during login
+        'SCOPE': [
+            "User.Read",  # access to user's account information
+            "Files.ReadWrite.All",  # access to user's files
+            "offline_access"  # provide a refresh_token when the user logs in
+        ],
+        'AUTH_PARAMS': {
+            "prompt": "select_account",
+        }
+    },
+    "custom_microsoft": {
         "APPS": [
             {
                 "client_id": AZURE_CLIENT_ID,

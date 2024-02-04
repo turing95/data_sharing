@@ -11,3 +11,7 @@ class ConnectionsView(AllAuthConnectionsView):
 
     def get(self, request, *args, **kwargs):
         raise Http404()
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return redirect(self.success_url)
