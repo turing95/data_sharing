@@ -23,7 +23,6 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def save_user(self, request, user, form=None):
         # Call the super class's save_user to save the user model
         user = super().save_user(request, user, form)
-        print(user)
         # Check if an organization named "Personal" already exists in the user's organizations
         personal_organization_exists = user.organizations.filter(name="Personal").exists()
 
