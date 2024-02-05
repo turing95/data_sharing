@@ -64,10 +64,6 @@ class SpaceDetailFormView(SpaceFormView):
         kwargs['instance'] = self.get_space()
         return kwargs
 
-    def get_formset_kwargs(self):
-        kwargs= super().get_formset_kwargs()
-        kwargs['access_token'] = self.get_space()
-        return kwargs
     def get_formset(self):
         formset = DetailRequestFormSet(self.request.POST or None,
                                        instance=self.get_space(),

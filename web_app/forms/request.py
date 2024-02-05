@@ -200,7 +200,6 @@ class DetailRequestForm(RequestForm):
 
     def __init__(self, *args, **kwargs):
         # Manually include the uuid field
-        self.access_token = kwargs.pop('access_token', None)
         super().__init__(*args, **kwargs)
         if self.instance and UploadRequest.objects.filter(pk=self.instance.pk).exists():
             self.fields['uuid'].initial = self.instance.uuid
