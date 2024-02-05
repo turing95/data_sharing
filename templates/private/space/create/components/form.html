@@ -120,18 +120,22 @@
 
 
         {% include 'private/space/create/components/request_form.html' with action=action %}
-{% include "components/buttons/generic.html" with button_text="Add Request" button_id="add-request-btn"  extra_classes="my-2 text-sm"%}
+<a id="add-request-btn" class="cursor-pointer inline-flex items-center font-medium text-black hover:text-blue-500 dark:text-blue-500">
+    <svg class="w-6 h-6 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+  </svg>
+
+                Add request
+            </a>
 
 
     {% if action == 'edit' %}    
-    <div class="sticky bottom-4">
-        <div class="flex justify-center">
-            <div class= "w-[300px] mx auto">
-                {% include "components/buttons/submit_with_loader.html" with button_text=submit_text %}
-            </div>
-        </div>
+    <div class="sticky bottom-4 flex justify-end">
+    {% include "components/buttons/submit_with_loader.html" with button_text=submit_text %}
     </div>
     {% else %}
+        <div class="flex justify-end">
         {% include "components/buttons/submit_with_loader.html" with button_text=submit_text %}
+        </div>
     {% endif %}
 </form>
