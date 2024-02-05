@@ -6,6 +6,7 @@ from web_app.views.receiver.authentication.login import LoginView,LoginCancelled
 from web_app.views.receiver.authentication.reset_password import PasswordResetView
 from web_app.views.receiver.authentication.delete import AccountDeleteView
 from web_app.views.receiver.authentication.connections import ConnectionsView
+from web_app.views.receiver.profile import ProfileView
 from web_app.views.receiver.space.detail import SpaceDetailFormView as SpaceDetailFormViewReceiver
 from web_app.views.legal.terms_of_service import TermsOfServiceView
 from web_app.views.legal.privacy_policy import privacy_policy
