@@ -192,14 +192,29 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         'SCOPE': [
             'profile',
-            'email',
-            'https://www.googleapis.com/auth/drive.file',
-            'https://www.googleapis.com/auth/drive.install',
-            'https://www.googleapis.com/auth/drive.readonly'
+            'email'
 
         ],
         'AUTH_PARAMS': {
             'access_type': 'offline',
+        }
+    },
+
+    "microsoft": {
+        "APPS": [
+            {
+                "client_id": AZURE_CLIENT_ID,
+                "secret": AZURE_CLIENT_SECRET
+            },
+
+        ],
+        # modify scopes requested during login
+        'SCOPE': [
+            "User.Read",  # access to user's account information
+            "offline_access"  # provide a refresh_token when the user logs in
+        ],
+        'AUTH_PARAMS': {
+            "prompt": "select_account",
         }
     },
     'custom_google': {
@@ -222,24 +237,6 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'offline',
             "prompt": "consent",
-        }
-    },
-    "microsoft": {
-        "APPS": [
-            {
-                "client_id": AZURE_CLIENT_ID,
-                "secret": AZURE_CLIENT_SECRET
-            },
-
-        ],
-        # modify scopes requested during login
-        'SCOPE': [
-            "User.Read",  # access to user's account information
-            "Files.ReadWrite.All",  # access to user's files
-            "offline_access"  # provide a refresh_token when the user logs in
-        ],
-        'AUTH_PARAMS': {
-            "prompt": "select_account",
         }
     },
     "custom_microsoft": {
