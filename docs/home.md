@@ -1,6 +1,6 @@
 # Welcome to Kezyy's Help Center
 
-Navigate the articles or use the search bar at the top left corner.
+Navigate the articles or use the search bar in the top left corner.
 
 ### Getting Started
 - [Sign-up](pages/sign-up.md)
