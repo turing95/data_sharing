@@ -67,7 +67,8 @@
         <div class="flex flex-col items-center justify-center mt-10">
             <p class="mb-3 text-2xl text-center text-gray-500">You have not created any spaces yet</p>
             {% url 'space_create' as space_create_url %}
-            {% include 'components/buttons/generic.html' with button_text="CREATE YOUR FIRST SPACE" href=space_create_url%}
+            {% include 'components/buttons/generic.html' with button_text="Create your first space" href=space_create_url%}
+            <p class="m-3 text-center text-gray-500"> Don't know where to start? <a href="{{ doc_url }}" target="_blank" class="hover:underline text-blue-500">Read our guide</a></p>
         </div>
     {% endif %}
 
