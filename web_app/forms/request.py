@@ -143,7 +143,7 @@ class RequestForm(ModelForm):
             """)
     multiple_files = forms.BooleanField(
         widget=ToggleWidget(label_on='Allow multiple files upload',
-                            label_off='Forbid multiple files upload'),
+                            label_off='Allow multiple files upload'),
         required=False,
         label='Multiple Files',
         help_text="""
