@@ -77,6 +77,8 @@ class SpaceDetailFormView(SpaceFormView):
         for req in formset:
             if (req.instance.destination is not None and req.instance.destination.folder_id != req.cleaned_data.get('destination_id')) or req.instance.destination is None:
                 GenericDestination.create_from_folder_id(req.instance, req.cleaned_data.get('destination_type'), req.cleaned_data.get('destination_id'),self.request.user)
+                req.instance.is_active = True
+                req.instance.save()
             if req.instance.file_types.exists():
                 req.instance.file_types.clear()
             for file_type in req.cleaned_data.get('file_types'):
