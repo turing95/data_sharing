@@ -142,8 +142,8 @@ class RequestForm(ModelForm):
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """)
     multiple_files = forms.BooleanField(
-        widget=ToggleWidget(label_on='Enable multiple files',
-                            label_off='Enable multiple files'),
+        widget=ToggleWidget(label_on='Allow multiple files upload',
+                            label_off='Forbid multiple files upload'),
         required=False,
         label='Multiple Files',
         help_text="""
