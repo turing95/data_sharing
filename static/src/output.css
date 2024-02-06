@@ -1445,6 +1445,14 @@ input:checked + .toggle-bg {
   margin-top: auto;
 }
 
+.mr-auto {
+  margin-right: auto;
+}
+
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -1586,6 +1594,10 @@ input:checked + .toggle-bg {
   height: 100%;
 }
 
+.h-\[150px\] {
+  height: 150px;
+}
+
 .max-h-\[150px\] {
   max-height: 150px;
 }
@@ -1622,12 +1634,12 @@ input:checked + .toggle-bg {
   width: 3rem;
 }
 
-.w-2\/3 {
-  width: 66.666667%;
-}
-
 .w-3 {
   width: 0.75rem;
+}
+
+.w-3\/5 {
+  width: 60%;
 }
 
 .w-4 {
@@ -1718,8 +1730,20 @@ input:checked + .toggle-bg {
   width: 100%;
 }
 
+.w-2\/5 {
+  width: 40%;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
 .w-1\/4 {
   width: 25%;
+}
+
+.w-\[100px\] {
+  width: 100px;
 }
 
 .min-w-0 {
@@ -1973,6 +1997,10 @@ input:checked + .toggle-bg {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {

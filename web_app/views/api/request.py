@@ -10,13 +10,12 @@ from web_app.forms import DetailRequestFormSet
 def delete_request(request, request_uuid):
     req = UploadRequest.objects.get(pk=request_uuid)
     space = req.space
-    req.is_deleted = True
-    req.save()
+    req.delete()
     space.refresh_from_db()
 
     requests = DetailRequestFormSet(None,
                                     instance=space,
-                                    queryset=space.requests.filter(is_deleted=False).order_by('created_at'),
+                                    queryset=space.requests.filter(is_active=True).order_by('created_at'),
                                     form_kwargs={'request': request})
     return render(
         request,

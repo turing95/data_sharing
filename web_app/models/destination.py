@@ -115,7 +115,7 @@ class GoogleDrive(BaseModel):
         file = self.service.files().create(supportsAllDrives=True, body=file_metadata,
                                            media_body=media,
                                            fields='id,webViewLink').execute()
-        return file.get('webViewLink')
+        return file.get('webViewLink',None)
 
     @property
     def generic_destination(self):
@@ -183,7 +183,7 @@ class OneDrive(BaseModel):
 
         # Check if the upload was successful
         if response.status_code in [200, 201]:
-            return response.json().get('webUrl')  # Returns the URL of the uploaded file
+            return response.json().get('webUrl',None)  # Returns the URL of the uploaded file
         else:
             # Handle any errors that occur during the upload
             raise Exception(f"Failed to upload file: {response.json()}")

@@ -39,17 +39,10 @@ class Space(BaseModel, DeleteModel):
     def deadline_expired(self):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
 
-    @property
-    def upload_events(self):
-        from web_app.models import SenderEvent
-        return SenderEvent.objects.filter(
-            request__space=self,
-            event_type=SenderEvent.EventType.FILE_UPLOADED
-        ).select_related('sender').prefetch_related('request', 'request__destinations')
 
     @property
     def public_upload_events(self):
-        return self.upload_events.filter(sender__isnull=True)
+        return self.events.filter(sender__isnull=True)
 
     def get_deadline_url_ics(self, sender):
         # Format the deadline as YYYYMMDDTHHMMSSZ 

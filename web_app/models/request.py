@@ -1,10 +1,10 @@
 from django.db import models
 from utils.strings import fill_template
-from web_app.models import BaseModel, DeleteModel
+from web_app.models import BaseModel, ActiveModel
 import arrow
 
 
-class UploadRequest(BaseModel, DeleteModel):
+class UploadRequest(BaseModel, ActiveModel):
     class FileType(models.TextChoices):
         CSV = 'CSV', 'CSV'
         PDF = 'PDF', 'PDF'

@@ -67,7 +67,7 @@ class SpaceDetailFormView(SpaceFormView):
     def get_formset(self):
         formset = DetailRequestFormSet(self.request.POST or None,
                                        instance=self.get_space(),
-                                       queryset=self.get_space().requests.filter(is_deleted=False).order_by(
+                                       queryset=self.get_space().requests.order_by(
                                            'created_at'),
                                        form_kwargs=self.get_formset_kwargs())
         return formset
