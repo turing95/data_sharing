@@ -1,6 +1,6 @@
 from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
-    ProfileView, LoginView, LoginCancelledView, SpaceDetailFormViewSender, \
+    profile, LoginView, LoginCancelledView, SpaceDetailFormViewSender, \
     TermsOfServiceView, privacy_policy, cookie_policy, DeleteSpaceView, SettingsView, PublicLandingView, \
     BetaAccessRequestFormView, \
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
@@ -19,7 +19,7 @@ urlpatterns = [
     # Receiver views
     path('spaces/', SpacesView.as_view(), name='spaces'),
     path('accounts/login/', LoginView.as_view(), name='account_login'),
-    path('accounts/profile/', ProfileView.as_view(), name='account_profile'),
+    path('accounts/profile/', profile, name='account_profile'),
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
     path('accounts/delete/', AccountDeleteView.as_view(), name='account_delete'),
     path('accounts/social/connections/', ConnectionsView.as_view(), name='socialaccount_connections'),

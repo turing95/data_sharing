@@ -8,29 +8,7 @@
 
 <div class="flex-col mb-8">
 <h2 class="text-2xl font-bold mb-4 border-b">Profile</h2>
-<form action="{% url 'account_profile' %}" method="post" class="flex flex-col">
-        {% csrf_token %}
-    {{ user_form.errors }}
-    {{ user_form.non_field_errors }}
-    <div class="mb-3 w-1/4">
-                    <label for="Email"
-                                class="block text-sm font-medium text-gray-900 dark:text-white">Email</label>
-        <span class="block ml-2 text-gray-500 truncate dark:text-gray-400">{{ request.user.email }}</span>
-    </div>
-        <div class="mb-3 w-1/4">
-            <label for="{{ user_form.first_name.id_for_label }}"
-                                class="block text-sm font-medium text-gray-900 dark:text-white">{{ user_form.first_name.label }} </label>
-    {{ user_form.first_name }}
-        </div>
-        <div class="mb-3 w-1/4">
-            <label for="{{ user_form.last_name.id_for_label }}"
-                                class="block text-sm font-medium text-gray-900 dark:text-white">{{ user_form.last_name.label }} </label>
-                            {{ user_form.last_name }}
-        </div>
-
-        {% include 'components/buttons/submit.html' with extra_classes="ml-auto mr-10" button_text="Save" %}
-    
-</form>
+{% include 'private/settings/profile_form.html' with user_form=user_form %}
     <h2 class="text-2xl font-bold mb-4 border-b">Connections</h2>
     <!-- SOCIAL ACCOUNT MANAGEMENT -->
     {% if socialaccount_providers %}
