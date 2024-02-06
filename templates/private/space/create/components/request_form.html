@@ -109,16 +109,15 @@
 
                                  <!-- Search Results Section -->
                                  <div id="destination-search-results-container" class="absolute z-10 w-full">
-                                    <div class="flex flex-col-reverse gap-4 md:flex-row">
-                                        <div class="flex-1 w-full">
+                                    <div class="flex gap-4 flex-col-reverse md:flex-row">
+                                        <div class="flex-1 w-full md:mr-49">
                                             <div class="flex flex-col sm:flex-row">
                                                 <div class="w-full sm:w-2/3 sm:ml-auto destination-search">
-                                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-100 "></div>
+                                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="hidden h-full ml-auto shrink-0 md:flex md:w-48">
-                                        </div>
+                                        <!-- Removed the hidden div used for spacing -->
                                     </div>
                                 </div>
                                 {{ req.destination_id }}

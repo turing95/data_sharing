@@ -12,6 +12,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+             spacing: {
+        '49': '13rem', // This adds a new spacing value for '49'
+        },
             fontFamily: {
                 sans: ['Lato', 'sans-serif'],
             },
