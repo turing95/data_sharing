@@ -9,7 +9,7 @@ class Space(BaseModel, DeleteModel):
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
 
     title = models.CharField(max_length=250)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name='spaces')
+    user = models.ForeignKey('User', null=True, on_delete=models.SET_NULL, related_name='spaces')
     is_public = models.BooleanField(default=True)
     instructions = models.TextField(null=True, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)

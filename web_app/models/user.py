@@ -18,6 +18,10 @@ class User(AbstractUser):
     organizations = models.ManyToManyField('Organization', through='UserOrganization')
 
     @property
+    def full_name(self):
+        return super().get_full_name()
+
+    @property
     def google_account(self):
         try:
             return SocialAccount.objects.get(user=self, provider='custom_google')
@@ -76,7 +80,7 @@ class User(AbstractUser):
         else:
             return None  # or handle the error as required
 
-    def refresh_google_token(self,token = None):
+    def refresh_google_token(self, token=None):
         try:
             if token is None:
                 social_account = self.google_account
@@ -101,7 +105,7 @@ class User(AbstractUser):
             # or the token does not exist
             return None
 
-    def refresh_microsoft_token(self,token=None):
+    def refresh_microsoft_token(self, token=None):
         if token is None:
             social_account = self.microsoft_account
             if social_account is None:

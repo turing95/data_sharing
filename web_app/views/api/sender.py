@@ -4,7 +4,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_POST, require_GET
 from web_app.models import Sender, Space
-from web_app.tasks.notifications import bulk_notify_deadline as bulk_notify_deadline_task, bulk_notify_invitation as bulk_notify_invitation_task
+from web_app.tasks.notifications import bulk_notify_deadline as bulk_notify_deadline_task, \
+    bulk_notify_invitation as bulk_notify_invitation_task
+
 
 @login_required
 @require_POST

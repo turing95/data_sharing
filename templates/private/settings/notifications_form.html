@@ -1,0 +1,21 @@
+{% if from_htmx %}
+    {% include 'components/messages.html' %}
+{% endif %}
+<form hx-post="{% url 'account_sender_notifications' %}" hx-swap="outerHTML" class="flex flex-col">
+    {% csrf_token %}
+    {{ form.errors }}
+    {{ form.non_field_errors }}
+    <div class="mb-3 w-1/4">
+        <label for="{{ form.name.id_for_label }}"
+               class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.name.label }} </label>
+        {{ form.name }}
+    </div>
+    <div class="mb-3 w-1/4">
+        <label for="{{ form.reference_email.id_for_label }}"
+               class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.reference_email.label }} </label>
+        {{ form.reference_email }}
+    </div>
+
+    {% include 'components/buttons/submit.html' with extra_classes="ml-auto mr-10" button_text="Save" %}
+
+</form>

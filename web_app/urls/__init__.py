@@ -2,7 +2,7 @@ from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     profile, LoginView, LoginCancelledView, SpaceDetailFormViewSender, \
     TermsOfServiceView, privacy_policy, cookie_policy, DeleteSpaceView, SettingsView, PublicLandingView, \
-    BetaAccessRequestFormView, \
+    BetaAccessRequestFormView,  sender_notifications_settings,\
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
@@ -21,6 +21,7 @@ urlpatterns = [
     path('accounts/login/', LoginView.as_view(), name='account_login'),
     path('accounts/profile/', profile, name='account_profile'),
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
+    path('accounts/sender-notifications-settings/', sender_notifications_settings, name='account_sender_notifications'),
     path('accounts/delete/', AccountDeleteView.as_view(), name='account_delete'),
     path('accounts/social/connections/', ConnectionsView.as_view(), name='socialaccount_connections'),
     path('accounts/social/login/cancelled/', LoginCancelledView.as_view(), name='socialaccount_login_cancelled'),

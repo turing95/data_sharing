@@ -9,6 +9,8 @@
 <div class="flex-col mb-8">
 <h2 class="text-2xl font-bold mb-4 border-b">Profile</h2>
 {% include 'private/settings/profile_form.html' with user_form=user_form %}
+</div>
+<div class="flex-col mb-8">   
     <h2 class="text-2xl font-bold mb-4 border-b">Connections</h2>
     <!-- SOCIAL ACCOUNT MANAGEMENT -->
     {% if socialaccount_providers %}
@@ -39,7 +41,11 @@
         <p>No providers available.</p>
     {% endif %}
 </div>
+<div class="flex-col mb-8">
+    <h2 class="text-2xl font-bold mb-4 border-b">Sender Notifications</h2>
+    {% include 'private/settings/notifications_form.html' with form=sender_notifications_form %}
 
+</div>
 
 <div class="flex-col mb-8">
     <h2 class="text-2xl font-bold mb-4 border-b">Close your account</h2>

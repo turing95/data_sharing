@@ -4,14 +4,15 @@ from django.conf import settings
 import pytz
 
 
-class UserSettings(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='settings')
+class SenderNotificationsSettings(BaseModel):
+    user = models.OneToOneField('User', on_delete=models.CASCADE,
+                                related_name='sender_notifications_settings')
+    name = models.CharField(max_length=100, null=True)
+    reference_email = models.EmailField(null=True)
 
-    # Timezone choices
-    TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
-
-    # Timezone field
-    timezone = models.CharField(
-        max_length=50,
-        choices=TIMEZONE_CHOICES
-    )
+    def save(self, *args, **kwargs):
+        if not self.name:
+            self.name = self.user.full_name
+        if not self.reference_email:
+            self.reference_email = self.user.email
+        super().save(*args, **kwargs)

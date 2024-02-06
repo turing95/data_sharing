@@ -51,6 +51,8 @@ class Sender(BaseModel, ActiveModel):
             context = {
                 'pre_header_text': f'Remember to complete the upload for space: {self.space.title}',
                 'sender': self,
+                'receiver_email': self.space.user.sender_notifications_settings.reference_email,
+                'receiver_name': self.space.user.sender_notifications_settings.name,
                 'contact_email': settings.CONTACT_EMAIL,
                 'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
                 'homepage_link': settings.BASE_URL,
@@ -58,6 +60,7 @@ class Sender(BaseModel, ActiveModel):
                 'space_link': self.full_space_link
 
             }
+            print(context)
             email_html = render_to_string('emails/deadline_notification.html', context)
             from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
             with get_connection(
@@ -88,6 +91,8 @@ class Sender(BaseModel, ActiveModel):
         context = {
             'pre_header_text': f'{self.space.user.email} invites you to upload files to the space: {self.space.title}',
             'sender': self,
+            'receiver_email': self.space.user.sender_notifications_settings.reference_email,
+            'receiver_name': self.space.user.sender_notifications_settings.name,
             'contact_email': settings.CONTACT_EMAIL,
             'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
             'homepage_link': settings.BASE_URL,
