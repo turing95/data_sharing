@@ -119,7 +119,6 @@ class User(AbstractUser):
                 scopes=[
                     "User.Read",  # access to user's account information
                     "Files.ReadWrite.All",  # access to user's files
-                    "offline_access"  # provide a refresh_token when the user logs in
                 ],  # Specify the required scopes
             )
             if 'access_token' in result:

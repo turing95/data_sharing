@@ -37,7 +37,10 @@ class UploadRequest(BaseModel, ActiveModel):
 
     @property
     def destination(self):
-        return self.destinations.filter(is_active=True).order_by('-created_at').first()
+        destination = self.destinations.filter(is_active=True).order_by('-created_at').first()
+        if destination is None:
+            destination = self.destinations.order_by('-created_at').first()
+        return destination
 
     @property
     def extensions(self):
