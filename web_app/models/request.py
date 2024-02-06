@@ -1,10 +1,10 @@
 from django.db import models
 from utils.strings import fill_template
-from web_app.models import BaseModel, DeleteModel
+from web_app.models import BaseModel, ActiveModel
 import arrow
 
 
-class UploadRequest(BaseModel, DeleteModel):
+class UploadRequest(BaseModel, ActiveModel):
     class FileType(models.TextChoices):
         CSV = 'CSV', 'CSV'
         PDF = 'PDF', 'PDF'
@@ -37,7 +37,10 @@ class UploadRequest(BaseModel, DeleteModel):
 
     @property
     def destination(self):
-        return self.destinations.filter(is_active=True).order_by('-created_at').first()
+        destination = self.destinations.filter(is_active=True).order_by('-created_at').first()
+        if destination is None:
+            destination = self.destinations.order_by('-created_at').first()
+        return destination
 
     @property
     def extensions(self):

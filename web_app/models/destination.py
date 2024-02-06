@@ -1,7 +1,8 @@
 import requests
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from allauth.socialaccount.models import SocialAccount
-
+from google.oauth2.credentials import Credentials
 from web_app.models import PolymorphicRelationModel, BaseModel, ActiveModel
 from django.db import models
 from googleapiclient.discovery import build
@@ -73,7 +74,16 @@ class GoogleDrive(BaseModel):
 
     @property
     def service(self):
-        return build('drive', 'v3', credentials=self.user.google_credentials)
+        token = self.user.refresh_google_token(self.generic_destination.social_account.socialtoken_set.first())
+        credentials = Credentials(
+            token=token.token,
+            refresh_token=token.token_secret,
+            token_uri='https://accounts.google.com/o/oauth2/token',
+            client_id=settings.GOOGLE_CLIENT_ID,
+            client_secret=settings.GOOGLE_CLIENT_SECRET
+        )
+
+        return build('drive', 'v3', credentials=credentials)
 
     @property
     def alive(self):
@@ -115,7 +125,7 @@ class GoogleDrive(BaseModel):
         file = self.service.files().create(supportsAllDrives=True, body=file_metadata,
                                            media_body=media,
                                            fields='id,webViewLink').execute()
-        return file.get('webViewLink')
+        return file.get('webViewLink', None)
 
     @property
     def generic_destination(self):
@@ -127,7 +137,6 @@ class GoogleDrive(BaseModel):
     @property
     def user(self):
         return self.generic_destination.request.space.user
-
 
 
 class OneDrive(BaseModel):
@@ -153,6 +162,12 @@ class OneDrive(BaseModel):
         return generic_destination
 
     @property
+    def token(self):
+        generic_destination = self.generic_destination
+        user = generic_destination.request.space.user
+        return user.refresh_microsoft_token(generic_destination.social_account.socialtoken_set.first())
+
+    @property
     def generic_destination(self):
         return GenericDestination.objects.get(
             content_type=ContentType.objects.get_for_model(self.__class__),
@@ -161,13 +176,12 @@ class OneDrive(BaseModel):
 
     def upload_file(self, file, file_name):
         # Ensure you have a valid access token
-        token = self.user.microsoft_token
-        if not token:
+        if not self.token:
             raise Exception("No valid Microsoft token available.")
 
         # Set up headers for the request
         headers = {
-            'Authorization': f'Bearer {token.token}',
+            'Authorization': f'Bearer {self.token.token}',
             'Content-Type': file.content_type,  # Assuming 'file' is a Django UploadedFile object
         }
 
@@ -183,7 +197,7 @@ class OneDrive(BaseModel):
 
         # Check if the upload was successful
         if response.status_code in [200, 201]:
-            return response.json().get('webUrl')  # Returns the URL of the uploaded file
+            return response.json().get('webUrl', None)  # Returns the URL of the uploaded file
         else:
             # Handle any errors that occur during the upload
             raise Exception(f"Failed to upload file: {response.json()}")
@@ -192,16 +206,14 @@ class OneDrive(BaseModel):
     def user(self):
         return self.generic_destination.request.space.user
 
-
     @property
     def url(self):
         try:
-            token = self.user.microsoft_token
-            if not token:
+            if not self.token:
                 return None
 
             headers = {
-                'Authorization': f'Bearer {token.token}'
+                'Authorization': f'Bearer {self.token.token}'
             }
             url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
 
@@ -217,9 +229,8 @@ class OneDrive(BaseModel):
     @property
     def name(self):
         try:
-            token = self.user.microsoft_token
             headers = {
-                'Authorization': f'Bearer {token.token}'
+                'Authorization': f'Bearer {self.token.token}'
             }
             url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
 
@@ -233,9 +244,8 @@ class OneDrive(BaseModel):
     @property
     def alive(self):
         try:
-            token = self.user.microsoft_token
             headers = {
-                'Authorization': f'Bearer {token.token}'
+                'Authorization': f'Bearer {self.token.token}'
             }
             url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
 

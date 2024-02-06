@@ -52,7 +52,7 @@ class Sender(BaseModel, ActiveModel):
                 'pre_header_text': f'Remember to complete the upload for space: {self.space.title}',
                 'sender': self,
                 'contact_email': settings.CONTACT_EMAIL,
-                'upload_requests': self.space.requests.filter(is_deleted=False).order_by('created_at'),
+                'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
                 'homepage_link': settings.BASE_URL,
                 'logo_link': settings.BASE_URL + static('images/logo.png'),
                 'space_link': self.full_space_link
@@ -89,7 +89,7 @@ class Sender(BaseModel, ActiveModel):
             'pre_header_text': f'{self.space.user.email} invites you to upload files to the space: {self.space.title}',
             'sender': self,
             'contact_email': settings.CONTACT_EMAIL,
-            'upload_requests': self.space.requests.filter(is_deleted=False).order_by('created_at'),
+            'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
             'homepage_link': settings.BASE_URL,
             'logo_link': settings.BASE_URL + static('images/logo.png'),
             'space_link': self.full_space_link

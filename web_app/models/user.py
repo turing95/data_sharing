@@ -76,36 +76,38 @@ class User(AbstractUser):
         else:
             return None  # or handle the error as required
 
-    def refresh_google_token(self):
+    def refresh_google_token(self,token = None):
         try:
-            social_account = self.google_account
-            if social_account is not None:
-                token = SocialToken.objects.get(account=social_account)
-                if arrow.get(token.expires_at) < arrow.utcnow():
-                    credentials = Credentials(
-                        token=token.token,
-                        refresh_token=token.token_secret,
-                        token_uri='https://accounts.google.com/o/oauth2/token',
-                        client_id=config.GOOGLE_CLIENT_ID,
-                        client_secret=config.GOOGLE_CLIENT_SECRET
-                    )
-                    credentials.refresh(Request())
-                    token.token = credentials.token
-                    token.expires_at = credentials.expiry
-                    token.save()  # Update the token in the database
+            if token is None:
+                social_account = self.google_account
+                if social_account is not None:
+                    token = SocialToken.objects.get(account=social_account)
+            if arrow.get(token.expires_at) < arrow.utcnow():
+                credentials = Credentials(
+                    token=token.token,
+                    refresh_token=token.token_secret,
+                    token_uri='https://accounts.google.com/o/oauth2/token',
+                    client_id=config.GOOGLE_CLIENT_ID,
+                    client_secret=config.GOOGLE_CLIENT_SECRET
+                )
+                credentials.refresh(Request())
+                token.token = credentials.token
+                token.expires_at = credentials.expiry
+                token.save()  # Update the token in the database
 
-                return token
+            return token
         except SocialToken.DoesNotExist:
             # Handle the case where the user does not have a Google social account
             # or the token does not exist
             return None
 
-    def refresh_microsoft_token(self):
-        social_account = self.microsoft_account
-        if social_account is None:
-            return None
+    def refresh_microsoft_token(self,token=None):
+        if token is None:
+            social_account = self.microsoft_account
+            if social_account is None:
+                return None
 
-        token = SocialToken.objects.get(account=social_account)
+            token = SocialToken.objects.get(account=social_account)
         if arrow.get(token.expires_at) < arrow.utcnow():
             # Create a Confidential Client Application
             app = ConfidentialClientApplication(

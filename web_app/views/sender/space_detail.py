@@ -15,7 +15,7 @@ class SpaceDetailView(TemplateView):
 
     def get_formset(self):
         FileFormset = formset_factory(FileForm, formset=BaseFileFormSet,
-                                      extra=self.get_space().requests.filter(is_deleted=False).count())
+                                      extra=self.get_space().requests.filter(is_active=True).count())
         return FileFormset(self.request.POST or None, self.request.FILES or None,
                            form_kwargs={'space': self.get_space()})
 
@@ -42,6 +42,7 @@ class SpaceDetailView(TemplateView):
                         if sender_event is None:
                             sender_event = SenderEvent.objects.create(sender=sender,
                                                                       request=upload_request,
+                                                                      space=upload_request.space,
                                                                       event_type=SenderEvent.EventType.FILE_UPLOADED,
                                                                       notes=form.cleaned_data.get('notes'))
                         file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
