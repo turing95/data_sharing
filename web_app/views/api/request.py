@@ -15,7 +15,7 @@ def delete_request(request, request_uuid):
 
     requests = DetailRequestFormSet(None,
                                     instance=space,
-                                    queryset=space.requests.filter(is_active=True).order_by('created_at'),
+                                    queryset=space.requests.order_by('created_at'),
                                     form_kwargs={'request': request})
     return render(
         request,

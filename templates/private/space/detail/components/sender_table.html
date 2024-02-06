@@ -28,8 +28,9 @@
                     <th scope="col" class="px-3 py-1.5 min-w-[150px]">
                         <div class="flex flex-col justify-start">
 
-                            <span class="text-xs font-normal normal-case">         
-                                Request {{ forloop.counter }} {% if req.is_active is False %} (suspended) {% endif %}:
+                            <span class="text-xs font-normal normal-case text-yellow-400">         
+                                Request {{ forloop.counter }}
+                                {% if req.is_active is False %} (suspended)  {% endif %}:
                             </span> 
                             {% if req.destination.url %}
                                 <a href="{{ req.destination.url }}"  title="{{req.title}}" target="_blank" class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">   
