@@ -251,6 +251,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': [
             "User.Read",  # access to user's account information
             "Files.ReadWrite.All",  # access to user's files
+            "Sites.ReadWrite.All",  # access to user's sites
             "offline_access"  # provide a refresh_token when the user logs in
         ],
         'AUTH_PARAMS': {

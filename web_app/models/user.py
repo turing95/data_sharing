@@ -123,6 +123,7 @@ class User(AbstractUser):
                 scopes=[
                     "User.Read",  # access to user's account information
                     "Files.ReadWrite.All",  # access to user's files
+                    "Sites.Read.All"
                 ],  # Specify the required scopes
             )
             if 'access_token' in result:
