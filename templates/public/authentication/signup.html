@@ -45,14 +45,14 @@
             </div>
         
             <!-- Submit Button -->
-            {% include "components/buttons/submit.html" with button_text="Register new account" %}
+            {% include "components/buttons/submit_with_loader.html" with button_text="Register new account" %}
         </form>
 
         <p class="text-center text-sm">
             Already have an account? <a href="{{ login_url }}" class="text-blue-600 hover:text-blue-600 underline">Sign in</a>
         </p>
 
-        <!-- seprarator from social account login -->
+        <!-- separator from social account login -->
         <div class="flex items-center justify-center my-4">
             <div class="flex-grow border-t border-gray-300"></div>
             <span class="mx-4 text-gray-600">or</span>

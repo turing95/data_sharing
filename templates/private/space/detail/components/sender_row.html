@@ -2,7 +2,7 @@
 
 <tr id="sender-row-container-{{sender.uuid}}"
     sender-uuid="{{sender.uuid}}"
-    class="sender-pull bg-white border-b dark:bg-gray-800 dark:border-gray-700" 
+    class="bg-white border-b sender-pull dark:bg-gray-800 dark:border-gray-700" 
     hx-trigger="senderUpdated-{{sender.uuid}} from:document"
     hx-get="{% url 'sender_row' sender.uuid %}"
     hx-target="this"
@@ -18,7 +18,7 @@
 
     </th>
     <th scope="row" class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
-        <div class="inline-flex items-center justify-center ml-2 duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
+        <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
             hx-get="{% url 'sender_modal'  sender.uuid %}"
             hx-trigger="click"
             hx-target="#htmx-modal" 
@@ -26,7 +26,7 @@
         {{ sender.email }}
         </div>
     </th>
-    {% url 'sender_space_detail_private' sender.space.uuid sender.uuid as sender_path%}
+    {% url 'sender_space_detail_private' sender.space.uuid sender.uuid as sender_path %}
     <td class="px-3 py-2">
         <div class="inline-flex items-center">
             <a href="{{ sender_path}}" target = "_blank" class="text-blue-600 transition-colors duration-300 hover:text-blue-800">

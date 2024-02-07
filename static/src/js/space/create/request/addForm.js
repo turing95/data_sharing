@@ -22,6 +22,7 @@ function cloneRequestForm(formCount) {
 
     const newForm = templateForm.cloneNode(true);
     cleanErrors(newForm);
+    cleanSuspendedRequest(newForm);
     updateElementIdentifiers(newForm, formCount);
     setupCloseButton(newForm);
     htmx.process(newForm);
@@ -181,4 +182,11 @@ function postProcessNewForm(newForm, formCount, totalForms){
         setupFileTypeCloseButton(newForm);
 
     }
+}
+
+function cleanSuspendedRequest(newForm) {
+    // Remove the suspended request ID from the form
+    newForm.querySelectorAll('.request-suspended').forEach(element => {
+        element.remove();
+    });
 }

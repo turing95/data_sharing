@@ -1,4 +1,4 @@
-
+import { initSubmitButtons } from './submitButton.js';
 export function initHtmxModal(modalElement) {
     const modal = new Modal(modalElement, {
         onHide: () => {
@@ -15,5 +15,6 @@ export function initHtmxModal(modalElement) {
         });
     }
     // show the modal upon initialization
+    initSubmitButtons(modalElement);
     modal.show();
 }

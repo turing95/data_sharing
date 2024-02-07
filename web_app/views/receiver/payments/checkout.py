@@ -62,10 +62,12 @@ def create_checkout_session(request):
 
 
     except models.Customer.DoesNotExist:
-        print("Customer Object not in DB.")
 
         session = stripe.checkout.Session.create(
             line_items=line_items,
+            billing_address_collection='auto',
+            customer_update={'address': 'auto'},
+            automatic_tax={'enabled': True},
             mode="subscription",
             success_url=success_url,
             cancel_url=cancel_url,

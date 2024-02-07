@@ -9,7 +9,7 @@ class Space(BaseModel, DeleteModel):
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
 
     title = models.CharField(max_length=250)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name='spaces')
+    user = models.ForeignKey('User', null=True, on_delete=models.SET_NULL, related_name='spaces')
     is_public = models.BooleanField(default=True)
     instructions = models.TextField(null=True, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
@@ -39,17 +39,10 @@ class Space(BaseModel, DeleteModel):
     def deadline_expired(self):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
 
-    @property
-    def upload_events(self):
-        from web_app.models import SenderEvent
-        return SenderEvent.objects.filter(
-            request__space=self,
-            event_type=SenderEvent.EventType.FILE_UPLOADED
-        ).select_related('sender').prefetch_related('request', 'request__destinations')
 
     @property
     def public_upload_events(self):
-        return self.upload_events.filter(sender__isnull=True)
+        return self.events.filter(sender__isnull=True)
 
     def get_deadline_url_ics(self, sender):
         # Format the deadline as YYYYMMDDTHHMMSSZ 

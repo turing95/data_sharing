@@ -9,11 +9,11 @@
                 <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
                 
                     <h1 class="max-w-3xl mb-4 text-4xl font-extrabold leading-none tracking-normal md:text-5xl xl:text-6xl dark:text-white">
-                        Effortless file collection.
+                        Collect files from anyone.
                     </h1>
                     
                     <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                        Set instructions, automate reminders, share upload links and receive files neatly named in your drive.
+                        Effortless file collection with custom links. Set instructions, rules, automate reminders, and receive files neatly named in your drive.
                     </p>                    
                    <div class="text-center">
                 {% if request.user.is_authenticated is False %}
@@ -69,8 +69,9 @@
                             <!--asset description-->
                             {% with "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% with doc_url as learn_more_href %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
                         <!-- card -->
                             <!--title-->
                             {% with "All instructions in one place" as title %}
@@ -81,8 +82,9 @@
                             <!--asset description-->
                             {% with "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% with doc_url as learn_more_href %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
                         <!-- card -->
                             <!--title-->
                             {% with "No awkward follow-ups with deadlines and reminders" as title %}
@@ -93,8 +95,9 @@
                             <!--asset description-->
                             {% with "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% with doc_url as learn_more_href %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
                         <!-- card -->
                             <!--title-->
                             {% with "Predefined file destination" as title %}
@@ -118,8 +121,9 @@
                             <!--asset description-->
                             {% with "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% with doc_url as learn_more_href %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
                         <!-- card -->
                             <!--title-->
                             {% with "Multiple file requests via one link" as title %}
@@ -130,8 +134,9 @@
                             <!--asset description-->
                             {% with "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% with doc_url as learn_more_href %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
                         <!-- card -->
                             <!--title-->
                             {% with "Space dashboard" as title %}
@@ -142,8 +147,9 @@
                             <!--asset description-->
                             {% with "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% with doc_url as learn_more_href %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
                         <!-- card -->
                             <!--title-->
                             {% with "Upload Space, no more wrong files" as title %}
@@ -154,8 +160,9 @@
                             <!--asset description-->
                             {% with "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}}
+                            {% with doc_url as learn_more_href %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}   
                     </div>
                 </div>
             </div>

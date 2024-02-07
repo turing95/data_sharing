@@ -1,19 +1,18 @@
 
 function activateLoading(button) {
-        const form = button.form; // Assuming the button is within the form
-        if (form.checkValidity()) {
-            const spinner = button.querySelector('.spinner');
-            const buttonTextSpan = button.querySelector('.button-content');
-            spinner.classList.remove('hidden');
-            buttonTextSpan.classList.add('hidden');
-            button.classList.remove('bg-marian-blue-400');
-            button.classList.add('bg-marian-blue-300');
 
-            // Allow form submission
-            setTimeout(() => {
-                button.disabled = true;
-            }, 10);
-        }
+        const spinner = button.querySelector('.spinner');
+        const buttonTextSpan = button.querySelector('.button-content');
+        spinner.classList.remove('hidden');
+        buttonTextSpan.classList.add('hidden');
+        button.classList.remove('bg-marian-blue-400');
+        button.classList.add('bg-marian-blue-300');
+
+        // Allow form submission
+        setTimeout(() => {
+            button.disabled = true;
+        }, 10);
+
 }
 export function initSubmitButtons() {
     const submitButtons = document.querySelectorAll('button[type="submit"]');

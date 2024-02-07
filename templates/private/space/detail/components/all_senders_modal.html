@@ -36,12 +36,20 @@
                                 <h4 class="mb-1 text-base font-medium text-gray-900 border-b border-gray-200 dark:text-white">
                                     Invitation
                                 </h4>
-                                <button class="my-2 ml-2 w-[140px] text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400"
-                                        hx-post="{% url 'bulk_notify_invitation' space.uuid %}"
-                                        hx-target="#messageBar"
-                                        hx-swap="outerHTML">
-                                    Send invitation to everyone
-                                </button>
+                                
+                                
+                                <div class="flex">
+                                    <button class="m-2 justify-center items-center text-sm text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 font-medium px-3 py-1.5 text-center dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200"
+                                            hx-post="{% url 'bulk_notify_invitation' space.uuid %}"
+                                            hx-swap="none"
+                                            hx-indicator="#loading-indicator-invitation">
+                                        Send invitation to everyone
+                                    </button>
+                                    <div id="loading-indicator-invitation" role="status" class="htmx-indicator flex items-center justify-center mr-2 spinner">
+                                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -50,14 +58,18 @@
                                 <h4 class="mb-1 text-base font-medium text-gray-900 border-b border-gray-200 dark:text-white">
                                     Deadline Reminder
                                 </h4>
-
-                                <button
-                                        class="my-2 ml-2 w-[140px]  text-sm px-2.5 py-1.5 text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400"
-                                        hx-post="{% url 'bulk_notify_deadline' space.uuid %}"
-                                        hx-target="#messageBar"
-                                        hx-swap="outerHTML">
-                                    Send reminder to everyone
-                                </button>
+                                <div class="flex">
+                                    <button class="m-2 justify-center items-center text-sm text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 font-medium px-3 py-1.5 text-center dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200"
+                                            hx-post="{% url 'bulk_notify_deadline' space.uuid %}"
+                                            hx-swap="none"
+                                            hx-indicator="#loading-indicator-reminder">
+                                        Send reminder to everyone
+                                    </button>
+                                    <div id="loading-indicator-reminder" role="status" class="htmx-indicator flex items-center justify-center mr-2 spinner">
+                                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

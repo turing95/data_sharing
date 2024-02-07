@@ -25,13 +25,13 @@
                         {% if action == 'edit' %}
                             {% if requests.total_form_count > 1 %}
                             <button type="button"  hx-confirm="Are you sure you want to delete this request?" hx-post="{% url 'request_delete' req.instance.uuid %}"  hx-swap="outerHTML"  class="h-full px-4 transition duration-300 ease-in-out bg-transparent border-none cursor-pointer request-close-button hover:bg-gray-300 active:bg-gray-400" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                                {% else %}
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {% else %}
                                 <button type="button" class="invisible h-full px-4 transition duration-300 ease-in-out bg-transparent border-none cursor-pointer request-close-button hover:bg-gray-300 active:bg-gray-400" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                                {% endif %}
+                            {% endif %}
 
                         {% else %}
                             <button type="button" class="invisible h-full px-4 transition duration-300 ease-in-out bg-transparent border-none cursor-pointer request-close-button hover:bg-gray-300 active:bg-gray-400" aria-label="Close">
@@ -42,17 +42,20 @@
                         
                         <!-- TITLE -->
                         <div class="w-full py-1 pl-0">
-                            <div class="flex items-center space-x-2">
-                                <label for="{{ req.title.id_for_label }}"
+                            <div class="flex items-center space-x-2 w-2/3">
+                                                                <label for="{{ req.title.id_for_label }}"
                                 class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ req.title.label }} </label>
                                 {{ req.title }}
-                                
+
+
                                 {% include 'components/tooltip.html' with title=req.title.label content=req.title.help_text target_prefix='requests' target=req.title.name  num=forloop.counter0 placement="bottom" %}
+
+
                             </div>
                             {% include 'components/forms/error_widget.html' with errors=req.title.errors %}
                         </div>
                         
-                        <button type="button" class="flex items-center justify-end w-1/3 h-full py-2 pr-2 bg-transparent focus:outline-none focus:ring-0 hover:bg-transparent active:bg-transparent" data-accordion-target="#accordion-{{ forloop.counter0 }}-open-body" aria-expanded="true" aria-controls="accordion-{{ forloop.counter0 }}-open-body">
+                        <button type="button" class="flex items-center justify-end h-full py-2 pr-2 bg-transparent focus:outline-none focus:ring-0 hover:bg-transparent active:bg-transparent" data-accordion-target="#accordion-{{ forloop.counter0 }}-open-body" aria-expanded="true" aria-controls="accordion-{{ forloop.counter0 }}-open-body">
                             <svg data-accordion-icon class="w-3 h-3 mx-auto mr-3 rotate-180 shrink-0" aria-hidden="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                             </svg>
@@ -63,7 +66,12 @@
 
                 <div id="accordion-{{ forloop.counter0 }}-open-body" class="border border-b-2 border-gray-200" aria-labelledby="accordion-{{ forloop.counter0 }}-open-heading">
                     <div class="p-5 pt-2 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                        
+                        {% if req.instance.is_active is False %}
+                           <div class="my-3 w-2/3 request-suspended">
+                           <span>Request is suspended, select a destination to activate it again</span>
+                           </div>
+
+                        {% endif %}
                         <!-- DESTINATION FOLDER -->
                         <div class="mb-6">
                             <div class="flex items-center mb-2 space-x-2">
@@ -101,18 +109,15 @@
 
                                  <!-- Search Results Section -->
                                  <div id="destination-search-results-container" class="absolute z-10 w-full">
-                                    <div class="flex flex-col-reverse gap-4 md:flex-row">
-                                        <div class="flex-1 w-full">
+                                    <div class="flex gap-4 flex-col-reverse md:flex-row">
+                                        <div class="flex-1 w-full md:mr-49">
                                             <div class="flex flex-col sm:flex-row">
-                                                <div class="hidden sm:flex flex-col w-full sm:w-1/3 h-[36px]">
-                                                </div>
-                                                <div  class="w-full sm:w-2/3 destination-search">
-                                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-100 "></div>
+                                                <div class="w-full sm:w-2/3 sm:ml-auto destination-search">
+                                                    <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-100"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="hidden h-full ml-auto shrink-0 md:flex md:w-48">
-                                        </div>
+                                        <!-- Removed the hidden div used for spacing -->
                                     </div>
                                 </div>
                                 {{ req.destination_id }}
@@ -186,7 +191,7 @@
                                     hx-target="next .file-types-search-results"
                                     autocomplete="off">
                                 <div class="inline-flex w-full my-1">
-                                    <div class="w-1/2 overflow-y-auto max-h-[150px] file-types-search-results custom-scrollbar mr-2 bg-gray-100"></div>
+                                    <div class="w-1/2 overflow-y-auto h-[150px] file-types-search-results custom-scrollbar mr-2 bg-gray-100"></div>
                                     <div class="w-1/2 pl-2 ml-2 bg-gray-100">
                                         <div class="hidden my-2 file-type-title">Allowed file types:</div>
                                         <div class="flex flex-col w-full h-full no-file-types">

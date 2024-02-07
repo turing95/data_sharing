@@ -108,7 +108,7 @@
                             
                             <!-- TITLE -->
                             <div class="w-full py-1 pl-5"> 
-                                <span class="block text-xs text-gray-900 font-meidum dark:text-white"> Request {{forloop.counter}}:</span>
+                                <span class="block text-xs text-gray-900 font-medium dark:text-white"> Request {{forloop.counter}}:</span>
                                 <span class="font-bold"> {{form.upload_request.title}}</span>
                             </div>
                             
@@ -234,7 +234,7 @@
                     <div class="sticky bottom-4">
                         <div class="flex justify-center">
                             <div class= "w-[300px] mx auto">
-                                {% include "components/buttons/submit.html" with button_text="Confirm and Upload" %}
+                                {% include "components/buttons/submit_with_loader.html" with button_text="Confirm and Upload" %}
                             </div>
                         </div>
                     </div>

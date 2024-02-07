@@ -52,12 +52,14 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
 
     <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/idiomorph/dist/idiomorph-ext.min.js"></script>
-
+    {% if debug %}
+    <script src="https://unpkg.com/htmx.org/dist/ext/debug.js"></script>
+    {% endif %}
 
 
 
 </head>
-<body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-ext="morph">
+<body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <!-- htmx model target-->
     <div id="htmx-modal" ></div>
 

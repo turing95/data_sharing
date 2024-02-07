@@ -4,7 +4,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_POST, require_GET
 from web_app.models import Sender, Space
-from web_app.tasks.notifications import bulk_notify_deadline as bulk_notify_deadline_task, bulk_notify_invitation as bulk_notify_invitation_task
+from web_app.tasks.notifications import bulk_notify_deadline as bulk_notify_deadline_task, \
+    bulk_notify_invitation as bulk_notify_invitation_task
+
 
 @login_required
 @require_POST
@@ -24,7 +26,8 @@ def notify_deadline(request, sender_uuid):
     messages.success(request, f"{sender.email} notified")
     return render(
         request,
-        'components/messages.html'
+        'components/messages.html',
+        {'from_htmx': True}
     )
 
 
@@ -37,7 +40,8 @@ def notify_invitation(request, sender_uuid):
     messages.success(request, f"{sender.email} invited")
     return render(
         request,
-        'components/messages.html'
+        'components/messages.html',
+        {'from_htmx': True}
     )
 
 
@@ -48,7 +52,8 @@ def bulk_notify_deadline(request, space_uuid):
     messages.success(request, "Notification are being sent to all senders")
     return render(
         request,
-        'components/messages.html'
+        'components/messages.html',
+        {'from_htmx': True}
     )
 
 
@@ -59,7 +64,8 @@ def bulk_notify_invitation(request, space_uuid):
     messages.success(request, "Invitation are being sent to all senders")
     return render(
         request,
-        'components/messages.html'
+        'components/messages.html',
+        {'from_htmx': True}
     )
 
 

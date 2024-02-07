@@ -44,7 +44,7 @@ class FileForm(Form):
         self.request_index = kwargs.pop('request_index')
         self.space = kwargs.pop('space')
         super().__init__(**kwargs)
-        upload_request = self.space.requests.filter(is_deleted=False)[self.request_index]
+        upload_request = self.space.requests.filter(is_active=True)[self.request_index]
         self.fields['files'] = MultipleFileField(upload_request=upload_request, label='Files', required=False)
 
         self.fields['request_uuid'].initial = upload_request.pk

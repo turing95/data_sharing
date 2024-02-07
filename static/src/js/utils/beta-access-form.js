@@ -4,8 +4,6 @@ export function initBetaAccessForm() {
     if (showFormButtons) {
         showFormButtons.forEach(function(button) {
             button.addEventListener('click', function(event) {
-                ; // Prevents the default action of the link
-                
                 const formContainer = document.getElementById('beta-access-form-container');
                 const introContainer = document.getElementById('beta-access-intro');
 
@@ -15,5 +13,5 @@ export function initBetaAccessForm() {
                 }
             })
         })
-    };
+    }
 }
