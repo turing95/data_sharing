@@ -34,7 +34,7 @@
                                 Request {{ forloop.counter }}
                                 {% if req.is_active is False %}
                                     (suspended)
-                                    {% include 'components/tooltip.html' with title='Request suspended' content='Request suspended, add a destination to activate it again' %}
+                                    {% include 'components/tooltip.html' with num=forloop.counter title='Request suspended' content='Request suspended, add a destination to activate it again' %}
                                 {% endif %}
                             </span>
                         {% if req.destination.url %}
