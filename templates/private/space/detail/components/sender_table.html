@@ -28,7 +28,7 @@
                     <th scope="col" class="px-3 py-1.5 min-w-[150px]">
                         <div class="flex flex-col justify-start">
 
-                            <span class="text-xs font-normal normal-case text-yellow-400">         
+                            <span class="text-xs font-normal normal-case {% if req.is_active is False %}text-yellow-400{% endif %}">         
                                 Request {{ forloop.counter }}
                                 {% if req.is_active is False %} (suspended)  {% endif %}:
                             </span> 
