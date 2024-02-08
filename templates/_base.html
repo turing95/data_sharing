@@ -45,6 +45,7 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
     <meta property="og:image" content="{% static 'images/logo.png' %}">
     <meta property="og:url" content="https://www.kezyy.com">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://kezyy.com{{ request.path }}">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
@@ -58,7 +59,7 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
 
 
 </head>
-<body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-ext="morph">
+<body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <!-- htmx model target-->
     <div id="htmx-modal" ></div>
 

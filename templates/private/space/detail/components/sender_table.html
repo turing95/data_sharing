@@ -1,124 +1,138 @@
 {% load custom_tags %}
 {% load static %}
 
-    <div class="relative overflow-x-auto custom-scrollbar">
-        <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-3 py-3 w-[30px] max-w-[30px] sticky left-0 z-10 bg-gray-100">
-<div class="inline-flex  justify-center items-center w-[20px] duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
-            hx-get="{% url 'all_senders_modal' space.uuid %}"
-            hx-trigger="click"
-            hx-target="#htmx-modal"
-            hx-swap="innerHTML">
-            <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
-        </div>                    </th>
-                    <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
-                        Invitee
-                    </th>
-                    <th scope="col" class="px-3 py-3 min-w-[200px]">
-                        Space Link
-                    </th>
-                    <th scope="col" class="px-3 py-3 min-w-[200px]">
-                        Link Status
-                    </th>
+<div class="relative overflow-x-auto custom-scrollbar">
+    <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="px-3 py-3 w-[30px] max-w-[30px] sticky left-0 z-10 bg-gray-100">
+                <div class="inline-flex  justify-center items-center w-[20px] duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
+                     hx-get="{% url 'all_senders_modal' space.uuid %}"
+                     hx-trigger="click"
+                     hx-target="#htmx-modal"
+                     hx-swap="innerHTML">
+                    <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke=""
+                         class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
+                </div>
+            </th>
+            <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
+                Invitee
+            </th>
+            <th scope="col" class="px-3 py-3 min-w-[200px]">
+                Space Link
+            </th>
+            <th scope="col" class="px-3 py-3 min-w-[200px]">
+                Link Status
+            </th>
 
-                    {% for req in space.requests.all reversed %}
-                    
-                    <th scope="col" class="px-3 py-1.5 min-w-[150px]">
-                        <div class="flex flex-col justify-start">
+            {% for req in space.requests.all reversed %}
 
-                            <span class="text-xs font-normal normal-case {% if req.is_active is False %}text-yellow-400{% endif %}">         
+                <th scope="col" class="px-3 py-1.5 min-w-[150px]">
+                    <div class="flex flex-col justify-start">
+
+                            <span class="flex text-xs font-normal normal-case {% if req.is_active is False %}text-yellow-400{% endif %}">         
                                 Request {{ forloop.counter }}
-                                {% if req.is_active is False %} (suspended)  {% endif %}:
-                            </span> 
-                            {% if req.destination.url %}
-                                <a href="{{ req.destination.url }}"  title="{{req.title}}" target="_blank" class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">   
-                                    <span class=" min-w-[25px] max-w-[250px] line-clamp-2" >{{ req.title }} </span>
-                                </a>
-                            {% else %}
-                            <span class=" min-w-[25px] max-w-[250px] line-clamp-2" title="{{req.title}}" >{{ req.title }} </span>
-                            {% endif %}
-                        </div>
-                    </th>
-                    {% endfor%}
-                    
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <!-- If the space has a public link add a row with its info-->
-                {% if space.is_public or space.public_upload_events %}
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="sticky left-0 z-10 w-[30px] px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
-                        
-                    </th>
-                    <th scope="row" class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
-                        Everyone (public)
-                        
-                    </th>
-                    <td class="px-3 py-2">
-                        <div class="inline-flex items-center">
-                            <a href="{% url 'sender_space_detail_public' space.uuid %}" target = "_blank" class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
-                                public space link
+                                {% if req.is_active is False %}
+                                    (suspended)
+                                    {% include 'components/tooltip.html' with num=forloop.counter title='Request suspended' content='Request suspended, add a destination to activate it again' %}
+                                {% endif %}
+                            </span>
+                        {% if req.destination.url %}
+                            <a href="{{ req.destination.url }}" title="{{ req.title }}" target="_blank"
+                               class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">
+                                <span class=" min-w-[25px] max-w-[250px] line-clamp-2">{{ req.title }} </span>
                             </a>
-                            <button 
-                                class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
-                                onclick="navigator.clipboard.writeText('{{ request.get_host }}{% url 'sender_space_detail_public' space.uuid %}')"
-                                title="Copy Link">
-                                <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
-                            </button>
+                        {% else %}
+                            <span class=" min-w-[25px] max-w-[250px] line-clamp-2"
+                                  title="{{ req.title }}">{{ req.title }} </span>
+                        {% endif %}
+                    </div>
+                </th>
+            {% endfor %}
 
-                    
-                        </div>
-                    </td>
+
+        </tr>
+        </thead>
+        <tbody>
+        <!-- If the space has a public link add a row with its info-->
+        {% if space.is_public or space.public_upload_events %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row"
+                    class="sticky left-0 z-10 w-[30px] px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
+
+                </th>
+                <th scope="row"
+                    class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
+                    Everyone (public)
+
+                </th>
+                <td class="px-3 py-2">
+                    <div class="inline-flex items-center">
+                        <a href="{% url 'sender_space_detail_public' space.uuid %}" target="_blank"
+                           class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
+                            public space link
+                        </a>
+                        <button
+                                class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
+                                onclick="navigator.clipboard.writeText('
+                                        {{ request.get_host }}{% url 'sender_space_detail_public' space.uuid %}')"
+                                title="Copy Link">
+                            <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon"
+                                 class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
+                        </button>
+
+
+                    </div>
+                </td>
+                <td class="px-3 py-2">
+                    <div class="inline-flex items-center">
+                        {% if space.is_public is False %}
+                            <div class="bg-orange-200 text-orange-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
+                                inactive
+                            </div>
+                        {% else %}
+                            <div class="bg-green-200 text-green-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
+                                active
+                            </div>
+                        {% endif %}
+                    </div>
+                </td>
+                {% for req in space.requests.all reversed %}
+
                     <td class="px-3 py-2">
-                        <div class="inline-flex items-center">
-                            {% if space.is_public is False %}
-                                <div class="bg-orange-200 text-orange-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                                    inactive
-                                </div>
-                            {% else %}
-                                <div class="bg-green-200 text-green-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                                    active
-                                </div>
-                            {% endif %}              
-                        </div>
-                    </td>
-                    {% for req in space.requests.all reversed%}
-                    
-                    <td class="px-3 py-2">
-                        <div class="flex" 
-                            hx-get="{% url 'request_modal'  req.uuid %}"
-                            hx-trigger="click" 
-                            hx-target="#htmx-modal" 
-                            hx-swap="innerHTML"
-                            hx-indicator="#loading-indicator-{{req.uuid}}-public">                 
-                                <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline" title="number of uploaded files" >
+                        <div class="flex"
+                             hx-get="{% url 'request_modal'  req.uuid %}"
+                             hx-trigger="click"
+                             hx-target="#htmx-modal"
+                             hx-swap="innerHTML"
+                             hx-indicator="#loading-indicator-{{ req.uuid }}-public">                 
+                                <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline"
+                                      title="number of uploaded files">
                                     {% get_count_uploaded_files req %} files
-                                </span> 
-                                <div class="flex items-center mb-3">
-                                    <!-- Loading Indicator -->
-                                    <div id="loading-indicator-{{req.uuid}}-public" class="items-center justify-center opacity-0 htmx-indicator">
-                                        <div role="status" class="ml-2 spinner">
-                                            {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
+                                </span>
+                            <div class="flex items-center mb-3">
+                                <!-- Loading Indicator -->
+                                <div id="loading-indicator-{{ req.uuid }}-public"
+                                     class="items-center justify-center opacity-0 htmx-indicator">
+                                    <div role="status" class="ml-2 spinner">
+                                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                        <span class="sr-only">Loading...</span>
                                     </div>
                                 </div>
-                                
-        
-                        </div>          
-                    </td>
-                    {% endfor %}
-                    
-                </tr>
+                            </div>
 
-                {% endif %}
-                {% for sender in space.senders.all reversed %}
-                    {% include 'private/space/detail/components/sender_row.html' with sender=sender %}
+
+                        </div>
+                    </td>
                 {% endfor %}
-                
-            </tbody>
-        </table>
-    </div>
+
+            </tr>
+
+        {% endif %}
+        {% for sender in space.senders.all reversed %}
+            {% include 'private/space/detail/components/sender_row.html' with sender=sender %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>

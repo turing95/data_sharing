@@ -91,8 +91,7 @@ class RequestForm(ModelForm):
                    'hx-trigger': "change, load",
                    'hx-get': reverse_lazy('select_destination_type'),
                    'hx-target': "previous .destination-search",
-                   'hx-swap': "outerHTML",
-                   'onchange': 'providerChanged(this)'
+                   'hx-swap': "outerHTML"
                    })
     )
 

@@ -143,7 +143,6 @@ class SpaceForm(ModelForm):
             space = self.instance
             self.fields['senders_emails'].initial = ','.join(
                 [sender.email for sender in space.senders.filter(is_active=True)])
-            self.fields['title'].disabled = True
 
     def clean_deadline(self):
         deadline = self.cleaned_data.get('deadline', None)
