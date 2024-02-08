@@ -10,7 +10,7 @@
 
         <div class="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
             {% if request.user.is_authenticated %}
-                <!-- User avatar and menue only if user is logged -->
+                <!-- User avatar and menu only if user is logged -->
                 <div class="justify-end md:min-w-[110px] md:me-0 md:inline-flex">
                     <button type="button" class="flex text-sm rounded-full me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
@@ -59,7 +59,7 @@
                     </div>
                 
             {% endif %}
-            {% if generic_area %} <!-- Show top menue only when the user is not in spaces pages or login pages-->
+            {% if generic_area %} <!-- Show top menu only when the user is not in spaces pages or login pages-->
 
             <button id="navbar-menu-button"type="button" class="inline-flex items-center justify-center w-8 h-8 p-1 my-auto text-sm text-gray-500 md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                 <span class="sr-only">Open main menu</span>
