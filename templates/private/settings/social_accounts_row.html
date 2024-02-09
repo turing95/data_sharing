@@ -9,11 +9,17 @@
         </div>
     </td>
     <!-- Column 2: Cloud Storage Logo and Name -->
-    <td class="px-6 py-4 whitespace-nowrap">
+    <td class="flex flex-col px-6 py-4 whitespace-nowrap">
         <div class="inline-flex items-center">
             <img src="{% static drive_logo_url %}" alt="{{drive_name}} Logo" class="h-[21px] w-[21px] mr-2" />
             {{drive_name}}
         </div>
+        {% if drive_name_2 %}
+        <div class="inline-flex items-center mt-2">
+            <img src="{% static drive_logo_url_2 %}" alt="{{drive_name_2}} Logo" class="h-[21px] w-[21px] mr-2" />
+            {{drive_name_2}}
+        </div>
+        {% endif %}
     </td>
     <!-- Column 3: Status -->
     <td class="px-6 py-4 whitespace-nowrap">
@@ -39,7 +45,7 @@
                     {% include 'private/settings/socialaccount_disconnect.html' with provider=provider.id %}
         
                 {% else %}
-                    <span class="whitespace-normal text-sm"> Connect another account to disconnect this </span>
+                    <span class="text-sm whitespace-normal"> Connect another account to disconnect this </span>
                 {%endif%}
             {% endif %}
         </div>
