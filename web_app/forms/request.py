@@ -1,7 +1,7 @@
 import re
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from django.core.exceptions import ValidationError
-from web_app.models import Space, UploadRequest, FileType, GoogleDrive, OneDrive
+from web_app.models import Space, UploadRequest, FileType, GoogleDrive, OneDrive, SharePoint
 from web_app.forms import css_classes
 from django.urls import reverse_lazy
 from django import forms
@@ -83,12 +83,13 @@ class RequestForm(ModelForm):
     destination_type_select = forms.ChoiceField(
         choices=[
             (GoogleDrive.TAG, 'Google Drive'),
-            (OneDrive.TAG, 'One Drive'),
+            (OneDrive.TAG, 'OneDrive'),
+            (SharePoint.TAG, 'SharePoint'),
         ],
         label="Destination folder",
         widget=forms.Select(
             attrs={'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full",
-                   'hx-trigger': "change, load",
+                   'hx-trigger': "change, load, intersect once",
                    'hx-get': reverse_lazy('select_destination_type'),
                    'hx-target': "previous .destination-search",
                    'hx-swap': "outerHTML"
@@ -99,7 +100,9 @@ class RequestForm(ModelForm):
         widget=forms.HiddenInput(attrs={'class': 'destination'}),
         label="Destination folder ID",
         help_text="""The file uploaded for this request will be sent to the folder selected here. Choose a cloud storage provider and search for a folder and select it.""")
-
+    sharepoint_site_id = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput(attrs={'class': 'sharepoint-site'}))
     destination_type = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination-type'}),
                                        label="Destination type")
 
@@ -157,7 +160,13 @@ class RequestForm(ModelForm):
         request = kwargs.pop('request', None)
         index = kwargs.pop('index', None)
         super().__init__(*args, **kwargs)
-        self.fields['destination_type_select'].widget.attrs['hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
+        self.fields['destination_type_select'].widget.attrs[
+            'hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
+        if not request.user.sharepoint_sites:
+            self.fields['destination_type_select'].choices = [
+                (GoogleDrive.TAG, 'Google Drive'),
+                (OneDrive.TAG, 'OneDrive'),
+            ]
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')

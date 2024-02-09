@@ -77,18 +77,17 @@ class SpaceDetailFormView(SpaceFormView):
         for req in formset:
             # Check if the current destination exists and if the folder ID matches the provided one.
             if req.instance.destination:
-                # If the folder IDs match, update the isActive status without creating a new destination.
-                if req.instance.destination.folder_id == req.cleaned_data.get('destination_id') and req.instance.destination.is_active is False:
-                    GenericDestination.create_from_folder_id(req.instance, req.cleaned_data.get('destination_type'),
-                                                             req.cleaned_data.get('destination_id'), self.request.user)
+                if req.instance.destination.folder_id == req.cleaned_data.get('destination_id'):
+                    if req.instance.destination.is_active is False:
+                        # if inactive and same, create new
+                        self.create_destination_from_form(req)
                 else:
                     # If the folder ID doesn't match, create a new destination.
-                    GenericDestination.create_from_folder_id(req.instance, req.cleaned_data.get('destination_type'),
-                                                             req.cleaned_data.get('destination_id'), self.request.user)
+                    self.create_destination_from_form(req)
+
             else:
                 # If no current destination exists, create a new one.
-                GenericDestination.create_from_folder_id(req.instance, req.cleaned_data.get('destination_type'),
-                                                         req.cleaned_data.get('destination_id'), self.request.user)
+                self.create_destination_from_form(req)
 
             # Activate the instance in all cases after handling the destination.
             req.instance.is_active = True

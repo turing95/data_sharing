@@ -96,7 +96,13 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
     def handle_formset(self,formset):
         formset.save()
         for req in formset:
-            GenericDestination.create_from_folder_id(req.instance, req.cleaned_data.get('destination_type'),
-                                                     req.cleaned_data.get('destination_id'),self.request.user)
+            self.create_destination_from_form(req)
             for file_type in req.cleaned_data.get('file_types'):
                 req.instance.file_types.add(file_type)
+
+    def create_destination_from_form(self,form):
+        GenericDestination.create_from_folder_id(form.instance,
+                                                 form.cleaned_data.get('destination_type'),
+                                                 form.cleaned_data.get('destination_id'),
+                                                 self.request.user,
+                                                 form.cleaned_data.get('sharepoint_site_id'))

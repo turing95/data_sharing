@@ -16,7 +16,7 @@ function resetDestinationLogo(newForm) {
 export function updateElementIdentifiers(newForm, formCount) {
     // Update IDs and names for inputs, selects, textareas, and accordions
     newForm.id = newForm.id.replace(/-\d+/, `-${formCount}`);
-    newForm.querySelectorAll('input, select, textarea, [id^="tooltip-"]').forEach(element => {
+    newForm.querySelectorAll('input, select, textarea').forEach(element => {
         if (element.id) {
             // Replace the form number in the ID
             element.id = element.id.replace(/-\d+-/, `-${formCount}-`);
@@ -32,11 +32,18 @@ export function updateElementIdentifiers(newForm, formCount) {
 
     });
     updateTooltip(newForm, formCount);
+    sharePointSiteUpdate(newForm, formCount);
     updateAccordion(newForm, formCount);
     updateHxAttributes(newForm, formCount);
     updateLabelsForAttribute(newForm, formCount);
 }
 
+function sharePointSiteUpdate(newForm, formCount){
+    newForm.querySelectorAll('[id^="sharepoint_site-"]').forEach(element => {
+        element.id = element.id.replace(/-\d+-/, `-${formCount}-`);
+
+    });
+}
 function updateTooltip(newForm, formCount){
     newForm.querySelectorAll('[id^="tooltip-"]').forEach(element => {
             let newId = element.id.replace(/-\d+-/, `-${formCount}-`);

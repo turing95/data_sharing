@@ -3,7 +3,7 @@ from django.http import Http404, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import render
 import re
-from web_app.models import GoogleDrive, OneDrive
+from web_app.models import GoogleDrive, OneDrive, SharePoint
 from allauth.socialaccount.adapter import get_adapter
 from django.http import HttpResponseBadRequest  # Import HttpResponseBadRequest
 
@@ -15,15 +15,16 @@ def search_folder(request):
         request_index = request.GET.get('request_index', None)
         if request_index is not None:
             search_query = request.POST.get(f'search-folders-{request_index}-')
+            sharepoint_site_id = request.POST.get(f'sharepoint-site-{request_index}-', None)
             search_type = request.POST[f'requests-{request_index}-destination_type_select']
             if search_query == '':
                 return HttpResponse(status=204)
 
             else:
-                folders = request.user.get_folders(search_type, search_query)
+                folders = request.user.get_folders(search_type, search_query,sharepoint_site_id)
             return render(request,
                           'private/space/create/components/destination/folders_search_results.html',
-                          {'folders': folders, 'destination_type': search_type})
+                          {'folders': folders, 'destination_type': search_type,'sharepoint_site_id':sharepoint_site_id})
     return HttpResponseBadRequest()
 
 
@@ -47,13 +48,19 @@ def select_destination_type(request):
                 if request.user.microsoft_account is None:
                     adapter = get_adapter()
                     missing_provider = adapter.get_provider(request, OneDrive.PROVIDER_ID)
+            elif provider_type == SharePoint.TAG:
+                provider_name = "SharePoint"
+                if request.user.microsoft_account is None:
+                    adapter = get_adapter()
+                    missing_provider = adapter.get_provider(request, SharePoint.PROVIDER_ID)
             else:
                 return HttpResponseBadRequest()
 
             return render(request,
                           'private/space/create/components/destination/destination_search.html',
                           {
-                              'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index, 'provider_name': provider_name})
+                              'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index,
+                              'provider_name': provider_name,'from_htmx':True})
     return HttpResponseBadRequest()
 
 
