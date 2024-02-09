@@ -1,6 +1,7 @@
 from allauth.socialaccount.models import SocialAccount, SocialToken
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.functional import cached_property
 from google.auth.transport.requests import Request
 import arrow
 from google.oauth2.credentials import Credentials
@@ -8,6 +9,7 @@ from googleapiclient.discovery import build
 from msal import ConfidentialClientApplication
 import requests
 from django.conf import settings
+import jwt
 
 
 class User(AbstractUser):
@@ -35,12 +37,12 @@ class User(AbstractUser):
         except SocialAccount.DoesNotExist:
             return None
 
-    def get_folders(self, destination_type, folder_name=None):
-        from web_app.models import OneDrive, GoogleDrive
+    def get_folders(self, destination_type, folder_name=None, sharepoint_site=None):
+        from web_app.models import OneDrive, GoogleDrive, SharePoint
         if destination_type == GoogleDrive.TAG:
             return GoogleService(self.google_account).get_folders(folder_name)
-        elif destination_type == OneDrive.TAG:
-            return MicrosoftService(self.microsoft_account).get_folders(folder_name)
+        elif destination_type == OneDrive.TAG or destination_type == SharePoint.TAG:
+            return MicrosoftService(self.microsoft_account).get_folders(folder_name, sharepoint_site)
         else:
             return None
 
@@ -50,6 +52,11 @@ class User(AbstractUser):
     def refresh_microsoft_token(self, token=None):
         return MicrosoftService(self.microsoft_account).refresh_token(token)
 
+    @cached_property
+    def sharepoint_sites(self):
+        if self.microsoft_account is None:
+            return None
+        return MicrosoftService(self.microsoft_account).get_sites()
 
 
 class GoogleService:
@@ -151,23 +158,67 @@ class MicrosoftService:
 
                 return token
             else:
-                # Handle error or no new token returned
                 return None
         return token
 
-    def get_folders(self, folder_name=None):
+    '''def _get_folders(self, folder_name=None,microsoft_site=None):
+        THIS MIGHT BE USEFUL IN THE FUTURE, BUT ATM SEARCH FROM MSFT DOES NOT SEEM TO WORK THE WAY IT SHOULD
         token = self.refresh_token()
 
         headers = {
             'Authorization': f'Bearer {token.token}',
             'Content-Type': 'application/json'
         }
-        url = "https://graph.microsoft.com/v1.0/me/drive/root/"
+        # The URL for the Microsoft Graph API search endpoint
+        url = 'https://graph.microsoft.com/beta/search/query'
+
+        # The body of the request specifying the search query and entity types
+        body = {
+            "requests": [
+                {
+                    "entityTypes": ["driveItem"],
+                    "query": {
+                        "queryString": folder_name
+                    },
+                    "from": 0,
+                    "size": 25
+                }
+            ]
+        }
+
+        # Send the POST request
+        response = requests.post(url, headers=headers, json=body)
+        if response.status_code == 200:
+            results = response.json().get('value', [])
+            folders = []
+            for result in results:  # Loop through each result in the response
+                # Each result may contain multiple hits, so we need to examine each one.
+                for hit in result.get('hitsContainers', []):
+                    # Each hit contains a resource which could be the item we are interested in.
+                    for item in hit.get('hits', []):
+                        # Now we examine the resource (item) to see if it is a folder.
+                        # This assumes 'folder' information is part of the item's resourceData.
+                        # Adjust the condition based on the actual structure of your items.
+                        resource = item.get('resource', {})
+                        folders.append(resource)
+            return folders
+        else:
+            return self.search_personal_drive(folder_name)  # or handle the error as required'''
+
+    def get_folders(self, folder_name=None, sharepoint_site=None):
+        token = self.refresh_token()
+        headers = {
+            'Authorization': f'Bearer {token.token}',
+            'Content-Type': 'application/json'
+        }
+        if sharepoint_site:
+            url = f"https://graph.microsoft.com/v1.0/sites/{sharepoint_site}/drive/root/"
+        else:
+            url = "https://graph.microsoft.com/v1.0/me/drive/root/"
         if folder_name:
-            url += f"search(q='{folder_name}')"
+            url += f"search(q='{folder_name}')/"
         else:
             url += 'children'
-
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             folders = [item for item in response.json().get('value', []) if 'folder' in item]
@@ -175,13 +226,19 @@ class MicrosoftService:
         else:
             return None  # or handle the error as required
 
-
-    def list_sites(self):
+    def get_sites(self):
         token = self.refresh_token()
-        url = "https://graph.microsoft.com/v1.0/sites/"
+        url = "https://graph.microsoft.com/v1.0/sites?search=*"
         headers = {
             'Authorization': f'Bearer {token.token}',
             'Content-Type': 'application/json'
         }
         response = requests.get(url, headers=headers)
-        return response.json()
+        return response.json().get('value', [])
+
+    @property
+    def decoded_token(self):
+        token = self.refresh_token()
+        rs = jwt.decode(token.token, options={"verify_signature": False})
+        print(rs)
+        return rs
