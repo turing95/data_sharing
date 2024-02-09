@@ -1,6 +1,6 @@
 import { toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 import {initializeFileTypes} from './fileTypeInput.js';
-import {addNewRequestForm} from './addForm.js';
+import {addNewRequestForm} from './add/addForm.js';
 export {handleTagDropdownChange,toggleRename, toggleFileTypeRestrict} from './eventHandlers.js';
 export {addFileTypeTag,initializeFileTypes} from './fileTypeInput.js';
 export {selectFolder}  from './folderPicker.js'

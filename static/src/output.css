@@ -1236,23 +1236,16 @@ input:checked + .toggle-bg {
   margin: -1rem;
 }
 
-<<<<<<< HEAD
-=======
 .m-2 {
   margin: 0.5rem;
 }
 
->>>>>>> 6a0fe89982dbfb89a34003ea88d1ec65525000c0
 .m-3 {
   margin: 0.75rem;
 }
 
 .m-auto {
   margin: auto;
-}
-
-.m-2 {
-  margin: 0.5rem;
 }
 
 .mx-1 {
@@ -1638,10 +1631,6 @@ input:checked + .toggle-bg {
   width: 33.333333%;
 }
 
-.w-1\/4 {
-  width: 25%;
-}
-
 .w-12 {
   width: 3rem;
 }
@@ -1706,13 +1695,6 @@ input:checked + .toggle-bg {
   width: 13px;
 }
 
-<<<<<<< HEAD
-.w-\[140px\] {
-  width: 140px;
-}
-
-=======
->>>>>>> 6a0fe89982dbfb89a34003ea88d1ec65525000c0
 .w-\[16px\] {
   width: 16px;
 }
@@ -1743,6 +1725,10 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
+}
+
+.w-2 {
+  width: 0.5rem;
 }
 
 .min-w-0 {
