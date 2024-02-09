@@ -2,6 +2,7 @@ from allauth.socialaccount.forms import DisconnectForm
 from django import forms
 
 from web_app.models import UploadRequest, GenericDestination
+from web_app.models.utils import disconnect_social_account
 
 
 class CustomSocialDisconnectForm(DisconnectForm):
@@ -25,6 +26,4 @@ class CustomSocialDisconnectForm(DisconnectForm):
 
     def save(self):
         account = self.cleaned_data['account']
-        UploadRequest.objects.filter(destinations__social_account=account).update(is_active=False)
-        GenericDestination.objects.filter(social_account=account).update(is_active=False)
-        super(CustomSocialDisconnectForm, self).save()
+        disconnect_social_account(self.request, account)
