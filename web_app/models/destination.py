@@ -41,11 +41,13 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
         return self.related_object.upload_file(file, file_name)
 
     @classmethod
-    def create_from_folder_id(cls, request_instance, destination_type, folder_id, user):
+    def create_from_folder_id(cls, request_instance, destination_type, folder_id, user,sharepoint_site=None):
         if destination_type == GoogleDrive.TAG:
             return GoogleDrive.create_from_folder_id(request_instance, folder_id, user)
         elif destination_type == OneDrive.TAG:
             return OneDrive.create_from_folder_id(request_instance, folder_id, user)
+        elif destination_type == SharePoint.TAG:
+            return SharePoint.create_from_folder_id(request_instance, folder_id, user,sharepoint_site)
         else:
             raise NotImplementedError
 
@@ -250,6 +252,125 @@ class OneDrive(BaseModel):
             url = f"https://graph.microsoft.com/v1.0/me/drive/items/{self.folder_id}"
 
             response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                return True
+            else:
+                return False
+        except Exception:
+            return False
+
+
+class SharePoint(BaseModel):
+    TAG = 'sharepoint'
+    folder_id = models.CharField(max_length=255)
+    site_id = models.CharField(max_length=255)
+    PROVIDER_ID = 'custom_microsoft'
+
+    @classmethod
+    def create_from_folder_id(cls, upload_request, folder_id, user, site_id):
+        sharepoint_destination = cls(folder_id=folder_id, site_id=site_id)
+
+        generic_destination = GenericDestination(
+            request=upload_request,
+            content_type=ContentType.objects.get_for_model(cls),
+            object_id=sharepoint_destination.pk,
+            social_account=user.microsoft_account,
+            tag=cls.TAG,
+        )
+
+        generic_destination.save()
+        sharepoint_destination.save()
+
+        return generic_destination
+
+    @property
+    def token(self):
+        generic_destination = self.generic_destination
+        user = generic_destination.request.space.user
+        return user.refresh_microsoft_token(generic_destination.social_account.socialtoken_set.first())
+
+    @property
+    def generic_destination(self):
+        return GenericDestination.objects.get(
+            content_type=ContentType.objects.get_for_model(self.__class__),
+            object_id=self.pk,
+        )
+
+    def upload_file(self, file, file_name):
+
+        # Set up headers for the request
+        headers = {
+            'Authorization': f'Bearer {self.token.token}',
+            'Content-Type': file.content_type,  # Assuming 'file' is a Django UploadedFile object
+        }
+
+        # Prepare the file stream
+        file_stream = BytesIO(file.read())
+        file_stream.seek(0)
+
+        # Construct the URL for the file upload
+        url = f"https://graph.microsoft.com/v1.0/sites/{self.site_id}/drive/items/{self.folder_id}:/{file_name}:/content"
+
+        # Send the request to upload the file
+        response = requests.put(url, headers=headers, data=file_stream)
+
+        # Check if the upload was successful
+        if response.status_code in [200, 201]:
+            return response.json().get('webUrl', None)  # Returns the URL of the uploaded file
+        else:
+            # Handle any errors that occur during the upload
+            raise Exception(f"Failed to upload file: {response.json()}")
+
+    @property
+    def user(self):
+        return self.generic_destination.request.space.user
+
+    @property
+    def url(self):
+        try:
+            if not self.token:
+                return None
+
+            headers = {
+                'Authorization': f'Bearer {self.token.token}'
+            }
+            url = f"https://graph.microsoft.com/v1.0/sites/{self.site_id}/drive/items/{self.folder_id}"
+
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                return data.get('webUrl')  # The URL of the folder
+            else:
+                return None
+        except Exception as e:
+            return None
+
+    @property
+    def name(self):
+        try:
+            headers = {
+                'Authorization': f'Bearer {self.token.token}'
+            }
+            url = f"https://graph.microsoft.com/v1.0/sites/{self.site_id}/drive/items/{self.folder_id}"
+
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                return data.get('name')  # The name of the folder
+        except Exception as e:
+            return None
+
+    @property
+    def alive(self):
+        try:
+            headers = {
+                'Authorization': f'Bearer {self.token.token}'
+            }
+            url = f"https://graph.microsoft.com/v1.0/sites/{self.site_id}/drive/items/{self.folder_id}"
+
+            response = requests.get(url, headers=headers)
+            print(self.site_id)
+            print(response.json())
             if response.status_code == 200:
                 return True
             else:
