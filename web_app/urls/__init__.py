@@ -2,12 +2,13 @@ from django.urls import path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     profile, LoginView, LoginCancelledView, SpaceDetailFormViewSender, \
     TermsOfServiceView, privacy_policy, cookie_policy, DeleteSpaceView, SettingsView, PublicLandingView, \
-    BetaAccessRequestFormView,  sender_notifications_settings,\
+    BetaAccessRequestFormView, sender_notifications_settings, \
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
-    sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation,bulk_notify_deadline
+    sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
+    bulk_notify_deadline,duplicate
 
 urlpatterns = [
     # Generic views
@@ -28,6 +29,7 @@ urlpatterns = [
     path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
     path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
     path('spaces/delete/<uuid:space_uuid>/', DeleteSpaceView.as_view(), name='space_delete'),
+    path('spaces/duplicate/<uuid:space_uuid>/', duplicate, name='space_duplicate'),
     path('stripe/create-checkout-session/', create_checkout_session, name='create_checkout_session'),
     path('stripe/create-billing-session/', create_billing_session, name='create_billing_session'),
     # Sender views

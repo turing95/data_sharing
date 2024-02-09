@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from django.db import models
 from utils.strings import fill_template
 from web_app.models import BaseModel, ActiveModel
@@ -26,6 +28,16 @@ class UploadRequest(BaseModel, ActiveModel):
     class Meta:
         ordering = ['-created_at']
 
+    def duplicate(self, space):
+        new_request = deepcopy(self)
+        new_request.pk = None
+        new_request.space = space
+        new_request.save()
+        for file_type in self.file_types.all():
+            new_request.file_types.add(file_type,through_defaults={'upload_request': new_request})
+        for destination in self.destinations.all():
+            destination.duplicate(new_request)
+        return new_request
     @property
     def google_drive_destination(self):
         from web_app.models import GenericDestination, GoogleDrive

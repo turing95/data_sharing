@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from django.db import models
 from web_app.models import BaseModel, DeleteModel
 from django.conf import settings
@@ -39,7 +41,20 @@ class Space(BaseModel, DeleteModel):
     def deadline_expired(self):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
 
+    def duplicate(self):
+        print(self.requests.all())
 
+        new_space = deepcopy(self)
+        new_space.pk = None
+        new_space.title = f'{self.title} (copy)'
+        new_space.save()
+        for sender in self.senders.all():
+            sender.duplicate(new_space)
+
+        for request in self.requests.all():
+            print(request)
+            request.duplicate(new_space)
+        return new_space
     @property
     def public_upload_events(self):
         return self.events.filter(sender__isnull=True)

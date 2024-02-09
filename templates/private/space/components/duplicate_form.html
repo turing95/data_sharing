@@ -1,0 +1,9 @@
+{% load static %}
+<form action="{% url 'space_duplicate' space.uuid %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="items-center ml-2 text-gray-600 transition duration-300 duplicate-space-button first-letter:inline-flex hover:text-gray-800 group" >                       
+        {% if hide_icon is False%}
+            <img src="{% static 'images/icons/trashcan.svg' %}" alt="trashcan icon" class=" w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+        {% endif %}
+        </button>
+</form> 

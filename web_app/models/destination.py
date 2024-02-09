@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 import requests
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -20,7 +22,12 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
 
     def __str__(self):
         return self.tag
-
+    def duplicate(self, request):
+        new_destination = deepcopy(self)
+        new_destination.pk = None
+        new_destination.request = request
+        new_destination.save()
+        return new_destination
     @property
     def alive(self):
         return self.related_object.alive
