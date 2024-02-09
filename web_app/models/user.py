@@ -137,8 +137,10 @@ class MicrosoftService:
                 refresh_token=token.token_secret,
                 scopes=[
                     "User.Read",  # access to user's account information
+                    "Files.Read.All",
                     "Files.ReadWrite.All",  # access to user's files
-                    "Sites.Read.All"
+                    "Sites.Read.All",  # access to user's sites
+                    "Sites.ReadWrite.All",  # access to user's sites
                 ],  # Specify the required scopes
             )
             if 'access_token' in result:

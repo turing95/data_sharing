@@ -250,7 +250,9 @@ SOCIALACCOUNT_PROVIDERS = {
         # modify scopes requested during login
         'SCOPE': [
             "User.Read",  # access to user's account information
+            "Files.Read.All",
             "Files.ReadWrite.All",  # access to user's files
+            "Sites.Read.All",  # access to user's sites
             "Sites.ReadWrite.All",  # access to user's sites
             "offline_access"  # provide a refresh_token when the user logs in
         ],
