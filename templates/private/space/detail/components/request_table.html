@@ -1,0 +1,33 @@
+{% load custom_tags %}
+{% load static %}
+
+<div class="relative overflow-x-auto custom-scrollbar">
+    <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="px-3 py-3 w-[30px] max-w-[30px] sticky left-0 z-10 bg-gray-100">
+                <!-- Empty -->
+            </th>
+            <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
+                Request Title
+            </th>
+            <th scope="col" class="px-3 py-3 min-w-[200px]">
+                Current destination
+            </th>
+            <th scope="col" class="px-3 py-3 min-w-[200px]">
+                Uploaded files
+            </th>
+            
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for req in space.requests.all reversed %}
+            {% include 'private/space/detail/components/request_row.html' with req=req %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>

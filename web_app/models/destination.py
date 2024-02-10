@@ -120,10 +120,9 @@ class GoogleDrive(BaseModel):
     def url(self):
         try:
             file = self.service.files().get(supportsAllDrives=True, fileId=self.folder_id,
-                                            fields='name').execute()
+                                            fields='name,webViewLink').execute()
             return file.get('webViewLink')
         except Exception as e:
-            print(e)
             return None
 
     def upload_file(self, file, file_name):

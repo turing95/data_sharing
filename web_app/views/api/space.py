@@ -59,12 +59,14 @@ def request_modal(request, request_uuid):
 
     events = upload_request.events.all()
     sender = None
-    if request.GET.get('sender_uuid'):
+    public = False
+    if request.GET.get('public'):
+        events = events.filter(sender__isnull=True)
+        public = True
+    elif request.GET.get('sender_uuid'):
         sender_uuid = request.GET.get('sender_uuid')
         sender = Sender.objects.get(pk=sender_uuid)
         events = events.filter(sender__uuid=sender_uuid)
-    else:
-        events = events.filter(sender__isnull=True)
 
     return render(request, 'private/space/detail/components/request_modal.html',
-                  {'req': upload_request, 'sender': sender, 'upload_events': events})
+                  {'req': upload_request, 'sender': sender, 'upload_events': events,'public': public})

@@ -30,7 +30,7 @@
                 <th scope="col" class="px-3 py-1.5 min-w-[150px]">
                     <div class="flex flex-col justify-start">
 
-                            <span class="flex text-xs font-normal normal-case {% if req.is_active is False %}text-yellow-400{% endif %}">         
+                            <span class="flex text-xs font-normal normal-case {% if req.is_active is False %}text-yellow-400{% endif %}">
                                 Request {{ forloop.counter }}
                                 {% if req.is_active is False %}
                                     (suspended)
@@ -101,14 +101,14 @@
 
                     <td class="px-3 py-2">
                         <div class="flex"
-                             hx-get="{% url 'request_modal'  req.uuid %}"
+                             hx-get="{% url 'request_modal'  req.uuid %}?public=1"
                              hx-trigger="click"
                              hx-target="#htmx-modal"
                              hx-swap="innerHTML"
-                             hx-indicator="#loading-indicator-{{ req.uuid }}-public">                 
+                             hx-indicator="#loading-indicator-{{ req.uuid }}-public">
                                 <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline"
                                       title="number of uploaded files">
-                                    {% get_count_uploaded_files req %} files
+                                    {% get_count_uploaded_files req public=True %} files
                                 </span>
                             <div class="flex items-center mb-3">
                                 <!-- Loading Indicator -->

@@ -28,12 +28,12 @@ def get_message_color(value):
 
 
 @register.simple_tag
-def get_count_uploaded_files(upload_request: UploadRequest, sender: Sender = None):
+def get_count_uploaded_files(upload_request: UploadRequest, sender: Sender = None, public=False):
+    files = File.objects.filter(sender_event__request=upload_request)
     if sender:
-        files = File.objects.filter(sender_event__request=upload_request, sender_event__sender=sender)
-    else:
-        files = File.objects.filter(sender_event__request=upload_request, sender_event__sender=None)
-
+        files = files.filter(sender_event__sender=sender)
+    elif public:
+        files = files.filter(sender_event__sender=None)
     return files.count()
 
 
@@ -56,9 +56,9 @@ def render_sender_activate_toggle(sender, name, value, **kwargs):
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_space_public_link_toggle(space, name, value):
     return ToggleWidget(label_on='Enable public link', label_off='Enable public link').get_context(name, value,
-                                                                                                      {
-                                                                                                          'hx-post': reverse(
-                                                                                                              'toggle_space_public',
-                                                                                                              kwargs={
-                                                                                                                  'space_uuid': space.pk}),
-                                                                                                          'hx-swap': 'morph:outerHTML'})
+                                                                                                   {
+                                                                                                       'hx-post': reverse(
+                                                                                                           'toggle_space_public',
+                                                                                                           kwargs={
+                                                                                                               'space_uuid': space.pk}),
+                                                                                                       'hx-swap': 'morph:outerHTML'})
