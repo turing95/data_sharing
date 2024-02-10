@@ -14,7 +14,7 @@ You can access a Space Summary page by clicking the "Summary" for one of the spa
     - Deadline settings and options.
     - Ability to activate or deactivate the public link.
 
-### Status Summary Table
+### Sender Summary Table
   - Each row represents an invitee, displaying key information about their interaction with the Space.
   - From left to right:
     - **Email Interaction:** Click on an invitee's email to view last sent notification and resend if needed.

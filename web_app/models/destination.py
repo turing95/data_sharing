@@ -1,5 +1,4 @@
 from copy import deepcopy
-
 import requests
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -22,12 +21,14 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
 
     def __str__(self):
         return self.tag
+
     def duplicate(self, request):
         new_destination = deepcopy(self)
         new_destination.pk = None
         new_destination.request = request
         new_destination.save()
         return new_destination
+
     @property
     def alive(self):
         return self.related_object.alive
@@ -48,13 +49,13 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
         return self.related_object.upload_file(file, file_name)
 
     @classmethod
-    def create_from_folder_id(cls, request_instance, destination_type, folder_id, user,sharepoint_site=None):
+    def create_from_folder_id(cls, request_instance, destination_type, folder_id, user, sharepoint_site=None):
         if destination_type == GoogleDrive.TAG:
             return GoogleDrive.create_from_folder_id(request_instance, folder_id, user)
         elif destination_type == OneDrive.TAG:
             return OneDrive.create_from_folder_id(request_instance, folder_id, user)
         elif destination_type == SharePoint.TAG:
-            return SharePoint.create_from_folder_id(request_instance, folder_id, user,sharepoint_site)
+            return SharePoint.create_from_folder_id(request_instance, folder_id, user, sharepoint_site)
         else:
             raise NotImplementedError
 
@@ -62,11 +63,13 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
 class GoogleDrive(BaseModel):
     TAG = 'google_drive'
     folder_id = models.CharField(max_length=255)
+    user = models.ForeignKey('web_app.User', on_delete=models.CASCADE, null=True)
+    social_account = models.ForeignKey(SocialAccount, on_delete=models.SET_NULL, null=True, blank=True)
     PROVIDER_ID = 'custom_google'
 
     @classmethod
     def create_from_folder_id(cls, upload_request, folder_id, user):
-        google_drive_destination = cls(folder_id=folder_id)
+        google_drive_destination = cls(folder_id=folder_id,user=user,social_account=user.google_account)
 
         generic_destination = GenericDestination(
             request=upload_request,
@@ -83,7 +86,7 @@ class GoogleDrive(BaseModel):
 
     @property
     def service(self):
-        token = self.user.refresh_google_token(self.generic_destination.social_account.socialtoken_set.first())
+        token = self.user.refresh_google_token(social_account=self.social_account)
         credentials = Credentials(
             token=token.token,
             refresh_token=token.token_secret,
@@ -110,11 +113,18 @@ class GoogleDrive(BaseModel):
                                             fields='name').execute()
             return file.get('name')
         except Exception as e:
+            print(e)
             return None
 
     @property
     def url(self):
-        return f'https://drive.google.com/drive/folders/{self.folder_id}'
+        try:
+            file = self.service.files().get(supportsAllDrives=True, fileId=self.folder_id,
+                                            fields='name').execute()
+            return file.get('webViewLink')
+        except Exception as e:
+            print(e)
+            return None
 
     def upload_file(self, file, file_name):
         # Build the Drive service
@@ -136,26 +146,17 @@ class GoogleDrive(BaseModel):
                                            fields='id,webViewLink').execute()
         return file.get('webViewLink', None)
 
-    @property
-    def generic_destination(self):
-        return GenericDestination.objects.get(
-            content_type=ContentType.objects.get_for_model(self.__class__),
-            object_id=self.pk,
-        )
-
-    @property
-    def user(self):
-        return self.generic_destination.request.space.user
-
 
 class OneDrive(BaseModel):
     TAG = 'one_drive'
     folder_id = models.CharField(max_length=255)
+    user = models.ForeignKey('web_app.User', on_delete=models.CASCADE, null=True)
+    social_account = models.ForeignKey(SocialAccount, on_delete=models.SET_NULL, null=True, blank=True)
     PROVIDER_ID = 'custom_microsoft'
 
     @classmethod
     def create_from_folder_id(cls, upload_request, folder_id, user):
-        one_drive_destination = cls(folder_id=folder_id)
+        one_drive_destination = cls(folder_id=folder_id,user=user,social_account=user.microsoft_account)
 
         generic_destination = GenericDestination(
             request=upload_request,
@@ -172,16 +173,7 @@ class OneDrive(BaseModel):
 
     @property
     def token(self):
-        generic_destination = self.generic_destination
-        user = generic_destination.request.space.user
-        return user.refresh_microsoft_token(generic_destination.social_account.socialtoken_set.first())
-
-    @property
-    def generic_destination(self):
-        return GenericDestination.objects.get(
-            content_type=ContentType.objects.get_for_model(self.__class__),
-            object_id=self.pk,
-        )
+        return self.user.refresh_microsoft_token(social_account=self.social_account)
 
     def upload_file(self, file, file_name):
         # Ensure you have a valid access token
@@ -212,15 +204,8 @@ class OneDrive(BaseModel):
             raise Exception(f"Failed to upload file: {response.json()}")
 
     @property
-    def user(self):
-        return self.generic_destination.request.space.user
-
-    @property
     def url(self):
         try:
-            if not self.token:
-                return None
-
             headers = {
                 'Authorization': f'Bearer {self.token.token}'
             }
@@ -271,11 +256,13 @@ class SharePoint(BaseModel):
     TAG = 'sharepoint'
     folder_id = models.CharField(max_length=255)
     site_id = models.CharField(max_length=255)
+    user = models.ForeignKey('web_app.User', on_delete=models.CASCADE, null=True)
+    social_account = models.ForeignKey(SocialAccount, on_delete=models.SET_NULL, null=True, blank=True)
     PROVIDER_ID = 'custom_microsoft'
 
     @classmethod
     def create_from_folder_id(cls, upload_request, folder_id, user, site_id):
-        sharepoint_destination = cls(folder_id=folder_id, site_id=site_id)
+        sharepoint_destination = cls(folder_id=folder_id, site_id=site_id,user=user,social_account=user.microsoft_account)
 
         generic_destination = GenericDestination(
             request=upload_request,
@@ -292,16 +279,7 @@ class SharePoint(BaseModel):
 
     @property
     def token(self):
-        generic_destination = self.generic_destination
-        user = generic_destination.request.space.user
-        return user.refresh_microsoft_token(generic_destination.social_account.socialtoken_set.first())
-
-    @property
-    def generic_destination(self):
-        return GenericDestination.objects.get(
-            content_type=ContentType.objects.get_for_model(self.__class__),
-            object_id=self.pk,
-        )
+        return self.user.refresh_microsoft_token(social_account=self.social_account)
 
     def upload_file(self, file, file_name):
 
@@ -329,15 +307,8 @@ class SharePoint(BaseModel):
             raise Exception(f"Failed to upload file: {response.json()}")
 
     @property
-    def user(self):
-        return self.generic_destination.request.space.user
-
-    @property
     def url(self):
         try:
-            if not self.token:
-                return None
-
             headers = {
                 'Authorization': f'Bearer {self.token.token}'
             }
@@ -376,8 +347,6 @@ class SharePoint(BaseModel):
             url = f"https://graph.microsoft.com/v1.0/sites/{self.site_id}/drive/items/{self.folder_id}"
 
             response = requests.get(url, headers=headers)
-            print(self.site_id)
-            print(response.json())
             if response.status_code == 200:
                 return True
             else:

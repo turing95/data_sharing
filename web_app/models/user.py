@@ -46,11 +46,11 @@ class User(AbstractUser):
         else:
             return None
 
-    def refresh_google_token(self, token=None):
-        return GoogleService(self.google_account).refresh_token(token)
+    def refresh_google_token(self,social_account=None, token=None):
+        return GoogleService(social_account or self.google_account).refresh_token(token)
 
-    def refresh_microsoft_token(self, token=None):
-        return MicrosoftService(self.microsoft_account).refresh_token(token)
+    def refresh_microsoft_token(self,social_account=None, token=None):
+        return MicrosoftService(social_account or self.microsoft_account).refresh_token(token)
 
     @cached_property
     def sharepoint_sites(self):
