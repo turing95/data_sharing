@@ -58,10 +58,16 @@
                         <td class="px-3 py-2">
                             <div class="flex items-center">            
                                 <span class=" min-w-[25px] max-w-[250px] line-clamp-2" title="{{event.request.title}}" >{{ event.request.title }}</span>
-                                {% if event.destination.name %}
-                                    <a title="Go to: {{ event.destination.name }}" data-popover-target="popover-{{ forloop.counter }}" href="{{ event.destination.url }}" target="_blank" class="inline-flex items-center ml-2 text-gray-600 transition duration-300 shrink-0 hover:text-gray-800 group">
-                                        <img src="{% static 'images/icons/folder-gray.svg' %}" alt="folder icon" class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
-                                    </a> 
+                                {% if event.request.destination.name %}
+                                    <a title="Go to: {{ event.request.destination.name }}" data-popover-target="popover-{{ forloop.counter }}" href="{{ event.request.destination.url }}" target="_blank" class="inline-flex items-center ml-2 text-gray-600 transition duration-300 shrink-0 hover:text-gray-800 group">
+                                        {% if event.request.destination.content_object.TAG %}
+                                            {% with 'images/drive_providers/'|add:event.request.destination.content_object.TAG|add:'-logo.svg' as logo_static %}
+                                                <img src="{% static logo_static %}" alt="Drive Provider Icon" class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+                                            {% endwith %}
+                                        {% else %}
+                                            <img src="{% static 'images/icons/folder-gray.svg' %}" alt="Drive Provider Icon" class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+                                        {% endif %}
+                                    </a>
                                 {% endif %}
                             </div>
                         </td>
