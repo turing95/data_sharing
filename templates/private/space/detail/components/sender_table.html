@@ -27,16 +27,9 @@
 
             {% for req in space.requests.all reversed %}
 
-                <th scope="col" class="px-3 py-1.5 min-w-[150px]">
+                <th scope="col" class="px-3 py-1.5 min-w-[150px] normal-case">
                     <div class="flex flex-col justify-start">
-
-                            <span class="flex text-xs font-normal normal-case {% if req.is_active is False %}text-yellow-400{% endif %}">
-                                Request {{ forloop.counter }}
-                                {% if req.is_active is False %}
-                                    (suspended)
-                                    {% include 'components/tooltip.html' with num=forloop.counter title='Request suspended' content='Request suspended, add a destination to activate it again' %}
-                                {% endif %}
-                            </span>
+                    
                         {% if req.destination.url %}
                             <a href="{{ req.destination.url }}" title="{{ req.title }}" target="_blank"
                                class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">
@@ -45,6 +38,12 @@
                         {% else %}
                             <span class=" min-w-[25px] max-w-[250px] line-clamp-2"
                                   title="{{ req.title }}">{{ req.title }} </span>
+                        {% endif %}
+                        {% if req.is_active is False %}
+                            <span class="flex text-xs font-normal {% if req.is_active is False %}text-yellow-400{% endif %}">
+                            (suspended)
+                            {% include 'components/tooltip.html' with num=forloop.counter content='Request suspended, add a destination to activate it again' %}
+                            </span>
                         {% endif %}
                     </div>
                 </th>
@@ -101,12 +100,13 @@
 
                     <td class="px-3 py-2">
                         <div class="flex"
-                             hx-get="{% url 'request_modal'  req.uuid %}?public=1"
-                             hx-trigger="click"
-                             hx-target="#htmx-modal"
-                             hx-swap="innerHTML"
-                             hx-indicator="#loading-indicator-{{ req.uuid }}-public">
+                             >
                                 <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline"
+                                      hx-get="{% url 'request_modal'  req.uuid %}?public=1"
+                                      hx-trigger="click"
+                                      hx-target="#htmx-modal"
+                                      hx-swap="innerHTML"
+                                      hx-indicator="#loading-indicator-{{ req.uuid }}-public"
                                       title="number of uploaded files">
                                     {% get_count_uploaded_files req public=True %} files
                                 </span>

@@ -1727,10 +1727,6 @@ input:checked + .toggle-bg {
   width: 100%;
 }
 
-.w-2 {
-  width: 0.5rem;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -2631,11 +2627,6 @@ input:checked + .toggle-bg {
   padding-bottom: 4px;
 }
 
-.px-16 {
-  padding-left: 4rem;
-  padding-right: 4rem;
-}
-
 .pb-14 {
   padding-bottom: 3.5rem;
 }
@@ -2824,6 +2815,10 @@ input:checked + .toggle-bg {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
 }
 
 .normal-case {
@@ -4101,6 +4096,11 @@ input[type="search"]::-webkit-search-cancel-button {
     padding: 0.75rem;
   }
 
+  .md\:px-16 {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
   .md\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -4109,11 +4109,6 @@ input[type="search"]::-webkit-search-cancel-button {
   .md\:py-6 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-  }
-
-  .md\:px-16 {
-    padding-left: 4rem;
-    padding-right: 4rem;
   }
 
   .md\:text-2xl {
