@@ -43,6 +43,7 @@ class SpaceDetailView(TemplateView):
                             sender_event = SenderEvent.objects.create(sender=sender,
                                                                       request=upload_request,
                                                                       space=upload_request.space,
+                                                                      destination=destination,
                                                                       event_type=SenderEvent.EventType.FILE_UPLOADED,
                                                                       notes=form.cleaned_data.get('notes'))
                         file_name = upload_request.get_file_name_from_formula(sender, uploaded_file.name)
