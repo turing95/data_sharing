@@ -7,13 +7,18 @@
 
     <!-- Dropdown menu -->
     <div class="z-50 hidden my-4 text-base font-normal list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600" id="space_actions_dropdown_{{space_num}}">
-        <ul class="py-2" aria-labelledby="user-menu-button-{{space_num}}">
+        <ul class="py-2 space-dropdown-menu" aria-labelledby="user-menu-button-{{space_num}}">
             <li>
                 <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                onclick="this.nextElementSibling.querySelector('.delete-space-button').click();">
+                onclick="this.closest('.space-dropdown-menu').querySelector('.duplicate-space-button').click();">
+                    Duplicate
+            </button>
+                <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                onclick="this.closest('.space-dropdown-menu').querySelector('.delete-space-button').click();">
                     Delete
             </button>
                 <div class=hidden> {% include 'private/space/components/delete_form.html' with space=space hide_icon=True%}</div>
+                <div class=hidden> {% include 'private/space/components/duplicate_form.html' with space=space hide_icon=True%}</div>
             </li>
         </ul>
     </div>

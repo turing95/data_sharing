@@ -93,14 +93,15 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
             if space_instance.deadline_notification_datetime is not None:
                 sender.schedule_deadline_notification()
 
-    def handle_formset(self,formset):
+    def handle_formset(self, formset):
         formset.save()
         for req in formset:
             self.create_destination_from_form(req)
             for file_type in req.cleaned_data.get('file_types'):
                 req.instance.file_types.add(file_type)
 
-    def create_destination_from_form(self,form):
+    def create_destination_from_form(self, form):
+        GenericDestination.objects.filter(request=form.instance).update(is_active=False)
         GenericDestination.create_from_folder_id(form.instance,
                                                  form.cleaned_data.get('destination_type'),
                                                  form.cleaned_data.get('destination_id'),

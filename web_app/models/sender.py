@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 
 from django.core.mail import get_connection, EmailMultiAlternatives
 from django.db import models
@@ -19,6 +20,14 @@ class Sender(BaseModel, ActiveModel):
     notified_at = models.DateTimeField(null=True, blank=True)
     invited_at = models.DateTimeField(null=True, blank=True)
     notification_task = models.ForeignKey(PeriodicTask, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def duplicate(self, space):
+        new_sender = deepcopy(self)
+        new_sender.pk = None
+        new_sender.space = space
+        new_sender.notification_task = None
+        new_sender.save()
+        return new_sender
 
     def schedule_deadline_notification(self):
         if self.notification_task is not None:
