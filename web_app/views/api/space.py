@@ -24,13 +24,11 @@ def toggle_space_public(request, space_uuid):
 def history_table(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
     upload_events = space.events.all()
-    if request.method == 'GET':
-        hide_sender = False
+    hide_sender = False
 
-    elif request.method == 'POST':
+    if request.method == 'POST':
         search_query = request.POST.get('search')
         if search_query:
-            search_query = request.POST.get('search')
             upload_events = upload_events.annotate(
                 name_similarity=TrigramSimilarity('files__name', search_query),
                 email_similarity=TrigramSimilarity('sender__email', search_query),
