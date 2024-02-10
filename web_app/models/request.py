@@ -55,6 +55,11 @@ class UploadRequest(BaseModel, ActiveModel):
         return destination
 
     @property
+    def active_destination(self):
+        destination = self.destinations.filter(is_active=True).order_by('-created_at').first()
+        return destination
+
+    @property
     def extensions(self):
         extensions = [file_type.extension for file_type in self.file_types.filter(group=False)]
         for file_type in self.file_types.filter(group=True):

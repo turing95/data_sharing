@@ -22,17 +22,24 @@
              hx-target="#htmx-modal"
              hx-swap="innerHTML">
             {{ req.title }}
+            {% if req.is_active is False %}
+
+            {% endif %}
         </div>
+        <span class="flex text-xs font-normal text-yellow-400">
+                            (suspended)
+                            {% include 'components/tooltip.html' with target_prefix='request' num=forloop.counter content='Request suspended, add a destination to activate it again' %}
+        </span>
     </th>
     <td class="px-3 py-2">
         <div class="inline-flex items-center">
-            {% if req.destination.url %}
-                <a href="{{ req.destination.url }}" target="_blank"
+            {% if req.active_destination %}
+                <a href="{{ req.active_destination.url }}" target="_blank"
                    class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
-                    {{ req.destination.name }}
+                    {{ req.active_destination.name }}
                 </a>
             {% else %}
-                {{ req.destination.name }}
+                No active destination
             {% endif %}
 
         </div>
