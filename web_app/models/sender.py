@@ -5,6 +5,7 @@ from django.core.mail import get_connection, EmailMultiAlternatives
 from django.db import models
 from django.template.loader import render_to_string
 from django.templatetags.static import static
+from django.utils.translation import activate, get_language
 
 from data_sharing import settings
 from utils.emails import html_to_text
@@ -57,85 +58,97 @@ class Sender(BaseModel, ActiveModel):
         })
 
     def notify_deadline(self):
-        if self.is_active and self.space.is_deleted is False:
-            context = {
-                'pre_header_text': f'Remember to complete the upload for space: {self.space.title}',
-                'sender': self,
-                'receiver_email': self.space.user.sender_notifications_settings.reference_email,
-                'receiver_name': self.space.user.sender_notifications_settings.name,
-                'contact_email': settings.CONTACT_EMAIL,
-                'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
-                'homepage_link': settings.BASE_URL,
-                'logo_link': settings.BASE_URL + static('images/logo.png'),
-                'space_link': self.full_space_link
+        current_language = get_language()  # Store the current language
+        try:
+            if self.is_active and self.space.is_deleted is False:
+                activate(self.space.user.sender_notifications_settings.language)
+                context = {
+                    'pre_header_text': f'Remember to complete the upload for space: {self.space.title}',
+                    'sender': self,
+                    'receiver_email': self.space.user.sender_notifications_settings.reference_email,
+                    'receiver_name': self.space.user.sender_notifications_settings.name,
+                    'contact_email': settings.CONTACT_EMAIL,
+                    'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
+                    'homepage_link': settings.BASE_URL,
+                    'logo_link': settings.BASE_URL + static('images/logo.png'),
+                    'space_link': self.full_space_link
 
-            }
-            print(context)
-            email_html = render_to_string('emails/deadline_notification.html', context)
-            from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
-            with get_connection(
-                    host=settings.RESEND_SMTP_HOST,
-                    port=settings.RESEND_SMTP_PORT,
-                    username=settings.RESEND_SMTP_USERNAME,
-                    password=settings.RESEND_API_KEY,
-                    use_tls=True,
-            ) as connection:
-                msg = EmailMultiAlternatives(
-                    subject=f'Files upload reminder for space: {self.space.title}',
-                    body=html_to_text(email_html),
-                    from_email=from_email,
-                    to=[self.email],
-                    reply_to=[from_email],
-                    connection=connection,
-                    headers={'Return-Path': from_email}
-                )
-                msg.attach_alternative(email_html, 'text/html')
+                }
+                email_html = render_to_string('emails/deadline_notification.html', context)
+                from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
+                with get_connection(
+                        host=settings.RESEND_SMTP_HOST,
+                        port=settings.RESEND_SMTP_PORT,
+                        username=settings.RESEND_SMTP_USERNAME,
+                        password=settings.RESEND_API_KEY,
+                        use_tls=True,
+                ) as connection:
+                    msg = EmailMultiAlternatives(
+                        subject=f'Files upload reminder for space: {self.space.title}',
+                        body=html_to_text(email_html),
+                        from_email=from_email,
+                        to=[self.email],
+                        reply_to=[from_email],
+                        connection=connection,
+                        headers={'Return-Path': from_email}
+                    )
+                    msg.attach_alternative(email_html, 'text/html')
 
-                msg.send()
-            self.notified_at = arrow.utcnow().datetime
-            self.save()
-            return True
-        return False
+                    msg.send()
+                self.notified_at = arrow.utcnow().datetime
+                self.save()
+                return True
+            return False
+        finally:
+            activate(current_language)  # Restore the original language
 
     def notify_invitation(self):
-        context = {
-            'pre_header_text': f'{self.space.user.email} invites you to upload files to the space: {self.space.title}',
-            'sender': self,
-            'receiver_email': self.space.user.sender_notifications_settings.reference_email,
-            'receiver_name': self.space.user.sender_notifications_settings.name,
-            'contact_email': settings.CONTACT_EMAIL,
-            'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
-            'homepage_link': settings.BASE_URL,
-            'logo_link': settings.BASE_URL + static('images/logo.png'),
-            'space_link': self.full_space_link
+        current_language = get_language()  # Store the current language
+        try:
+            if self.is_active and self.space.is_deleted is False:
+                activate(self.space.user.sender_notifications_settings.language)
+                context = {
+                    'pre_header_text': f'{self.space.user.email} invites you to upload files to the space: {self.space.title}',
+                    'sender': self,
+                    'receiver_email': self.space.user.sender_notifications_settings.reference_email,
+                    'receiver_name': self.space.user.sender_notifications_settings.name,
+                    'contact_email': settings.CONTACT_EMAIL,
+                    'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
+                    'homepage_link': settings.BASE_URL,
+                    'logo_link': settings.BASE_URL + static('images/logo.png'),
+                    'space_link': self.full_space_link
 
-        }
-        calendar_url, ics_content = self.space.get_deadline_url_ics(self)
+                }
+                calendar_url, ics_content = self.space.get_deadline_url_ics(self)
 
-        context['calendar_url'] = calendar_url
+                context['calendar_url'] = calendar_url
 
-        email_html = render_to_string('emails/sender_invite.html', context)
-        from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
-        with get_connection(
-                host=settings.RESEND_SMTP_HOST,
-                port=settings.RESEND_SMTP_PORT,
-                username=settings.RESEND_SMTP_USERNAME,
-                password=settings.RESEND_API_KEY,
-                use_tls=True,
-        ) as connection:
-            msg = EmailMultiAlternatives(
-                subject=f'Invitation to upload space: {self.space.title}',
-                body=html_to_text(email_html),
-                from_email=from_email,
-                to=[self.email],
-                reply_to=[from_email],
-                connection=connection,
-                headers={'Return-Path': from_email}
-            )
-            msg.attach_alternative(email_html, 'text/html')
-            if ics_content is not None:
-                msg.attach('event.ics', ics_content, 'text/calendar')
+                email_html = render_to_string('emails/sender_invite.html', context)
+                from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
+                with get_connection(
+                        host=settings.RESEND_SMTP_HOST,
+                        port=settings.RESEND_SMTP_PORT,
+                        username=settings.RESEND_SMTP_USERNAME,
+                        password=settings.RESEND_API_KEY,
+                        use_tls=True,
+                ) as connection:
+                    msg = EmailMultiAlternatives(
+                        subject=f'Invitation to upload space: {self.space.title}',
+                        body=html_to_text(email_html),
+                        from_email=from_email,
+                        to=[self.email],
+                        reply_to=[from_email],
+                        connection=connection,
+                        headers={'Return-Path': from_email}
+                    )
+                    msg.attach_alternative(email_html, 'text/html')
+                    if ics_content is not None:
+                        msg.attach('event.ics', ics_content, 'text/calendar')
 
-            msg.send()
-        self.invited_at = arrow.utcnow().datetime
-        self.save()
+                    msg.send()
+                self.invited_at = arrow.utcnow().datetime
+                self.save()
+                return True
+            return False
+        finally:
+            activate(current_language)  # Restore the original language

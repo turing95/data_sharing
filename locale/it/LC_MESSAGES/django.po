@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-11 19:35+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/emails/components/deadline_section.html:7
+#, python-format
+msgid ""
+"You have time until %(sender.space.deadline)s "
+"%(sender.space.deadline|date:\"T\")s"
+msgstr ""
+
+#: templates/emails/components/deadline_section.html:9
+msgid "Add the deadline to your calendar"
+msgstr ""
+
+#: templates/emails/components/footer.html:18
+msgid "Contact us"
+msgstr "Contattaci"
+
+#: templates/emails/components/main_section.html:14
+msgid "Go to Space for more details"
+msgstr "Accedi allo Spazio per maggiori dettagli"
+
+#: templates/emails/deadline_notification.html:10
+#, python-format
+msgid ""
+"Remember to complete the upload at:<br> <a href=\"%(space_link)s\" "
+"style=\"text-decoration:underline;\"> %(sender.space.title)s </a>"
+msgstr ""
+
+#: templates/emails/deadline_notification.html:24
+#: templates/emails/sender_invite.html:24
+#, python-format
+msgid "Reference email for this invitation: %(receiver_email)s"
+msgstr ""
+
+#: templates/emails/sender_invite.html:10
+#, python-format
+msgid ""
+"%(receiver_name)s invites you to upload files at:<br> <a "
+"href=\"%(space_link)s\" style=\"text-decoration:underline;\"> "
+"%(sender.space.title)s </a>"
+msgstr ""
+
+#: templates/public/snippets/login.html:9
+msgid "Or use a third-party"
+msgstr ""

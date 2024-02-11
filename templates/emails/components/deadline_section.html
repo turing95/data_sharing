@@ -1,18 +1,16 @@
+{% load i18n %}
 {% load l10n %}
 {% if sender.space.deadline %}
-<tr>
-        <td style="padding:10px 0;">
-            You have time until {{ sender.space.deadline }} {{ sender.space.deadline|date:"T" }} {% if calendar_url %}(<a style="text-align:center;" href="{{ calendar_url }}">Add the deadline to your calendar</a>){% endif %} 
-                {% if sender.space.upload_after_deadline is False %}
+    <tr>
 
-                <br><span style="color:#FF0000;  font-style:italic;">
-            Uploads will not be accepted after the deadline
-        </span>   
-                                {% endif %}
+        <td style="padding:10px 0;">
+            {% blocktranslate trimmed %}You have time until {{ sender.space.deadline }}
+                {{ sender.space.deadline|date:"T" }}{% endblocktranslate %} {% if calendar_url %}(
+            <a style="text-align:center;" href="{{ calendar_url }}">{% translate 'Add the deadline to your calendar' %}</a>){% endif %}
 
         </td>
 
-</tr>
-    
+    </tr>
+
 
 {% endif %}

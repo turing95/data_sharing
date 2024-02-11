@@ -9,6 +9,7 @@ class SenderNotificationsSettings(BaseModel):
                                 related_name='sender_notifications_settings')
     name = models.CharField(max_length=100, null=True)
     reference_email = models.EmailField(null=True)
+    language = models.CharField(max_length=10, default=settings.LANGUAGE_CODE)
 
     def save(self, *args, **kwargs):
         if not self.name:
