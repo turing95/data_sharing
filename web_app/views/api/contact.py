@@ -35,7 +35,7 @@ def search_contacts(request):
 @login_required
 def create_contact_modal(request):
     if request.method == 'GET':
-        form = ContactForm()
+        form = ContactForm(request=request)
         return render(request,
                       'private/space/create/components/contacts/create_modal.html', {'form': form})
 
@@ -46,7 +46,7 @@ def create_contact_modal(request):
 @login_required
 def create_contact(request):
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = ContactForm(request.POST, request=request)
         if form.is_valid():
             contact = form.save(commit=False)
             contact.user = request.user
@@ -54,7 +54,7 @@ def create_contact(request):
             messages.success(request, 'Contact created successfully')
             return render(request,
                           'private/space/create/components/contacts/create_form.html',
-                          {'form': form,'show_msg':True,'from_htmx':True},status=201)
+                          {'form': form, 'show_msg': True, 'from_htmx': True}, status=201)
         return render(request,
                       'private/space/create/components/contacts/create_form.html',
                       {'form': form})

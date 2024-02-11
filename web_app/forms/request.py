@@ -28,7 +28,7 @@ class RequestForm(ModelForm):
     instance: UploadRequest
     FILE_NAME_INSTRUCTIONS = "Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:"
     FILE_NAME_TAGS = "<br>" + "<br>".join([
-        f"- <strong>{{{tag[1]}}}</strong> - \"{'spiegazione va qui'}\""
+        f"- <strong>{{{tag[1]}}}</strong>"
         for tag in UploadRequest.FileNameTag.choices
     ])
 

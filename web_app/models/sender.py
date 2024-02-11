@@ -17,11 +17,19 @@ from django.urls import reverse
 
 class Sender(BaseModel, ActiveModel):
     email = models.CharField(max_length=50)
-    contact = models.ForeignKey('Contact', on_delete=models.CASCADE, related_name='senders',null=True)
+    contact = models.ForeignKey('Contact', on_delete=models.CASCADE, related_name='senders', null=True)
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='senders')
     notified_at = models.DateTimeField(null=True, blank=True)
     invited_at = models.DateTimeField(null=True, blank=True)
     notification_task = models.ForeignKey(PeriodicTask, on_delete=models.SET_NULL, null=True, blank=True)
+
+    @property
+    def company(self):
+        return self.contact.company or ''
+
+    @property
+    def full_name(self):
+        return f'{self.contact.first_name} {self.contact.last_name}'
 
     def duplicate(self, space):
         new_sender = deepcopy(self)
