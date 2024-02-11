@@ -8,7 +8,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
-    bulk_notify_deadline,duplicate
+    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact
 
 urlpatterns = [
     # Generic views
@@ -57,4 +57,7 @@ urlpatterns = [
     path('senders/<uuid:sender_uuid>/toggle-active/', toggle_sender_active, name='toggle_sender_active'),
     path('senders/<uuid:sender_uuid>/notify_deadline/', notify_deadline, name='notify_deadline'),
     path('senders/<uuid:sender_uuid>/notify_invitation/', notify_invitation, name='notify_invitation'),
+    path('contacts/search/', search_contacts, name='search_contacts'),
+    path('contacts/create/modal/', create_contact_modal, name='create_contact_modal'),
+    path('contacts/create/', create_contact, name='create_contact')
 ]

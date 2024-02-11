@@ -3,7 +3,7 @@ let addedEmails = new Set();
 export function initEmailInput(){
     initializeEmailTags();
 
-        const emailInput = document.getElementById('id_email_input');
+       /* const emailInput = document.getElementById('id_email_input');
 
         emailInput.addEventListener('blur', () => {
             const email = emailInput.value.trim();
@@ -23,7 +23,7 @@ export function initEmailInput(){
         emailInput.addEventListener('paste', (e) => {
             e.preventDefault();
             emailInput.value = processInputText((e.clipboardData || window.clipboardData).getData('text'));
-        });
+        });*/
 
         document.getElementById("space-form").addEventListener('submit', () => {
             document.getElementById('id_senders_emails').value = Array.from(addedEmails).join(',');
@@ -60,7 +60,7 @@ function addEmailTag(email) {
     }
 }
 
-function processInputText(inputText) {
+export function processInputText(inputText) {
     const parts = inputText.split(/[\s,]+/);
     return parts.reduce((remainingText, part) => {
         if (isValidEmail(part.trim())) {

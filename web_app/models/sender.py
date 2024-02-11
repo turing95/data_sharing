@@ -16,6 +16,7 @@ from django.urls import reverse
 
 class Sender(BaseModel, ActiveModel):
     email = models.CharField(max_length=50)
+    contact = models.ForeignKey('Contact', on_delete=models.CASCADE, related_name='senders',null=True)
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='senders')
     notified_at = models.DateTimeField(null=True, blank=True)
     invited_at = models.DateTimeField(null=True, blank=True)

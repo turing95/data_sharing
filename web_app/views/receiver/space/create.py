@@ -7,7 +7,7 @@ from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, GoogleDrive, UploadRequest, FileType, Space, OneDrive, GenericDestination
+from web_app.models import Sender, GoogleDrive, UploadRequest, FileType, Space, OneDrive, GenericDestination, Contact
 from django.db import transaction
 from web_app.tasks.notifications import notify_invitation
 from web_app.mixins import SubscriptionMixin
@@ -84,10 +84,15 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
                 return self.form_valid(form)
         return self.form_invalid(form)
 
-    @staticmethod
-    def handle_senders(emails, space_instance: Space):
+    def update_or_create_sender(self, email, space_instance):
+        contact = Contact.objects.get(email=email, user=self.request.user)
+        sender, created = Sender.objects.update_or_create(email=contact.email, contact=contact,
+                                                          space=space_instance, defaults={'is_active': True})
+        return sender, created
+
+    def handle_senders(self, emails, space_instance: Space):
         for email in emails:
-            sender = Sender.objects.create(email=email, space=space_instance)
+            sender, created = self.update_or_create_sender(email, space_instance)
             if space_instance.notify_invitation is True:
                 notify_invitation.delay(sender.pk)
             if space_instance.deadline_notification_datetime is not None:

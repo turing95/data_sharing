@@ -1,0 +1,10 @@
+{% if contacts %}
+    <ul class="border-b border-gray-200 folders-list border-x">
+        {% for contact in contacts %}
+            <li class="cursor-pointer hover:bg-gray-200" onclick="processInputText('{{ contact.email }}')">
+                <span class="ml-2">{{ contact.first_name }} {{ contact.last_name }} ({{ contact.email }})</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+{% endif %}

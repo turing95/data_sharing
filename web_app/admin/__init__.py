@@ -1,12 +1,13 @@
 from django.contrib import admin
 from web_app.models import Sender, Space, UploadRequest, GoogleDrive, FileType, GenericDestination, \
-    UploadRequestFileType, SenderEvent, OneDrive, User, BetaAccessRequest, Organization, UserOrganization, SenderNotificationsSettings
+    UploadRequestFileType, SenderEvent, OneDrive, User, BetaAccessRequest, Organization, UserOrganization, \
+    SenderNotificationsSettings, Contact
 from django.contrib.auth.admin import UserAdmin
 
 admin.site.register(User, UserAdmin)
 
 
-@admin.register(Sender, Space, GoogleDrive, FileType, SenderEvent, OneDrive, GenericDestination, BetaAccessRequest,SenderNotificationsSettings)
+@admin.register(Sender, Space, GoogleDrive, FileType, SenderEvent, OneDrive, GenericDestination, BetaAccessRequest,SenderNotificationsSettings,Contact)
 class BaseAdmin(admin.ModelAdmin):
     pass
 

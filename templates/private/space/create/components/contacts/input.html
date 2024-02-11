@@ -1,0 +1,10 @@
+<input class='w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+       type="search"
+       placeholder="Type to search contacts"
+       id="id_search-contacts"
+       name="search-contacts"
+       hx-post="{% url 'search_contacts' %}"
+       hx-params="search-contacts"
+       hx-trigger="input changed delay:500ms, search"
+       hx-target="#search-contacts-results-container"
+       autocomplete="off">

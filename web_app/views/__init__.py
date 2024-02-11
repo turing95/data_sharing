@@ -24,6 +24,7 @@ from web_app.views.api.sender import (toggle_sender_active,notify_deadline,notif
                                       sender_row,all_senders_modal,bulk_notify_invitation,bulk_notify_deadline)
 from web_app.views.api.space import toggle_space_public,history_table,request_modal
 from web_app.views.api.request import delete_request
+from web_app.views.api.contact import search_contacts, create_contact_modal, create_contact
 from web_app.views.api.destination import search_folder, select_destination_type,get_destination_logo
 from web_app.views.api.file_type import search_file_types
 from web_app.views.api.profile import profile

@@ -1,0 +1,17 @@
+<form hx-post="{% url 'create_contact' %}" id="create-contact-form">
+    {% csrf_token %}
+    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+
+    {% for field in form %}
+                <label for="{{ field.id_for_label }}"
+               class="font-medium text-gray-900 dark:text-white">{{ field.label }}
+        </label>
+        {{ field }}
+        {% include 'components/forms/error_widget.html' with errors=field.errors %}
+
+    {% endfor %}
+    {% include 'components/buttons/submit_with_loader.html' with button_text="Save contact" %}
+</form>
+{% if show_msg %}
+    {% include 'components/messages.html' %}
+{% endif %}
