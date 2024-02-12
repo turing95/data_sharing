@@ -1,5 +1,5 @@
 {% load static %}
-<div id="accordion-open" data-accordion="open" hx-target="this">
+<div id="accordion-open" data-accordion="open" hx-target="this" class="lg:w-2/3">
     {{ requests.management_form }}
 
     <h3 class="mb-2 text-xl font-medium text-gray-900 dark:text-white">Requests</h3>
@@ -10,18 +10,15 @@
         <!-- Display non-field errors -->
         {% include 'components/forms/error_widget.html' with errors=req.non_field_errors %}
 
-        <div class="request-form" id="form-{{ forloop.counter0 }}">
+        <div class="request-form border-gray-300 border mb-2" id="form-{{ forloop.counter0 }}">
             {% if action == 'edit' %}
                 {{ req.uuid }}
             {% endif %}
-            <!-- SEPARATOR -->
-            <div class="flex-grow mt-4 mb-2 border-t border-gray-300"></div>
-
 
             <div id="accordion-{{ forloop.counter0 }}-open-heading">
 
 
-                <div class="flex items-center justify-between w-full font-medium bg-gray-200 border border-gray-200 border-b-3 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 ">
+                <div class="flex items-center justify-between w-full font-medium focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 ">
                     {% if action == 'edit' %}
                         {% if requests.total_form_count > 1 %}
                             <button type="button"
@@ -78,9 +75,9 @@
                 </div>
             </div>
 
-            <div id="accordion-{{ forloop.counter0 }}-open-body" class="border border-b-2 border-gray-200"
+            <div id="accordion-{{ forloop.counter0 }}-open-body"
                  aria-labelledby="accordion-{{ forloop.counter0 }}-open-heading">
-                <div class="p-5 pt-2 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                <div class="p-5 pt-2 dark:border-gray-700 dark:bg-gray-900">
                     {% if req.instance.is_active is False %}
                         <div class="my-3 w-2/3 request-suspended">
                             <span>Request is suspended, select a destination to activate it again</span>
