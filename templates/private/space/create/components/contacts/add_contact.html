@@ -1,7 +1,2 @@
-<a class=" duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
-     hx-get="{% url 'create_contact_modal' %}"
-     hx-trigger="click"
-     hx-target="#htmx-modal"
-     hx-swap="innerHTML">
-Add new contact
-</a>
+{% url 'create_contact_modal' as get_url %}
+{% include 'components/buttons/add.html' with button_text='Add contact' button_id='add-request-btn' hx_get=get_url hx_trigger="click" hx_target="#htmx-modal" hx_swap="innerHTML" %}

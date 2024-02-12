@@ -113,15 +113,8 @@
 
 
     {% include 'private/space/create/components/request_form.html' with action=action %}
-    <a id="add-request-btn"
-       class="inline-flex items-center font-medium text-black cursor-pointer hover:text-blue-500 dark:text-blue-500">
-        <svg class="w-6 h-6 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M5 12h14m-7 7V5"/>
-        </svg>
+    {% include 'components/buttons/add.html' with button_text='Add request' button_id='add-request-btn' %}
 
-        Add request
-    </a>
 
 
     {% if action == 'edit' %}

@@ -1,0 +1,23 @@
+<button type="button"
+        {% if button_id %}
+        id="{{ button_id }}"
+        {% endif %} 
+        {% if hx_get %}
+            hx-get="{{ hx_get }}"
+        {% endif %}
+        {% if hx_trigger %}
+            hx-trigger="{{ hx_trigger }}"
+        {% endif %}
+        {% if hx_target %}
+            hx-target="{{ hx_target }}"
+        {% endif %}
+        {% if hx_swap %}
+            hx-swap="{{ hx_swap }}"
+        {% endif %}
+        class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-marian-blue-400  hover:bg-marian-blue-500  focus:ring-4 focus:outline-none focus:bg-marian-blue-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 {{ extra_classes }}">
+    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 12h14m-7 7V5"/>
+    </svg>
+    {{ button_text }}
+</button>
