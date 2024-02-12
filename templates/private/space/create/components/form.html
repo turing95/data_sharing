@@ -6,7 +6,7 @@
     {% csrf_token %}
 
     <!-- TITLE -->
-    <div class="mt-2 mb-6">
+    <div class="mt-2 mb-6 md:w-1/2">
         <div class="flex items-center space-x-2">
             <label for="{{ form.title.id_for_label }}"
                    class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
@@ -18,7 +18,7 @@
 
 
     <!-- INVITATIONS -->
-    <div class="mb-6">
+    <div class="mb-6 md:w-1/2">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Invitees</h3>
             {% include 'components/tooltip.html' with title="Invitees" content=form.senders_emails.help_text target=form.senders_emails.name %}
@@ -52,7 +52,7 @@
 
 
     <!-- INSTRUCTIONS -->
-    <div class="mb-6">
+    <div class="mb-6 md:w-1/3">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Instructions</h3>
             {% include 'components/tooltip.html' with title=form.instructions.label content=form.instructions.help_text target=form.instructions.name %}
@@ -64,7 +64,7 @@
     </div>
 
     <!-- DEADLINE -->
-    <div class="mb-6" id="deadline-section">
+    <div class="mb-6 md:w-1/3" id="deadline-section">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Deadline</h3>
             {% include 'components/tooltip.html' with title=form.deadline.label content=form.deadline.help_text target=form.deadline.name %}
