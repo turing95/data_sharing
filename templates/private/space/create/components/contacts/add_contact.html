@@ -1,2 +1,2 @@
 {% url 'create_contact_modal' as get_url %}
-{% include 'components/buttons/add.html' with button_text='Add contact' button_id='add-request-btn' hx_get=get_url hx_trigger="click" hx_target="#htmx-modal" hx_swap="innerHTML" %}
+{% include 'components/buttons/add.html' with button_text='Add contact' hx_get=get_url hx_trigger="click" hx_target="#htmx-modal" hx_swap="innerHTML" %}
