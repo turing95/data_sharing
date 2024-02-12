@@ -55,7 +55,7 @@ def render_sender_activate_toggle(sender, name, value, **kwargs):
 
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_space_public_link_toggle(space, name, value):
-    return ToggleWidget(label_on='Enable public link', label_off='Enable public link').get_context(name, value,
+    return ToggleWidget(label_on='Public link', label_off='Public link').get_context(name, value,
                                                                                                    {
                                                                                                        'hx-post': reverse(
                                                                                                            'toggle_space_public',

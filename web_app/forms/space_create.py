@@ -6,10 +6,8 @@ from django import forms
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.utils import timezone as dj_timezone
-from django.utils.timezone import is_aware, make_aware
 from django.utils import translation
 import arrow
-from decimal import Decimal
 
 
 class CommaSeparatedEmailField(forms.CharField):
@@ -50,11 +48,15 @@ class SpaceForm(ModelForm):
                                   widget=forms.TextInput(
                                       attrs={'placeholder': 'Type or paste email addresses of invitees',
                                              'class': css_classes.text_input + "email-input"}))
-    is_public = forms.BooleanField(
-        widget=ToggleWidget(label_on='Enable public link',
-                            label_off='Enable public link'),
+    notify_invitation = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
         required=False,
-        label='Generate public link',
+        label='Invitation notification',
+        help_text="""All invitees will receive an email with the link to the space upon creation. You can re-send the invitation at any time.""")
+    is_public = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
+        required=False,
+        label='Public link',
         help_text="""The public link will not be tied to a specific email address and can be used to collect inputs from the general public, when there is not the need to distinguish one upload from another.
                             The link can be enabled and disabled at any time, and can coexist with the invitees links.
                             """)
@@ -110,25 +112,19 @@ class SpaceForm(ModelForm):
     )
 
     upload_after_deadline = forms.BooleanField(
-        widget=ToggleWidget(label_on='Allow uploads after deadline',
-                            label_off='Allow uploads after deadline'),
+        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
         required=False,
-        label='Allow uploads after deadline',
+        label='Uploads after deadline',
         help_text="""Your invitees will be able to upload files after the deadline if this is enabled.
         You can change this setting at any time.""")
 
     notify_deadline = forms.BooleanField(
-        widget=ToggleWidget(label_on='Notify',
-                            label_off='Notify'),
+        widget=ToggleWidget(label_on='Notification',
+                            label_off='Notification'),
         required=False,
         label='Notify deadline',
         help_text="""Set a number of days and hours before the deadline to send a notification to your invitees.""")
-    notify_invitation = forms.BooleanField(
-        widget=ToggleWidget(label_on='Notify Invitation',
-                            label_off='Notify Invitation'),
-        required=False,
-        label='Notify invitation',
-        help_text="""All invitees will receive an email with the link to the space upon creation. You can re-send the invitation at any time.""")
+
 
     class Meta:
         model = Space

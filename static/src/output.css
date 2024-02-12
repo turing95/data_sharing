@@ -3202,6 +3202,31 @@ input[type="search"]::-webkit-search-cancel-button {
   top: 50%;
 }
 
+.after\:left-\[4px\]::after {
+  content: var(--tw-content);
+  left: 4px;
+}
+
+.after\:left-\[px\]::after {
+  content: var(--tw-content);
+  left: px;
+}
+
+.after\:left-\[5px\]::after {
+  content: var(--tw-content);
+  left: 5px;
+}
+
+.after\:left-\[3px\]::after {
+  content: var(--tw-content);
+  left: 3px;
+}
+
+.after\:left-\[2px\]::after {
+  content: var(--tw-content);
+  left: 2px;
+}
+
 .after\:h-4::after {
   content: var(--tw-content);
   height: 1rem;

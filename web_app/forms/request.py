@@ -132,8 +132,8 @@ class RequestForm(ModelForm):
                             """)
 
     rename = forms.BooleanField(
-        widget=ToggleWidget(label_on='Enable custom file names',
-                            label_off='Enable custom file names',
+        widget=ToggleWidget(label_on='Custom file names',
+                            label_off='Custom file names',
                             attrs={
                                 'onclick': 'toggleRename(this)'
                             }),
@@ -144,8 +144,7 @@ class RequestForm(ModelForm):
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """)
     multiple_files = forms.BooleanField(
-        widget=ToggleWidget(label_on='Allow multiple files upload',
-                            label_off='Allow multiple files upload'),
+        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
         required=False,
         label='Multiple Files',
         help_text="""

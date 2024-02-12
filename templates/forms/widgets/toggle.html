@@ -3,7 +3,7 @@
 
         {% include 'django/forms/widgets/input.html' %}
 
-        <div class="z-[2] w-9 h-5 ml-1 {% if widget.toggle_color_off_soft %} bg-{{ widget.toggle_color_off }}-200 {% else %} bg-{{ widget.toggle_color_off }}-400 {%endif%} peer-focus:outline-none peer-focus:ring peer-focus:ring-blue-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:left-[6px] after:-translate-y-1/2 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{ widget.toggle_color_on }}-400"></div>
+        <div class="z-[2] w-9 h-5 {% if widget.toggle_color_off_soft %} bg-{{ widget.toggle_color_off }}-200 {% else %} bg-{{ widget.toggle_color_off }}-400 {%endif%} peer-focus:outline-none peer-focus:ring peer-focus:ring-blue-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:left-[2px] after:-translate-y-1/2 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{ widget.toggle_color_on }}-400"></div>
         
         {% if widget.label_wrap and widget.label_wrap_mono %}
             <!-- mono wrap on -->
