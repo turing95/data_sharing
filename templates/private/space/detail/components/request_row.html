@@ -53,7 +53,7 @@
              hx-target="#htmx-modal"
              hx-swap="innerHTML"
              hx-indicator="#loading-indicator-{{ req.uuid }}">                 
-                    <span class="flex-shrink-0 ml-1 text-center cursor-pointer hover:underline"
+                    <span class="flex-shrink-0 text-center cursor-pointer hover:underline"
                           title="number of uploaded files">
                         {% get_count_uploaded_files req %} files
                     </span>
