@@ -54,7 +54,7 @@ def create_contact(request):
             messages.success(request, 'Contact created successfully')
             return render(request,
                           'private/space/create/components/contacts/create_form.html',
-                          {'form': form, 'show_msg': True, 'from_htmx': True}, status=201)
+                          {'form': form, 'show_msg': True, 'from_htmx': True})
         return render(request,
                       'private/space/create/components/contacts/create_form.html',
                       {'form': form})

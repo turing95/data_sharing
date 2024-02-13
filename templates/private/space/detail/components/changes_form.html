@@ -1,0 +1,37 @@
+<form hx-post="{% url 'request_changes' req.uuid sender.uuid %}"
+      hx-swap="outerHTML"
+      class="files-push">
+    {% csrf_token %}
+    <div class="grid grid-cols-2">
+        <div>
+            {% for field in changes_form.files %}
+                <div>
+                    {{ field.tag }}
+                    <label for="{{ field.id_for_label }}"
+                           class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">
+                        <a href="{{ field.choice_label.url }}"
+                           class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">{{ field.choice_label.name }}</a>
+                    </label>
+                </div>
+            {% endfor %}
+            <div class="w-1/2">
+                {% include 'components/forms/error_widget.html' with errors=changes_form.files.errors %}
+
+            </div>
+        </div>
+        <div>
+            {{ changes_form.notes }}
+
+        </div>
+
+    </div>
+    <div class="col-span-2 flex justify-end items-center mt-4">
+
+        {% include 'components/buttons/submit_with_loader.html' with button_text='Request changes' %}
+    </div>
+</form>
+
+{% if show_msg %}
+    {% include 'components/messages.html' %}
+{% endif %}
+ 

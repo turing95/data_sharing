@@ -39,7 +39,7 @@
                     </div>
                     
             
-                    <div class="" hx-get="{% url 'history_table' sender.space.uuid %}?sender_uuid={{sender.uuid}}"
+                    <div hx-get="{% url 'history_table' sender.space.uuid %}?sender_uuid={{sender.uuid}}"
                         hx-trigger="intersect once"
                         hx-target="#history-table-sender-modal"
                         hx-indicator="#loading-indicator-sender-modal">

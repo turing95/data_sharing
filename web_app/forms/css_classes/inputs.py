@@ -5,7 +5,7 @@ language_input = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:
 
 text_input_label = 'block text-red-700 text-sm font-bold mb-2'
 
-checkbox_input = 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out border border-gray-300'
+checkbox_input = 'h-4 w-4 text-blue-600 transition duration-150 ease-in-out border border-gray-300'
 
 dropdown = 'dropdownClass bg-gray-50 border border-gray-300 text-gray-900 text-sm max-h-[42px] my-1'
 

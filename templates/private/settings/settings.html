@@ -51,9 +51,9 @@
     <h2 class="mb-4 text-2xl font-bold border-b">Close your account</h2>
 
         
-    <form action="{% url 'account_delete' %}" method="post">
+    <form action="{% url 'account_delete' %}" method="post" class="flex">
         {% csrf_token %}
-        {% include 'components/buttons/submit.html' with extra_classes="ml-auto mr-10 account-delete-alert" button_text="Delete account" %}
+        {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto mr-10 account-delete-alert" button_text="Delete account" %}
     </form>
 </div>
 

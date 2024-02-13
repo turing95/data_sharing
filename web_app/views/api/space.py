@@ -7,6 +7,8 @@ from utils.render_block import render_block_to_string
 from django.contrib.postgres.search import SearchVector, SearchQuery, TrigramSimilarity
 
 from django.views.decorators.http import require_POST, require_GET
+
+from web_app.forms import FileSelectForm
 from web_app.models import Space, Sender, UploadRequest, SenderEvent
 
 
@@ -24,7 +26,8 @@ def toggle_space_public(request, space_uuid):
 def history_table(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
     upload_events = space.events.all()
-    hide_sender = False
+    show_sender = True
+    show_request = True
 
     if request.method == 'POST':
         search_query = request.POST.get('search')
@@ -44,10 +47,19 @@ def history_table(request, space_uuid):
     if request.GET.get('sender_uuid'):
         sender_uuid = request.GET.get('sender_uuid')
         upload_events = upload_events.filter(sender__uuid=sender_uuid)
-        hide_sender = True
+        show_sender = False
+
+    if request.GET.get('request_uuid'):
+        request_uuid = request.GET.get('request_uuid')
+        upload_events = upload_events.filter(request__uuid=request_uuid)
+        show_request = False
+    if request.GET.get('public'):
+        upload_events = upload_events.filter(sender__isnull=True)
+        show_sender = False
 
     return render(request, 'private/space/detail/components/history_table.html',
-                  {'space': space, 'upload_events': upload_events, 'hide_request': False, 'hide_sender': hide_sender})
+                  {'space': space, 'upload_events': upload_events, 'show_request': show_request,
+                   'show_sender': show_sender})
 
 
 @login_required
@@ -57,6 +69,7 @@ def request_modal(request, request_uuid):
 
     events = upload_request.events.all()
     sender = None
+    changes_form = None
     public = False
     if request.GET.get('public'):
         events = events.filter(sender__isnull=True)
@@ -65,6 +78,11 @@ def request_modal(request, request_uuid):
         sender_uuid = request.GET.get('sender_uuid')
         sender = Sender.objects.get(pk=sender_uuid)
         events = events.filter(sender__uuid=sender_uuid)
+        changes_form = FileSelectForm(upload_request=upload_request, sender=sender)
 
     return render(request, 'private/space/detail/components/request_modal.html',
-                  {'req': upload_request, 'sender': sender, 'upload_events': events,'public': public})
+                  {'req': upload_request,
+                   'sender': sender,
+                   'upload_events': events,
+                   'public': public,
+                   'changes_form': changes_form})

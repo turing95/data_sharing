@@ -26,7 +26,7 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('htmx:afterRequest', function (evt) {
-    if (evt.detail.successful && evt.detail.xhr.status === 201) {
+    if (evt.detail.successful && evt.detail.xhr.status === 200) {
         if (evt.target.id === 'create-contact-form')
             document.getElementById('htmx-modal').children[0].querySelector('[data-modal-hide]').click();
     }

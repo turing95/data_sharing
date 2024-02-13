@@ -8,7 +8,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
-    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact
+    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes
 
 urlpatterns = [
     # Generic views
@@ -49,7 +49,8 @@ urlpatterns = [
     path('spaces/<uuid:space_uuid>/all-senders-modal/', all_senders_modal, name='all_senders_modal'),
     path('spaces/<uuid:space_uuid>/invite-all-senders/', bulk_notify_invitation, name='bulk_notify_invitation'),
     path('spaces/<uuid:space_uuid>/notify-all-senders/', bulk_notify_deadline, name='bulk_notify_deadline'),
-    path('request/<uuid:request_uuid>/modal/', request_modal, name='request_modal'),
+    path('requests/<uuid:request_uuid>/modal/', request_modal, name='request_modal'),
+    path('requests/<uuid:request_uuid>/senders/<uuid:sender_uuid>/files/changes/', request_changes, name='request_changes'),
     path('requests/<uuid:request_uuid>/delete/', delete_request, name='request_delete'),
     path('senders/<uuid:sender_uuid>/modal/', sender_modal, name='sender_modal'),
     path('senders/<uuid:sender_uuid>/sender-info/', sender_info, name='sender_info'),
@@ -59,5 +60,5 @@ urlpatterns = [
     path('senders/<uuid:sender_uuid>/notify_invitation/', notify_invitation, name='notify_invitation'),
     path('contacts/search/', search_contacts, name='search_contacts'),
     path('contacts/create/modal/', create_contact_modal, name='create_contact_modal'),
-    path('contacts/create/', create_contact, name='create_contact')
+    path('contacts/create/', create_contact, name='create_contact'),
 ]

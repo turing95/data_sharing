@@ -16,5 +16,6 @@ export function initHtmxModal(modalElement) {
     }
     // show the modal upon initialization
     initSubmitButtons(modalElement);
+    document.body.dispatchEvent(new CustomEvent('htmxModal:init', { detail: modalElement }))
     modal.show();
 }

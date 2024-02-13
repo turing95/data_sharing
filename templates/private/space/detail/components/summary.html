@@ -96,7 +96,7 @@
     {% endblock %}
 
     <div class="mt-6 mb-6" hx-get="{% url 'history_table' space.uuid %}"
-         hx-trigger="intersect once"
+         hx-trigger="intersect once, filesUpdated from:document"
          hx-target="#history-table"
          hx-indicator="#loading-indicator-history-table">
 
