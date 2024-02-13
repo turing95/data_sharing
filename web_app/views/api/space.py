@@ -22,7 +22,7 @@ def toggle_space_public(request, space_uuid):
         render_block_to_string('private/space/detail/components/summary.html', 'details', {'space': space}, request))
 
 
-@login_required
+
 def history_table(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
     upload_events = space.events.all()

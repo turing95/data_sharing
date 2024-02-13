@@ -36,7 +36,7 @@ class FileForm(Form):
             'rows': 2,
             'class': css_classes.text_area + "text-sm",
         }),
-        label='Note',
+        label='Notes',
         help_text="""Add a note to clarify what you are uploading, if needed. Notes do not substitute the upload of the requested files.
                             """)
 

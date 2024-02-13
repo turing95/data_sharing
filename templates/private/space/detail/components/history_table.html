@@ -98,21 +98,27 @@
                         <ul class="flex flex-col">
                             {% for file in event.files.all %}
                                 <li class="inline-flex overflow-wrap-anywhere m-1">
-                                    <a href="{{ file.url }}" target="_blank"
-                                       class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
-                                        <span class="min-w-0">{{ file.name }}</span>
-                                    </a>
-                                    <button type="button"
-                                            hx-post="{% url 'accept_single' file.uuid %}"
-                                            hx-swap="none"
-                                            class="files-push max-h-5 text-green-500 border border-green-500 hover:bg-green-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-green-300 font-medium text-sm text-center inline-flex items-center me-2 dark:border-blue-green dark:text-blue-green dark:hover:text-white dark:focus:ring-blue-green dark:hover:bg-green-500">
-                                        <svg class="w-4 h-4" aria-hidden="true"
-                                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                  stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
-                                        </svg>
-                                        <span class="sr-only">Accept File</span>
-                                    </button>
+                                    {% if request.user.is_authenticated %}
+                                        <a href="{{ file.url }}" target="_blank"
+                                           class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
+                                            <span class="min-w-0">{{ file.name }}</span>
+                                        </a>
+
+                                        <button type="button"
+                                                hx-post="{% url 'accept_single' file.uuid %}"
+                                                hx-swap="none"
+                                                class="files-push max-h-5 text-green-500 border border-green-500 hover:bg-green-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-green-300 font-medium text-sm text-center inline-flex items-center me-2 dark:border-blue-green dark:text-blue-green dark:hover:text-white dark:focus:ring-blue-green dark:hover:bg-green-500">
+                                            <svg class="w-4 h-4" aria-hidden="true"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                      stroke-linejoin="round"
+                                                      stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+                                            </svg>
+                                            <span class="sr-only">Accept File</span>
+                                        </button>
+                                        {% else %}
+                                        <span class="min-w-0">{{ file.original_name }}</span>
+                                    {% endif %}
                                     {% comment %}
                                     <button type="button"
                                             class="max-h-5 text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm text-center inline-flex items-center me-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500">
@@ -126,12 +132,12 @@
                                     {% endcomment %}
                                     {% if file.status == file.FileStatus.PENDING %}
 
-                                        <span class="ml-2 text-sm text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] inline-block items-center justify-center">{{file.status}}</span>
+                                        <span class="ml-2 text-sm text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] inline-block items-center justify-center">{{ file.status }}</span>
                                     {% elif  file.status == file.FileStatus.ACCEPTED %}
-                                        <span class="ml-2 text-sm text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] inline-block items-center justify-center">{{file.status}}</span>
+                                        <span class="ml-2 text-sm text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] inline-block items-center justify-center">{{ file.status }}</span>
 
                                     {% elif file.status == file.FileStatus.REJECTED %}
-                                        <span class="ml-2 text-sm text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] inline-block items-center justify-center">{{file.status}}</span>
+                                        <span class="ml-2 text-sm text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] inline-block items-center justify-center">{{ file.status }}</span>
 
                                     {% endif %}
                                 </li>
