@@ -240,5 +240,4 @@ class MicrosoftService:
     def decoded_token(self):
         token = self.refresh_token()
         rs = jwt.decode(token.token, options={"verify_signature": False})
-        print(rs)
         return rs

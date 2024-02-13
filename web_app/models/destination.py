@@ -113,7 +113,6 @@ class GoogleDrive(BaseModel):
                                             fields='name').execute()
             return file.get('name')
         except Exception as e:
-            print(e)
             return None
 
     @property

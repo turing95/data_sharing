@@ -42,7 +42,6 @@ class Space(BaseModel, DeleteModel):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
 
     def duplicate(self):
-        print(self.requests.all())
 
         new_space = deepcopy(self)
         new_space.pk = None
@@ -52,7 +51,6 @@ class Space(BaseModel, DeleteModel):
             sender.duplicate(new_space)
 
         for request in self.requests.all():
-            print(request)
             request.duplicate(new_space)
         return new_space
     @property

@@ -25,7 +25,6 @@ function handleSenderUpdated(evt) {
 }
 function handleFilesChanges(evt) {
     let srcElement = evt.detail.requestConfig.elt;
-    console.log(evt)
     if (srcElement.classList && srcElement.classList.contains('files-push')) {
         document.dispatchEvent(new Event('filesUpdated'));
     }
