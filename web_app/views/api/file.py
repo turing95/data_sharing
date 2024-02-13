@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -20,10 +22,14 @@ def request_changes(request, request_uuid):
         if changes_form.is_valid():
             files = changes_form.cleaned_data['files']
             notes = changes_form.cleaned_data['notes']
-
+            files_by_senders = defaultdict(list)
             for file in files:
+                files_by_senders[file.sender_event.sender].append(file)
                 file.status = File.FileStatus.REJECTED
                 file.save()
+            # Notify each sender about the changes request
+            for tmp_sender, sender_files in files_by_senders.items():
+                tmp_sender.notify_changes_request(upload_request, sender_files, notes)
             messages.success(request, 'Changes requested successfully')
         return render(request, 'private/space/detail/components/changes_form.html',
                       {'req': upload_request, 'sender': sender, 'upload_events': events, 'changes_form': changes_form,
