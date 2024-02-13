@@ -1,12 +1,12 @@
-<div class="my-2 grid lg:grid-cols-[0.5fr_minmax(150px,0.2fr)]">
-    <div class="bg-gray-50 relative w-full ">
+<div class="inline-flex w-full my-2">
+    <div class="relative w-full bg-gray-50">
         {% include 'private/space/create/components/contacts/input.html' %}
-        <div id="search-contacts-results-container" class="overflow-y-auto absolute z-10 bg-gray-50 w-full">
-            {% include 'private/space/create/components/contacts/results.html' %}
+        <div id="search-contacts-results-container" class="absolute z-10 w-full overflow-y-auto bg-gray-50 search-results">
+            {% include 'private/space/create/components/contacts/results.html' %} 
 
         </div>
     </div>
-    <div class="sm:m-0 m-2 inline-flex items-center justify-center">
+    <div class="items-center justify-center flex-shrink-0 my-auto ml-2">
             {% include 'private/space/create/components/contacts/add_contact.html' %}
 
     </div>

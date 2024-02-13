@@ -29,7 +29,7 @@ export function hideShowSearch(event) {
     let clickedElement = event.target;
 
     // Check if the clicked element doesn't meet the criteria
-    if (!clickedElement.id.startsWith('id_search-folders')) {
+    if (!clickedElement.id.startsWith('id_search-')) {
 
         // Find all elements with the class 'search-results'
         let searchResults = document.querySelectorAll('.search-results');
@@ -40,8 +40,15 @@ export function hideShowSearch(event) {
         });
     }else{
         //show only search results next to element
-        let searchResults = clickedElement.closest('.request-form').querySelector('.search-results');
-        searchResults.classList.remove('hidden');
+        let form = clickedElement.closest('.request-form')
+        if(form) {
+            let searchResults = form.querySelector('search-results');
+            searchResults.classList.remove('hidden');
+        }else{
+            let searchResults = clickedElement.closest('#space-form').querySelector('.search-results');
+            searchResults.classList.remove('hidden');
+        }
+        
 
     }
 }
