@@ -3,18 +3,19 @@
 
 <div id="destination-search-container" class="w-full sm:w-2/3 h-[36px] destination-search">
     {% if not missing_provider  %}
+    <div>
         <div class="inline-flex w-full bg-gray-50 border-gray-300 border h-[36px] pr-1.5">
             <div id="destination-search-bar" class="flex-grow">
 
-                    <input class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input" type="search"
-                        placeholder="Type to search in {{ provider_name }}"
-                        id="id_search-folders-{{ request_index }}-"
-                        name="search-folders-{{ request_index }}-"
-                        hx-post="{% url 'search_folders' %}?request_index={{ request_index }}"
-                        hx-trigger="input changed delay:500ms, search"
-                        hx-target="next .search-results"
-                        hx-indicator="#loading-indicator-destination-search-{{ request_index}}-"
-                        autocomplete="off">
+                <input class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input" type="search"
+                    placeholder="Type to search in {{ provider_name }}"
+                    id="id_search-folders-{{ request_index }}-"
+                    name="search-folders-{{ request_index }}-"
+                    hx-post="{% url 'search_folders' %}?request_index={{ request_index }}"
+                    hx-trigger="input changed delay:500ms, search"
+                    hx-target="next .search-results"
+                    hx-indicator="#loading-indicator-destination-search-{{ request_index}}-"
+                    autocomplete="off">
             </div>
             <!-- Loading Indicator -->
             <div id="loading-indicator-destination-search-{{ request_index}}-" class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
@@ -25,6 +26,9 @@
             </div>
 
         </div>
+        <!-- Search Results Section -->
+        <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-50"></div>
+    </div>
 
     {% else %}
         <div class="flex flex-col items-center justify-center pl-3 h-9">

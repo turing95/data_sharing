@@ -1,13 +1,13 @@
 {% if folders %}
     <ul class="border-b border-gray-200 folders-list border-x">
         {% for folder in folders %}
-            <li class="ml-2 cursor-pointer hover:bg-gray-200"
+            <li class="cursor-pointer hover:bg-gray-200"
                 hx-trigger="click"
                 hx-get="{% url 'get_destination_logo' %}?tag={{ destination_type }}"
                 hx-target="previous .destination-logo"
                 hx-swap="outerHTML"
                 hx-on:click="selectFolder(this,'{{ folder.name }}','{{ folder.id }}','{{ destination_type }}','{{ sharepoint_site_id }}')">
-                <span>{{ folder.name }}</span>
+                <span class="ml-2">{{ folder.name }}</span>
             </li>
         {% endfor %}
     </ul>
