@@ -7,7 +7,7 @@
                 <th scope="col" class="px-3 py-3 min-w-[200px]">
                     Upload Timestamp
                 </th>
-                {% if show_request %}
+                {% if show_sender %}
                     <th scope="col" class="px-3 py-3 min-w-[200px]">
                         Uploader email
                     </th>
@@ -82,7 +82,7 @@
 
 
                     <td class="px-3 py-2">
-                        <div class="flex">            
+                        <div class="flex">
                             <span class=" min-w-[25px] max-w-[250px] text-sm line-clamp-5"
                                   title="{{ event.notes|default_if_none:'' }}">
                                 {% if event.notes %}
