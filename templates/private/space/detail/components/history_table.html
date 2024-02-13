@@ -103,7 +103,9 @@
                                         <span class="min-w-0">{{ file.name }}</span>
                                     </a>
                                     <button type="button"
-                                            class="max-h-5 text-green-500 border border-green-500 hover:bg-green-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-green-300 font-medium text-sm text-center inline-flex items-center me-2 dark:border-blue-green dark:text-blue-green dark:hover:text-white dark:focus:ring-blue-green dark:hover:bg-green-500">
+                                            hx-post="{% url 'accept_single' file.uuid %}"
+                                            hx-swap="none"
+                                            class="files-push max-h-5 text-green-500 border border-green-500 hover:bg-green-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-green-300 font-medium text-sm text-center inline-flex items-center me-2 dark:border-blue-green dark:text-blue-green dark:hover:text-white dark:focus:ring-blue-green dark:hover:bg-green-500">
                                         <svg class="w-4 h-4" aria-hidden="true"
                                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"

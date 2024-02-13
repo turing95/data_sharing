@@ -1,3 +1,4 @@
+{% load custom_tags %}
 <div id="small-modal-{{ req.uuid }}-{% if sender %}{{ sender.uuid }}{% else %}public{% endif %}" tabindex="-1"
      class="fixed top-0 left-0 right-0 z-[52] w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full h-auto max-w-4xl border border-gray-300 md:max-h-full">
@@ -40,7 +41,7 @@
                 <div class="w-1/4">
                     {% url 'accept_all' req.uuid as url_accept %}
                 {% if sender %}
-                    {% with url_accept|add:"?sender="|add:sender.uuid as hx_post %}
+                    {% with url_accept|addstr:"?sender="|addstr:sender.uuid as hx_post %}
                         {% include 'components/buttons/submit_with_loader.html' with button_text='Accept all files' hx_post=hx_post hx_swap="none" extra_classes="files-push" %}
                     {% endwith %}
                 {% elif public %}

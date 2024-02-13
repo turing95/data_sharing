@@ -16,6 +16,12 @@ def split(value, key):
     return value.split(key)
 
 
+@register.filter
+def addstr(arg1, arg2):
+    """concatenate arg1 & arg2"""
+    return str(arg1) + str(arg2)
+
+
 @register.filter(name='get_message_color')
 def get_message_color(value):
     colors = {
@@ -56,9 +62,9 @@ def render_sender_activate_toggle(sender, name, value, **kwargs):
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_space_public_link_toggle(space, name, value):
     return ToggleWidget(label_on='Public link', label_off='Public link').get_context(name, value,
-                                                                                                   {
-                                                                                                       'hx-post': reverse(
-                                                                                                           'toggle_space_public',
-                                                                                                           kwargs={
-                                                                                                               'space_uuid': space.pk}),
-                                                                                                       'hx-swap': 'morph:outerHTML'})
+                                                                                     {
+                                                                                         'hx-post': reverse(
+                                                                                             'toggle_space_public',
+                                                                                             kwargs={
+                                                                                                 'space_uuid': space.pk}),
+                                                                                         'hx-swap': 'morph:outerHTML'})
