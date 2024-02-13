@@ -1,4 +1,4 @@
-<form hx-post="{% url 'request_changes' req.uuid sender.uuid %}"
+<form hx-post="{% url 'request_changes' req.uuid %}?{% if sender %}sender={{ sender.uuid }}{% elif public %}public=1{% endif %}"
       hx-swap="outerHTML"
       class="files-push">
     {% csrf_token %}

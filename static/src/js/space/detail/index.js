@@ -1,7 +1,7 @@
 document.addEventListener('htmx:afterRequest', function(evt) {
     if (evt.detail.successful && evt.detail.xhr.status === 200) {
         handleSenderUpdated(evt);
-        handleRequestChanges(evt);
+        handleFilesChanges(evt);
     }
 });
 
@@ -23,8 +23,9 @@ function handleSenderUpdated(evt) {
 
 
 }
-function handleRequestChanges(evt) {
-    let srcElement = evt.detail.requestConfig.triggeringEvent.srcElement;
+function handleFilesChanges(evt) {
+    let srcElement = evt.detail.requestConfig.elt;
+    console.log(evt)
     if (srcElement.classList && srcElement.classList.contains('files-push')) {
         document.dispatchEvent(new Event('filesUpdated'));
     }

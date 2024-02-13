@@ -28,7 +28,7 @@ from web_app.views.api.contact import search_contacts, create_contact_modal, cre
 from web_app.views.api.destination import search_folder, select_destination_type,get_destination_logo
 from web_app.views.api.file_type import search_file_types
 from web_app.views.api.profile import profile
-from web_app.views.api.file import request_changes
+from web_app.views.api.file import request_changes,accept_all
 from web_app.views.api.settings import sender_notifications_settings
 from web_app.views.receiver.payments.checkout import create_checkout_session
 from web_app.views.receiver.payments.billing import create_billing_session

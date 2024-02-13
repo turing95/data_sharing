@@ -38,7 +38,18 @@
                     Files
                 </h3>
                 <div class="w-1/4">
-                    {% include 'components/buttons/submit_with_loader.html' with button_text='Accept all' %}
+                    {% url 'accept_all' req.uuid as url_accept %}
+                {% if sender %}
+                    {% with url_accept|add:"?sender="|add:sender.uuid as hx_post %}
+                        {% include 'components/buttons/submit_with_loader.html' with button_text='Accept all files' hx_post=hx_post hx_swap="none" extra_classes="files-push" %}
+                    {% endwith %}
+                {% elif public %}
+                    {% with url_accept|add:"?public=1" as hx_post %}
+                        {% include 'components/buttons/submit_with_loader.html' with button_text='Accept all files' hx_post=hx_post hx_swap="none" extra_classes="files-push"%}
+                    {% endwith %}
+                {% else %}
+                    {% include 'components/buttons/submit_with_loader.html' with button_text='Accept all files' hx_post=url_accept hx_swap="none" extra_classes="files-push"%}
+                {% endif %}
                 </div>
                     {% if changes_form %}
                         <div id="accordion-flush" data-accordion="collapse"
@@ -74,9 +85,13 @@
                  hx-swap="innerHTML"
                  hx-target="#modal-history-table"
                  hx-indicator="#loading-indicator-modal-history-table">
-            <h3 class="mb-2 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
+            <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
             Uploads History
         </h3>
+
+                <div id="modal-history-table">
+
+                </div>
                 <div id="loading-indicator-modal-history-table"
                      class="items-center justify-center opacity-0 htmx-indicator">
                     <div role="status" class="ml-2 spinner">
@@ -84,10 +99,6 @@
                         <span class="sr-only">Loading...</span>
                     </div>
                 </div>
-                <div id="modal-history-table">
-
-                </div>
-
             </div>
         </div>
     </div>
