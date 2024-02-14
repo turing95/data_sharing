@@ -1,4 +1,5 @@
 {% extends 'public/_base.html' %}
+{% load i18n %}
 {% load l10n %}
 {% load static %}
 {% load custom_tags %}
@@ -182,17 +183,26 @@
 
 
                                 </div>
+                                {% if form.upload_request.file_template %}
+                                    <div class="col-span-2 mb-2 flex">
+                                        <p class="mr-1">{% translate 'Use this template as a reference for your upload:' %}</p>
+                                        <a href="{{ form.upload_request.file_template }}" target="_blank"
+                                           class="text-blue-600 underline">
+                                            {{ form.upload_request.file_template }}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if form.upload_request.file_types.count %}
 
-                                <div class="col-span-1 mb-2">
-                                    {% if form.upload_request.file_types.count %}
+                                    <div class="col-span-1 mb-2">
                                         <p class="mb-2 ">Restrictions:</p>
                                         <ul class="pl-5 list-disc">
                                             <li class="text-sm"><strong>Allowed file extensions:</strong>
                                                 {{ form.upload_request.formatted_extensions|join:", " }}
                                             </li>
                                         </ul>
-                                    {% endif %}
-                                </div>
+                                    </div>
+                                {% endif %}
 
 
                             </div>
@@ -222,11 +232,11 @@
                 {% endfor %}
             </div>
             {% if space.upload_after_deadline or not space.deadline_expired %}
-                    <div class="sticky flex justify-center bottom-4">
-                            {% include "components/buttons/submit_with_loader.html" with button_text="Confirm and Upload" loading="True" extra_classes="min-w-[200px] min-h-[42px]" %}
-                            <span class="hidden min-w-[200px] min-h-[42px]"><span> <!-- ensures the classess are added to output css -->
-                    
-                    </div>
+                <div class="sticky flex justify-center bottom-4">
+                    {% include "components/buttons/submit_with_loader.html" with button_text="Confirm and Upload" loading="True" extra_classes="min-w-[200px] min-h-[42px]" %}
+                    <span class="hidden min-w-[200px] min-h-[42px]"><span> <!-- ensures the classess are added to output css -->
+
+                </div>
             {% endif %}
 
 
