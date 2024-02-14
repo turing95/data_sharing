@@ -54,7 +54,7 @@ class User(AbstractUser):
 
     @cached_property
     def sharepoint_sites(self):
-        if self.microsoft_account is None:
+        if self.microsoft_account is None or self.microsoft_account.socialtoken_set.count() == 0:
             return None
         return MicrosoftService(self.microsoft_account).get_sites()
 
@@ -132,38 +132,44 @@ class MicrosoftService:
         self.social_account = social_account
 
     def refresh_token(self, token=None):
-        if token is None:
-            social_account = self.social_account
-            if social_account is None:
-                return None
+        try:
+            if token is None:
+                social_account = self.social_account
+                if social_account is None:
+                    return None
 
-            token = SocialToken.objects.get(account=social_account)
-        if arrow.get(token.expires_at) < arrow.utcnow():
-            # Create a Confidential Client Application
-            app = ConfidentialClientApplication(
-                settings.AZURE_CLIENT_ID,
-                client_credential=settings.AZURE_CLIENT_SECRET
-            )
-            result = app.acquire_token_by_refresh_token(
-                refresh_token=token.token_secret,
-                scopes=[
-                    "User.Read",  # access to user's account information
-                    "Files.Read.All",
-                    "Files.ReadWrite.All",  # access to user's files
-                    "Sites.Read.All",  # access to user's sites
-                    "Sites.ReadWrite.All",  # access to user's sites
-                ],  # Specify the required scopes
-            )
-            if 'access_token' in result:
-                # Update token details from result
-                token.token = result['access_token']
-                token.expires_at = arrow.utcnow().shift(seconds=result['expires_in']).datetime
-                token.save()  # Update the token in the database
+                token = SocialToken.objects.get(account=social_account)
+            if arrow.get(token.expires_at) < arrow.utcnow():
+                # Create a Confidential Client Application
+                app = ConfidentialClientApplication(
+                    settings.AZURE_CLIENT_ID,
+                    client_credential=settings.AZURE_CLIENT_SECRET
+                )
+                result = app.acquire_token_by_refresh_token(
+                    refresh_token=token.token_secret,
+                    scopes=[
+                        "User.Read",  # access to user's account information
+                        "Files.Read.All",
+                        "Files.ReadWrite.All",  # access to user's files
+                        "Sites.Read.All",  # access to user's sites
+                        "Sites.ReadWrite.All",  # access to user's sites
+                    ],  # Specify the required scopes
+                )
+                if 'access_token' in result:
+                    # Update token details from result
+                    token.token = result['access_token']
+                    token.expires_at = arrow.utcnow().shift(seconds=result['expires_in']).datetime
+                    token.save()  # Update the token in the database
 
-                return token
-            else:
-                return None
-        return token
+                    return token
+                else:
+                    token.delete()
+                    return None
+            return token
+        except SocialToken.DoesNotExist:
+            # Handle the case where the user does not have a Microsoft social account
+            # or the token does not exist
+            return None
 
     '''def _get_folders(self, folder_name=None,microsoft_site=None):
         THIS MIGHT BE USEFUL IN THE FUTURE, BUT ATM SEARCH FROM MSFT DOES NOT SEEM TO WORK THE WAY IT SHOULD
