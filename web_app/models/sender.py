@@ -1,6 +1,8 @@
 import json
 from copy import deepcopy
 
+from django.utils.text import format_lazy
+from django.utils.translation import gettext_lazy as _
 from django.core.mail import get_connection, EmailMultiAlternatives
 from django.db import models
 from django.template.loader import render_to_string
@@ -84,8 +86,9 @@ class Sender(BaseModel, ActiveModel):
             if self.is_active and self.space.is_deleted is False:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
-                context['pre_header_text'] = f'Remember to complete the upload for space: {self.space.title}'
-
+                pre_header_text = _('Remember to complete the upload for space:')
+                context['pre_header_text'] = format_lazy('{pre_header_text} {title}', pre_header_text=pre_header_text, title=self.space.title)
+                title_text = _('Upload reminder for space:')
                 email_html = render_to_string('emails/deadline_notification.html', context)
                 from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
                 with get_connection(
@@ -96,7 +99,7 @@ class Sender(BaseModel, ActiveModel):
                         use_tls=True,
                 ) as connection:
                     msg = EmailMultiAlternatives(
-                        subject=f'Files upload reminder for space: {self.space.title}',
+                        subject=format_lazy('{title_text} {title}', title_text=title_text, title=self.space.title),
                         body=html_to_text(email_html),
                         from_email=from_email,
                         to=[self.email],
@@ -120,7 +123,12 @@ class Sender(BaseModel, ActiveModel):
             if self.is_active and self.space.is_deleted is False:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
-                context['pre_header_text'] = f'{context["receiver_name"]} invites you to upload files to the space: {self.space.title}'
+                pre_header_text = _('invites you to upload files to the space:')
+                invitation_title_text = _('Invitation:')
+                context['pre_header_text'] = format_lazy('{receiver_name} {pre_header_text} {title}',
+                                                         receiver_name=context["receiver_name"],
+                                                         pre_header_text=pre_header_text,
+                                                         title=self.space.title)
                 calendar_url, ics_content = self.space.get_deadline_url_ics(self)
 
                 context['calendar_url'] = calendar_url
@@ -135,7 +143,11 @@ class Sender(BaseModel, ActiveModel):
                         use_tls=True,
                 ) as connection:
                     msg = EmailMultiAlternatives(
-                        subject=f'Invitation: {context["receiver_name"]} invites you to upload files to the space: {self.space.title}',
+                        subject=format_lazy('{invitation_title_text} {receiver_name} {pre_header_text} {title}',
+                                            invitation_title_text=invitation_title_text,
+                                            pre_header_text=pre_header_text,
+                                            receiver_name=context["receiver_name"],
+                                            title=self.space.title),
                         body=html_to_text(email_html),
                         from_email=from_email,
                         to=[self.email],
@@ -161,7 +173,13 @@ class Sender(BaseModel, ActiveModel):
             if self.is_active and self.space.is_deleted is False:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
-                context['pre_header_text'] = f'{context["receiver_name"]} has requested changes to  {upload_request.title}'
+                context['pre_header_text'] = f'{context["receiver_name"]} has requested changes to {upload_request.title}'
+                pre_header_text = _('has requested changes to')
+                changes_title_text = _('Changes Requested:')
+                context['pre_header_text'] = format_lazy('{receiver_name} {pre_header_text} {title}',
+                                                         receiver_name=context["receiver_name"],
+                                                         pre_header_text=pre_header_text,
+                                                         title=upload_request.title)
                 context['notes'] = notes
                 context['upload_request'] = upload_request
                 context['files'] = files
@@ -176,7 +194,11 @@ class Sender(BaseModel, ActiveModel):
                         use_tls=True,
                 ) as connection:
                     msg = EmailMultiAlternatives(
-                        subject=f'Changes Requested: {context["receiver_name"]} has requested changes to  {upload_request.title}',
+                        subject=format_lazy('{changes_title_text} {receiver_name} {pre_header_text} {title}',
+                                            changes_title_text=changes_title_text,
+                                            pre_header_text=pre_header_text,
+                                            receiver_name=context["receiver_name"],
+                                            title=self.space.title),
                         body=html_to_text(email_html),
                         from_email=from_email,
                         to=[self.email],

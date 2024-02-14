@@ -17,7 +17,11 @@ function activateLoading(button) {
 export function initSubmitButtons() {
     const submitButtons = document.querySelectorAll('button[type="submit"]');
     submitButtons.forEach((button) => {
-        button.closest('form').onsubmit = function() {
+        let form = button.closest('form')
+        if(!form) {
+            return;
+        }
+        form.onsubmit = function() {
             if (button.classList.contains('space-delete-alert')) {
                 return confirm('Are you sure you want to delete this space?');
 
