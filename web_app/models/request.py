@@ -25,6 +25,7 @@ class UploadRequest(BaseModel, ActiveModel):
     instructions = models.TextField(null=True, blank=True)
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
     file_types = models.ManyToManyField('FileType', through='UploadRequestFileType')
+    file_template = models.URLField(null=True, blank=True)
     multiple_files = models.BooleanField(default=False)
 
     class Meta:

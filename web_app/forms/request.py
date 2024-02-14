@@ -150,10 +150,20 @@ class RequestForm(ModelForm):
         help_text="""
                 By default, each request can only contain one file. You can choose to enable multiple files upload for this request.
             """)
+    file_template = forms.URLField(
+        required=False,
+        label='File Template',
+        widget=forms.URLInput(
+            attrs={'placeholder': 'Insert file template URL',
+                   'class': css_classes.text_input}),
+        help_text="""
+                You can provide a template file that will be available for download to your invitees. 
+                Leave blank if not necessary.
+            """)
 
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files']
+        fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files','file_template']
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop('request', None)

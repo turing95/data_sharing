@@ -11,7 +11,7 @@
             <label for="{{ form.title.id_for_label }}"
                 class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
             {{ form.title }}
-            {% include 'components/tooltip.html' with title=form.title.label content=form.title.help_text target=form.title.name placement="bottom" %}
+            {% include 'components/tooltip.html' with content=form.title.help_text target=form.title.name placement="bottom" %}
         </div>
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
@@ -21,7 +21,7 @@
     <div class="mb-6">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Invitees</h3>
-            {% include 'components/tooltip.html' with title="Invitees" content=form.senders_emails.help_text target=form.senders_emails.name %}
+            {% include 'components/tooltip.html' with content=form.senders_emails.help_text target=form.senders_emails.name %}
         </div>
         <div id="email-input-container" class="border-0">
             <!-- Tags will appear here, below the input field -->
@@ -38,7 +38,7 @@
                 <label for="{{ form.notify_invitation.id_for_label }}"
                        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.notify_invitation.label }}</label>
             </div>
-            {% include 'components/tooltip.html' with title="Notify Invitation" content=form.notify_invitation.help_text target=form.notify_invitation.name %}
+            {% include 'components/tooltip.html' with content=form.notify_invitation.help_text target=form.notify_invitation.name %}
         </div>
         <div class="flex items-center mb-2 space-x-2">
             <div class="flex items-center h-5">
@@ -46,7 +46,7 @@
                 <label for="{{ form.is_public.id_for_label }}"
                        class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_public.label }}</label>
             </div>
-            {% include 'components/tooltip.html' with title="Public Link" content=form.is_public.help_text target=form.is_public.name %}
+            {% include 'components/tooltip.html' with content=form.is_public.help_text target=form.is_public.name %}
         </div>
     </div>
 
@@ -55,7 +55,7 @@
     <div class="mb-6">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Instructions</h3>
-            {% include 'components/tooltip.html' with title=form.instructions.label content=form.instructions.help_text target=form.instructions.name %}
+            {% include 'components/tooltip.html' with content=form.instructions.help_text target=form.instructions.name %}
         </div>
         <label for="{{ form.instructions.id_for_label }}"
                class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
@@ -67,7 +67,7 @@
     <div class="mb-6" id="deadline-section">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Deadline</h3>
-            {% include 'components/tooltip.html' with title=form.deadline.label content=form.deadline.help_text target=form.deadline.name %}
+            {% include 'components/tooltip.html' with content=form.deadline.help_text target=form.deadline.name %}
         </div>
         <div id="deadline-input-container" class="my-1 border-0">
             <label for="{{ form.deadline.id_for_label }}"
@@ -83,7 +83,7 @@
                     <label for="{{ form.notify_deadline.id_for_label }}"
                            class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.notify_deadline.label }}</label>
                 </div>
-                {% include 'components/tooltip.html' with title="Deadline Notification" content=form.notify_deadline.help_text target=form.notify_deadline.name %}
+                {% include 'components/tooltip.html' with content=form.notify_deadline.help_text target=form.notify_deadline.name %}
                 {% include 'components/forms/error_widget.html' with errors=form.notify_deadline.errors %}
             </div>
 
@@ -103,7 +103,7 @@
                     <label for="{{ form.upload_after_deadline.id_for_label }}"
                            class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.upload_after_deadline.label }}</label>
                 </div>
-                {% include 'components/tooltip.html' with title="Allow uploads after deadline" content=form.upload_after_deadline.help_text target=form.upload_after_deadline.name %}
+                {% include 'components/tooltip.html' with content=form.upload_after_deadline.help_text target=form.upload_after_deadline.name %}
                 {% include 'components/forms/error_widget.html' with errors=form.upload_after_deadline.errors %}
             </div>
         </div>
