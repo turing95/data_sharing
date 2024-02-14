@@ -98,7 +98,7 @@
                         <ul class="flex flex-col">
                             {% for file in event.files.all %}
                                 <li class="inline-flex overflow-wrap-anywhere m-1">
-                                    {% if request.user.is_authenticated %}
+                                    {% if sender_area %}
                                         <a href="{{ file.url }}" target="_blank"
                                            class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
                                             <span class="min-w-0">{{ file.name }}</span>
