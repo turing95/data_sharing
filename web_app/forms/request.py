@@ -201,9 +201,9 @@ class RequestForm(ModelForm):
         if rename is False:
             cleaned_data['file_naming_formula'] = None
         else:
-            if file_naming_formula is file_naming_formula is None or file_naming_formula == '':
-                self.add_error('file_naming_formula', 'You must provide a file name if you want to rename the files.')
-
+            if file_naming_formula is None or file_naming_formula == '':
+                #self.add_error('file_naming_formula', 'You must provide a file name if you want to rename the files.')
+                cleaned_data['file_naming_formula'] = None
         file_type_restrict = cleaned_data.get('file_type_restrict', False)
         if file_type_restrict is False:
             cleaned_data['file_types'] = []
