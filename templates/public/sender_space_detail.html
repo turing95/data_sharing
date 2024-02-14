@@ -28,7 +28,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="w-full max-w-4xl px-10 mx-auto">
+    <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
 
         <!-- Instructions Section -->
         {% if space.instructions %}
@@ -101,7 +101,7 @@
 
                 {% for form in formset.forms reversed %}
                     {% if form.upload_request.destination.alive %}
-                        <div class="border-gray-300 border mb-2">
+                        <div class="mb-2 border border-gray-300">
                             {{ form.request_uuid }}
 
                             <div id="accordion-open-heading-{{ forloop.counter0 }}">
@@ -127,7 +127,7 @@
                             </div>
 
                             <div id="accordion-open-body-{{ forloop.counter0 }}"
-                                 class="request-accordion-body grid grid-cols-1 p-5 md:grid-cols-3"
+                                 class="grid grid-cols-1 p-5 request-accordion-body md:grid-cols-3"
                                  aria-labelledby="accordion-open-heading-{{ forloop.counter0 }}">
                                 <div class="col-span-1 p-1">
                                     {% if space.upload_after_deadline or not space.deadline_expired %}
@@ -222,8 +222,9 @@
                 {% endfor %}
             </div>
             {% if space.upload_after_deadline or not space.deadline_expired %}
-                    <div class="sticky bottom-4 flex justify-center">
-                            {% include "components/buttons/submit_with_loader.html" with button_text="Confirm and Upload" %}
+                    <div class="sticky flex justify-center bottom-4">
+                            {% include "components/buttons/submit_with_loader.html" with button_text="Confirm and Upload" loading="True" extra_classes="min-w-[200px] min-h-[42px]" %}
+                            <span class="hidden min-w-[200px] min-h-[42px]"><span> <!-- ensures the classess are added to output css -->
                     
                     </div>
             {% endif %}
