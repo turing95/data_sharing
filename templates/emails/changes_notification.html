@@ -1,0 +1,59 @@
+{% extends 'emails/_base.html' %}
+{% load i18n %}
+{% block content %}
+    <tr>
+        <td>
+            <!--primary 1-->
+            <table style="width:100%;">
+                <tr>
+                    <td style="font-weight:bold;font-size:24px;padding:20px 0;">
+                    {% with title=upload_request.title %}
+                        {% blocktranslate trimmed %}
+                            {{ receiver_name }} has requested changes to  {{ title }}, click to access
+                            the space <br>
+                        {% endblocktranslate %}
+                    {% endwith %}
+                        <a href="{{ space_link }}" style="text-decoration:underline;">
+                                {{ upload_request.space.title }}
+                        </a>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="padding:10px 0;">
+                        {% blocktranslate trimmed %}
+
+                            File to change:
+                        {% endblocktranslate %}
+                    <ul>
+                        {% for file in files%}
+                            <li>
+                                    {{ file.original_name }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    </td>
+                </tr>
+            {% if notes %}
+                <tr>
+                    <td style="padding:10px 0;">
+                        {% blocktranslate trimmed %}
+
+                            Notes from the receiver: {{ notes }}
+                        {% endblocktranslate %}
+                    </td>
+                </tr>
+            {% endif %}
+                <tr>
+                    <td style="padding:10px 0;">
+                        {% blocktranslate trimmed %}
+
+                            Reference email: {{ receiver_email }}
+                        {% endblocktranslate %}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+{% endblock %}

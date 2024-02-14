@@ -29,7 +29,12 @@ class FileSelectForm(forms.Form):
     def __init__(self, *args, **kwargs):
         sender = kwargs.pop('sender', None)
         upload_request = kwargs.pop('upload_request', None)
+        public = kwargs.pop('public', None)
         super().__init__(*args, **kwargs)
         if upload_request:
-            self.fields['files'].queryset = File.objects.filter(sender_event__request=upload_request,
-                                                                sender_event__sender=sender)
+            queryset = File.objects.filter(sender_event__request=upload_request)
+            if sender:
+                queryset = queryset.filter(sender_event__sender=sender)
+            elif public:
+                queryset = queryset.filter(sender_event__sender__isnull=True)
+            self.fields['files'].queryset = queryset

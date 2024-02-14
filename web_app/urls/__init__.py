@@ -8,7 +8,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
-    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes
+    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes,accept_all,accept_single
 
 urlpatterns = [
     # Generic views
@@ -41,6 +41,7 @@ urlpatterns = [
     path("500/", custom_server_error),
     # Ajax views
     path('file-types/search/', search_file_types, name='search_file_types'),
+    path('files/<uuid:file_uuid>/accept/', accept_single, name='accept_single'),
     path('destinations/search-folder/', search_folder, name='search_folders'),
     path('destinations/select-type/', select_destination_type, name='select_destination_type'),
     path('destinations/get-logo/', get_destination_logo, name='get_destination_logo'),
@@ -50,7 +51,8 @@ urlpatterns = [
     path('spaces/<uuid:space_uuid>/invite-all-senders/', bulk_notify_invitation, name='bulk_notify_invitation'),
     path('spaces/<uuid:space_uuid>/notify-all-senders/', bulk_notify_deadline, name='bulk_notify_deadline'),
     path('requests/<uuid:request_uuid>/modal/', request_modal, name='request_modal'),
-    path('requests/<uuid:request_uuid>/senders/<uuid:sender_uuid>/files/changes/', request_changes, name='request_changes'),
+    path('requests/<uuid:request_uuid>/files/changes/', request_changes, name='request_changes'),
+    path('requests/<uuid:request_uuid>/files/accept/', accept_all, name='accept_all'),
     path('requests/<uuid:request_uuid>/delete/', delete_request, name='request_delete'),
     path('senders/<uuid:sender_uuid>/modal/', sender_modal, name='sender_modal'),
     path('senders/<uuid:sender_uuid>/sender-info/', sender_info, name='sender_info'),

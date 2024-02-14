@@ -65,23 +65,27 @@ class Sender(BaseModel, ActiveModel):
             'sender_uuid': self.uuid
         })
 
+    def get_context_for_email(self):
+        return {
+            'sender': self,
+            'receiver_email': self.space.user.sender_notifications_settings.reference_email,
+            'receiver_name': self.space.user.sender_notifications_settings.name,
+            'contact_email': settings.CONTACT_EMAIL,
+            'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
+            'homepage_link': settings.BASE_URL,
+            'logo_link': settings.BASE_URL + static('images/logo.png'),
+            'space_link': self.full_space_link
+
+        }
+
     def notify_deadline(self):
         current_language = get_language()  # Store the current language
         try:
             if self.is_active and self.space.is_deleted is False:
                 activate(self.space.user.sender_notifications_settings.language)
-                context = {
-                    'pre_header_text': f'Remember to complete the upload for space: {self.space.title}',
-                    'sender': self,
-                    'receiver_email': self.space.user.sender_notifications_settings.reference_email,
-                    'receiver_name': self.space.user.sender_notifications_settings.name,
-                    'contact_email': settings.CONTACT_EMAIL,
-                    'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
-                    'homepage_link': settings.BASE_URL,
-                    'logo_link': settings.BASE_URL + static('images/logo.png'),
-                    'space_link': self.full_space_link
+                context = self.get_context_for_email()
+                context['pre_header_text'] = f'Remember to complete the upload for space: {self.space.title}'
 
-                }
                 email_html = render_to_string('emails/deadline_notification.html', context)
                 from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
                 with get_connection(
@@ -115,18 +119,8 @@ class Sender(BaseModel, ActiveModel):
         try:
             if self.is_active and self.space.is_deleted is False:
                 activate(self.space.user.sender_notifications_settings.language)
-                context = {
-                    'pre_header_text': f'{self.space.user.email} invites you to upload files to the space: {self.space.title}',
-                    'sender': self,
-                    'receiver_email': self.space.user.sender_notifications_settings.reference_email,
-                    'receiver_name': self.space.user.sender_notifications_settings.name,
-                    'contact_email': settings.CONTACT_EMAIL,
-                    'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
-                    'homepage_link': settings.BASE_URL,
-                    'logo_link': settings.BASE_URL + static('images/logo.png'),
-                    'space_link': self.full_space_link
-
-                }
+                context = self.get_context_for_email()
+                context['pre_header_text'] = f'{context["receiver_name"]} invites you to upload files to the space: {self.space.title}'
                 calendar_url, ics_content = self.space.get_deadline_url_ics(self)
 
                 context['calendar_url'] = calendar_url
@@ -141,7 +135,7 @@ class Sender(BaseModel, ActiveModel):
                         use_tls=True,
                 ) as connection:
                     msg = EmailMultiAlternatives(
-                        subject=f'Invitation to upload space: {self.space.title}',
+                        subject=f'Invitation: {context["receiver_name"]} invites you to upload files to the space: {self.space.title}',
                         body=html_to_text(email_html),
                         from_email=from_email,
                         to=[self.email],
@@ -160,3 +154,42 @@ class Sender(BaseModel, ActiveModel):
             return False
         finally:
             activate(current_language)  # Restore the original language
+
+    def notify_changes_request(self, upload_request, files, notes):
+        current_language = get_language()  # Store the current language
+        try:
+            if self.is_active and self.space.is_deleted is False:
+                activate(self.space.user.sender_notifications_settings.language)
+                context = self.get_context_for_email()
+                context['pre_header_text'] = f'{context["receiver_name"]} has requested changes to  {upload_request.title}'
+                context['notes'] = notes
+                context['upload_request'] = upload_request
+                context['files'] = files
+
+                email_html = render_to_string('emails/changes_notification.html', context)
+                from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
+                with get_connection(
+                        host=settings.RESEND_SMTP_HOST,
+                        port=settings.RESEND_SMTP_PORT,
+                        username=settings.RESEND_SMTP_USERNAME,
+                        password=settings.RESEND_API_KEY,
+                        use_tls=True,
+                ) as connection:
+                    msg = EmailMultiAlternatives(
+                        subject=f'Changes Requested: {context["receiver_name"]} has requested changes to  {upload_request.title}',
+                        body=html_to_text(email_html),
+                        from_email=from_email,
+                        to=[self.email],
+                        reply_to=[from_email],
+                        connection=connection,
+                        headers={'Return-Path': from_email}
+                    )
+                    msg.attach_alternative(email_html, 'text/html')
+
+                    msg.send()
+                self.save()
+                return True
+            return False
+        finally:
+            activate(current_language)  # Restore the original language
+
