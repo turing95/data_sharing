@@ -1,46 +1,58 @@
-
 {% load static i18n socialaccount allauth %}
 
 <div id="destination-search-container" class="w-full sm:w-2/3 h-[36px] destination-search">
-    {% if not missing_provider  %}
-    <div>
-        <div class="inline-flex w-full bg-gray-50 border-gray-300 border h-[36px] pr-1.5">
-            <div id="destination-search-bar" class="flex-grow">
+    {% if not missing_provider and not expired_provider %}
+        <div>
+            <div class="inline-flex w-full bg-gray-50 border-gray-300 border h-[36px] pr-1.5">
+                <div id="destination-search-bar" class="flex-grow">
 
-                <input class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input" type="search"
-                    placeholder="Type to search in {{ provider_name }}"
-                    id="id_search-folders-{{ request_index }}-"
-                    name="search-folders-{{ request_index }}-"
-                    hx-post="{% url 'search_folders' %}?request_index={{ request_index }}"
-                    hx-trigger="input changed delay:500ms, search"
-                    hx-target="next .search-results"
-                    hx-indicator="#loading-indicator-destination-search-{{ request_index}}-"
-                    autocomplete="off">
-            </div>
-            <!-- Loading Indicator -->
-            <div id="loading-indicator-destination-search-{{ request_index}}-" class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
-                <div role="status" class="flex spinner ml-0.5">
-                    {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
-                    <span class="sr-only">Loading...</span>
+                    <input class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input"
+                           type="search"
+                           placeholder="Type to search in {{ provider_name }}"
+                           id="id_search-folders-{{ request_index }}-"
+                           name="search-folders-{{ request_index }}-"
+                           hx-post="{% url 'search_folders' %}?request_index={{ request_index }}"
+                           hx-trigger="input changed delay:500ms, search"
+                           hx-target="next .search-results"
+                           hx-indicator="#loading-indicator-destination-search-{{ request_index }}-"
+                           autocomplete="off">
                 </div>
-            </div>
+                <!-- Loading Indicator -->
+                <div id="loading-indicator-destination-search-{{ request_index }}-"
+                     class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
+                    <div role="status" class="flex spinner ml-0.5">
+                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
 
+            </div>
+            <!-- Search Results Section -->
+            <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-50"></div>
         </div>
-        <!-- Search Results Section -->
-        <div class="overflow-y-auto max-h-[150px] search-results custom-scrollbar bg-gray-50"></div>
-    </div>
 
     {% else %}
-        <div class="flex flex-col items-center justify-center pl-3 h-9">
-            <span class="text-xs text-gray-700">To access service:</span>
-            <a href="{% provider_login_url missing_provider process='connect' scope=scope auth_params=auth_params next=next %}" class="text-sm px-1.5 py-[1.5px] text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400">
-                Connect a {{ missing_provider.name|title }} Account
-            </a>
-        </div>
+        {% if missing_provider %}
+            <div class="flex flex-col items-center justify-center pl-3 h-9">
+                <span class="text-xs text-gray-700">To access service:</span>
+                <a href="{% provider_login_url missing_provider process='connect' scope=scope auth_params=auth_params next=next %}"
+                   class="text-sm px-1.5 py-[1.5px] text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400">
+                    Connect a {{ missing_provider.name|title }} Account
+                </a>
+            </div>
+        {% elif expired_provider %}
+            <div class="flex flex-col items-center justify-center pl-3 h-9">
+                <span class="text-xs text-gray-700">To access service:</span>
+                <a href="{% provider_login_url expired_provider process='connect' scope=scope auth_params=custom_auth_params next=next %}"
+                   class="text-sm px-1.5 py-[1.5px] text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400">
+                    Reconnect your {{ account.extra_data.mail }}{{ account.extra_data.email }} {{ expired_provider.name|title }} Account
+                </a>
+            </div>
+        {% endif %}
 
     {% endif %}
 
 </div>
 {% if from_htmx %}
-        {% include 'private/space/create/components/destination/sharepoint_site_container.html' with provider_name=provider_name index=request_index %}
+    {% include 'private/space/create/components/destination/sharepoint_site_container.html' with provider_name=provider_name index=request_index %}
 {% endif %}

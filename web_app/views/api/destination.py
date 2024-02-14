@@ -36,31 +36,41 @@ def select_destination_type(request):
         request_index = request.GET.get('request_index', None)
         if request_index is not None:
             missing_provider = None
+            expired_provider = None
+            account = None
             provider_type = request.GET.get(f'requests-{request_index}-destination_type_select')
             next_path = request.GET.get('next', None)
+            adapter = get_adapter()
             if provider_type == GoogleDrive.TAG:
                 provider_name = "Google Drive"
                 if request.user.google_account is None:
-                    adapter = get_adapter()
                     missing_provider = adapter.get_provider(request, GoogleDrive.PROVIDER_ID)
+                elif request.user.google_account.socialtoken_set.count() == 0:
+                    account = request.user.google_account
+                    expired_provider = adapter.get_provider(request, GoogleDrive.PROVIDER_ID)
 
             elif provider_type == OneDrive.TAG:
                 provider_name = "OneDrive"
                 if request.user.microsoft_account is None:
-                    adapter = get_adapter()
                     missing_provider = adapter.get_provider(request, OneDrive.PROVIDER_ID)
+                elif request.user.microsoft_account.socialtoken_set.count() == 0:
+                    account = request.user.microsoft_account
+
+                    expired_provider = adapter.get_provider(request, OneDrive.PROVIDER_ID)
             elif provider_type == SharePoint.TAG:
                 provider_name = "SharePoint"
                 if request.user.microsoft_account is None:
-                    adapter = get_adapter()
+                    account = request.user.microsoft_account
                     missing_provider = adapter.get_provider(request, SharePoint.PROVIDER_ID)
+                elif request.user.microsoft_account.socialtoken_set.count() == 0:
+                    expired_provider = adapter.get_provider(request, SharePoint.PROVIDER_ID)
             else:
                 return HttpResponseBadRequest()
 
             return render(request,
                           'private/space/create/components/destination/destination_search.html',
                           {
-                              'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index,
+                              'missing_provider': missing_provider,'expired_provider':expired_provider, 'next': next_path,'account':account, 'request_index': request_index,
                               'provider_name': provider_name, 'from_htmx': True})
     return HttpResponseBadRequest()
 
