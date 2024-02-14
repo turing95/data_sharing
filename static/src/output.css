@@ -1627,12 +1627,12 @@ input:checked + .toggle-bg {
   max-height: 100vh;
 }
 
-.min-h-\[42px\] {
-  min-height: 42px;
-}
-
 .min-h-screen {
   min-height: 100vh;
+}
+
+.min-h-\[42px\] {
+  min-height: 42px;
 }
 
 .w-1\/2 {
@@ -2657,10 +2657,6 @@ input:checked + .toggle-bg {
   padding-bottom: 3.5rem;
 }
 
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
 .pb-3 {
   padding-bottom: 0.75rem;
 }
@@ -2751,6 +2747,10 @@ input:checked + .toggle-bg {
 
 .pt-\[200px\] {
   padding-top: 200px;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .text-left {
@@ -3981,6 +3981,10 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @media (min-width: 640px) {
+  .sm\:m-0 {
+    margin: 0px;
+  }
+
   .sm\:mb-5 {
     margin-bottom: 1.25rem;
   }
@@ -4007,6 +4011,14 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .sm\:flex-row {
     flex-direction: row;
+  }
+
+  .sm\:items-start {
+    align-items: flex-start;
+  }
+
+  .sm\:justify-start {
+    justify-content: flex-start;
   }
 
   .sm\:gap-6 {
@@ -4257,6 +4269,10 @@ input[type="search"]::-webkit-search-cancel-button {
     display: grid;
   }
 
+  .lg\:w-1\/2 {
+    width: 50%;
+  }
+
   .lg\:w-1\/3 {
     width: 33.333333%;
   }
@@ -4267,6 +4283,18 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lg\:grid-cols-\[0\.5fr_minmax\(150px\2c 0\.2fr\)\] {
+    grid-template-columns: 0.5fr minmax(150px,0.2fr);
+  }
+
+  .lg\:items-start {
+    align-items: flex-start;
+  }
+
+  .lg\:justify-start {
+    justify-content: flex-start;
   }
 
   .lg\:gap-16 {
@@ -4323,12 +4351,16 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @media (min-width: 1280px) {
-  .xl\:ml-10 {
-    margin-left: 2.5rem;
-  }
-
   .xl\:w-1\/3 {
     width: 33.333333%;
+  }
+
+  .xl\:items-start {
+    align-items: flex-start;
+  }
+
+  .xl\:justify-start {
+    justify-content: flex-start;
   }
 
   .xl\:gap-0 {
@@ -4354,5 +4386,15 @@ input[type="search"]::-webkit-search-cancel-button {
   .xl\:text-6xl {
     font-size: 3.75rem;
     line-height: 1;
+  }
+}
+
+@media (min-width: 1536px) {
+  .\32xl\:items-start {
+    align-items: flex-start;
+  }
+
+  .\32xl\:justify-start {
+    justify-content: flex-start;
   }
 }

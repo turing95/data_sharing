@@ -55,14 +55,12 @@ class CustomOAuth2CallbackView(OAuth2View):
                                                                         user=request.user)
                 if (existing_social_accounts.exists() and
                         not existing_social_accounts.filter(uid=login.account.uid).exists()):
-                    print('here')
                     provider = self.adapter.get_provider()
                     messages.error(request,
                                    f"You already have an account with {provider.name}, reconnect or disconnect the existing one.")
                     default_next = get_adapter().get_connect_redirect_url(request, login.account)
                     next_url = login.get_redirect_url(request) or default_next
                     return redirect(next_url)
-                print('here wrog place')
 
             return complete_social_login(request, login)
         except (
