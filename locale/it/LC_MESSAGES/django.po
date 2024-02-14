@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-14 17:36+0000\n"
+"POT-Creation-Date: 2024-02-14 18:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,13 +37,15 @@ msgid "Notes from the receiver: %(notes)s"
 msgstr "Note dal ricevente: %(notes)s"
 
 #: templates/emails/changes_notification.html:50
+#: templates/emails/deadline_notification.html:26
+#: templates/emails/sender_invite.html:26
 #, python-format
 msgid "Reference email: %(receiver_email)s"
 msgstr "Email di riferimento: %(receiver_email)s"
 
 #: templates/emails/components/deadline_section.html:7
 msgid "You have time until "
-msgstr "Hai tempo fino a"
+msgstr "Hai tempo fino a "
 
 #: templates/emails/components/deadline_section.html:9
 msgid "Add the deadline to your calendar"
@@ -57,6 +59,10 @@ msgstr "Contattaci"
 msgid "Go to Space for more details"
 msgstr "Accedi allo Spazio per maggiori dettagli"
 
+#: templates/emails/components/requests_summary.html:5
+msgid "You have been requested the following:"
+msgstr "Ti sono stati richiesti i seguenti elementi:"
+
 #: templates/emails/deadline_notification.html:11
 #, python-format
 msgid ""
@@ -66,19 +72,13 @@ msgstr ""
 "Ricorda di completare l'upload a<br> <a href=\"%(space_link)s\" style=\"text-"
 "decoration:underline;\"> %(title)s </a>"
 
-#: templates/emails/deadline_notification.html:26
-#: templates/emails/sender_invite.html:26
-#, python-format
-msgid "Reference email for this invitation: %(receiver_email)s"
-msgstr "Email di riferimento per questo invito: %(receiver_email)s"
-
 #: templates/emails/sender_invite.html:11
 #, python-format
 msgid ""
-"%(receiver_name)s invites you to upload files at<br> <a "
+"%(receiver_name)s invites you to upload files  to the space:<br> <a "
 "href=\"%(space_link)s\" style=\"text-decoration:underline;\"> %(title)s </a>"
 msgstr ""
-"%(receiver_name)s ti invita a caricare dei file a<br> <a "
+"%(receiver_name)s ti invita a caricare dei file nello spazio:<br> <a "
 "href=\"%(space_link)s\" style=\"text-decoration:underline;\"> %(title)s </a>"
 
 #: templates/public/sender_space_detail.html:188
@@ -90,11 +90,11 @@ msgid "Or use a third-party"
 msgstr "O usa un servizio terzo"
 
 #: web_app/models/sender.py:89
-msgid "Remember to complete the upload for space:"
-msgstr "Ricorda di completare l'upload per lo spazio:"
+msgid "Remember to complete the upload to the space:"
+msgstr "Ricorda di completare l'upload nello spazio:"
 
 #: web_app/models/sender.py:91
-msgid "Upload reminder for space:"
+msgid "Upload reminder for the space:"
 msgstr "Promemoria di upload per lo spazio:"
 
 #: web_app/models/sender.py:126
@@ -106,9 +106,13 @@ msgid "Invitation:"
 msgstr "Invito:"
 
 #: web_app/models/sender.py:177
-msgid "has requested changes to"
+msgid "has requested changes for"
 msgstr "ha richiesto dei cambiamenti a"
 
 #: web_app/models/sender.py:178
 msgid "Changes Requested:"
 msgstr "Cambiamenti Richiesti:"
+
+#, python-format
+#~ msgid "Reference email for this invitation: %(receiver_email)s"
+#~ msgstr "Email di riferimento per questo invito: %(receiver_email)s"

@@ -86,9 +86,9 @@ class Sender(BaseModel, ActiveModel):
             if self.is_active and self.space.is_deleted is False:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
-                pre_header_text = _('Remember to complete the upload for space:')
+                pre_header_text = _('Remember to complete the upload to the space:')
                 context['pre_header_text'] = format_lazy('{pre_header_text} {title}', pre_header_text=pre_header_text, title=self.space.title)
-                title_text = _('Upload reminder for space:')
+                title_text = _('Upload reminder for the space:')
                 email_html = render_to_string('emails/deadline_notification.html', context)
                 from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
                 with get_connection(
@@ -173,8 +173,8 @@ class Sender(BaseModel, ActiveModel):
             if self.is_active and self.space.is_deleted is False:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
-                context['pre_header_text'] = f'{context["receiver_name"]} has requested changes to {upload_request.title}'
-                pre_header_text = _('has requested changes to')
+                context['pre_header_text'] = f'{context["receiver_name"]} has requested changes for {upload_request.title}'
+                pre_header_text = _('has requested changes for')
                 changes_title_text = _('Changes Requested:')
                 context['pre_header_text'] = format_lazy('{receiver_name} {pre_header_text} {title}',
                                                          receiver_name=context["receiver_name"],
