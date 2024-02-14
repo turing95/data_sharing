@@ -18,13 +18,14 @@ def search_folder(request):
             sharepoint_site_id = request.POST.get(f'sharepoint-site-{request_index}-', None)
             search_type = request.POST[f'requests-{request_index}-destination_type_select']
             if search_query == '':
-                return HttpResponse(status=204)
+                return HttpResponse('')
 
             else:
-                folders = request.user.get_folders(search_type, search_query,sharepoint_site_id)
+                folders = request.user.get_folders(search_type, search_query, sharepoint_site_id)
             return render(request,
                           'private/space/create/components/destination/folders_search_results.html',
-                          {'folders': folders, 'destination_type': search_type,'sharepoint_site_id':sharepoint_site_id})
+                          {'folders': folders, 'destination_type': search_type,
+                           'sharepoint_site_id': sharepoint_site_id})
     return HttpResponseBadRequest()
 
 
@@ -60,7 +61,7 @@ def select_destination_type(request):
                           'private/space/create/components/destination/destination_search.html',
                           {
                               'missing_provider': missing_provider, 'next': next_path, 'request_index': request_index,
-                              'provider_name': provider_name,'from_htmx':True})
+                              'provider_name': provider_name, 'from_htmx': True})
     return HttpResponseBadRequest()
 
 
