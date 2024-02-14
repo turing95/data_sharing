@@ -184,8 +184,8 @@
 
                                 </div>
                                 {% if form.upload_request.file_template %}
-                                    <div class="col-span-2 mb-2 flex items-center">
-                                        <p class="mr-1">{% translate 'Use this template as a reference for your upload:' %}</p>
+                                    <div class="col-span-1 mb-2 flex items-center">
+                                        <p class="mr-1">{% translate 'Use this as a reference for your upload:' %}</p>
                                         {% include 'components/buttons/generic.html' with href=form.upload_request.file_template button_text='Template' target="_blank" %}
                                     </div>
                                 {% endif %}
