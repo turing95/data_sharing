@@ -4,8 +4,8 @@
     <tr>
 
         <td style="padding:10px 0;">
-            {% blocktranslate trimmed %}You have time until {{ sender.space.deadline }}
-                {{ sender.space.deadline|date:"T" }}{% endblocktranslate %} {% if calendar_url %}(
+            {% translate 'You have time until ' %}{{ sender.space.deadline }}
+                {{ sender.space.deadline|date:"T" }}{% if calendar_url %}(
             <a style="text-align:center;" href="{{ calendar_url }}">{% translate 'Add the deadline to your calendar' %}</a>){% endif %}
 
         </td>

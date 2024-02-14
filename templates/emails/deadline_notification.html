@@ -7,12 +7,14 @@
             <table style="width:100%;">
                 <tr>
                     <td style="font-weight:bold;font-size:24px;padding:20px 0;">
-                        {% blocktranslate trimmed %}
-                            Remember to complete the upload at:<br>
-                            <a href="{{ space_link }}" style="text-decoration:underline;">
-                                {{ sender.space.title }}
-                            </a>
-                        {% endblocktranslate %}
+                        {% with title=sender.space.title %}
+                            {% blocktranslate trimmed %}
+                                Remember to complete the upload at<br>
+                                <a href="{{ space_link }}" style="text-decoration:underline;">
+                                    {{ title }}
+                                </a>
+                            {% endblocktranslate %}
+                        {% endwith %}
 
                     </td>
 
