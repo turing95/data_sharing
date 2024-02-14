@@ -1,5 +1,5 @@
 {% if href %}
-<a href="{{href}}" {% if button_id %} id="{{ button_id }}" {% endif %} class="justify-center items-center text-white bg-marian-blue-400 hover:bg-marian-blue-500 focus:outline-none focus:ring-marian-blue-500 font-medium px-3 py-1.5 text-center dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 {{ extra_classes }}">{{ button_text }}</a>
+<a href="{{href}}" target="{{ target|default_if_none:"_self" }}" {% if button_id %} id="{{ button_id }}" {% endif %} class="justify-center items-center text-white bg-marian-blue-400 hover:bg-marian-blue-500 focus:outline-none focus:ring-marian-blue-500 font-medium px-3 py-1.5 text-center dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 {{ extra_classes }}">{{ button_text }}</a>
 {%else%}
 <button type="button" {% if button_id %} id="{{ button_id }}" {% endif %}  {% if data_modal_toggle %} data-modal-toggle="{{data_modal_toggle}}" {% endif %}  {% if data_modal_target %} data-modal-target="{{ data_modal_target }}" {% endif %} class=" flex justify-center items-center text-white bg-marian-blue-400 hover:bg-marian-blue-500 focus:outline-none focus:ring-marian-blue-500 font-medium   px-5 py-2 text-center dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 {{ extra_classes }}">{{ button_text }}</button>
 {%endif%}

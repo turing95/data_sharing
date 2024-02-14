@@ -184,12 +184,9 @@
 
                                 </div>
                                 {% if form.upload_request.file_template %}
-                                    <div class="col-span-2 mb-2 flex">
+                                    <div class="col-span-2 mb-2 flex items-center">
                                         <p class="mr-1">{% translate 'Use this template as a reference for your upload:' %}</p>
-                                        <a href="{{ form.upload_request.file_template }}" target="_blank"
-                                           class="text-blue-600 underline">
-                                            {{ form.upload_request.file_template }}
-                                        </a>
+                                        {% include 'components/buttons/generic.html' with href=form.upload_request.file_template button_text='Template' target="_blank" %}
                                     </div>
                                 {% endif %}
                                 {% if form.upload_request.file_types.count %}
