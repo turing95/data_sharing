@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-14 18:07+0000\n"
+"POT-Creation-Date: 2024-02-14 18:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,13 +81,89 @@ msgstr ""
 "%(receiver_name)s ti invita a caricare dei file nello spazio:<br> <a "
 "href=\"%(space_link)s\" style=\"text-decoration:underline;\"> %(title)s </a>"
 
+#: templates/public/sender_space_detail.html:13
+msgid "Accessing as:"
+msgstr "Accedendo come:"
+
+#: templates/public/sender_space_detail.html:15
+msgid "Accessing via public link"
+msgstr "Accedendo tramite link pubblico"
+
+#: templates/public/sender_space_detail.html:17
+msgid "Invited by:"
+msgstr "Invitato da:"
+
+#: templates/public/sender_space_detail.html:26
+msgid "Upload Space"
+msgstr "Spazio di Upload"
+
+#: templates/public/sender_space_detail.html:41
+msgid "Total max size of uploads: 50MB"
+msgstr "Massima dimensione totale degli upload: 50MB"
+
+#: templates/public/sender_space_detail.html:83
+msgid "It is not possible to upload files anymore. For any inquiries, contact:"
+msgstr "Non è più possibile caricare file. Per qualsiasi domanda, contatta:"
+
+#: templates/public/sender_space_detail.html:147
+msgid "Click to upload"
+msgstr "Clicca per caricare"
+
 #: templates/public/sender_space_detail.html:188
 msgid "Use this as a reference for your upload:"
 msgstr "Usa questo come riferimento per il tuo upload:"
 
+#: templates/public/sender_space_detail.html:189
+msgid "Template"
+msgstr "Modello"
+
+#: templates/public/sender_space_detail.html:196
+msgid "Restrictions:"
+msgstr "Restrizioni:"
+
+#: templates/public/sender_space_detail.html:198
+msgid "Allowed file extensions:"
+msgstr "Estensioni di file consentite:"
+
+#: templates/public/sender_space_detail.html:213
+msgid "Previous uploads"
+msgstr "Upload precedenti"
+
+#: templates/public/sender_space_detail.html:234
+msgid "Confirm and Upload"
+msgstr "Conferma e Carica"
+
 #: templates/public/snippets/login.html:9
 msgid "Or use a third-party"
 msgstr "O usa un servizio terzo"
+
+#: web_app/forms/file.py:37
+msgid "Add a note to your upload..."
+msgstr "Aggiungi una nota al tuo upload..."
+
+#: web_app/forms/file.py:41
+msgid "Notes"
+msgstr "Note"
+
+#: web_app/forms/file.py:42
+msgid ""
+"Add a note to clarify what you are uploading, if needed. Notes do not "
+"substitute the upload of the requested files.\n"
+"                            "
+msgstr "Aggiungi una nota per chiarire cosa stai caricando, se necessario. Le note non sostituiscono l'upload dei file richiesti.\n"
+"                            "
+
+#: web_app/forms/file.py:69
+msgid "has extension "
+msgstr "ha estensione"
+
+#: web_app/forms/file.py:70
+msgid "which is not allowed."
+msgstr "che non è consentita."
+
+#: web_app/forms/file.py:85
+msgid "You need to upload at least one file."
+msgstr "Devi caricare almeno un file."
 
 #: web_app/models/sender.py:89
 msgid "Remember to complete the upload to the space:"

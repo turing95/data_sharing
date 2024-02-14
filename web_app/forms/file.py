@@ -2,8 +2,10 @@ from django.core.exceptions import ValidationError
 from django.forms import Form
 from django.forms import BaseFormSet
 from django import forms
-from web_app.forms import css_classes
+from django.utils.text import format_lazy
 
+from web_app.forms import css_classes
+from django.utils.translation import gettext_lazy as _
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
@@ -32,13 +34,13 @@ class FileForm(Form):
     notes = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={
-            'placeholder': 'Add a note to your upload...',
+            'placeholder': _('Add a note to your upload...'),
             'rows': 2,
             'class': css_classes.text_area + "text-sm",
         }),
-        label='Notes',
-        help_text="""Add a note to clarify what you are uploading, if needed. Notes do not substitute the upload of the requested files.
-                            """)
+        label=_('Notes'),
+        help_text=_("""Add a note to clarify what you are uploading, if needed. Notes do not substitute the upload of the requested files.
+                            """))
 
     def __init__(self, **kwargs):
         self.request_index = kwargs.pop('request_index')
@@ -64,7 +66,9 @@ class FileForm(Form):
             for file in files:
                 extension = file.name.split('.')[-1]
                 if (extension in self.upload_request.extensions) is False:
-                    self.add_error('files', f'{file.name} has extension {extension}, which is not allowed.')
+                    str_a = _('has extension ')
+                    str_b = _('which is not allowed.')
+                    self.add_error('files', format_lazy('{name} {str_a} {extension}, {str_b}',str_a=str_a,str_b=str_b,name=file.name, extension=extension))
         return files
 
 
@@ -78,7 +82,7 @@ class BaseFileFormSet(BaseFormSet):
             return True
         else:
             # Add an error message to the formset
-            self.non_form_errors().append(ValidationError("You need to upload at least one file."))
+            self.non_form_errors().append(ValidationError(_("You need to upload at least one file.")))
             return False
 
     def get_form_kwargs(self, index):

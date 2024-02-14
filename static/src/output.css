@@ -1232,6 +1232,10 @@ input:checked + .toggle-bg {
   grid-column: span 2 / span 2;
 }
 
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+
 .-m-4 {
   margin: -1rem;
 }
@@ -3981,6 +3985,14 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @media (min-width: 640px) {
+  .sm\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+
+  .sm\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+
   .sm\:m-0 {
     margin: 0px;
   }
@@ -4064,6 +4076,14 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
+  }
+
+  .md\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+
+  .md\:col-span-3 {
+    grid-column: span 3 / span 3;
   }
 
   .md\:me-0 {
