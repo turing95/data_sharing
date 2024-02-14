@@ -42,7 +42,7 @@ export function hideShowSearch(event) {
         //show only search results next to element
         let form = clickedElement.closest('.request-form')
         if(form) {
-            let searchResults = form.querySelector('search-results');
+            let searchResults = form.querySelector('.search-results');
             searchResults.classList.remove('hidden');
         }else{
             let searchResults = clickedElement.closest('#space-form').querySelector('.search-results');
