@@ -45,7 +45,7 @@
                 <span class="text-xs text-gray-700">To access service:</span>
                 <a href="{% provider_login_url expired_provider process='connect' scope=scope auth_params=custom_auth_params next=next %}"
                    class="text-sm px-1.5 py-[1.5px] text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400">
-                    Reconnect your {{ account.extra_data.mail }}{{ account.extra_data.email }} {{ expired_provider.name|title }} Account
+                    Reconnect your {% if account.extra_data.mail %}{{ account.extra_data.mail }}{% elif account.extra_data.email %}{{ account.extra_data.email }}{% elif account.extra_data.userPrincipalName %}{{ account.extra_data.userPrincipalName }}{% endif %} {{ expired_provider.name|title }} Account
                 </a>
             </div>
         {% endif %}

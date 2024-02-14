@@ -5,8 +5,16 @@
         <div class="inline-flex items-center">
 
             <img src="{% static logo_url %}" alt="{{ provider.id }} Logo" class="h-[21px] w-[21px] mr-2"/>
-            {{ provider.name|title }} {% if account %}({{ account.extra_data.mail }}{{ account.extra_data.email }}
-            ){% endif %}
+            {{ provider.name|title }}
+            {% if account %}
+            ({% if account.extra_data.mail %}
+                {{ account.extra_data.mail }}
+            {% elif account.extra_data.email %}
+                {{ account.extra_data.email }}
+            {% elif account.extra_data.userPrincipalName %}
+                {{ account.extra_data.userPrincipalName }}
+            {% endif %})
+        {% endif %}
         </div>
     </td>
     <!-- Column 2: Cloud Storage Logo and Name -->
