@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initNav();
     initBetaAccessForm();
 });
-
+document.addEventListener('htmx:afterRequest', function(evt) {
+    initMessageBar();
+});
 document.addEventListener('htmx:beforeSwap', function(evt) {
     if (evt.detail.target.id.startsWith('htmx-modal')) {
         const modalElement = evt.detail.target.children[0];
