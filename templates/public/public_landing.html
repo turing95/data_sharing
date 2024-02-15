@@ -1,5 +1,5 @@
 {% extends 'public/_base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block public_content %}
 <div class="w-full max-w-screen-xl p-4 mx-auto lg:px-10">
    
@@ -9,22 +9,23 @@
                 <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
                 
                     <h1 class="max-w-3xl mb-4 text-4xl font-extrabold leading-none tracking-normal md:text-5xl xl:text-6xl dark:text-white">
-                        Effortless file collection
+                        {% translate 'Effortless file collection' %}
                     </h1>
                     
                     <p class="max-w-3xl md:px-16 px-3 mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                        Set instructions, automate reminders, share public links and receive files neatly named in your drive.
+                        {% translate 'Set instructions, automate reminders, share public links and receive files neatly named in your drive.' %}
                     </p>                    
                    <div class="text-center">
                 {% if request.user.is_authenticated is False %}
                     <div class="max-w-xs mx-auto"> <!-- Adjusted max-width and alignment -->
                         {% url 'generic_beta_access' as beta_access_request_url %}
-                        {% include "components/buttons/generic.html" with button_text="Access beta for free" href=beta_access_request_url %}
-                        <p class="flex items-center justify-center my-auto mt-1 text-xs text-gray-500">No credit card required</p>
+                        {% translate 'Access beta for free' as beta_text %}
+                        {% include "components/buttons/generic.html" with button_text=beta_text href=beta_access_request_url %}
+                        <p class="flex items-center justify-center my-auto mt-1 text-xs text-gray-500">{% translate 'No credit card required' %}</p>
                     </div>
                 {% endif %}
                 <div class="flex my-4 sm:mb-5" >
-                    <a href="#features_section" class="flex items-center justify-center mx-auto my-auto text-lg text-blue-700 hover:text-blue-500">View all features
+                    <a href="#features_section" class="flex items-center justify-center mx-auto my-auto text-lg text-blue-700 hover:text-blue-500">{% translate 'View all features' %}
                         <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     </a>
                 </div>
@@ -52,8 +53,8 @@
         <section id="features_section" class="bg-white dark:bg-gray-900">
             <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
                 <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
-                    <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">All the features you need in one tool</h2>
-                    <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">You will feel like you hired someone to take care of collecting files for you.</p>
+                    <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">{% translate 'All the features you need in one tool' %}</h2>
+                    <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">{% translate 'You will feel like you hired someone to take care of collecting files for you.' %}</p>
                 </div>
 
                 <div class="container px-5 mx-auto mb-10">
@@ -61,108 +62,94 @@
 
                         <!-- card -->
                             <!--title-->
-                            {% with "Forget attachments, welcome personal links" as title %}
+                            {% translate "Forget attachments, welcome personal links" as title %}
                             <!--description-->
-                            {% with "Collect the same type of files from multiple counterparties with personal links. No sign up required." as description %}
+                            {% translate "Collect the same type of files from multiple counterparties with personal links. No sign up required." as description %}
                             <!--asset link-->
-                            {% with "images/home_features/sender_link.png" as asset_link %}
+                            {% translate "images/home_features/sender_link.png" as asset_link %}
                             <!--asset description-->
-                            {% with "disable sender link gif" as asset_description %}
+                            {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% with doc_url as learn_more_href %}
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
+
                         <!-- card -->
                             <!--title-->
-                            {% with "All instructions in one place" as title %}
+                            {% translate "All instructions in one place" as title %}
                             <!--description-->
-                            {% with "Replace long email threads by specifying all instructions in one place. Update details anytime." as description %}
+                            {% translate "Replace long email threads by specifying all instructions in one place. Update details anytime." as description %}
                             <!--asset link-->
-                            {% with "images/home_features/instructions.png" as asset_link %}
+                            {% translate "images/home_features/instructions.png" as asset_link %}
                             <!--asset description-->
-                            {% with "disable sender link gif" as asset_description %}
+                            {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% with doc_url as learn_more_href %}
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
                         <!-- card -->
                             <!--title-->
-                            {% with "No awkward follow-ups with deadlines and reminders" as title %}
+                            {% translate "No awkward follow-ups with deadlines and reminders" as title %}
                             <!--description-->
-                            {% with "Set deadlines visible in calendars and let automated gentle reminders replace awkward pings." as description %}
+                            {% translate "Set deadlines visible in calendars and let automated gentle reminders replace awkward pings." as description %}
                             <!--asset link-->
-                            {% with "images/home_features/deadline.png" as asset_link %}
+                            {% translate "images/home_features/deadline.png" as asset_link %}
                             <!--asset description-->
-                            {% with "disable sender link gif" as asset_description %}
+                            {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% with doc_url as learn_more_href %}
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
                         <!-- card -->
                             <!--title-->
-                            {% with "Predefined file destination" as title %}
+                            {% translate "Predefined file destination" as title %}
                             <!--description-->
-                            {% with "Assign to each file a specific destination in your drive system." as description %}
-                            <!--asset link-->
-                            {% with "images/home_features/destination.png" as asset_link %}
+                            {% translate "Assign to each file a specific destination in your drive system." as description %}
+                            <!--translate link-->
+                            {% translate "images/home_features/destination.png" as asset_link %}
                             <!--asset description-->
-                            {% with "disable sender link gif" as asset_description %}
+                            {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% with doc_url as learn_more_href %}
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
                         <!-- card -->
                             <!--title-->
-                            {% with "Parametric file names" as title %}
+                            {% translate "Parametric file names" as title %}
                             <!--description-->
-                            {% with "Stop renaming every attachment you receive, set a name that will tell what's inside including the upload date, sender email, and more." as description %}
+                            {% translate "Stop renaming every attachment you receive, set a name that will tell what's inside including the upload date, sender email, and more." as description %}
                             <!--asset link-->
-                            {% with "images/home_features/naming.png" as asset_link %}
+                            {% translate "images/home_features/naming.png" as asset_link %}
                             <!--asset description-->
-                            {% with "disable sender link gif" as asset_description %}
+                            {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% with doc_url as learn_more_href %}
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
+
                         <!-- card -->
                             <!--title-->
-                            {% with "Multiple file requests via one link" as title %}
+                            {% translate "Multiple file requests via one link" as title %}
                             <!--description-->
-                            {% with "Never ask to send the missing file again. Add multiple file requests to each upload space and set dedicated instructions and rules." as description %}
+                            {% translate "Never ask to send the missing file again. Add multiple file requests to each upload space and set dedicated instructions and rules." as description %}
                             <!--asset link-->
-                            {% with "images/home_features/multi_request.png" as asset_link %}
+                            {% translate "images/home_features/multi_request.png" as asset_link %}
                             <!--asset description-->
-                            {% with "disable sender link gif" as asset_description %}
+                            {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% with doc_url as learn_more_href %}
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
                         <!-- card -->
                             <!--title-->
-                            {% with "Space dashboard" as title %}
+                            {% translate "Space dashboard" as title %}
                             <!--description-->
-                            {% with "Don't go through your email to see what's missing, the space dashboard has everything you need." as description %}
+                            {% translate "Don't go through your email to see what's missing, the space dashboard has everything you need." as description %}
                             <!--asset link-->
-                            {% with "images/home_features/summary.png" as asset_link %}
+                            {% translate "images/home_features/summary.png" as asset_link %}
                             <!--asset description-->
-                            {% with "disable sender link gif" as asset_description %}
+                            {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% with doc_url as learn_more_href %}
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
                         <!-- card -->
                             <!--title-->
-                            {% with "No more wrong files" as title %}
+                            {% translate "No more wrong files" as title %}
                             <!--description-->
-                            {% with "Counterparties upload files in one dedicated space. Each file is instantly validated by your rules, making progress transparent to all." as description %}
+                            {% translate "Counterparties upload files in one dedicated space. Each file is instantly validated by your rules, making progress transparent to all." as description %}
                             <!--asset link-->
-                            {% with "images/home_features/restrictions.png" as asset_link %}
+                            {% translate "images/home_features/restrictions.png" as asset_link %}
                             <!--asset description-->
-                            {% with "disable sender link gif" as asset_description %}
+                            {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
-                            {% with doc_url as learn_more_href %}
-                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=learn_more_href%}
-                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}   
+                            {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
                     </div>
                 </div>
             </div>
@@ -172,7 +159,7 @@
     <!-- Start pricing section -->
         <section id="pricing_section" class="bg-white dark:bg-gray-900">
             <div class="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
-                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Choose the right plan for you and your team</h2>
+                <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">{% translate 'Choose the right plan for you and your team' %}</h2>
                 <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400"></p> <!-- subtitle -->
             </div>
             {% include 'components/pricing.html' %}
@@ -183,21 +170,21 @@
        <section class="mt-10 bg-white dark:bg-gray-900">
            <div class="items-start max-w-screen-xl px-4 py-8 mx-auto lg:grid lg:grid-cols-4 lg:gap-16 xl:gap-24 lg:py-10 lg:px-6">
                <div class="col-span-2 mb-8">
-                   <p class="text-lg font-medium text-marian-blue-400 dark:text-marian-blue-400">Security first</p>
-                   <h2 class="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl dark:text-white">Kezyy never stores your files</h2>
-                   <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Kezyy ensures direct transfers from your counterparties to your storage system, keeping files extra safe and confidential.</p>
+                   <p class="text-lg font-medium text-marian-blue-400 dark:text-marian-blue-400">{% translate 'Security first' %}</p>
+                   <h2 class="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl dark:text-white">{% translate 'Kezyy never stores your files' %}</h2>
+                   <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">{% translate 'Kezyy ensures direct transfers from your counterparties to your storage system, keeping files extra safe and confidential.' %}</p>
 
                </div>
                <div class="col-span-2 space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
                    <div>
                     <img src="{% static 'images/drive_providers/google_drive-logo.svg' %}"  alt="Google Drive logo" class="w-12 h-12 p-1">
-                       <h3 class="mb-2 text-2xl font-bold dark:text-white">Google Drive<br>connection</h3>
-                       <p class="font-light text-gray-500 dark:text-gray-400">Receive files on shared folders too.</p>
+                       <h3 class="mb-2 text-2xl font-bold dark:text-white">{% blocktranslate %}Google Drive<br>connection{% endblocktranslate %}</h3>
+                       <p class="font-light text-gray-500 dark:text-gray-400">{% translate 'Receive files on shared folders too.' %}</p>
                    </div>
                    <div>
                     <img src="{% static 'images/drive_providers/one_drive-logo.svg' %}"  alt="OneDrive logo" class="w-12 h-12">
-                       <h3 class="mb-2 text-2xl font-bold dark:text-white">OneDrive<br>connection</h3>
-                       <p class="font-light text-gray-500 dark:text-gray-400">Make received files instantly available to your peers.</p>
+                       <h3 class="mb-2 text-2xl font-bold dark:text-white">{% blocktranslate %}OneDrive<br>connection{% endblocktranslate %}</h3>
+                       <p class="font-light text-gray-500 dark:text-gray-400">{% translate 'Make received files instantly available to your peers.' %}</p>
                    </div>
                </div>
            </div>
@@ -212,7 +199,7 @@
                        <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/>
                    </svg> 
                    <blockquote>
-                       <p class="text-xl font-medium text-gray-900 md:text-2xl dark:text-white">"Managing hundreds of weekly customer files via email, from download to Drive upload, was tedious, especially tracking missing submissions. With Kezyy, files land directly where needed, and we are perceived as more organized."</p>
+                       <p class="text-xl font-medium text-gray-900 md:text-2xl dark:text-white">{% translate '"Managing hundreds of weekly customer files via email, from download to Drive upload, was tedious, especially tracking missing submissions. With Kezyy, files land directly where needed, and we are perceived as more organized."' %}</p>
                    </blockquote>
                    <figcaption class="flex items-center justify-center mt-6 space-x-3">
                        <img src="{% static 'images/testimonial-boretto.jpg' %}"  alt="testimonial picture" class="w-8 h-8">
@@ -233,13 +220,14 @@
         <section class="bg-gray-50 dark:bg-gray-800">
             <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6">
                 <div class="max-w-screen-sm mx-auto text-center">
-                    <h2 class="mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white">Get started for free</h2>
-                    <p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">Start collecting files on autopilot</p>
+                    <h2 class="mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white">{% translate 'Get started for free' %}</h2>
+                    <p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">{% translate 'Start collecting files on autopilot' %}</p>
 
                     <div class="flex flex-col max-w-[180px] mx-auto">
                         {% url 'generic_beta_access' as beta_access_request_url %}
-                        {% include "components/buttons/generic.html" with button_text="Access beta for free" href=beta_access_request_url %}
-                        <p class="flex items-center mx-auto my-auto mt-1 text-xs text-gray-500">No credit card required</p>
+                        {% translate 'Access beta for free' as beta_text %}
+                        {% include "components/buttons/generic.html" with button_text=beta_text href=beta_access_request_url %}
+                        <p class="flex items-center mx-auto my-auto mt-1 text-xs text-gray-500">{% translate 'No credit card required' %}</p>
                     </div>
                 </div>
             </div>

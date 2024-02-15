@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-14 18:51+0000\n"
+"POT-Creation-Date: 2024-02-15 15:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,129 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data_sharing/settings.py:164
+msgid "english"
+msgstr "inglese"
+
+#: data_sharing/settings.py:165
+msgid "italian"
+msgstr "italiano"
+
+#: templates/components/navbar.html:71
+msgid "Sign in"
+msgstr "Accedi"
+
+#: templates/components/navbar.html:73
+msgid "Access beta"
+msgstr "Accedi alla beta"
+
+#: templates/components/navbar.html:96
+msgid "Home"
+msgstr "Home"
+
+#: templates/components/navbar.html:100
+msgid "Demo"
+msgstr ""
+
+#: templates/components/navbar.html:104
+msgid "Features"
+msgstr "Funzionalità"
+
+#: templates/components/navbar.html:108
+msgid "Pricing"
+msgstr "Prezzi"
+
+#: templates/components/navbar.html:112
+msgid "Help"
+msgstr "Aiuto"
+
+#: templates/components/pricing.html:11
+msgid "Test out what Kezyy can do to streamline your file collection"
+msgstr "Testa cosa Kezyy può fare per semplificare la raccolta di file"
+
+#: templates/components/pricing.html:13
+msgid "Free"
+msgstr "Gratis"
+
+#: templates/components/pricing.html:18
+msgid "Key features:"
+msgstr "Funzionalità principali:"
+
+#: templates/components/pricing.html:28
+#, python-format
+msgid ""
+"<span>Max spaces: <span class=\"font-semibold\">%(max_free_spaces)s spaces</"
+"span></span>"
+msgstr ""
+"<span>Massimo spazi: <span class=\"font-semibold\">%(max_free_spaces)s "
+"spazi</span></span>"
+
+#: templates/components/pricing.html:38
+msgid "Google Drive and One Drive integration"
+msgstr "Integrazione con Google Drive e One Drive"
+
+#: templates/components/pricing.html:48
+msgid "Deadlines and reminders"
+msgstr "Date di scadenza e promemoria"
+
+#: templates/components/pricing.html:58
+msgid "Unlimited invitees per space"
+msgstr "Numero illimitato di invitati per spazio"
+
+#: templates/components/pricing.html:68
+msgid "Unlimited file requests per space"
+msgstr "Numero illimitato di richieste di file per spazio"
+
+#: templates/components/pricing.html:78
+msgid "Self service knowledge base"
+msgstr "Knowledge base self service"
+
+#: templates/components/pricing.html:88 templates/components/pricing.html:149
+msgid "Get started"
+msgstr "Inizia"
+
+#: templates/components/pricing.html:106
+msgid "All basic features, plus:"
+msgstr "Tutte le funzionalità base, più:"
+
+#: templates/components/pricing.html:116
+msgid "Unlimited spaces"
+msgstr "Spazi illimitati"
+
+#: templates/components/pricing.html:126
+msgid "Email support"
+msgstr "Supporto via email"
+
+#: templates/components/pricing.html:131
+msgid "Current plan"
+msgstr "Piano attuale"
+
+#: templates/components/pricing.html:135
+msgid "Will cancel on"
+msgstr "Si annullerà il"
+
+#: templates/components/pricing.html:140
+msgid "Manage my subscription"
+msgstr "Gestisci la mia sottoscrizione"
+
+#: templates/components/pricing.html:145
+msgid "Upgrade"
+msgstr "Upgrade"
+
+#: templates/components/pricing.html:160
+msgid "Need Enterprise features?"
+msgstr "Ti servono funzionalità Enterprise?"
+
+#: templates/components/pricing.html:162
+#, fuzzy
+#| msgid "Contact us"
+msgid "Contact us at:"
+msgstr "Contattaci"
+
+#: templates/components/pricing.html:169
+msgid "Tell us more"
+msgstr "Dicci di più"
 
 #: templates/emails/changes_notification.html:11
 #, python-format
@@ -81,55 +204,291 @@ msgstr ""
 "%(receiver_name)s ti invita a caricare dei file nello spazio:<br> <a "
 "href=\"%(space_link)s\" style=\"text-decoration:underline;\"> %(title)s </a>"
 
-#: templates/public/sender_space_detail.html:13
+#: templates/public/feature_card.html:20
+msgid "Learn more"
+msgstr "Scopri di più"
+
+#: templates/public/public_landing.html:12
+msgid "Effortless file collection"
+msgstr "Raccolta di file senza problemi"
+
+#: templates/public/public_landing.html:16
+msgid ""
+"Set instructions, automate reminders, share public links and receive files "
+"neatly named in your drive."
+msgstr ""
+"Imposta istruzioni, automatizza promemoria, condividi link pubblici e ricevi "
+"file ordinatamente nominati nel tuo drive."
+
+#: templates/public/public_landing.html:22
+#: templates/public/public_landing.html:228
+msgid "Access beta for free"
+msgstr "Accedi alla beta gratuitamente"
+
+#: templates/public/public_landing.html:24
+#: templates/public/public_landing.html:230
+msgid "No credit card required"
+msgstr "Nessuna carta di credito richiesta"
+
+#: templates/public/public_landing.html:28
+msgid "View all features"
+msgstr "Visualizza tutte le funzionalità"
+
+#: templates/public/public_landing.html:56
+msgid "All the features you need in one tool"
+msgstr "Tutte le funzionalità di cui hai bisogno in un unico strumento"
+
+#: templates/public/public_landing.html:57
+msgid ""
+"You will feel like you hired someone to take care of collecting files for "
+"you."
+msgstr ""
+"Ti sembrerà di aver assunto qualcuno per occuparsi della raccolta di file "
+"per te."
+
+#: templates/public/public_landing.html:65
+msgid "Forget attachments, welcome personal links"
+msgstr "Dimentica gli allegati, utilizza i link personali"
+
+#: templates/public/public_landing.html:67
+msgid ""
+"Collect the same type of files from multiple counterparties with personal "
+"links. No sign up required."
+msgstr ""
+"Raccogli lo stesso tipo di file da più controparti con link personali. Non è "
+"richiesta alcuna registrazione."
+
+#: templates/public/public_landing.html:69
+msgid "images/home_features/sender_link.png"
+msgstr ""
+
+#: templates/public/public_landing.html:71
+#: templates/public/public_landing.html:83
+#: templates/public/public_landing.html:94
+#: templates/public/public_landing.html:105
+#: templates/public/public_landing.html:116
+#: templates/public/public_landing.html:128
+#: templates/public/public_landing.html:139
+#: templates/public/public_landing.html:150
+msgid "disable sender link gif"
+msgstr "disabilita il link del mittente gif"
+
+#: templates/public/public_landing.html:77
+msgid "All instructions in one place"
+msgstr "Tutte le istruzioni in un unico posto"
+
+#: templates/public/public_landing.html:79
+msgid ""
+"Replace long email threads by specifying all instructions in one place. "
+"Update details anytime."
+msgstr ""
+"Sostituisci le lunghe discussioni via email specificando tutte le istruzioni "
+"in un unico posto. Aggiorna i dettagli in qualsiasi momento."
+
+#: templates/public/public_landing.html:81
+msgid "images/home_features/instructions.png"
+msgstr ""
+
+#: templates/public/public_landing.html:88
+msgid "No awkward follow-ups with deadlines and reminders"
+msgstr "Nessun imbarazzante follow-up con scadenze e promemoria"
+
+#: templates/public/public_landing.html:90
+msgid ""
+"Set deadlines visible in calendars and let automated gentle reminders "
+"replace awkward pings."
+msgstr ""
+"Imposta scadenze visibili nei calendari e lascia che i promemoria automatici "
+"sostituiscano i fastidiosi ping."
+
+#: templates/public/public_landing.html:92
+msgid "images/home_features/deadline.png"
+msgstr ""
+
+#: templates/public/public_landing.html:99
+msgid "Predefined file destination"
+msgstr "Destinazione predefinita dei file"
+
+#: templates/public/public_landing.html:101
+msgid "Assign to each file a specific destination in your drive system."
+msgstr "Assegna a ciascun file una destinazione specifica nel tuo drive."
+
+#: templates/public/public_landing.html:103
+msgid "images/home_features/destination.png"
+msgstr ""
+
+#: templates/public/public_landing.html:110
+msgid "Parametric file names"
+msgstr "Nomi di file parametrici"
+
+#: templates/public/public_landing.html:112
+msgid ""
+"Stop renaming every attachment you receive, set a name that will tell what's "
+"inside including the upload date, sender email, and more."
+msgstr ""
+"Smetti di rinominare  ogni allegato che ricevi, imposta un nome che "
+"indicherà cosa c'è dentro, incluso la data di upload, l'email del mittente e "
+"altro."
+
+#: templates/public/public_landing.html:114
+msgid "images/home_features/naming.png"
+msgstr ""
+
+#: templates/public/public_landing.html:122
+msgid "Multiple file requests via one link"
+msgstr "Richieste di multipli file tramite un solo link"
+
+#: templates/public/public_landing.html:124
+msgid ""
+"Never ask to send the missing file again. Add multiple file requests to each "
+"upload space and set dedicated instructions and rules."
+msgstr ""
+"Non chiedere mai di inviare di nuovo il file mancante. Aggiungi più "
+"richieste di file a ciascuno spazio di upload e imposta istruzioni e regole "
+"dedicate."
+
+#: templates/public/public_landing.html:126
+msgid "images/home_features/multi_request.png"
+msgstr ""
+
+#: templates/public/public_landing.html:133
+msgid "Space dashboard"
+msgstr "Dashboard degli spazi"
+
+#: templates/public/public_landing.html:135
+msgid ""
+"Don't go through your email to see what's missing, the space dashboard has "
+"everything you need."
+msgstr ""
+"Non cercare tra le tue email per vedere cosa manca, la dashboard degli spazi "
+"ha tutto ciò di cui hai bisogno."
+
+#: templates/public/public_landing.html:137
+msgid "images/home_features/summary.png"
+msgstr ""
+
+#: templates/public/public_landing.html:144
+msgid "No more wrong files"
+msgstr "Basta file scorretti"
+
+#: templates/public/public_landing.html:146
+msgid ""
+"Counterparties upload files in one dedicated space. Each file is instantly "
+"validated by your rules, making progress transparent to all."
+msgstr ""
+"Le controparti caricano i file in uno spazio dedicato. Ciascun file viene "
+"validato istantaneamente dalle tue regole, rendendo il progresso trasparente "
+"a tutti."
+
+#: templates/public/public_landing.html:148
+msgid "images/home_features/restrictions.png"
+msgstr ""
+
+#: templates/public/public_landing.html:162
+msgid "Choose the right plan for you and your team"
+msgstr "Scegli il piano giusto per te e il tuo team"
+
+#: templates/public/public_landing.html:173
+msgid "Security first"
+msgstr "Sicurezza al primo posto"
+
+#: templates/public/public_landing.html:174
+msgid "Kezyy never stores your files"
+msgstr "Kezyy non salva mai i tuoi file"
+
+#: templates/public/public_landing.html:175
+msgid ""
+"Kezyy ensures direct transfers from your counterparties to your storage "
+"system, keeping files extra safe and confidential."
+msgstr ""
+"Kezyy garantisce trasferimenti diretti dai tuoi partner al tuo sistema di "
+"archiviazione, mantenendo i file extra sicuri e confidenziali."
+
+#: templates/public/public_landing.html:181
+msgid "Google Drive<br>connection"
+msgstr "Connessione a<br>Google Drive"
+
+#: templates/public/public_landing.html:182
+msgid "Receive files on shared folders too."
+msgstr "Ricevi file anche in cartelle condivise."
+
+#: templates/public/public_landing.html:186
+msgid "OneDrive<br>connection"
+msgstr "Connessione a<br>OneDrive"
+
+#: templates/public/public_landing.html:187
+msgid "Make received files instantly available to your peers."
+msgstr "Rendi i file ricevuti immediatamente disponibili ai tuoi colleghi."
+
+#: templates/public/public_landing.html:202
+msgid ""
+"\"Managing hundreds of weekly customer files via email, from download to "
+"Drive upload, was tedious, especially tracking missing submissions. With "
+"Kezyy, files land directly where needed, and we are perceived as more "
+"organized.\""
+msgstr ""
+"\"Gestire centinaia di file settimanali dei clienti via email, dal download "
+"all'upload su Drive, era noioso, specialmente il tracciamento delle "
+"submission mancanti. Con Kezyy, i file arrivano direttamente dove "
+"necessario, e siamo percepiti come più organizzati.\""
+
+#: templates/public/public_landing.html:223
+msgid "Get started for free"
+msgstr "Inizia gratuitamente"
+
+#: templates/public/public_landing.html:224
+msgid "Start collecting files on autopilot"
+msgstr "Inizia a raccogliere file in automatico"
+
+#: templates/public/sender_space_detail.html:14
 msgid "Accessing as:"
 msgstr "Accedendo come:"
 
-#: templates/public/sender_space_detail.html:15
+#: templates/public/sender_space_detail.html:16
 msgid "Accessing via public link"
 msgstr "Accedendo tramite link pubblico"
 
-#: templates/public/sender_space_detail.html:17
+#: templates/public/sender_space_detail.html:18
 msgid "Invited by:"
 msgstr "Invitato da:"
 
-#: templates/public/sender_space_detail.html:26
+#: templates/public/sender_space_detail.html:39
 msgid "Upload Space"
 msgstr "Spazio di Upload"
 
-#: templates/public/sender_space_detail.html:41
+#: templates/public/sender_space_detail.html:55
 msgid "Total max size of uploads: 50MB"
 msgstr "Massima dimensione totale degli upload: 50MB"
 
-#: templates/public/sender_space_detail.html:83
+#: templates/public/sender_space_detail.html:97
 msgid "It is not possible to upload files anymore. For any inquiries, contact:"
 msgstr "Non è più possibile caricare file. Per qualsiasi domanda, contatta:"
 
-#: templates/public/sender_space_detail.html:147
+#: templates/public/sender_space_detail.html:162
 msgid "Click to upload"
 msgstr "Clicca per caricare"
 
-#: templates/public/sender_space_detail.html:188
+#: templates/public/sender_space_detail.html:204
 msgid "Use this as a reference for your upload:"
 msgstr "Usa questo come riferimento per il tuo upload:"
 
-#: templates/public/sender_space_detail.html:189
+#: templates/public/sender_space_detail.html:205
 msgid "Template"
 msgstr "Modello"
 
-#: templates/public/sender_space_detail.html:196
+#: templates/public/sender_space_detail.html:212
 msgid "Restrictions:"
 msgstr "Restrizioni:"
 
-#: templates/public/sender_space_detail.html:198
+#: templates/public/sender_space_detail.html:215
 msgid "Allowed file extensions:"
 msgstr "Estensioni di file consentite:"
 
-#: templates/public/sender_space_detail.html:213
+#: templates/public/sender_space_detail.html:230
 msgid "Previous uploads"
 msgstr "Upload precedenti"
 
-#: templates/public/sender_space_detail.html:234
+#: templates/public/sender_space_detail.html:251
 msgid "Confirm and Upload"
 msgstr "Conferma e Carica"
 
@@ -150,7 +509,9 @@ msgid ""
 "Add a note to clarify what you are uploading, if needed. Notes do not "
 "substitute the upload of the requested files.\n"
 "                            "
-msgstr "Aggiungi una nota per chiarire cosa stai caricando, se necessario. Le note non sostituiscono l'upload dei file richiesti.\n"
+msgstr ""
+"Aggiungi una nota per chiarire cosa stai caricando, se necessario. Le note "
+"non sostituiscono l'upload dei file richiesti.\n"
 "                            "
 
 #: web_app/forms/file.py:69

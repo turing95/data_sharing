@@ -22,5 +22,6 @@ urlpatterns = [
     path("", include(urlpatterns)),
     path('accounts/', include('allauth.urls')),
     path("stripe/", include("djstripe.urls", namespace="djstripe")),
+    path('i18n/', include('django.conf.urls.i18n'))
 
 ]
