@@ -9,8 +9,8 @@ class ContactForm(forms.ModelForm):
                                  widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class': text_input}))
     last_name = forms.CharField(required=False, label="Last name",
                                 widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class': text_input}))
-    email = forms.CharField(label="Email",
-                            widget=forms.TextInput(attrs={'placeholder': 'Email*', 'class': text_input}))
+    email = forms.EmailField(label="Email",
+                            widget=forms.EmailInput(attrs={'placeholder': 'Email*', 'class': text_input}))
     company = forms.CharField(label="Company", required=False,
                               widget=forms.TextInput(attrs={'placeholder': 'Company', 'class': text_input}))
 

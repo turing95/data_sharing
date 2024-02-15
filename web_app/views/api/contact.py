@@ -33,7 +33,7 @@ def search_contacts(request):
 @login_required
 def create_contact_modal(request):
     if request.method == 'GET':
-        form = ContactForm(request=request)
+        form = ContactForm(request=request,initial={'email': request.GET.get('search-contacts',None)})
         return render(request,
                       'private/space/create/components/contacts/create_modal.html', {'form': form})
 
@@ -63,5 +63,7 @@ def create_contact(request):
         messages.error(request, 'Error creating contact. Please try again.')
         return render(request,
                       'private/space/create/components/contacts/create_form.html',
-                      {'form': form,'show_msg': True, 'from_htmx': True})
+                      {'form': form,'show_msg': True, 'from_htmx': True},
+                      status=400
+                      )
     return HttpResponseBadRequest()
