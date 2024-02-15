@@ -100,8 +100,8 @@
                                 <li class="inline-flex overflow-wrap-anywhere m-1">
                                     {% if sender_area is False %}
                                         <a href="{{ file.url }}" target="_blank"
-                                           class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
-                                            <span class="min-w-0">{{ file.name }}</span>
+                                           class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800 truncate">
+                                            <span class="min-w-0" title="{{ file.name }}">{{ file.name }}</span>
                                         </a>
 
                                         <button type="button"
@@ -117,7 +117,7 @@
                                             <span class="sr-only">Accept File</span>
                                         </button>
                                     {% else %}
-                                        <span class="min-w-0">{{ file.original_name }}</span>
+                                        <span class="min-w-0 truncate">{{ file.original_name }}</span>
                                     {% endif %}
                                     {% comment %}
                                     <button type="button"
@@ -132,12 +132,12 @@
                                     {% endcomment %}
                                     {% if file.status == file.FileStatus.PENDING %}
 
-                                        <span class="ml-2 text-sm text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] inline-block items-center justify-center">{{ file.status }}</span>
+                                        <span class="ml-2 text-sm min-w-[70px] text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
                                     {% elif  file.status == file.FileStatus.ACCEPTED %}
-                                        <span class="ml-2 text-sm text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] inline-block items-center justify-center">{{ file.status }}</span>
+                                        <span class="ml-2 text-sm min-w-[70px] text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
 
                                     {% elif file.status == file.FileStatus.REJECTED %}
-                                        <span class="ml-2 text-sm text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] inline-block items-center justify-center">{{ file.status }}</span>
+                                        <span class="ml-2 text-sm min-w-[70px]  text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
 
                                     {% endif %}
                                 </li>
