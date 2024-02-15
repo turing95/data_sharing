@@ -30,6 +30,7 @@ def request_changes(request, request_uuid):
             # Notify each sender about the changes request
             for tmp_sender, sender_files in files_by_senders.items():
                 tmp_sender.notify_changes_request(upload_request, sender_files, notes)
+            changes_form = FileSelectForm(sender=sender, public=public, upload_request=upload_request)
             messages.success(request, 'Changes requested successfully')
         return render(request, 'private/space/detail/components/changes_form.html',
                       {'req': upload_request, 'sender': sender, 'upload_events': events, 'changes_form': changes_form,
