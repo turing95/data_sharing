@@ -151,7 +151,11 @@
     </div>
 {% else %}
     <div>
-        <span class="text-gray-500">No uploads</span>
+        {% if sender_area %}
+            <span class="text-gray-500 text-sm">No uploads</span>
+        {% else %}
+            <span class="text-gray-500">No uploads</span>
+        {% endif %}
     </div>
 {% endif %}
 
