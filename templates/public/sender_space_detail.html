@@ -205,7 +205,7 @@
 
                             </div>
                             <div class="p-5"
-                                 hx-get="{% url 'history_table' space.uuid %}?request_uuid={{ form.upload_request.uuid }}&sender_uuid={{ sender.uuid }}"
+                                 hx-get="{% url 'sender_history_table' space.uuid %}?request_uuid={{ form.upload_request.uuid }}&sender_uuid={{ sender.uuid }}"
                                  hx-trigger="intersect once, filesUpdated from:document"
                                  hx-target="#history-table-{{ forloop.counter0 }}"
                                  hx-indicator="#loading-indicator-history-table-{{ forloop.counter0 }}">

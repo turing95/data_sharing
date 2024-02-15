@@ -54,6 +54,7 @@ urlpatterns = [
     path('requests/<uuid:request_uuid>/files/changes/', request_changes, name='request_changes'),
     path('requests/<uuid:request_uuid>/files/accept/', accept_all, name='accept_all'),
     path('requests/<uuid:request_uuid>/delete/', delete_request, name='request_delete'),
+    path('spaces/<uuid:space_uuid>/senders-history-table/', history_table, name='sender_history_table'),
     path('senders/<uuid:sender_uuid>/modal/', sender_modal, name='sender_modal'),
     path('senders/<uuid:sender_uuid>/sender-info/', sender_info, name='sender_info'),
     path('senders/<uuid:sender_uuid>/sender-row/', sender_row, name='sender_row'),

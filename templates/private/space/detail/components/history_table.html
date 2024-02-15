@@ -98,7 +98,7 @@
                         <ul class="flex flex-col">
                             {% for file in event.files.all %}
                                 <li class="inline-flex overflow-wrap-anywhere m-1">
-                                    {% if sender_area %}
+                                    {% if sender_area is False %}
                                         <a href="{{ file.url }}" target="_blank"
                                            class="text-blue-600 underline transition-colors duration-300 hover:text-blue-800">
                                             <span class="min-w-0">{{ file.name }}</span>
@@ -116,7 +116,7 @@
                                             </svg>
                                             <span class="sr-only">Accept File</span>
                                         </button>
-                                        {% else %}
+                                    {% else %}
                                         <span class="min-w-0">{{ file.original_name }}</span>
                                     {% endif %}
                                     {% comment %}
