@@ -12,6 +12,7 @@ from django.conf import settings
 import jwt
 
 
+
 class User(AbstractUser):
     '''
     Custom user model
@@ -59,6 +60,16 @@ class User(AbstractUser):
             return None
         return MicrosoftService(self.microsoft_account).get_sites()
 
+    def setup(self):
+        from web_app.models import Organization, SenderNotificationsSettings
+        SenderNotificationsSettings.objects.get_or_create(user=self)
+        # Check if an organization named "Personal" already exists in the user's organizations
+        personal_organization_exists = self.organizations.filter(name="Personal").exists()
+
+        # If it does not exist, create it and add it to the user's organizations
+        if not personal_organization_exists:
+            personal_organization = Organization.objects.create(name="Personal")
+            self.organizations.add(personal_organization)
 
 class GoogleService:
     def __init__(self, social_account):

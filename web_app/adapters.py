@@ -23,13 +23,6 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def save_user(self, request, user, form=None):
         # Call the super class's save_user to save the user model
         user = super().save_user(request, user, form)
-        # Check if an organization named "Personal" already exists in the user's organizations
-        SenderNotificationsSettings.objects.get_or_create(user=user)
-        personal_organization_exists = user.organizations.filter(name="Personal").exists()
-
-        # If it does not exist, create it and add it to the user's organizations
-        if not personal_organization_exists:
-            personal_organization = Organization.objects.create(name="Personal")
-            user.organizations.add(personal_organization)
+        user.setup()
 
         return user
