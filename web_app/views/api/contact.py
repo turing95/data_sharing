@@ -15,14 +15,11 @@ def search_contacts(request):
     if request.method == 'POST':
         search_query = request.POST.get('search-contacts')
         if search_query:
-            contacts = request.user.contacts.annotate(
-                first_name_similarity=TrigramSimilarity('first_name', search_query),
-                last_name_similarity=TrigramSimilarity('last_name', search_query),
-                email_similarity=TrigramSimilarity('email', search_query),
-            ).filter(
-                Q(first_name_similarity__gt=0.1) |
-                Q(last_name_similarity__gt=0.1) |
-                Q(email_similarity__gt=0.1)
+            contacts = request.user.contacts.filter(
+                Q(first_name__icontains=search_query) |
+                Q(last_name__icontains=search_query) |
+                Q(email__icontains=search_query) |
+                Q(company__icontains=search_query)
             )
 
         return render(request,

@@ -22,7 +22,6 @@ def toggle_space_public(request, space_uuid):
         render_block_to_string('private/space/detail/components/summary.html', 'details', {'space': space}, request))
 
 
-
 def history_table(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
     upload_events = space.events.all()
@@ -32,18 +31,12 @@ def history_table(request, space_uuid):
     if request.method == 'POST':
         search_query = request.POST.get('search')
         if search_query:
-            upload_events = upload_events.annotate(
-                name_similarity=TrigramSimilarity('files__name', search_query),
-                email_similarity=TrigramSimilarity('sender__email', search_query),
-                title_similarity=TrigramSimilarity('request__title', search_query),
-                original_name_similarity=TrigramSimilarity('files__original_name', search_query),
-            ).filter(
-                Q(name_similarity__gt=0.1) |
-                Q(email_similarity__gt=0.1) |
-                Q(title_similarity__gt=0.1) |
-                Q(original_name_similarity__gt=0.1)
+            upload_events = upload_events.filter(
+                Q(files__name__icontains=search_query) |
+                Q(sender__email__icontains=search_query) |
+                Q(request__title__icontains=search_query) |
+                Q(files__original_name__icontains=search_query)
             )
-
     if request.GET.get('sender_uuid'):
         sender_uuid = request.GET.get('sender_uuid')
         upload_events = upload_events.filter(sender__uuid=sender_uuid)
@@ -77,7 +70,7 @@ def request_modal(request, request_uuid):
         sender_uuid = request.GET.get('sender_uuid')
         sender = Sender.objects.get(pk=sender_uuid)
         files = files.filter(sender_event__sender=sender)
-    changes_form = FileSelectForm(upload_request=upload_request, sender=sender,public=public)
+    changes_form = FileSelectForm(upload_request=upload_request, sender=sender, public=public)
 
     return render(request, 'private/space/detail/components/request_modal.html',
                   {'req': upload_request,
