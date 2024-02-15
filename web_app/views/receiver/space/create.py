@@ -85,7 +85,7 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
         return self.form_invalid(form)
 
     def update_or_create_sender(self, email, space_instance):
-        contact = Contact.objects.get(email=email, user=self.request.user)
+        contact,created = Contact.objects.get_or_create(email=email, user=self.request.user)
         sender, created = Sender.objects.update_or_create(email=contact.email, contact=contact,
                                                           space=space_instance, defaults={'is_active': True})
         return sender, created

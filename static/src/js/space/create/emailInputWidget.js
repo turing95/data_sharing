@@ -1,33 +1,33 @@
 let addedEmails = new Set();
 
-export function initEmailInput(){
+export function initEmailInput() {
     initializeEmailTags();
 
-       /* const emailInput = document.getElementById('id_email_input');
+    const emailInput = document.getElementById('id_search-contacts');
 
-        emailInput.addEventListener('blur', () => {
-            const email = emailInput.value.trim();
-            if (isValidEmail(email)) {
-                addEmailTag(email);
-                emailInput.value = '';
-            }
-        });
+    emailInput.addEventListener('blur', () => {
+        const email = emailInput.value.trim();
+        if (isValidEmail(email)) {
+            addEmailTag(email);
+            emailInput.value = '';
+        }
+    });
 
-        emailInput.addEventListener('keydown', (e) => {
-            if ([' ', ',', ';', 'Enter'].includes(e.key)) {
-                e.preventDefault();
-                emailInput.value = processInputText(emailInput.value);
-            }
-        });
-
-        emailInput.addEventListener('paste', (e) => {
+    emailInput.addEventListener('keydown', (e) => {
+        if ([' ', ',', ';', 'Enter'].includes(e.key)) {
             e.preventDefault();
-            emailInput.value = processInputText((e.clipboardData || window.clipboardData).getData('text'));
-        });*/
+            emailInput.value = processInputText(emailInput.value);
+        }
+    });
 
-        document.getElementById("space-form").addEventListener('submit', () => {
-            document.getElementById('id_senders_emails').value = Array.from(addedEmails).join(',');
-        });
+    emailInput.addEventListener('paste', (e) => {
+        e.preventDefault();
+        emailInput.value = processInputText((e.clipboardData || window.clipboardData).getData('text'));
+    });
+
+    document.getElementById("space-form").addEventListener('submit', () => {
+        document.getElementById('id_senders_emails').value = Array.from(addedEmails).join(',');
+    });
 
 }
 

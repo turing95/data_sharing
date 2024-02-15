@@ -18,6 +18,7 @@ class User(AbstractUser):
     self.request.session['account_authentication_methods'] to access authentication methods( has social provider)
     '''
     organizations = models.ManyToManyField('Organization', through='UserOrganization')
+    language = models.CharField(max_length=10, default='en')
 
     @property
     def full_name(self):
