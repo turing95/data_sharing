@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-15 15:21+0000\n"
+"POT-Creation-Date: 2024-02-15 15:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,6 +203,96 @@ msgid ""
 msgstr ""
 "%(receiver_name)s ti invita a caricare dei file nello spazio:<br> <a "
 "href=\"%(space_link)s\" style=\"text-decoration:underline;\"> %(title)s </a>"
+
+#: templates/public/beta_access_request.html:11
+msgid "Thanks for requesting access to Kezyy's Beta"
+msgstr "Grazie per aver richiesto l'accesso alla Beta di Kezyy"
+
+#: templates/public/beta_access_request.html:12
+msgid ""
+"We'll get back to you in a few hours after we have reviewed your request."
+msgstr ""
+"Ti risponderemo tra poche ore dopo aver esaminato la tua richiesta."
+
+#: templates/public/beta_access_request.html:14
+msgid "Back to homepage"
+msgstr "Torna alla homepage"
+
+#: templates/public/beta_access_request.html:25
+msgid "Kezyy's Beta Access"
+msgstr "Accesso alla Beta di Kezyy"
+
+#: templates/public/beta_access_request.html:26
+msgid "To access the Beta you need to have your email approved."
+msgstr "Per accedere alla Beta è necessario che la tua email venga approvata."
+
+#: templates/public/beta_access_request.html:27
+msgid ""
+"You can book a Demo and explain your use case or just fill a short form if "
+"you prefer."
+msgstr ""
+"Puoi prenotare una Demo e spiegare il tuo caso d'uso o semplicemente "
+"compilare un breve form se preferisci."
+
+#: templates/public/beta_access_request.html:42
+msgid "'Book a 15 minutes Demo'"
+msgstr "'Prenota una Demo di 15 minuti'"
+
+#: templates/public/beta_access_request.html:59
+msgid "Or fill a short form"
+msgstr "O compila un breve form"
+
+#: templates/public/beta_access_request.html:71
+msgid "Kezyy's Beta Access Form"
+msgstr "Modulo di accesso alla Beta di Kezyy"
+
+#: templates/public/beta_access_request.html:72
+msgid ""
+"<p class=\"mt-2 text-sm text-gray-600\">Please, provide your email address "
+"and answer these few questions.<br> We review requests every day, and you "
+"will receive an email once you will be allowed to sign up.<br> Remember to "
+"insert the same email you will use to sign up via your Google or Microsoft "
+"account.</p>"
+msgstr ""
+"<p class=\"mt-2 text-sm text-gray-600\">Per favore, fornisci il tuo indirizzo "
+"email e rispondi a queste poche domande.<br> Esaminiamo le richieste ogni "
+"giorno, e riceverai una email una volta che ti sarà permesso di registrarti."
+"<br> Ricorda di inserire la stessa email che userai per registrarti tramite "
+"il tuo account Google o Microsoft.</p>"
+
+#: templates/public/beta_access_request.html:77
+msgid "Book a demo instead"
+msgstr "Prenota una demo invece"
+
+#: templates/public/beta_access_request.html:86
+msgid "Name"
+msgstr "Nome"
+
+#: templates/public/beta_access_request.html:86
+#: templates/public/beta_access_request.html:99
+#: templates/public/beta_access_request.html:113
+msgid "required"
+msgstr "obbligatorio"
+
+#: templates/public/beta_access_request.html:97
+msgid "Email"
+msgstr "Email"
+
+#: templates/public/beta_access_request.html:112
+msgid "Briefly describe how and why you collect files?"
+msgstr "Descrivi brevemente come e perché raccogli file?"
+
+#: templates/public/beta_access_request.html:125
+msgid "What's your company?"
+msgstr "Qual è la tua azienda?"
+
+#: templates/public/beta_access_request.html:136
+msgid "And role?"
+msgstr "E il tuo ruolo?"
+
+#: templates/public/beta_access_request.html:150
+msgid "How did you hear about Kezyy?"
+msgstr "Come hai sentito parlare di Kezyy?"
 
 #: templates/public/feature_card.html:20
 msgid "Learn more"
