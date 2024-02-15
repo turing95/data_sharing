@@ -1,5 +1,6 @@
 document.addEventListener('htmx:afterRequest', function(evt) {
-    if (evt.detail.successful && evt.detail.xhr.status === 200) {
+    let successStates = [200,201, 204];
+    if (evt.detail.successful && successStates.includes(evt.detail.xhr.status)) {
         handleSenderUpdated(evt);
         handleFilesChanges(evt);
     }
