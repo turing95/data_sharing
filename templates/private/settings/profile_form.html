@@ -6,12 +6,12 @@
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
 
         
-    <div class="mb-3 md:w-1/4 w-3/4">
+    <div class="w-3/4 mb-3 md:w-1/4">
         <label for="Email"
                class="block text-sm font-medium text-gray-900 dark:text-white">Email</label>
-        <span class="block ml-2 text-gray-500 truncate dark:text-gray-400">{{ request.user.email }}</span>
+        <span class="block ml-2 text-gray-500 dark:text-gray-400">{{ request.user.email }}</span>
     </div>
-    <div class="mb-3 md:w-1/4 w-3/4">
+    <div class="w-3/4 mb-3 md:w-1/4">
         <label for="{{ form.first_name.id_for_label }}"
                class="font-medium text-gray-900 dark:text-white">{{ form.first_name.label }}
 
@@ -20,7 +20,7 @@
         {{ form.first_name }}
         {% include 'components/forms/error_widget.html' with errors=form.first_name.errors %}
     </div>
-    <div class="mb-3 md:w-1/4 w-3/4">
+    <div class="w-3/4 mb-3 md:w-1/4">
         <label for="{{ form.last_name.id_for_label }}"
                class="font-medium text-gray-900 dark:text-white">{{ form.last_name.label }}
 
