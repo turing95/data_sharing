@@ -114,11 +114,11 @@
                     {% if request.user.is_authenticated is False %}
                         <li class="flex flex-col items-center justify-center py-2 md:hidden">
                             <a href="{% url 'account_login' %}"
-                               class="px-10 py-1 text-blue-700 bg-transparent signin hover:underline dark:text-blue-500">Sign
-                                in</a>
+                               class="px-10 py-1 text-blue-700 bg-transparent signin hover:underline dark:text-blue-500">{% translate 'Sign in' %}</a>
                             <!-- Include other elements as needed -->
                             {% url 'generic_beta_access' as generic_beta_access_url %}
-                            {% include "components/buttons/generic.html" with button_text="Access beta" href=beta_access_request_url extra_classes="px-10" %}
+                            {% translate 'Access beta' as beta_text %}
+                            {% include "components/buttons/generic.html" with button_text=beta_text href=beta_access_request_url extra_classes="px-10" %}
 
                         </li>
                     {% endif %}
