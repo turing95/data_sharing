@@ -15,7 +15,6 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
 
 urlpatterns = [
     # Generic views
-    path('accounts/set-language/', custom_set_language, name='set_user_language'),
     path('terms-of-service/', TermsOfServiceView.as_view(), name='generic_terms_of_service'),
     path('privacy-policy/', privacy_policy, name='generic_privacy_policy'),
     path('cookie-policy/', cookie_policy, name='generic_cookie_policy'),
