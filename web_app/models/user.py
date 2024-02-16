@@ -1,6 +1,8 @@
 from allauth.socialaccount.models import SocialAccount, SocialToken
 from django.contrib.auth.models import AbstractUser
+from django.core.mail import get_connection, EmailMultiAlternatives
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils.functional import cached_property
 from google.auth.transport.requests import Request
 import arrow
@@ -10,7 +12,9 @@ from msal import ConfidentialClientApplication
 import requests
 from django.conf import settings
 import jwt
+from django.utils.translation import gettext_lazy as _
 
+from utils.emails import html_to_text
 
 
 class User(AbstractUser):
@@ -70,6 +74,44 @@ class User(AbstractUser):
         if not personal_organization_exists:
             personal_organization = Organization.objects.create(name="Personal")
             self.organizations.add(personal_organization)
+
+    def notify_upload(self, sender_event):
+        from web_app.models.settings import NotificationsSettings
+        from web_app.utils import get_base_context_for_email
+        try:
+            if sender_event.space.is_deleted is False and self.notifications_settings.on_sender_upload:
+                context = get_base_context_for_email()
+                context[
+                    'pre_header_text'] = _('New Upload receipt')
+                context['sender_event'] = sender_event
+
+                email_html = render_to_string('emails/receiver_upload_notification.html', context)
+                from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
+                with get_connection(
+                        host=settings.RESEND_SMTP_HOST,
+                        port=settings.RESEND_SMTP_PORT,
+                        username=settings.RESEND_SMTP_USERNAME,
+                        password=settings.RESEND_API_KEY,
+                        use_tls=True,
+                ) as connection:
+                    msg = EmailMultiAlternatives(
+                        subject=context['pre_header_text'],
+                        body=html_to_text(email_html),
+                        from_email=from_email,
+                        to=[self.email],
+                        reply_to=[from_email],
+                        connection=connection,
+                        headers={'Return-Path': from_email}
+                    )
+                    msg.attach_alternative(email_html, 'text/html')
+
+                    msg.send()
+                return True
+            return False
+        except NotificationsSettings.DoesNotExist:
+            NotificationsSettings.objects.create(user=self)
+            return self.notify_upload(sender_event)
+
 
 class GoogleService:
     def __init__(self, social_account):
