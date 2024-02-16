@@ -1795,6 +1795,26 @@ input:checked + .toggle-bg {
   min-width: 65px;
 }
 
+.min-w-\[300px\] {
+  min-width: 300px;
+}
+
+.min-w-\[2\] {
+  min-width: 2;
+}
+
+.min-w-\[250p\] {
+  min-width: 250p;
+}
+
+.min-w-\[250px\] {
+  min-width: 250px;
+}
+
+.min-w-\[125px\] {
+  min-width: 125px;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }

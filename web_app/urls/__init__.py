@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     profile, LoginView, LoginCancelledView, SpaceDetailFormViewSender, \
     TermsOfServiceView, privacy_policy, cookie_policy, DeleteSpaceView, SettingsView, PublicLandingView, \
@@ -9,6 +9,9 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
     bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes,accept_all,accept_single
+    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes, accept_all, \
+    accept_single, SignupView, PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
+
 
 urlpatterns = [
     # Generic views
@@ -19,7 +22,17 @@ urlpatterns = [
     path('', PublicLandingView.as_view(), name='generic_home'),
     # Receiver views
     path('spaces/', SpacesView.as_view(), name='spaces'),
+    path('accounts/signup/', SignupView.as_view(), name='account_signup'),
     path('accounts/login/', LoginView.as_view(), name='account_login'),
+    path('accounts/password/reset/', PasswordResetView.as_view(), name='account_reset_password'),
+    path(
+        "accounts/password/reset/key/done/",
+        PasswordResetFromKeyDoneView.as_view(),
+        name="account_reset_password_from_key_done",
+    ),
+    path('accounts/password/reset/done/', PasswordResetDoneView.as_view(), name='account_reset_password_done'),
+    re_path(
+        r"^accounts/password/reset/key/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$", PasswordResetFromKeyView.as_view(), name='account_reset_password_from_key'),
     path('accounts/profile/', profile, name='account_profile'),
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
     path('accounts/sender-notifications-settings/', sender_notifications_settings, name='account_sender_notifications'),

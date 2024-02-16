@@ -4,7 +4,7 @@ from web_app.views.receiver.space.delete import DeleteSpaceView
 from web_app.views.receiver.space.duplicate import duplicate
 from web_app.views.receiver.authentication.signup import SignupView
 from web_app.views.receiver.authentication.login import LoginView,LoginCancelledView
-from web_app.views.receiver.authentication.reset_password import PasswordResetView
+from web_app.views.receiver.authentication.reset_password import PasswordResetView,PasswordResetDoneView,PasswordResetFromKeyView ,PasswordResetFromKeyDoneView
 from web_app.views.receiver.authentication.delete import AccountDeleteView
 from web_app.views.receiver.authentication.connections import ConnectionsView
 from web_app.views.api.profile import profile
