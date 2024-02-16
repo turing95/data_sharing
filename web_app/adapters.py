@@ -38,6 +38,15 @@ class AccountAdapter(DefaultAccountAdapter):
             )
             msg.attach_alternative(email_html, 'text/html')
 
+            msg.send()
+
+    def save_user(self, request, user, form, commit=True):
+        # Call the super class's save_user to save the user model
+        user = super().save_user(request, user, form, commit=True)
+        user.setup()
+
+        return user
+
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def validate_disconnect(self, account, accounts):
