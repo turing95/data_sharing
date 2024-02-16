@@ -8,10 +8,10 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
-    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes,accept_all,accept_single
     bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes, accept_all, \
     accept_single, SignupView, PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, PasswordResetFromKeyDoneView
 
+from web_app.views.language import custom_set_language
 
 urlpatterns = [
     # Generic views
