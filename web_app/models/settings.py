@@ -17,3 +17,10 @@ class SenderNotificationsSettings(BaseModel):
         if not self.reference_email:
             self.reference_email = self.user.email
         super().save(*args, **kwargs)
+
+
+
+class NotificationsSettings(BaseModel):
+    user = models.OneToOneField('User', on_delete=models.CASCADE,
+                                related_name='notifications_settings')
+    on_sender_upload = models.BooleanField(default=False)

@@ -68,18 +68,18 @@ class Sender(BaseModel, ActiveModel):
         })
 
     def get_context_for_email(self):
-        return {
+        from web_app.utils import get_base_context_for_email
+        context = get_base_context_for_email()
+        ctx_update = {
             'sender': self,
             'receiver_email': self.space.user.sender_notifications_settings.reference_email,
             'receiver_name': self.space.user.sender_notifications_settings.name,
-            'contact_email': settings.CONTACT_EMAIL,
             'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
-            'homepage_link': settings.BASE_URL,
-            'logo_link': settings.BASE_URL + static('images/logo.png'),
             'space_link': self.full_space_link
 
         }
-
+        context.update(ctx_update)
+        return context
     def notify_deadline(self):
         current_language = get_language()  # Store the current language
         try:
@@ -87,7 +87,8 @@ class Sender(BaseModel, ActiveModel):
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 pre_header_text = _('Remember to complete the upload to the space:')
-                context['pre_header_text'] = format_lazy('{pre_header_text} {title}', pre_header_text=pre_header_text, title=self.space.title)
+                context['pre_header_text'] = format_lazy('{pre_header_text} {title}', pre_header_text=pre_header_text,
+                                                         title=self.space.title)
                 title_text = _('Upload reminder for the space:')
                 email_html = render_to_string('emails/deadline_notification.html', context)
                 from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
@@ -173,7 +174,8 @@ class Sender(BaseModel, ActiveModel):
             if self.is_active and self.space.is_deleted is False:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
-                context['pre_header_text'] = f'{context["receiver_name"]} has requested changes for {upload_request.title}'
+                context[
+                    'pre_header_text'] = f'{context["receiver_name"]} has requested changes for {upload_request.title}'
                 pre_header_text = _('has requested changes for')
                 changes_title_text = _('Changes Requested:')
                 context['pre_header_text'] = format_lazy('{receiver_name} {pre_header_text} {title}',
@@ -215,3 +217,39 @@ class Sender(BaseModel, ActiveModel):
         finally:
             activate(current_language)  # Restore the original language
 
+    def notify_upload(self, sender_event):
+        current_language = get_language()  # Store the current language
+        try:
+            if self.is_active and self.space.is_deleted is False:
+                activate(self.space.user.sender_notifications_settings.language)
+                context = self.get_context_for_email()
+                context[
+                    'pre_header_text'] = _('Your Upload receipt')
+                context['sender_event'] = sender_event
+
+                email_html = render_to_string('emails/sender_upload_notification.html', context)
+                from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
+                with get_connection(
+                        host=settings.RESEND_SMTP_HOST,
+                        port=settings.RESEND_SMTP_PORT,
+                        username=settings.RESEND_SMTP_USERNAME,
+                        password=settings.RESEND_API_KEY,
+                        use_tls=True,
+                ) as connection:
+                    msg = EmailMultiAlternatives(
+                        subject=context['pre_header_text'],
+                        body=html_to_text(email_html),
+                        from_email=from_email,
+                        to=[self.email],
+                        reply_to=[from_email],
+                        connection=connection,
+                        headers={'Return-Path': from_email}
+                    )
+                    msg.attach_alternative(email_html, 'text/html')
+
+                    msg.send()
+                self.save()
+                return True
+            return False
+        finally:
+            activate(current_language)  # Restore the original language

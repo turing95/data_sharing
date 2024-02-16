@@ -43,3 +43,11 @@ def bulk_notify_deadline(space_pk):
     space = Space.objects.get(pk=space_pk)
     for sender in space.senders.all():
         sender.notify_deadline()
+
+
+@app.task(autoretry_for=(smtplib.SMTPServerDisconnected,),
+          retry_kwargs={'max_retries': 5}, default_retry_delay=5)
+def handle_sender_upload(sender_event_pk, notify_sender=False):
+    from web_app.models import SenderEvent
+    sender_event = SenderEvent.objects.get(pk=sender_event_pk)
+    sender_event.notify(notify_sender=notify_sender)

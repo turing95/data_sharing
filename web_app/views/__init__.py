@@ -21,7 +21,7 @@ from web_app.views.sender.space_detail import SpaceDetailView as SpaceDetailForm
 from web_app.views.custom_http_errors import custom_page_not_found, custom_server_error
 
 from web_app.views.api.sender import (toggle_sender_active,notify_deadline,notify_invitation, sender_modal, sender_info,
-                                      sender_row,all_senders_modal,bulk_notify_invitation,bulk_notify_deadline)
+                                      sender_row,all_senders_modal,bulk_notify_invitation,bulk_notify_deadline, sender_upload_notification)
 from web_app.views.api.space import toggle_space_public,history_table,request_modal
 from web_app.views.api.request import delete_request
 from web_app.views.api.contact import search_contacts, create_contact_modal, create_contact

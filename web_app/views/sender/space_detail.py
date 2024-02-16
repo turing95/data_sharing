@@ -58,6 +58,8 @@ class SpaceDetailView(TemplateView):
                                             file_type=uploaded_file.content_type,
                                             url=file_url,
                                             sender_event=sender_event)
+                    if sender_event is not None:
+                        sender_event.notify(request.session.get('sender_upload_notification',False))
                     if not error:
                         messages.success(request, f"Your upload has completed")
             return redirect(request.path)

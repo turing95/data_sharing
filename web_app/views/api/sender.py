@@ -103,3 +103,10 @@ def all_senders_modal(request, space_uuid):
 
     return render(request, 'private/space/detail/components/all_senders_modal.html',
                   {'space': space})
+
+
+@require_POST
+def sender_upload_notification(request):
+    request.session['sender_upload_notification'] = request.POST['sender_upload_notification']
+    print(request.session['sender_upload_notification'])
+    return HttpResponse(status=204)
