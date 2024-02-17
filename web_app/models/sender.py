@@ -80,6 +80,7 @@ class Sender(BaseModel, ActiveModel):
         }
         context.update(ctx_update)
         return context
+
     def notify_deadline(self):
         current_language = get_language()  # Store the current language
         try:
@@ -211,7 +212,6 @@ class Sender(BaseModel, ActiveModel):
                     msg.attach_alternative(email_html, 'text/html')
 
                     msg.send()
-                self.save()
                 return True
             return False
         finally:
@@ -248,7 +248,6 @@ class Sender(BaseModel, ActiveModel):
                     msg.attach_alternative(email_html, 'text/html')
 
                     msg.send()
-                self.save()
                 return True
             return False
         finally:
