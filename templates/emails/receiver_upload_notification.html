@@ -6,10 +6,10 @@
             <!--primary 1-->
             <table style="width:100%;">
                 <tr>
-                    <td style="font-weight:bold;font-size:20px;padding:20px 0;line-height: 1.2">
+                    <td style="font-size:20px;padding:20px 0;line-height: 1.2">
                     {% with req_title=sender_event.request.title space_title=sender_event.space.title sender_email=sender_event.sender.email %}
                         {% blocktranslate trimmed %}
-                            {{ sender_email }} has uploaded files to  {{ req_title }}, in space <b>{{ space_title }}</b>
+                            {{ sender_email }} has uploaded files to  <b>{{ req_title }}</b>, in space <b>{{ space_title }}</b>
                         {% endblocktranslate %}
                     {% endwith %}
 
