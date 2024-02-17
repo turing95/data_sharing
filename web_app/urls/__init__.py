@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver, \
     profile, LoginView, LoginCancelledView, SpaceDetailFormViewSender, \
     TermsOfServiceView, privacy_policy, cookie_policy, DeleteSpaceView, SettingsView, PublicLandingView, \
@@ -8,10 +8,15 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
-    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes,accept_all,accept_single
+    bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes, accept_all, \
+    accept_single, SignupView, PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, \
+    PasswordResetFromKeyDoneView, sender_upload_notification, account_notifications
+
+from web_app.views.language import custom_set_language
 
 urlpatterns = [
     # Generic views
+    path('accounts/set-language/', custom_set_language, name='set_user_language'),
     path('terms-of-service/', TermsOfServiceView.as_view(), name='generic_terms_of_service'),
     path('privacy-policy/', privacy_policy, name='generic_privacy_policy'),
     path('cookie-policy/', cookie_policy, name='generic_cookie_policy'),
@@ -19,10 +24,21 @@ urlpatterns = [
     path('', PublicLandingView.as_view(), name='generic_home'),
     # Receiver views
     path('spaces/', SpacesView.as_view(), name='spaces'),
+    path('accounts/signup/', SignupView.as_view(), name='account_signup'),
     path('accounts/login/', LoginView.as_view(), name='account_login'),
+    path('accounts/password/reset/', PasswordResetView.as_view(), name='account_reset_password'),
+    path(
+        "accounts/password/reset/key/done/",
+        PasswordResetFromKeyDoneView.as_view(),
+        name="account_reset_password_from_key_done",
+    ),
+    path('accounts/password/reset/done/', PasswordResetDoneView.as_view(), name='account_reset_password_done'),
+    re_path(
+        r"^accounts/password/reset/key/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$", PasswordResetFromKeyView.as_view(), name='account_reset_password_from_key'),
     path('accounts/profile/', profile, name='account_profile'),
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
     path('accounts/sender-notifications-settings/', sender_notifications_settings, name='account_sender_notifications'),
+    path('accounts/notifications-settings/', account_notifications, name='account_notifications'),
     path('accounts/delete/', AccountDeleteView.as_view(), name='account_delete'),
     path('accounts/social/connections/', ConnectionsView.as_view(), name='socialaccount_connections'),
     path('accounts/social/login/cancelled/', LoginCancelledView.as_view(), name='socialaccount_login_cancelled'),
@@ -61,6 +77,7 @@ urlpatterns = [
     path('senders/<uuid:sender_uuid>/toggle-active/', toggle_sender_active, name='toggle_sender_active'),
     path('senders/<uuid:sender_uuid>/notify_deadline/', notify_deadline, name='notify_deadline'),
     path('senders/<uuid:sender_uuid>/notify_invitation/', notify_invitation, name='notify_invitation'),
+    path('senders/sender-upload-notification/', sender_upload_notification, name='sender_upload_notification'),
     path('contacts/search/', search_contacts, name='search_contacts'),
     path('contacts/create/modal/', create_contact_modal, name='create_contact_modal'),
     path('contacts/create/', create_contact, name='create_contact'),

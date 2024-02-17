@@ -8,6 +8,6 @@ from web_app.forms.authentication.disconnect import CustomSocialDisconnectForm
 from web_app.forms.file import FileForm, BaseFileFormSet
 from web_app.forms.beta_access_request import BetaAccessRequestForm
 from web_app.forms.user import UserForm
-from web_app.forms.settings import SenderNotificationsSettingsForm
+from web_app.forms.settings import SenderNotificationsSettingsForm, NotificationsSettingsForm
 from web_app.forms.contact import ContactForm
 from web_app.forms.file_changes import FileSelectForm

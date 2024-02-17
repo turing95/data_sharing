@@ -29,16 +29,24 @@
 
                 <th scope="col" class="px-3 py-1.5 min-w-[150px] normal-case">
                     <div class="flex flex-col justify-start">
-                    
-                        {% if req.destination.url %}
-                            <a href="{{ req.destination.url }}" title="{{ req.title }}" target="_blank"
-                               class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">
-                                <span class=" min-w-[25px] max-w-[250px] line-clamp-2">{{ req.title }} </span>
-                            </a>
-                        {% else %}
-                            <span class=" min-w-[25px] max-w-[250px] line-clamp-2"
-                                  title="{{ req.title }}">{{ req.title }} </span>
-                        {% endif %}
+                        <a href="{{ req.destination.url }}"
+                           title="{{ req.title }}"
+                           hx-get="{% url 'request_modal'  req.uuid %}"
+                           hx-trigger="click"
+                           hx-target="#htmx-modal"
+                           hx-swap="innerHTML"
+                           hx-indicator="#sender-table-loading-indicator-{{ req.uuid }}"
+                           target="_blank"
+                           class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">
+                            <span class=" min-w-[25px] max-w-[250px] line-clamp-2">{{ req.title }} </span>
+                        </a>
+                        <div id="sender-table-loading-indicator-{{ req.uuid }}"
+                             class="items-center justify-center opacity-1 my-htmx-indicator">
+                            <div role="status" class="ml-2 spinner">
+                                {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                         {% if req.is_active is False %}
                             <span class="flex text-xs font-normal {% if req.is_active is False %}text-yellow-400{% endif %}">
                             (suspended)
@@ -100,7 +108,7 @@
 
                     <td class="px-3 py-2">
                         <div class="flex"
-                             >
+                        >
                                 <span class="flex-shrink-0 text-center cursor-pointer hover:underline"
                                       hx-get="{% url 'request_modal'  req.uuid %}?public=1"
                                       hx-trigger="click"

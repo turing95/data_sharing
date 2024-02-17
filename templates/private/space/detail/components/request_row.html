@@ -19,10 +19,19 @@
         <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
              hx-get="{% url 'request_modal'  req.uuid %}"
              hx-trigger="click"
+             hx-indicator="#request-row-title-loading-indicator-{{ req.uuid }}"
              hx-target="#htmx-modal"
              hx-swap="innerHTML">
             {{ req.title }}
-
+                <div class="flex items-center mb-3">
+        <div id="request-row-title-loading-indicator-{{ req.uuid }}"
+             class="items-center justify-center opacity-1 my-htmx-indicator">
+            <div role="status" class="ml-2 spinner">
+                {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>  
         </div>
         {% if req.is_active is False %}
 
@@ -31,6 +40,7 @@
                             {% include 'components/tooltip.html' with target_prefix='request' num=forloop.counter content='Request suspended, add a destination to activate it again' %}
         </span>
         {% endif %}
+
 
     </th>
     <td class="px-3 py-2">

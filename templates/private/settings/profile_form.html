@@ -29,7 +29,8 @@
         {{ form.last_name }}
         {% include 'components/forms/error_widget.html' with errors=form.last_name.errors %}
     </div>
-
-    {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto mr-10" button_text="Save" %}
+    <div class="flex mb-3 md:w-1/4 w-3/4">
+    {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text="Save" %}
+    </div>
 
 </form>

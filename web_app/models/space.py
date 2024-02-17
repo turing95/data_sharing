@@ -1,6 +1,8 @@
 from copy import deepcopy
 
 from django.db import models
+from django.urls import reverse
+
 from web_app.models import BaseModel, DeleteModel
 from django.conf import settings
 import pytz
@@ -26,6 +28,11 @@ class Space(BaseModel, DeleteModel):
     )
     locale = models.CharField(max_length=10, null=True, blank=True, default='en-us')
 
+    @property
+    def link_for_email(self):
+        return settings.BASE_URL + reverse('receiver_space_detail', kwargs={
+            'space_uuid': self.uuid
+        })
     @property
     def deadline_notification_datetime(self):
         if not self.deadline or self.deadline_notice_days is None or self.deadline_notice_hours is None:

@@ -1,0 +1,13 @@
+{% extends 'public/_base.html' %}
+{% block public_content %}
+    <div class="flex flex-col justify-between pt-[200px] px-10">
+        <div class="flex-grow">
+            <div class="flex items-center justify-center h-full">
+                <div class="text-center">
+                    {% block feedback %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

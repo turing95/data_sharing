@@ -68,3 +68,12 @@ def render_space_public_link_toggle(space, name, value):
                                                                                              kwargs={
                                                                                                  'space_uuid': space.pk}),
                                                                                          'hx-swap': 'morph:outerHTML'})
+
+
+@register.inclusion_tag("forms/widgets/toggle.html")
+def render_sender_notification_activate_toggle(request):
+    return ToggleWidget(label_on='Get receipt', label_off='Get receipt').get_context('sender_upload_notification', request.session.get('sender_upload_notification',False),
+                                                                                     {
+                                                                                         'hx-params':'sender_upload_notification',
+                                                                                         'hx-post': reverse(
+                                                                                             'sender_upload_notification'),'hx-swap': 'none'})
