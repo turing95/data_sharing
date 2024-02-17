@@ -52,11 +52,11 @@ msgstr "Prezzi"
 
 #: templates/components/navbar.html:112
 msgid "Help"
-msgstr "Aiuto"
+msgstr "Supporto"
 
 #: templates/components/pricing.html:11
 msgid "Test out what Kezyy can do to streamline your file collection"
-msgstr "Testa cosa Kezyy può fare per semplificare la raccolta di file"
+msgstr "Valuta cosa Kezyy può fare per semplificare la raccolta di file"
 
 #: templates/components/pricing.html:13
 msgid "Free"
@@ -72,16 +72,16 @@ msgid ""
 "<span>Max spaces: <span class=\"font-semibold\">%(max_free_spaces)s spaces</"
 "span></span>"
 msgstr ""
-"<span>Massimo spazi: <span class=\"font-semibold\">%(max_free_spaces)s "
+"<span>Massimo numero di spazi: <span class=\"font-semibold\">%(max_free_spaces)s "
 "spazi</span></span>"
 
 #: templates/components/pricing.html:38
 msgid "Google Drive and One Drive integration"
-msgstr "Integrazione con Google Drive e One Drive"
+msgstr "Integrazione con Google Drive e OneDrive e Sharepoint"
 
 #: templates/components/pricing.html:48
 msgid "Deadlines and reminders"
-msgstr "Date di scadenza e promemoria"
+msgstr "Scadenze e promemoria"
 
 #: templates/components/pricing.html:58
 msgid "Unlimited invitees per space"
@@ -93,11 +93,11 @@ msgstr "Numero illimitato di richieste di file per spazio"
 
 #: templates/components/pricing.html:78
 msgid "Self service knowledge base"
-msgstr "Knowledge base self service"
+msgstr "Accesso alla knowledge base"
 
 #: templates/components/pricing.html:88 templates/components/pricing.html:149
 msgid "Get started"
-msgstr "Inizia"
+msgstr "Inizia ora"
 
 #: templates/components/pricing.html:106
 msgid "All basic features, plus:"
@@ -117,11 +117,11 @@ msgstr "Piano attuale"
 
 #: templates/components/pricing.html:135
 msgid "Will cancel on"
-msgstr "Si annullerà il"
+msgstr "Scadrà il"
 
 #: templates/components/pricing.html:140
 msgid "Manage my subscription"
-msgstr "Gestisci la mia sottoscrizione"
+msgstr "Gestisci la mia iscrizione"
 
 #: templates/components/pricing.html:145
 msgid "Upgrade"
@@ -152,12 +152,12 @@ msgstr ""
 
 #: templates/emails/changes_notification.html:25
 msgid "File to change:"
-msgstr "File da cambiare:"
+msgstr "File da ricaricare:"
 
 #: templates/emails/changes_notification.html:41
 #, python-format
 msgid "Notes from the receiver: %(notes)s"
-msgstr "Note dal ricevente: %(notes)s"
+msgstr "Note dal richiedente: %(notes)s"
 
 #: templates/emails/changes_notification.html:50
 #: templates/emails/deadline_notification.html:26
@@ -212,7 +212,7 @@ msgstr "Grazie per aver richiesto l'accesso alla Beta di Kezyy"
 msgid ""
 "We'll get back to you in a few hours after we have reviewed your request."
 msgstr ""
-"Ti risponderemo tra poche ore dopo aver esaminato la tua richiesta."
+"Ti risponderemo in poche ore dopo aver elaborato la tua richiesta."
 
 #: templates/public/beta_access_request.html:14
 msgid "Back to homepage"
