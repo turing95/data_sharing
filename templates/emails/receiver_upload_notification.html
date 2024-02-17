@@ -7,11 +7,14 @@
             <table style="width:100%;">
                 <tr>
                     <td style="font-size:20px;padding:20px 0;line-height: 1.2">
-                    {% with req_title=sender_event.request.title space_title=sender_event.space.title sender_email=sender_event.sender.email %}
-                        {% blocktranslate trimmed %}
-                            {{ sender_email }} has uploaded files to  <b>{{ req_title }}</b>, in space <b>{{ space_title }}</b>
-                        {% endblocktranslate %}
-                    {% endwith %}
+                        {% with req_title=sender_event.request.title sender_email=sender_event.sender.email %}
+                            {% blocktranslate trimmed %}
+                                {{ sender_email }} has uploaded files to  <b>{{ req_title }}</b>, in space 
+                            {% endblocktranslate %}
+                            <a href="{{ sender_event.space.link_for_email }}" style="text-decoration:underline;">
+                                <b>{{ sender_event.space.title }}</b>
+                            </a>
+                        {% endwith %}
 
                     </td>
 
@@ -22,27 +25,27 @@
 
                             File uploaded:
                         {% endblocktranslate %}
-                    <ul>
-                        {% for file in sender_event.files.all %}
-                            <li>
+                        <ul>
+                            {% for file in sender_event.files.all %}
+                                <li>
                                     {{ file.name }}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </td>
                 </tr>
-            {% if sender_event.notes %}
-                <tr>
-                    <td style="padding:10px 0;">
-                    {% with notes=sender_event.notes %}
-                        {% blocktranslate trimmed %}
+                {% if sender_event.notes %}
+                    <tr>
+                        <td style="padding:10px 0;">
+                            {% with notes=sender_event.notes %}
+                                {% blocktranslate trimmed %}
 
-                            Notes from the sender: {{ notes }}
-                        {% endblocktranslate %}
-                    {% endwith %}
-                    </td>
-                </tr>
-            {% endif %}
+                                    Notes from the sender: {{ notes }}
+                                {% endblocktranslate %}
+                            {% endwith %}
+                        </td>
+                    </tr>
+                {% endif %}
             </table>
         </td>
     </tr>

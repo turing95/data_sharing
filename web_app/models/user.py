@@ -4,6 +4,7 @@ from django.core.mail import get_connection, EmailMultiAlternatives
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils.functional import cached_property
+from django.utils.text import format_lazy
 from google.auth.transport.requests import Request
 import arrow
 from google.oauth2.credentials import Credentials
@@ -82,8 +83,14 @@ class User(AbstractUser):
         try:
             if sender_event.space.is_deleted is False and self.notifications_settings.on_sender_upload:
                 context = get_base_context_for_email()
-                context[
-                    'pre_header_text'] = _('New Upload receipt')
+                pre_header_text_1 = _('New Upload to')
+                pre_header_text_2 = _('in space')
+                context['pre_header_text'] = format_lazy('{pre_header_text_1} {req_title} {pre_header_text_2} {space_title}',
+                                                         pre_header_text_1=pre_header_text_1,
+                                                         pre_header_text_2=pre_header_text_2,
+                                                         space_title=sender_event.space.title,
+                                                         req_title=sender_event.request.title
+                                                         )
                 context['sender_event'] = sender_event
 
                 email_html = render_to_string('emails/receiver_upload_notification.html', context)

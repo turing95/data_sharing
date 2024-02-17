@@ -61,7 +61,7 @@ class Sender(BaseModel, ActiveModel):
         self.save()
 
     @property
-    def full_space_link(self):
+    def link_for_email(self):
         return settings.BASE_URL + reverse('sender_space_detail_private', kwargs={
             'space_uuid': self.space.uuid,
             'sender_uuid': self.uuid
@@ -75,7 +75,7 @@ class Sender(BaseModel, ActiveModel):
             'receiver_email': self.space.user.sender_notifications_settings.reference_email,
             'receiver_name': self.space.user.sender_notifications_settings.name,
             'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
-            'space_link': self.full_space_link
+            'space_link': self.link_for_email
 
         }
         context.update(ctx_update)

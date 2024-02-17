@@ -9,7 +9,7 @@
                     <td style="font-size:20px;padding:20px 0;line-height: 1.2">
                         {% with req_title=sender_event.request.title space_title=sender_event.space.title sender_mail=sender_event.sender.email %}
                             {% blocktranslate trimmed %}
-                                You have uploaded files to  <b>{{ req_title }}</b>, in space <br>
+                                You have uploaded files to  <b>{{ req_title }}</b>, in space 
                             {% endblocktranslate %}
                             <a href="{{ space_link }}" style="text-decoration:underline;">
                                 {{ sender_event.space.title }}
