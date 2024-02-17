@@ -10,11 +10,13 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
     bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes, accept_all, \
     accept_single, SignupView, PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, \
-    PasswordResetFromKeyDoneView, sender_upload_notification
+    PasswordResetFromKeyDoneView, sender_upload_notification, account_notifications
 
+from web_app.views.language import custom_set_language
 
 urlpatterns = [
     # Generic views
+    path('accounts/set-language/', custom_set_language, name='set_user_language'),
     path('terms-of-service/', TermsOfServiceView.as_view(), name='generic_terms_of_service'),
     path('privacy-policy/', privacy_policy, name='generic_privacy_policy'),
     path('cookie-policy/', cookie_policy, name='generic_cookie_policy'),
@@ -36,6 +38,7 @@ urlpatterns = [
     path('accounts/profile/', profile, name='account_profile'),
     path('accounts/settings/', SettingsView.as_view(), name='account_settings'),
     path('accounts/sender-notifications-settings/', sender_notifications_settings, name='account_sender_notifications'),
+    path('accounts/notifications-settings/', account_notifications, name='account_notifications'),
     path('accounts/delete/', AccountDeleteView.as_view(), name='account_delete'),
     path('accounts/social/connections/', ConnectionsView.as_view(), name='socialaccount_connections'),
     path('accounts/social/login/cancelled/', LoginCancelledView.as_view(), name='socialaccount_login_cancelled'),

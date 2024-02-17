@@ -29,7 +29,7 @@ from web_app.views.api.destination import search_folder, select_destination_type
 from web_app.views.api.file_type import search_file_types
 from web_app.views.api.profile import profile
 from web_app.views.api.file import request_changes,accept_all,accept_single
-from web_app.views.api.settings import sender_notifications_settings
+from web_app.views.api.settings import sender_notifications_settings,account_notifications
 from web_app.views.receiver.payments.checkout import create_checkout_session
 from web_app.views.receiver.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook

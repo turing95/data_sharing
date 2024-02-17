@@ -65,8 +65,9 @@ class User(AbstractUser):
         return MicrosoftService(self.microsoft_account).get_sites()
 
     def setup(self):
-        from web_app.models import Organization, SenderNotificationsSettings
+        from web_app.models import Organization, SenderNotificationsSettings,NotificationsSettings
         SenderNotificationsSettings.objects.get_or_create(user=self)
+        NotificationsSettings.objects.get_or_create(user=self)
         # Check if an organization named "Personal" already exists in the user's organizations
         personal_organization_exists = self.organizations.filter(name="Personal").exists()
 
@@ -76,7 +77,7 @@ class User(AbstractUser):
             self.organizations.add(personal_organization)
 
     def notify_upload(self, sender_event):
-        from web_app.models.settings import NotificationsSettings
+        from web_app.models import NotificationsSettings
         from web_app.utils import get_base_context_for_email
         try:
             if sender_event.space.is_deleted is False and self.notifications_settings.on_sender_upload:
