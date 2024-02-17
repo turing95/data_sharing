@@ -1,4 +1,60 @@
 {% extends 'emails/_base.html' %}
+{% load i18n %}
 {% block content %}
-    new upload receipt
+    <tr>
+        <td>
+            <!--primary 1-->
+            <table style="width:100%;">
+                <tr>
+                    <td style="font-weight:bold;font-size:20px;padding:20px 0;line-height: 1.2">
+                        {% with req_title=sender_event.request.title space_title=sender_event.space.title sender_mail=sender_event.sender.email %}
+                            {% blocktranslate trimmed %}
+                                You have uploaded files to  <b>{{ req_title }}</b>, in space <br>
+                            {% endblocktranslate %}
+                            <a href="{{ space_link }}" style="text-decoration:underline;">
+                                {{ sender_event.space.title }}
+                            </a>
+                        {% endwith %}
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="padding:10px 0;">
+                        {% blocktranslate trimmed %}
+
+                            File uploaded:
+                        {% endblocktranslate %}
+                        <ul>
+                            {% for file in sender_event.files.all %}
+                                <li>
+                                    {{ file.original_name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                {% if sender_event.notes %}
+                    <tr>
+                        <td style="padding:10px 0;">
+                            {% with notes=sender_event.notes %}
+                                {% blocktranslate trimmed %}
+
+                                    Upload notes: {{ notes }}
+                                {% endblocktranslate %}
+                            {% endwith %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 0;">
+                            {% blocktranslate trimmed %}
+
+                                Reference email: {{ receiver_email }}
+                            {% endblocktranslate %}
+                        </td>
+                    </tr>
+                {% endif %}
+            </table>
+        </td>
+    </tr>
 {% endblock %}
