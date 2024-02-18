@@ -51,8 +51,3 @@ required for scheduled async tasks
  - npm i docsify-cli -g
  - docsify serve docs
  - to test images locally use ngrok and expose local host url. add to allowed hosts the url from ngrok (it changes daily)
-
- ## translattions
- - edit the .po files in locale folder
- - run ```python manage.py compilemessages --locale=it``` to compile the .po files to .mo files
- - if the copy is changed run ```python manage.py makemessages --locale=it``` to update the .po files
