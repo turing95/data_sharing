@@ -60,6 +60,7 @@
                                 <span class=" min-w-[25px] max-w-[250px] line-clamp-2"
                                       title="{{ event.request.title }}">{{ event.request.title }}</span>
                                 {% if event.destination.name %}
+                                    {% if event.destination.url %}
                                     <a title="Go to: {{ event.destination.name }}"
                                        data-popover-target="popover-{{ forloop.counter }}"
                                        href="{{ event.destination.url }}" target="_blank"
@@ -75,6 +76,18 @@
                                                  class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
                                         {% endif %}
                                     </a>
+                                        {% else %}
+                                        {% if event.destination.content_object.TAG %}
+                                            {% with 'images/drive_providers/'|add:event.destination.content_object.TAG|add:'-logo.svg' as logo_static %}
+                                                <img src="{% static logo_static %}" alt="Drive Provider Icon"
+                                                     class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+                                            {% endwith %}
+                                        {% else %}
+                                            <img src="{% static 'images/icons/folder-gray.svg' %}"
+                                                 alt="Drive Provider Icon"
+                                                 class="shrink-0 w-[16px] h-[16px] transition-transform duration-300 bi bi-folder group-hover:scale-110">
+                                        {% endif %}
+                                        {% endif %}
                                 {% endif %}
                             </div>
                         </td>

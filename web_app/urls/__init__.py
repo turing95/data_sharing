@@ -13,7 +13,6 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     PasswordResetFromKeyDoneView, sender_upload_notification, account_notifications
 
 from web_app.views.language import custom_set_language
-
 urlpatterns = [
     # Generic views
     path('accounts/set-language/', custom_set_language, name='set_user_language'),

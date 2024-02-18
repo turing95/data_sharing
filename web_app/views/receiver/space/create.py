@@ -107,8 +107,8 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
 
     def create_destination_from_form(self, form):
         GenericDestination.objects.filter(request=form.instance).update(is_active=False)
-        GenericDestination.create_from_folder_id(form.instance,
-                                                 form.cleaned_data.get('destination_type'),
-                                                 form.cleaned_data.get('destination_id'),
-                                                 self.request.user,
-                                                 form.cleaned_data.get('sharepoint_site_id'))
+        GenericDestination.create_provider(form.instance,
+                                           form.cleaned_data.get('destination_type'),
+                                           self.request.user,
+                                           form.cleaned_data.get('destination_id'),
+                                           form.cleaned_data.get('sharepoint_site_id'))

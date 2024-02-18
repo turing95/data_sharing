@@ -1,0 +1,1 @@
+from web_app.storage_backends.backends import PrivateMediaStorage

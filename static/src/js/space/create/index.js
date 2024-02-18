@@ -31,7 +31,19 @@ document.addEventListener('htmx:afterRequest', function (evt) {
             const modal = FlowbiteInstances.getInstance('Modal', document.getElementById('htmx-modal').children[0].id);
             modal.hide();
         }
-        //document.getElementById('htmx-modal').children[0].querySelector('[data-modal-hide]').click();
+        let trgEvent = evt.detail.requestConfig.triggeringEvent;
+        if (trgEvent && trgEvent.srcElement && trgEvent.srcElement.classList.contains('select-destination-type')){
+            let srcElement = trgEvent.srcElement;
+            let form = srcElement.closest('.request-form');
+            let destinationType = srcElement.options[srcElement.selectedIndex].value;
+            if(destinationType === 'kezyy'){
+                let destinationTypeInput = form.querySelector('.destination-type');
+                let selectedInputDisplay = form.querySelector('.destination-display');
+                destinationTypeInput.value = destinationType;
+                selectedInputDisplay.value = 'Kezyy'
+            }
+
+        }
     }
 
 });

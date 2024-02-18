@@ -29,7 +29,7 @@
 
                 <th scope="col" class="px-3 py-1.5 min-w-[150px] normal-case">
                     <div class="flex flex-col justify-start">
-                        <a href="{{ req.destination.url }}"
+                        <a 
                            title="{{ req.title }}"
                            hx-get="{% url 'request_modal'  req.uuid %}"
                            hx-trigger="click"

@@ -1,5 +1,6 @@
-from web_app.models import BaseModel, SenderEvent
+from web_app.models import BaseModel
 from django.db import models
+from web_app.storage_backends import PrivateMediaStorage
 
 
 class File(BaseModel):
@@ -12,7 +13,7 @@ class File(BaseModel):
     name = models.CharField(max_length=255)
     size = models.IntegerField()
     file_type = models.CharField(max_length=255)
-    url = models.CharField(max_length=255, null=True, blank=True)
+    url = models.CharField(max_length=1000, null=True, blank=True)
     sender_event = models.ForeignKey('SenderEvent', on_delete=models.CASCADE, related_name='files')
     status = models.CharField(
         max_length=50,
@@ -45,3 +46,4 @@ class FileType(BaseModel):
         if self.group is False:
             return f".{self.extension}"
         return None
+

@@ -3,8 +3,9 @@ from web_app.views.receiver.space.create import SpaceFormView
 from web_app.views.receiver.space.delete import DeleteSpaceView
 from web_app.views.receiver.space.duplicate import duplicate
 from web_app.views.receiver.authentication.signup import SignupView
-from web_app.views.receiver.authentication.login import LoginView,LoginCancelledView
-from web_app.views.receiver.authentication.reset_password import PasswordResetView,PasswordResetDoneView,PasswordResetFromKeyView ,PasswordResetFromKeyDoneView
+from web_app.views.receiver.authentication.login import LoginView, LoginCancelledView
+from web_app.views.receiver.authentication.reset_password import PasswordResetView, PasswordResetDoneView, \
+    PasswordResetFromKeyView, PasswordResetFromKeyDoneView
 from web_app.views.receiver.authentication.delete import AccountDeleteView
 from web_app.views.receiver.authentication.connections import ConnectionsView
 from web_app.views.api.profile import profile
@@ -20,16 +21,18 @@ from web_app.views.sender.space_detail import SpaceDetailView as SpaceDetailForm
 
 from web_app.views.custom_http_errors import custom_page_not_found, custom_server_error
 
-from web_app.views.api.sender import (toggle_sender_active,notify_deadline,notify_invitation, sender_modal, sender_info,
-                                      sender_row,all_senders_modal,bulk_notify_invitation,bulk_notify_deadline, sender_upload_notification)
-from web_app.views.api.space import toggle_space_public,history_table,request_modal
+from web_app.views.api.sender import (toggle_sender_active, notify_deadline, notify_invitation, sender_modal,
+                                      sender_info,
+                                      sender_row, all_senders_modal, bulk_notify_invitation, bulk_notify_deadline,
+                                      sender_upload_notification)
+from web_app.views.api.space import toggle_space_public, history_table, request_modal
 from web_app.views.api.request import delete_request
 from web_app.views.api.contact import search_contacts, create_contact_modal, create_contact
-from web_app.views.api.destination import search_folder, select_destination_type,get_destination_logo
+from web_app.views.api.destination import search_folder, select_destination_type, get_destination_logo
 from web_app.views.api.file_type import search_file_types
 from web_app.views.api.profile import profile
-from web_app.views.api.file import request_changes,accept_all,accept_single
-from web_app.views.api.settings import sender_notifications_settings,account_notifications
+from web_app.views.api.file import request_changes, accept_all, accept_single
+from web_app.views.api.settings import sender_notifications_settings, account_notifications
 from web_app.views.receiver.payments.checkout import create_checkout_session
 from web_app.views.receiver.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook

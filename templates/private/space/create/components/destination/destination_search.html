@@ -1,7 +1,7 @@
 {% load static i18n socialaccount allauth %}
 
 <div id="destination-search-container" class="w-full sm:w-2/3 h-[36px] destination-search">
-    {% if not missing_provider and not expired_provider %}
+    {% if not missing_provider and not expired_provider and not provider_name == 'Kezyy' %}
         <div>
             <div class="inline-flex w-full bg-gray-50 border-gray-300 border sm:border-l-0 h-[36px] pr-1.5">
                 <div id="destination-search-bar" class="flex-grow">

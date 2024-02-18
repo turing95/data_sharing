@@ -1,7 +1,7 @@
 import re
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from django.core.exceptions import ValidationError
-from web_app.models import Space, UploadRequest, FileType, GoogleDrive, OneDrive, SharePoint
+from web_app.models import Space, UploadRequest, FileType, GoogleDrive, OneDrive, SharePoint, Kezyy
 from web_app.forms import css_classes
 from django.urls import reverse_lazy
 from django import forms
@@ -85,18 +85,20 @@ class RequestForm(ModelForm):
             (GoogleDrive.TAG, 'Google Drive'),
             (OneDrive.TAG, 'OneDrive'),
             (SharePoint.TAG, 'SharePoint'),
+            (Kezyy.TAG, 'Kezyy'),
         ],
         label="Destination folder",
         widget=forms.Select(
-            attrs={'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full",
+            attrs={'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full select-destination-type",
                    'hx-trigger': "change, load, intersect once",
                    'hx-get': reverse_lazy('select_destination_type'),
                    'hx-target': "previous .destination-search",
-                   'hx-swap': "outerHTML"
+                   'hx-swap': "outerHTML",
                    })
     )
 
     destination_id = forms.CharField(
+        required=False,
         widget=forms.HiddenInput(attrs={'class': 'destination'}),
         label="Destination folder ID",
         help_text="""The file uploaded for this request will be sent to the folder selected here. Choose a cloud storage provider and search for a folder and select it.""")
@@ -175,6 +177,7 @@ class RequestForm(ModelForm):
             self.fields['destination_type_select'].choices = [
                 (GoogleDrive.TAG, 'Google Drive'),
                 (OneDrive.TAG, 'OneDrive'),
+                (Kezyy.TAG, 'Kezyy'),
             ]
 
     def clean_file_naming_formula(self):
@@ -196,6 +199,9 @@ class RequestForm(ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        if cleaned_data.get('destination_id') is None:
+            if cleaned_data.get('destination_type') != Kezyy.TAG:
+                self.add_error('destination_id', 'You must select a folder!')
         rename = cleaned_data.get('rename', False)
         file_naming_formula = cleaned_data.get('file_naming_formula', None)
         if rename is False:

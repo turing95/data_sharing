@@ -3,7 +3,7 @@ from django.http import Http404, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import render
 import re
-from web_app.models import GoogleDrive, OneDrive, SharePoint
+from web_app.models import GoogleDrive, OneDrive, SharePoint, Kezyy
 from allauth.socialaccount.adapter import get_adapter
 from django.http import HttpResponseBadRequest  # Import HttpResponseBadRequest
 
@@ -64,6 +64,8 @@ def select_destination_type(request):
                     missing_provider = adapter.get_provider(request, SharePoint.PROVIDER_ID)
                 elif request.user.microsoft_account.socialtoken_set.count() == 0:
                     expired_provider = adapter.get_provider(request, SharePoint.PROVIDER_ID)
+            elif provider_type == Kezyy.TAG:
+                provider_name = "Kezyy"
             else:
                 return HttpResponseBadRequest()
 

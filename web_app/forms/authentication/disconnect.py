@@ -1,6 +1,6 @@
 from allauth.socialaccount.forms import DisconnectForm
 from django import forms
-from web_app.utils import disconnect_social_account
+from web_app.utils.socialaccount import disconnect_social_account
 
 
 class CustomSocialDisconnectForm(DisconnectForm):
