@@ -158,7 +158,8 @@ class MicrosoftService:
 
         # Check if the upload was successful
         if response.status_code in [200, 201]:
-            return response.json().get('webUrl', None)  # Returns the URL of the uploaded file
+            # return response.json().get('webUrl', None)  # Returns the URL of the uploaded file
+            return response.json()  # Returns the ID of the uploaded file
         else:
             # Handle any errors that occur during the upload
             raise Exception(f"Failed to upload file: {response.json()}")

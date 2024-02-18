@@ -10,11 +10,11 @@ class File(BaseModel):
         PENDING = 'Pending', 'Pending'
 
     original_name = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
+    uid = models.CharField(max_length=255,default='noid')
     size = models.IntegerField()
     file_type = models.CharField(max_length=255)
-    url = models.CharField(max_length=1000, null=True, blank=True)
     sender_event = models.ForeignKey('SenderEvent', on_delete=models.CASCADE, related_name='files')
+    destination = models.ForeignKey('GenericDestination', on_delete=models.CASCADE, related_name='files',null=True)
     status = models.CharField(
         max_length=50,
         choices=FileStatus.choices,
@@ -23,6 +23,14 @@ class File(BaseModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def url(self):
+        return self.destination.get_file_url(self.uid)
+
+    @property
+    def name(self):
+        return self.destination.get_file_name(self.uid)
 
 
 class FileType(BaseModel):
@@ -46,4 +54,3 @@ class FileType(BaseModel):
         if self.group is False:
             return f".{self.extension}"
         return None
-

@@ -117,4 +117,5 @@ class GoogleService:
         file = self._service.files().create(supportsAllDrives=True, body=file_metadata,
                                             media_body=media,
                                             fields='id,webViewLink').execute()
-        return file.get('webViewLink', None)
+        #return file.get('webViewLink', None)
+        return file

@@ -1,6 +1,6 @@
 from copy import deepcopy
 from allauth.socialaccount.models import SocialAccount
-from web_app.models import PolymorphicRelationModel,ActiveModel
+from web_app.models import PolymorphicRelationModel, ActiveModel
 from django.db import models
 
 
@@ -54,3 +54,9 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
             return Kezyy.create(request_instance, user)
         else:
             raise NotImplementedError
+
+    def get_file_url(self, file_id):
+        return self.related_object.get_file_url(file_id)
+
+    def get_file_name(self, file_id):
+        return self.related_object.get_file_name(file_id)

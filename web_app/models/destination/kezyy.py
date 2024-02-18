@@ -28,12 +28,11 @@ class Kezyy(BaseModel):
         return generic_destination
 
     def upload_file(self, file, file_name):
-        from web_app.storage_backends import PrivateMediaStorage
         from web_app.models import KezyyFile
         file = deepcopy(file)
         file.name = file_name
         kezyy_file = KezyyFile.objects.create(upload=file, destination=self)
-        return kezyy_file.upload.url
+        return kezyy_file.upload.name
 
     @property
     def folder_id(self):
@@ -50,6 +49,13 @@ class Kezyy(BaseModel):
     @property
     def alive(self):
         return True
+
+    def get_file_name(self, file_id):
+        from web_app.models import KezyyFile
+        return KezyyFile.objects.get(upload=file_id).upload.name
+
+    def get_file_url(self, file_id):
+        return KezyyFile.objects.get(upload=file_id).upload.url
 
 
 class KezyyFile(BaseModel):

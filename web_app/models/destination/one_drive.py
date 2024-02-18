@@ -36,7 +36,7 @@ class OneDrive(BaseModel):
         return MicrosoftService(self.social_account)
 
     def upload_file(self, file, file_name):
-        return self.service.upload_file(file, file_name, self.folder_id)
+        return self.service.upload_file(file, file_name, self.folder_id).get('id', None)
 
     @property
     def url(self):
@@ -49,3 +49,9 @@ class OneDrive(BaseModel):
     @property
     def alive(self):
         return self.service.is_file_alive(self.folder_id)
+
+    def get_file_name(self, file_id):
+        return self.service.get_file_name(file_id)
+
+    def get_file_url(self, file_id):
+        return self.service.get_file_url(file_id)

@@ -47,4 +47,10 @@ class GoogleDrive(BaseModel):
         return self.service.get_file_url(self.folder_id)
 
     def upload_file(self, file, file_name):
-        return self.service.upload_file(file, file_name, self.folder_id)
+        return self.service.upload_file(file, file_name, self.folder_id).get('id', None)
+
+    def get_file_name(self, file_id):
+        return self.service.get_file_name(file_id)
+
+    def get_file_url(self, file_id):
+        return self.service.get_file_url(file_id)

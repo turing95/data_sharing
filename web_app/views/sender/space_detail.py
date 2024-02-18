@@ -53,10 +53,11 @@ class SpaceDetailView(TemplateView):
                             error = True
                             messages.error(request, f"An error occurred while uploading file {uploaded_file.name}")
                             continue
-                        File.objects.create(original_name=uploaded_file.name, name=file_name,
+                        File.objects.create(original_name=uploaded_file.name,
                                             size=uploaded_file.size,
                                             file_type=uploaded_file.content_type,
-                                            url=file_url,
+                                            destination=destination,
+                                            uid=file_url,
                                             sender_event=sender_event)
                     if sender_event is not None:
                         sender_event.notify(request.session.get('sender_upload_notification',False))
