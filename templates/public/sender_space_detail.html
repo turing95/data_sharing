@@ -247,6 +247,9 @@
                 {% endfor %}
             </div>
         {% render_sender_notification_activate_toggle request %}
+        {% translate 'Get an email with a summary of the files uploaded' as receipt_text%}
+            {% include 'components/tooltip.html' with content=receipt_text target='sender_upload_notification' %}
+
             {% if space.upload_after_deadline or not space.deadline_expired %}
                 <div class="sticky flex justify-center bottom-4">
                     {% translate 'Confirm and Upload' as confirm_text %}
