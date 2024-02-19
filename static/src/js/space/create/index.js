@@ -38,9 +38,11 @@ document.addEventListener('htmx:afterRequest', function (evt) {
             let destinationType = srcElement.options[srcElement.selectedIndex].value;
             if(destinationType === 'kezyy'){
                 let destinationTypeInput = form.querySelector('.destination-type');
+                let selectedInput = form.querySelector('.destination');
                 let selectedInputDisplay = form.querySelector('.destination-display');
                 destinationTypeInput.value = destinationType;
                 selectedInputDisplay.value = 'Kezyy'
+                selectedInput.value = ''
                 destinationTypeInput.dispatchEvent(new CustomEvent("change"));
             }
 
