@@ -57,7 +57,7 @@ class Space(BaseModel, DeleteModel):
         for sender in self.senders.all():
             sender.duplicate(new_space)
 
-        for request in self.requests.all():
+        for request in self.requests.all().order_by('created_at'):
             request.duplicate(new_space)
         return new_space
     @property

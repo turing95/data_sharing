@@ -86,7 +86,7 @@
                     {% else %}
                         {% url 'generic_beta_access' as form_url %}
                         {% translate 'Get started' as get_started_text %}
-                        {% include 'components/buttons/generic.html' with href=form_url button_text=get_started_text %}
+                        {% include 'components/buttons/generic.html' with href=form_url button_text=get_started_text extra_classes="flex" %}
                     {% endif %}
                 </div>
             </div>
@@ -143,12 +143,12 @@
                     {% if user.is_authenticated %}
                         {% url 'create_checkout_session'  as subscribe_url %}
                         {% translate 'Upgrade' as upgrade_text %}
-                        {% include 'components/buttons/generic.html' with href=subscribe_url button_text=upgrade_text %}
+                        {% include 'components/buttons/generic.html' with href=subscribe_url button_text=upgrade_text extra_classes="flex" %}
                     {% else %}
                         {% url 'generic_beta_access' as form_url %}
                         {% translate 'Get started' as get_started_text %}
 
-                        {% include 'components/buttons/generic.html' with href=form_url button_text=get_started_text %}
+                        {% include 'components/buttons/generic.html' with href=form_url button_text=get_started_text extra_classes="flex" %}
                     {% endif %}
                 {% endif %}
             </div>
