@@ -73,7 +73,7 @@ class Sender(BaseModel, ActiveModel):
         ctx_update = {
             'sender': self,
             'receiver_email': self.space.user.sender_notifications_settings.reference_email,
-            'receiver_name': self.space.user.sender_notifications_settings.name,
+            'receiver_name': self.space.user.sender_notifications_settings.name or self.space.user.sender_notifications_settings.reference_email,
             'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
             'space_link': self.link_for_email
 
