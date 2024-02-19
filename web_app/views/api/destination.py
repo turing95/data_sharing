@@ -78,10 +78,14 @@ def select_destination_type(request):
 
 
 @login_required
-@require_GET
 def get_destination_logo(request):
     if request.method == 'GET':
         return render(request,
                       'private/space/create/components/destination/destination_logo.html',
                       {'tag': request.GET.get('tag')})
+    elif request.method == 'POST':
+        request_index = request.GET.get('request_index', None)
+        return render(request,
+                      'private/space/create/components/destination/destination_logo.html',
+                      {'tag': request.POST[f'requests-{request_index}-destination_type']})
     return HttpResponseBadRequest()

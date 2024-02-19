@@ -41,6 +41,7 @@ document.addEventListener('htmx:afterRequest', function (evt) {
                 let selectedInputDisplay = form.querySelector('.destination-display');
                 destinationTypeInput.value = destinationType;
                 selectedInputDisplay.value = 'Kezyy'
+                destinationTypeInput.dispatchEvent(new CustomEvent("change"));
             }
 
         }

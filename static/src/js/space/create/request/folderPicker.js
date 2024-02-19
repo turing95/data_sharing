@@ -14,6 +14,7 @@ export function selectFolder(liElement,folderName,folderId,destinationType,share
     // clear search results
     form.querySelector('.search-results').innerHTML = '';
     form.querySelector('.search-input').value = '';
+    selectedDestinationTypeInput.dispatchEvent(new CustomEvent("change"));
 
 
     }

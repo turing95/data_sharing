@@ -89,12 +89,13 @@ class RequestForm(ModelForm):
         ],
         label="Destination folder",
         widget=forms.Select(
-            attrs={'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full select-destination-type",
-                   'hx-trigger': "change, load, intersect once",
-                   'hx-get': reverse_lazy('select_destination_type'),
-                   'hx-target': "previous .destination-search",
-                   'hx-swap': "outerHTML",
-                   })
+            attrs={
+                'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full select-destination-type",
+                'hx-trigger': "change, load, intersect once",
+                'hx-get': reverse_lazy('select_destination_type'),
+                'hx-target': "previous .destination-search",
+                'hx-swap': "outerHTML",
+                })
     )
 
     destination_id = forms.CharField(
@@ -105,8 +106,17 @@ class RequestForm(ModelForm):
     sharepoint_site_id = forms.CharField(
         required=False,
         widget=forms.HiddenInput(attrs={'class': 'sharepoint-site'}))
-    destination_type = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'destination-type'}),
-                                       label="Destination type")
+    destination_type = forms.CharField(widget=forms.HiddenInput(attrs={
+        'class': 'destination-type',
+        'hx-trigger': "change, load, intersect once",
+        'hx-post': reverse_lazy('get_destination_logo'),
+        'hx-target': "previous .destination-logo",
+        'hx-swap': "outerHTML",
+        'hx-include': 'this'
+    }),
+        label="Destination type"
+
+    )
 
     destination_display = forms.CharField(
         required=False,
@@ -165,7 +175,7 @@ class RequestForm(ModelForm):
 
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files','file_template']
+        fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files', 'file_template']
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop('request', None)
@@ -173,6 +183,8 @@ class RequestForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['destination_type_select'].widget.attrs[
             'hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
+        self.fields['destination_type'].widget.attrs[
+            'hx-post'] += f'?request_index={index}'
         if not request.user.sharepoint_sites:
             self.fields['destination_type_select'].choices = [
                 (GoogleDrive.TAG, 'Google Drive'),
@@ -208,7 +220,7 @@ class RequestForm(ModelForm):
             cleaned_data['file_naming_formula'] = None
         else:
             if file_naming_formula is None or file_naming_formula == '':
-                #self.add_error('file_naming_formula', 'You must provide a file name if you want to rename the files.')
+                # self.add_error('file_naming_formula', 'You must provide a file name if you want to rename the files.')
                 cleaned_data['file_naming_formula'] = None
         file_type_restrict = cleaned_data.get('file_type_restrict', False)
         if file_type_restrict is False:

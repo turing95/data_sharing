@@ -26,10 +26,14 @@ class File(BaseModel):
 
     @property
     def url(self):
+        if self.destination is None:
+            return None
         return self.destination.get_file_url(self.uid)
 
     @property
     def name(self):
+        if self.destination is None:
+            return None
         return self.destination.get_file_name(self.uid)
 
 
