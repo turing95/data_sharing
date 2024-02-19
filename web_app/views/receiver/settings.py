@@ -23,7 +23,7 @@ class SettingsView(LoginRequiredMixin, SubscriptionMixin, TemplateView):
             context['sender_notifications_form'] = SenderNotificationsSettingsForm(instance=self.request.user.sender_notifications_settings)
         try:
             context['notifications_form'] = NotificationsSettingsForm(instance=self.request.user.notifications_settings)
-        except SenderNotificationsSettings.DoesNotExist:
+        except NotificationsSettings.DoesNotExist:
             NotificationsSettings.objects.create(user=self.request.user)
             context['notifications_form'] = NotificationsSettingsForm(instance=self.request.user.notifications_settings)
         context['disconnect_form'] = CustomSocialDisconnectForm(**self.get_form_kwargs())
