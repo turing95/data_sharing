@@ -25,6 +25,7 @@ urlpatterns = [
     path('spaces/', SpacesView.as_view(), name='spaces'),
     path('accounts/signup/', SignupView.as_view(), name='account_signup'),
     path('accounts/login/', LoginView.as_view(), name='account_login'),
+    path('accounts/social/signup/', LoginView.as_view(), name='account_login'),
     path('accounts/password/reset/', PasswordResetView.as_view(), name='account_reset_password'),
     path(
         "accounts/password/reset/key/done/",
