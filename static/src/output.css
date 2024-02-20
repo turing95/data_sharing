@@ -1815,6 +1815,10 @@ input:checked + .toggle-bg {
   min-width: 125px;
 }
 
+.min-w-\[75px\] {
+  min-width: 75px;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }

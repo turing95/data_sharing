@@ -145,12 +145,12 @@
                                     {% endcomment %}
                                     {% if file.status == file.FileStatus.PENDING %}
 
-                                        <span class="ml-2 text-sm min-w-[70px] text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+                                        <span class="ml-2 text-sm min-w-[75px] text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
                                     {% elif  file.status == file.FileStatus.ACCEPTED %}
-                                        <span class="ml-2 text-sm min-w-[70px] text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+                                        <span class="ml-2 text-sm min-w-[75px] text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
 
                                     {% elif file.status == file.FileStatus.REJECTED %}
-                                        <span class="ml-2 text-sm min-w-[70px]  text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+                                        <span class="ml-2 text-sm min-w-[75px]  text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
 
                                     {% endif %}
                                 </li>
