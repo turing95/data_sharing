@@ -4,6 +4,7 @@ import { initNav } from './utils/navbar.js';
 import {initHtmxModal} from "./utils/htmxModal.js";
 import {handleHtmxError} from "./utils/errors.js";
 import { initBetaAccessForm } from "./utils/beta-access-form.js";
+import {initWalkthroughTipbox} from "./utils/walkthrough.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // e.g. "America/New_York"
@@ -34,6 +35,15 @@ document.body.addEventListener('htmx:afterSwap', function(evt) {
         }
     }
 });
+
+document.body.addEventListener('htmx:afterSettle', function(evt) {
+
+    if (evt.detail.target.id === 'walkthrough-tipbox-container') {
+        initWalkthroughTipbox();
+    }
+
+});
+
 
 
 document.body.addEventListener('htmx:sendError', function(evt) {

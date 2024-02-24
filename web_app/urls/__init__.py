@@ -6,6 +6,7 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     custom_page_not_found, custom_server_error, toggle_sender_active, delete_request, \
     toggle_space_public, history_table, \
     request_modal, create_checkout_session, search_file_types, notify_deadline, notify_invitation, \
+    walkthrough_tipbox, \
     create_billing_session, AccountDeleteView, sender_modal, search_folder, ConnectionsView, \
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
     bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes, accept_all, \
@@ -81,4 +82,5 @@ urlpatterns = [
     path('contacts/search/', search_contacts, name='search_contacts'),
     path('contacts/create/modal/', create_contact_modal, name='create_contact_modal'),
     path('contacts/create/', create_contact, name='create_contact'),
+    path('walkthrough-tipbox/', walkthrough_tipbox, name='walkthrough_tipbox'),
 ]

@@ -1,0 +1,13 @@
+{
+    "test_sequence": {
+      "0": {"content": "This is the title of the space",
+            "target": "space-title"
+        },
+      "1": {"content": "Invite People to upload document to the space", "target": "space-invitations"},
+      "2": {"content": "Add instructions to the space", "target": "space-instructions"}
+    },
+    "Sequence2": {
+      "0": {"content": "Content of Step 0, Sequence 2", "target": "Target of Step 0, Sequence 2"},
+      "1": {"content": "Content of Step 1, Sequence 2", "target": "Target of Step 1, Sequence 2"}
+    }
+  }

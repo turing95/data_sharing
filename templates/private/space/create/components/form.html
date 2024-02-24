@@ -7,7 +7,7 @@
 
     <!-- TITLE -->
     <div class="mt-2 mb-6">
-        <div class="flex">
+        <div id="space-title" class="flex">
             <label for="{{ form.title.id_for_label }}"
                 class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
             {{ form.title }}
@@ -18,7 +18,7 @@
 
 
     <!-- INVITATIONS -->
-    <div class="mb-6">
+    <div id="space-invitations" class="mb-6">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Invitees</h3>
             {% include 'components/tooltip.html' with content=form.senders_emails.help_text target=form.senders_emails.name %}
@@ -52,7 +52,7 @@
 
 
     <!-- INSTRUCTIONS -->
-    <div class="mb-6">
+    <div id="space-instructions" class="mb-6">
         <div class="flex items-center mb-2 space-x-2">
             <h3 class="text-xl font-medium text-gray-900 dark:text-white">Instructions</h3>
             {% include 'components/tooltip.html' with content=form.instructions.help_text target=form.instructions.name %}
@@ -123,3 +123,8 @@
             <span class="hidden min-w-[100px] min-h-[42px]"><span> <!-- ensures the classess are added to output css -->
         </div>
 </form>
+
+{% url 'walkthrough_tipbox' as walkthrough_tipbox_url %}
+{% include 'components/buttons/submit_with_loader.html' with button_text='Tutorial' hx_get=walkthrough_tipbox_url|add:"?sequence=test_sequence&step=0" hx_trigger="click" hx_target="#walkthrough-tipbox-container" hx_swap="innerHTML" extra_classes="z-[100] top-[65px] right-5 fixed border border-white" %}
+<span class="hidden z-[100] top-[65px] right-5 fixed border-white"><span> <!-- ensures the classess are added to output css -->
+
