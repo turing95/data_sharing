@@ -72,7 +72,7 @@ export function initNav()  {
         });
 
     }
-    let modal;
+    let modalPrice;
    
     // set the modal menu element
     const pricingModalEl = document.getElementById('plan_pricing_modal');
@@ -88,7 +88,7 @@ export function initNav()  {
             override: true
         };
 
-        modal = new Modal(pricingModalEl, options, instanceOptions);
+        modalPrice = new Modal(pricingModalEl, options, instanceOptions);
     }
 
     // setup all the buttons that open the modal
@@ -97,12 +97,12 @@ export function initNav()  {
         // Iterate over each button and add the click event listener
         pricingModalButtons.forEach(function(button) {
             button.addEventListener('click', function() {
-                modal.show();
+                modalPrice.show();
             });
         });
     }
 
-
+    let modalLanguage;
     // set the modal for languages
     const languageModalEl = document.getElementById('language_modal');
     if (languageModalEl) {
@@ -117,7 +117,7 @@ export function initNav()  {
             override: true
         };
 
-        modal = new Modal(languageModalEl, options, instanceOptions);
+        modalLanguage = new Modal(languageModalEl, options, instanceOptions);
     }
 
     // setup all the buttons that open the modal
@@ -126,7 +126,7 @@ export function initNav()  {
         // Iterate over each button and add the click event listener
         languageModalButtons.forEach(function(button) {
             button.addEventListener('click', function() {
-                modal.show();
+                modalLanguage.show();
             });
         });
     }
