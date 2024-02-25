@@ -102,4 +102,46 @@ export function initNav()  {
         });
     }
 
+
+    // set the modal for languages
+    const languageModalEl = document.getElementById('language_modal');
+    if (languageModalEl) {
+
+        // options with default values
+        const options = {
+            backdropClasses:
+                'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-[51]',
+        };
+        // instance options object
+        const instanceOptions = {
+            override: true
+        };
+
+        modal = new Modal(languageModalEl, options, instanceOptions);
+    }
+
+    // setup all the buttons that open the modal
+    const languageModalButtons = document.querySelectorAll('[id^="language_modal_button"]');
+    if (languageModalButtons) {
+        // Iterate over each button and add the click event listener
+        languageModalButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                modal.show();
+            });
+        });
+    }
+
+    // init submit button of the language modal
+    const languageSelectionButtons = document.querySelectorAll('.language-selection-button');
+    languageSelectionButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // get the language code from the button data-language attribute
+            const languageCode = button.getAttribute('data-language');
+            // set the language and submit the form
+            document.getElementById('languageInput').value = languageCode;
+            document.getElementById('languageForm').submit();
+        });
+    });
+
+
 }
