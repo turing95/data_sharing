@@ -31,8 +31,8 @@
                                         data-language="{{ language.code }}"
                                         class="block w-full p-2 text-base text-left text-gray-900 border-0 language-selection-button focus:ring-0 focus:border-0 hover:text-marian-blue-400 hover:underline"
                                 >
-                                    {% if 'it' in language.code %}Italiano
-                                    {% elif 'en' in language.code %}English
+                                    {% if 'it' in language.code %} {{ language.name_local|title }}
+                                    {% elif 'en' in language.code %} {{ language.name_local|title }}
                                     {% else %}{{ language.name }}
                                     {% endif %}
                                 </button>
