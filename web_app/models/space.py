@@ -14,6 +14,7 @@ class Space(BaseModel, DeleteModel):
 
     title = models.CharField(max_length=250)
     user = models.ForeignKey('User', null=True, on_delete=models.SET_NULL, related_name='spaces')
+    organization = models.ForeignKey('Organization', null=True, on_delete=models.SET_NULL, related_name='spaces')
     is_public = models.BooleanField(default=True)
     instructions = models.TextField(null=True, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
