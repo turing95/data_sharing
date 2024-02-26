@@ -22,7 +22,6 @@ class Organization(BaseModel):
 class UserOrganization(BaseModel):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE)
-    role = models.CharField(max_length=50)
 
 
 class OrganizationInvitation(BaseModel):
