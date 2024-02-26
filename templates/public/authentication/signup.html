@@ -1,9 +1,10 @@
 {% extends 'public/_base.html' %}
 {% load static %}
 
-{% block right_container_content %}
-    <div class="max-w-lg w-full">
-        <h1 class="text-2xl font-semibold mb-4">Create a new account</h1>
+{% block public_content %}
+<div class="flex flex-col w-full p-5 mx-auto my-10 border border-gray-200 shadow-sm md:mt-30 max-w-[410px]">
+   
+        <h1 class="mb-4 text-2xl font-semibold">Create a new account</h1>
         
 
         <form action="" method="post" class="w-full">
@@ -16,7 +17,7 @@
 
             <!-- Render Email Field -->
             <div>
-                <label for="{{ form.email.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.email.label}}</label>
+                <label for="{{ form.email.id_for_label }}" class="block mt-1 mb-1 text-sm font-bold text-gray-700">{{form.email.label}}</label>
                 {{ form.email}}
                 {% if form.email.help_text %}
                     <div class="">{{ form.email.help_text }}</div>
@@ -26,30 +27,30 @@
         
             <!-- Render Password 1 Field -->
             <div>
-                <label for="{{ form.password1.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.password1.label}}</label>
+                <label for="{{ form.password1.id_for_label }}" class="block mt-1 mb-1 text-sm font-bold text-gray-700">{{form.password1.label}}</label>
                 {{ form.password1 }}
                 {% if form.password1.help_text %}
-                    <div class="text-sm">{{ form.password1.help_text }}</div>
+                    <div class="text-xs">{{ form.password1.help_text }}</div>
                 {% endif %}
                 {% include 'components/forms/error_widget.html' with errors=form.password1.errors %}
             </div>
         
             <!-- Render Password 2 Field -->
             <div>
-                <label for="{{ form.password2.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-1 mt-1">{{form.password2.label}}</label>
+                <label for="{{ form.password2.id_for_label }}" class="block mt-1 mb-1 text-sm font-bold text-gray-700">{{form.password2.label}}</label>
                 {{ form.password2 }}
                 {% if form.password2.help_text %}
-                    <div>{{ form.password2.help_text }}</div>
+                    <div class="text-xs">{{ form.password2.help_text }}</div>
                 {% endif %}
                 {% include 'components/forms/error_widget.html' with errors=form.password2.errors %}
             </div>
         
             <!-- Submit Button -->
-            {% include "components/buttons/submit_with_loader.html" with button_text="Register new account" %}
+            {% include "components/buttons/submit_with_loader.html" with button_text="Register new account" extra_classes="w-full min-h-[42px] mt-3" loading="True" %}
         </form>
 
-        <p class="text-center text-sm">
-            Already have an account? <a href="{{ login_url }}" class="text-blue-600 hover:text-blue-600 underline">Sign in</a>
+        <p class="mt-1 text-sm text-center">
+            Already have an account? <a href="{{ login_url }}" class="text-blue-600 underline hover:text-blue-600">Sign in</a>
         </p>
 
         <!-- separator from social account login -->
