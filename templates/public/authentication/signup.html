@@ -1,5 +1,6 @@
 {% extends 'public/_base.html' %}
 {% load static %}
+{% load static i18n %}
 
 {% block public_content %}
 <div class="flex flex-col w-full p-5 mx-auto my-10 border border-gray-200 shadow-sm md:mt-30 max-w-[410px]">
@@ -18,7 +19,7 @@
             <!-- Render Email Field -->
             <div>
                 <label for="{{ form.email.id_for_label }}" class="block mt-1 mb-1 text-sm font-bold text-gray-700">{{form.email.label}}</label>
-                {{ form.email}}
+                {{ form.email}} <!--TRADUZIONE MANCANTE -->
                 {% if form.email.help_text %}
                     <div class="">{{ form.email.help_text }}</div>
                 {% endif %}
@@ -45,18 +46,18 @@
                 {% include 'components/forms/error_widget.html' with errors=form.password2.errors %}
             </div>
         
-            <!-- Submit Button -->
-            {% include "components/buttons/submit_with_loader.html" with button_text="Register new account" extra_classes="w-full min-h-[42px] mt-3" loading="True" %}
+            <!-- Submit Button --> <!--TRADUZIONE MANCANTE -->
+            {% include "components/buttons/submit_with_loader.html" with button_text='Register new account' extra_classes="w-full min-h-[42px] mt-3" loading="True" %}
         </form>
 
         <p class="mt-1 text-sm text-center">
-            {% 'Already have an account?' %}<a href="{{ login_url }}" class="text-blue-600 underline hover:text-blue-600">{% translate 'Sign in' %}</a>
+            {% translate 'Already have an account?' %}<a href="{{ login_url }}" class="text-blue-600 underline hover:text-blue-600">{% translate 'Sign in' %}</a>
         </p>
 
         <!-- separator from social account login -->
         <div class="flex items-center justify-center my-4">
             <div class="flex-grow border-t border-gray-300"></div>
-            <span class="mx-4 text-gray-600">or</span>
+            <span class="mx-4 text-gray-600">{% transalte 'or' %}</span>
             <div class="flex-grow border-t border-gray-300"></div>
         </div>
         {% include "public/snippets/login.html"%}

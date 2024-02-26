@@ -1,5 +1,6 @@
 {% extends 'public/_base.html' %}
 {% load static %}
+{% load static i18n %}
 
 {% block public_content %}
     <div class="flex flex-col w-full p-5 mx-auto my-10 border border-gray-200 shadow-sm md:mt-30 max-w-[410px]">
@@ -60,8 +61,8 @@
         </p>{% endcomment %}
         <!-- Beta disclaimer -->
         <div class="mx-auto flex flex-col items-center justify-center max-w-[420px] px-4 py-2 text-center border-t mt-6">
-            <div class="max-w-[300px] text-sm text-gray-600 dark:text-gray-300">Kezyy is currently in beta. Access is limited to approved profiles only. Feel free to request access by clicking below.</div>
-            <a href="{% url 'generic_beta_access' %}" class="cursor-pointer px-3 py-1.5 mt-2 text-xs text-white  bg-marian-blue-400 hover:bg-marian-blue-300">Request beta access</a>
+            <div class="max-w-[300px] text-sm text-gray-600 dark:text-gray-300">{% translate 'Kezyy is currently in beta. Access is limited to approved profiles only. Feel free to request access by clicking below.' %}</div>
+            <a href="{% url 'generic_beta_access' %}" class="cursor-pointer px-3 py-1.5 mt-2 text-xs text-white  bg-marian-blue-400 hover:bg-marian-blue-300">{% translate 'Request beta access' %}</a>
         </div>
 
     </div>
