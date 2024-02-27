@@ -52,7 +52,7 @@ def team_invitation_redemption(request):
             invitation.organization.users.add(user)
             invitation.delete()
             messages.success(request, 'User added to organization successfully')
-            return redirect(reverse('spaces'))
+            return redirect(reverse('spaces'),kwargs={'organization_uuid': invitation.organization.pk})
         else:
             request.session['invitation_uuid'] = str(invitation.pk)
             request.session['invitation_email'] = invitation.email
