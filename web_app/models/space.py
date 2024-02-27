@@ -49,10 +49,11 @@ class Space(BaseModel, DeleteModel):
     def deadline_expired(self):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
 
-    def duplicate(self):
+    def duplicate(self,user):
 
         new_space = deepcopy(self)
         new_space.pk = None
+        new_space.user = user
         new_space.title = f'{self.title} (copy)'
         new_space.save()
         for sender in self.senders.all():
