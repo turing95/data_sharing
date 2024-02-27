@@ -15,7 +15,7 @@ from web_app.tasks.notifications import notify_invitation
 from web_app.mixins import SubscriptionMixin,OrganizationMixin,SideBarMixin
 
 
-class SpaceFormView(LoginRequiredMixin, SubscriptionMixin,OrganizationMixin,SideBarMixin, FormView):
+class SpaceFormView(LoginRequiredMixin, SubscriptionMixin,OrganizationMixin, FormView):
     template_name = "private/space/create/base.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')

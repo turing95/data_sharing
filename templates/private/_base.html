@@ -1,28 +1,33 @@
 {% extends '_base.html' %}
 
 {% block content %}
-    
+
     <div class="max-w-screen-xl px-2 mx-auto border-t flex">
-    <div class="sm:w-1/4">
         {% if sidebar %}
-            {% include 'private/sidebar.html' %}
-        {% endif %}
-    </div>
-    <div class="sm:w-3/4 w-full p-5">
-                {% if back %}
-            <a href="{{ back.url }}" class="inline-flex items-center font-medium text-black hover:text-blue-500 dark:text-blue-500">
-                <svg class="w-4 h-4 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M1 5h12m0 0L9 1m4 4L9 9" transform="rotate(180 7 5)"/>
-                </svg>
-                {{ back.text }}
-            </a>
+
+            <div class="sm:w-1/4">
+                {% include 'private/sidebar.html' %}
+            </div>
         {% endif %}
 
-        {% block private_content %}
+        <div class="{% if sidebar %}sm:w-3/4{% endif %} w-full p-5">
+            {% if back %}
+                <a href="{{ back.url }}"
+                   class="inline-flex items-center font-medium text-black hover:text-blue-500 dark:text-blue-500">
+                    <svg class="w-4 h-4 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                              d="M1 5h12m0 0L9 1m4 4L9 9" transform="rotate(180 7 5)"/>
+                    </svg>
+                    {{ back.text }}
+                </a>
+            {% endif %}
 
-        {% endblock %}
+            {% block private_content %}
+
+            {% endblock %}
+        </div>
+
     </div>
 
-    </div>
-    
 {% endblock %}
