@@ -2,6 +2,7 @@ from allauth.account import app_settings
 from allauth.account.forms import SignupForm as AllauthSignupForm
 from django import forms
 from web_app.forms import css_classes
+from django.utils.translation import gettext_lazy as _
 
 
 class SignupForm(AllauthSignupForm):
@@ -16,7 +17,7 @@ class SignupForm(AllauthSignupForm):
         widget=forms.TextInput(
             attrs={
                 "type": "email",
-                "placeholder": "Email address",
+                "placeholder": _("Email address"),
                 "autocomplete": "email",
                 "class": css_classes.text_input
             }

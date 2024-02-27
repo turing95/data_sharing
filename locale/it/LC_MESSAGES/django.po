@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 23:20+0100\n"
+"POT-Creation-Date: 2024-02-27 10:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgid "Choose a language:"
 msgstr ""
 
 #: .\templates\components\navbar.html:78 .\templates\components\navbar.html:124
-#: .\templates\public\authentication\signup.html:54
+#: .\templates\public\authentication\signup.html:55
 msgid "Sign in"
 msgstr "Accedi"
 
@@ -253,6 +253,11 @@ msgstr ""
 msgid "Upload notes: %(notes)s"
 msgstr ""
 
+#: .\templates\public\authentication\login.html:53
+#: .\templates\public\authentication\signup.html:61
+msgid "or"
+msgstr "oppure"
+
 #: .\templates\public\authentication\login.html:65
 msgid ""
 "Kezyy is currently in beta. Access is limited to approved profiles only. "
@@ -267,6 +272,7 @@ msgstr "Richiedi accesso alla beta"
 
 #: .\templates\public\authentication\password_reset_from_key.html:5
 #: .\templates\public\authentication\password_reset_from_key.html:13
+#: .\templates\public\authentication\password_reset_from_key.html:38
 #: .\templates\public\authentication\password_reset_from_key_done.html:4
 msgid "Change Password"
 msgstr "Modifica Password"
@@ -275,14 +281,10 @@ msgstr "Modifica Password"
 msgid "Bad Token"
 msgstr ""
 
-#: .\templates\public\authentication\password_reset_from_key.html:19
-#, python-format
-msgid ""
-"The password reset link was invalid, possibly because it has already been\n"
-"                used.  Please request a <a href=\"%(passwd_reset_url)s\">new "
-"password reset</a>\n"
-"                ."
-msgstr ""
+#: .\templates\public\authentication\password_reset_from_key.html:28
+#| msgid "Back to homepage"
+msgid "Back to hompage"
+msgstr "Torna alla homepage"
 
 #: .\templates\public\authentication\password_reset_from_key_done.html:6
 msgid "Your password is now changed."
@@ -301,11 +303,20 @@ msgstr ""
 "Dimenticato la password? Inserisci il tuo indirizzo email qui sotto, e ti "
 "invieremo un link per reimpostarla."
 
+#: .\templates\public\authentication\reset_password.html:33
+#| msgid "Reset Password"
+msgid "Reset password"
+msgstr "Reimposta la Password"
+
 #: .\templates\public\authentication\signup.html:8
 msgid "Create a new account"
 msgstr "Crea un nuovo account"
 
-#: .\templates\public\authentication\signup.html:54
+#: .\templates\public\authentication\signup.html:50
+msgid "Register new account"
+msgstr "Crea nuovo account"
+
+#: .\templates\public\authentication\signup.html:55
 msgid "Already have an account?"
 msgstr "Hai già un account?"
 
@@ -696,13 +707,24 @@ msgid "Confirm and Upload"
 msgstr "Conferma e Carica"
 
 #: .\templates\public\snippets\custom_login_social.html:9
-#| msgid "Sign in"
 msgid "Sign in with"
 msgstr "Accedi con"
 
 #: .\templates\public\snippets\login.html:9
 msgid "Or use a third-party"
 msgstr "O usa un servizio terzo"
+
+#: .\web_app\forms\authentication\login.py:18
+msgid "Forgot your password?"
+msgstr "Dimenticato la password?"
+
+#: .\web_app\forms\authentication\login.py:19
+msgid "Reset"
+msgstr "Reimposta"
+
+#: .\web_app\forms\authentication\signup.py:20
+msgid "Email address"
+msgstr "Indirizzo email"
 
 #: .\web_app\forms\file.py:37
 msgid "Add a note to your upload..."
