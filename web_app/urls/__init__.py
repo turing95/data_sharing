@@ -10,7 +10,9 @@ from web_app.views import SpacesView, SpaceFormView, SpaceDetailFormViewReceiver
     sender_info, sender_row, select_destination_type, get_destination_logo, all_senders_modal, bulk_notify_invitation, \
     bulk_notify_deadline, duplicate, search_contacts, create_contact_modal, create_contact, request_changes, accept_all, \
     accept_single, SignupView, PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView, \
-    PasswordResetFromKeyDoneView, sender_upload_notification, account_notifications
+    PasswordResetFromKeyDoneView, sender_upload_notification, account_notifications, create_organization, \
+    create_organization_modal, TeamView, team_invitation, team_invitation_redemption, revoke_invitation, \
+    remove_team_member
 
 from web_app.views.language import custom_set_language
 urlpatterns = [
@@ -22,7 +24,6 @@ urlpatterns = [
     path('beta/', BetaAccessRequestFormView.as_view(), name='generic_beta_access'),
     path('', PublicLandingView.as_view(), name='generic_home'),
     # Receiver views
-    path('spaces/', SpacesView.as_view(), name='spaces'),
     path('accounts/signup/', SignupView.as_view(), name='account_signup'),
     path('accounts/login/', LoginView.as_view(), name='account_login'),
     path('accounts/social/signup/', LoginView.as_view(), name='account_login'),
@@ -42,8 +43,15 @@ urlpatterns = [
     path('accounts/delete/', AccountDeleteView.as_view(), name='account_delete'),
     path('accounts/social/connections/', ConnectionsView.as_view(), name='socialaccount_connections'),
     path('accounts/social/login/cancelled/', LoginCancelledView.as_view(), name='socialaccount_login_cancelled'),
-    path('spaces/add/', SpaceFormView.as_view(), name='space_create'),
-    path('spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
+    path('organizations/<uuid:organization_uuid>/spaces/', SpacesView.as_view(), name='spaces'),
+    path('spaces/', SpacesView.as_view(), name='spaces'),
+    path('organizations/<uuid:organization_uuid>/spaces/add/', SpaceFormView.as_view(), name='space_create'),
+    path('organizations/<uuid:organization_uuid>/spaces/detail/<uuid:space_uuid>/', SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
+    path('organizations/<uuid:organization_uuid>/team/', TeamView.as_view(), name='team'),
+    path('organizations/<uuid:organization_uuid>/team-invitation/', team_invitation, name='team_invitation'),
+    path('team-invitation-redemption/', team_invitation_redemption, name='team_invitation_redemption'),
+    path('<uuid:invitation_uuid>/revoke-invitation/', revoke_invitation, name='revoke_invitation'),
+    path('<uuid:user_org_uuid>/delete/', remove_team_member, name='remove_team_member'),
     path('spaces/delete/<uuid:space_uuid>/', DeleteSpaceView.as_view(), name='space_delete'),
     path('spaces/duplicate/<uuid:space_uuid>/', duplicate, name='space_duplicate'),
     path('stripe/create-checkout-session/', create_checkout_session, name='create_checkout_session'),
@@ -81,4 +89,6 @@ urlpatterns = [
     path('contacts/search/', search_contacts, name='search_contacts'),
     path('contacts/create/modal/', create_contact_modal, name='create_contact_modal'),
     path('contacts/create/', create_contact, name='create_contact'),
+    path('organizations/create/', create_organization, name='create_organization'),
+    path('organizations/create/modal/', create_organization_modal, name='create_organization_modal')
 ]

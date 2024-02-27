@@ -9,7 +9,7 @@ class PublicLandingView(SubscriptionMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(reverse('spaces'))
+            return redirect(reverse('spaces',kwargs={'organization_uuid': request.user.organizations.first().uuid}))
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

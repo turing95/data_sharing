@@ -43,7 +43,7 @@ class AccountAdapter(DefaultAccountAdapter):
     def save_user(self, request, user, form, commit=True):
         # Call the super class's save_user to save the user model
         user = super().save_user(request, user, form, commit=True)
-        user.setup()
+        user.setup(request)
 
         return user
 
@@ -57,6 +57,6 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def save_user(self, request, user, form=None):
         # Call the super class's save_user to save the user model
         user = super().save_user(request, user, form)
-        user.setup()
+        user.setup(request)
 
         return user

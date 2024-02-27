@@ -1,8 +1,11 @@
 import stripe
+from django.shortcuts import get_object_or_404
 from djstripe.mixins import PaymentsContextMixin
 from djstripe.models import Plan, Customer, APIKey
 from djstripe.settings import djstripe_settings
 from django.conf import settings
+
+from web_app.models import Organization
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -22,5 +25,31 @@ class SubscriptionMixin(PaymentsContextMixin):
             )
             context["subscription"] = context["customer"].subscription
             context["user_maxed_spaces"] = context[
-                                               "customer"].subscription is None and self.request.user.spaces.filter(is_deleted=False).count() >= settings.MAX_FREE_SPACES
+                                               "customer"].subscription is None and self.request.user.spaces.filter(
+                is_deleted=False).count() >= settings.MAX_FREE_SPACES
+            context['new_space_button_text'] = 'New space' if context[
+                                                                  'user_maxed_spaces'] is False else 'Upgrade to create more spaces'
         return context
+
+
+class OrganizationMixin:
+    _organization = None  # Placeholder for the cached object
+
+    def get_organization(self) -> Organization:
+        if self._organization is None:
+            self._organization = get_object_or_404(Organization,
+                                                   pk=self.kwargs.get('organization_uuid'),
+                                                   users=self.request.user)
+        return self._organization
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['organization'] = self.get_organization()
+        return data
+
+
+class SideBarMixin:
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sidebar'] = True
+        return data

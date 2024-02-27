@@ -1,2 +1,1 @@
-from web_app.middleware.timezone import TimezoneMiddleware
 from web_app.middleware.query_logger import QueryLoggingMiddleware

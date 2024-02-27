@@ -1,23 +1,26 @@
+import uuid
+
 from django.conf import settings
 from django.shortcuts import redirect
 from djstripe.models import Customer
 from djstripe.settings import djstripe_settings
-
 from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from web_app.models import Sender, GoogleDrive, UploadRequest, FileType, Space, OneDrive, GenericDestination, Contact
+from web_app.models import Sender, UploadRequest, FileType, Space, GenericDestination, Contact, \
+    Organization
 from django.db import transaction
 from web_app.tasks.notifications import notify_invitation
-from web_app.mixins import SubscriptionMixin
+from web_app.mixins import SubscriptionMixin,OrganizationMixin,SideBarMixin
 
 
-class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
+class SpaceFormView(LoginRequiredMixin, SubscriptionMixin,OrganizationMixin,SideBarMixin, FormView):
     template_name = "private/space/create/base.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
     _space = None  # Placeholder for the cached object
+    _organization = None  # Placeholder for the cached object
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -36,7 +39,7 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
 
     def get_success_url(self):
         if self._space is not None:
-            return reverse_lazy('receiver_space_detail', kwargs={'space_uuid': self._space.uuid})
+            return reverse_lazy('receiver_space_detail', kwargs={'space_uuid': self._space.uuid,'organization_uuid': self.get_organization().pk})
         return super().get_success_url()
 
     def get_formset_kwargs(self):
@@ -44,7 +47,8 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
         return kwargs
 
     def get_context_for_form(self, data, button_text='Create space', **kwargs):
-        data['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back to Spaces'}
+        data['back'] = {'url': reverse_lazy('spaces', kwargs={'organization_uuid': self.get_organization().pk}),
+                        'text': 'Back to Spaces'}
         data['space_form'] = True
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         data['file_types'] = FileType.objects.filter(group=False)
@@ -73,6 +77,7 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
         if form.is_valid():
             space_instance = form.save(commit=False)
             space_instance.user = request.user
+            space_instance.organization = self.get_organization()
             formset.instance = space_instance
 
             if formset.is_valid():
@@ -85,7 +90,7 @@ class SpaceFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
         return self.form_invalid(form)
 
     def update_or_create_sender(self, email, space_instance):
-        contact,created = Contact.objects.get_or_create(email=email, user=self.request.user)
+        contact, created = Contact.objects.get_or_create(email=email, user=self.request.user)
         sender, created = Sender.objects.update_or_create(email=contact.email, contact=contact,
                                                           space=space_instance, defaults={'is_active': True})
         return sender, created

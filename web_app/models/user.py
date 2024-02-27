@@ -1,3 +1,5 @@
+import uuid
+
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import get_connection, EmailMultiAlternatives
@@ -52,8 +54,9 @@ class User(AbstractUser):
             return None
         return MicrosoftService(self.microsoft_account).get_sites()
 
-    def setup(self):
-        from web_app.models import Organization, SenderNotificationsSettings, NotificationsSettings
+    def setup(self, request):
+        from web_app.models import Organization, SenderNotificationsSettings, NotificationsSettings, \
+            OrganizationInvitation
         SenderNotificationsSettings.objects.get_or_create(user=self)
         NotificationsSettings.objects.get_or_create(user=self)
         # Check if an organization named "Personal" already exists in the user's organizations
@@ -61,8 +64,13 @@ class User(AbstractUser):
 
         # If it does not exist, create it and add it to the user's organizations
         if not personal_organization_exists:
-            personal_organization = Organization.objects.create(name="Personal")
+            personal_organization = Organization.objects.create(name="Personal", created_by=self)
             self.organizations.add(personal_organization)
+
+        if request.session.get('invitation_uuid'):
+            invitation = OrganizationInvitation.objects.get(pk=request.session['invitation_uuid'])
+            invitation.organization.users.add(self)
+            del request.session['invitation_uuid']
 
     def notify_upload(self, sender_event):
         from web_app.models import NotificationsSettings
@@ -78,7 +86,7 @@ class User(AbstractUser):
                     pre_header_text_2=pre_header_text_2,
                     space_title=sender_event.space.title,
                     req_title=sender_event.request.title
-                    )
+                )
                 context['sender_event'] = sender_event
 
                 email_html = render_to_string('emails/receiver_upload_notification.html', context)

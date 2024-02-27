@@ -5,6 +5,18 @@
 <nav id="navbar" class="fixed top-0 left-0 z-50 w-full bg-white border-gray-200 dark:bg-gray-900 h-14">
 
     <div class="flex flex-wrap items-center justify-between h-full max-w-screen-xl px-4 py-2 mx-auto">
+        {% if sidebar %}
+            <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
+                    type="button"
+                    class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" fill-rule="evenodd"
+                          d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                </svg>
+            </button>
+        {% endif %}
         <!-- company logo-->
         <a href="{% url 'generic_home' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="{% static 'images/logo.png' %}" class="h-8" alt="Kezyy Logo"/>
@@ -64,12 +76,16 @@
                     </ul>
                 </div>
             {% else %}
-                <a id="language_modal_button" class="flex items-center justify-end mx-2 cursor-pointer md:inline-flex max-h-8 hover:scale-[1.05]" title="Select language"
-                   > 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.1" stroke="currentColor" class="w-6 h-6 ">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+                <a id="language_modal_button"
+                   class="flex items-center justify-end mx-2 cursor-pointer md:inline-flex max-h-8 hover:scale-[1.05]"
+                   title="Select language"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.1"
+                         stroke="currentColor" class="w-6 h-6 ">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/>
                     </svg>
-                      
+
                     {% comment %} {% include 'components/language_selector.html' %} {% endcomment %}
                 </a>
                 <div class="hidden md:inline-flex md:me-0">

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 10:49+0100\n"
+"POT-Creation-Date: 2024-02-27 10:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,137 +18,136 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\data_sharing\settings.py:164
+#: data_sharing/settings.py:163
 msgid "english"
 msgstr "inglese"
 
-#: .\data_sharing\settings.py:165
+#: data_sharing/settings.py:164
 msgid "italian"
 msgstr "italiano"
 
-#: .\templates\components\language_modal.html:16
+#: templates/components/language_modal.html:16
 msgid "Choose a language:"
 msgstr ""
 
-#: .\templates\components\navbar.html:78 .\templates\components\navbar.html:124
-#: .\templates\public\authentication\signup.html:55
+#: templates/components/navbar.html:94 templates/components/navbar.html:140
+#: templates/public/authentication/signup.html:55
 msgid "Sign in"
 msgstr "Accedi"
 
-#: .\templates\components\navbar.html:80 .\templates\components\navbar.html:127
-#: .\templates\public\beta_access_request.html:157
+#: templates/components/navbar.html:96 templates/components/navbar.html:143
+#: templates/public/beta_access_request.html:157
 msgid "Access beta"
 msgstr "Accedi alla beta"
 
-#: .\templates\components\navbar.html:103
+#: templates/components/navbar.html:119
 msgid "Home"
 msgstr "Home"
 
-#: .\templates\components\navbar.html:107
+#: templates/components/navbar.html:123
 msgid "Demo"
 msgstr ""
 
-#: .\templates\components\navbar.html:111
+#: templates/components/navbar.html:127
 msgid "Features"
 msgstr "Funzionalità"
 
-#: .\templates\components\navbar.html:115
+#: templates/components/navbar.html:131
 msgid "Pricing"
 msgstr "Prezzi"
 
-#: .\templates\components\navbar.html:119
+#: templates/components/navbar.html:135
 msgid "Help"
 msgstr "Supporto"
 
-#: .\templates\components\pricing.html:11
+#: templates/components/pricing.html:11
 msgid "Test out what Kezyy can do to streamline your file collection"
 msgstr "Valuta cosa Kezyy può fare per semplificare la raccolta di documenti"
 
-#: .\templates\components\pricing.html:13
+#: templates/components/pricing.html:13
 msgid "Free"
 msgstr "Gratis"
 
-#: .\templates\components\pricing.html:18
+#: templates/components/pricing.html:18
 msgid "Key features:"
 msgstr "Funzionalità principali:"
 
-#: .\templates\components\pricing.html:28
+#: templates/components/pricing.html:28
 #, python-format
 msgid ""
 "<span>Max spaces: <span class=\"font-semibold\">%(max_free_spaces)s spaces</"
 "span></span>"
 msgstr ""
-"<span>Massimo numero di spazi: <span class=\"font-semibold\">"
-"%(max_free_spaces)s spazi</span></span>"
+"<span>Massimo numero di spazi: <span class=\"font-"
+"semibold\">%(max_free_spaces)s spazi</span></span>"
 
-#: .\templates\components\pricing.html:38
+#: templates/components/pricing.html:38
 msgid "Google Drive and One Drive integration"
 msgstr "Integrazione con Google Drive e OneDrive e Sharepoint"
 
-#: .\templates\components\pricing.html:48
+#: templates/components/pricing.html:48
 msgid "Deadlines and reminders"
 msgstr "Scadenze e promemoria"
 
-#: .\templates\components\pricing.html:58
+#: templates/components/pricing.html:58
 msgid "Unlimited invitees per space"
 msgstr "Numero illimitato di invitati per spazio"
 
-#: .\templates\components\pricing.html:68
+#: templates/components/pricing.html:68
 msgid "Unlimited file requests per space"
 msgstr "Numero illimitato di richieste di documenti per spazio"
 
-#: .\templates\components\pricing.html:78
+#: templates/components/pricing.html:78
 msgid "Self service knowledge base"
 msgstr "Accesso alla knowledge base"
 
-#: .\templates\components\pricing.html:88
-#: .\templates\components\pricing.html:149
+#: templates/components/pricing.html:88 templates/components/pricing.html:149
 msgid "Get started"
 msgstr "Inizia ora"
 
-#: .\templates\components\pricing.html:106
+#: templates/components/pricing.html:106
 msgid "All basic features, plus:"
 msgstr "Tutte le funzionalità base, più:"
 
-#: .\templates\components\pricing.html:116
+#: templates/components/pricing.html:116
 msgid "Unlimited spaces"
 msgstr "Spazi illimitati"
 
-#: .\templates\components\pricing.html:126
+#: templates/components/pricing.html:126
 msgid "Email support"
 msgstr "Supporto via email"
 
-#: .\templates\components\pricing.html:131
+#: templates/components/pricing.html:131
 msgid "Current plan"
 msgstr "Piano attuale"
 
-#: .\templates\components\pricing.html:135
+#: templates/components/pricing.html:135
 msgid "Will cancel on"
 msgstr "Scadrà il"
 
-#: .\templates\components\pricing.html:140
+#: templates/components/pricing.html:140
 msgid "Manage my subscription"
 msgstr "Gestisci la mia iscrizione"
 
-#: .\templates\components\pricing.html:145
+#: templates/components/pricing.html:145
 msgid "Upgrade"
 msgstr "Upgrade"
 
-#: .\templates\components\pricing.html:160
+#: templates/components/pricing.html:160
 msgid "Need Enterprise features?"
 msgstr "Ti servono funzionalità Enterprise?"
 
-#: .\templates\components\pricing.html:162
+#: templates/components/pricing.html:162
 #, fuzzy
 #| msgid "Contact us"
 msgid "Contact us at:"
 msgstr "Contattaci"
 
-#: .\templates\components\pricing.html:169
+#: templates/components/pricing.html:169
 msgid "Tell us more"
 msgstr "Dicci di più"
 
-#: .\templates\emails\changes_notification.html:11
+#: templates/emails/changes_notification.html:11
 #, python-format
 msgid ""
 "%(receiver_name)s has requested changes to  %(title)s, click to access the "
@@ -157,53 +156,53 @@ msgstr ""
 "%(receiver_name)s ha richiesto dei cambiamenti a  %(title)s, clicca per "
 "accedere allo spazio <br>"
 
-#: .\templates\emails\changes_notification.html:25
+#: templates/emails/changes_notification.html:25
 msgid "File to change:"
 msgstr "documenti da ricaricare:"
 
-#: .\templates\emails\changes_notification.html:41
+#: templates/emails/changes_notification.html:41
 #, python-format
 msgid "Notes from the receiver: %(notes)s"
 msgstr "Note dal richiedente: %(notes)s"
 
-#: .\templates\emails\changes_notification.html:50
-#: .\templates\emails\deadline_notification.html:26
-#: .\templates\emails\sender_invite.html:26
-#: .\templates\emails\sender_upload_notification.html:50
+#: templates/emails/changes_notification.html:50
+#: templates/emails/deadline_notification.html:26
+#: templates/emails/sender_invite.html:26
+#: templates/emails/sender_upload_notification.html:50
 #, python-format
 msgid "Reference email: %(receiver_email)s"
 msgstr "Email di riferimento: %(receiver_email)s"
 
-#: .\templates\emails\components\deadline_section.html:7
+#: templates/emails/components/deadline_section.html:7
 msgid "You have time until "
 msgstr "Hai tempo fino a "
 
-#: .\templates\emails\components\deadline_section.html:9
+#: templates/emails/components/deadline_section.html:9
 msgid "Add the deadline to your calendar"
 msgstr "Aggiungi la scadenza al tuo calendario"
 
-#: .\templates\emails\components\footer.html:18
+#: templates/emails/components/footer.html:18
 msgid "Contact us"
 msgstr "Contattaci"
 
-#: .\templates\emails\components\main_section.html:14
+#: templates/emails/components/main_section.html:14
 msgid "Go to Space for more details"
 msgstr "Accedi allo Spazio per maggiori dettagli"
 
-#: .\templates\emails\components\requests_summary.html:5
+#: templates/emails/components/requests_summary.html:5
 msgid "You have been requested the following:"
 msgstr "Ti sono stati richiesti i seguenti elementi:"
 
-#: .\templates\emails\deadline_notification.html:11
+#: templates/emails/deadline_notification.html:11
 #, python-format
 msgid ""
-"Remember to complete the upload at<br> <a href=\"%(space_link)s\" style="
-"\"text-decoration:underline;\"> %(title)s </a>"
+"Remember to complete the upload at<br> <a href=\"%(space_link)s\" "
+"style=\"text-decoration:underline;\"> %(title)s </a>"
 msgstr ""
 "Ricorda di completare l'upload a<br> <a href=\"%(space_link)s\" style=\"text-"
 "decoration:underline;\"> %(title)s </a>"
 
-#: .\templates\emails\password_reset.html:5
+#: templates/emails/password_reset.html:5
 msgid ""
 "You're receiving this email because you or someone else has requested a "
 "password reset for your user account.\n"
@@ -211,54 +210,65 @@ msgid ""
 "link below to reset your password."
 msgstr ""
 
-#: .\templates\emails\password_reset.html:10
+#: templates/emails/password_reset.html:10
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
 msgstr ""
 
-#: .\templates\emails\receiver_upload_notification.html:11
+#: templates/emails/receiver_upload_notification.html:11
 #, python-format
 msgid "%(sender_email)s has uploaded files to  <b>%(req_title)s</b>, in space"
 msgstr ""
 
-#: .\templates\emails\receiver_upload_notification.html:24
-#: .\templates\emails\sender_upload_notification.html:24
+#: templates/emails/receiver_upload_notification.html:24
+#: templates/emails/sender_upload_notification.html:24
 #, fuzzy
 #| msgid "File to change:"
 msgid "File uploaded:"
 msgstr "documenti da ricaricare:"
 
-#: .\templates\emails\receiver_upload_notification.html:41
+#: templates/emails/receiver_upload_notification.html:41
 #, fuzzy, python-format
 #| msgid "Notes from the receiver: %(notes)s"
 msgid "Notes from the sender: %(notes)s"
 msgstr "Note dal richiedente: %(notes)s"
 
-#: .\templates\emails\sender_invite.html:11
+#: templates/emails/sender_invite.html:11
 #, python-format
 msgid ""
-"%(receiver_name)s invites you to upload files  to the space:<br> <a href="
-"\"%(space_link)s\" style=\"text-decoration:underline;\"> %(title)s </a>"
+"%(receiver_name)s invites you to upload files  to the space:<br> <a "
+"href=\"%(space_link)s\" style=\"text-decoration:underline;\"> %(title)s </a>"
 msgstr ""
 "%(receiver_name)s ti invita a caricare dei documenti nello spazio:<br> <a "
 "href=\"%(space_link)s\" style=\"text-decoration:underline;\"> %(title)s </a>"
 
-#: .\templates\emails\sender_upload_notification.html:11
+#: templates/emails/sender_upload_notification.html:11
 #, python-format
 msgid "You have uploaded files to  <b>%(req_title)s</b>, in space"
 msgstr ""
 
-#: .\templates\emails\sender_upload_notification.html:41
+#: templates/emails/sender_upload_notification.html:41
 #, python-format
 msgid "Upload notes: %(notes)s"
 msgstr ""
 
-#: .\templates\public\authentication\login.html:53
-#: .\templates\public\authentication\signup.html:61
+#: templates/emails/team_invitation.html:10
+#, python-format
+msgid "%(user_identifier)s wants you to join %(org_name)s:"
+msgstr ""
+
+#: templates/emails/team_invitation.html:19 web_app/models/organization.py:27
+#, fuzzy
+#| msgid "Invitation:"
+msgid "Accept invitation"
+msgstr "Invito:"
+
+#: templates/public/authentication/login.html:53
+#: templates/public/authentication/signup.html:61
 msgid "or"
 msgstr "oppure"
 
-#: .\templates\public\authentication\login.html:65
+#: templates/public/authentication/login.html:65
 msgid ""
 "Kezyy is currently in beta. Access is limited to approved profiles only. "
 "Feel free to request access by clicking below."
@@ -266,36 +276,34 @@ msgstr ""
 "Kezyy è in versione beta. L'accesso è limitato ai profili approvati. "
 "Richiedi l'accesso cliccando qui sotto."
 
-#: .\templates\public\authentication\login.html:66
+#: templates/public/authentication/login.html:66
 msgid "Request beta access"
 msgstr "Richiedi accesso alla beta"
 
-#: .\templates\public\authentication\password_reset_from_key.html:5
-#: .\templates\public\authentication\password_reset_from_key.html:13
-#: .\templates\public\authentication\password_reset_from_key.html:38
-#: .\templates\public\authentication\password_reset_from_key_done.html:4
+#: templates/public/authentication/password_reset_from_key.html:5
+#: templates/public/authentication/password_reset_from_key.html:13
+#: templates/public/authentication/password_reset_from_key.html:38
+#: templates/public/authentication/password_reset_from_key_done.html:4
 msgid "Change Password"
 msgstr "Modifica Password"
 
-#: .\templates\public\authentication\password_reset_from_key.html:10
+#: templates/public/authentication/password_reset_from_key.html:10
 msgid "Bad Token"
 msgstr ""
 
-#: .\templates\public\authentication\password_reset_from_key.html:28
-#| msgid "Back to homepage"
+#: templates/public/authentication/password_reset_from_key.html:28
 msgid "Back to hompage"
 msgstr "Torna alla homepage"
 
-#: .\templates\public\authentication\password_reset_from_key_done.html:6
+#: templates/public/authentication/password_reset_from_key_done.html:6
 msgid "Your password is now changed."
 msgstr "La tua password è stata reimpostata."
 
-#: .\templates\public\authentication\reset_password.html:7
-#: .\web_app\adapters.py:31
+#: templates/public/authentication/reset_password.html:7 web_app/adapters.py:31
 msgid "Reset Password"
 msgstr "Reimposta la Password"
 
-#: .\templates\public\authentication\reset_password.html:11
+#: templates/public/authentication/reset_password.html:11
 msgid ""
 "Forgot your password? Enter your email address below, and we'll email you a "
 "link to reset it."
@@ -303,45 +311,44 @@ msgstr ""
 "Dimenticato la password? Inserisci il tuo indirizzo email qui sotto, e ti "
 "invieremo un link per reimpostarla."
 
-#: .\templates\public\authentication\reset_password.html:33
-#| msgid "Reset Password"
+#: templates/public/authentication/reset_password.html:33
 msgid "Reset password"
 msgstr "Reimposta la Password"
 
-#: .\templates\public\authentication\signup.html:8
+#: templates/public/authentication/signup.html:8
 msgid "Create a new account"
 msgstr "Crea un nuovo account"
 
-#: .\templates\public\authentication\signup.html:50
+#: templates/public/authentication/signup.html:50
 msgid "Register new account"
 msgstr "Crea nuovo account"
 
-#: .\templates\public\authentication\signup.html:55
+#: templates/public/authentication/signup.html:55
 msgid "Already have an account?"
 msgstr "Hai già un account?"
 
-#: .\templates\public\beta_access_request.html:11
+#: templates/public/beta_access_request.html:11
 msgid "Thanks for requesting access to Kezyy's Beta"
 msgstr "Grazie per aver richiesto l'accesso alla Beta di Kezyy"
 
-#: .\templates\public\beta_access_request.html:12
+#: templates/public/beta_access_request.html:12
 msgid ""
 "We'll get back to you in a few hours after we have reviewed your request."
 msgstr "Ti risponderemo in poche ore dopo aver elaborato la tua richiesta."
 
-#: .\templates\public\beta_access_request.html:14
+#: templates/public/beta_access_request.html:14
 msgid "Back to homepage"
 msgstr "Torna alla homepage"
 
-#: .\templates\public\beta_access_request.html:25
+#: templates/public/beta_access_request.html:25
 msgid "Kezyy's Beta Access"
 msgstr "Accesso alla Beta di Kezyy"
 
-#: .\templates\public\beta_access_request.html:26
+#: templates/public/beta_access_request.html:26
 msgid "To access the Beta you need to have your email approved."
 msgstr "Per accedere alla Beta è necessario che la tua email venga approvata."
 
-#: .\templates\public\beta_access_request.html:27
+#: templates/public/beta_access_request.html:27
 msgid ""
 "You can book a Demo and explain your use case or just fill a short form if "
 "you prefer."
@@ -349,19 +356,19 @@ msgstr ""
 "Puoi prenotare una Demo e spiegare il tuo caso d'uso o semplicemente "
 "compilare un breve form se preferisci."
 
-#: .\templates\public\beta_access_request.html:42
+#: templates/public/beta_access_request.html:42
 msgid "'Book a 15 minutes Demo'"
 msgstr "'Prenota una Demo di 15 minuti'"
 
-#: .\templates\public\beta_access_request.html:59
+#: templates/public/beta_access_request.html:59
 msgid "Or fill a short form"
 msgstr "O compila un breve form"
 
-#: .\templates\public\beta_access_request.html:71
+#: templates/public/beta_access_request.html:71
 msgid "Kezyy's Beta Access Form"
 msgstr "Modulo di accesso alla Beta di Kezyy"
 
-#: .\templates\public\beta_access_request.html:72
+#: templates/public/beta_access_request.html:72
 msgid ""
 "<p class=\"mt-2 text-sm text-gray-600\">Please, provide your email address "
 "and answer these few questions.<br> We review requests every day, and you "
@@ -375,49 +382,49 @@ msgstr ""
 "registrarti.<br> Ricorda di inserire la stessa email che userai per "
 "registrarti tramite il tuo account Google o Microsoft.</p>"
 
-#: .\templates\public\beta_access_request.html:77
+#: templates/public/beta_access_request.html:77
 msgid "Book a demo instead"
 msgstr "Prenota una demo invece"
 
-#: .\templates\public\beta_access_request.html:86
+#: templates/public/beta_access_request.html:86
 msgid "Name"
 msgstr "Nome"
 
-#: .\templates\public\beta_access_request.html:86
-#: .\templates\public\beta_access_request.html:99
-#: .\templates\public\beta_access_request.html:113
+#: templates/public/beta_access_request.html:86
+#: templates/public/beta_access_request.html:99
+#: templates/public/beta_access_request.html:113
 msgid "required"
 msgstr "obbligatorio"
 
-#: .\templates\public\beta_access_request.html:97
+#: templates/public/beta_access_request.html:97
 msgid "Email"
 msgstr "Email"
 
-#: .\templates\public\beta_access_request.html:112
+#: templates/public/beta_access_request.html:112
 msgid "Briefly describe how and why you collect files?"
 msgstr "Descrivi brevemente come e perché richiedi documenti a terzi?"
 
-#: .\templates\public\beta_access_request.html:125
+#: templates/public/beta_access_request.html:125
 msgid "What's your company?"
 msgstr "Qual è la tua azienda?"
 
-#: .\templates\public\beta_access_request.html:136
+#: templates/public/beta_access_request.html:136
 msgid "And role?"
 msgstr "E il tuo ruolo?"
 
-#: .\templates\public\beta_access_request.html:150
+#: templates/public/beta_access_request.html:150
 msgid "How did you hear about Kezyy?"
 msgstr "Come hai sentito parlare di Kezyy?"
 
-#: .\templates\public\feature_card.html:20
+#: templates/public/feature_card.html:20
 msgid "Learn more"
 msgstr "Scopri di più"
 
-#: .\templates\public\public_landing.html:12
+#: templates/public/public_landing.html:12
 msgid "Effortless file collection"
 msgstr "Gestisci le richieste di documenti in scioltezza"
 
-#: .\templates\public\public_landing.html:16
+#: templates/public/public_landing.html:16
 msgid ""
 "Set instructions, automate reminders, share public links and receive files "
 "neatly named in your drive."
@@ -425,25 +432,25 @@ msgstr ""
 "Imposta le istruzioni, automatizza promemoria, condividi link e ricevi i "
 "documenti nominati a tuo piacimento sul tuo drive."
 
-#: .\templates\public\public_landing.html:22
-#: .\templates\public\public_landing.html:228
+#: templates/public/public_landing.html:22
+#: templates/public/public_landing.html:228
 msgid "Access beta for free"
 msgstr "Accedi gratuitamente alla beta"
 
-#: .\templates\public\public_landing.html:24
-#: .\templates\public\public_landing.html:230
+#: templates/public/public_landing.html:24
+#: templates/public/public_landing.html:230
 msgid "No credit card required"
 msgstr "Nessuna carta di credito richiesta"
 
-#: .\templates\public\public_landing.html:28
+#: templates/public/public_landing.html:28
 msgid "View all features"
 msgstr "Vai alle funzionalità"
 
-#: .\templates\public\public_landing.html:56
+#: templates/public/public_landing.html:56
 msgid "All the features you need in one tool"
 msgstr "Tutte le funzionalità di cui hai bisogno in un unico strumento"
 
-#: .\templates\public\public_landing.html:57
+#: templates/public/public_landing.html:57
 msgid ""
 "You will feel like you hired someone to take care of collecting files for "
 "you."
@@ -451,11 +458,11 @@ msgstr ""
 "Ti sembrerà di aver assunto qualcuno per occuparsi della raccolta di "
 "documenti per te."
 
-#: .\templates\public\public_landing.html:65
+#: templates/public/public_landing.html:65
 msgid "Forget attachments, welcome personal links"
 msgstr "Dimentica gli allegati, benvenuti link di caricamento"
 
-#: .\templates\public\public_landing.html:67
+#: templates/public/public_landing.html:67
 msgid ""
 "Collect the same type of files from multiple counterparties with personal "
 "links. No sign up required."
@@ -463,26 +470,26 @@ msgstr ""
 "Colleziona documenti da più controparti, inviando a ciascuna il suo link. "
 "Per loro non è richiesta alcuna registrazione."
 
-#: .\templates\public\public_landing.html:69
+#: templates/public/public_landing.html:69
 msgid "images/home_features/sender_link.png"
 msgstr ""
 
-#: .\templates\public\public_landing.html:71
-#: .\templates\public\public_landing.html:83
-#: .\templates\public\public_landing.html:94
-#: .\templates\public\public_landing.html:105
-#: .\templates\public\public_landing.html:116
-#: .\templates\public\public_landing.html:128
-#: .\templates\public\public_landing.html:139
-#: .\templates\public\public_landing.html:150
+#: templates/public/public_landing.html:71
+#: templates/public/public_landing.html:83
+#: templates/public/public_landing.html:94
+#: templates/public/public_landing.html:105
+#: templates/public/public_landing.html:116
+#: templates/public/public_landing.html:128
+#: templates/public/public_landing.html:139
+#: templates/public/public_landing.html:150
 msgid "disable sender link gif"
 msgstr "disabilita il link del mittente gif"
 
-#: .\templates\public\public_landing.html:77
+#: templates/public/public_landing.html:77
 msgid "All instructions in one place"
 msgstr "Tutte le istruzioni in un unico posto"
 
-#: .\templates\public\public_landing.html:79
+#: templates/public/public_landing.html:79
 msgid ""
 "Replace long email threads by specifying all instructions in one place. "
 "Update details anytime."
@@ -490,16 +497,16 @@ msgstr ""
 "Sostituisci lunghi scambi di email specificando le istruzioni in un unico "
 "posto. Aggiorna i dettagli in qualunque momento."
 
-#: .\templates\public\public_landing.html:81
+#: templates/public/public_landing.html:81
 msgid "images/home_features/instructions.png"
 msgstr ""
 
-#: .\templates\public\public_landing.html:88
+#: templates/public/public_landing.html:88
 msgid "No awkward follow-ups with deadlines and reminders"
 msgstr ""
 "Nessun imbarazzante sollecito grazie a scadenze e promemoria automatici"
 
-#: .\templates\public\public_landing.html:90
+#: templates/public/public_landing.html:90
 msgid ""
 "Set deadlines visible in calendars and let automated gentle reminders "
 "replace awkward pings."
@@ -507,29 +514,29 @@ msgstr ""
 "Imposta scadenze da aggiungere al calendario e lascia che i promemoria "
 "automatici non ti facciano passare per insistente."
 
-#: .\templates\public\public_landing.html:92
+#: templates/public/public_landing.html:92
 msgid "images/home_features/deadline.png"
 msgstr ""
 
-#: .\templates\public\public_landing.html:99
+#: templates/public/public_landing.html:99
 msgid "Predefined file destination"
 msgstr "Cartelle di destinazione preimpostate per ogni documento"
 
-#: .\templates\public\public_landing.html:101
+#: templates/public/public_landing.html:101
 msgid "Assign to each file a specific destination in your drive system."
 msgstr ""
 "Assegna a ciascun documenti una una cartella di destinazione specifica nel "
 "tuo drive."
 
-#: .\templates\public\public_landing.html:103
+#: templates/public/public_landing.html:103
 msgid "images/home_features/destination.png"
 msgstr ""
 
-#: .\templates\public\public_landing.html:110
+#: templates/public/public_landing.html:110
 msgid "Parametric file names"
 msgstr "Nomi parametrici per i documenti"
 
-#: .\templates\public\public_landing.html:112
+#: templates/public/public_landing.html:112
 msgid ""
 "Stop renaming every attachment you receive, set a name that will tell what's "
 "inside including the upload date, sender email, and more."
@@ -538,15 +545,15 @@ msgstr ""
 "rappresentativi  del contenuto grazie a componenti parametriche tra cui la "
 "data di caricamento, il nome del mittente e altro ancora."
 
-#: .\templates\public\public_landing.html:114
+#: templates/public/public_landing.html:114
 msgid "images/home_features/naming.png"
 msgstr ""
 
-#: .\templates\public\public_landing.html:122
+#: templates/public/public_landing.html:122
 msgid "Multiple file requests via one link"
 msgstr "Colleziona più documenti tramite un unico link"
 
-#: .\templates\public\public_landing.html:124
+#: templates/public/public_landing.html:124
 msgid ""
 "Never ask to send the missing file again. Add multiple file requests to each "
 "upload space and set dedicated instructions and rules."
@@ -555,15 +562,15 @@ msgstr ""
 "spazio di caricamento senza modificare il link di accesso e imposta "
 "istruzioni dedicate per ogni richiesta."
 
-#: .\templates\public\public_landing.html:126
+#: templates/public/public_landing.html:126
 msgid "images/home_features/multi_request.png"
 msgstr ""
 
-#: .\templates\public\public_landing.html:133
+#: templates/public/public_landing.html:133
 msgid "Space dashboard"
 msgstr "Dashboard deglo spazio di caricamento"
 
-#: .\templates\public\public_landing.html:135
+#: templates/public/public_landing.html:135
 msgid ""
 "Don't go through your email to see what's missing, the space dashboard has "
 "everything you need."
@@ -571,15 +578,15 @@ msgstr ""
 "Non cercare tra le tue email per vedere cosa manca, la dashboard dello "
 "spazio ha tutto ciò di cui hai bisogno."
 
-#: .\templates\public\public_landing.html:137
+#: templates/public/public_landing.html:137
 msgid "images/home_features/summary.png"
 msgstr ""
 
-#: .\templates\public\public_landing.html:144
+#: templates/public/public_landing.html:144
 msgid "No more wrong files"
 msgstr ""
 
-#: .\templates\public\public_landing.html:146
+#: templates/public/public_landing.html:146
 msgid ""
 "Counterparties upload files in one dedicated space. Each file is instantly "
 "validated by your rules, making progress transparent to all."
@@ -587,23 +594,23 @@ msgstr ""
 "Ogni documento caricato viene validato secondo le tue regole istantaneamente "
 "per notificare subito l'invitato che qualcosa non è corretto."
 
-#: .\templates\public\public_landing.html:148
+#: templates/public/public_landing.html:148
 msgid "images/home_features/restrictions.png"
 msgstr ""
 
-#: .\templates\public\public_landing.html:162
+#: templates/public/public_landing.html:162
 msgid "Choose the right plan for you and your team"
 msgstr "Scegli il piano giusto per te e il tuo team"
 
-#: .\templates\public\public_landing.html:173
+#: templates/public/public_landing.html:173
 msgid "Security first"
 msgstr "Sicurezza al primo posto"
 
-#: .\templates\public\public_landing.html:174
+#: templates/public/public_landing.html:174
 msgid "Kezyy never stores your files"
 msgstr "Kezyy non salva mai i tuoi documenti"
 
-#: .\templates\public\public_landing.html:175
+#: templates/public/public_landing.html:175
 msgid ""
 "Kezyy ensures direct transfers from your counterparties to your storage "
 "system, keeping files extra safe and confidential."
@@ -611,24 +618,24 @@ msgstr ""
 "Kezyy garantisce trasferimenti diretti dai tuoi partner al tuo sistema di "
 "archiviazione, mantenendo i documenti sicuri e confidenziali."
 
-#: .\templates\public\public_landing.html:181
+#: templates/public/public_landing.html:181
 msgid "Google Drive<br>connection"
 msgstr "Connessione a<br>Google Drive"
 
-#: .\templates\public\public_landing.html:182
+#: templates/public/public_landing.html:182
 msgid "Receive files on shared folders too."
 msgstr "Ricevi documenti anche in cartelle condivise."
 
-#: .\templates\public\public_landing.html:186
+#: templates/public/public_landing.html:186
 msgid "OneDrive<br>connection"
 msgstr "Connessione a<br>OneDrive"
 
-#: .\templates\public\public_landing.html:187
+#: templates/public/public_landing.html:187
 msgid "Make received files instantly available to your peers."
 msgstr ""
 "Rendi i documenti ricevuti immediatamente disponibili ai tuoi colleghi."
 
-#: .\templates\public\public_landing.html:202
+#: templates/public/public_landing.html:202
 msgid ""
 "\"Managing hundreds of weekly customer files via email, from download to "
 "Drive upload, was tedious, especially tracking missing submissions. With "
@@ -641,100 +648,100 @@ msgstr ""
 "direttamente dove li voglio. Con Kezyy, i file arrivano direttamente dove "
 "necessario, e siamo percepiti come più organizzati.\""
 
-#: .\templates\public\public_landing.html:223
+#: templates/public/public_landing.html:223
 msgid "Get started for free"
 msgstr "Inizia gratuitamente"
 
-#: .\templates\public\public_landing.html:224
+#: templates/public/public_landing.html:224
 msgid "Start collecting files on autopilot"
 msgstr "Inizia a raccogliere documenti con il pilota automatico"
 
-#: .\templates\public\sender_space_detail.html:14
+#: templates/public/sender_space_detail.html:14
 msgid "Accessing as:"
 msgstr "Accesso come:"
 
-#: .\templates\public\sender_space_detail.html:16
+#: templates/public/sender_space_detail.html:16
 msgid "Accessing via public link"
 msgstr "Accesso tramite link pubblico"
 
-#: .\templates\public\sender_space_detail.html:18
+#: templates/public/sender_space_detail.html:18
 msgid "Invited by:"
 msgstr "Invitato da:"
 
-#: .\templates\public\sender_space_detail.html:39
+#: templates/public/sender_space_detail.html:39
 msgid "Upload Space"
 msgstr "Spazio di Upload"
 
-#: .\templates\public\sender_space_detail.html:55
+#: templates/public/sender_space_detail.html:55
 msgid "Total max size of uploads: 50MB"
 msgstr "Massima dimensione totale dei documenti in un caricamento: 50MB"
 
-#: .\templates\public\sender_space_detail.html:97
+#: templates/public/sender_space_detail.html:97
 msgid "It is not possible to upload files anymore. For any inquiries, contact:"
 msgstr ""
 "Non è più possibile caricare documenti. Per qualsiasi domanda, contatta:"
 
-#: .\templates\public\sender_space_detail.html:162
+#: templates/public/sender_space_detail.html:162
 msgid "Click to upload"
 msgstr "Clicca per caricare"
 
-#: .\templates\public\sender_space_detail.html:204
+#: templates/public/sender_space_detail.html:204
 msgid "Use this as a reference for your upload:"
 msgstr "Usa questo come riferimento per il tuo caricamento:"
 
-#: .\templates\public\sender_space_detail.html:205
+#: templates/public/sender_space_detail.html:205
 msgid "Template"
 msgstr "Modello"
 
-#: .\templates\public\sender_space_detail.html:212
+#: templates/public/sender_space_detail.html:212
 msgid "Restrictions:"
 msgstr "Restrizioni:"
 
-#: .\templates\public\sender_space_detail.html:215
+#: templates/public/sender_space_detail.html:215
 msgid "Allowed file extensions:"
 msgstr "Estensioni di file consentite:"
 
-#: .\templates\public\sender_space_detail.html:230
+#: templates/public/sender_space_detail.html:230
 msgid "Previous uploads"
 msgstr "Caricamenti precedenti"
 
-#: .\templates\public\sender_space_detail.html:250
+#: templates/public/sender_space_detail.html:250
 msgid "Get an email with a summary of the files uploaded"
 msgstr ""
 
-#: .\templates\public\sender_space_detail.html:255
+#: templates/public/sender_space_detail.html:255
 msgid "Confirm and Upload"
 msgstr "Conferma e Carica"
 
-#: .\templates\public\snippets\custom_login_social.html:9
+#: templates/public/snippets/custom_login_social.html:9
 msgid "Sign in with"
 msgstr "Accedi con"
 
-#: .\templates\public\snippets\login.html:9
+#: templates/public/snippets/login.html:9
 msgid "Or use a third-party"
 msgstr "O usa un servizio terzo"
 
-#: .\web_app\forms\authentication\login.py:18
+#: web_app/forms/authentication/login.py:16
 msgid "Forgot your password?"
 msgstr "Dimenticato la password?"
 
-#: .\web_app\forms\authentication\login.py:19
+#: web_app/forms/authentication/login.py:17
 msgid "Reset"
 msgstr "Reimposta"
 
-#: .\web_app\forms\authentication\signup.py:20
+#: web_app/forms/authentication/signup.py:20
 msgid "Email address"
 msgstr "Indirizzo email"
 
-#: .\web_app\forms\file.py:37
+#: web_app/forms/file.py:37
 msgid "Add a note to your upload..."
 msgstr "Aggiungi una nota al tuo caricamento..."
 
-#: .\web_app\forms\file.py:41
+#: web_app/forms/file.py:41
 msgid "Notes"
 msgstr "Note"
 
-#: .\web_app\forms\file.py:42
+#: web_app/forms/file.py:42
 msgid ""
 "Add a note to clarify what you are uploading, if needed. Notes do not "
 "substitute the upload of the requested files.\n"
@@ -744,51 +751,55 @@ msgstr ""
 "non sostituiscono il caricamento dei documenti richiesti.\n"
 "                            "
 
-#: .\web_app\forms\file.py:69
+#: web_app/forms/file.py:69
 msgid "has extension "
 msgstr "ha estensione"
 
-#: .\web_app\forms\file.py:70
+#: web_app/forms/file.py:70
 msgid "which is not allowed."
 msgstr "che non è consentita."
 
-#: .\web_app\forms\file.py:85
+#: web_app/forms/file.py:85
 msgid "You need to upload at least one file."
 msgstr "Devi caricare almeno un documento."
 
-#: .\web_app\models\sender.py:90
+#: web_app/models/organization.py:26
+msgid "wants you to join"
+msgstr ""
+
+#: web_app/models/sender.py:90
 msgid "Remember to complete the upload to the space:"
 msgstr "Ricorda di completare i caricamenti per lo spazio:"
 
-#: .\web_app\models\sender.py:93
+#: web_app/models/sender.py:93
 msgid "Upload reminder for the space:"
 msgstr "Promemoria di caricamento documenti per lo spazio:"
 
-#: .\web_app\models\sender.py:128
+#: web_app/models/sender.py:128
 msgid "invites you to upload files to the space:"
 msgstr "ti invita a caricare dei documenti nello spazio:"
 
-#: .\web_app\models\sender.py:129
+#: web_app/models/sender.py:129
 msgid "Invitation:"
 msgstr "Invito:"
 
-#: .\web_app\models\sender.py:180
+#: web_app/models/sender.py:180
 msgid "has requested changes for"
 msgstr "ha richiesto dei cambiamenti a"
 
-#: .\web_app\models\sender.py:181
+#: web_app/models/sender.py:181
 msgid "Changes Requested:"
 msgstr "Cambiamenti Richiesti:"
 
-#: .\web_app\models\sender.py:227
+#: web_app/models/sender.py:227
 msgid "Your Upload receipt"
 msgstr ""
 
-#: .\web_app\models\user.py:73
+#: web_app/models/user.py:81
 msgid "New Upload to"
 msgstr ""
 
-#: .\web_app\models\user.py:74
+#: web_app/models/user.py:82
 msgid "in space"
 msgstr ""
 

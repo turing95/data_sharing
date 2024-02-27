@@ -1,27 +1,27 @@
-
 function activateLoading(button) {
 
-        const spinner = button.querySelector('.spinner');
-        const buttonTextSpan = button.querySelector('.button-content');
-        spinner.classList.remove('hidden');
-        buttonTextSpan.classList.add('hidden');
-        button.classList.remove('bg-marian-blue-400');
-        button.classList.add('bg-marian-blue-300');
+    const spinner = button.querySelector('.spinner');
+    const buttonTextSpan = button.querySelector('.button-content');
+    spinner.classList.remove('hidden');
+    buttonTextSpan.classList.add('hidden');
+    button.classList.remove('bg-marian-blue-400');
+    button.classList.add('bg-marian-blue-300');
 
-        // Allow form submission
-        setTimeout(() => {
-            button.disabled = true;
-        }, 10);
+    // Allow form submission
+    setTimeout(() => {
+        button.disabled = true;
+    }, 10);
 
 }
+
 export function initSubmitButtons() {
     const submitButtons = document.querySelectorAll('button[type="submit"]');
     submitButtons.forEach((button) => {
         let form = button.closest('form')
-        if(!form) {
+        if (!form) {
             return;
         }
-        form.onsubmit = function() {
+        form.onsubmit = function () {
             if (button.classList.contains('space-delete-alert')) {
                 return confirm('Are you sure you want to delete this space?');
 
@@ -31,7 +31,13 @@ export function initSubmitButtons() {
 
             }
             if (button.classList.contains('requires-loading')) {
-            activateLoading(button);
+                activateLoading(button);
+            }
+            if (button.classList.contains('revoke-invitation-alert')) {
+                return confirm('Are you sure you want to revoke this invitation?');
+            }
+            if (button.classList.contains('remove-member-alert')) {
+                return confirm('Are you sure you want to remove this member?');
             }
         }
     });

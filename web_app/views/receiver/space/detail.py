@@ -12,7 +12,7 @@ class SpaceDetailFormView(SpaceFormView):
 
     def get_context_data(self, **kwargs):
         context = super(SpaceFormView, self).get_context_data(**kwargs)
-        context['back'] = {'url': reverse_lazy('spaces'), 'text': 'Back to Spaces'}
+        context['back'] = {'url': reverse_lazy('spaces',kwargs={'organization_uuid':self.get_organization().pk}), 'text': 'Back to Spaces'}
         if 'status' in self.request.GET:
             context = self.get_context_for_form(context, button_text='Save space',
                                                 status=self.request.GET.get('status'))
@@ -55,7 +55,9 @@ class SpaceDetailFormView(SpaceFormView):
     def get_space(self):
         if not self._space:
             pk = self.kwargs.get('space_uuid')
-            self._space = get_object_or_404(Space, pk=pk)
+            self._space = get_object_or_404(Space, pk=pk,
+                                            organization=self.kwargs.get('organization_uuid'),
+                                            organization__in=self.request.user.organizations.all())
         return self._space
 
     def get_form_kwargs(self):
@@ -72,7 +74,7 @@ class SpaceDetailFormView(SpaceFormView):
                                        form_kwargs=self.get_formset_kwargs())
         return formset
 
-    def handle_formset(self,formset):
+    def handle_formset(self, formset):
         formset.save()
         for req in formset:
             # Check if the current destination exists and if the folder ID matches the provided one.

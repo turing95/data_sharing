@@ -67,8 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
-    'web_app.middleware.TimezoneMiddleware',
-
+    'web_app.middleware.timezone.TimezoneMiddleware'
 ]
 if DEBUG is True:
     MIDDLEWARE.append('web_app.middleware.QueryLoggingMiddleware')
