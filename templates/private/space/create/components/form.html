@@ -40,14 +40,6 @@
             </div>
             {% include 'components/tooltip.html' with content=form.notify_invitation.help_text target=form.notify_invitation.name %}
         </div>
-        <div class="flex items-center mb-2 space-x-2">
-            <div class="flex items-center h-5">
-                {{ form.is_public }}
-                <label for="{{ form.is_public.id_for_label }}"
-                       class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.is_public.label }}</label>
-            </div>
-            {% include 'components/tooltip.html' with content=form.is_public.help_text target=form.is_public.name %}
-        </div>
     </div>
 
 
