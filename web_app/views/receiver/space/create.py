@@ -107,7 +107,7 @@ class SpaceFormView(AccessMixin, SubscriptionMixin,OrganizationMixin, FormView):
         formset.save()
         for req in formset:
             self.create_destination_from_form(req)
-            for file_type in req.cleaned_data.get('file_types'):
+            for file_type in req.cleaned_data.get('file_types', []):
                 req.instance.file_types.add(file_type)
 
     def create_destination_from_form(self, form):

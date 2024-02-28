@@ -1,6 +1,7 @@
 
 export function initializeFileTypes(requestForm) {
     const fileTypeInput = requestForm.querySelector('.file-types');
+    if(!fileTypeInput) return;
     if (fileTypeInput.value){
         fileTypeInput.value.split(',').forEach(fileTypeSlug =>{
     let fileTypeInput =  requestForm.querySelector('.file-types');

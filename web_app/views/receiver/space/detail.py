@@ -96,5 +96,5 @@ class SpaceDetailFormView(SpaceFormView):
             req.instance.save()
             if req.instance.file_types.exists():
                 req.instance.file_types.clear()
-            for file_type in req.cleaned_data.get('file_types'):
+            for file_type in req.cleaned_data.get('file_types',[]):
                 req.instance.file_types.add(file_type)
