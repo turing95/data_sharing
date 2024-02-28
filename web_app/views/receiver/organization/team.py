@@ -76,6 +76,10 @@ def revoke_invitation(request, invitation_uuid):
 def remove_team_member(request, user_org_uuid):
     user_org = UserOrganization.objects.get(pk=user_org_uuid)
     organization_uuid = user_org.organization.pk
+    user = user_org.user
     user_org.delete()
-    messages.success(request, 'User removed from organization successfully')
+    if user == request.user:
+        messages.success(request, 'You have left the organization')
+        return redirect(reverse('spaces'))
+    messages.success(request, 'User removed from organization')
     return redirect(reverse('team', kwargs={'organization_uuid': organization_uuid}))

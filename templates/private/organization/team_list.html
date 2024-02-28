@@ -26,7 +26,7 @@
                         <div class="flex flex-col justify-start">
                             <div class="inline-flex">
                             <div class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ user_org.user.full_name }}</div>
-                            {% if user_org.user == user_org.organization.created_by%}
+                            {% if user_org.user == user_org.organization.created_by %}
                             <div class="flex items-center ml-2 text-xs text-center text-gray-500 dark:text-gray-400">
                                 Owner
                             </div>
@@ -39,12 +39,16 @@
                             </div>
                             <div class="mb-auto text-sm tracking-tight text-gray-900 dark:text-white">{{ user_org.user.email }}</div>
                         </div>
-                        {% if user_org.user != request.user and user_org.user != user_org.organization.created_by %}
+                        {% if user_org.user != user_org.organization.created_by %}
                             <form action="{% url 'remove_team_member' user_org.pk %}"
                                   class="flex items-center justify-end w-full ml-auto"
                                     method="POST">
                                 {% csrf_token %}
-                                {% include "components/buttons/submit_with_loader.html" with button_text="Remove" extra_classes="w-[74px] text-sm p-1 remove-member-alert" %}
+                                {% if user_org.user != request.user %}
+                                    {% include "components/buttons/submit_with_loader.html" with button_text="Remove" extra_classes="w-[74px] text-sm p-1 remove-member-alert" %}
+                                {% else %}
+                                    {% include "components/buttons/submit_with_loader.html" with button_text="Leave" extra_classes="w-[74px] text-sm p-1 remove-member-alert" %}
+                                {% endif %}
                                 <span class="hidden w-[74px] text-sm p-1 remove-member-alert"></span> <!-- to add classess to outputcss-->
                                 {% comment %} <button type="submit"
                                         class="inline-flex items-center px-2 py-2 text-sm border shadow cursor-pointer remove-member-alert hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
