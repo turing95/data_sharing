@@ -43,8 +43,11 @@ class SpaceDetailFormView(SpaceFormView):
 
         # Delete removed emails
         for email, sender in existing_senders.items():
-            sender.is_active = False
-            sender.save()
+            if sender.events.exists():
+                sender.is_active = False
+                sender.save()
+            else:
+                sender.delete()
         for sender in space_instance.senders.all():
             if space_instance.deadline_notification_datetime is not None:
                 sender.schedule_deadline_notification()
