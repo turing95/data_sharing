@@ -5,8 +5,8 @@ from web_app.models import Organization
 
 
 class TeamInviteForm(forms.Form):
-    email = forms.EmailField(label="Email",
-                             widget=forms.EmailInput(attrs={'placeholder': 'example@example.com', 'class': text_input}))
+    email = forms.EmailField(label="Invite collaborator:",
+                             widget=forms.EmailInput(attrs={'placeholder': 'user@mail.com', 'class': text_input}))
 
     def __init__(self, *args, **kwargs):
         self.organization = kwargs.pop('organization', None)
