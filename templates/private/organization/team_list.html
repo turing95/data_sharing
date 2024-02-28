@@ -42,58 +42,19 @@
                         {% if user_org.user != user_org.organization.created_by %}
                             <form action="{% url 'remove_team_member' user_org.pk %}"
                                   class="flex items-center justify-end w-full ml-auto"
-                                    method="POST">
+                                  onsubmit="return confirm('Are you sure you want to remove this member?');"
+                                  method="POST">
                                 {% csrf_token %}
                                 {% if user_org.user != request.user %}
-                                    {% include "components/buttons/submit_with_loader.html" with button_text="Remove" extra_classes="w-[74px] text-sm p-1 remove-member-alert" %}
+                                    {% include "components/buttons/submit_with_loader.html" with button_text="Remove" extra_classes="w-[74px] text-sm p-1" %}
                                 {% else %}
-                                    {% include "components/buttons/submit_with_loader.html" with button_text="Leave" extra_classes="w-[74px] text-sm p-1 remove-member-alert" %}
+                                    {% include "components/buttons/submit_with_loader.html" with button_text="Leave" extra_classes="w-[74px] text-sm p-1" %}
                                 {% endif %}
-                                <span class="hidden w-[74px] text-sm p-1 remove-member-alert"></span> <!-- to add classess to outputcss-->
-                                {% comment %} <button type="submit"
-                                        class="inline-flex items-center px-2 py-2 text-sm border shadow cursor-pointer remove-member-alert hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                    <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white"
-                                            aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
-                                    </svg>
-                                    Remove
-                                </button> {% endcomment %}
+                                <span class="hidden w-[74px] text-sm p-1"></span> <!-- to add classess to outputcss-->
                             </form>
                         {% endif %}
 
                     </div>
-
-                        {% comment %} <div class="flex w-full p-4 md:w-1/2">
-                            <div class="flex flex-col p-5 pt-3 transition-transform duration-150 ease-in-out border border-gray-200 shadow-md grow hover:shadow-xl">
-                                <div class="flex justify-end mt-auto">
-                                    {% if user_org.user != request.user and user_org.user != user_org.organization.created_by %}
-                                        <form action="{% url 'remove_team_member' user_org.pk %}"
-                                              method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit"
-                                                    class="inline-flex items-center px-2 py-2 text-sm border shadow cursor-pointer remove-member-alert hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                                <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white"
-                                                     aria-hidden="true"
-                                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linecap="round"
-                                                          stroke-linejoin="round"
-                                                          stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
-                                                </svg>
-                                                Remove
-                                            </button>
-                                        </form>
-                                    {% endif %}
-
-                                </div>
-
-                                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ user_org.user.email }}</h5>
-
-
-                            </div>
-                        </div> {% endcomment %}
                     {% endfor %}
 
 
@@ -101,7 +62,7 @@
             </div>
         </section>
 
-        {% comment %} {% include 'components/pagination.html' with objs_name='Members' %} {% endcomment %}
+    {% include 'components/pagination.html' with objs_name='Members' %} 
     {% else %}
         <div class="flex flex-col items-center justify-center mt-12">
             <p class="mb-3 text-2xl text-center text-gray-500">There are no users yet</p>
@@ -125,52 +86,18 @@
                 </div>
                 <form action="{% url 'revoke_invitation' invitation.pk %}"
                         class="flex items-center justify-end w-full ml-auto"
+                        onsubmit="return confirm('Are you sure you want to revoke this invitation?');"
                         method="POST">
                     {% csrf_token %}
-                    {% include "components/buttons/submit_with_loader.html" with button_text="Revoke" extra_classes="w-[74px] text-sm p-1 revoke-invitation-alert" %}
-                    <span class="hidden w-[74px] text-sm p-1 revoke-invitation-alert"></span> <!-- to add classess to outputcss-->
+                    {% include "components/buttons/submit_with_loader.html" with button_text="Revoke" extra_classes="w-[74px] text-sm p-1" %}
+                    <span class="hidden w-[74px] text-sm p-1"></span> <!-- to add classess to outputcss-->
                 </form>
 
 
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-{% comment %} 
-
-
-
-            <div class="flex w-full p-4 md:w-1/2">
-                <div class="flex flex-col p-5 pt-3 transition-transform duration-150 ease-in-out bg-gray-100 border border-gray-200 shadow-md grow hover:shadow-xl">
-                    <div class="flex justify-end mt-auto">
-                        <form action="{% url 'revoke_invitation' invitation.pk %}"
-                              method="POST">
-                            {% csrf_token %}
-                            <button type="submit"
-                                    class="inline-flex items-center px-2 py-2 text-sm border shadow cursor-pointer revoke-invitation-alert hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
-                                </svg>
-                                Revoke
-                            </button>
-                        </form>
-
-                    </div>
-
-                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ invitation.email }}</h5>
-
-
-                </div>
-            </div> {% endcomment %}
+                
         {% endfor %}
     {% endif %}
 {% endblock private_content %}

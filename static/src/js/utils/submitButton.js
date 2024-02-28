@@ -21,24 +21,11 @@ export function initSubmitButtons() {
         if (!form) {
             return;
         }
-        form.onsubmit = function () {
-            if (button.classList.contains('space-delete-alert')) {
-                return confirm('Are you sure you want to delete this space?');
-
-            }
-            if (button.classList.contains('account-delete-alert')) {
-                return confirm('Are you sure you want to delete your account?');
-
-            }
-            if (button.classList.contains('requires-loading')) {
+        if (button.classList.contains('requires-loading')) {
+            form.onsubmit = function () {
                 activateLoading(button);
             }
-            if (button.classList.contains('revoke-invitation-alert')) {
-                return confirm('Are you sure you want to revoke this invitation?');
-            }
-            if (button.classList.contains('remove-member-alert')) {
-                return confirm('Are you sure you want to remove this member?');
-            }
         }
+
     });
 }
