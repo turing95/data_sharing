@@ -42,7 +42,11 @@
                         {% if user_org.user != user_org.organization.created_by %}
                             <form action="{% url 'remove_team_member' user_org.pk %}"
                                   class="flex items-center justify-end w-full ml-auto"
-                                  onsubmit="return confirm('Are you sure you want to remove this member?');"
+                                  {% if user_org.user != request.user %}
+                                    onsubmit="return confirm('Are you sure you want to remove this member?');"
+                                    {% else %}
+                                    onsubmit="return confirm('Are you sure you want to leave this organization?');"
+                                    {% endif %}
                                   method="POST">
                                 {% csrf_token %}
                                 {% if user_org.user != request.user %}
