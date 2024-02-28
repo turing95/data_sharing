@@ -7,7 +7,7 @@ from djstripe.settings import djstripe_settings
 from web_app.forms import SpaceForm, RequestFormSet
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from web_app.models import Sender, UploadRequest, FileType, Space, GenericDestination, Contact, \
     Organization
 from django.db import transaction
@@ -15,7 +15,7 @@ from web_app.tasks.notifications import notify_invitation
 from web_app.mixins import SubscriptionMixin,OrganizationMixin,SideBarMixin
 
 
-class SpaceFormView(LoginRequiredMixin, SubscriptionMixin,OrganizationMixin, FormView):
+class SpaceFormView(AccessMixin, SubscriptionMixin,OrganizationMixin, FormView):
     template_name = "private/space/create/base.html"
     form_class = SpaceForm
     success_url = reverse_lazy('spaces')
