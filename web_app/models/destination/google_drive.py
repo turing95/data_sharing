@@ -22,6 +22,7 @@ class GoogleDrive(BaseModel):
             content_type=ContentType.objects.get_for_model(cls),
             object_id=google_drive_destination.pk,
             social_account=user.google_account,
+            user=user,
             tag=cls.TAG,
         )
 

@@ -2,13 +2,14 @@ from copy import deepcopy
 from django.contrib.contenttypes.models import ContentType
 from web_app.models import BaseModel
 from django.db import models
-
+from django.contrib.contenttypes.fields import GenericRelation
 from web_app.storage_backends import PrivateMediaStorage
 
 
 class Kezyy(BaseModel):
     TAG = 'kezyy'
     user = models.ForeignKey('web_app.User', on_delete=models.CASCADE, null=True)
+    generic_destination = GenericRelation('GenericDestination')
 
     @classmethod
     def create(cls, upload_request, user):
@@ -19,6 +20,7 @@ class Kezyy(BaseModel):
             request=upload_request,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=kezyy_destination.pk,
+            user=user,
             tag=cls.TAG,
         )
 

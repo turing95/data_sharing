@@ -25,6 +25,7 @@ class SharePoint(BaseModel):
             content_type=ContentType.objects.get_for_model(cls),
             object_id=sharepoint_destination.pk,
             social_account=user.microsoft_account,
+            user=user,
             tag=cls.TAG,
         )
 

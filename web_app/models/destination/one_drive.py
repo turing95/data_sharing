@@ -23,6 +23,7 @@ class OneDrive(BaseModel):
             content_type=ContentType.objects.get_for_model(cls),
             object_id=one_drive_destination.pk,
             social_account=user.microsoft_account,
+            user=user,
             tag=cls.TAG,
         )
 
