@@ -220,10 +220,11 @@ class DetailRequestForm(RequestForm):
             destination = self.instance.destination
             if self.instance.file_naming_formula is not None:
                 self.fields['rename'].initial = True
-            self.fields['destination_id'].initial = destination.folder_id
-            self.fields['destination_display'].initial = destination.name
-            self.fields['destination_type'].initial = destination.tag
-            self.fields['destination_type_select'].initial = destination.tag
+            if destination:
+                self.fields['destination_id'].initial = destination.folder_id
+                self.fields['destination_display'].initial = destination.name
+                self.fields['destination_type'].initial = destination.tag
+                self.fields['destination_type_select'].initial = destination.tag
 
 
 class CustomInlineFormSet(BaseInlineFormSet):

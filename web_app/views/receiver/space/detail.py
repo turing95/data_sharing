@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from web_app.forms import SpaceForm, DetailRequestFormSet
-from web_app.models import Space, Sender, GoogleDrive, GenericDestination
+from web_app.models import Space
 from web_app.views import SpaceFormView
 from web_app.tasks.notifications import notify_invitation
 
