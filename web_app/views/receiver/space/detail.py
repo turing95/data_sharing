@@ -21,12 +21,6 @@ class SpaceDetailFormView(SpaceFormView):
             context['space_summary'] = True
         return context
 
-    def dispatch(self, request, *args, **kwargs):
-        # Call the parent dispatch method
-        response = super(SpaceFormView, self).dispatch(request, *args, **kwargs)
-        response["Cross-Origin-Opener-Policy"] = "unsafe-none"
-        return response
-
     def handle_senders(self, senders_emails, space_instance):
 
         existing_senders = {sender.email: sender for sender in space_instance.senders.filter(is_active=True)}

@@ -27,10 +27,8 @@ class SpaceFormView(AccessMixin, SubscriptionMixin,OrganizationMixin, FormView):
             return self.handle_no_permission()
         if not request.user.can_create_space:
             return redirect('create_checkout_session')
-        response = super().dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
-        response["Cross-Origin-Opener-Policy"] = "unsafe-none"
-        return response
 
     def get_success_url(self):
         if self._space is not None:
