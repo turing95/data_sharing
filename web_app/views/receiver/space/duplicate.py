@@ -12,11 +12,7 @@ from web_app.models import Space
 @login_required
 @require_POST
 def duplicate(request, space_uuid):
-    customer, _created = Customer.get_or_create(
-        subscriber=djstripe_settings.subscriber_request_callback(request)
-    )
-    if not customer.subscription and request.user.spaces.filter(
-            is_deleted=False).count() >= settings.MAX_FREE_SPACES:
+    if not request.user.can_create_space:
         return redirect('create_checkout_session')
     space = get_object_or_404(Space, pk=space_uuid)
     space.duplicate(request.user)

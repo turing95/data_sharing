@@ -25,12 +25,7 @@ class SpaceFormView(AccessMixin, SubscriptionMixin,OrganizationMixin, FormView):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
-        # Call the parent dispatch method
-        customer, _created = Customer.get_or_create(
-            subscriber=djstripe_settings.subscriber_request_callback(self.request)
-        )
-        if not customer.subscription and request.user.spaces.filter(
-                is_deleted=False).count() >= settings.MAX_FREE_SPACES:
+        if not request.user.can_create_space:
             return redirect('create_checkout_session')
         response = super().dispatch(request, *args, **kwargs)
 

@@ -9,6 +9,8 @@ from django.utils.functional import cached_property
 from django.utils.text import format_lazy
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from djstripe.models import Customer
+
 from web_app.utils.drive_services import GoogleService, MicrosoftService
 from utils.emails import html_to_text
 
@@ -24,6 +26,18 @@ class User(AbstractUser):
     @property
     def full_name(self):
         return super().get_full_name()
+
+    @property
+    def can_create_space(self):
+        if self.is_superuser:
+            return True
+        customer, _created = Customer.get_or_create(
+            subscriber=self
+        )
+        if not customer.subscription and self.spaces.filter(
+                is_deleted=False).count() >= settings.MAX_FREE_SPACES:
+            return False
+        return True
 
     @property
     def google_account(self):
