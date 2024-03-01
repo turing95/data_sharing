@@ -25,8 +25,7 @@ class SpaceFormView(AccessMixin, SubscriptionMixin, OrganizationMixin, FormView)
 
     def get_success_url(self):
         if self._space is not None:
-            return reverse_lazy('receiver_space_detail', kwargs={'space_uuid': self._space.uuid,
-                                                                 'organization_uuid': self.get_organization().pk})
+            return reverse_lazy('receiver_space_detail', kwargs={'space_uuid': self._space.uuid})
         return super().get_success_url()
 
     def get_context_for_form(self, data, button_text='Create space', **kwargs):
