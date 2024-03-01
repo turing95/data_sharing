@@ -85,6 +85,7 @@ class User(AbstractUser):
             invitation = OrganizationInvitation.objects.get(pk=request.session['invitation_uuid'])
             invitation.organization.users.add(self)
             del request.session['invitation_uuid']
+            invitation.delete()
 
     def notify_upload(self, sender_event):
         from web_app.models import NotificationsSettings
