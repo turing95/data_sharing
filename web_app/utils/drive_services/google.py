@@ -68,7 +68,8 @@ class GoogleService:
             .list(
                 q="mimeType='application/vnd.google-apps.folder' and name contains '" + folder_name + "'",
                 spaces="drive",
-                fields="files(id, name)",
+                pageSize=10,
+                fields="files(id, name, webViewLink, createdTime)",
                 supportsAllDrives=True
             )
             .execute()

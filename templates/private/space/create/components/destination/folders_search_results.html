@@ -1,9 +1,13 @@
+{% load l10n custom_tags %}
 {% if folders %}
     <ul class="border-b border-gray-200 folders-list border-x">
         {% for folder in folders %}
-            <li class="cursor-pointer hover:bg-gray-200"
-                hx-on:click="selectFolder(this,'{{ folder.name }}','{{ folder.id }}','{{ destination_type }}','{{ sharepoint_site_id }}')">
-                <span class="ml-2">{{ folder.name }}</span>
+
+            <li class="flex justify-between">
+                <span class="pl-2 flex-grow cursor-pointer hover:bg-gray-200"
+                      hx-on:click="selectFolder(this,'{{ folder.name }}','{{ folder.id }}','{{ destination_type }}','{{ sharepoint_site_id }}')">{{ folder.name }} </span>
+                <a href="{{ folder.webViewLink }}{{ folder.webUrl }}" target="_blank" class="pr-2 flex justify-end underline text-blue-400">Open </a>
+
             </li>
         {% endfor %}
     </ul>

@@ -67,6 +67,7 @@ class MicrosoftService:
             url += 'children'
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
+            print(response.json())
             folders = [item for item in response.json().get('value', []) if 'folder' in item]
             return folders
         else:

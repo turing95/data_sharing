@@ -791,7 +791,7 @@ select:not([size]) {
 }
 
 [type='checkbox']:indeterminate {
-  background-image: url("data:image/svg+xml,%3csvg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 12'%3e %3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M1 5.917 5.724 10.5 15 1.5'/%3e %3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 12'%3e %3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M0.5 6h14'/%3e %3c/svg%3e");
   background-color: currentColor;
   border-color: transparent;
   background-position: center;
@@ -1252,10 +1252,6 @@ input:checked + .toggle-bg {
   margin: 0.75rem;
 }
 
-.m-4 {
-  margin: 1rem;
-}
-
 .m-auto {
   margin: auto;
 }
@@ -1439,6 +1435,10 @@ input:checked + .toggle-bg {
   margin-top: 2.5rem;
 }
 
+.mt-12 {
+  margin-top: 3rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -1461,10 +1461,6 @@ input:checked + .toggle-bg {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.mt-12 {
-  margin-top: 3rem;
 }
 
 .line-clamp-2 {
@@ -1578,10 +1574,6 @@ input:checked + .toggle-bg {
 
 .h-\[13px\] {
   height: 13px;
-}
-
-.h-\[150px\] {
-  height: 150px;
 }
 
 .h-\[16px\] {
@@ -1764,20 +1756,12 @@ input:checked + .toggle-bg {
   width: 5%;
 }
 
-.w-full {
-  width: 100%;
-}
-
-.w-\[48px\] {
-  width: 48px;
-}
-
-.w-\[68px\] {
-  width: 68px;
-}
-
 .w-\[74px\] {
   width: 74px;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .min-w-0 {
@@ -2964,6 +2948,11 @@ input:checked + .toggle-bg {
   color: rgb(30 66 159 / var(--tw-text-opacity));
 }
 
+.text-gray-100 {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity));
+}
+
 .text-gray-200 {
   --tw-text-opacity: 1;
   color: rgb(229 231 235 / var(--tw-text-opacity));
@@ -3077,6 +3066,11 @@ input:checked + .toggle-bg {
 .text-yellow-800 {
   --tw-text-opacity: 1;
   color: rgb(114 59 19 / var(--tw-text-opacity));
+}
+
+.text-blue-50 {
+  --tw-text-opacity: 1;
+  color: rgb(235 245 255 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -4211,10 +4205,6 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .md\:w-1\/4 {
     width: 25%;
-  }
-
-  .md\:w-2\/3 {
-    width: 66.666667%;
   }
 
   .md\:w-48 {
