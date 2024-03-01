@@ -61,3 +61,12 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
 
     def get_file_name(self, file_id):
         return self.related_object.get_file_name(file_id)
+
+    @classmethod
+    def create_from_form(cls,request, form):
+        cls.objects.filter(request=form.instance).update(is_active=False)
+        cls.create_provider(form.instance,
+                            form.cleaned_data.get('destination_type'),
+                            request.user,
+                            form.cleaned_data.get('destination_id'),
+                            form.cleaned_data.get('sharepoint_site_id'))
