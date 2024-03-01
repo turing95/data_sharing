@@ -24,11 +24,7 @@ class SubscriptionMixin(PaymentsContextMixin):
                 subscriber=djstripe_settings.subscriber_request_callback(self.request)
             )
             context["subscription"] = context["customer"].subscription
-            context["user_maxed_spaces"] = context[
-                                               "customer"].subscription is None and self.request.user.spaces.filter(
-                is_deleted=False).count() >= settings.MAX_FREE_SPACES
-            context['new_space_button_text'] = 'New space' if context[
-                                                                  'user_maxed_spaces'] is False else 'Upgrade to create more spaces'
+            context['new_space_button_text'] = 'New space' if self.request.user.can_create_space is True else 'Upgrade to create more spaces'
         return context
 
 
