@@ -15,6 +15,7 @@ class Space(BaseModel, DeleteModel):
     title = models.CharField(max_length=250)
     user = models.ForeignKey('User', null=True, on_delete=models.SET_NULL, related_name='spaces')
     organization = models.ForeignKey('Organization', null=True, on_delete=models.SET_NULL, related_name='spaces')
+    company = models.ForeignKey('Company', null=True, on_delete=models.SET_NULL, related_name='spaces')
     is_public = models.BooleanField(default=False)
     instructions = models.TextField(null=True, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
@@ -34,6 +35,7 @@ class Space(BaseModel, DeleteModel):
         return settings.BASE_URL + reverse('receiver_space_detail', kwargs={
             'space_uuid': self.uuid
         })
+
     @property
     def deadline_notification_datetime(self):
         if not self.deadline or self.deadline_notice_days is None or self.deadline_notice_hours is None:
@@ -49,7 +51,7 @@ class Space(BaseModel, DeleteModel):
     def deadline_expired(self):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
 
-    def duplicate(self,user):
+    def duplicate(self, user):
 
         new_space = deepcopy(self)
         new_space.pk = None
@@ -62,6 +64,7 @@ class Space(BaseModel, DeleteModel):
         for request in self.requests.all().order_by('created_at'):
             request.duplicate(new_space)
         return new_space
+
     @property
     def public_upload_events(self):
         return self.events.filter(sender__isnull=True)
