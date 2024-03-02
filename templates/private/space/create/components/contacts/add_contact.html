@@ -1,2 +1,2 @@
-{% url 'create_contact_modal' as get_url %}
+{% url 'contact_create_modal' organization.pk as get_url %}
 {% include 'components/buttons/add.html' with button_text='Add contact' hx_include="[name='search-contacts']" hx_get=get_url hx_trigger="click" hx_target="#htmx-modal" hx_swap="innerHTML" button_text_classes="hidden sm:flex"%}

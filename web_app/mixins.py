@@ -24,7 +24,8 @@ class SubscriptionMixin(PaymentsContextMixin):
                 subscriber=djstripe_settings.subscriber_request_callback(self.request)
             )
             context["subscription"] = context["customer"].subscription
-            context['new_space_button_text'] = 'New space' if self.request.user.can_create_space is True else 'Upgrade to create more spaces'
+            context[
+                'new_space_button_text'] = 'New space' if self.request.user.can_create_space is True else 'Upgrade to create more spaces'
         return context
 
 
@@ -47,5 +48,5 @@ class OrganizationMixin:
 class SideBarMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['sidebar'] = True
+        data['sidebar'] = {'team': False, 'space': False, 'company': False, 'organization': False}
         return data

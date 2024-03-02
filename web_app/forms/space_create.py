@@ -37,6 +37,11 @@ class SpaceForm(ModelForm):
                                                           'class': css_classes.text_space_title_input}),
                             label='Space title - MANDATORY',
                             help_text="It will be displayed to your invitees")
+    company = forms.ModelChoiceField(
+        queryset=None,
+        required=True,
+        label='Company',
+        help_text="Select the company to which the space belongs.")
 
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
@@ -125,16 +130,17 @@ class SpaceForm(ModelForm):
         label='Notify deadline',
         help_text="""Set a number of days and hours before the deadline to send a notification to your invitees.""")
 
-
     class Meta:
         model = Space
         fields = ['title', 'is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline',
-                  'notify_invitation',
+                  'notify_invitation','company',
                   'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
+        self.organization = kwargs.pop('organization', None)
         super().__init__(*args, **kwargs)
+        self.fields['company'].queryset = self.organization.companies.all()
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
             space = self.instance
             self.fields['senders_emails'].initial = ','.join(

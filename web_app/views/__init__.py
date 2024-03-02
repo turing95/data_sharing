@@ -3,7 +3,8 @@ from web_app.views.receiver.space.create import SpaceFormView
 from web_app.views.receiver.space.delete import DeleteSpaceView
 from web_app.views.receiver.space.duplicate import duplicate
 from web_app.views.receiver.authentication.signup import SignupView
-from web_app.views.receiver.organization.team import TeamView, team_invitation, team_invitation_redemption,revoke_invitation,remove_team_member
+from web_app.views.receiver.organization.team import TeamView, team_invitation, team_invitation_redemption, \
+    revoke_invitation, remove_team_member
 from web_app.views.receiver.authentication.login import LoginView, LoginCancelledView
 from web_app.views.receiver.authentication.reset_password import PasswordResetView, PasswordResetDoneView, \
     PasswordResetFromKeyView, PasswordResetFromKeyDoneView
@@ -28,7 +29,6 @@ from web_app.views.api.sender import (toggle_sender_active, notify_deadline, not
                                       sender_upload_notification)
 from web_app.views.api.space import toggle_space_public, history_table, request_modal
 from web_app.views.api.request import delete_request
-from web_app.views.api.contact import search_contacts, create_contact_modal, create_contact
 from web_app.views.api.organization import create_organization, create_organization_modal
 from web_app.views.api.destination import search_folder, select_destination_type, get_destination_logo
 from web_app.views.api.file_type import search_file_types
@@ -38,3 +38,6 @@ from web_app.views.api.settings import sender_notifications_settings, account_no
 from web_app.views.receiver.payments.checkout import create_checkout_session
 from web_app.views.receiver.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook
+from web_app.views.receiver.organization.company import CompanyListView, CompanyCreateView, CompanyDetailView
+from web_app.views.language import custom_set_language
+from web_app.views.receiver.organization.contact import ContactListView, search_contacts, contact_create_modal, contact_create

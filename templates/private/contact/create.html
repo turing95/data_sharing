@@ -1,4 +1,4 @@
-<form hx-post="{% url 'contact_create' organization_uuid %}" id="create-contact-form">
+<form action="{% url 'contact_create' organization.pk %}" id="create-contact-form">
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -10,8 +10,6 @@
                 {{ field }}
                 {% include 'components/forms/error_widget.html' with errors=field.errors %}
             </div>
-
-
         {% endfor %}
     </div>
     <div class="flex justify-end mx-2">
@@ -19,6 +17,3 @@
 
     </div>
 </form>
-{% if show_msg %}
-    {% include 'components/messages.html' %}
-{% endif %}

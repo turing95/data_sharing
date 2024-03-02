@@ -4,7 +4,7 @@
         placeholder="Type to search contacts"
         id="id_search-contacts"
         name="search-contacts"
-        hx-post="{% url 'search_contacts' %}"
+        hx-post="{% url 'search_contacts' organization.pk %}"
         hx-params="search-contacts"
         hx-trigger="input changed delay:500ms, search"
         hx-target="#search-contacts-results-container"

@@ -10,7 +10,14 @@ from web_app.forms import TeamInviteForm
 from web_app.models import Organization, OrganizationInvitation, User, UserOrganization
 
 
-class TeamView(SubscriptionMixin, OrganizationMixin, SideBarMixin, ListView):
+class TeamSideBarMixin(SideBarMixin):
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sidebar']['team'] = True
+        return data
+
+
+class TeamView(SubscriptionMixin, OrganizationMixin, TeamSideBarMixin, ListView):
     template_name = "private/organization/team_list.html"
     paginate_by = 12
 
@@ -52,7 +59,7 @@ def team_invitation_redemption(request):
             invitation.organization.users.add(user)
             invitation.delete()
             messages.success(request, 'User added to organization successfully')
-            return redirect(reverse('spaces'),kwargs={'organization_uuid': invitation.organization.pk})
+            return redirect(reverse('spaces'), kwargs={'organization_uuid': invitation.organization.pk})
         else:
             request.session['invitation_uuid'] = str(invitation.pk)
             request.session['invitation_email'] = invitation.email

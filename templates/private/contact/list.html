@@ -1,0 +1,41 @@
+{% extends "private/_base.html" %}
+{% load static %}
+{% block private_content %}
+    <!-- title and new space button -->
+    <div class="flex items-center justify-between mb-2">
+        <h1 class="text-2xl font-bold text-gray-800">Contacts</h1>
+    </div>
+
+    {% if page_obj %}
+
+
+        <div class="relative overflow-x-auto custom-scrollbar border-t">
+            <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+                <thead class="text-xs text-gray-700 uppercase border-b">
+                <tr>
+                    <th scope="col" class="px-3 py-3 min-w-[100px]">
+                        Name
+                    </th>
+                    <th scope="col" class="py-3 min-w-[100px]">
+                        Email
+                    </th>
+                    <th scope="col" class=" py-3 min-w-[100px]">
+                        Company
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contact in page_obj %}
+                    {% include 'private/contact/contact_row.html' with contact=contact %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% include 'components/pagination.html' with objs_name='Contacts' %}
+    {% else %}
+        <div class="flex flex-col items-center justify-center mt-12">
+            <p class="mb-3 text-2xl text-center text-gray-500">There are no contacts yet</p>
+        </div>
+    {% endif %}
+{% endblock private_content %}
