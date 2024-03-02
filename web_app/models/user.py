@@ -73,11 +73,9 @@ class User(AbstractUser):
             OrganizationInvitation
         SenderNotificationsSettings.objects.get_or_create(user=self)
         NotificationsSettings.objects.get_or_create(user=self)
-        # Check if an organization named "Personal" already exists in the user's organizations
-        personal_organization_exists = self.organizations.filter(name="Personal").exists()
 
-        # If it does not exist, create it and add it to the user's organizations
-        if not personal_organization_exists:
+        # If no personal org, create it and add it to the user's organizations
+        if not self.created_organizations.exists():
             personal_organization = Organization.objects.create(name="Personal", created_by=self)
             self.organizations.add(personal_organization)
 
