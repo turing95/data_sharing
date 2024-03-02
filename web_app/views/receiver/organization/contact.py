@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, FormView
 from web_app.mixins import OrganizationMixin, SideBarMixin, SubscriptionMixin
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -26,18 +26,17 @@ class ContactListView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixin,
         return self.get_organization().contacts.all().order_by('first_name', 'last_name', 'created_at')
 
 
-class ContactCreateView(OrganizationMixin, SideBarMixin, SubscriptionMixin, CreateView):
+class ContactCreateView(OrganizationMixin, SideBarMixin, SubscriptionMixin, FormView):
     template_name = "private/contact/create.html"
-    model = Contact
-    fields = ['name']
+    form_class = ContactForm
 
     def get_success_url(self):
-        return reverse('companies', kwargs={'organization_uuid': self.get_organization().pk})
+        return reverse('contacts', kwargs={'organization_uuid': self.get_organization().pk})
 
     def form_valid(self, form):
-        company = form.save(commit=False)
-        company.organization = self.get_organization()
-        company.save()
+        contact = form.save(commit=False)
+        contact.organization = self.get_organization()
+        contact.save()
         return super().form_valid(form)
 
 
@@ -107,5 +106,10 @@ def contact_create(request, organization_uuid):
                           status=status
                           )
         else:
-            return redirect(reverse('contacts', kwargs={'organization_uuid': organization_uuid}))
+            if status == 200:
+                return redirect(reverse('contacts', kwargs={'organization_uuid': organization_uuid}))
+            return render(request,
+                          "private/contact/create.html",
+                          {'form': form, 'organization_uuid': organization_uuid}
+                          )
     return HttpResponseNotFound()

@@ -44,7 +44,14 @@ class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixi
         return super().form_valid(form)
 
 
-class CompanyDetailView(SubscriptionMixin, CompanySideBarMixin, FormView):
+class CompanyTabMixin(SideBarMixin):
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['company_tab'] = {'spaces': False, 'detail': False}
+        return data
+
+
+class CompanyDetailView(SubscriptionMixin, CompanySideBarMixin, CompanyTabMixin, FormView):
     template_name = "private/company/detail.html"
     form_class = CompanyForm
     _company = None
@@ -53,6 +60,7 @@ class CompanyDetailView(SubscriptionMixin, CompanySideBarMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['organization'] = self.get_company().organization
         context['company'] = self.get_company()
+        context['company_tab']['detail'] = True
         '''context['back'] = {'url': reverse_lazy('companies', kwargs={'organization_uuid': self.get_company().organization.pk}),
                         'text': 'Back to Companies'}'''
         return context
@@ -73,3 +81,24 @@ class CompanyDetailView(SubscriptionMixin, CompanySideBarMixin, FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class CompanySpacesListView(SubscriptionMixin, CompanySideBarMixin, CompanyTabMixin, ListView):
+    template_name = "private/company/spaces_list.html"
+    paginate_by = 12
+    _company = None
+
+    def get_company(self):
+        if not self._company:
+            self._company = Company.objects.get(pk=self.kwargs.get('company_uuid'))
+        return self._company
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['organization'] = self.get_company().organization
+        context['company'] = Company.objects.get(pk=self.kwargs.get('company_uuid'))
+        context['company_tab']['spaces'] = True
+        return context
+
+    def get_queryset(self):
+        return self.get_company().spaces.all().order_by('created_at')

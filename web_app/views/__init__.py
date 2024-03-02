@@ -38,6 +38,6 @@ from web_app.views.api.settings import sender_notifications_settings, account_no
 from web_app.views.receiver.payments.checkout import create_checkout_session
 from web_app.views.receiver.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook
-from web_app.views.receiver.organization.company import CompanyListView, CompanyCreateView, CompanyDetailView
+from web_app.views.receiver.organization.company import CompanyListView, CompanyCreateView, CompanyDetailView, CompanySpacesListView
 from web_app.views.language import custom_set_language
-from web_app.views.receiver.organization.contact import ContactListView, search_contacts, contact_create_modal, contact_create
+from web_app.views.receiver.organization.contact import ContactListView, search_contacts, contact_create_modal, contact_create, ContactCreateView

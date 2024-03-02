@@ -1,4 +1,6 @@
-<form action="{% url 'contact_create' organization.pk %}" id="create-contact-form">
+{% extends "private/_base.html" %}
+{% block private_content %}
+<form action="{% url 'contact_create' organization.pk %}" id="create-contact-form" method="POST">
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -17,3 +19,4 @@
 
     </div>
 </form>
+{% endblock %}

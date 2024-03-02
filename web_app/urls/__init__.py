@@ -34,6 +34,7 @@ urlpatterns = [
     path('organizations/<uuid:organization_uuid>/companies/create/', views.CompanyCreateView.as_view(), name='company_create'),
     path('organizations/<uuid:organization_uuid>/companies/', views.CompanyListView.as_view(), name='companies'),
     path('companies/<uuid:company_uuid>/detail/', views.CompanyDetailView.as_view(), name='company_detail'),
+    path('companies/<uuid:company_uuid>/spaces/', views.CompanySpacesListView.as_view(), name='company_spaces'),
     path('organizations/<uuid:organization_uuid>/contacts/', views.ContactListView.as_view(), name='contacts'),
     path('spaces/<uuid:space_uuid>/detail/', views.SpaceDetailFormViewReceiver.as_view(), name='receiver_space_detail'),
     path('organizations/<uuid:organization_uuid>/team/', views.TeamView.as_view(), name='team'),
@@ -77,7 +78,8 @@ urlpatterns = [
     path('senders/sender-upload-notification/', views.sender_upload_notification, name='sender_upload_notification'),
     path('organizations/<uuid:organization_uuid>/contacts/search/', views.search_contacts, name='search_contacts'),
     path('organizations/<uuid:organization_uuid>/contacts/create/modal/', views.contact_create_modal, name='contact_create_modal'),
-    path('organizations/<uuid:organization_uuid>/contacts/create/', views.contact_create, name='contact_create'),
+    path('organizations/<uuid:organization_uuid>/contacts/create_ajax/', views.contact_create, name='contact_create'),
+    path('organizations/<uuid:organization_uuid>/contacts/create/', views.ContactCreateView.as_view(), name='contact_create_no_ajax'),
     path('organizations/create/', views.create_organization, name='create_organization'),
     path('organizations/create/modal/', views.create_organization_modal, name='create_organization_modal'),
 ]

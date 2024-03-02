@@ -1,0 +1,32 @@
+{% extends "private/company/detail.html" %}
+{% load static %}
+{% block company_content %}
+    {% if page_obj %}
+
+        <div class="relative overflow-x-auto custom-scrollbar">
+            <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+                <thead class="text-xs text-gray-700 uppercase border-b">
+                <tr>
+                    <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10">
+                        Space Title
+                    </th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for space in page_obj %}
+                    {% include 'private/company/space_row.html' with space=space %}
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        {% include 'components/pagination.html' with objs_name='Spaces' %}
+    {% else %}
+        <div class="flex flex-col items-center justify-center mt-12">
+            <p class="mb-3 text-2xl text-center text-gray-500">There are no spaces yet</p>
+        </div>
+    {% endif %}
+{% endblock company_content %}
