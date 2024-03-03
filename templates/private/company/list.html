@@ -1,9 +1,10 @@
 {% extends "private/_base.html" %}
 {% load static %}
 {% block private_content %}
+{% load i18n %}
         <!-- title and new space button -->
         <div class="flex items-center justify-between mb-2">
-            <h1 class="text-2xl font-bold text-gray-800">Companies</h1>
+            <h1 class="text-2xl font-bold text-gray-800">{% translate 'Companies' %}</h1>
         </div>
     
         <a href="{% url 'company_create' organization.pk %}"
@@ -12,7 +13,7 @@
                  stroke="currentColor" class="w-4 h-4 my-auto mr-1">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
             </svg>
-            Create new company
+            {% translate 'Create new company' %}
         </a>
     {% if page_obj %}
 
@@ -22,7 +23,7 @@
         <thead class="text-xs text-gray-700 uppercase border-b">
         <tr>
             <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10">
-                Company Name
+                {% translate 'Company Name' %}
             </th>
 
         </tr>
@@ -36,11 +37,11 @@
         </tbody>
     </table>
 </div>
-
-    {% include 'components/pagination.html' with objs_name='Companies' %} 
+    {% translate 'Companies' as objs_name %}
+    {% include 'components/pagination.html' with objs_name=objs_name %} 
     {% else %}
         <div class="flex flex-col items-center justify-center mt-12">
-            <p class="mb-3 text-2xl text-center text-gray-500">There are no companies yet</p>
+            <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no companies yet' %}</p>
         </div>
     {% endif %}
 {% endblock private_content %}

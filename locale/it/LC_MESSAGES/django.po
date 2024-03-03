@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 22:55+0100\n"
+"POT-Creation-Date: 2024-03-03 23:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -408,6 +408,23 @@ msgstr "Accetta l'invito"
 #: .\templates\private\company\detail.html:14
 msgid "Detail"
 msgstr "Dettagli"
+
+#: .\templates\private\company\list.html:7
+#: .\templates\private\company\list.html:40
+msgid "Companies"
+msgstr "Aziende"
+
+#: .\templates\private\company\list.html:16
+msgid "Create new company"
+msgstr "Crea una nuova azienda"
+
+#: .\templates\private\company\list.html:26
+msgid "Company Name"
+msgstr "Nome dell'azienda"
+
+#: .\templates\private\company\list.html:44
+msgid "There are no companies yet"
+msgstr "Non ci sono ancora aziende"
 
 #: .\templates\private\contact\list.html:7
 msgid "Contacts"
@@ -1132,12 +1149,12 @@ msgstr ""
 "documenti nominati a tuo piacimento sul tuo drive."
 
 #: .\templates\public\public_landing.html:22
-#: .\templates\public\public_landing.html:228
+#: .\templates\public\public_landing.html:241
 msgid "Access beta for free"
 msgstr "Accedi gratuitamente alla beta"
 
 #: .\templates\public\public_landing.html:24
-#: .\templates\public\public_landing.html:230
+#: .\templates\public\public_landing.html:243
 msgid "No credit card required"
 msgstr "Nessuna carta di credito richiesta"
 
@@ -1171,12 +1188,12 @@ msgstr ""
 
 #: .\templates\public\public_landing.html:71
 #: .\templates\public\public_landing.html:83
-#: .\templates\public\public_landing.html:94
-#: .\templates\public\public_landing.html:105
-#: .\templates\public\public_landing.html:116
-#: .\templates\public\public_landing.html:128
-#: .\templates\public\public_landing.html:139
-#: .\templates\public\public_landing.html:150
+#: .\templates\public\public_landing.html:96
+#: .\templates\public\public_landing.html:109
+#: .\templates\public\public_landing.html:122
+#: .\templates\public\public_landing.html:135
+#: .\templates\public\public_landing.html:148
+#: .\templates\public\public_landing.html:161
 msgid "disable sender link gif"
 msgstr "disabilita il link del mittente - gif"
 
@@ -1192,12 +1209,12 @@ msgstr ""
 "Sostituisci lunghi scambi di email specificando le istruzioni in un unico "
 "posto. Aggiorna i dettagli in qualunque momento."
 
-#: .\templates\public\public_landing.html:88
+#: .\templates\public\public_landing.html:90
 msgid "No awkward follow-ups with deadlines and reminders"
 msgstr ""
 "Nessun imbarazzante sollecito grazie a scadenze e promemoria automatici"
 
-#: .\templates\public\public_landing.html:90
+#: .\templates\public\public_landing.html:92
 msgid ""
 "Set deadlines visible in calendars and let automated gentle reminders "
 "replace awkward pings."
@@ -1205,21 +1222,21 @@ msgstr ""
 "Imposta scadenze da aggiungere al calendario e lascia che i promemoria "
 "automatici non ti facciano passare per insistente."
 
-#: .\templates\public\public_landing.html:99
+#: .\templates\public\public_landing.html:103
 msgid "Predefined file destination"
 msgstr "Cartelle di destinazione preimpostate per ogni documento"
 
-#: .\templates\public\public_landing.html:101
+#: .\templates\public\public_landing.html:105
 msgid "Assign to each file a specific destination in your drive system."
 msgstr ""
 "Assegna a ciascun documenti una una cartella di destinazione specifica nel "
 "tuo drive."
 
-#: .\templates\public\public_landing.html:110
+#: .\templates\public\public_landing.html:116
 msgid "Parametric file names"
 msgstr "Nomi parametrici per i documenti"
 
-#: .\templates\public\public_landing.html:112
+#: .\templates\public\public_landing.html:118
 msgid ""
 "Stop renaming every attachment you receive, set a name that will tell what's "
 "inside including the upload date, sender email, and more."
@@ -1228,11 +1245,11 @@ msgstr ""
 "rappresentativi  del contenuto grazie a componenti parametriche tra cui la "
 "data di caricamento, il nome del mittente e altro ancora."
 
-#: .\templates\public\public_landing.html:122
+#: .\templates\public\public_landing.html:129
 msgid "Multiple file requests via one link"
 msgstr "Colleziona più documenti tramite un unico link"
 
-#: .\templates\public\public_landing.html:124
+#: .\templates\public\public_landing.html:131
 msgid ""
 "Never ask to send the missing file again. Add multiple file requests to each "
 "upload space and set dedicated instructions and rules."
@@ -1241,11 +1258,11 @@ msgstr ""
 "spazio di caricamento senza modificare il link di accesso e imposta "
 "istruzioni dedicate per ogni richiesta."
 
-#: .\templates\public\public_landing.html:133
+#: .\templates\public\public_landing.html:142
 msgid "Space dashboard"
 msgstr "Dashboard deglo spazio di caricamento"
 
-#: .\templates\public\public_landing.html:135
+#: .\templates\public\public_landing.html:144
 msgid ""
 "Don't go through your email to see what's missing, the space dashboard has "
 "everything you need."
@@ -1253,11 +1270,11 @@ msgstr ""
 "Non cercare tra le tue email per vedere cosa manca, la dashboard dello "
 "spazio ha tutto ciò di cui hai bisogno."
 
-#: .\templates\public\public_landing.html:144
+#: .\templates\public\public_landing.html:155
 msgid "No more wrong files"
 msgstr "Mai più file sbagliati"
 
-#: .\templates\public\public_landing.html:146
+#: .\templates\public\public_landing.html:157
 msgid ""
 "Counterparties upload files in one dedicated space. Each file is instantly "
 "validated by your rules, making progress transparent to all."
@@ -1265,19 +1282,19 @@ msgstr ""
 "Ogni documento caricato viene validato secondo le tue regole istantaneamente "
 "per notificare subito l'invitato che qualcosa non è corretto."
 
-#: .\templates\public\public_landing.html:162
+#: .\templates\public\public_landing.html:175
 msgid "Choose the right plan for you and your team"
 msgstr "Scegli il piano giusto per te e il tuo team"
 
-#: .\templates\public\public_landing.html:173
+#: .\templates\public\public_landing.html:186
 msgid "Security first"
 msgstr "Sicurezza al primo posto"
 
-#: .\templates\public\public_landing.html:174
+#: .\templates\public\public_landing.html:187
 msgid "Kezyy never stores your files"
 msgstr "Kezyy non salva mai i tuoi documenti"
 
-#: .\templates\public\public_landing.html:175
+#: .\templates\public\public_landing.html:188
 msgid ""
 "Kezyy ensures direct transfers from your counterparties to your storage "
 "system, keeping files extra safe and confidential."
@@ -1285,24 +1302,24 @@ msgstr ""
 "Kezyy garantisce trasferimenti diretti dai tuoi partner al tuo sistema di "
 "archiviazione, mantenendo i documenti sicuri e confidenziali."
 
-#: .\templates\public\public_landing.html:181
+#: .\templates\public\public_landing.html:194
 msgid "Google Drive<br>connection"
 msgstr "Connessione a<br>Google Drive"
 
-#: .\templates\public\public_landing.html:182
+#: .\templates\public\public_landing.html:195
 msgid "Receive files on shared folders too."
 msgstr "Ricevi documenti anche in cartelle condivise."
 
-#: .\templates\public\public_landing.html:186
+#: .\templates\public\public_landing.html:199
 msgid "OneDrive<br>connection"
 msgstr "Connessione a<br>OneDrive"
 
-#: .\templates\public\public_landing.html:187
+#: .\templates\public\public_landing.html:200
 msgid "Make received files instantly available to your peers."
 msgstr ""
 "Rendi i documenti ricevuti immediatamente disponibili ai tuoi colleghi."
 
-#: .\templates\public\public_landing.html:202
+#: .\templates\public\public_landing.html:215
 msgid ""
 "\"Managing hundreds of weekly customer files via email, from download to "
 "Drive upload, was tedious, especially tracking missing submissions. With "
@@ -1315,11 +1332,11 @@ msgstr ""
 "direttamente dove li voglio. Con Kezyy, i file arrivano direttamente dove "
 "necessario, e siamo percepiti come più organizzati.\""
 
-#: .\templates\public\public_landing.html:223
+#: .\templates\public\public_landing.html:236
 msgid "Get started for free"
 msgstr "Inizia gratuitamente"
 
-#: .\templates\public\public_landing.html:224
+#: .\templates\public\public_landing.html:237
 msgid "Start collecting files on autopilot"
 msgstr "Inizia a raccogliere documenti con il pilota automatico"
 
@@ -1652,7 +1669,7 @@ msgstr "Nomi parametrici per i documenti"
 msgid "File Naming"
 msgstr "Denominazione File"
 
-#: .\web_app\forms\request.py:136      "
+#: .\web_app\forms\request.py:136
 msgid ""
 "By default, files are saved to your destination folder with the name they "
 "have been uploaded with.\n"

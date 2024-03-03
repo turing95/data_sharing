@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
+
 from web_app.models import Space
 
 
