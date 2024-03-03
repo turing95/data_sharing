@@ -1311,10 +1311,6 @@ input:checked + .toggle-bg {
   margin-bottom: auto;
 }
 
-.-mb-px {
-  margin-bottom: -1px;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1465,6 +1461,10 @@ input:checked + .toggle-bg {
 
 .mt-auto {
   margin-top: auto;
+}
+
+.-mb-px {
+  margin-bottom: -1px;
 }
 
 .line-clamp-2 {
@@ -2227,10 +2227,6 @@ input:checked + .toggle-bg {
   border-bottom-width: 1px;
 }
 
-.border-b-2 {
-  border-bottom-width: 2px;
-}
-
 .border-l {
   border-left-width: 1px;
 }
@@ -2243,6 +2239,10 @@ input:checked + .toggle-bg {
   border-right-width: 1px;
 }
 
+.border-s-0 {
+  border-inline-start-width: 0px;
+}
+
 .border-t {
   border-top-width: 1px;
 }
@@ -2253,6 +2253,10 @@ input:checked + .toggle-bg {
 
 .border-t-4 {
   border-top-width: 4px;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
 }
 
 .border-dashed {
@@ -2323,13 +2327,13 @@ input:checked + .toggle-bg {
   border-color: rgb(200 30 30 / var(--tw-border-opacity));
 }
 
-.border-transparent {
-  border-color: transparent;
-}
-
 .border-yellow-300 {
   --tw-border-opacity: 1;
   border-color: rgb(250 202 21 / var(--tw-border-opacity));
+}
+
+.border-transparent {
+  border-color: transparent;
 }
 
 .border-b-black {
@@ -3400,6 +3404,11 @@ input[type="search"]::-webkit-search-cancel-button {
   background-color: rgb(4 108 78 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-marian-blue-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(143 165 230 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-marian-blue-300:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(87 120 218 / var(--tw-bg-opacity));
@@ -3898,11 +3907,6 @@ input[type="search"]::-webkit-search-cancel-button {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
-:is(.dark .dark\:text-gray-500) {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
-}
-
 :is(.dark .dark\:text-gray-600) {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
@@ -3936,6 +3940,11 @@ input[type="search"]::-webkit-search-cancel-button {
 :is(.dark .dark\:text-yellow-400) {
   --tw-text-opacity: 1;
   color: rgb(227 160 8 / var(--tw-text-opacity));
+}
+
+:is(.dark .dark\:text-gray-500) {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 :is(.dark .dark\:placeholder-gray-400)::-moz-placeholder {

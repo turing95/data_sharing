@@ -6,11 +6,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class SignupForm(AllauthSignupForm):
+
     username = forms.CharField(
-        label="Username",
+        label=_("Username"),
         min_length=app_settings.USERNAME_MIN_LENGTH,
         widget=forms.TextInput(
-            attrs={"placeholder": "Username", "autocomplete": "username", "class": css_classes.text_input}
+            attrs={"placeholder": _("Username"), "autocomplete": "username", "class": css_classes.text_input}
         ),
     )
     email = forms.EmailField(
