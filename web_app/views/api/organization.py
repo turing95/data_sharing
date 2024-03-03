@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
 from django.utils.translation import gettext_lazy as _
-
 from web_app.forms import OrganizationForm
 
 @require_GET
@@ -29,15 +29,9 @@ def create_organization(request):
             organization.save()
             request.user.organizations.add(organization)
             messages.success(request, _('Organization created successfully'))
-            return render(request,
-                          'private/organization/create_form.html',
-                          {'form': OrganizationForm(), 'show_msg': True, 'from_htmx': True})
-        messages.error(request, _('Error creating contact. Please try again.'))
-        return render(request,
-                      'private/organization/create_form.html',
-                      {'form': form, 'show_msg': True, 'from_htmx': True},
-                      status=400
-                      )
+            return redirect(reverse('spaces', kwargs={'organization_uuid':organization.pk}))
+        messages.error(request, _('Error creating organization. Please try again.'))
+        return redirect(reverse('spaces'))
     return HttpResponseBadRequest()
 
 

@@ -1,5 +1,5 @@
 {% load i18n %}
-<form hx-post="{% url 'create_organization' %}" id="create-organization-form">
+<form action="{% url 'create_organization' %}" method="POST" id="create-organization-form">
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     <div class="flex items-center justify-center mx-auto">
@@ -21,6 +21,3 @@
 
     </div>
 </form>
-{% if show_msg %}
-    {% include 'components/messages.html' %}
-{% endif %}
