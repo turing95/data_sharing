@@ -1,0 +1,12 @@
+<div class="inline-flex w-full my-2 widget-container">
+    <div class="relative w-full bg-gray-50 search-container">
+        {% include 'private/space/create/components/company/input.html' %}
+        <div id="search-companies-results-container"
+             class="absolute z-10 w-full overflow-y-auto bg-gray-50 search-results">
+            {% include 'private/space/create/components/company/results.html' %}
+
+        </div>
+    </div>
+    {% include 'components/forms/error_widget.html' with errors=input.errors %}
+    {{ input }}
+</div>

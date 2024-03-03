@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.decorators.http import require_GET
 from djstripe import models
-from djstripe import settings as djstripe_settings
+from djstripe.settings import djstripe_settings
 from djstripe.models import APIKey, Product
 
 logger = logging.getLogger(__name__)
@@ -14,10 +14,7 @@ logger = logging.getLogger(__name__)
 @login_required
 @require_GET
 def create_billing_session(request):
-    if djstripe_settings.djstripe_settings.STRIPE_LIVE_MODE is True:
-        stripe.api_key = APIKey.objects.get(name='STRIPE_LIVE_SECRET_KEY').secret
-    else:
-        stripe.api_key = APIKey.objects.get(name='STRIPE_TEST_SECRET_KEY').secret
+    stripe.api_key = djstripe_settings.STRIPE_SECRET_KEY
 
     return_url = request.build_absolute_uri(reverse("generic_home"))
 

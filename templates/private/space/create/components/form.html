@@ -9,12 +9,23 @@
     <div class="mt-2 mb-6">
         <div class="flex">
             <label for="{{ form.title.id_for_label }}"
-                class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
+                   class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
             {{ form.title }}
             {% include 'components/tooltip.html' with content=form.title.help_text target=form.title.name placement="bottom" %}
         </div>
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
+
+
+    <div class="mb-6">
+        <div class="flex items-center mb-2 space-x-2">
+            <h3 class="text-xl font-medium text-gray-900 dark:text-white">Company</h3>
+            {% include 'components/tooltip.html' with content=form.company.help_text target=form.company.name %}
+        </div>
+        {% include 'private/space/create/components/company/widget.html' with input=form.company search_input=form.search_company %}
+
+    </div>
+
 
 
     <!-- INVITATIONS -->

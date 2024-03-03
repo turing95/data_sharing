@@ -47,7 +47,7 @@ class SpaceFormView(AccessMixin, SubscriptionMixin, OrganizationMixin, FormView)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs['organization'] = self.get_organization()
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -59,7 +59,6 @@ class SpaceFormView(AccessMixin, SubscriptionMixin, OrganizationMixin, FormView)
             space_instance.user = request.user
             space_instance.organization = self.get_organization()
             formset.instance = space_instance
-
             if formset.is_valid():
                 with transaction.atomic():
                     space_instance.save()

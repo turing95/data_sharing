@@ -20,14 +20,15 @@ class SpaceDetailFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
         context['back'] = {
             'url': reverse_lazy('spaces', kwargs={'organization_uuid': self.get_space().organization.pk}),
             'text': 'Back to Spaces'}
+
         if 'status' in self.request.GET:
             context['space_form'] = True
             context['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
             context['requests'] = self.get_formset()
             context['submit_text'] = 'Save space'
             context['status'] = self.request.GET.get('status')
+            context['organization'] = self.get_space().organization
         else:
-
             context['space'] = self.get_space()
             context['space_summary'] = True
         return context
@@ -62,6 +63,7 @@ class SpaceDetailFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
         kwargs['instance'] = self.get_space()
+        kwargs['organization'] = self.get_space().organization
         return kwargs
 
     def get_formset(self):

@@ -5,7 +5,14 @@ from django.contrib.auth.mixins import AccessMixin
 from web_app.mixins import SubscriptionMixin, OrganizationMixin, SideBarMixin
 
 
-class SpacesView(AccessMixin, SubscriptionMixin, OrganizationMixin,SideBarMixin, ListView):
+class SpaceSideBarMixin(SideBarMixin):
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sidebar']['space'] = True
+        return data
+
+
+class SpacesView(AccessMixin, SubscriptionMixin, OrganizationMixin, SpaceSideBarMixin, ListView):
     model = Space
     template_name = "private/space/list.html"
     paginate_by = 12

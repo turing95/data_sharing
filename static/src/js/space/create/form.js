@@ -1,4 +1,4 @@
-import {initEmailInput} from "./emailInputWidget.js";
+import {initEmailInput} from "./emailInput.js";
 import {initDeadlineInput} from "./deadlineInput.js";
 export function initForm(){
     preventFormSubmit();

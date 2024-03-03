@@ -29,7 +29,7 @@ export function hideShowSearch(event) {
     let clickedElement = event.target;
 
     // Check if the clicked element doesn't meet the criteria
-    if (!clickedElement.id.startsWith('id_search-')) {
+    if (!clickedElement.id.startsWith('id_search')) {
 
         // Find all elements with the class 'search-results'
         let searchResults = document.querySelectorAll('.search-results');
@@ -45,7 +45,7 @@ export function hideShowSearch(event) {
             let searchResults = form.querySelector('.search-results');
             searchResults.classList.remove('hidden');
         }else{
-            let searchResults = clickedElement.closest('#space-form').querySelector('.search-results');
+            let searchResults = clickedElement.closest('.search-container').querySelector('.search-results');
             searchResults.classList.remove('hidden');
         }
         

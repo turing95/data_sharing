@@ -1,0 +1,9 @@
+{% if companies %}
+    <ul class="border-b border-gray-200 folders-list border-x">
+        {% for company in companies %}
+            <li class="cursor-pointer hover:bg-gray-200" onclick="selectCompany(this,'{{ company.name }}','{{ company.uuid }}')">
+                <span class="ml-2">{{ company.name }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

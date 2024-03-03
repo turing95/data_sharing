@@ -12,3 +12,4 @@ modify locale parameter to change language
 --locale=en
 ```
 
+to test images locally use ngrok and expose local host url. add to allowed hosts the url from ngrok (it changes daily)
