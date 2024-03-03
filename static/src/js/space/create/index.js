@@ -8,7 +8,8 @@ import {
 } from "./request/index.js";
 import {initForm} from "./form.js";
 import {hideShowSearch} from "./eventHandlers.js";
-import {processInputText} from "./emailInputWidget.js";
+import {processInputText} from "./emailInput.js";
+import {selectCompany} from "./companyInput.js";
 
 window.toggleRename = toggleRename;
 window.toggleFileTypeRestrict = toggleFileTypeRestrict
@@ -16,6 +17,7 @@ window.handleTagDropdownChange = handleTagDropdownChange;
 window.addFileTypeTag = addFileTypeTag;
 window.selectFolder = selectFolder;
 window.processInputText = processInputText;
+window.selectCompany = selectCompany;
 document.addEventListener('DOMContentLoaded', function () {
     initForm();
     initRequestForms();

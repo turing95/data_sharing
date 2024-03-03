@@ -32,6 +32,7 @@ urlpatterns = [
     path('spaces/', views.SpacesView.as_view(), name='spaces'),
     path('organizations/<uuid:organization_uuid>/spaces/add/', views.SpaceFormView.as_view(), name='space_create'),
     path('organizations/<uuid:organization_uuid>/companies/create/', views.CompanyCreateView.as_view(), name='company_create'),
+    path('organizations/<uuid:organization_uuid>/companies/search/', views.search_companies, name='search_companies'),
     path('organizations/<uuid:organization_uuid>/companies/', views.CompanyListView.as_view(), name='companies'),
     path('companies/<uuid:company_uuid>/detail/', views.CompanyDetailView.as_view(), name='company_detail'),
     path('companies/<uuid:company_uuid>/spaces/', views.CompanySpacesListView.as_view(), name='company_spaces'),

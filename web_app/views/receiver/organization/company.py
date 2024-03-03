@@ -1,9 +1,14 @@
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.http import HttpResponseBadRequest
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView, CreateView, FormView
 
 from web_app.forms import CompanyForm
 from web_app.mixins import OrganizationMixin, SideBarMixin, SubscriptionMixin
-from web_app.models import Company
+from web_app.models import Company, Organization
 
 
 class CompanySideBarMixin(SideBarMixin):
@@ -102,3 +107,20 @@ class CompanySpacesListView(SubscriptionMixin, CompanySideBarMixin, CompanyTabMi
 
     def get_queryset(self):
         return self.get_company().spaces.all().order_by('created_at')
+
+
+@require_POST
+@login_required
+def search_companies(request, organization_uuid):
+    companies = []
+    if request.method == 'POST':
+        organization = get_object_or_404(Organization, pk=organization_uuid)
+        search_query = request.POST.get('search_company')
+        if search_query:
+            companies = organization.companies.filter(
+                name__icontains=search_query
+            )
+        return render(request,
+                      'private/space/create/components/company/results.html',
+                      {'companies': companies})
+    return HttpResponseBadRequest()

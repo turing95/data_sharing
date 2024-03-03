@@ -4,11 +4,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_POST, require_GET
 from web_app.forms import ContactForm
-from web_app.models import Contact
+from web_app.models import Contact, Organization
 
 
 class ContactSideBarMixin(SideBarMixin):
@@ -45,15 +45,14 @@ class ContactCreateView(OrganizationMixin, SideBarMixin, SubscriptionMixin, Form
 def search_contacts(request,organization_uuid):
     contacts = []
     if request.method == 'POST':
+        organization = get_object_or_404(Organization, pk=organization_uuid)
         search_query = request.POST.get('search-contacts')
         if search_query:
-            contacts = request.user.contacts.filter(
+            contacts = organization.contacts.filter(
                 Q(first_name__icontains=search_query) |
                 Q(last_name__icontains=search_query) |
                 Q(email__icontains=search_query) |
-                Q(company__icontains=search_query),
-                organization_id=organization_uuid,
-
+                Q(company__icontains=search_query)
             )
         return render(request,
                       'private/space/create/components/contacts/results.html',
