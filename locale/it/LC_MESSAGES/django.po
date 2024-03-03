@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 23:39+0100\n"
+"POT-Creation-Date: 2024-03-03 23:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -410,7 +410,7 @@ msgid "Detail"
 msgstr "Dettagli"
 
 #: .\templates\private\company\list.html:7
-#: .\templates\private\company\list.html:40
+#: .\templates\private\company\list.html:40 .\templates\private\sidebar.html:81
 msgid "Companies"
 msgstr "Aziende"
 
@@ -426,13 +426,13 @@ msgstr "Nome dell'azienda"
 msgid "There are no companies yet"
 msgstr "Non ci sono ancora aziende"
 
-#: .\templates\private\contact\list.html:7
+#: .\templates\private\contact\list.html:7 .\templates\private\sidebar.html:93
 msgid "Contacts"
-msgstr "Contatatti"
+msgstr "Contatti"
 
 #: .\templates\private\contact\list.html:16
 msgid "Create new contact"
-msgstr "Crea un nuovo account"
+msgstr "Crea un nuovo contatto"
 
 #: .\templates\private\contact\list.html:26
 #: .\templates\public\beta_access_request.html:86 .\web_app\forms\company.py:9
@@ -606,6 +606,23 @@ msgstr ""
 #: .\templates\private\settings\socialaccount_disconnect.html:8
 msgid "Disconnect"
 msgstr "Disconnetti"
+
+#: .\templates\private\sidebar.html:4
+
+msgid "Organization"
+msgstr "Organizzazione"
+
+#: .\templates\private\sidebar.html:42
+msgid "Create new organization"
+msgstr "Crea una nuova organizzazione"
+
+#: .\templates\private\sidebar.html:68
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: .\templates\private\sidebar.html:106
+msgid "Team"
+msgstr "Team"
 
 #: .\templates\private\space\components\delete_form.html:3
 msgid "return confirm('Are you sure you want to delete this space?');"
@@ -1752,7 +1769,7 @@ msgstr ""
 
 #: .\web_app\forms\settings.py:31
 msgid "Upload notification"
-msgstr "Notifica di caricamento"
+msgstr "Notifiche di caricamento"
 
 #: .\web_app\forms\settings.py:32
 msgid ""

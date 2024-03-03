@@ -1,7 +1,8 @@
+{% load i18n %}
 <aside id="default-sidebar"
        class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:relative sm:z-0 sm:pt-0 sm:w-auto sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700">
     <div class="h-full px-3 py-4 overflow-y-auto">
-        <label id="dropdown-organization-label" class="block mb-1 text-sm font-medium">Organization</label>
+        <label id="dropdown-organization-label" class="block mb-1 text-sm font-medium">{% translate 'Organization' %}</label>
 
         <button id="dropdown-organization-button" data-dropdown-toggle="dropdown-organization"
                 class="w-full border-gray-200 border hover:bg-gray-100 focus:outline-none px-3 font-medium py-1.5 text-center inline-flex items-center justify-between dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200"
@@ -39,7 +40,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                         </svg>
 
-                        Create new organization
+                        {% translate 'Create new organization' %}
                     </a>
                 </li>
             </ul>
@@ -65,7 +66,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                               d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3"/>
                     </svg>
-                    <span class="ms-3">Dashboard</span>
+                    <span class="ms-3">{% translate 'Dashboard' %}</span>
                 </a>
             </li>
 
@@ -78,7 +79,7 @@
                               d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/>
                     </svg>
 
-                    <span class="flex-1 ms-3 whitespace-nowrap">Companies</span>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% translate 'Companies' %}</span>
                 </a>
             </li>
             <li>
@@ -90,7 +91,7 @@
                               d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/>
                     </svg>
 
-                    <span class="flex-1 ms-3 whitespace-nowrap">Contacts</span>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% translate 'Contacts' %}</span>
                 </a>
             </li>
 
@@ -103,7 +104,7 @@
                               d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/>
                     </svg>
 
-                    <span class="flex-1 ms-3 whitespace-nowrap">Team</span>
+                    <span class="flex-1 ms-3 whitespace-nowrap">{% translate 'Team' %}</span>
                 </a>
             </li>
             {% comment %}
