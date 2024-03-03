@@ -1,13 +1,13 @@
 from web_app.models import BaseModel
 from django.db import models
 from web_app.storage_backends import PrivateMediaStorage
-
+from django.utils.translation import gettext_lazy as _
 
 class File(BaseModel):
     class FileStatus(models.TextChoices):
-        ACCEPTED = 'Accepted', 'Accepted'
-        REJECTED = 'Rejected', 'Rejected'
-        PENDING = 'Pending', 'Pending'
+        ACCEPTED = 'Accepted', _('Accepted')
+        REJECTED = 'Rejected', _('Rejected')
+        PENDING = 'Pending', _('Pending')
 
     original_name = models.CharField(max_length=255)
     uid = models.CharField(max_length=255,default='noid')

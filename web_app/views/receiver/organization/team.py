@@ -8,6 +8,7 @@ from django.views.generic import ListView
 from web_app.mixins import OrganizationMixin, SubscriptionMixin, SideBarMixin
 from web_app.forms import TeamInviteForm
 from web_app.models import Organization, OrganizationInvitation, User, UserOrganization
+from django.utils.translation import gettext_lazy as _
 
 
 class TeamSideBarMixin(SideBarMixin):
@@ -40,7 +41,7 @@ def team_invitation(request, organization_uuid):
         form = TeamInviteForm(request.POST, organization=organization)
         if form.is_valid():
             organization.invite_user(form.cleaned_data['email'], request.user)
-            messages.success(request, 'User invited successfully')
+            messages.success(request, _('User invited successfully'))
             return redirect(reverse('team', kwargs={'organization_uuid': organization.pk}))
         messages.error(request, form.errors['email'])
         return redirect(reverse('team', kwargs={'organization_uuid': organization.pk}))
@@ -58,7 +59,7 @@ def team_invitation_redemption(request):
         if user:
             invitation.organization.users.add(user)
             invitation.delete()
-            messages.success(request, 'User added to organization successfully')
+            messages.success(request, _('User added to organization successfully'))
             return redirect(reverse('spaces'), kwargs={'organization_uuid': invitation.organization.pk})
         else:
             request.session['invitation_uuid'] = str(invitation.pk)
@@ -73,7 +74,7 @@ def revoke_invitation(request, invitation_uuid):
     invitation = get_object_or_404(OrganizationInvitation, pk=invitation_uuid)
     if invitation.invited_by == request.user:
         invitation.delete()
-        messages.success(request, 'Invitation revoked successfully')
+        messages.success(request, _('Invitation revoked successfully'))
         return redirect(reverse('team', kwargs={'organization_uuid': invitation.organization.pk}))
     return HttpResponseNotFound()
 
@@ -86,7 +87,7 @@ def remove_team_member(request, user_org_uuid):
     user = user_org.user
     user_org.delete()
     if user == request.user:
-        messages.success(request, 'You have left the organization')
+        messages.success(request, _('You have left the organization'))
         return redirect(reverse('spaces'))
-    messages.success(request, 'User removed from organization')
+    messages.success(request, _('User removed from organization'))
     return redirect(reverse('team', kwargs={'organization_uuid': organization_uuid}))

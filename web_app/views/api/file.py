@@ -7,6 +7,7 @@ from django.views.decorators.http import require_POST
 from web_app.forms import FileSelectForm
 from web_app.models import File, UploadRequest, Sender
 from django.http import HttpResponseBadRequest
+from django.utils.translation import gettext_lazy as _
 
 
 @require_POST
@@ -31,7 +32,7 @@ def request_changes(request, request_uuid):
             for tmp_sender, sender_files in files_by_senders.items():
                 tmp_sender.notify_changes_request(upload_request, sender_files, notes)
             changes_form = FileSelectForm(sender=sender, public=public, upload_request=upload_request)
-            messages.success(request, 'Changes requested successfully')
+            messages.success(request, _('Changes requested successfully'))
         return render(request, 'private/space/detail/components/changes_form.html',
                       {'req': upload_request, 'sender': sender, 'upload_events': events, 'changes_form': changes_form,
                        'show_msg': True})
@@ -53,7 +54,7 @@ def accept_all(request, request_uuid):
             files = files.filter(sender_event__sender=sender)
         files.update(
             status=File.FileStatus.ACCEPTED)
-        messages.success(request, 'All files accepted successfully')
+        messages.success(request, _('All files accepted successfully'))
         return render(
             request,
             'components/messages.html',
@@ -77,7 +78,7 @@ def accept_all(request, request_uuid):
             files = files.filter(sender_event__sender=sender)
         files.update(
             status=File.FileStatus.ACCEPTED)
-        messages.success(request, 'All files accepted successfully')
+        messages.success(request, _('All files accepted successfully'))
         return render(
             request,
             'components/messages.html',
@@ -91,7 +92,7 @@ def accept_all(request, request_uuid):
 def accept_single(request,file_uuid):
     if request.method == 'POST':
         File.objects.filter(pk=file_uuid).update(status=File.FileStatus.ACCEPTED)
-        messages.success(request, 'File accepted successfully')
+        messages.success(request, _('File accepted successfully'))
         return render(
             request,
             'components/messages.html',

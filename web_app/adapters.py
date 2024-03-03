@@ -51,8 +51,8 @@ class AccountAdapter(DefaultAccountAdapter):
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def validate_disconnect(self, account, accounts):
         if len(accounts) == 1:
-            messages.error(self.request, "You can not disconnect from your last account")
-            raise ValidationError("Can not disconnect")
+            messages.error(self.request, _("You can not disconnect from your last account"))
+            raise ValidationError(_("Cannot disconnect"))
 
     def save_user(self, request, user, form=None):
         # Call the super class's save_user to save the user model

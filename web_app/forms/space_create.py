@@ -45,9 +45,9 @@ class CommaSeparatedEmailField(forms.CharField):
                 invalid_emails.append(email)
         if invalid_emails:
             if len(invalid_emails) == 1:
-                raise ValidationError(f"{invalid_emails[0]} is not a valid email address")
+                raise ValidationError(_(f"{invalid_emails[0]} is not a valid email address"))
             else:
-                raise ValidationError(f"{', '.join(invalid_emails)} are not valid email addresses")
+                raise ValidationError(_(f"{', '.join(invalid_emails)} are not valid email addresses"))
 
 
 class SpaceForm(ModelForm):
@@ -74,7 +74,7 @@ class SpaceForm(ModelForm):
 
     senders_emails = CommaSeparatedEmailField(
         widget=forms.HiddenInput(),
-        label='Senders emails',
+        label=_('Senders emails'),
         required=False,
         help_text=_("Each invitee will have their own access link and will not be able to see any other invitee in the list."))
 
@@ -121,13 +121,13 @@ class SpaceForm(ModelForm):
         max_value=15,
         localize=True,
         widget=forms.NumberInput(attrs={
-            'placeholder': 'Days',
+            'placeholder': _('Days'),
             'step': '1',  # Set step for increments
             'value': '1',  # Default value
             'class': css_classes.inline_text_input
         }),
-        label='Days before deadline',
-        help_text='Number of days before the deadline to send notifications.'
+        label=_('Days before deadline'),
+        help_text=_('Number of days before the deadline to send notifications.')
     )
 
     deadline_notice_hours = forms.IntegerField(
@@ -153,8 +153,8 @@ class SpaceForm(ModelForm):
         You can change this setting at any time."""))
 
     notify_deadline = forms.BooleanField(
-        widget=ToggleWidget(label_on='Notification',
-                            label_off='Notification'),
+        widget=ToggleWidget(label_on=_('Notification'),
+                            label_off=_('Notification')),
         required=False,
         label=_('Notify deadline'),
         help_text=_("""Set a number of days and hours before the deadline to send a notification to your invitees."""))
@@ -191,7 +191,7 @@ class SpaceForm(ModelForm):
             if deadline < arrow.utcnow():
                 if self.instance is None or self.instance.deadline != deadline:
                     raise forms.ValidationError(
-                        "Deadline must be in the future."
+                        _("Deadline must be in the future.")
                     )
 
             return deadline.isoformat()
@@ -218,7 +218,7 @@ class SpaceForm(ModelForm):
 
             # Check if current time is past the notification time
             if current_dt > notification_dt:
-                error_message = "Current time is past the deadline notification time."
+                error_message = _("Current time is past the deadline notification time.")
                 self.add_error('deadline_notice_days', error_message)
                 self.add_error('deadline_notice_hours', error_message)
 

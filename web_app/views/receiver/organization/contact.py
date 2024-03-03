@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST, require_GET
 from web_app.forms import ContactForm
 from web_app.models import Contact, Organization
+from django.utils.translation import gettext_lazy as _
 
 
 class ContactSideBarMixin(SideBarMixin):
@@ -91,11 +92,11 @@ def contact_create(request, organization_uuid):
                 contact.user = request.user
                 contact.organization_id = organization_uuid
                 contact.save()
-            messages.success(request, 'Contact created successfully')
+            messages.success(request, _('Contact created successfully'))
             status = 200
             form = ContactForm(request=request)
         else:
-            messages.error(request, 'Error creating contact. Please try again.')
+            messages.error(request, _('Error creating contact. Please try again.'))
             status = 400
             form = form
         if request.headers.get('HX-Request'):

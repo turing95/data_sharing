@@ -10,7 +10,7 @@ class BetaAccessRequestForm(ModelForm):
     user_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('John Doe'),
                                                               'class': css_classes.text_input}),
                                 label=_('User Name'),
-                                help_text=_(""))
+                                help_text="")
 
     user_email = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('jhon.doe@mail.com'),
                                                                'class': css_classes.text_input}),
@@ -21,25 +21,25 @@ class BetaAccessRequestForm(ModelForm):
                                                              'class': css_classes.text_input}),
                                required=False,
                                label=_('Industry'),
-                               help_text=_(""))
+                               help_text="")
 
     country = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('United States'),
                                                             'class': css_classes.text_input}),
                               required=False,
                               label=_('Country'),
-                              help_text=_(""))
+                              help_text="")
 
     company = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Acme Inc.'),
                                                             'class': css_classes.text_input}),
                               required=False,
                               label=_('Company'),
-                              help_text=_(""))
+                              help_text="")
 
     user_role = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Accountant'),
                                                               'class': css_classes.text_input}),
                                 required=False,
                                 label=_('Role'),
-                                help_text=_(""))
+                                help_text="")
 
     intended_use = forms.CharField(
         widget=forms.Textarea(attrs={
@@ -54,7 +54,7 @@ class BetaAccessRequestForm(ModelForm):
                                                                      'class': css_classes.text_input}),
                                        required=False,
                                        label=_('First Touchpoint'),
-                                       help_text=_(""))
+                                       help_text="")
     honeypot = forms.CharField(required=False,
                                widget=forms.TextInput(attrs={'class': 'hidden'}))
 

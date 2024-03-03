@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
 from web_app.models import Space, UploadRequest, GenericDestination
-
+from django.utils.translation import gettext_lazy as _
 
 class AccountDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('generic_home')
@@ -25,5 +25,5 @@ class AccountDeleteView(LoginRequiredMixin, DeleteView):
         dests.update(is_active=False)
         spaces_to_delete.update(is_deleted=True)
         user.delete()
-        messages.success(self.request, 'Account successfully deleted')
+        messages.success(self.request, _('Account successfully deleted'))
         return super().form_valid(form)

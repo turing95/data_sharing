@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST, require_GET
 from web_app.models import Sender, Space
 from web_app.tasks.notifications import bulk_notify_deadline as bulk_notify_deadline_task, \
     bulk_notify_invitation as bulk_notify_invitation_task
+from django.utils.translation import gettext_lazy as _
 
 
 @login_required
@@ -23,7 +24,7 @@ def notify_deadline(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
     # notify_deadline_task.delay(sender.pk)
     sender.notify_deadline()
-    messages.success(request, f"{sender.email} notified")
+    messages.success(request, _(f"{sender.email} notified"))
     return render(
         request,
         'components/messages.html',
@@ -37,7 +38,7 @@ def notify_invitation(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
     # notify_invitation_task.delay(sender.pk)
     sender.notify_invitation()
-    messages.success(request, f"{sender.email} invited")
+    messages.success(request, _("{sender.email} invited"))
     return render(
         request,
         'components/messages.html',
@@ -49,7 +50,7 @@ def notify_invitation(request, sender_uuid):
 @require_POST
 def bulk_notify_deadline(request, space_uuid):
     bulk_notify_deadline_task.delay(space_uuid)
-    messages.success(request, "Notification are being sent to all senders")
+    messages.success(request, _("Notification are being sent to all senders"))
     return render(
         request,
         'components/messages.html',
@@ -61,7 +62,7 @@ def bulk_notify_deadline(request, space_uuid):
 @require_POST
 def bulk_notify_invitation(request, space_uuid):
     bulk_notify_invitation_task.delay(space_uuid)
-    messages.success(request, "Invitation are being sent to all senders")
+    messages.success(request, _("Invitation are being sent to all senders"))
     return render(
         request,
         'components/messages.html',

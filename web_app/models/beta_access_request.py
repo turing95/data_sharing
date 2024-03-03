@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.db import models
 from web_app.models import BaseModel
+from django.utils.translation import gettext_lazy as _
 
 
 class BetaAccessRequest(BaseModel):
@@ -15,7 +16,7 @@ class BetaAccessRequest(BaseModel):
     first_touchpoint = models.CharField(max_length=150, null=True, blank=True)
 
     def notify(self):
-        txt = f"""
+        txt = _(f"""
         New beta access request from {self.user_name} ({self.user_email})
         Industry: {self.industry}
         Country: {self.country}
@@ -23,7 +24,7 @@ class BetaAccessRequest(BaseModel):
         User role: {self.user_role}
         Intended use: {self.intended_use}
         First touchpoint: {self.first_touchpoint}
-        """
+        """)
 
         with get_connection(
                 host=settings.RESEND_SMTP_HOST,
@@ -33,7 +34,7 @@ class BetaAccessRequest(BaseModel):
                 use_tls=True,
         ) as connection:
             msg = EmailMultiAlternatives(
-                subject=f'New beta access request from {self.user_name} ({self.user_email})',
+                subject=_(f'New beta access request from {self.user_name} ({self.user_email})'),
                 body=txt,
                 from_email=settings.NO_REPLY_EMAIL,
                 to=['beta@kezyy.com'],

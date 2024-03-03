@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_GET, require_POST
+from django.utils.translation import gettext_lazy as _
 
 from web_app.forms import OrganizationForm
 
@@ -27,11 +28,11 @@ def create_organization(request):
             organization.created_by = request.user
             organization.save()
             request.user.organizations.add(organization)
-            messages.success(request, 'Organization created successfully')
+            messages.success(request, _('Organization created successfully'))
             return render(request,
                           'private/organization/create_form.html',
                           {'form': OrganizationForm(), 'show_msg': True, 'from_htmx': True})
-        messages.error(request, 'Error creating contact. Please try again.')
+        messages.error(request, _('Error creating contact. Please try again.'))
         return render(request,
                       'private/organization/create_form.html',
                       {'form': form, 'show_msg': True, 'from_htmx': True},

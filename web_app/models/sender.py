@@ -50,7 +50,7 @@ class Sender(BaseModel, ActiveModel):
         )
         args = [str(self.pk)]
         task = PeriodicTask.objects.create(
-            name='Deadline notification for sender {}'.format(self.pk),
+            name=_('Deadline notification for sender {}').format(self.pk),
             task='web_app.tasks.notifications.notify_deadline',
             args=json.dumps(args),
             kwargs={},
@@ -176,7 +176,7 @@ class Sender(BaseModel, ActiveModel):
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 context[
-                    'pre_header_text'] = f'{context["receiver_name"]} has requested changes for {upload_request.title}'
+                    'pre_header_text'] = _(f'{context["receiver_name"]} has requested changes for {upload_request.title}')
                 pre_header_text = _('has requested changes for')
                 changes_title_text = _('Changes Requested:')
                 context['pre_header_text'] = format_lazy('{receiver_name} {pre_header_text} {title}',

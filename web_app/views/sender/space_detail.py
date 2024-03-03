@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from web_app.models import Space, GenericDestination, Sender, SenderEvent, UploadRequest, File
 from web_app.forms import FileForm, BaseFileFormSet
+from django.utils.translation import gettext_lazy as _
 
 
 class SpaceDetailView(TemplateView):
@@ -51,7 +52,7 @@ class SpaceDetailView(TemplateView):
                             file_url = destination.upload_file(uploaded_file, file_name)
                         except Exception:
                             error = True
-                            messages.error(request, f"An error occurred while uploading file {uploaded_file.name}")
+                            messages.error(request, _(f"An error occurred while uploading file {uploaded_file.name}"))
                             continue
                         File.objects.create(original_name=uploaded_file.name,
                                             size=uploaded_file.size,
@@ -62,7 +63,7 @@ class SpaceDetailView(TemplateView):
                     if sender_event is not None:
                         sender_event.notify(request.session.get('sender_upload_notification',False))
                     if not error:
-                        messages.success(request, f"Your upload has completed")
+                        messages.success(request, _(f"Your upload has completed"))
             return redirect(request.path)
         return self.render_to_response(self.get_context_data(formset=formset))
 
@@ -82,7 +83,7 @@ class SpaceDetailView(TemplateView):
             try:
                 self._space = Space.objects.get(**filter_criteria)
             except Space.DoesNotExist:
-                raise Http404(f"No Space matches the given query: {filter_criteria}")
+                raise Http404(_(f"No Space matches the given query: {filter_criteria}"))
 
         return self._space
 
@@ -94,6 +95,6 @@ class SpaceDetailView(TemplateView):
                 try:
                     self._sender = Sender.objects.get(pk=sender_id, is_active=True)
                 except Sender.DoesNotExist:
-                    raise Http404(f"Sender with id '{sender_id}' not found")
+                    raise Http404(_(f"Sender with id '{sender_id}' not found"))
 
         return self._sender

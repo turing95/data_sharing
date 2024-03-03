@@ -4,6 +4,7 @@ from djstripe.mixins import PaymentsContextMixin
 from djstripe.models import Plan, Customer, APIKey
 from djstripe.settings import djstripe_settings
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 from web_app.models import Organization
 
@@ -25,7 +26,7 @@ class SubscriptionMixin(PaymentsContextMixin):
             )
             context["subscription"] = context["customer"].subscription
             context[
-                'new_space_button_text'] = 'New space' if self.request.user.can_create_space is True else 'Upgrade to create more spaces'
+                'new_space_button_text'] = _('New space') if self.request.user.can_create_space is True else _('Upgrade to create more spaces')
         return context
 
 
