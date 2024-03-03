@@ -59,7 +59,7 @@
         {% if space.deadline %}
             <!-- Deadline -->
             <div class="mt-4 mb-2 mb-4 text-base">
-                <span class="">Deadline:</span>
+                <span class="">{% translate 'Deadline:' %}</span>
                 {% localize on %}
                     <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
                     <img src="{% static 'images/icons/calendar-blue.svg' %}" alt="clock icon"
@@ -75,12 +75,12 @@
                 {% endlocalize %}
                 {% if space.deadline_expired %}
                     <span class="inline-flex items-center  bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                        Deadline expired!
+                        {% translate 'Deadline expired!' %}
                     </span>
                 {% else %}
                     {% if space.upload_after_deadline is False %}
                         <span class="inline-flex items-center text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                        You will not be able to upload files after the deadline.
+                            {% translate 'You will not be able to upload files after the deadline.' %}
                     </span>
                     {% endif %}
                 {% endif %}
@@ -92,7 +92,7 @@
                 <!-- Deadline Expired Message -->
                 <div class="flex items-center justify-center w-4/5 mx-auto my-8">
                     <div class="p-4 text-center bg-red-100 border border-red-300 shadow-lg">
-                        <h2 class="mt-2 text-xl font-bold text-red-800">Deadline Expired</h2>
+                        <h2 class="mt-2 text-xl font-bold text-red-800">{% translate 'Deadline Expired' %}</h2>
                         <p class="mt-2 text-red-700 text-md">
                             {% translate 'It is not possible to upload files anymore. For any inquiries, contact:' %}<br>
                             <a
@@ -145,7 +145,7 @@
                             <div id="accordion-open-body-{{ forloop.counter0 }}"
                                  class="grid grid-cols-2 p-5 request-accordion-body md:grid-cols-3"
                                  aria-labelledby="accordion-open-heading-{{ forloop.counter0 }}">
-                                <div class="col-span-2 sm:col-span-1 p-1">
+                                <div class="col-span-2 p-1 sm:col-span-1">
                                     {% if space.upload_after_deadline or not space.deadline_expired %}
                                         <div class="flex items-center justify-center w-full">
                                             <label for="{{ form.files.id_for_label }}"
@@ -200,7 +200,7 @@
 
                                 </div>
                                 {% if form.upload_request.file_template %}
-                                    <div class="md:col-span-3 col-span-2 mb-2 flex items-center">
+                                    <div class="flex items-center col-span-2 mb-2 md:col-span-3">
                                         <p class="mr-1">{% translate 'Use this as a reference for your upload:' %}</p>
                                         {% translate 'Template' as template_text %}
                                         {% include 'components/buttons/generic.html' with href=form.upload_request.file_template button_text=template_text target="_blank" %}

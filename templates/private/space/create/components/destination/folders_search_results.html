@@ -1,16 +1,17 @@
 {% load l10n custom_tags %}
+{% load i18n %}
 {% if folders %}
     <ul class="border-b border-gray-200 folders-list border-x">
         {% for folder in folders %}
 
             <li class="flex justify-between">
-                <span class="pl-2 flex-grow cursor-pointer hover:bg-gray-200"
+                <span class="flex-grow pl-2 cursor-pointer hover:bg-gray-200"
                       hx-on:click="selectFolder(this,'{{ folder.name }}','{{ folder.id }}','{{ destination_type }}','{{ sharepoint_site_id }}')">{{ folder.name }} </span>
-                <a href="{{ folder.webViewLink }}{{ folder.webUrl }}" target="_blank" class="pr-2 flex justify-end underline text-blue-400">Open </a>
+                <a href="{{ folder.webViewLink }}{{ folder.webUrl }}" target="_blank" class="flex justify-end pr-2 text-blue-400 underline">{% translate 'Open' %} </a>
 
             </li>
         {% endfor %}
     </ul>
 {% else %}
-    <p class="ml-2 text-sm">No results found</p>
+    <p class="ml-2 text-sm">{% translate 'No results found' %}</p>
 {% endif %}

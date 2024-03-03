@@ -4,25 +4,26 @@
 {% block private_content %}
     {% get_providers as socialaccount_providers %}
 
-    <h1 class="mb-8 text-4xl font-bold">Settings</h1>
+    <h1 class="mb-8 text-4xl font-bold">
+        {% translate 'Settings' %}</h1>
 
     <div class="flex-col mb-8">
-        <h2 class="mb-4 text-2xl font-bold border-b">Profile</h2>
+        <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Profile' %}</h2>
         {% include 'private/settings/profile_form.html' with form=user_form %}
     </div>
     {% if debug is True %}
     <div class="flex-col mb-8">
-        <h2 class="mb-4 text-2xl font-bold border-b">Language</h2>
+        <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Language' %}</h2>
         {% include 'private/settings/language_selector.html' %}
     </div>
     {% endif %}
     <div class="flex-col mb-8">
-        <h2 class="mb-4 text-2xl font-bold border-b">Notifications</h2>
+        <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Notifications' %}</h2>
         {% include 'private/settings/receiver_notifications_form.html' with form=notifications_form %}
 
     </div>
     <div class="flex-col mb-8">
-        <h2 class="mb-4 text-2xl font-bold border-b">Connections</h2>
+        <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Connections' %}</h2>
         <!-- SOCIAL ACCOUNT MANAGEMENT -->
         {% if socialaccount_providers %}
             {% url 'account_settings' as next %}
@@ -30,10 +31,10 @@
                 <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3">Provider</th>
-                        <th scope="col" class="px-6 py-3">Cloud Storage</th>
-                        <th scope="col" class="px-6 py-3">Status</th>
-                        <th scope="col" class="px-6 py-3">Options</th>
+                        <th scope="col" class="px-6 py-3">{% translate 'Provider' %}</th>
+                        <th scope="col" class="px-6 py-3">{% translate 'Cloud Storage' %}</th>
+                        <th scope="col" class="px-6 py-3">{% translate 'Status' %}</th>
+                        <th scope="col" class="px-6 py-3">{% translate 'Options' %}</th>
                     </tr>
                     </thead>
 
@@ -49,23 +50,24 @@
                 </table>
             </div>
         {% else %}
-            <p>No providers available.</p>
+            <p>{% translate 'No providers available.' %}</p>
         {% endif %}
     </div>
     <div class="flex-col mb-8">
-        <h2 class="mb-4 text-2xl font-bold border-b">Sender Notifications</h2>
+        <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Sender Notifications' %}</h2>
         {% include 'private/settings/notifications_form.html' with form=sender_notifications_form %}
 
     </div>
 
     <div class="flex-col mb-8">
-        <h2 class="mb-4 text-2xl font-bold border-b">Close your account</h2>
+        <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Close your account' %}</h2>
 
 
         <form action="{% url 'account_delete' %}" method="post" class="flex" onsubmit="return confirm('Are you sure you want to delete your account?');">
             {% csrf_token %}
-            <div class="flex mb-3 md:w-1/4 w-3/4">
-                {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text="Delete account" %}
+            <div class="flex w-3/4 mb-3 md:w-1/4">
+                {% translate "Delete account" as button_text %}
+                {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text=button_text %}
             </div>
         </form>
     </div>

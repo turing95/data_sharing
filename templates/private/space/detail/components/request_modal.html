@@ -1,4 +1,5 @@
 {% load custom_tags %}
+{% load i18n %}
 <div id="small-modal-{{ req.uuid }}-{% if sender %}{{ sender.uuid }}{% else %}public{% endif %}" tabindex="-1"
      class="fixed top-0 left-0 right-0 z-[52] w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full h-auto max-w-4xl border border-gray-300 md:max-h-full">
@@ -17,8 +18,13 @@
                         {% endif %}
                     </h3>
                     <p class="text-sm text-gray-600 dark:text-gray-300">
-                        {% if sender %}Uploads by: {{ sender.email }}{% elif public %}Uploads via public
-                            link {% endif %}
+                        
+                            {% if sender %}
+                                {% blocktrans trimmed %}Uploads by: {{ sender.email }}{% endblocktrans %}
+                            {% elif public %}
+                            {% translate 'Uploads via public link' %}
+                            {% endif %} 
+                        
                     </p>
                 </div>
                 <button type="button"
@@ -39,17 +45,21 @@
                     Files
                 </h3>
                 <div class="w-1/4">
+                    {% if False %}<span class="hidden min-w-[125px] min-h-[36px]"></span> {% endif %} <!-- to add classess to outputcss-->
                     {% url 'accept_all' req.uuid as url_accept %}
                 {% if sender %}
                     {% with url_accept|addstr:"?sender="|addstr:sender.uuid as hx_post %}
-                        {% include 'components/buttons/submit_with_loader.html' with button_text='Accept all files' hx_post=hx_post hx_swap="none" extra_classes="files-push" %}
+                    {% translate 'Accept all files' as button_text %}
+                        {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=hx_post hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
                     {% endwith %}
                 {% elif public %}
                     {% with url_accept|add:"?public=1" as hx_post %}
-                        {% include 'components/buttons/submit_with_loader.html' with button_text='Accept all files' hx_post=hx_post hx_swap="none" extra_classes="files-push"%}
+                    {% translate 'Accept all files' as button_text %}
+                        {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=hx_post hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
                     {% endwith %}
                 {% else %}
-                    {% include 'components/buttons/submit_with_loader.html' with button_text='Accept all files' hx_post=url_accept hx_swap="none" extra_classes="files-push"%}
+                {% translate 'Accept all files' as button_text %}
+                    {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=url_accept hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
                 {% endif %}
                 </div>
                     {% if changes_form %}
@@ -58,10 +68,10 @@
                              data-inactive-classes="text-gray-500 dark:text-gray-400">
                             <h2 id="accordion-flush-heading-1">
                                 <button type="button"
-                                        class="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 gap-3"
+                                        class="flex items-center justify-between w-full gap-3 py-5 font-medium text-gray-500 border-b border-gray-200 rtl:text-right dark:border-gray-700 dark:text-gray-400"
                                         data-accordion-target="#accordion-flush-body-1" aria-expanded="true"
                                         aria-controls="accordion-flush-body-1">
-                                    <span>Request changes</span>
+                                    <span>{% translate 'Request changes' %}</span>
                                     <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -87,7 +97,7 @@
                  hx-target="#modal-history-table"
                  hx-indicator="#loading-indicator-modal-history-table">
             <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
-            Uploads History
+                {% translate 'Uploads History' %}
         </h3>
 
                 <div id="modal-history-table">

@@ -1,10 +1,11 @@
 {% extends "private/_base.html" %}
+{% load i18n %}
 {% block private_content %}
     {% if page_obj %}
 
     <!-- title and new space button -->
     <div class="flex items-center justify-between mb-2">
-        <h1 class="text-2xl font-bold text-gray-800">Your Spaces</h1>
+        <h1 class="text-2xl font-bold text-gray-800">{% translate 'Your Spaces' %}</h1>
 
     </div>
     
@@ -34,10 +35,12 @@
        
                         <div class="flex justify-end mt-auto">
                             {% url 'receiver_space_detail' space.uuid as space_detail_url %}
-                            {% include "components/buttons/generic.html" with button_text="Summary" href=space_detail_url extra_classes="mr-1.5" %}
+                            {% translate "Summary" as button_text %}
+                            {% include "components/buttons/generic.html" with button_text=button_text href=space_detail_url extra_classes="mr-1.5" %}
 
                                 {% url 'receiver_space_detail' space.uuid as space_detail_url %}
-                                {% include "components/buttons/generic.html" with button_text="Edit" href=space_detail_url|add:"?status=edit" extra_classes="ml-1.5" %}
+                                {% translate "Edit" as button_text %}
+                                {% include "components/buttons/generic.html" with button_text=button_text href=space_detail_url|add:"?status=edit" extra_classes="ml-1.5" %}
                                 
 
                             </div> 
@@ -53,14 +56,15 @@
             </div>
         </div>
     </section>
-
-        {% include 'components/pagination.html' with objs_name='Spaces' %}
+        {% translate "Spaces" as objs_name %}
+        {% include 'components/pagination.html' with objs_name=objs_name %}
         {% else %}
         <div class="flex flex-col items-center justify-center mt-10">
-            <p class="mb-3 text-2xl text-center text-gray-500">You have not created any spaces yet</p>
+            <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'You have not created any spaces yet' %}</p>
             {% url 'space_create' organization.uuid as space_create_url %}
-            {% include 'components/buttons/generic.html' with button_text="Create your first space" href=space_create_url%}
-            <p class="m-3 text-center text-gray-500"> Don't know where to start? <a href="{{ doc_url }}" target="_blank" class="hover:underline text-blue-500">Read our guide</a></p>
+            {% translate "Create your first space" as button_text %}
+            {% include 'components/buttons/generic.html' with button_text=button_text href=space_create_url%}
+            <p class="m-3 text-center text-gray-500">{% translate "Don't know where to start?" %} <a href="{{ doc_url }}" target="_blank" class="text-blue-500 hover:underline">{% translate 'Read our guide' %}</a></p>
         </div>
     {% endif %}
 

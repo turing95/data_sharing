@@ -2,7 +2,8 @@
 <form action="{% url 'set_user_language' %}" method="post">
     {% csrf_token %}
     <input name="next" type="hidden" value="{{ request.path }}"/>
-    <label for="language" class="font-medium text-gray-900 dark:text-white hidden">Language</label>
+    <label for="language" class="hidden font-medium text-gray-900 dark:text-white">
+        {% translate 'Language' %}</label>
 
     <select name="language" id="language" onchange="this.form.submit()"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5">

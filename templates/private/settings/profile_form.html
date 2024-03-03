@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if from_htmx %}
     {% include 'components/messages.html' %}
 {% endif %}
@@ -8,7 +9,8 @@
         
     <div class="w-3/4 mb-3 md:w-1/4">
         <label for="Email"
-               class="block text-sm font-medium text-gray-900 dark:text-white">Email</label>
+               class="block text-sm font-medium text-gray-900 dark:text-white">
+               {% translate 'Email' %}</label>
         <span class="block ml-2 text-gray-500 dark:text-gray-400">{{ request.user.email }}</span>
     </div>
     <div class="w-3/4 mb-3 md:w-1/4">
@@ -29,8 +31,9 @@
         {{ form.last_name }}
         {% include 'components/forms/error_widget.html' with errors=form.last_name.errors %}
     </div>
-    <div class="flex mb-3 md:w-1/4 w-3/4">
-    {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text="Save" %}
+    <div class="flex w-3/4 mb-3 md:w-1/4">
+        {% translate "Save" as button_text %}
+    {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text=button_text %}
     </div>
 
 </form>

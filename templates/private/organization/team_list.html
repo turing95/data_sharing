@@ -1,10 +1,11 @@
 {% extends "private/_base.html" %}
+{% load i18n %}
 {% block private_content %}
     {% if page_obj %}
 
         <!-- title and new space button -->
         <div class="flex items-center justify-between mb-2">
-            <h1 class="text-2xl font-bold text-gray-800">Members</h1>
+            <h1 class="text-2xl font-bold text-gray-800">{% translate 'Members' %}</h1>
         </div>
 
         <div class="w-full py-1 mb-2 border-t border-gray-300"></div>
@@ -28,12 +29,12 @@
                             <div class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ user_org.user.full_name }}</div>
                             {% if user_org.user == user_org.organization.created_by %}
                             <div class="flex items-center ml-2 text-xs text-center text-gray-500 dark:text-gray-400">
-                                Owner
+                                {% translate 'Owner' %}
                             </div>
                             
                             {% else %}
                             <div class="flex items-center ml-2 text-xs text-center text-gray-500 dark:text-gray-400">
-                                Member
+                                {% translate 'Member' %}
                             </div>
                             {% endif %}
                             </div>
@@ -43,18 +44,20 @@
                             <form action="{% url 'remove_team_member' user_org.pk %}"
                                   class="flex items-center justify-end w-full ml-auto"
                                   {% if user_org.user != request.user %}
-                                    onsubmit="return confirm('Are you sure you want to remove this member?');"
+                                    onsubmit={% translate "return confirm('Are you sure you want to remove this member?');" %}
                                     {% else %}
-                                    onsubmit="return confirm('Are you sure you want to leave this organization?');"
+                                    onsubmit={% translate "return confirm('Are you sure you want to leave this organization?');" %}
                                     {% endif %}
                                   method="POST">
                                 {% csrf_token %}
                                 {% if user_org.user != request.user %}
-                                    {% include "components/buttons/submit_with_loader.html" with button_text="Remove" extra_classes="w-[74px] text-sm p-1" %}
+                                    {% translate "Remove" as button_text %}
+                                    {% include "components/buttons/submit_with_loader.html" with button_text=button_text extra_classes="w-[74px] text-sm p-1" %}
                                 {% else %}
-                                    {% include "components/buttons/submit_with_loader.html" with button_text="Leave" extra_classes="w-[74px] text-sm p-1" %}
+                                    {% translate "Leave" as button_text %}
+                                    {% include "components/buttons/submit_with_loader.html" with button_text=button_text extra_classes="w-[74px] text-sm p-1" %}
                                 {% endif %}
-                                <span class="hidden w-[74px] text-sm p-1"></span> <!-- to add classess to outputcss-->
+                                {% if False %}<span class="hidden w-[74px] text-sm p-1"></span> {% endif%} <!-- to add classess to outputcss-->
                             </form>
                         {% endif %}
 
@@ -65,17 +68,21 @@
                 </div>
             </div>
         </section>
-
-    {% include 'components/pagination.html' with objs_name='Members' %} 
+        {% translate "Members" as text %}
+    {% include 'components/pagination.html' with objs_name=text %} 
     {% else %}
         <div class="flex flex-col items-center justify-center mt-12">
-            <p class="mb-3 text-2xl text-center text-gray-500">There are no users yet</p>
+            <p class="mb-3 text-2xl text-center text-gray-500">
+                {% translate 'There are no users yet' %}
+            </p>
         </div>
     {% endif %}
     {% if invitations %}
     <div class="w-full mt-6">
         <div class="flex items-center justify-between mb-2">
-            <h1 class="text-2xl font-bold text-gray-800">Pending invitations</h1>
+            <h1 class="text-2xl font-bold text-gray-800">
+                {% translate 'Pending invitations' %}
+            </h1>
         </div>
             <div class="border-t border-gray-300">
             {% for invitation in invitations %}
@@ -88,20 +95,23 @@
                 <div class="inline-flex">
                     <div class="text-lg tracking-tight text-gray-900 dark:text-white">{{ invitation.email }}</div>
                 </div>
+
                 <form action="{% url 'revoke_invitation' invitation.pk %}"
                         class="flex items-center justify-end w-full ml-auto"
-                        onsubmit="return confirm('Are you sure you want to revoke this invitation?');"
+                        onsubmit={% translate "return confirm('Are you sure you want to revoke this invitation?');" %}
                         method="POST">
                     {% csrf_token %}
-                    {% include "components/buttons/submit_with_loader.html" with button_text="Revoke" extra_classes="w-[74px] text-sm p-1" %}
-                    <span class="hidden w-[74px] text-sm p-1"></span> <!-- to add classess to outputcss-->
+                    {% translate "Revoke" as button_text %}
+                    {% include "components/buttons/submit_with_loader.html" with button_text=button_text extra_classes="w-[74px] text-sm p-1" %}
+                    {%  if False %}<span class="hidden w-[74px] text-sm p-1"></span> {% endif %} <!-- to add classess to outputcss-->
                 </form>
 
 
             </div>
+            {% endfor %}
         </div>
     </div>
                 
-        {% endfor %}
+        
     {% endif %}
 {% endblock private_content %}

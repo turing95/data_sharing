@@ -1,5 +1,6 @@
 {% load custom_tags %}
 {% load static %}
+{% load i18n %}
 
 <div class="relative overflow-x-auto custom-scrollbar">
     <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
@@ -9,13 +10,13 @@
                 <!-- Empty -->
             </th>
             <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
-                Request Title
+                {% translate 'Request Title' %}
             </th>
             <th scope="col" class="px-3 py-3  max-w-[300px]">
-                Current destination
+                {% translate 'Current destination' %}
             </th>
             <th scope="col" class="px-3 py-3  max-w-[300px]">
-                Uploaded files
+                {% translate 'Uploaded files' %}
             </th>
             
 

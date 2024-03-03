@@ -1,3 +1,4 @@
+{% load i18n %}
 <div id="small-modal-create-contact" tabindex="-1"
      class="fixed top-0 left-0 right-0 z-[52] w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full h-auto max-w-2xl border border-gray-300 md:max-h-full">
@@ -6,7 +7,7 @@
                 <div class="w-full text-center">
                     <h3 class="text-xl font-bold text-gray-900 uppercase dark:text-white">
 
-                        <span class="line-clamp-2">Add new organization</span>
+                        <span class="line-clamp-2">{% translate 'Add new organization' %}</span>
 
                     </h3>
                 </div>
@@ -23,7 +24,7 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <div class=" items-center justify-between p-2 border-b md:p-3 dark:border-gray-600">
+            <div class="items-center justify-between p-2 border-b  md:p-3 dark:border-gray-600">
                 {% include 'private/organization/create_form.html' with form=form %}
 
             </div>

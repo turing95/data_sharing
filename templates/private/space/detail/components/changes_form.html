@@ -1,3 +1,4 @@
+{% load i18n %}
 <form hx-post="{% url 'request_changes' req.uuid %}?{% if sender %}sender={{ sender.uuid }}{% elif public %}public=1{% endif %}"
       hx-swap="outerHTML"
       class="files-push">
@@ -26,9 +27,10 @@
         </div>
 
     </div>
-    <div class="col-span-2 flex justify-end items-center mt-4">
-
-        {% include 'components/buttons/submit_with_loader.html' with button_text='Request changes' %}
+    <div class="flex items-center justify-end col-span-2 mt-4">
+        {% translate "Request changes" as button_text %}
+        {% include 'components/buttons/submit_with_loader.html' with button_text=button_text loading="True" extra_classes="min-w-[142px] min-h-[36px]"%}
+        {% if False %}<span class="hidden min-w-[118px] min-h-[36px]"></span> {% endif %} <!-- to add classess to outputcss-->
     </div>
 </form>
 

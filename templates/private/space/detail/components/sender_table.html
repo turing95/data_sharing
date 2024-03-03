@@ -1,5 +1,6 @@
 {% load custom_tags %}
 {% load static %}
+{% load i18n %}
 
 <div class="relative overflow-x-auto custom-scrollbar">
     <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
@@ -16,13 +17,13 @@
                 </div>
             </th>
             <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
-                Invitee
+                {% translate 'Invitee' %}
             </th>
             <th scope="col" class="px-3 py-3 min-w-[200px]">
-                Space Link
+                {% translate 'Space Link' %}
             </th>
             <th scope="col" class="px-3 py-3 min-w-[200px]">
-                Link Status
+                {% translate 'Link Status' %}
             </th>
 
             {% for req in space.requests.all reversed %}
@@ -49,8 +50,9 @@
                         </div>
                         {% if req.is_active is False %}
                             <span class="flex text-xs font-normal {% if req.is_active is False %}text-yellow-400{% endif %}">
-                            (suspended)
-                            {% include 'components/tooltip.html' with num=forloop.counter content='Request suspended, add a destination to activate it again' %}
+                                {% translate '(suspended)' %}
+                                {% translate 'Request suspended, add a destination to activate it again' as content %}
+                            {% include 'components/tooltip.html' with num=forloop.counter content=content %}
                             </span>
                         {% endif %}
                     </div>
@@ -70,20 +72,21 @@
                 </th>
                 <th scope="row"
                     class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
-                    Everyone (public)
+                    {% translate 'Everyone (public)' %}
 
                 </th>
                 <td class="px-3 py-2">
                     <div class="inline-flex items-center">
                         <a href="{% url 'sender_space_detail_public' space.uuid %}" target="_blank"
                            class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
-                            public space link
+                           {% translate 'public space link' %}
                         </a>
+                        {% translate "Copy link" as title %}
                         <button
                                 class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
                                 onclick="navigator.clipboard.writeText('
                                         {{ request.get_host }}{% url 'sender_space_detail_public' space.uuid %}')"
-                                title="Copy Link">
+                                title=title>
                             <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon"
                                  class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
                         </button>
@@ -95,11 +98,11 @@
                     <div class="inline-flex items-center">
                         {% if space.is_public is False %}
                             <div class="bg-orange-200 text-orange-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                                inactive
+                                {% translate 'inactive' %}
                             </div>
                         {% else %}
                             <div class="bg-green-200 text-green-800 rounded-full text-sm px-[6px] py-[4px]] inline-block items-center justify-center">
-                                active
+                                {% translate 'active' %}
                             </div>
                         {% endif %}
                     </div>
@@ -116,7 +119,7 @@
                                       hx-swap="innerHTML"
                                       hx-indicator="#loading-indicator-{{ req.uuid }}-public"
                                       title="number of uploaded files">
-                                    {% get_count_uploaded_files req public=True %} files
+                                    {% get_count_uploaded_files req public=True %} {% translate 'files' %}
                                 </span>
                             <div class="flex items-center mb-3">
                                 <!-- Loading Indicator -->

@@ -1,10 +1,11 @@
+{% load i18n %}
 {% if from_htmx %}
     {% include 'components/messages.html' %}
 {% endif %}
 <form hx-post="{% url 'account_sender_notifications' %}" hx-swap="outerHTML" class="flex flex-col">
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
-        <div class="mb-3 md:w-1/4 w-3/4">
+        <div class="w-3/4 mb-3 md:w-1/4">
             <label for="{{ form.name.id_for_label }}"
                    class="font-medium text-gray-900 dark:text-white">{{ form.name.label }}
                 {% include 'components/tooltip.html' with content=form.name.help_text target=form.name.name %}
@@ -13,7 +14,7 @@
             {{ form.name }}
             {% include 'components/forms/error_widget.html' with errors=form.name.errors %}
         </div>
-            <div class="mb-3 md:w-1/4 w-3/4">
+            <div class="w-3/4 mb-3 md:w-1/4">
             <label for="{{ form.reference_email.id_for_label }}"
                    class="font-medium text-gray-900 dark:text-white">{{ form.reference_email.label }}
                 {% include 'components/tooltip.html' with content=form.reference_email.help_text target=form.reference_email.name %}
@@ -22,7 +23,7 @@
             {{ form.reference_email }}
             {% include 'components/forms/error_widget.html' with errors=form.reference_email.errors %}
         </div>
-    <div class="mb-3 md:w-1/4 w-3/4">
+    <div class="w-3/4 mb-3 md:w-1/4">
             <label for="{{ form.language.id_for_label }}"
                    class="font-medium text-gray-900 dark:text-white">{{ form.language.label }}
                 {% include 'components/tooltip.html' with content=form.name.help_text target=form.language.name %}
@@ -31,8 +32,9 @@
             {{ form.language }}
             {% include 'components/forms/error_widget.html' with errors=form.language.errors %}
         </div>
-    <div class="flex mb-3 md:w-1/4 w-3/4">
-            {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text="Save" %}
+    <div class="flex w-3/4 mb-3 md:w-1/4">
+        {% translate "Save" as button_text %}
+            {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text=button_text %}
 
     </div>
 

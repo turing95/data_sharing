@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
     <button type="button" class="inline-flex items-center ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group" id="space_actions_dropdown_button_{{space_num}}" aria-expanded="false" data-dropdown-toggle="space_actions_dropdown_{{space_num}}" data-dropdown-placement="bottom">
         <span class="sr-only">Open space dropdown</span>
@@ -11,11 +12,11 @@
             <li>
                 <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 onclick="this.closest('.space-dropdown-menu').querySelector('.duplicate-space-button').click();">
-                    Duplicate
+                {% translate 'Duplicate' %}
             </button>
                 <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 onclick="this.closest('.space-dropdown-menu').querySelector('.delete-space-button').click();">
-                    Delete
+                {% translate 'Delete' %}
             </button>
                 <div class=hidden> {% include 'private/space/components/delete_form.html' with space=space hide_icon=True%}</div>
                 <div class=hidden> {% include 'private/space/components/duplicate_form.html' with space=space hide_icon=True%}</div>

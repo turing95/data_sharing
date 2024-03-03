@@ -112,6 +112,6 @@
 
         <div class="flex justify-end {% if action == 'edit' %} sticky bottom-4 {% endif %}">
             {% include "components/buttons/submit_with_loader.html" with button_text=submit_text loading="True" extra_classes="min-w-[100px] min-h-[42px]"%}
-            <span class="hidden min-w-[100px] min-h-[42px]"><span> <!-- ensures the classess are added to output css -->
+            {% if False %}<span class="hidden min-w-[100px] min-h-[42px]"><span> <!-- ensures the classess are added to output css -->{% endif %}
         </div>
 </form>

@@ -1,3 +1,4 @@
+{% load i18n %}
 <div id="plan_pricing_modal" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-[52] w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full h-auto max-w-3xl max-h-screen border border-gray-300"> 
         <div class="relative bg-white shadow dark:bg-gray-700">
@@ -12,7 +13,9 @@
             </div>
             <div class="w-full text-center">
                 <h3 class="w-full text-2xl font-bold text-center text-gray-900 dark:text-white">
-                    <span class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group min-w-[25px] line-clamp-2" >Chose the right plan for you</span>
+                    <span class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group min-w-[25px] line-clamp-2" >
+                        {% translate 'Chose the right plan for you' %}
+                    </span>
                 </h3>
             </div>
             {% include 'components/pricing.html'%}

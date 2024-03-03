@@ -1,4 +1,5 @@
 {% load custom_tags static %}
+{% load i18n %}
 
 <tr id="sender-row-container-{{sender.uuid}}"
     sender-uuid="{{sender.uuid}}"
@@ -30,12 +31,13 @@
     <td class="px-3 py-2">
         <div class="inline-flex items-center">
             <a href="{{ sender_path}}" target = "_blank" class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
-                space link
+                {% translate 'space link' %}
             </a>
+            {% translate "Copy link" as title %}            
             <button 
                 class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
                 onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
-                title="Copy Link">
+                title=title>
                 <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
             </button>
 
@@ -52,9 +54,10 @@
                 hx-trigger="click" 
                 hx-target="#htmx-modal" 
                 hx-swap="innerHTML"
-                hx-indicator="#loading-indicator-{{req.uuid}}-{{ sender.uuid }}">                 
-                    <span class="flex-shrink-0 text-center cursor-pointer hover:underline" title="number of uploaded files" >
-                        {% get_count_uploaded_files req sender %} files
+                hx-indicator="#loading-indicator-{{req.uuid}}-{{ sender.uuid }}">    
+                {% translate "number of uploaded files" as title %}             
+                    <span class="flex-shrink-0 text-center cursor-pointer hover:underline" title=title >
+                        {% get_count_uploaded_files req sender %} {% translate 'files' %}
                     </span> 
                     <div class="flex items-center mb-3">
                         <!-- Loading Indicator -->

@@ -1,5 +1,6 @@
 {% load static l10n %}
 {% load custom_tags %} <!-- for toggle buttons-->
+{% load i18n %}
 
 <!-- TITLE -->
 <div class="mt-2 mb-3">
@@ -38,7 +39,7 @@
             {% if space.deadline %}
                 <!-- Deadline -->
                 <div class="mb-2 text-base">
-                    <span class="">Deadline:</span>
+                    <span class="">{% translate 'Deadline:' %}</span>
                     {% localize on %}
                         <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
                 <img src="{% static 'images/icons/calendar-blue.svg' %}" alt="clock icon"
@@ -52,33 +53,41 @@
                     {% endlocalize %}
                     {% if space.deadline_expired %}
                         <span class="inline-flex items-center  bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                    Deadline expired!
+                            {% translate 'Deadline expired!' %}
                 </span>
                     {% endif %}
+                    {% translate "To change this setting edit the space" as title %}
                     <span class="inline-flex items-center  bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2"
-                          title="To change this setting edit the space">
-                {% if space.upload_after_deadline %}Uploads allowed after the deadline{% else %}Uploads forbidden after
-                    the deadline{% endif %}
-            </span>
+                          title=title>
+                          
+                {% if space.upload_after_deadline %}
+                    {% translate 'Uploads allowed after the deadline' %}
+                {% else %}
+                    {% translate 'Uploads forbidden after the deadline' %}
+                {% endif %}
+                    
                     {% with space.deadline_notification_datetime as deadline_notification_datetime %}
                         {% if deadline_notification_datetime %}
+                        {% translate "To change this setting edit the space" as title %}
                             <span class="inline-flex items-center  bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 ml-2"
-                                  title="To change this setting edit the space">
-                    Notifications will be sent out on {% localize on %}{{ deadline_notification_datetime|date }} at
+                                  title=title>
+           
+                                  {% translate 'Notifications will be sent out on' %} {% localize on %}{{ deadline_notification_datetime|date }} {% translate 'at' %}
                                 {{ deadline_notification_datetime|time }}{% endlocalize %}
+                         
                     </span>
                         {% endif %}
                     {% endwith %}
                 </div>
             {% endif %}
             <div class="mt-6 mb-6">
-                <h3 class="mb-3 text-2xl font-semibold">Request Summary</h3>
+                <h3 class="mb-3 text-2xl font-semibold">{% translate 'Request Summary' %}</h3>
                 {% include "private/space/detail/components/request_table.html" %}
             </div>
 
             <!-- UPLOAD STATUS -->
             <div class="mt-6 mb-6">
-                <h3 class="mb-3 text-2xl font-semibold">Sender Summary</h3>
+                <h3 class="mb-3 text-2xl font-semibold">{% translate 'Sender Summary' %}</h3>
                 {% include "private/space/detail/components/sender_table.html" %}
             </div>
         </div>
@@ -90,7 +99,7 @@
          hx-indicator="#loading-indicator-history-table">
 
         <div class="flex items-center mb-3">
-            <h3 class="text-2xl font-semibold ">Uploads History</h3>
+            <h3 class="text-2xl font-semibold ">{% translate 'Uploads History' %}</h3>
 
             <!-- Loading Indicator -->
             <div id="loading-indicator-history-table" class="items-center justify-center opacity-0 htmx-indicator">
@@ -109,9 +118,10 @@
                         <img src="{% static 'images/icons/magnifying-lense.svg' %}" alt="Search Icon"
                              class="w-[18px] h-[18px] text-gray-500">
                     </div>
+                    {% translate "Type to search..." as placeholder %}
                     <input class="outline-none block py-1.5 text-sm text-gray-900 border border-gray-300 form-control ps-10 w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            type="search"
-                           name="search" placeholder="Type to search..."
+                           name="search" placeholder=placeholder
                            hx-post="{% url 'history_table' space.uuid %}"
                            hx-trigger="input changed delay:500ms, search"
                            hx-target="#history-table"

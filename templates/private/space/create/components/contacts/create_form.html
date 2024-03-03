@@ -1,3 +1,4 @@
+{% load i18n %}
 <form hx-post="{% url 'create_contact' %}" id="create-contact-form">
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
@@ -15,7 +16,8 @@
         {% endfor %}
     </div>
     <div class="flex justify-end mx-2">
-        {% include 'components/buttons/submit_with_loader.html' with button_text="Save contact" %}
+        {% translate "Save contact" as button_text %}
+        {% include 'components/buttons/submit_with_loader.html' with button_text=button_text %}
 
     </div>
 </form>

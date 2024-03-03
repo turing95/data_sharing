@@ -1,5 +1,7 @@
 {% extends 'public/_base.html' %}
 {% load static %}
 {% block public_content %}
-    {% include 'components/custom_error.html' with code=404 slug='Page Not Found' description='The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.' %}
+{% translate 'Page Not Found' as slug %}
+{% translate 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.' as description %}
+    {% include 'components/custom_error.html' with code=404 slug=slug description=description %}
 {% endblock public_content %}

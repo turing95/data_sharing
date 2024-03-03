@@ -1,4 +1,5 @@
 {% load custom_tags static l10n %}
+{% load i18n %}
 
 <div id="senders-modal-{{ space.uuid }}" tabindex="-1"
      class="fixed top-0 left-0 right-0 z-[100] w-full p-4 overflow-x-hidden  overflow-y-hidden md:inset-0 h-[calc(100%)]">
@@ -7,7 +8,7 @@
             <div class="flex items-center justify-between p-2 border-b md:p-3 dark:border-gray-600">
                 <div class="w-full text-center">
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-                        Everyone
+                        {% translate 'Everyone' %}
                     </h3>
                     <p class="text-sm text-gray-600 dark:text-gray-300">
                         <!-- subtitle-->
@@ -29,12 +30,12 @@
 
                     <div class="flex flex-col ">
                         <h3 class="mb-2 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
-                            Notifications
+                            {% translate 'Notifications' %}
                         </h3>
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                             <div class="flex flex-col">
                                 <h4 class="mb-1 text-base font-medium text-gray-900 border-b border-gray-200 dark:text-white">
-                                    Invitation
+                                    {% translate 'Invitation' %}
                                 </h4>
                                 
                                 
@@ -43,9 +44,9 @@
                                             hx-post="{% url 'bulk_notify_invitation' space.uuid %}"
                                             hx-swap="none"
                                             hx-indicator="#loading-indicator-invitation">
-                                        Send invitation to everyone
+                                            {% translate 'Send invitation to everyone' %}
                                     </button>
-                                    <div id="loading-indicator-invitation" role="status" class="htmx-indicator flex items-center justify-center mr-2 spinner">
+                                    <div id="loading-indicator-invitation" role="status" class="flex items-center justify-center mr-2 htmx-indicator spinner">
                                         {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
                                         <span class="sr-only">Loading...</span>
                                     </div>
@@ -56,16 +57,16 @@
                             <div class="flex flex-col">
 
                                 <h4 class="mb-1 text-base font-medium text-gray-900 border-b border-gray-200 dark:text-white">
-                                    Deadline Reminder
+                                    {% translate 'Deadline Reminder' %}
                                 </h4>
                                 <div class="flex">
                                     <button class="m-2 justify-center items-center text-sm text-white bg-marian-blue-400 hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 font-medium px-3 py-1.5 text-center dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200"
                                             hx-post="{% url 'bulk_notify_deadline' space.uuid %}"
                                             hx-swap="none"
                                             hx-indicator="#loading-indicator-reminder">
-                                        Send reminder to everyone
+                                            {% translate 'Send reminder to everyone' %}
                                     </button>
-                                    <div id="loading-indicator-reminder" role="status" class="htmx-indicator flex items-center justify-center mr-2 spinner">
+                                    <div id="loading-indicator-reminder" role="status" class="flex items-center justify-center mr-2 htmx-indicator spinner">
                                         {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
                                         <span class="sr-only">Loading...</span>
                                     </div>

@@ -1,5 +1,5 @@
 {% load custom_tags static l10n %}
-
+{% load i18n %}
 
 <div id="sender-info-container-{{ sender.uuid }}"
      sender-uuid="{{ sender.uuid }}"
@@ -11,18 +11,18 @@
 
     <div class="flex flex-col ">
         <h3 class="mb-2 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
-            Notifications
+            {% translate 'Notifications' %}
         </h3>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div class="flex flex-col">
                 <h4 class="mb-1 text-base font-medium text-gray-900 border-b border-gray-200 dark:text-white">
-                    Invitation
+                    {% translate 'Invitation' %}
                 </h4>
                 <span class="my-1 ml-2 text-xs">
-                    Last invitation:
+                    {% translate 'Last invitation:' %}
                     <span class="ml-2 text-xs underline">
                     {% localize on %}
-                        {% if sender.invited_at %}{{ sender.invited_at }}{% else %}Never invited{% endif %}
+                        {% if sender.invited_at %}{{ sender.invited_at }}{% else %}{% translate 'Never invited' %}{% endif %}
                     {% endlocalize %}
                     </span>
                 </span>
@@ -33,10 +33,10 @@
                                 hx-post="{% url 'notify_invitation' sender.pk %}"
                                 hx-swap="none"
                                 hx-indicator="#loading-indicator-invitation">
-                            Send invitation
+                                {% translate 'Send invitation' %}
                         </button>
                         <div id="loading-indicator-invitation" role="status"
-                             class="htmx-indicator flex items-center justify-center mr-2 spinner">
+                             class="flex items-center justify-center mr-2 htmx-indicator spinner">
                             {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -49,14 +49,16 @@
                 <div class="flex flex-col">
 
                     <h4 class="mb-1 text-base font-medium text-gray-900 border-b border-gray-200 dark:text-white">
-                        Deadline Reminder
+                        {% translate 'Deadline Reminder' %}
                     </h4>
                     <span class="my-1 ml-2 text-xs">
-                    Last notification:
+                        {% translate 'Last notification:' %}
                     <span class="ml-2 text-xs underline">
                         {% localize on %}
 
-                            {% if sender.notified_at %}{{ sender.notified_at }}{% else %}Never notified{% endif %}
+                            {% if sender.notified_at %}{{ sender.notified_at }}{% else %}
+                            {% translate 'Never notified' %}
+                            {% endif %}
                         {% endlocalize %}
                     </span>
                 </span>
@@ -67,10 +69,10 @@
                                 hx-post="{% url 'notify_deadline' sender.pk %}"
                                 hx-swap="none"
                                 hx-indicator="#loading-indicator-reminder">
-                            Send reminder
+                                {% translate 'Send reminder' %}
                             </button>
                             <div id="loading-indicator-reminder" role="status"
-                                 class="htmx-indicator flex items-center justify-center mr-2 spinner">
+                                 class="flex items-center justify-center mr-2 htmx-indicator spinner">
                                 {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
                                 <span class="sr-only">Loading...</span>
                             </div>
@@ -86,20 +88,21 @@
 
     <div class="flex flex-col">
         <h3 class="mt-4 mb-1 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
-            Space link
+            {% translate 'Space link' %}
         </h3>
         {% url 'sender_space_detail_private' sender.space.uuid sender.uuid as sender_path %}
         <div class="my-1 ml-2 text-xs">
-            Link to space:
+            {% translate 'Link to space:' %}
             <div class="inline-flex items-center">
                 <a href="{{ sender_path }}" target="_blank"
                    class="ml-1 text-blue-600 transition-colors duration-300 hover:text-blue-800">
-                    space link
+                   {% translate 'space link' %}
                 </a>
+                {% translate "Copy link" as title %}
                 <button
                         class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
                         onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
-                        title="Copy Link">
+                        title=title>
                     <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon"
                          class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
                 </button>
@@ -107,7 +110,7 @@
         </div>
 
         <div class="inline-flex items-center my-1 ml-2 text-xs">
-            <span class="mr-2">Link status:</span>
+            <span class="mr-2">{% translate 'Link status:' %}</span>
             {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active %}
         </div>
     </div>

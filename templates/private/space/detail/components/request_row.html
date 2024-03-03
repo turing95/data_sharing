@@ -1,4 +1,5 @@
 {% load custom_tags static %}
+{% load i18n %}
 
 <tr id="request-row-container-{{ req.uuid }}"
     request-uuid="{{ req.uuid }}"
@@ -36,9 +37,10 @@
         {% if req.is_active is False %}
 
             <span class="flex text-xs font-normal text-yellow-400">
-                            (suspended)
-                            {% include 'components/tooltip.html' with target_prefix='request' num=forloop.counter content='Request suspended, add a destination to activate it again' %}
-        </span>
+                {% translate '(suspended)' %}
+                {% translate 'Request suspended, add a destination to activate it again' as content %}
+                {% include 'components/tooltip.html' with target_prefix='request' num=forloop.counter content=content %}
+            </span>
         {% endif %}
 
 
@@ -49,13 +51,15 @@
                 {% if req.active_destination.url and req.active_destination.name  %}
                     <a href="{{ req.active_destination.url }}" target="_blank"
                        class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
-                        {{ req.active_destination.name|default_if_none:"Unable to retrieve name" }}
+                       {% translate "Unable to retrieve name" as default_text %}
+                        {{ req.active_destination.name|default_if_none:default_text }}
                     </a>
                 {% else %}
-                    {{ req.active_destination.name|default_if_none:"Unable to retrieve name"}}
+                {% translate "Unable to retrieve name" as default_text %}
+                    {{ req.active_destination.name|default_if_none:default_text }}
                 {% endif %}
             {% else %}
-                No active destination
+                {% translate 'No active destination' %}
             {% endif %}
 
         </div>
@@ -69,7 +73,7 @@
              hx-indicator="#loading-indicator-{{ req.uuid }}">                 
                     <span class="flex-shrink-0 text-center cursor-pointer hover:underline"
                           title="number of uploaded files">
-                        {% get_count_uploaded_files req %} files
+                        {% get_count_uploaded_files req %} {% translate 'files' %}
                     </span>
             <div class="flex items-center mb-3">
                 <!-- Loading Indicator -->
