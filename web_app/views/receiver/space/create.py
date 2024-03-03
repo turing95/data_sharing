@@ -7,6 +7,7 @@ from web_app.models import Sender, UploadRequest, FileType, Space, GenericDestin
 from django.db import transaction
 from web_app.tasks.notifications import notify_invitation
 from web_app.mixins import SubscriptionMixin, OrganizationMixin
+from django.utils.translation import gettext_lazy as _
 
 
 class SpaceFormView(AccessMixin, SubscriptionMixin, OrganizationMixin, FormView):
@@ -30,7 +31,7 @@ class SpaceFormView(AccessMixin, SubscriptionMixin, OrganizationMixin, FormView)
 
     def get_context_for_form(self, data, button_text='Create space', **kwargs):
         data['back'] = {'url': reverse_lazy('spaces', kwargs={'organization_uuid': self.get_organization().pk}),
-                        'text': 'Back to Spaces'}
+                        'text': _('Back to Spaces')}
         data['space_form'] = True
         data['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
         data['requests'] = self.get_formset()

@@ -3,6 +3,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import FormView
+from django.utils.translation import gettext_lazy as _
 
 from web_app.forms import SpaceForm, DetailRequestFormSet
 from web_app.mixins import SubscriptionMixin
@@ -19,13 +20,13 @@ class SpaceDetailFormView(LoginRequiredMixin, SubscriptionMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['back'] = {
             'url': reverse_lazy('spaces', kwargs={'organization_uuid': self.get_space().organization.pk}),
-            'text': 'Back to Spaces'}
+            'text': _('Back to Spaces')}
 
         if 'status' in self.request.GET:
             context['space_form'] = True
             context['file_name_tags'] = {'tags': [tag[1] for tag in UploadRequest.FileNameTag.choices]}
             context['requests'] = self.get_formset()
-            context['submit_text'] = 'Save space'
+            context['submit_text'] = _('Save space')
             context['status'] = self.request.GET.get('status')
             context['organization'] = self.get_space().organization
         else:

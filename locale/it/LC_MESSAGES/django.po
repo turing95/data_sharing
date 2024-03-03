@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 18:38+0100\n"
+"POT-Creation-Date: 2024-03-03 22:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,6 +134,10 @@ msgstr "Impostazioni"
 msgid "Help Center"
 msgstr "Centro Assistenza"
 
+#: .\templates\components\navbar.html:81
+msgid "Sign out"
+msgstr "Scollegati"
+
 #: .\templates\components\navbar.html:103
 #: .\templates\components\navbar.html:149
 #: .\templates\public\authentication\login_cancelled.html:13
@@ -206,9 +210,7 @@ msgstr ""
 "%(max_free_spaces)s spazi</span></span>"
 
 #: .\templates\components\pricing.html:41
-#, fuzzy
-#| msgid "Google Drive and One Drive integration"
-msgid "Google Drive, One Drive and Sharepoint integration"
+msgid "Google Drive, OneDrive and Sharepoint integration"
 msgstr "Integrazione con Google Drive, OneDrive e Sharepoint"
 
 #: .\templates\components\pricing.html:51
@@ -236,6 +238,14 @@ msgstr "Piano attuale"
 #: .\templates\components\pricing.html:152
 msgid "Get started"
 msgstr "Inizia ora"
+
+#: .\templates\components\pricing.html:101
+msgid "Make Kezyy your file collection companion"
+msgstr ""
+
+#: .\templates\components\pricing.html:104
+msgid "/month"
+msgstr ""
 
 #: .\templates\components\pricing.html:109
 msgid "All basic features, plus:"
@@ -399,6 +409,38 @@ msgstr "Accetta l'invito"
 msgid "Detail"
 msgstr "Dettagli"
 
+#: .\templates\private\contact\list.html:7
+msgid "Contacts"
+msgstr "Contatatti"
+
+#: .\templates\private\contact\list.html:16
+msgid "Create new contact"
+msgstr "Crea un nuovo account"
+
+#: .\templates\private\contact\list.html:26
+#: .\templates\public\beta_access_request.html:86 .\web_app\forms\company.py:9
+#: .\web_app\forms\company.py:10 .\web_app\forms\organization.py:9
+#: .\web_app\forms\organization.py:10 .\web_app\forms\settings.py:10
+#: .\web_app\forms\settings.py:11
+msgid "Name"
+msgstr "Nome"
+
+#: .\templates\private\contact\list.html:29
+#: .\templates\private\settings\profile_form.html:13
+#: .\templates\public\beta_access_request.html:97 .\web_app\forms\contact.py:12
+msgid "Email"
+msgstr "Email"
+
+#: .\templates\private\contact\list.html:32
+#: .\web_app\forms\beta_access_request.py:35 .\web_app\forms\contact.py:14
+#: .\web_app\forms\contact.py:15 .\web_app\forms\space_create.py:61
+msgid "Company"
+msgstr "Azienda"
+
+#: .\templates\private\contact\list.html:47
+msgid "There are no contacts yet"
+msgstr "Ancora non ci sono contatti"
+
 #: .\templates\private\organization\create_form.html:19
 msgid "Save organization"
 msgstr "Salva organizzazione"
@@ -469,11 +511,6 @@ msgstr "Lingua"
 #: .\templates\private\settings\receiver_notifications_form.html:19
 msgid "Save"
 msgstr "Salva"
-
-#: .\templates\private\settings\profile_form.html:13
-#: .\templates\public\beta_access_request.html:97 .\web_app\forms\contact.py:12
-msgid "Email"
-msgstr "Email"
 
 #: .\templates\private\settings\settings.html:11
 msgid "Profile"
@@ -1056,13 +1093,6 @@ msgstr ""
 msgid "Book a demo instead"
 msgstr "Prenota una demo invece"
 
-#: .\templates\public\beta_access_request.html:86 .\web_app\forms\company.py:9
-#: .\web_app\forms\company.py:10 .\web_app\forms\organization.py:9
-#: .\web_app\forms\organization.py:10 .\web_app\forms\settings.py:10
-#: .\web_app\forms\settings.py:11
-msgid "Name"
-msgstr "Nome"
-
 #: .\templates\public\beta_access_request.html:86
 #: .\templates\public\beta_access_request.html:99
 #: .\templates\public\beta_access_request.html:113
@@ -1435,11 +1465,6 @@ msgstr "Paese"
 msgid "Acme Inc."
 msgstr "ABC spa"
 
-#: .\web_app\forms\beta_access_request.py:35 .\web_app\forms\contact.py:14
-#: .\web_app\forms\contact.py:15 .\web_app\forms\space_create.py:61
-msgid "Company"
-msgstr "Azienda"
-
 #: .\web_app\forms\beta_access_request.py:38
 msgid "Accountant"
 msgstr "Contabile"
@@ -1537,7 +1562,10 @@ msgid ""
 "Name the file as you want it to appear in your destination folder. You can "
 "use tags to make the file name parametric. Here is the list of the possible "
 "tags:"
-msgstr "Nomina il file come desideri che appaia nella tua cartella di destinazione. Puoi utilizzare i tag per rendere il nome del file parametrico. Ecco l'elenco dei possibili tag:"
+msgstr ""
+"Nomina il file come desideri che appaia nella tua cartella di destinazione. "
+"Puoi utilizzare i tag per rendere il nome del file parametrico. Ecco "
+"l'elenco dei possibili tag:"
 
 #: .\web_app\forms\request.py:36
 msgid "Untitled request*"
@@ -1551,7 +1579,9 @@ msgstr "Titolo della richiesta - OBBLIGATORIO"
 msgid ""
 "This will be displayed to your invitees. Assign a meaningful title to your "
 "request to help your invitees understand what you are asking for."
-msgstr "Questo sarà visualizzato dai tuoi invitati. Assegna un titolo significativo alla tua richiesta per aiutare i tuoi invitati a capire cosa stai chiedendo."
+msgstr ""
+"Questo sarà visualizzato dai tuoi invitati. Assegna un titolo significativo "
+"alla tua richiesta per aiutare i tuoi invitati a capire cosa stai chiedendo."
 
 #: .\web_app\forms\request.py:47
 msgid "Insert file name, use tags for dynamic naming"
@@ -1577,7 +1607,10 @@ msgstr "ID cartella di destinazione"
 msgid ""
 "The file uploaded for this request will be sent to the folder selected here. "
 "Choose a cloud storage provider and search for a folder and select it."
-msgstr "Il file caricato per questa richiesta verrà inviato alla cartella selezionata qui. Scegli un provider di archiviazione cloud, cerca una cartella e selezionala."
+msgstr ""
+"Il file caricato per questa richiesta verrà inviato alla cartella "
+"selezionata qui. Scegli un provider di archiviazione cloud, cerca una "
+"cartella e selezionala."
 
 #: .\web_app\forms\request.py:99
 msgid "Destination type"
@@ -1605,7 +1638,10 @@ msgid ""
 "specific to the request.\n"
 "                                Leave blank if not necessary.\n"
 "                            "
-msgstr "Utilizza questo per fornire informazioni aggiuntive specifiche della richiesta ai tuoi invitati.\nLascia vuoto se non necessario.\n"
+msgstr ""
+"Utilizza questo per fornire informazioni aggiuntive specifiche della "
+"richiesta ai tuoi invitati.\n"
+"Lascia vuoto se non necessario.\n"
 " "
 
 #: .\web_app\forms\request.py:129 .\web_app\forms\request.py:130
@@ -1616,26 +1652,26 @@ msgstr "Nomi parametrici per i documenti"
 msgid "File Naming"
 msgstr "Denominazione File"
 
-#: .\web_app\forms\request.py:136
+#: .\web_app\forms\request.py:136      "
 msgid ""
-"\n"
-"                By default, files are saved to your destination folder with "
-"the name they have been uploaded with.\n"
+"By default, files are saved to your destination folder with the name they "
+"have been uploaded with.\n"
 "                You can choose to apply a custom file name to add parametric "
 "information to the file names to make them more meaningful and standardized\n"
 "            "
-msgstr "\n"
-"Di default, i file vengono salvati nella cartella di destinazione con "
-"il nome con cui sono stati caricati.\n"
+msgstr ""
+"Di default, i file vengono salvati nella cartella di destinazione con il "
+"nome con cui sono stati caricati.\n"
 "Puoi scegliere di applicare un nome file personalizzato per aggiungere "
-"informazioni parametriche ai nomi dei file per renderli più significativi e standardizzati\n"
+"informazioni parametriche ai nomi dei file per renderli più significativi e "
+"standardizzati\n"
 " "
 
-#: .\web_app\forms\request.py:143
+#: .\web_app\forms\request.py:142
 msgid "Multiple Files"
 msgstr "File multipli"
 
-#: .\web_app\forms\request.py:144
+#: .\web_app\forms\request.py:143
 msgid ""
 "\n"
 "                By default, each request can only contain one file. You can "
@@ -1643,19 +1679,19 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"Di default, ogni richiesta può contenere solo un file. Puoi "
-"scegliere di abilitare il caricamento di file multipli per questa richiesta.\n"
+"Di default, ogni richiesta può contenere solo un file. Puoi scegliere di "
+"abilitare il caricamento di file multipli per questa richiesta.\n"
 " "
 
-#: .\web_app\forms\request.py:149
+#: .\web_app\forms\request.py:148
 msgid "File Template"
 msgstr "Modello"
 
-#: .\web_app\forms\request.py:151
+#: .\web_app\forms\request.py:150
 msgid "Insert file template URL"
 msgstr "Inserisci il link a un modello"
 
-#: .\web_app\forms\request.py:153
+#: .\web_app\forms\request.py:152
 msgid ""
 "\n"
 "                You can provide a template file that will be available for "
@@ -1664,8 +1700,8 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"                Puoi fornire un modello di file che sarà disponibile per "
-"il download ai tuoi invitati. \n"
+"                Puoi fornire un modello di file che sarà disponibile per il "
+"download ai tuoi invitati. \n"
 "                Lascia vuoto se non necessario.\n"
 " "
 
@@ -1674,8 +1710,8 @@ msgid ""
 "This name will be used as the reference name displayed in all notifications "
 "sent to the senders."
 msgstr ""
-"Questo nome verrà utilizzato come nome di riferimento visualizzato in tutte le notifiche "
-"inviato ai mittenti."
+"Questo nome verrà utilizzato come nome di riferimento visualizzato in tutte "
+"le notifiche inviato ai mittenti."
 
 #: .\web_app\forms\settings.py:13 .\web_app\forms\settings.py:15
 msgid "Reference Email"
@@ -1686,8 +1722,8 @@ msgid ""
 "This email will be used as the reference email displayed in all "
 "notifications sent to the senders."
 msgstr ""
-"Questa email verrà utilizzata come email di riferimento e visualizzata in tutte le "
-"notifiche inviate ai mittenti."
+"Questa email verrà utilizzata come email di riferimento e visualizzata in "
+"tutte le notifiche inviate ai mittenti."
 
 #: .\web_app\forms\settings.py:19
 msgid ""
@@ -1709,7 +1745,6 @@ msgstr ""
 "Ricevi una notifica quando un mittente carica un file nel tuo spazio. Questa "
 "notifica verrà inviata all'indirizzo email che hai registrato con noi."
 
-
 #: .\web_app\forms\space_create.py:23
 msgid "Company not found."
 msgstr "Azienda non trovata."
@@ -1719,11 +1754,9 @@ msgstr "Azienda non trovata."
 msgid "{invalid_emails[0]} is not a valid email address"
 msgstr "{invalid_emails[0]} non è un indirizzo email valido"
 
-
 #: .\web_app\forms\space_create.py:50
 msgid "{', '.join(invalid_emails)} are not valid email addresses"
 msgstr "{', '.join(invalid_emails)} non sono indirizzi email validi"
-
 
 #: .\web_app\forms\space_create.py:54
 msgid "Untitled Space*"
@@ -1757,8 +1790,9 @@ msgstr "Email dei mittenti"
 msgid ""
 "Each invitee will have their own access link and will not be able to see any "
 "other invitee in the list."
-msgstr "Ogni invitato avrà il proprio link di accesso e non potrà vedere gli altri invitati nell'elenco."
-
+msgstr ""
+"Ogni invitato avrà il proprio link di accesso e non potrà vedere gli altri "
+"invitati nell'elenco."
 
 #: .\web_app\forms\space_create.py:83
 msgid "Type or paste email addresses of invitees"
@@ -1772,7 +1806,9 @@ msgstr "Notifica di invito"
 msgid ""
 "All invitees will receive an email with the link to the space upon creation. "
 "You can re-send the invitation at any time."
-msgstr "Tutti gli invitati riceveranno un'email con il link allo spazio al momento della creazione. Puoi inviare nuovamente l'invito in qualsiasi momento."
+msgstr ""
+"Tutti gli invitati riceveranno un'email con il link allo spazio al momento "
+"della creazione. Puoi inviare nuovamente l'invito in qualsiasi momento."
 
 #: .\web_app\forms\space_create.py:93
 msgid "Public link"
@@ -1786,8 +1822,12 @@ msgid ""
 "                            The link can be enabled and disabled at any "
 "time, and can coexist with the invitees links.\n"
 "                            "
-msgstr "Il link pubblico non sarà legato a un indirizzo email specifico e può essere utilizzato per raccogliere contributi dal pubblico generale, quando non è necessario distinguere un caricamento dall'altro. Il link può essere attivato e disattivato in qualsiasi momento e può coesistere con i link degli invitati."
-
+msgstr ""
+"Il link pubblico non sarà legato a un indirizzo email specifico e può essere "
+"utilizzato per raccogliere contributi dal pubblico generale, quando non è "
+"necessario distinguere un caricamento dall'altro. Il link può essere "
+"attivato e disattivato in qualsiasi momento e può coesistere con i link "
+"degli invitati."
 
 #: .\web_app\forms\space_create.py:101
 msgid "Explain what files you are requesting"
@@ -1802,7 +1842,9 @@ msgid ""
 "These instructions will be displayed to your invitees. They refer to all the "
 "file requests in the space.\n"
 "                            "
-msgstr "Queste istruzioni verranno visualizzate dai tuoi invitati. Si riferiscono a tutte le richieste di file nello spazio."
+msgstr ""
+"Queste istruzioni verranno visualizzate dai tuoi invitati. Si riferiscono a "
+"tutte le richieste di file nello spazio."
 
 #: .\web_app\forms\space_create.py:115
 msgid ""
@@ -1810,7 +1852,10 @@ msgid ""
 "                                You can customize what happens once the "
 "deadline is reached.\n"
 "                                "
-msgstr "La scadenza si applica a tutti gli invitati ed è visibile nella loro pagina di caricamento. Puoi personalizzare cosa succede una volta raggiunta la scadenza."
+msgstr ""
+"La scadenza si applica a tutti gli invitati ed è visibile nella loro pagina "
+"di caricamento. Puoi personalizzare cosa succede una volta raggiunta la "
+"scadenza."
 
 #: .\web_app\forms\space_create.py:124
 msgid "Days"
@@ -1823,7 +1868,6 @@ msgstr "Giorni prima della deadline"
 #: .\web_app\forms\space_create.py:130
 msgid "Number of days before the deadline to send notifications."
 msgstr "Numero di giorni prima della scadenza per inviare le notifiche."
-
 
 #: .\web_app\forms\space_create.py:139
 msgid "Hours"
@@ -1851,7 +1895,6 @@ msgstr ""
 "abilitata.\n"
 "        Puoi modificare questa impostazione in qualsiasi momento."
 
-
 #: .\web_app\forms\space_create.py:156 .\web_app\forms\space_create.py:157
 msgid "Notification"
 msgstr "Notifiche"
@@ -1864,8 +1907,9 @@ msgstr "Notifica la deadline"
 msgid ""
 "Set a number of days and hours before the deadline to send a notification to "
 "your invitees."
-msgstr "Imposta un numero di giorni e ore prima della scadenza per inviare una notifica "
-"ai tuoi invitati."
+msgstr ""
+"Imposta un numero di giorni e ore prima della scadenza per inviare una "
+"notifica ai tuoi invitati."
 
 #: .\web_app\forms\space_create.py:194
 msgid "Deadline must be in the future."
@@ -1873,8 +1917,8 @@ msgstr "La deadline deve essere  nel futuro."
 
 #: .\web_app\forms\space_create.py:221
 msgid "Current time is past the deadline notification time."
-msgstr "L'orario attuale è successivo a quando è pianificata notifica della deadline."
-
+msgstr ""
+"L'orario attuale è successivo a quando è pianificata notifica della deadline."
 
 #: .\web_app\forms\team.py:10
 msgid "Invite collaborator:"
@@ -1895,14 +1939,11 @@ msgstr "Utente già invitato"
 #: .\web_app\management\commands\populate_file_types.py:6
 msgid ""
 "Populates the database with common file extensions and descriptive slugs"
-msgstr ""
-"Popola il database con estensioni di file comuni e slug descrittivi"
-
+msgstr "Popola il database con estensioni di file comuni e slug descrittivi"
 
 #: .\web_app\management\commands\populate_file_types.py:62
 msgid "Successfully populated file types with descriptive slugs"
 msgstr "Tipi di file inseriti con successo con slug descrittivi"
-
 
 #: .\web_app\mixins.py:29
 msgid "New space"
@@ -1926,7 +1967,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        Nuova richiesta di accesso alla beta da {self.user_name} ({self.user_email})\n"
+"        Nuova richiesta di accesso alla beta da {self.user_name} ({self."
+"user_email})\n"
 "        Settore: {self.industry}\n"
 "        Paese: {self.country}\n"
 "        Azienda: {self.company}\n"
@@ -1938,7 +1980,8 @@ msgstr ""
 #: .\web_app\models\beta_access_request.py:37
 #, python-brace-format
 msgid "New beta access request from {self.user_name} ({self.user_email})"
-msgstr "Nuova richiesta di accesso alla beta da {self.user_name} ({self.user_email})"
+msgstr ""
+"Nuova richiesta di accesso alla beta da {self.user_name} ({self.user_email})"
 
 #: .\web_app\models\file.py:8
 msgid "Accepted"
@@ -1979,8 +2022,9 @@ msgstr "Invito:"
 #: .\web_app\models\sender.py:179
 msgid ""
 "{context[\"receiver_name\"]} has requested changes for {upload_request.title}"
-msgstr "{context[\"receiver_name\"]} ha richiesto modifiche per {upload_request.title}"
-
+msgstr ""
+"{context[\"receiver_name\"]} ha richiesto modifiche per {upload_request."
+"title}"
 
 #: .\web_app\models\sender.py:180
 msgid "has requested changes for"
@@ -2014,16 +2058,15 @@ msgstr "Tutti i file accettati con successo"
 msgid "File accepted successfully"
 msgstr "File accettato con successo"
 
-
 #: .\web_app\views\api\organization.py:31
 msgid "Organization created successfully"
 msgstr "Organizzazione creata con successo"
 
-#: .\web_app\views\api\organization.py:35
-#: .\web_app\views\receiver\organization\contact.py:99
-msgid "Error creating contact. Please try again."
+#: .\web_app\views\api\organization.py:33
+#, fuzzy
+#| msgid "Error creating contact. Please try again."
+msgid "Error creating organization. Please try again."
 msgstr "Errore nella creazione del contatto. Per favore, prova di nuovo."
-
 
 #: .\web_app\views\api\profile.py:16
 msgid "Profile updated"
@@ -2043,11 +2086,9 @@ msgstr "{sender.email} invitato"
 msgid "Notification are being sent to all senders"
 msgstr "Le notifiche stanno venendo inviate a tutti i mittenti"
 
-
 #: .\web_app\views\api\sender.py:65
 msgid "Invitation are being sent to all senders"
 msgstr "Gli inviti stanno venendo inviati a tutti gli invitati"
-
 
 #: .\web_app\views\api\settings.py:16 .\web_app\views\api\settings.py:25
 msgid "Settings updated"
@@ -2060,6 +2101,10 @@ msgstr "Account cancellato con successo"
 #: .\web_app\views\receiver\organization\contact.py:95
 msgid "Contact created successfully"
 msgstr "Account creato con successo"
+
+#: .\web_app\views\receiver\organization\contact.py:99
+msgid "Error creating contact. Please try again."
+msgstr "Errore nella creazione del contatto. Per favore, prova di nuovo."
 
 #: .\web_app\views\receiver\organization\team.py:44
 msgid "User invited successfully"
@@ -2081,28 +2126,35 @@ msgstr "Hai abbandonato l'organizzazione "
 msgid "User removed from organization"
 msgstr "Utente rimosso dall'organizzazione"
 
+#: .\web_app\views\receiver\space\create.py:34
+#: .\web_app\views\receiver\space\detail.py:23
+msgid "Back to Spaces"
+msgstr "Torna alla homepage"
+
+#: .\web_app\views\receiver\space\detail.py:29
+msgid "Save space"
+msgstr "Salva lo spazio"
+
 #: .\web_app\views\sender\space_detail.py:55
 #, python-brace-format
 msgid "An error occurred while uploading file {uploaded_file.name}"
-msgstr "Si è verificato un errore durante il caricamento del file {uploaded_file.name}"
-
+msgstr ""
+"Si è verificato un errore durante il caricamento del file {uploaded_file."
+"name}"
 
 #: .\web_app\views\sender\space_detail.py:66
 msgid "Your upload has completed"
 msgstr "Il tuo caricamento è stato completato"
-
 
 #: .\web_app\views\sender\space_detail.py:86
 #, python-brace-format
 msgid "No Space matches the given query: {filter_criteria}"
 msgstr "Nessuno spazio corrisponde alla query fornita: {filter_criteria}"
 
-
 #: .\web_app\views\sender\space_detail.py:98
 #, python-brace-format
 msgid "Sender with id '{sender_id}' not found"
 msgstr "Mittente con id '{sender_id}' non trovato"
-
 
 #, python-format
 #~ msgid "Notes from the receiver: %(notes)s"
