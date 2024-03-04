@@ -122,14 +122,14 @@
                             {% endif %}
                             {% translate "To change this setting edit the space" as title %}
                             <span class="inline-flex items-center  bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2"
-                                  title=title></span>
+                                  title=title>
 
                             {% if space.upload_after_deadline %}
                                 {% translate 'Uploads allowed after the deadline' %}
                             {% else %}
                                 {% translate 'Uploads forbidden after the deadline' %}
                             {% endif %}
-
+</span>
                             {% with space.deadline_notification_datetime as deadline_notification_datetime %}
                                 {% if deadline_notification_datetime %}
                                     {% translate "To change this setting edit the space" as title %}

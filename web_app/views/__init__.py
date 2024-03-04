@@ -1,7 +1,7 @@
 from web_app.views.receiver.space.list import SpacesView
 from web_app.views.receiver.space.create import SpaceCreateView, space_create
 from web_app.views.receiver.space.detail import SpaceSettingsView, SpaceDetailView, space_edit
-from web_app.views.receiver.request.create import RequestCreateView
+from web_app.views.receiver.request.create import RequestCreateView, request_create
 from web_app.views.receiver.request.detail import RequestDetailView
 from web_app.views.receiver.event.upload_history import UploadHistoryListView
 from web_app.views.receiver.sender.list import SenderListView
