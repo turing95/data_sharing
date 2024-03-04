@@ -10,9 +10,11 @@ from django.utils.safestring import mark_safe
 from web_app.forms.widgets import ToggleWidget
 from django.utils.translation import gettext_lazy as _
 
+
 class RequestForm(ModelForm):
     instance: UploadRequest
-    FILE_NAME_INSTRUCTIONS = _("Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:")
+    FILE_NAME_INSTRUCTIONS = _(
+        "Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:")
     FILE_NAME_TAGS = "<br>" + "<br>".join([
         f"- <strong>{{{tag[1]}}}</strong>"
         for tag in UploadRequest.FileNameTag.choices
@@ -22,7 +24,8 @@ class RequestForm(ModelForm):
                                                           'required': 'required',
                                                           'class': css_classes.text_request_title_input}),
                             label=_('Request title - MANDATORY'),
-                            help_text=_("""This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
+                            help_text=_(
+                                """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
@@ -62,14 +65,15 @@ class RequestForm(ModelForm):
                 'hx-get': reverse_lazy('select_destination_type'),
                 'hx-target': "previous .destination-search",
                 'hx-swap': "outerHTML",
-                })
+            })
     )
 
     destination_id = forms.CharField(
         required=False,
         widget=forms.HiddenInput(attrs={'class': 'destination'}),
         label=_("Destination folder ID"),
-        help_text=_("""The file uploaded for this request will be sent to the folder selected here. Choose a cloud storage provider and search for a folder and select it."""))
+        help_text=_(
+            """The file uploaded for this request will be sent to the folder selected here. Choose a cloud storage provider and search for a folder and select it."""))
     sharepoint_site_id = forms.CharField(
         required=False,
         widget=forms.HiddenInput(attrs={'class': 'sharepoint-site'}))
@@ -166,7 +170,6 @@ class RequestForm(ModelForm):
                 self.fields['destination_display'].initial = destination.name
                 self.fields['destination_type'].initial = destination.tag
                 self.fields['destination_type_select'].initial = destination.tag
-
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')

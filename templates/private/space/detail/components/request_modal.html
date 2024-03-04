@@ -18,13 +18,15 @@
                         {% endif %}
                     </h3>
                     <p class="text-sm text-gray-600 dark:text-gray-300">
-                        
-                            {% if sender %}
-                                {% blocktrans trimmed %}Uploads by: {{ sender.email }}{% endblocktrans %}
-                            {% elif public %}
+
+                        {% if sender %}
+                            {% with sender_email=sender.email %}
+                                {% blocktrans trimmed %}Uploads by: {{ sender_email }}{% endblocktrans %}
+                            {% endwith %}
+                        {% elif public %}
                             {% translate 'Uploads via public link' %}
-                            {% endif %} 
-                        
+                        {% endif %}
+
                     </p>
                 </div>
                 <button type="button"
@@ -41,27 +43,28 @@
             </div>
             {% if files %}
                 <div class="flex flex-col p-3">
-                <h3 class="mb-2 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
-                    Files
-                </h3>
-                <div class="w-1/4">
-                    {% if False %}<span class="hidden min-w-[125px] min-h-[36px]"></span> {% endif %} <!-- to add classess to outputcss-->
-                    {% url 'accept_all' req.uuid as url_accept %}
-                {% if sender %}
-                    {% with url_accept|addstr:"?sender="|addstr:sender.uuid as hx_post %}
-                    {% translate 'Accept all files' as button_text %}
-                        {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=hx_post hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
-                    {% endwith %}
-                {% elif public %}
-                    {% with url_accept|add:"?public=1" as hx_post %}
-                    {% translate 'Accept all files' as button_text %}
-                        {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=hx_post hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
-                    {% endwith %}
-                {% else %}
-                {% translate 'Accept all files' as button_text %}
-                    {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=url_accept hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
-                {% endif %}
-                </div>
+                    <h3 class="mb-2 text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
+                        Files
+                    </h3>
+                    <div class="w-1/4">
+                        {% if False %}<span class="hidden min-w-[125px] min-h-[36px]"></span> {% endif %}
+                        <!-- to add classess to outputcss-->
+                        {% url 'accept_all' req.uuid as url_accept %}
+                        {% if sender %}
+                            {% with url_accept|addstr:"?sender="|addstr:sender.uuid as hx_post %}
+                                {% translate 'Accept all files' as button_text %}
+                                {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=hx_post hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
+                            {% endwith %}
+                        {% elif public %}
+                            {% with url_accept|add:"?public=1" as hx_post %}
+                                {% translate 'Accept all files' as button_text %}
+                                {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=hx_post hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
+                            {% endwith %}
+                        {% else %}
+                            {% translate 'Accept all files' as button_text %}
+                            {% include 'components/buttons/submit_with_loader.html' with button_text=button_text hx_post=url_accept hx_swap="none" extra_classes="files-push min-w-[125px] min-h-[36px]" loading="True" %}
+                        {% endif %}
+                    </div>
                     {% if changes_form %}
                         <div id="accordion-flush" data-accordion="collapse"
                              data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
@@ -91,14 +94,16 @@
 
             {% endif %}
             <div class="p-3 space-y-4 files-pull"
-                 hx-get="{% url 'history_table' req.space.uuid %}?request_uuid={{ req.uuid }}{% if sender %}&sender_uuid={{ sender.uuid }}{% elif public %}&public=1{% endif %}"
+                 hx-get="{% url 'history_table' req.space.uuid %}?request_uuid=
+                         {{ req.uuid }}{% if sender %}&sender_uuid=
+                             {{ sender.uuid }}{% elif public %}&public=1{% endif %}"
                  hx-trigger="intersect once, filesUpdated from:document"
                  hx-swap="innerHTML"
                  hx-target="#modal-history-table"
                  hx-indicator="#loading-indicator-modal-history-table">
-            <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
-                {% translate 'Uploads History' %}
-        </h3>
+                <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 dark:text-white">
+                    {% translate 'Uploads History' %}
+                </h3>
 
                 <div id="modal-history-table">
 
