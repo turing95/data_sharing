@@ -1,24 +1,24 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import FormView
-
-from web_app.mixins import SpaceSideBarMixin, RequestMixin,SubscriptionMixin
+from django.utils.translation import gettext_lazy as _
+from web_app.mixins import SpaceSideBarMixin, RequestMixin, SubscriptionMixin
 from web_app.models import UploadRequest, GenericDestination
 from web_app.forms import RequestForm
 
 
-class RequestDetailView(LoginRequiredMixin, SubscriptionMixin,RequestMixin,SpaceSideBarMixin, FormView):
+class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, FormView):
     model = UploadRequest
     form_class = RequestForm
     template_name = 'private/upload_request/create.html'
     _request = None  # Placeholder for the cached object
 
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['request_form'] = True
-        context['submit_text'] = 'Save request'
+        context['back'] = {'url': reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk}),
+                           'text': _('Back to Space')}
+        context['submit_text'] = _('Save request')
         context['space'] = self.get_request().space
         return context
 

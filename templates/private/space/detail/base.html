@@ -4,7 +4,7 @@
 {% load i18n %}
 {% block private_content %}
     <h2 class="bg-transparent text-gray-900 p-2.5 w-5/6 border-0 text-4xl font-bold">
-                        <label for="id_title" class="hidden">Space title</label>
+        <label for="id_title" class="hidden">Space title</label>
 
         <input type="text" name="title" value="{{ space.title }}" placeholder="Spazio senza titolo*"
                hx-trigger="blur changed delay:500ms"
@@ -146,7 +146,14 @@
                         </div>
                     {% endif %}
                     <div class="mt-6 mb-6">
-                        <h3 class="mb-3 text-2xl font-semibold">{% translate 'Request Summary' %}</h3>
+                        <div class="flex justify-between">
+                            <h3 class="mb-3 text-2xl font-semibold">{% translate 'Request Summary' %}</h3>
+                            {% url 'request_create' space.pk as request_create_url %}
+                            {% translate 'Add request' as button_text %}
+                            {% include "components/buttons/generic.html" with button_text=button_text href=request_create_url extra_classes="my-2"%}
+                        </div>
+
+
                         {% include "private/space/detail/components/request_table.html" %}
                     </div>
 

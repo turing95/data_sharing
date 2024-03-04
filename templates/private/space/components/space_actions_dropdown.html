@@ -1,25 +1,37 @@
 {% load static %}
 {% load i18n %}
 
-    <button type="button" class="inline-flex items-center ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group" id="space_actions_dropdown_button_{{space_num}}" aria-expanded="false" data-dropdown-toggle="space_actions_dropdown_{{space_num}}" data-dropdown-placement="bottom">
-        <span class="sr-only">Open space dropdown</span>
-        <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
-    </button>
+<button type="button"
+        class="inline-flex items-center ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group"
+        id="space_actions_dropdown_button_{{ space_num }}" aria-expanded="false"
+        data-dropdown-toggle="space_actions_dropdown_{{ space_num }}" data-dropdown-placement="bottom">
+    <span class="sr-only">Open space dropdown</span>
+    <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke=""
+         class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
+</button>
 
-    <!-- Dropdown menu -->
-    <div class="z-50 hidden my-4 text-base font-normal list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600" id="space_actions_dropdown_{{space_num}}">
-        <ul class="py-2 space-dropdown-menu" aria-labelledby="user-menu-button-{{space_num}}">
-            <li>
-                <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                onclick="this.closest('.space-dropdown-menu').querySelector('.duplicate-space-button').click();">
-                {% translate 'Duplicate' %}
-            </button>
-                <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                onclick="this.closest('.space-dropdown-menu').querySelector('.delete-space-button').click();">
-                {% translate 'Delete' %}
-            </button>
-                <div class=hidden> {% include 'private/space/components/delete_form.html' with space=space hide_icon=True%}</div>
-                <div class=hidden> {% include 'private/space/components/duplicate_form.html' with space=space hide_icon=True%}</div>
-            </li>
-        </ul>
-    </div>
+<!-- Dropdown menu -->
+<div class="z-50 hidden my-4 text-base font-normal list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+     id="space_actions_dropdown_{{ space_num }}">
+    <ul class="py-2 space-dropdown-menu" aria-labelledby="user-menu-button-{{ space_num }}">
+        <li>
+            <form action="{% url 'space_duplicate' space.uuid %}" method="post">
+                {% csrf_token %}
+                <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    {% translate 'Duplicate' %}
+                </button>
+            </form>
+
+            <form action="{% url 'space_delete' space.uuid %}" method="post"
+                  onsubmit={% translate "return confirm('Are you sure you want to delete this space?');" %}>
+                {% csrf_token %}
+                <button class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    {% translate 'Delete' %}
+                </button>
+            </form>
+
+            <div class=hidden> {% include 'private/space/components/delete_form.html' with space=space hide_icon=True %}</div>
+            <div class=hidden> {% include 'private/space/components/duplicate_form.html' with space=space hide_icon=True %}</div>
+        </li>
+    </ul>
+</div>

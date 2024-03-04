@@ -1,9 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import FormView
-from djstripe.mixins import SubscriptionMixin
 
-from web_app.mixins import SpaceSideBarMixin, SpaceMixin
+from web_app.mixins import SpaceSideBarMixin, SpaceMixin, SubscriptionMixin
 from web_app.models import UploadRequest, GenericDestination
 from web_app.forms import RequestForm
 
@@ -15,6 +14,7 @@ class RequestCreateView(LoginRequiredMixin, SubscriptionMixin,SpaceMixin,SpaceSi
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        context['back'] = {'url': reverse('receiver_space_detail', kwargs={'space_uuid': self.kwargs.get('space_uuid')}), 'text': 'Back to Space'}
         context['request_form'] = True
         context['submit_text'] = 'Create request'
         return context
