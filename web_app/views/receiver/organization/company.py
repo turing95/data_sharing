@@ -101,12 +101,12 @@ class CompanySpacesListView(SubscriptionMixin, CompanySideBarMixin, CompanyTabMi
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['organization'] = self.get_company().organization
-        context['company'] = Company.objects.get(pk=self.kwargs.get('company_uuid'))
+        context['company'] = self.get_company()
         context['company_tab']['spaces'] = True
         return context
 
     def get_queryset(self):
-        return self.get_company().spaces.all().order_by('created_at')
+        return self.get_company().spaces.filter(is_deleted=False).order_by('created_at')
 
 
 @require_POST

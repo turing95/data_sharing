@@ -2,23 +2,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import FormView
-from djstripe.mixins import SubscriptionMixin
 
-from web_app.mixins import SpaceMixin,SpaceSideBarMixin
+from web_app.mixins import SpaceSideBarMixin, RequestMixin,SubscriptionMixin
 from web_app.models import UploadRequest, GenericDestination
 from web_app.forms import RequestForm
 
 
-class RequestDetailView(LoginRequiredMixin, SubscriptionMixin,SpaceSideBarMixin, FormView):
+class RequestDetailView(LoginRequiredMixin, SubscriptionMixin,RequestMixin,SpaceSideBarMixin, FormView):
     model = UploadRequest
     form_class = RequestForm
     template_name = 'private/upload_request/create.html'
     _request = None  # Placeholder for the cached object
 
-    def get_request(self):
-        if not self._request:
-            self._request = get_object_or_404(UploadRequest, pk=self.kwargs.get('request_uuid'))
-        return self._request
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

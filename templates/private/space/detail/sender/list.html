@@ -73,7 +73,8 @@
                 </tbody>
             </table>
         {% translate "Senders" as objs_name %}
-        {% include 'components/pagination.html' with objs_name=objs_name %}
         </div>
+            {% include 'components/pagination.html' with objs_name=objs_name %}
+
     </div>
 {% endblock %}

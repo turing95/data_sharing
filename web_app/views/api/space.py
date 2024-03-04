@@ -12,16 +12,6 @@ from web_app.forms import FileSelectForm
 from web_app.models import Space, Sender, UploadRequest, SenderEvent, File
 
 
-@login_required
-@require_POST
-def toggle_space_public(request, space_uuid):
-    space = Space.objects.get(pk=space_uuid)
-    space.is_public = not space.is_public
-    space.save()
-    return HttpResponse(
-        render_block_to_string('private/space/detail/components/summary.html', 'details', {'space': space}, request))
-
-
 def history_table(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
     upload_events = space.events.all()

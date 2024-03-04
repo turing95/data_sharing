@@ -57,7 +57,7 @@ class SpaceForm(ModelForm):
                             help_text=_("It will be displayed to your invitees"))
     company = CompanyField(
         widget=forms.HiddenInput(),
-        required=True,
+        required=False,
         label=_('Company'),
         help_text=_("Select the company to which the space belongs."))
     search_company = forms.CharField(
@@ -175,7 +175,8 @@ class SpaceForm(ModelForm):
             'organization_uuid': self.organization.pk})
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
             space = self.instance
-            self.fields['search_company'].initial = space.company.name
+            if space.company:
+                self.fields['search_company'].initial = space.company.name
             self.fields['senders_emails'].initial = ','.join(
                 [sender.email for sender in space.senders.filter(is_active=True)])
 

@@ -3,6 +3,17 @@
 {% load l10n %}
 {% load i18n %}
 {% block private_content %}
+    <h2 class="bg-transparent text-gray-900 p-2.5 w-5/6 border-0 text-4xl font-bold">
+                        <label for="id_title" class="hidden">Space title</label>
+
+        <input type="text" name="title" value="{{ space.title }}" placeholder="Spazio senza titolo*"
+               hx-trigger="blur changed delay:500ms"
+               hx-post="{% url 'space_edit' space.pk %}"
+               class="bg-transparent text-gray-900 p-2.5 w-5/6 border-t-0 border-x-0 border-b border-b-black transition-all duration-300 text-4xl    hover:border-black #hover:text-4xl    focus:outline-none focus:ring-0 font-bold"
+               required="" id="id_title">
+        {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=0 %}
+
+    </h2>
     <div class="border-b border-gray-200 dark:border-gray-700">
         <ul class="flex justify-center -mb-px text-medium font-medium text-center text-gray-500 dark:text-gray-400">
             <li class="me-2">
@@ -38,7 +49,7 @@
                     {% translate 'Upload history' %}
                 </a>
             </li>
-                    <li class="me-2">
+            <li class="me-2">
                 <a href="{% url 'senders' space.pk %}"
                    class="inline-flex items-center justify-center p-4 {% if company_tab.spaces %}text-blue-600 active  border-blue-600{% else %}border-transparent hover:text-gray-600 hover:border-gray-300{% endif %} border-b-2 rounded-t-lg group"
                    {% if company_tab.spaces %}aria-current="page"{% endif %}>
@@ -56,11 +67,6 @@
         <form action="">
             {% csrf_token %}
             <div class="mt-2 mb-3">
-                <label class="hidden">Space title</label>
-                <h2 class="bg-transparent text-gray-900 p-2.5 w-5/6 border-0 text-4xl font-bold">
-                    {{ form.title }}
-                    {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=0 %}
-                </h2>
                 <div class="bg-transparent text-gray-900 p-2.5 w-4/6 border-0 text-4xl">
                     {{ form.instructions }}
                 </div>

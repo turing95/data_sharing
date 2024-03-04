@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.views.decorators.http import require_GET
 
 from web_app.forms import SpaceForm
 from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import AccessMixin
 from web_app.models import Sender, Space, Contact
 from web_app.tasks.notifications import notify_invitation
@@ -10,7 +12,7 @@ from web_app.mixins import SubscriptionMixin, OrganizationMixin, SideBarMixin
 from django.utils.translation import gettext_lazy as _
 
 
-class SpaceCreateView(AccessMixin, SubscriptionMixin, OrganizationMixin,SideBarMixin, FormView):
+class SpaceCreateView(AccessMixin, SubscriptionMixin, OrganizationMixin, SideBarMixin, FormView):
     form_class = SpaceForm
     _space = None  # Placeholder for the cached object
     template_name = "private/space/create/base.html"
@@ -56,3 +58,12 @@ class SpaceCreateView(AccessMixin, SubscriptionMixin, OrganizationMixin,SideBarM
                 notify_invitation.delay(sender.pk)
             if space_instance.deadline_notification_datetime is not None:
                 sender.schedule_deadline_notification()
+
+
+@login_required
+@require_GET
+def space_create(request, organization_uuid):
+    if not request.user.can_create_space:
+        return redirect('create_checkout_session')
+    space = Space.objects.create(title='untitled',user=request.user, organization_id=organization_uuid)
+    return redirect(reverse('receiver_space_detail', kwargs={'space_uuid': space.pk}))

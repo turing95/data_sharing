@@ -1,5 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import redirect
+from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView
 from django.utils.translation import gettext_lazy as _
 
@@ -9,14 +12,12 @@ from web_app.models import Space, Contact, Sender
 from web_app.tasks.notifications import notify_invitation
 
 
-
 class SpaceDetailView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, TemplateView):
     template_name = "private/space/detail/base.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['space'] = self.get_space()
-        context['status'] = self.request.GET.get('status')
         context['space_summary'] = True
         context['form'] = SpaceUpdateForm(instance=self.get_space())
         return context
@@ -28,7 +29,6 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['space'] = self.get_space()
         context['space_form'] = True
         context['submit_text'] = _('Save space')
         return context
@@ -80,3 +80,18 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
         for sender in space_instance.senders.all():
             if space_instance.deadline_notification_datetime is not None:
                 sender.schedule_deadline_notification()
+
+
+@login_required
+@require_POST
+def space_edit(request, space_uuid):
+    space = Space.objects.get(pk=space_uuid)
+    if request.method == 'POST':
+        form = SpaceForm(request.POST, instance=space,user=request.user,organization=space.organization)
+        if form.is_valid():
+            form.save()
+            return HttpResponse()
+        else:
+            print('no ok')
+            print(form.errors)
+    return HttpResponseBadRequest()
