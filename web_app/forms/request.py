@@ -160,7 +160,7 @@ class RequestForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         request = kwargs.pop('request', None)
-        index = kwargs.pop('index', None)
+        index = kwargs.pop('index', 0)
         super().__init__(*args, **kwargs)
         self.fields['destination_type_select'].widget.attrs[
             'hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
@@ -172,6 +172,16 @@ class RequestForm(ModelForm):
                 (OneDrive.TAG, 'OneDrive'),
                 (Kezyy.TAG, 'Kezyy'),
             ]
+        if self.instance and UploadRequest.objects.filter(pk=self.instance.pk).exists():
+            destination = self.instance.destination
+            if self.instance.file_naming_formula is not None:
+                self.fields['rename'].initial = True
+            if destination:
+                self.fields['destination_id'].initial = destination.folder_id
+                self.fields['destination_display'].initial = destination.name
+                self.fields['destination_type'].initial = destination.tag
+                self.fields['destination_type_select'].initial = destination.tag
+
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
@@ -212,19 +222,8 @@ class DetailRequestForm(RequestForm):
     )
 
     def __init__(self, *args, **kwargs):
-        # Manually include the uuid field
-        super().__init__(*args, **kwargs)
-        if self.instance and UploadRequest.objects.filter(pk=self.instance.pk).exists():
-            self.fields['uuid'].initial = self.instance.uuid
-
-            destination = self.instance.destination
-            if self.instance.file_naming_formula is not None:
-                self.fields['rename'].initial = True
-            if destination:
-                self.fields['destination_id'].initial = destination.folder_id
-                self.fields['destination_display'].initial = destination.name
-                self.fields['destination_type'].initial = destination.tag
-                self.fields['destination_type_select'].initial = destination.tag
+        super().__init__()
+        self.fields['uuid'].initial = self.instance.uuid
 
 
 class CustomInlineFormSet(BaseInlineFormSet):

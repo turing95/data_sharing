@@ -6,7 +6,7 @@ from djstripe.settings import djstripe_settings
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-from web_app.models import Organization
+from web_app.models import Organization, Space, UploadRequest
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -26,7 +26,8 @@ class SubscriptionMixin(PaymentsContextMixin):
             )
             context["subscription"] = context["customer"].subscription
             context[
-                'new_space_button_text'] = _('New space') if self.request.user.can_create_space is True else _('Upgrade to create more spaces')
+                'new_space_button_text'] = _('New space') if self.request.user.can_create_space is True else _(
+                'Upgrade to create more spaces')
         return context
 
 
@@ -46,8 +47,48 @@ class OrganizationMixin:
         return data
 
 
+class SpaceMixin:
+    _space = None  # Placeholder for the cached object
+
+    def get_space(self) -> Space:
+        if self._space is None:
+            self._space = get_object_or_404(Space, pk=self.kwargs.get('space_uuid'),
+                                            organization__in=self.request.user.organizations.all()
+                                            )
+        return self._space
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['space'] = self.get_space()
+        data['organization'] = self.get_space().organization
+        return data
+
+
+class RequestMixin:
+    _request = None  # Placeholder for the cached object
+
+    def get_request(self) -> UploadRequest:
+        if self._request is None:
+            self._request = get_object_or_404(UploadRequest, pk=self.kwargs.get('request_uuid'))
+        return self._request
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['upload_request'] = self.get_request()
+        data['space'] = self.get_request().space
+        data['organization'] = self.get_request().space.organization
+        return data
+
+
 class SideBarMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['sidebar'] = {'team': False, 'space': False, 'company': False, 'organization': False}
+        return data
+
+
+class SpaceSideBarMixin(SideBarMixin):
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sidebar']['space'] = True
         return data

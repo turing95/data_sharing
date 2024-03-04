@@ -1,0 +1,80 @@
+{% extends "private/space/detail/base.html" %}
+{% load static %}
+{% load l10n %}
+{% load i18n %}
+{% block space_content %}       <!-- UPLOAD STATUS -->
+    <div class="mt-6 mb-6">
+        <h3 class="mb-3 text-2xl font-semibold">{% translate 'Sender Summary' %}</h3>
+        <div class="relative overflow-x-auto custom-scrollbar">
+            <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-3 py-3 w-[30px] max-w-[30px] sticky left-0 z-10 bg-gray-100">
+                        <div class="inline-flex  justify-center items-center w-[20px] duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
+                             hx-get="{% url 'all_senders_modal' space.uuid %}"
+                             hx-trigger="click"
+                             hx-target="#htmx-modal"
+                             hx-swap="innerHTML">
+                            <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke=""
+                                 class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
+                        </div>
+                    </th>
+                    <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
+                        {% translate 'Invitee' %}
+                    </th>
+                    <th scope="col" class="px-3 py-3 min-w-[200px]">
+                        {% translate 'Space Link' %}
+                    </th>
+                    <th scope="col" class="px-3 py-3 min-w-[200px]">
+                        {% translate 'Link Status' %}
+                    </th>
+
+                    {% for req in space.requests.all reversed %}
+
+                        <th scope="col" class="px-3 py-1.5 min-w-[150px] normal-case">
+                            <div class="flex flex-col justify-start">
+                                <a
+                                        title="{{ req.title }}"
+                                        hx-get="{% url 'request_modal'  req.uuid %}"
+                                        hx-trigger="click"
+                                        hx-target="#htmx-modal"
+                                        hx-swap="innerHTML"
+                                        hx-indicator="#sender-table-loading-indicator-{{ req.uuid }}"
+                                        target="_blank"
+                                        class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">
+                                    <span class=" min-w-[25px] max-w-[250px] line-clamp-2">{{ req.title }} </span>
+                                </a>
+                                <div id="sender-table-loading-indicator-{{ req.uuid }}"
+                                     class="items-center justify-center opacity-1 my-htmx-indicator">
+                                    <div role="status" class="ml-2 spinner">
+                                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                {% if req.is_active is False %}
+                                    <span class="flex text-xs font-normal {% if req.is_active is False %}text-yellow-400{% endif %}">
+                                {% translate '(suspended)' %}
+                                {% translate 'Request suspended, add a destination to activate it again' as content %}
+                            {% include 'components/tooltip.html' with num=forloop.counter content=content %}
+                            </span>
+                                {% endif %}
+                            </div>
+                        </th>
+                    {% endfor %}
+
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for sender in page_obj %}
+                    {% include 'private/space/detail/components/sender_row.html' with sender=sender %}
+                {% endfor %}
+
+                </tbody>
+            </table>
+        {% translate "Senders" as objs_name %}
+        </div>
+            {% include 'components/pagination.html' with objs_name=objs_name %}
+
+    </div>
+{% endblock %}

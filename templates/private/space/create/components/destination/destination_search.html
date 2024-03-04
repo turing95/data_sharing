@@ -10,16 +10,16 @@
                     <input class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input"
                            type="search"
                            placeholder="Type to search in {{ provider_name }}"
-                           id="id_search-folders-{{ request_index }}-"
-                           name="search-folders-{{ request_index }}-"
-                           hx-post="{% url 'search_folders' %}?request_index={{ request_index }}"
+                           id="id_search-folders"
+                           name="search-folders"
+                           hx-post="{% url 'search_folders' %}"
                            hx-trigger="input changed delay:500ms, search"
                            hx-target="next .search-results"
-                           hx-indicator="#loading-indicator-destination-search-{{ request_index }}-"
+                           hx-indicator="#loading-indicator-destination-search"
                            autocomplete="off">
                 </div>
                 <!-- Loading Indicator -->
-                <div id="loading-indicator-destination-search-{{ request_index }}-"
+                <div id="loading-indicator-destination-search"
                      class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
                     <div role="status" class="flex spinner ml-0.5">
                         {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
@@ -59,5 +59,5 @@
 
 </div>
 {% if from_htmx %}
-    {% include 'private/space/create/components/destination/sharepoint_site_container.html' with provider_name=provider_name index=request_index %}
+    {% include 'private/space/create/components/destination/sharepoint_site_container.html' with provider_name=provider_name %}
 {% endif %}

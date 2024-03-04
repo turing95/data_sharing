@@ -1,19 +1,12 @@
-{% extends "private/_base.html" %}
+{% extends "private/space/detail/base.html" %}
+{% load static %}
+{% load l10n %}
 {% load i18n %}
-{% block private_content %}
+{% block space_content %}
+
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     <form id="space-form" action="" method="POST" class="max-w-screen-md">
         {% csrf_token %}
-
-        <div class="mt-2 mb-6">
-            <div class="flex">
-                <label for="{{ form.title.id_for_label }}"
-                       class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
-                {{ form.title }}
-                {% include 'components/tooltip.html' with content=form.title.help_text target=form.title.name placement="bottom" %}
-            </div>
-            {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
-        </div>
                 <!-- INSTRUCTIONS -->
         <div class="mb-6">
             <div class="flex items-center mb-2 space-x-2">
@@ -117,4 +110,6 @@
             {% if False %}<span class="hidden min-w-[100px] min-h-[42px]"></span>{% endif %}
         </div>
     </form>
-{% endblock %}
+
+{% endblock space_content %}
+
