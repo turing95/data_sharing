@@ -7,9 +7,6 @@ import arrow
 
 
 class UploadRequest(BaseModel, ActiveModel):
-    class FileType(models.TextChoices):
-        CSV = 'CSV', 'CSV'
-        PDF = 'PDF', 'PDF'
 
     class FileNameTag(models.TextChoices):
         ORIGINAL_FILE_NAME = 'ORIGINAL_FILE_NAME', 'original_file_name'  # "The name with which the file is uploaded"
@@ -24,7 +21,6 @@ class UploadRequest(BaseModel, ActiveModel):
     title = models.CharField(max_length=50, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
-    file_types = models.ManyToManyField('FileType', through='UploadRequestFileType')
     file_template = models.URLField(null=True, blank=True)
     multiple_files = models.BooleanField(default=False)
 
@@ -36,8 +32,6 @@ class UploadRequest(BaseModel, ActiveModel):
         new_request.pk = None
         new_request.space = space
         new_request.save()
-        for file_type in self.file_types.all():
-            new_request.file_types.add(file_type, through_defaults={'upload_request': new_request})
         for destination in self.destinations.all():
             destination.duplicate(new_request)
         return new_request
@@ -63,20 +57,6 @@ class UploadRequest(BaseModel, ActiveModel):
         destination = self.destinations.filter(is_active=True).order_by('-created_at').first()
         return destination
 
-    @property
-    def extensions(self):
-        extensions = [file_type.extension for file_type in self.file_types.filter(group=False)]
-        for file_type in self.file_types.filter(group=True):
-            extensions += file_type.extensions
-        return extensions
-
-    @property
-    def formatted_extensions(self):
-        extensions = [file_type.formatted_extension for file_type in self.file_types.filter(group=False)]
-        for file_type in self.file_types.filter(group=True):
-            extensions += file_type.formatted_extensions
-        return extensions
-
     def get_name_format_params(self, sender, original_file_name):
 
         format_params = {
@@ -97,8 +77,3 @@ class UploadRequest(BaseModel, ActiveModel):
         else:
             file_name = original_file_name
         return file_name
-
-
-class UploadRequestFileType(BaseModel):
-    upload_request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE)
-    file_type = models.ForeignKey('FileType', on_delete=models.CASCADE)

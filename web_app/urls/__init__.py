@@ -64,7 +64,6 @@ urlpatterns = [
     path("404/", views.custom_page_not_found),
     path("500/", views.custom_server_error),
     # Ajax views
-    path('file-types/search/', views.search_file_types, name='search_file_types'),
     path('files/<uuid:file_uuid>/accept/', views.accept_single, name='accept_single'),
     path('destinations/search-folder/', views.search_folder, name='search_folders'),
     path('destinations/select-type/', views.select_destination_type, name='select_destination_type'),

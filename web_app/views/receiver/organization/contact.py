@@ -43,7 +43,7 @@ class ContactCreateView(OrganizationMixin, SideBarMixin, SubscriptionMixin, Form
 
 @require_POST
 @login_required
-def search_contacts(request,organization_uuid):
+def search_contacts(request, organization_uuid):
     contacts = []
     if request.method == 'POST':
         organization = get_object_or_404(Organization, pk=organization_uuid)
@@ -53,7 +53,7 @@ def search_contacts(request,organization_uuid):
                 Q(first_name__icontains=search_query) |
                 Q(last_name__icontains=search_query) |
                 Q(email__icontains=search_query) |
-                Q(company__icontains=search_query)
+                Q(company__name__icontains=search_query)
             )
         return render(request,
                       'private/space/create/components/contacts/results.html',
@@ -65,7 +65,9 @@ def search_contacts(request,organization_uuid):
 @login_required
 def contact_create_modal(request, organization_uuid):
     if request.method == 'GET':
-        form = ContactForm(request=request, initial={'email': request.GET.get('search-contacts', None)})
+        form = ContactForm(request=request,
+                           initial={'email': request.GET.get('search-contacts', None)},
+                           organization=Organization.objects.get(pk=organization_uuid))
         return render(request,
                       'private/space/create/components/contacts/create_modal.html',
                       {'form': form, 'organization_uuid': organization_uuid})
@@ -77,7 +79,7 @@ def contact_create_modal(request, organization_uuid):
 @login_required
 def contact_create(request, organization_uuid):
     if request.method == 'POST':
-        form = ContactForm(request.POST, request=request)
+        form = ContactForm(request.POST, request=request,organization=Organization.objects.get(pk=organization_uuid))
         if form.is_valid():
             instance = Contact.objects.filter(email=form.cleaned_data['email'],
                                               organization_id=organization_uuid).first()
@@ -94,7 +96,7 @@ def contact_create(request, organization_uuid):
                 contact.save()
             messages.success(request, _('Contact created successfully'))
             status = 200
-            form = ContactForm(request=request)
+            form = ContactForm(request=request,organization=Organization.objects.get(pk=organization_uuid))
         else:
             messages.error(request, _('Error creating contact. Please try again.'))
             status = 400

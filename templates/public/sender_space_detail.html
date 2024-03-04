@@ -206,18 +206,6 @@
                                         {% include 'components/buttons/generic.html' with href=form.upload_request.file_template button_text=template_text target="_blank" %}
                                     </div>
                                 {% endif %}
-                                {% if form.upload_request.file_types.count %}
-
-                                    <div class="col-span-1 mb-2">
-                                        <p class="mb-2 ">{% translate 'Restrictions:' %}</p>
-                                        <ul class="pl-5 list-disc">
-                                            <li class="text-sm">
-                                                <strong>{% translate 'Allowed file extensions:' %}</strong>
-                                                {{ form.upload_request.formatted_extensions|join:", " }}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                {% endif %}
 
 
                             </div>
