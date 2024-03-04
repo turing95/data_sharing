@@ -6,7 +6,7 @@ export function initForm(){
     initDeadlineInput();
 }
 function preventFormSubmit(){
-    const form = document.querySelector('#space-form');
+    const form = document.querySelector('form');
     form.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && e.target.matches('input:not([type="submit"]):not([type="button"]):not([type="hidden"]):not([class*="email-input"]), select')) {
         e.preventDefault(); // Prevent form submission

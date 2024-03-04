@@ -1,6 +1,9 @@
-{% extends "private/_base.html" %}
+{% extends "private/space/detail/base.html" %}
+{% load static %}
+{% load l10n %}
 {% load i18n %}
-{% block private_content %}
+{% block space_content %}
+
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     <form id="space-form" action="" method="POST" class="max-w-screen-md">
         {% csrf_token %}
@@ -117,4 +120,6 @@
             {% if False %}<span class="hidden min-w-[100px] min-h-[42px]"></span>{% endif %}
         </div>
     </form>
-{% endblock %}
+
+{% endblock space_content %}
+

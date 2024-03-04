@@ -34,6 +34,7 @@
         </div>
     </div>  
         </div>
+    <a href="{% url 'request_detail' req.pk %}">Detail</a>
         {% if req.is_active is False %}
 
             <span class="flex text-xs font-normal text-yellow-400">

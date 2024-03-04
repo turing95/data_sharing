@@ -1,5 +1,5 @@
 export function selectFolder(liElement,folderName,folderId,destinationType,sharePointSiteId) {
-    let form =liElement.closest('.request-form')
+    let form =liElement.closest('form')
     let selectedInputDisplay = form.querySelector('.destination-display');
     let selectedInput = form.querySelector('.destination');
     let selectedDestinationTypeInput = form.querySelector('.destination-type');

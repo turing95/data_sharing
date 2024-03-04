@@ -38,9 +38,9 @@
                             {% translate "Summary" as button_text %}
                             {% include "components/buttons/generic.html" with button_text=button_text href=space_detail_url extra_classes="mr-1.5" %}
 
-                                {% url 'receiver_space_detail' space.uuid as space_detail_url %}
+                                {% url 'space_settings' space.uuid as space_detail_url %}
                                 {% translate "Edit" as button_text %}
-                                {% include "components/buttons/generic.html" with button_text=button_text href=space_detail_url|add:"?status=edit" extra_classes="ml-1.5" %}
+                                {% include "components/buttons/generic.html" with button_text=button_text href=space_detail_url extra_classes="ml-1.5" %}
                                 
 
                             </div> 

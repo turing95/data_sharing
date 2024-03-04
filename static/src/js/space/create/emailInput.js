@@ -4,7 +4,7 @@ export function initEmailInput() {
     initializeEmailTags();
 
     const emailInput = document.getElementById('id_search-contacts');
-
+    if (!emailInput) return;
     emailInput.addEventListener('blur', () => {
         const email = emailInput.value.trim();
         if (isValidEmail(email)) {
@@ -74,6 +74,7 @@ export function processInputText(inputText) {
 
 function initializeEmailTags() {
     const sendersInput = document.getElementById('id_senders_emails');
+    if (!sendersInput) return;
     sendersInput.value.split(',').forEach(email => email.trim() && addEmailTag(email.trim()));
     sendersInput.value = '';
 }

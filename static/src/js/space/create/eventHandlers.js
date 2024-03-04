@@ -40,7 +40,7 @@ export function hideShowSearch(event) {
         });
     }else{
         //show only search results next to element
-        let form = clickedElement.closest('.request-form')
+        let form = clickedElement.closest('form')
         if(form) {
             let searchResults = form.querySelector('.search-results');
             searchResults.classList.remove('hidden');

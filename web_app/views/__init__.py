@@ -1,5 +1,9 @@
 from web_app.views.receiver.space.list import SpacesView
-from web_app.views.receiver.space.create import SpaceFormView
+from web_app.views.receiver.space.create import SpaceCreateView
+from web_app.views.receiver.request.create import RequestCreateView
+from web_app.views.receiver.request.detail import RequestDetailView
+from web_app.views.receiver.event.upload_history import UploadHistoryListView
+from web_app.views.receiver.sender.list import SenderListView
 from web_app.views.receiver.space.delete import DeleteSpaceView
 from web_app.views.receiver.space.duplicate import duplicate
 from web_app.views.receiver.authentication.signup import SignupView
@@ -11,7 +15,7 @@ from web_app.views.receiver.authentication.reset_password import PasswordResetVi
 from web_app.views.receiver.authentication.delete import AccountDeleteView
 from web_app.views.receiver.authentication.connections import ConnectionsView
 from web_app.views.api.profile import profile
-from web_app.views.receiver.space.detail import SpaceDetailFormView as SpaceDetailFormViewReceiver
+from web_app.views.receiver.space.detail import SpaceSettingsView, SpaceDetailView
 from web_app.views.legal.terms_of_service import TermsOfServiceView
 from web_app.views.legal.privacy_policy import privacy_policy
 from web_app.views.legal.cookie_policy import cookie_policy
