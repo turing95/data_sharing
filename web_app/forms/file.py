@@ -51,8 +51,6 @@ class FileForm(Form):
 
         self.fields['request_uuid'].initial = upload_request.pk
         self.upload_request = upload_request
-        if upload_request.file_types.exists():
-            self.fields['files'].widget.attrs['accept'] = ','.join(upload_request.formatted_extensions)
 
     def clean_files(self):
         super().clean()
@@ -61,14 +59,6 @@ class FileForm(Form):
         # Ensure 'files' is always iterable
         if not isinstance(files, (list, tuple)):
             files = [files] if files else []
-
-        if files and self.upload_request.file_types.exists() is True:
-            for file in files:
-                extension = file.name.split('.')[-1]
-                if (extension in self.upload_request.extensions) is False:
-                    str_a = _('has extension ')
-                    str_b = _('which is not allowed.')
-                    self.add_error('files', format_lazy('{name} {str_a} {extension}, {str_b}',str_a=str_a,str_b=str_b,name=file.name, extension=extension))
         return files
 
 

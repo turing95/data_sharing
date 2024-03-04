@@ -1,7 +1,7 @@
 import re
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from django.core.exceptions import ValidationError
-from web_app.models import Space, UploadRequest, FileType, GoogleDrive, OneDrive, SharePoint, Kezyy
+from web_app.models import Space, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy
 from web_app.forms import css_classes
 from django.urls import reverse_lazy
 from django import forms
@@ -9,21 +9,6 @@ from django import forms
 from django.utils.safestring import mark_safe
 from web_app.forms.widgets import ToggleWidget
 from django.utils.translation import gettext_lazy as _
-
-
-class CommaSeparatedFileTypeField(forms.CharField):
-
-    def to_python(self, value):
-        if not value:
-            return []
-        file_types = []
-        for slug in value.split(','):
-            file_type = FileType.objects.filter(slug=slug).first()
-            if file_type is None:
-                raise ValidationError(_("{slug} is not a valid file type"))
-            file_types.append(file_type)
-        return file_types
-
 
 class RequestForm(ModelForm):
     instance: UploadRequest

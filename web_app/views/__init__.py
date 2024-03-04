@@ -35,7 +35,6 @@ from web_app.views.api.space import history_table, request_modal
 from web_app.views.api.request import delete_request
 from web_app.views.api.organization import create_organization, create_organization_modal
 from web_app.views.api.destination import search_folder, select_destination_type, get_destination_logo
-from web_app.views.api.file_type import search_file_types
 from web_app.views.api.profile import profile
 from web_app.views.api.file import request_changes, accept_all, accept_single
 from web_app.views.api.settings import sender_notifications_settings, account_notifications
