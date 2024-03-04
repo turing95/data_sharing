@@ -37,10 +37,11 @@ class UploadRequest(BaseModel, ActiveModel):
         new_request.space = space
         new_request.save()
         for file_type in self.file_types.all():
-            new_request.file_types.add(file_type,through_defaults={'upload_request': new_request})
+            new_request.file_types.add(file_type, through_defaults={'upload_request': new_request})
         for destination in self.destinations.all():
             destination.duplicate(new_request)
         return new_request
+
     @property
     def google_drive_destination(self):
         from web_app.models import GenericDestination, GoogleDrive
