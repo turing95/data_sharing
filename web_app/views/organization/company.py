@@ -4,6 +4,8 @@ from django.http import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET
+from django.shortcuts import redirect
 from django.views.generic import ListView, CreateView, FormView
 
 from web_app.forms import CompanyForm
@@ -30,9 +32,9 @@ class CompanyListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin,
         return self.get_organization().companies.all().order_by('created_at')
 
 
-class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, FormView):
-    template_name = "private/company/create.html"
-    form_class = CompanyForm
+# class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, FormView):
+#     template_name = "private/company/create.html"
+#     form_class = CompanyForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -123,3 +125,13 @@ def search_companies(request, organization_uuid):
                       'private/space/create/components/company/results.html',
                       {'companies': companies})
     return HttpResponseBadRequest()
+
+
+
+@login_required
+@require_GET
+def company_create(request, organization_uuid):
+    company = Company.objects.create(name='New company',
+                                 organization_id=organization_uuid)
+    
+    return redirect(reverse('company_detail', kwargs={'company_uuid': company.pk}))
