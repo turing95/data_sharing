@@ -13,7 +13,7 @@ from web_app.forms import RequestForm, FileSelectForm
 class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, FormView):
     model = UploadRequest
     form_class = RequestForm
-    template_name = 'private/upload_request/create.html'
+    template_name = 'private/upload_request/detail.html'
     _request = None  # Placeholder for the cached object
 
     def get_context_data(self, *args, **kwargs):
