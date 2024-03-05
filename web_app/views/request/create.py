@@ -13,7 +13,7 @@ from web_app.forms import RequestForm
 class RequestCreateView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, FormView):
     model = UploadRequest
     form_class = RequestForm
-    template_name = 'private/upload_request/create.html'
+    template_name = 'private/upload_request/detail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

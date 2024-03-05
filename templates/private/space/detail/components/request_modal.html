@@ -94,9 +94,7 @@
 
             {% endif %}
             <div class="p-3 space-y-4 files-pull"
-                 hx-get="{% url 'history_table' req.space.uuid %}?request_uuid=
-                         {{ req.uuid }}{% if sender %}&sender_uuid=
-                             {{ sender.uuid }}{% elif public %}&public=1{% endif %}"
+                 hx-get="{% url 'history_table' req.space.uuid %}?request_uuid={{ req.uuid }}{% if sender %}&sender_uuid={{ sender.uuid }}{% elif public %}&public=1{% endif %}"
                  hx-trigger="intersect once, filesUpdated from:document"
                  hx-swap="innerHTML"
                  hx-target="#modal-history-table"

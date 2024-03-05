@@ -82,10 +82,11 @@
                            {% translate 'public space link' %}
                         </a>
                         {% translate "Copy link" as title %}
+                        {% url 'sender_space_detail_public' space.uuid as public_url%}
+                        
                         <button
                                 class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
-                                onclick="navigator.clipboard.writeText('
-                                        {{ request.get_host }}{% url 'sender_space_detail_public' space.uuid %}')"
+                                onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ public_url }}');"
                                 title=title>
                             <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon"
                                  class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
