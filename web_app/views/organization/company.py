@@ -30,10 +30,9 @@ class CompanyListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin,
         return self.get_organization().companies.all().order_by('created_at')
 
 
-class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, CreateView):
+class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, FormView):
     template_name = "private/company/create.html"
-    model = Company
-    fields = ['name']
+    form_class = CompanyForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
