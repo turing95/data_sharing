@@ -15,4 +15,4 @@ def profile(request, *args, **kwargs):
     if form.is_valid():
         messages.success(request, _("Profile updated"))
         form.save()
-    return render(request, "private/settings/profile_form.html", {"form": form,'from_htmx':True})
+    return render(request, "private/settings/profile_form.html", {"form": form, 'from_htmx':True})

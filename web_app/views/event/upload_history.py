@@ -1,15 +1,14 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import HttpResponse
-
 from django.shortcuts import render
-from utils.render_block import render_block_to_string
-from django.contrib.postgres.search import SearchVector, SearchQuery, TrigramSimilarity
+from django.views.generic import TemplateView
 
-from django.views.decorators.http import require_POST, require_GET
+from web_app.mixins import SubscriptionMixin, SpaceMixin, SpaceSideBarMixin
+from web_app.models import Space
 
-from web_app.forms import FileSelectForm
-from web_app.models import Space, Sender, UploadRequest, SenderEvent, File
+
+class UploadHistoryListView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, TemplateView):
+    template_name = 'private/space/detail/event/upload_history.html'
 
 
 def history_table(request, space_uuid):
@@ -43,28 +42,3 @@ def history_table(request, space_uuid):
     return render(request, 'private/space/detail/components/history_table.html',
                   {'space': space, 'upload_events': upload_events, 'show_request': show_request,
                    'show_sender': show_sender})
-
-
-@login_required
-@require_GET
-def request_modal(request, request_uuid):
-    upload_request = UploadRequest.objects.get(pk=request_uuid)
-
-    sender = None
-    public = False
-    files = File.objects.filter(sender_event__request=upload_request)
-    if request.GET.get('public'):
-        public = True
-        files = files.filter(sender_event__sender=None)
-    elif request.GET.get('sender_uuid'):
-        sender_uuid = request.GET.get('sender_uuid')
-        sender = Sender.objects.get(pk=sender_uuid)
-        files = files.filter(sender_event__sender=sender)
-    changes_form = FileSelectForm(upload_request=upload_request, sender=sender, public=public)
-
-    return render(request, 'private/space/detail/components/request_modal.html',
-                  {'req': upload_request,
-                   'sender': sender,
-                   'files': files,
-                   'public': public,
-                   'changes_form': changes_form})
