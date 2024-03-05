@@ -51,10 +51,6 @@ class CommaSeparatedEmailField(forms.CharField):
 
 
 class SpaceForm(ModelForm):
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled Space*'),
-                                                          'class': css_classes.text_space_title_input}),
-                            label=_('Space title - MANDATORY'),
-                            help_text=_("It will be displayed to your invitees"))
     company = CompanyField(
         widget=forms.HiddenInput(),
         required=False,
@@ -163,7 +159,7 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title', 'is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline',
+        fields = ['is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline',
                   'notify_invitation', 'company',
                   'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
 

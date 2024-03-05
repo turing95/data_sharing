@@ -83,7 +83,7 @@
                         </a>
                         {% translate "Copy link" as title %}
                         {% url 'sender_space_detail_public' space.uuid as public_url%}
-                        
+
                         <button
                                 class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
                                 onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ public_url }}');"
@@ -142,7 +142,7 @@
 
         {% endif %}
         {% for sender in space.senders.all reversed %}
-            {% include 'private/space/detail/components/sender_row.html' with sender=sender %}
+            {% include 'private/space/detail/components/../sender/sender_row.html' with sender=sender %}
         {% endfor %}
 
         </tbody>

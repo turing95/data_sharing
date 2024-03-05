@@ -28,46 +28,11 @@
                     <th scope="col" class="px-3 py-3 min-w-[200px]">
                         {% translate 'Link Status' %}
                     </th>
-
-                    {% for req in space.requests.all reversed %}
-
-                        <th scope="col" class="px-3 py-1.5 min-w-[150px] normal-case">
-                            <div class="flex flex-col justify-start">
-                                <a
-                                        title="{{ req.title }}"
-                                        hx-get="{% url 'request_modal'  req.uuid %}"
-                                        hx-trigger="click"
-                                        hx-target="#htmx-modal"
-                                        hx-swap="innerHTML"
-                                        hx-indicator="#sender-table-loading-indicator-{{ req.uuid }}"
-                                        target="_blank"
-                                        class="inline-flex items-center text-gray-800 transition duration-200 hover:text-black group hover:underline">
-                                    <span class=" min-w-[25px] max-w-[250px] line-clamp-2">{{ req.title }} </span>
-                                </a>
-                                <div id="sender-table-loading-indicator-{{ req.uuid }}"
-                                     class="items-center justify-center opacity-1 my-htmx-indicator">
-                                    <div role="status" class="ml-2 spinner">
-                                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                </div>
-                                {% if req.is_active is False %}
-                                    <span class="flex text-xs font-normal {% if req.is_active is False %}text-yellow-400{% endif %}">
-                                {% translate '(suspended)' %}
-                                {% translate 'Request suspended, add a destination to activate it again' as content %}
-                            {% include 'components/tooltip.html' with num=forloop.counter content=content %}
-                            </span>
-                                {% endif %}
-                            </div>
-                        </th>
-                    {% endfor %}
-
-
                 </tr>
                 </thead>
                 <tbody>
                 {% for sender in page_obj %}
-                    {% include 'private/space/detail/components/sender_row.html' with sender=sender %}
+                    {% include 'private/space/detail/sender/sender_row.html' with sender=sender %}
                 {% endfor %}
 
                 </tbody>

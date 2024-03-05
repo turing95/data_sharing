@@ -59,8 +59,10 @@ urlpatterns = [
     path('stripe/create-billing-session/', views.create_billing_session, name='create_billing_session'),
     # Sender views
     path('spaces/<uuid:space_uuid>/', views.SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
-    path('spaces/<uuid:space_uuid>/senders/<uuid:sender_uuid>/', views.SpaceDetailFormViewSender.as_view(),
-         name='sender_space_detail_private'),
+    path('senders/<uuid:sender_uuid>/spaces/<uuid:space_uuid>/', views.SpaceDetailFormViewSender.as_view(),
+         name='sender_space_detail'),
+    path('senders/<uuid:sender_uuid>/request/<uuid:request_uuid>/', views.SenderRequestDetailView.as_view(),
+         name='sender_request_detail'),
     # Error views
     path("404/", views.custom_page_not_found),
     path("500/", views.custom_server_error),

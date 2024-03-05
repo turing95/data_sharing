@@ -75,7 +75,8 @@ def bulk_notify_invitation(request, space_uuid):
 def sender_modal(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
 
-    return render(request, 'private/space/detail/components/sender_modal.html',
+    return render(request,
+                  'private/space/detail/components/../../../templates/private/space/detail/sender/sender_modal.html',
                   {'sender': sender})
 
 
@@ -84,7 +85,8 @@ def sender_modal(request, sender_uuid):
 def sender_info(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
 
-    return render(request, 'private/space/detail/components/sender_info.html',
+    return render(request,
+                  'private/space/detail/components/../../../templates/private/space/detail/sender/sender_info.html',
                   {'sender': sender})
 
 
@@ -93,7 +95,8 @@ def sender_info(request, sender_uuid):
 def sender_row(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
 
-    return render(request, 'private/space/detail/components/sender_row.html',
+    return render(request,
+                  'private/space/detail/components/../../../templates/private/space/detail/sender/sender_row.html',
                   {'sender': sender})
 
 

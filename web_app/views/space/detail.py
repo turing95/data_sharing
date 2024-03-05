@@ -42,6 +42,8 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
             space_instance.save()
             self.handle_senders(form.cleaned_data.get('senders_emails', []), space_instance)
             return self.form_valid(form)
+        else:
+            print(form.errors)
         return self.form_invalid(form)
 
     def get_success_url(self):
