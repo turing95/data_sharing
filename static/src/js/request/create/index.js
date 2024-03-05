@@ -5,10 +5,8 @@ window.toggleRename = toggleRename;
 window.handleTagDropdownChange = handleTagDropdownChange;
 window.selectFolder = selectFolder;
 export function initRequestForms() {
-    document.querySelectorAll('[id^="id_requests-"][id$="-rename"]').forEach(element => {
-        if (/^id_requests-\d+-rename$/.test(element.id)) {
+    document.querySelectorAll('input[id*="-rename"]').forEach(element => {
             toggleRename(element);
-        }
     });
 }
 document.addEventListener('DOMContentLoaded', function () {

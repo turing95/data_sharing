@@ -6,14 +6,14 @@ from django.views.decorators.http import require_POST, require_GET
 from django.views.generic import FormView
 
 from web_app.mixins import SpaceSideBarMixin, SpaceMixin, SubscriptionMixin
-from web_app.models import UploadRequest, GenericDestination, Space
+from web_app.models import UploadRequest, GenericDestination, Space, Request
 from web_app.forms import RequestForm
 
 
 class RequestCreateView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, FormView):
     model = UploadRequest
     form_class = RequestForm
-    template_name = 'private/upload_request/detail.html'
+    template_name = 'private/request/detail.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -44,5 +44,5 @@ class RequestCreateView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
 @require_GET
 def request_create(request, space_uuid):
     space = get_object_or_404(Space, pk=space_uuid, organization__in=request.user.organizations.all())
-    upload_request = UploadRequest.objects.create(space=space, title='Untitled')
-    return redirect('request_detail', request_uuid=upload_request.pk)
+    space_request = Request.objects.create(space=space, title='Untitled')
+    return redirect('request_detail', request_uuid=space_request.pk)

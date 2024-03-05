@@ -2,7 +2,7 @@ from web_app.models.base import BaseModel, ActiveModel, PolymorphicRelationModel
 from web_app.models.space import Space
 from web_app.models.sender import Sender
 from web_app.models.contact import Contact
-from web_app.models.request import UploadRequest
+from web_app.models.request import UploadRequest, Request, InputRequest,TextRequest
 from web_app.models.destination.generic import GenericDestination
 from web_app.models.destination.google_drive import GoogleDrive
 from web_app.models.destination.kezyy import Kezyy, KezyyFile

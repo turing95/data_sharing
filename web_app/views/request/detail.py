@@ -6,14 +6,14 @@ from django.views.decorators.http import require_GET
 from django.views.generic import FormView
 from django.utils.translation import gettext_lazy as _
 from web_app.mixins import SpaceSideBarMixin, RequestMixin, SubscriptionMixin
-from web_app.models import UploadRequest, GenericDestination, File, Sender
+from web_app.models import Request, GenericDestination, File, Sender
 from web_app.forms import RequestForm, FileSelectForm
 
 
 class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, FormView):
-    model = UploadRequest
+    model = Request
     form_class = RequestForm
-    template_name = 'private/upload_request/detail.html'
+    template_name = 'private/request/detail.html'
     _request = None  # Placeholder for the cached object
 
     def get_context_data(self, *args, **kwargs):
@@ -27,7 +27,6 @@ class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, Spa
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
         kwargs['instance'] = self.get_request()
         return kwargs
 
@@ -51,7 +50,7 @@ class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, Spa
 
     def form_valid(self, form):
         form.save()
-        self.handle_destination(form)
+        #self.handle_destination(form)
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -61,7 +60,7 @@ class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, Spa
 @login_required
 @require_GET
 def request_modal(request, request_uuid):
-    upload_request = UploadRequest.objects.get(pk=request_uuid)
+    upload_request = Request.objects.get(pk=request_uuid)
 
     sender = None
     public = False
@@ -75,7 +74,7 @@ def request_modal(request, request_uuid):
         files = files.filter(sender_event__sender=sender)
     changes_form = FileSelectForm(upload_request=upload_request, sender=sender, public=public)
 
-    return render(request, 'private/space/detail/components/request_modal.html',
+    return render(request, 'private/space/detail/components/upload_request_modal.html',
                   {'req': upload_request,
                    'sender': sender,
                    'files': files,

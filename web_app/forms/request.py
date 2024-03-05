@@ -1,7 +1,6 @@
 import re
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
-from django.core.exceptions import ValidationError
-from web_app.models import Space, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy
+from web_app.models import Request, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy
 from web_app.forms import css_classes
 from django.urls import reverse_lazy
 from django import forms
@@ -11,7 +10,7 @@ from web_app.forms.widgets import ToggleWidget
 from django.utils.translation import gettext_lazy as _
 
 
-class RequestForm(ModelForm):
+class UploadRequestForm(ModelForm):
     instance: UploadRequest
     FILE_NAME_INSTRUCTIONS = _(
         "Name the file as you want it to appear in your destination folder. You can use tags to make the file name parametric. Here is the list of the possible tags:")
@@ -20,19 +19,13 @@ class RequestForm(ModelForm):
         for tag in UploadRequest.FileNameTag.choices
     ])
 
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
-                                                          'required': 'required',
-                                                          'class': css_classes.text_request_title_input}),
-                            label=_('Request title - MANDATORY'),
-                            help_text=_(
-                                """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
-
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
                                           help_text=mark_safe(
                                               f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
                                           widget=forms.TextInput(
                                               attrs={'placeholder': _('Insert file name, use tags for dynamic naming'),
+                                                     'hx-trigger': 'blur changed',
                                                      'class': "file-naming-formula placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input}),
                                           label=_('File naming formula'))
 
@@ -62,7 +55,6 @@ class RequestForm(ModelForm):
             attrs={
                 'class': "bg-gray-50 border border-gray-300 text-gray-900 text-sm flex-grow w-full h-full select-destination-type",
                 'hx-trigger': "change, load, intersect once",
-                'hx-get': reverse_lazy('select_destination_type'),
                 'hx-target': "previous .destination-search",
                 'hx-swap': "outerHTML",
             })
@@ -76,11 +68,10 @@ class RequestForm(ModelForm):
             """The file uploaded for this request will be sent to the folder selected here. Choose a cloud storage provider and search for a folder and select it."""))
     sharepoint_site_id = forms.CharField(
         required=False,
-        widget=forms.HiddenInput(attrs={'class': 'sharepoint-site'}))
+        widget=forms.HiddenInput(attrs={'class': 'sharepoint-site', 'hx-trigger': 'change'}))
     destination_type = forms.CharField(widget=forms.HiddenInput(attrs={
         'class': 'destination-type',
         'hx-trigger': "change, load, intersect once",
-        'hx-post': reverse_lazy('get_destination_logo'),
         'hx-target': "previous .destination-logo",
         'hx-swap': "outerHTML",
         'hx-include': 'this'
@@ -100,19 +91,6 @@ class RequestForm(ModelForm):
             }
         )
     )
-
-    # REQUEST INSTRUCTIONS
-    instructions = forms.CharField(
-        required=False,
-        widget=forms.Textarea(attrs={
-            'placeholder': _('Add request-specific instructions here'),
-            'rows': 2,
-            'class': css_classes.text_area,
-        }),
-        label=_('Request Instructions'),
-        help_text=_("""Use this to provide additional information for your invitees that are specific to the request.
-                                Leave blank if not necessary.
-                            """))
 
     rename = forms.BooleanField(
         widget=ToggleWidget(label_on=_('Custom file names'),
@@ -137,7 +115,8 @@ class RequestForm(ModelForm):
         label=_('File Template'),
         widget=forms.URLInput(
             attrs={'placeholder': _('Insert file template URL'),
-                   'class': css_classes.text_input}),
+                   'class': css_classes.text_input,
+                   'hx-trigger': 'blur changed'}),
         help_text=_("""
                 You can provide a template file that will be available for download to your invitees. 
                 Leave blank if not necessary.
@@ -145,17 +124,26 @@ class RequestForm(ModelForm):
 
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_naming_formula', 'instructions', 'multiple_files', 'file_template']
+        fields = ['file_naming_formula', 'multiple_files', 'file_template']
 
     def __init__(self, *args, **kwargs):
-        request = kwargs.pop('request', None)
-        index = kwargs.pop('index', 0)
+        user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        self.fields['destination_type_select'].widget.attrs[
-            'hx-get'] += f'?next={request.get_full_path()}&request_index={index}'
+        update_url = reverse_lazy('upload_request_update', kwargs={'upload_request_uuid': self.instance.pk})
+        self.fields['destination_id'].widget.attrs['hx-post'] = update_url
+        self.fields['file_naming_formula'].widget.attrs['hx-post'] = update_url
+        self.fields['file_template'].widget.attrs['hx-post'] = update_url
+        self.fields['multiple_files'].widget.attrs['hx-post'] = update_url
+        self.fields['rename'].widget.attrs['hx-post'] = update_url
         self.fields['destination_type'].widget.attrs[
-            'hx-post'] += f'?request_index={index}'
-        if not request.user.sharepoint_sites:
+            'hx-post'] = reverse_lazy('get_destination_logo', kwargs={'upload_request_uuid': self.instance.pk})
+        self.fields['destination_type'].widget.attrs[
+            'hx-post'] = reverse_lazy('get_destination_logo', kwargs={'upload_request_uuid': self.instance.pk})
+        self.fields['destination_type_select'].widget.attrs[
+            'hx-get'] = reverse_lazy('select_destination_type', kwargs={'upload_request_uuid': self.instance.pk})
+        '''self.fields['destination_type_select'].widget.attrs[
+            'hx-get'] += f'?next={request.get_full_path()}'''
+        if not user.sharepoint_sites:
             self.fields['destination_type_select'].choices = [
                 (GoogleDrive.TAG, 'Google Drive'),
                 (OneDrive.TAG, 'OneDrive'),
@@ -204,24 +192,28 @@ class RequestForm(ModelForm):
         return cleaned_data
 
 
-class DetailRequestForm(RequestForm):
-    uuid = forms.UUIDField(
-        widget=forms.HiddenInput(),
-    )
+class RequestForm(ModelForm):
+    instance: Request
 
-    def __init__(self, *args, **kwargs):
-        super().__init__()
-        self.fields['uuid'].initial = self.instance.uuid
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
+                                                          'required': 'required',
+                                                          'class': css_classes.text_request_title_input}),
+                            label=_('Request title - MANDATORY'),
+                            help_text=_(
+                                """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
 
+    instructions = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'placeholder': _('Add request-specific instructions here'),
+            'rows': 2,
+            'class': css_classes.text_area,
+        }),
+        label=_('Request Instructions'),
+        help_text=_("""Use this to provide additional information for your invitees that are specific to the request.
+                                Leave blank if not necessary.
+                            """))
 
-class CustomInlineFormSet(BaseInlineFormSet):
-
-    def get_form_kwargs(self, index):
-        kwargs = super().get_form_kwargs(index)
-        kwargs["index"] = index
-        return kwargs
-
-
-RequestFormSet = inlineformset_factory(Space, UploadRequest, form=RequestForm, formset=CustomInlineFormSet, extra=1)
-DetailRequestFormSet = inlineformset_factory(Space, UploadRequest, form=DetailRequestForm, formset=CustomInlineFormSet,
-                                             extra=0)
+    class Meta:
+        model = Request
+        fields = ['title', 'instructions']

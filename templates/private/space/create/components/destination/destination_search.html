@@ -10,12 +10,12 @@
                     <input class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input"
                            type="search"
                            placeholder="Type to search in {{ provider_name }}"
-                           id="id_search-folders"
-                           name="search-folders"
-                           hx-post="{% url 'search_folders' %}"
+                           id="id_{{ upload_request.pk }}-search-folders"
+                           name="{{ upload_request.pk }}-search-folders"
+                           hx-post="{% url 'search_folders' upload_request.pk %}"
                            hx-trigger="input changed delay:500ms, search"
                            hx-target="next .search-results"
-                           hx-indicator="#loading-indicator-destination-search"
+                           hx-indicator="next .my-htmx-indicator"
                            autocomplete="off">
                 </div>
                 <!-- Loading Indicator -->

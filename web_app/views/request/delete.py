@@ -2,8 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from web_app.models import UploadRequest
-from web_app.forms import DetailRequestFormSet
-
 
 @login_required
 @require_POST
@@ -12,13 +10,8 @@ def delete_request(request, request_uuid):
     space = req.space
     req.delete()
     space.refresh_from_db()
-
-    requests = DetailRequestFormSet(None,
-                                    instance=space,
-                                    queryset=space.requests.order_by('created_at'),
-                                    form_kwargs={'request': request})
     return render(
         request,
         'private/space/create/components/request_form.html',
-        {'requests': requests, 'action': 'edit'}
+        {'action': 'edit'}
     )

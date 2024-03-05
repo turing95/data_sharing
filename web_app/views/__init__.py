@@ -4,7 +4,9 @@ from web_app.views.space.detail import SpaceSettingsView, SpaceDetailView, space
 from web_app.views.space.sender.detail import SpaceDetailView as SpaceDetailFormViewSender
 from web_app.views.request.create import RequestCreateView, request_create
 from web_app.views.request.detail import RequestDetailView, request_modal
-from web_app.views.event.upload_history import UploadHistoryListView,history_table
+from web_app.views.upload_request.create import upload_request_create
+from web_app.views.upload_request.update import upload_request_update
+from web_app.views.event.upload_history import UploadHistoryListView, history_table
 from web_app.views.sender.list import SenderListView
 from web_app.views.space.delete import DeleteSpaceView
 from web_app.views.space.duplicate import duplicate

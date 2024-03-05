@@ -14,7 +14,7 @@
         <div class="mb-6">
             {{ form.title }}
         </div>
-            <div class="mb-3">
+        <div class="mb-3">
             <div class="flex items-center mb-2 space-x-2">
                 <label for="{{ form.instructions.id_for_label }}"
                        class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
@@ -28,6 +28,8 @@
             {% include "components/buttons/submit_with_loader.html" with button_text=submit_text loading="True" extra_classes="min-w-[100px] min-h-[42px]" %}
             {% if False %}<span class="hidden min-w-[100px] min-h-[42px]"></span>{% endif %}
         </div>
+        {% comment %}
+
             <!-- DESTINATION FOLDER -->
         <div class="mb-6">
             <div class="flex items-center mb-2 space-x-2">
@@ -74,8 +76,7 @@
             </section>
         </div>
         <!-- REQUEST INSTRUCTIONS -->
-
-        <div class="mb-3">
+                <div class="mb-3">
             <div class="flex items-center mb-2 space-x-2">
                 <label for="{{ form.file_template.id_for_label }}"
                        class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.file_template.label }} </label>
@@ -123,7 +124,18 @@
                 </div>
                 <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=form.file_naming_formula.errors %}</div>
             </div>
-        </div>
+        </div>{% endcomment %}
+
     </form>
-    
+    {% url 'upload_request_create' kezyy_request.pk as upload_request_create_url %}
+    {% translate 'Add file request' as button_text %}
+    {% include "components/buttons/generic.html" with button_text=button_text extra_classes="my-2" hx_get=upload_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
+    <div id="requests-container">
+        {% for input_request in kezyy_request.input_requests.all %}
+            {% include 'private/request/input_request.html' with input_request=input_request %}
+
+        {% endfor %}
+
+
+    </div>
 {% endblock %}

@@ -1,0 +1,5 @@
+{% load i18n %}
+{% if input_request.upload_request %}
+    {% include 'private/request/upload_request.html' with upload_request=input_request.upload_request %}
+
+{% endif %}

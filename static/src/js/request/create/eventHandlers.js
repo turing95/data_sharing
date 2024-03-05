@@ -21,6 +21,8 @@ function insertText(textInput, selectedValue) {
     }
 
     textInput.focus(); // Focus back on the text input
+    textInput.dispatchEvent(new CustomEvent("change"));
+
 }
 
 export function toggleRename(checkbox) {

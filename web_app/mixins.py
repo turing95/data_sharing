@@ -6,7 +6,7 @@ from djstripe.settings import djstripe_settings
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
-from web_app.models import Organization, Space, UploadRequest
+from web_app.models import Organization, Space, UploadRequest, Request
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -67,14 +67,14 @@ class SpaceMixin:
 class RequestMixin:
     _request = None  # Placeholder for the cached object
 
-    def get_request(self) -> UploadRequest:
+    def get_request(self) -> Request:
         if self._request is None:
-            self._request = get_object_or_404(UploadRequest, pk=self.kwargs.get('request_uuid'))
+            self._request = get_object_or_404(Request, pk=self.kwargs.get('request_uuid'))
         return self._request
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['upload_request'] = self.get_request()
+        data['kezyy_request'] = self.get_request()
         data['space'] = self.get_request().space
         data['organization'] = self.get_request().space.organization
         return data
