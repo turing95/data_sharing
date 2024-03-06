@@ -36,18 +36,18 @@ class CompanyListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin,
 #     template_name = "private/company/create.html"
 #     form_class = CompanyForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         return context
 
-    def get_success_url(self):
-        return reverse('companies', kwargs={'organization_uuid': self.get_organization().pk})
+#     def get_success_url(self):
+#         return reverse('companies', kwargs={'organization_uuid': self.get_organization().pk})
 
-    def form_valid(self, form):
-        company = form.save(commit=False)
-        company.organization = self.get_organization()
-        company.save()
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         company = form.save(commit=False)
+#         company.organization = self.get_organization()
+#         company.save()
+#         return super().form_valid(form)
 
 
 class CompanyTabMixin(SideBarMixin):
