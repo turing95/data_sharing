@@ -27,7 +27,7 @@
         {{ sender.email }}
         </div>
     </th>
-    {% url 'sender_space_detail_private' sender.space.uuid sender.uuid as sender_path %}
+    {% url 'sender_space_detail' sender.uuid sender.space.uuid  as sender_path %}
     <td class="px-3 py-2">
         <div class="inline-flex items-center">
             <a href="{{ sender_path}}" target = "_blank" class="text-blue-600 transition-colors duration-300 hover:text-blue-800">

@@ -1,5 +1,7 @@
 {% load i18n %}
 {% if input_request.upload_request %}
     {% include 'private/request/upload_request.html' with upload_request=input_request.upload_request %}
+{% elif input_request.text_request %}
+        {% include 'private/request/text_request.html' with text_request=input_request.text_request %}
 
 {% endif %}
