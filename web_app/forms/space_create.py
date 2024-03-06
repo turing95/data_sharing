@@ -50,13 +50,7 @@ class CommaSeparatedEmailField(forms.CharField):
                 raise ValidationError(_(f"{', '.join(invalid_emails)} are not valid email addresses"))
 
 
-class SpaceForm(ModelForm):
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled Space*'),
-                                                          'class': css_classes.text_space_title_input,
-                                                          'hx-trigger': 'blur changed'}),
-                            required=False,
-                            label=_('Space title - MANDATORY'),
-                            help_text=_("It will be displayed to your invitees"))
+class SpaceSettingsForm(ModelForm):
     company = CompanyField(
         widget=forms.HiddenInput(),
         required=False,
@@ -165,7 +159,7 @@ class SpaceForm(ModelForm):
 
     class Meta:
         model = Space
-        fields = ['title','is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline',
+        fields = ['is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline',
                   'notify_invitation', 'company',
                   'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
 
@@ -176,7 +170,6 @@ class SpaceForm(ModelForm):
         self.fields['search_company'].widget.attrs['hx-post'] = reverse('search_companies', kwargs={
             'organization_uuid': self.organization.pk})
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
-            self.fields['title'].widget.attrs['hx-post'] = reverse_lazy('space_edit', kwargs={'space_uuid': self.instance.pk})
             space = self.instance
             if space.company:
                 self.fields['search_company'].initial = space.company.name
@@ -240,17 +233,12 @@ class SpaceUpdateForm(ModelForm):
                                                           'class': css_classes.text_space_title_input}),
                             label=_('Space title - MANDATORY'),
                             help_text=_("It will be displayed to your invitees"))
-    instructions = forms.CharField(
-        required=False,
-        widget=forms.Textarea(attrs={
-            'placeholder': _('Explain what files you are requesting'),
-            'rows': 3,
-            'class': css_classes.text_area,
-        }),
-        label=_('Instructions'),
-        help_text=_("""These instructions will be displayed to your invitees. They refer to all the file requests in the space.
-                            """))
 
     class Meta:
         model = Space
-        fields = ['title', 'instructions']
+        fields = ['title']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
+            self.fields['title'].widget.attrs['hx-post'] = reverse_lazy('space_edit', kwargs={'space_uuid': self.instance.pk})

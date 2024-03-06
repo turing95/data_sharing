@@ -6,7 +6,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView
 from django.utils.translation import gettext_lazy as _
 
-from web_app.forms import SpaceForm, SpaceUpdateForm
+from web_app.forms import SpaceSettingsForm, SpaceUpdateForm
 from web_app.mixins import SubscriptionMixin, SpaceMixin, SpaceSideBarMixin
 from web_app.models import Space, Contact, Sender
 from web_app.tasks.notifications import notify_invitation
@@ -19,13 +19,12 @@ class SpaceDetailView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSi
         context = super().get_context_data(**kwargs)
         context['space'] = self.get_space()
         context['space_summary'] = True
-        context['form'] = SpaceUpdateForm(instance=self.get_space())
         return context
 
 
 class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, FormView):
     template_name = "private/space/detail/settings.html"
-    form_class = SpaceForm
+    form_class = SpaceSettingsForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -42,8 +41,6 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
             space_instance.save()
             self.handle_senders(form.cleaned_data.get('senders_emails', []), space_instance)
             return self.form_valid(form)
-        else:
-            print(form.errors)
         return self.form_invalid(form)
 
     def get_success_url(self):
@@ -89,11 +86,8 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
 def space_edit(request, space_uuid):
     space = Space.objects.get(pk=space_uuid)
     if request.method == 'POST':
-        form = SpaceForm(request.POST, instance=space,user=request.user,organization=space.organization)
+        form = SpaceUpdateForm(request.POST, instance=space)
         if form.is_valid():
             form.save()
             return HttpResponse()
-        else:
-            print('no ok')
-            print(form.errors)
     return HttpResponseBadRequest()

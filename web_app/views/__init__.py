@@ -1,5 +1,5 @@
 from web_app.views.space.list import SpacesView
-from web_app.views.space.create import SpaceCreateView, space_create
+from web_app.views.space.create import space_create
 from web_app.views.space.detail import SpaceSettingsView, SpaceDetailView, space_edit
 from web_app.views.space.sender.detail import SpaceDetailView as SpaceDetailFormViewSender
 from web_app.views.request.create import RequestCreateView, request_create

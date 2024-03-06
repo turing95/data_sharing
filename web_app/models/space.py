@@ -52,8 +52,8 @@ class Space(BaseModel, DeleteModel):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
 
     def form(self):
-        from web_app.forms import SpaceForm
-        return SpaceForm(instance=self,user=self.user,organization=self.organization)
+        from web_app.forms import SpaceUpdateForm
+        return SpaceUpdateForm(instance=self)
 
     def duplicate(self, user):
 
