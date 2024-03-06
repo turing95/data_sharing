@@ -7,8 +7,8 @@ from web_app.mixins import SubscriptionMixin, SpaceMixin, SpaceSideBarMixin
 from web_app.models import Space
 
 
-class UploadHistoryListView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, TemplateView):
-    template_name = 'private/space/detail/event/upload_history.html'
+class HistoryListView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, TemplateView):
+    template_name = 'private/space/detail/event/history.html'
 
 
 def history_table(request, space_uuid):
@@ -21,10 +21,10 @@ def history_table(request, space_uuid):
         search_query = request.POST.get('search')
         if search_query:
             events = events.filter(
-                Q(files__name__icontains=search_query) |
                 Q(sender__email__icontains=search_query) |
                 Q(upload_request__title__icontains=search_query) |
                 Q(text_request__title__icontains=search_query) |
+                Q(request__title__icontains=search_query) |
                 Q(files__original_name__icontains=search_query)
             )
     if request.GET.get('sender_uuid'):

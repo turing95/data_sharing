@@ -223,7 +223,8 @@ class RequestForm(ModelForm):
 
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
                                                           'required': 'required',
-                                                          'class': css_classes.text_request_title_input}),
+                                                          'class': css_classes.text_request_title_input,
+                                                          'hx-trigger': 'blur changed'}),
                             label=_('Request title - MANDATORY'),
                             help_text=_(
                                 """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
@@ -234,6 +235,7 @@ class RequestForm(ModelForm):
             'placeholder': _('Add request-specific instructions here'),
             'rows': 2,
             'class': css_classes.text_area,
+            'hx-trigger': 'blur changed'
         }),
         label=_('Request Instructions'),
         help_text=_("""Use this to provide additional information for your invitees that are specific to the request.
@@ -243,3 +245,9 @@ class RequestForm(ModelForm):
     class Meta:
         model = Request
         fields = ['title', 'instructions']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        update_url = reverse_lazy('request_detail', kwargs={'request_uuid': self.instance.pk})
+        self.fields['title'].widget.attrs['hx-post'] = update_url
+        self.fields['instructions'].widget.attrs['hx-post'] = update_url

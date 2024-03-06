@@ -85,19 +85,6 @@ class BaseFileFormSet(BaseFormSet):
 class InputRequestForm(Form):
     request_uuid = forms.CharField(widget=forms.HiddenInput())
 
-    def is_valid(self):
-        result = super().is_valid()
-        if result is False:
-            return result
-        if self.input_request.upload_request:
-            if self.cleaned_data.get('files'):
-                return True
-            else:
-                # Add an error message to the formset
-                self.errors.append(ValidationError(_("You need to upload at least one file.")))
-                return False
-        return True
-
     def __init__(self, **kwargs):
         self.input_request_index = kwargs.pop('input_request_index')
         self.request = kwargs.pop('request')

@@ -9,7 +9,7 @@ from web_app.views.upload_request.create import upload_request_create
 from web_app.views.upload_request.update import upload_request_update
 from web_app.views.text_request.update import text_request_update
 from web_app.views.text_request.create import text_request_create
-from web_app.views.event.upload_history import UploadHistoryListView, history_table
+from web_app.views.event.upload_history import HistoryListView, history_table
 from web_app.views.sender.list import SenderListView
 from web_app.views.space.delete import DeleteSpaceView
 from web_app.views.space.duplicate import duplicate

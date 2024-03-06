@@ -66,6 +66,8 @@
                     {% if form.upload_request %}
                         {% if form.upload_request.destination.alive %}
                             <div class="mb-2 border border-gray-300">
+
+
                                 {{ form.request_uuid }}
 
                                 <div id="accordion-open-heading-{{ forloop.counter0 }}">
@@ -93,6 +95,10 @@
                                 <div id="accordion-open-body-{{ forloop.counter0 }}"
                                      class="grid grid-cols-2 p-5 request-accordion-body md:grid-cols-3"
                                      aria-labelledby="accordion-open-heading-{{ forloop.counter0 }}">
+                                    <div class="mt-3">
+                                        <div class="mb-2 text-lg font-medium text-gray-700 ">{% translate 'Total max size of uploads: 50MB' %}</div>
+
+                                    </div>
                                     <div class="col-span-2 p-1 sm:col-span-1">
                                         {% if space.upload_after_deadline or not space.deadline_expired %}
                                             <div class="flex items-center justify-center w-full">

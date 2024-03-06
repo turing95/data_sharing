@@ -16,7 +16,7 @@ class UploadRequest(BaseModel, ActiveModel):
         SPACE_TITLE = 'SPACE_TITLE', 'space_title'  # "The title of the space"
         REQUEST_TITLE = 'REQUEST_TITLE', 'request_title'  # "The title of the request"
 
-    title = models.CharField(max_length=50, null=True, blank=True)
+    title = models.CharField(max_length=250, null=True, blank=True)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='upload_requests', null=True)
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
     file_template = models.URLField(null=True, blank=True)
@@ -82,7 +82,7 @@ class UploadRequest(BaseModel, ActiveModel):
 
 
 class TextRequest(BaseModel):
-    title = models.CharField(max_length=50, null=True, blank=True)
+    title = models.CharField(max_length=250, null=True, blank=True)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='text_requests')
 
     def request_form(self):
@@ -92,7 +92,7 @@ class TextRequest(BaseModel):
 
 class Request(BaseModel):
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='requests')
-    title = models.CharField(max_length=50, null=True, blank=True)
+    title = models.CharField(max_length=250, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
 
 

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
@@ -50,8 +51,18 @@ class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, Spa
 
     def form_valid(self, form):
         form.save()
-        #self.handle_destination(form)
+        # self.handle_destination(form)
+        if self.request.headers.get('HX-Request'):
+            messages.success(self.request, _('Request saved'))
+            return render(self.request, 'components/messages.html', {'from_htmx': True})
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        super().form_invalid(form)
+        if self.request.headers.get('HX-Request'):
+            messages.error(self.request, _('Request not saved'))
+            return render(self.request, 'components/messages.html', {'from_htmx': True})
+        return self.render_to_response(self.get_context_data(form=form))
 
     def get_success_url(self):
         return reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk})

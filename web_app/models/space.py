@@ -51,6 +51,10 @@ class Space(BaseModel, DeleteModel):
     def deadline_expired(self):
         return bool(self.deadline) and self.deadline < arrow.utcnow()
 
+    def form(self):
+        from web_app.forms import SpaceForm
+        return SpaceForm(instance=self,user=self.user,organization=self.organization)
+
     def duplicate(self, user):
 
         new_space = deepcopy(self)
