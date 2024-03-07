@@ -51,11 +51,8 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
 
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
 
-    <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/idiomorph/dist/idiomorph-ext.min.js"></script>
-    {% if debug %}
-    <script src="https://unpkg.com/htmx.org/dist/ext/debug.js"></script>
-    {% endif %}
+    <script src="{% static 'src/js/htmx.min.js' %}"></script>
+    <script src="{% static 'src/js/idiomorph-ext.min.js' %}"></script>
 
 
 

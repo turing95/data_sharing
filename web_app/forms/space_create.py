@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from web_app.models import Space, Company
 from web_app.forms import css_classes
@@ -50,7 +50,7 @@ class CommaSeparatedEmailField(forms.CharField):
                 raise ValidationError(_(f"{', '.join(invalid_emails)} are not valid email addresses"))
 
 
-class SpaceForm(ModelForm):
+class SpaceSettingsForm(ModelForm):
     company = CompanyField(
         widget=forms.HiddenInput(),
         required=False,
@@ -233,17 +233,12 @@ class SpaceUpdateForm(ModelForm):
                                                           'class': css_classes.text_space_title_input}),
                             label=_('Space title - MANDATORY'),
                             help_text=_("It will be displayed to your invitees"))
-    instructions = forms.CharField(
-        required=False,
-        widget=forms.Textarea(attrs={
-            'placeholder': _('Explain what files you are requesting'),
-            'rows': 3,
-            'class': css_classes.text_area,
-        }),
-        label=_('Instructions'),
-        help_text=_("""These instructions will be displayed to your invitees. They refer to all the file requests in the space.
-                            """))
 
     class Meta:
         model = Space
-        fields = ['title', 'instructions']
+        fields = ['title']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
+            self.fields['title'].widget.attrs['hx-post'] = reverse_lazy('space_edit', kwargs={'space_uuid': self.instance.pk})

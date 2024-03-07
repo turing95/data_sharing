@@ -1,6 +1,6 @@
 import re
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
-from web_app.models import Request, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy
+from web_app.models import Request, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy, TextRequest
 from web_app.forms import css_classes
 from django.urls import reverse_lazy
 from django import forms
@@ -18,6 +18,13 @@ class UploadRequestForm(ModelForm):
         f"- <strong>{{{tag[1]}}}</strong>"
         for tag in UploadRequest.FileNameTag.choices
     ])
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
+                                                          'required': 'required',
+                                                          'class': css_classes.text_request_title_input,
+                                                          'hx-trigger': 'blur changed'}),
+                            label=_('Request title - MANDATORY'),
+                            help_text=_(
+                                """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
@@ -124,13 +131,14 @@ class UploadRequestForm(ModelForm):
 
     class Meta:
         model = UploadRequest
-        fields = ['file_naming_formula', 'multiple_files', 'file_template']
+        fields = ['title', 'file_naming_formula', 'multiple_files', 'file_template']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         update_url = reverse_lazy('upload_request_update', kwargs={'upload_request_uuid': self.instance.pk})
         self.fields['destination_id'].widget.attrs['hx-post'] = update_url
+        self.fields['title'].widget.attrs['hx-post'] = update_url
         self.fields['file_naming_formula'].widget.attrs['hx-post'] = update_url
         self.fields['file_template'].widget.attrs['hx-post'] = update_url
         self.fields['multiple_files'].widget.attrs['hx-post'] = update_url
@@ -192,12 +200,31 @@ class UploadRequestForm(ModelForm):
         return cleaned_data
 
 
+class TextRequestForm(ModelForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
+                                                          'required': 'required',
+                                                          'class': css_classes.text_request_title_input}),
+                            label=_('Request title - MANDATORY'),
+                            help_text=_(
+                                """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
+
+    class Meta:
+        model = TextRequest
+        fields = ['title']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        update_url = reverse_lazy('text_request_update', kwargs={'text_request_uuid': self.instance.pk})
+        self.fields['title'].widget.attrs['hx-post'] = update_url
+
+
 class RequestForm(ModelForm):
     instance: Request
 
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
                                                           'required': 'required',
-                                                          'class': css_classes.text_request_title_input}),
+                                                          'class': css_classes.text_request_title_input,
+                                                          'hx-trigger': 'blur changed'}),
                             label=_('Request title - MANDATORY'),
                             help_text=_(
                                 """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
@@ -208,6 +235,7 @@ class RequestForm(ModelForm):
             'placeholder': _('Add request-specific instructions here'),
             'rows': 2,
             'class': css_classes.text_area,
+            'hx-trigger': 'blur changed'
         }),
         label=_('Request Instructions'),
         help_text=_("""Use this to provide additional information for your invitees that are specific to the request.
@@ -217,3 +245,9 @@ class RequestForm(ModelForm):
     class Meta:
         model = Request
         fields = ['title', 'instructions']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        update_url = reverse_lazy('request_detail', kwargs={'request_uuid': self.instance.pk})
+        self.fields['title'].widget.attrs['hx-post'] = update_url
+        self.fields['instructions'].widget.attrs['hx-post'] = update_url

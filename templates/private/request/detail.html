@@ -130,6 +130,9 @@
     {% url 'upload_request_create' kezyy_request.pk as upload_request_create_url %}
     {% translate 'Add file request' as button_text %}
     {% include "components/buttons/generic.html" with button_text=button_text extra_classes="my-2" hx_get=upload_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
+    {% url 'text_request_create' kezyy_request.pk as text_request_create_url %}
+    {% translate 'Add text request' as button_text %}
+    {% include "components/buttons/generic.html" with button_text=button_text extra_classes="my-2" hx_get=text_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
     <div id="requests-container">
         {% for input_request in kezyy_request.input_requests.all %}
             {% include 'private/request/input_request.html' with input_request=input_request %}

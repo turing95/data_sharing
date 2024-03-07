@@ -51,10 +51,6 @@
                 <p class="text-sm">{{ space.instructions|linebreaks }}</p>
             </div>
         {% endif %}
-        <div class="mt-3">
-            <div class="mb-2 text-lg font-medium text-gray-700 ">{% translate 'Total max size of uploads: 50MB' %}</div>
-
-        </div>
 
         {% if space.deadline %}
             <!-- Deadline -->
@@ -103,8 +99,9 @@
                 </div>
             {% endif %}
         {% endif %}
-    </div>
-    {% for kezyy_request in space.requests.all %}
+        {% for kezyy_request in space.requests.all %}
         <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}">{{ kezyy_request.title }}</a>
     {% endfor %}
+    </div>
+
 {% endblock %}
