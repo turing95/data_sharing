@@ -31,32 +31,6 @@
         </div>
 
 
-        <!-- INVITATIONS -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Invitees</h3>
-                {% include 'components/tooltip.html' with content=form.senders_emails.help_text target=form.senders_emails.name %}
-            </div>
-            <div id="email-input-container" class="border-0">
-                <!-- Tags will appear here, below the input field -->
-                <div id="tags" class="flex flex-wrap gap-2"></div>
-                <!-- Error message-->
-                {% include 'components/forms/error_widget.html' with errors=form.senders_emails.errors %}
-                <!-- Hidden input for form submission -->
-                {{ form.senders_emails }}
-            </div>
-            {% include 'private/space/create/components/contacts/search_contacts_widget.html' %}
-            <div class="flex items-center mb-2 space-x-2">
-                <div class="flex items-center h-5">
-                    {{ form.notify_invitation }}
-                    <label for="{{ form.notify_invitation.id_for_label }}"
-                           class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.notify_invitation.label }}</label>
-                </div>
-                {% include 'components/tooltip.html' with content=form.notify_invitation.help_text target=form.notify_invitation.name %}
-            </div>
-        </div>
-
-
 
         <!-- DEADLINE -->
         <div class="mb-6" id="deadline-section">
