@@ -47,5 +47,5 @@ from web_app.views.djstripe_webhooks.payment import custom_webhook
 from web_app.views.organization.company import CompanyListView, CompanyDetailView, CompanySpacesListView, \
     search_companies, CompanyCreateView
 from web_app.views.language import custom_set_language
-from web_app.views.organization.contact import ContactListView, search_contacts, contact_create_modal, contact_create, \
-    ContactCreateView
+from web_app.views.contact.create import ContactCreateView, contact_create_modal
+from web_app.views.contact.list import ContactListView, search_contacts

@@ -31,9 +31,15 @@ class ContactForm(forms.ModelForm):
                                 widget=forms.TextInput(attrs={'placeholder': _('Last Name'), 'class': text_input}))
     email = forms.EmailField(label=_("Email"),
                              widget=forms.EmailInput(attrs={'placeholder': _('Email*'), 'class': text_input}))
-    company = CompanyField(
+    # company_id = CompanyField(
+    #     widget=forms.HiddenInput(),
+    #     required=False,
+    #     label=_('Company'),
+    #     help_text=_("Select the company to which the space belongs."))
+    company = forms.ModelChoiceField(
+        queryset=Company.objects.all(),
         widget=forms.HiddenInput(),
-        required=False,
+        required=True,
         label=_('Company'),
         help_text=_("Select the company to which the space belongs."))
     search_company = forms.CharField(
@@ -53,7 +59,6 @@ class ContactForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email', 'company')
 
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
         self.organization = kwargs.pop('organization', None)
         super(ContactForm, self).__init__(*args, **kwargs)
         self.fields['search_company'].widget.attrs['hx-post'] = reverse('search_companies', kwargs={

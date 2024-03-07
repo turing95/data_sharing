@@ -24,6 +24,7 @@ class SenderCreateForm(ModelForm):
                                       'autocomplete': 'off'}),
         help_text=_("Type the company name to search for it."))
     is_active = forms.BooleanField(
+        required=False,
         widget=SenderToggle()
     )
 

@@ -98,9 +98,8 @@ urlpatterns = [
     path('organizations/<uuid:organization_uuid>/contacts/search/', views.search_contacts, name='search_contacts'),
     path('organizations/<uuid:organization_uuid>/contacts/create/modal/', views.contact_create_modal,
          name='contact_create_modal'),
-    path('organizations/<uuid:organization_uuid>/contacts/create_ajax/', views.contact_create, name='contact_create'),
     path('organizations/<uuid:organization_uuid>/contacts/create/', views.ContactCreateView.as_view(),
-         name='contact_create_no_ajax'),
+         name='contact_create'),
     path('organizations/create/', views.create_organization, name='create_organization'),
     path('organizations/create/modal/', views.create_organization_modal, name='create_organization_modal'),
 ]

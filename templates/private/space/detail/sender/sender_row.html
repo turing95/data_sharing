@@ -25,15 +25,22 @@
         {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active %}
     </div>
 {% elif create_sender %}
-    <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700 sender-create-row">
+    <div class="sender-create-row">
         <form hx-post="{% url 'sender_create' space.pk %}" hx-swap="outerHTML" hx-target="closest .sender-create-row">
+                <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700 sender-create-row">
+
             <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
 
                 {% include 'private/space/create/components/contacts/search_contacts_widget.html' with input=form.contact_id search_input=form.email %}
             </div>
+            <div class="inline-flex items-center">
             {{ form.is_active }}
+            </div>
+            <div class="inline-flex items-center">
             {% translate 'Confirm' as button_text %}
             {% include 'components/buttons/submit_with_loader.html' with button_text=button_text %}
+            </div>
+                </div>
         </form>
 
 
