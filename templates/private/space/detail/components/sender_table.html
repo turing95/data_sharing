@@ -142,7 +142,7 @@
 
         {% endif %}
         {% for sender in space.senders.all reversed %}
-            {% include 'private/space/detail/components/../sender/sender_row.html' with sender=sender %}
+            {% include 'private/space/detail/components/../sender/sender_row_old.html' with sender=sender %}
         {% endfor %}
 
         </tbody>

@@ -1,4 +1,4 @@
-{% extends "private/company/detail.html" %}
+{% extends "private/company/detail/base.html" %}
 {% load static %}
 {% block company_content %}
     {% if page_obj %}
@@ -10,13 +10,12 @@
                     <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10">
                         Space Title
                     </th>
-
                 </tr>
                 </thead>
                 <tbody>
 
                 {% for space in page_obj %}
-                    {% include 'private/company/space_row.html' with space=space %}
+                    {% include 'private/company/detail/space_row.html' with space=space %}
                 {% endfor %}
 
                 </tbody>

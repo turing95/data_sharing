@@ -29,7 +29,7 @@ export function hideShowSearch(event) {
     let clickedElement = event.target;
 
     // Check if the clicked element doesn't meet the criteria
-    if (!clickedElement.id.startsWith('id_search')) {
+    if (!clickedElement.classList.contains('search-input')) {
 
         // Find all elements with the class 'search-results'
         let searchResults = document.querySelectorAll('.search-results');

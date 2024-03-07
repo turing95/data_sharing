@@ -1,6 +1,15 @@
 {% extends "private/_base.html" %}
 {% load i18n %}
 {% block private_content %}
+        <h2 class="bg-transparent text-gray-900 p-2.5 w-5/6 border-0 text-4xl font-bold">
+        <label for="id_title" class="hidden">Company name</label>
+        {{ company.form.name }}
+       {% comment %} <input type="text" name="title" value="{{ space.title }}" placeholder="Spazio senza titolo*"
+               hx-trigger="blur changed delay:500ms"
+               hx-post="{% url 'space_edit' space.pk %}"
+               class="bg-transparent text-gray-900 p-2.5 w-5/6 border-t-0 border-x-0 border-b border-b-black transition-all duration-300 text-4xl    hover:border-black #hover:text-4xl    focus:outline-none focus:ring-0 font-bold"
+               required="" id="id_title">{% endcomment %}
+    </h2>
     <div class="border-b border-gray-200 dark:border-gray-700">
         <ul class="flex justify-center -mb-px font-medium text-center text-gray-500 text-medium dark:text-gray-400">
             <li class="me-2">

@@ -31,9 +31,10 @@ from web_app.views.beta_access_request import BetaAccessRequestFormView
 from web_app.views.custom_http_errors import custom_page_not_found, custom_server_error
 
 from web_app.views.sender.detail import (toggle_sender_active, notify_deadline, notify_invitation, sender_modal,
-                                      sender_info,
-                                      sender_row, all_senders_modal, bulk_notify_invitation, bulk_notify_deadline,
-                                      sender_upload_notification)
+                                         sender_info,
+                                         sender_row, all_senders_modal, bulk_notify_invitation, bulk_notify_deadline,
+                                         sender_upload_notification)
+from web_app.views.sender.create import sender_create_row, sender_create
 from web_app.views.request.delete import delete_request
 from web_app.views.organization.create import create_organization, create_organization_modal
 from web_app.views.destination import search_folder, select_destination_type, get_destination_logo
@@ -43,6 +44,10 @@ from web_app.views.settings import sender_notifications_settings, account_notifi
 from web_app.views.payments.checkout import create_checkout_session
 from web_app.views.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook
-from web_app.views.organization.company import CompanyListView, CompanyDetailView, CompanySpacesListView, search_companies, company_create
+from web_app.views.company.list import CompanyListView,search_companies
+from web_app.views.company.create import CompanyCreateView
+from web_app.views.company.detail import CompanyDetailView, CompanySpacesListView
+from web_app.views.company.update import company_update
 from web_app.views.language import custom_set_language
-from web_app.views.organization.contact import ContactListView, search_contacts, contact_create_modal, contact_create, ContactCreateView
+from web_app.views.contact.create import ContactCreateView, contact_create_modal
+from web_app.views.contact.list import ContactListView, search_contacts

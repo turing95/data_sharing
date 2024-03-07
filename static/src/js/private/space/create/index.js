@@ -1,10 +1,8 @@
 import {initForm} from "./form.js";
 import {hideShowSearch} from "./eventHandlers.js";
 import {processInputText} from "./emailInput.js";
-import {selectCompany} from "./companyInput.js";
 
 window.processInputText = processInputText;
-window.selectCompany = selectCompany;
 document.addEventListener('DOMContentLoaded', function () {
     initForm();
 });
