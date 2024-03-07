@@ -1,49 +1,41 @@
-{% load custom_tags static %}
+{% load static %}
+{% load custom_tags %}
 {% load i18n %}
-
-<tr id="sender-row-container-{{sender.uuid}}"
-    sender-uuid="{{sender.uuid}}"
-    class="bg-white border-b sender-pull dark:bg-gray-800 dark:border-gray-700" 
-    hx-trigger="senderUpdated-{{sender.uuid}} from:document"
-    hx-get="{% url 'sender_row' sender.uuid %}"
-    hx-target="this"
-    hx-swap="outerHTML">
-    <th scope="row" class="sticky left-0 z-[15] w-[30px] py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white items-center">
-        {% comment %}<div class="inline-flex  justify-center items-center w-[20px] ml-2 duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
-            hx-get="{% url 'sender_modal' sender.uuid %}"
-            hx-trigger="click"
-            hx-target="#htmx-modal"
-            hx-swap="innerHTML">
-            <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke="" class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
-        </div>{% endcomment %}
-
-    </th>
-    <th scope="row" class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
-        <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer" 
-            hx-get="{% url 'sender_modal'  sender.uuid %}"
-            hx-trigger="click"
-            hx-target="#htmx-modal" 
-            hx-swap="innerHTML"> 
-        {{ sender.email }}
+{% if sender %}
+    <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700">
+        <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
+            {{ sender.email }}
         </div>
-    </th>
-    {% url 'sender_space_detail' sender.uuid sender.space.uuid  as sender_path %}
-    <td class="px-3 py-2">
+        {% url 'sender_space_detail'  sender.uuid  sender.space.uuid as sender_path %}
         <div class="inline-flex items-center">
-            <a href="{{ sender_path}}" target = "_blank" class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
+            <a href="{{ sender_path }}" target="_blank"
+               class="text-blue-600 transition-colors duration-300 hover:text-blue-800">
                 {% translate 'space link' %}
             </a>
-            {% translate "Copy link" as title %}            
-            <button 
-                class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
-                onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
-                title=title>
-                <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
+            {% translate "Copy link" as title %}
+            <button
+                    class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group active:ring-2 active:ring-offset-2 active:ring-gray-300"
+                    onclick="navigator.clipboard.writeText('{{ request.get_host }}{{ sender_path }}')"
+                    title=title>
+                <img src="{% static 'images/icons/copy-link.svg' %}" alt="Copy Link Icon"
+                     class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
             </button>
 
         </div>
-    </td>
-    <td class="px-3 py-2">
-            {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active %}
-    </td>
-</tr>
+        {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active %}
+    </div>
+{% elif create_sender %}
+    <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700 sender-create-row">
+        <form hx-post="{% url 'sender_create' space.pk %}" hx-swap="outerHTML" hx-target="closest .sender-create-row">
+            <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
+
+                {% include 'private/space/create/components/contacts/search_contacts_widget.html' with input=form.contact_id search_input=form.email %}
+            </div>
+            {{ form.is_active }}
+            {% translate 'Confirm' as button_text %}
+            {% include 'components/buttons/submit_with_loader.html' with button_text=button_text %}
+        </form>
+
+
+    </div>
+{% endif %}
