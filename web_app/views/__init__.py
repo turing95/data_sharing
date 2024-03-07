@@ -49,3 +49,4 @@ from web_app.views.organization.company import CompanyListView, CompanyDetailVie
 from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.list import ContactListView, search_contacts
+from web_app.views.company.update import company_update

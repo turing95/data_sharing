@@ -9,3 +9,6 @@ class Company(BaseModel):
     def __str__(self):
         return self.name
 
+    def form(self):
+        from web_app.forms import CompanyUpdateForm
+        return CompanyUpdateForm(instance=self)

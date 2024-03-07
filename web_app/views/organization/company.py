@@ -74,7 +74,7 @@ class CompanyTabMixin(SideBarMixin):
 
 
 class CompanyDetailView(SubscriptionMixin, CompanySideBarMixin, CompanyTabMixin, FormView):
-    template_name = "private/company/detail.html"
+    template_name = "private/company/detail/base.html"
     form_class = CompanyForm
     _company = None
 
@@ -106,7 +106,7 @@ class CompanyDetailView(SubscriptionMixin, CompanySideBarMixin, CompanyTabMixin,
 
 
 class CompanySpacesListView(SubscriptionMixin, CompanySideBarMixin, CompanyTabMixin, ListView):
-    template_name = "private/company/spaces_list.html"
+    template_name = "private/company/detail/spaces_list.html"
     paginate_by = 12
     _company = None
 
