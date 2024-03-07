@@ -1,5 +1,5 @@
 import { initSocialAccountsTable } from './socialAccounts.js';
-import {initTooltip} from "../utils/tooltip.js";
+import {initTooltip} from "../../utils/tooltip.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     initSocialAccountsTable();

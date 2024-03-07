@@ -1,5 +1,5 @@
-<div class="inline-flex w-full my-2">
-    <div class="relative w-full bg-gray-50 search-container">
+<div class="inline-flex w-full my-2 contact-widget-container widget-container">
+    <div class="relative w-full bg-gray-50 contact-search-container search-container">
         {% include 'private/space/create/components/contacts/input.html' %}
         <div id="search-contacts-results-container" class="absolute z-10 w-full overflow-y-auto bg-gray-50 search-results">
             {% include 'private/space/create/components/contacts/results.html' %} 
@@ -10,5 +10,6 @@
             {% include 'private/space/create/components/contacts/add_contact.html' %}
 
     </div>
+        {{ input }}
 
 </div>

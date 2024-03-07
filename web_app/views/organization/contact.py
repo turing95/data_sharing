@@ -47,7 +47,7 @@ def search_contacts(request, organization_uuid):
     contacts = []
     if request.method == 'POST':
         organization = get_object_or_404(Organization, pk=organization_uuid)
-        search_query = request.POST.get('search-contacts')
+        search_query = request.POST.get('email')
         if search_query:
             contacts = organization.contacts.filter(
                 Q(first_name__icontains=search_query) |

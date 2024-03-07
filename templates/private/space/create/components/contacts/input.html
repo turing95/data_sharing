@@ -1,16 +1,6 @@
 <div class="inline-flex w-full bg-gray-50 border-gray-300 border h-[36px] pr-1.5">
-    <input class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input"
-           type="search"
-           placeholder="Type to search contacts"
-           id="id_search-contacts"
-           name="search-contacts"
-           hx-post="{% url 'search_contacts' organization.pk %}"
-           hx-params="search-contacts"
-           hx-trigger="input changed delay:500ms, search"
-           hx-target="#search-contacts-results-container"
-           hx-indicator="#loading-indicator-contacts-search"
-           autocomplete="off">
 
+    {{ search_input }}
     <!-- Loading Indicator -->
     <div id="loading-indicator-contacts-search"
          class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
