@@ -93,8 +93,16 @@ class SpaceSideBarMixin(SideBarMixin):
         data['sidebar']['space'] = True
         return data
 
+
 class ContactSideBarMixin(SideBarMixin):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['sidebar']['contact'] = True
+        return data
+
+
+class CompanySideBarMixin(SideBarMixin):
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sidebar']['company'] = True
         return data

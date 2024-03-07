@@ -44,9 +44,10 @@ from web_app.views.settings import sender_notifications_settings, account_notifi
 from web_app.views.payments.checkout import create_checkout_session
 from web_app.views.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook
-from web_app.views.organization.company import CompanyListView, CompanyDetailView, CompanySpacesListView, \
-    search_companies, CompanyCreateView
+from web_app.views.company.list import CompanyListView,search_companies
+from web_app.views.company.create import CompanyCreateView
+from web_app.views.company.detail import CompanyDetailView, CompanySpacesListView
+from web_app.views.company.update import company_update
 from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.list import ContactListView, search_contacts
-from web_app.views.company.update import company_update
