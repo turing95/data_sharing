@@ -34,7 +34,7 @@ urlpatterns = [
     path('organizations/<uuid:organization_uuid>/spaces/', views.SpacesView.as_view(), name='spaces'),
     path('spaces/', views.SpacesView.as_view(), name='spaces'),
     path('organizations/<uuid:organization_uuid>/spaces/create/', views.space_create, name='space_create'),
-    path('organizations/<uuid:organization_uuid>/companies/create/', views.company_create,
+    path('organizations/<uuid:organization_uuid>/companies/create/', views.CompanyCreateView.as_view(),
          name='company_create'),
     path('organizations/<uuid:organization_uuid>/companies/search/', views.search_companies, name='search_companies'),
     path('organizations/<uuid:organization_uuid>/companies/', views.CompanyListView.as_view(), name='companies'),

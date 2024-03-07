@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from  django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -33,31 +33,38 @@ class CompanyListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin,
         return self.get_organization().companies.all().order_by('created_at')
 
 
-# class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, FormView):
-#     template_name = "private/company/create.html"
-#     form_class = CompanyForm
+class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, FormView):
+    template_name = "private/company/create.html"
+    form_class = CompanyForm
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
-#     def get_success_url(self):
-#         return reverse('companies', kwargs={'organization_uuid': self.get_organization().pk})
+    def get_success_url(self):
+        return reverse('companies', kwargs={'organization_uuid': self.get_organization().pk})
 
-    # def form_valid(self, form):
-    #     company = form.save(commit=False)
-    #     company.organization = self.get_organization()
-    #     company.save()
-    #     if self.request.headers.get('HX-Request'):
-    #         messages.success(self.request, _('Company created'))
-    #         return render(self.request, 'components/messages.html', {'from_htmx': True})
-    #     return super().form_valid(form)
+    def get(self, request, *args, **kwargs):
+        company = Company.objects.create(name='New company',
+                                         organization=self.get_organization())
 
-    # def form_invalid(self, form):
-    #     if self.request.headers.get('HX-Request'):
-    #         messages.error(self.request, _('Company not created'))
-    #         return render(self.request, 'components/messages.html', {'from_htmx': True})
-    #     return super().form_invalid(form)
+        return redirect(reverse('company_detail', kwargs={'company_uuid': company.pk}))
+
+    def form_valid(self, form):
+        company = form.save(commit=False)
+        company.organization = self.get_organization()
+        company.save()
+        if self.request.headers.get('HX-Request'):
+            messages.success(self.request, _('Company created'))
+            return render(self.request, 'components/messages.html', {'from_htmx': True})
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        if self.request.headers.get('HX-Request'):
+            messages.error(self.request, _('Company not created'))
+            return render(self.request, 'components/messages.html', {'from_htmx': True})
+        return super().form_invalid(form)
+
 
 class CompanyTabMixin(SideBarMixin):
     def get_context_data(self, **kwargs):
@@ -115,7 +122,6 @@ class CompanySpacesListView(SubscriptionMixin, CompanySideBarMixin, CompanyTabMi
         context['company_tab']['spaces'] = True
         return context
 
-
     def get_queryset(self):
         return self.get_company().spaces.filter(is_deleted=False).order_by('created_at')
 
@@ -133,15 +139,5 @@ def search_companies(request, organization_uuid):
             )
         return render(request,
                       'private/space/create/components/company/results.html',
-                      {'companies': companies,'search_query': search_query, 'organization': organization})
+                      {'companies': companies, 'search_query': search_query, 'organization': organization})
     return HttpResponseBadRequest()
-
-
-
-@login_required
-@require_GET
-def company_create(request, organization_uuid):
-    company = Company.objects.create(name='New company',
-                                 organization_id=organization_uuid)
-    
-    return redirect(reverse('company_detail', kwargs={'company_uuid': company.pk}))
