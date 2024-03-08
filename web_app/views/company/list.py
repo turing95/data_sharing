@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseBadRequest
 from django.views.generic import ListView
 from web_app.mixins import OrganizationMixin, CompanySideBarMixin, SubscriptionMixin
-
+from web_app.models import Organization
 
 class CompanyListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, ListView):
     template_name = "private/company/list.html"

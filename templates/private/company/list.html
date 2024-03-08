@@ -9,7 +9,7 @@
 
         <!-- ADD NEW BUTTON-->
         {% url 'company_create' organization.pk as url %}
-        {% translate 'add company' as button_text %}
+        {% translate 'Create new company' as button_text %}
         {% include "components/buttons/light_add_button.html" with url=url button_text=button_text %}
 
     {% if page_obj %}

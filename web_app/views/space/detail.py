@@ -17,7 +17,6 @@ class SpaceDetailView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSi
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['space'] = self.get_space()
         context['space_summary'] = True
         return context
 
