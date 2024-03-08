@@ -1,20 +1,17 @@
 {% extends "private/_base.html" %}
 {% load static %}
-{% block private_content %}
 {% load i18n %}
-        <!-- title and new space button -->
-        <div class="flex items-center justify-between mb-2">
-            <h1 class="text-2xl font-bold text-gray-800">{% translate 'Companies' %}</h1>
-        </div>
-    
-        <a href="{% url 'company_create' organization.pk %}"
-           class="flex w-full p-2 text-gray-900 border-t dark:text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="currentColor" class="w-4 h-4 my-auto mr-1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-            </svg>
-            {% translate 'Create new company' %}
-        </a>
+{% block private_content%}
+
+        <!-- TITLE -->   
+        {% translate "Companies" as title %}     
+        {% include 'private/page_title.html' with title=title%}
+
+        <!-- ADD NEW BUTTON-->
+        {% url 'company_create' organization.pk as url %}
+        {% translate 'add company' as button_text %}
+        {% include "components/buttons/light_add_button.html" with url=url button_text=button_text %}
+
     {% if page_obj %}
 
 
@@ -22,8 +19,8 @@
     <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
         <thead class="text-xs text-gray-700 uppercase border-b">
         <tr>
-            <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10">
-                {% translate 'Company Name' %}
+            <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 text-sm">
+                {% translate 'Name' %}
             </th>
 
         </tr>
@@ -44,4 +41,4 @@
             <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no companies yet' %}</p>
         </div>
     {% endif %}
-{% endblock private_content %}
+    {% endblock private_content%}
