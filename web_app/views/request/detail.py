@@ -1,18 +1,21 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_GET
 from django.views.generic import FormView
 from django.utils.translation import gettext_lazy as _
+
+from utils.render_block import render_block_to_string
 from web_app.mixins import SpaceSideBarMixin, RequestMixin, SubscriptionMixin
 from web_app.models import Request, GenericDestination, File, Sender
 from web_app.forms import RequestForm, FileSelectForm
 
 
 class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, FormView):
-    model = Request 
+    model = Request
     form_class = RequestForm
     template_name = 'private/request/detail.html'
     _request = None  # Placeholder for the cached object
@@ -31,42 +34,21 @@ class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, Spa
         kwargs['instance'] = self.get_request()
         return kwargs
 
-    def handle_destination(self, form):
-        if form.instance.destination:
-            if form.instance.destination.folder_id == form.cleaned_data.get('destination_id'):
-                if form.instance.destination.is_active is False:
-                    # if inactive and same, create new
-                    GenericDestination.create_from_form(self.request, form)
-            else:
-                # If the folder ID doesn't match, create a new destination.
-                GenericDestination.create_from_form(self.request, form)
-
-        else:
-            # If no current destination exists, create a new one.
-            GenericDestination.create_from_form(self.request, form)
-
-        # Activate the instance in all cases after handling the destination.
-        form.instance.is_active = True
-        form.instance.save()
-
     def form_valid(self, form):
         form.save()
-        # self.handle_destination(form)
         if self.request.headers.get('HX-Request'):
             messages.success(self.request, _('Request saved'))
-            return render(self.request, 'components/messages.html', {'from_htmx': True})
+            return render(self.request, 'private/request/request_form.html',
+                          {'from_htmx': True, 'form': self.form_class(instance=self.get_request())})
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # Check if the title field has errors
-        title_errors = form.errors.get('title', None)
-        # General error message for other form errors
-        messages.error(self.request, _('Request not saved.'+ ' ' + ', '.join(title_errors)))
 
         if self.request.headers.get('HX-Request'):
-            # Return specific partial for HTMX requests
-            return render(self.request, 'components/messages.html', {'from_htmx': True, 'form': form})
-        # Return the full form with errors for non-HTMX requests
+            title_errors = form.errors.get('title', None)
+            messages.error(self.request, title_errors)
+            return render(self.request, 'private/request/request_form.html',
+                          {'from_htmx': True, 'form': self.form_class(instance=self.get_request())})
         return self.render_to_response(self.get_context_data(form=form))
 
 
