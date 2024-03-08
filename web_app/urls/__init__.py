@@ -41,6 +41,7 @@ urlpatterns = [
     path('companies/<uuid:company_uuid>/detail/', views.CompanyDetailView.as_view(), name='company_detail'),
     path('companies/<uuid:company_uuid>/spaces/', views.CompanySpacesListView.as_view(), name='company_spaces'),
     path('companies/<uuid:company_uuid>/contacts/', views.CompanyContactsListView.as_view(), name='company_contacts'),
+    path('companies/<uuid:company_uuid>/files/', views.CompanyFilesListView.as_view(), name='company_files'),
     path('organizations/<uuid:organization_uuid>/contacts/', views.ContactListView.as_view(), name='contacts'),
     path('spaces/<uuid:space_uuid>/detail/', views.SpaceDetailView.as_view(), name='receiver_space_detail'),
     path('spaces/<uuid:space_uuid>/settings/', views.SpaceSettingsView.as_view(), name='space_settings'),

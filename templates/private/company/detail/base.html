@@ -10,27 +10,34 @@
                class="bg-transparent text-gray-900 p-2.5 w-5/6 border-t-0 border-x-0 border-b border-b-black transition-all duration-300 text-4xl    hover:border-black #hover:text-4xl    focus:outline-none focus:ring-0 font-bold"
                required="" id="id_title">{% endcomment %}
     </h2>
-    
+
     <!-- TABS MENU-->
-    {% include "private/tabs_menu.html" with tabs_data=company_tab  pk=company.pk%}
+    {% include "private/tabs_menu.html" with tabs_data=company_tab  pk=company.pk %}
 
     {% block company_content %}
         <form action="{% url 'company_detail' company.pk %}" method="POST" id="edit-company-form">
             {% csrf_token %}
             {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
-            <div class="flex mx-auto">
-                {% for field in form %}
-                    <div class="mx-2">
-                        <label for="{{ field.id_for_label }}"
-                               class="font-medium text-gray-900 dark:text-white">{{ field.label }}:
-                        </label>
-                        {{ field }}
-                        {% include 'components/forms/error_widget.html' with errors=field.errors %}
-                    </div>
-                {% endfor %}
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div class="mx-2">
+                    <label for="{{ form.address.id_for_label }}"
+                           class="font-medium text-gray-900 dark:text-white">{{ form.address.label }}
+                    </label>
+                    {{ form.address }}
+                    {% include 'components/forms/error_widget.html' with errors=form.address.errors %}
+                </div>
+                <div class="mx-2">
+                    <label for="{{ form.reference_contact.id_for_label }}"
+                           class="font-medium text-gray-900 dark:text-white">{{ form.reference_contact.label }}
+                    </label>
+                    {% include 'private/space/create/components/contacts/search_contacts_widget.html' with input=form.reference_contact search_input=form.email %}
+                    {% include 'components/forms/error_widget.html' with errors=form.reference_contact.errors %}
+                </div>
+
             </div>
-            <div class="flex justify-center m-2">
+            <div class="flex justify-end mx-2">
                 {% include 'components/buttons/submit_with_loader.html' with button_text="Save company" %}
+
             </div>
         </form>
     {% endblock company_content %}
