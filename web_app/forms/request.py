@@ -57,6 +57,7 @@ class UploadRequestForm(ModelForm):
             (SharePoint.TAG, 'SharePoint'),
             (Kezyy.TAG, 'Kezyy'),
         ],
+        required=False,
         label="Destination folder",
         widget=forms.Select(
             attrs={
@@ -83,7 +84,8 @@ class UploadRequestForm(ModelForm):
         'hx-swap': "outerHTML",
         'hx-include': 'this'
     }),
-        label=_("Destination type")
+        label=_("Destination type"),
+        required=False
 
     )
 

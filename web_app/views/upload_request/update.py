@@ -32,7 +32,8 @@ def upload_request_update(request, upload_request_uuid):
     upload_request_form = UploadRequestForm(request.POST,prefix=upload_request.pk, instance=upload_request,user=request.user)
     if upload_request_form.is_valid():
         upload_request_form.save()
-        handle_destination(request, upload_request_form)
+        if upload_request_form.cleaned_data.get('destination_type'):
+            handle_destination(request, upload_request_form)
         return HttpResponse()
     else:
         print(upload_request_form.errors)

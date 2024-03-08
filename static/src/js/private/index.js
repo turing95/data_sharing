@@ -35,8 +35,8 @@ htmx.onLoad(function (content) {
 
             // Disable sorting on the `end` event
             onEnd: function (evt) {
-                console.log(evt);
-            }
+            this.option("disabled", true);
+          }
         });
 
         // Re-enable sorting on the `htmx:afterSwap` event
