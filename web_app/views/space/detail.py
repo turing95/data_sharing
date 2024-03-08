@@ -5,23 +5,68 @@ from django.shortcuts import redirect
 from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView
 from django.utils.translation import gettext_lazy as _
+from web_app.utils.svg_icon_paths import svg_icons_path as paths
 
 from web_app.forms import SpaceSettingsForm, SpaceUpdateForm
 from web_app.mixins import SubscriptionMixin, SpaceMixin, SpaceSideBarMixin
 from web_app.models import Space, Contact, Sender
 from web_app.tasks.notifications import notify_invitation
 
+class SpaceTabMixin:
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['space_tab'] = {
+            'content': {
+                'active': False,  
+                'alternative_text': _('Content'),  
+                'url_name': 'receiver_space_detail',  
+                'svg_path': paths['content']
+            },
+            'requests': {
+                'active': False,  
+                'alternative_text': _('Requests'),  
+                'url_name': 'receiver_space_detail',  
+                'svg_path': paths['requests']
+            },
+            'share': {
+                'active': False,  
+                'alternative_text': _('Share'),  
+                'url_name': 'senders',  
+                'svg_path': paths['share']
+            },
+            'history': {
+                'active': False,  
+                'alternative_text': _('History'),  
+                'url_name': 'space_history',  
+                'svg_path': paths['history']
+            },            
+            'documents': {
+                'active': False,  
+                'alternative_text': _('Documents'),  
+                'url_name': "space_history",  
+                'svg_path': paths['documents']
+            },
+            'settings': {
+                'active': False,  
+                'alternative_text': _('Settings'),  
+                'url_name': 'space_settings',  
+                'svg_path': paths['settings']
+            },
 
-class SpaceDetailView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, TemplateView):
+        }
+        return data
+    
+class SpaceDetailView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin,SpaceTabMixin, TemplateView):
     template_name = "private/space/detail/base.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['space_summary'] = True
+        context['space_tab']['requests']['active'] = True
         return context
 
 
-class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, FormView):
+class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin,SpaceTabMixin, FormView):
     template_name = "private/space/detail/settings.html"
     form_class = SpaceSettingsForm
 
@@ -29,6 +74,7 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
         context = super().get_context_data(**kwargs)
         context['space_form'] = True
         context['submit_text'] = _('Save space')
+        context['space_tab']['settings']['active'] = True
         return context
 
     def post(self, request, *args, **kwargs):
