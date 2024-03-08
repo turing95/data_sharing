@@ -9,14 +9,18 @@
         {% if show_more %}
             <button type="button"
                     hx-get="{% url 'upload_request_detail_show' upload_request.pk %}"
-                    hx-target="next .upload-request-detail-container">show less
+                    hx-target="closest .upload-request-detail-container"
+                    hx-indicator="next .my-htmx-indicator">show less
             </button>
         {% else %}
             <button type="button"
                     hx-get="{% url 'upload_request_detail_show' upload_request.pk %}?show_more=1"
-                    hx-target="next .upload-request-detail-container">show more
+                    hx-target="closest .upload-request-detail-container"
+                    hx-indicator="next .my-htmx-indicator">show more
             </button>
         {% endif %}
+        {% include 'components/custom_htmx_indicator.html' %}
+
         {% if show_more %}
             <div class="mb-6">
                 <div class="flex items-center mb-2 space-x-2">

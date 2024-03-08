@@ -38,7 +38,7 @@
     <form id="requests-container"
           class="sortable"
           hx-post="{% url 'request_update_order' kezyy_request.pk %}"
-          hx-indicator="#loading-indicator-sort"
+          hx-indicator="find .my-htmx-indicator"
           hx-trigger="end"
           data-accordion="collapse"
     >
