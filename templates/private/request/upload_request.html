@@ -1,3 +1,4 @@
+{% load custom_tags %}
 {% load i18n %}
 <div class="mb-6">
     {{ upload_request.request_form.title }}
@@ -16,11 +17,12 @@
             <button type="button"
                     hx-get="{% url 'upload_request_detail_show' upload_request.pk %}?show_more=1"
                     hx-target="closest .upload-request-detail-container"
-                    hx-indicator="next .my-htmx-indicator">show more
+                    hx-indicator="#loader_{{ upload_request.pk }}">show more
             </button>
         {% endif %}
-        {% include 'components/custom_htmx_indicator.html' %}
-
+        {% with 'loader_'|addstr:upload_request.uuid as loader_id %}
+            {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
+        {% endwith %}
         {% if show_more %}
             <div class="mb-6">
                 <div class="flex items-center mb-2 space-x-2">
