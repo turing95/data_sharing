@@ -87,6 +87,9 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
     {% if generic_home %}
         <script type="module" src="{% static 'src/js/home/index.js' %}"></script>
     {% endif %}
+    {% if beta_access_form %}
+        <script type="module" src="{% static 'src/js/beta-access-form/index.js' %}"></script>
+    {% endif %}
 {% endblock scripts %}
 
 <script type="module" src="{% static 'src/js/index.js' %}"></script>

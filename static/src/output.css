@@ -1228,10 +1228,6 @@ input:checked + .toggle-bg {
   grid-column: span 2 / span 2;
 }
 
-.float-right {
-  float: right;
-}
-
 .-m-4 {
   margin: -1rem;
 }
@@ -2200,11 +2196,6 @@ input:checked + .toggle-bg {
   border-top-right-radius: 0.5rem;
 }
 
-.rounded-t-xl {
-  border-top-left-radius: 0.75rem;
-  border-top-right-radius: 0.75rem;
-}
-
 .border {
   border-width: 1px;
 }
@@ -2262,10 +2253,6 @@ input:checked + .toggle-bg {
 
 .border-t-4 {
   border-top-width: 4px;
-}
-
-.border-b-0 {
-  border-bottom-width: 0px;
 }
 
 .border-dashed {
