@@ -14,6 +14,10 @@
         {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=0 %}
 
     </h2>
+
+    <!-- TABS MENU-->
+    {% include "private/tabs_menu.html" with tabs_data=space_tab  pk=space.pk%}
+    
     <div class="border-b border-gray-200 dark:border-gray-700">
         <ul class="flex justify-center -mb-px font-medium text-center text-gray-500 text-medium dark:text-gray-400">
             <li class="me-2">
