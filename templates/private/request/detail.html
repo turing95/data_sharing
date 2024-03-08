@@ -1,4 +1,4 @@
-{% extends "private/_base.html" %}
+{% extends "private/_base.html" %} 
 {% load static i18n %}
 {% block private_content %}
     {{ file_name_tags |json_script:"file-name-tags" }}
@@ -10,9 +10,17 @@
         {% csrf_token %}
 
         <!-- TITLE -->
-        <div class="mb-6">
-            {{ form.title }}
+        <div class="mt-2 mb-6">
+            <div class="flex">
+                <label for="{{ form.title.id_for_label }}"
+                       class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
+                {{ form.title }}
+                {% include 'components/tooltip.html' with content=form.title.help_text target=form.title.name placement="bottom" %}
+            </div>
+            {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
         </div>
+
+        <!-- INSTRUCTIONS -->
         <div class="mb-3">
             <div class="flex items-center mb-2 space-x-2">
                 <label for="{{ form.instructions.id_for_label }}"
@@ -22,13 +30,9 @@
             {{ form.instructions }}
             {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
         </div>
-
-        <div class="flex justify-end {% if action == 'edit' %} sticky bottom-4 {% endif %}">
-            {% include "components/buttons/submit_with_loader.html" with button_text=submit_text loading="True" extra_classes="min-w-[100px] min-h-[42px]" %}
-            {% if False %}<span class="hidden min-w-[100px] min-h-[42px]"></span>{% endif %}
-        </div>
-
     </form>
+
+    
     {% url 'upload_request_create' kezyy_request.pk as upload_request_create_url %}
     {% translate 'Add file request' as button_text %}
     {% include "components/buttons/generic.html" with button_text=button_text extra_classes="my-2" hx_get=upload_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}

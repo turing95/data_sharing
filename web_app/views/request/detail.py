@@ -12,7 +12,7 @@ from web_app.forms import RequestForm, FileSelectForm
 
 
 class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, FormView):
-    model = Request
+    model = Request 
     form_class = RequestForm
     template_name = 'private/request/detail.html'
     _request = None  # Placeholder for the cached object
@@ -58,14 +58,16 @@ class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, Spa
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        super().form_invalid(form)
-        if self.request.headers.get('HX-Request'):
-            messages.error(self.request, _('Request not saved'))
-            return render(self.request, 'components/messages.html', {'from_htmx': True})
-        return self.render_to_response(self.get_context_data(form=form))
+        # Check if the title field has errors
+        title_errors = form.errors.get('title', None)
+        # General error message for other form errors
+        messages.error(self.request, _('Request not saved.'+ ' ' + ', '.join(title_errors)))
 
-    def get_success_url(self):
-        return reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk})
+        if self.request.headers.get('HX-Request'):
+            # Return specific partial for HTMX requests
+            return render(self.request, 'components/messages.html', {'from_htmx': True, 'form': form})
+        # Return the full form with errors for non-HTMX requests
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 @login_required
