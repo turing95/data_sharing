@@ -14,6 +14,7 @@ class File(BaseModel):
     size = models.IntegerField()
     file_type = models.CharField(max_length=255)
     sender_event = models.ForeignKey('SenderEvent', on_delete=models.CASCADE, related_name='files')
+    company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='files', null=True)
     destination = models.ForeignKey('GenericDestination', on_delete=models.CASCADE, related_name='files',null=True)
     status = models.CharField(
         max_length=50,

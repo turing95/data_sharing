@@ -48,7 +48,10 @@ from web_app.views.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook
 from web_app.views.company.list import CompanyListView,search_companies
 from web_app.views.company.create import CompanyCreateView
-from web_app.views.company.detail import CompanyDetailView, CompanySpacesListView, CompanyContactsListView
+from web_app.views.company.detail.home import CompanyDetailView
+from web_app.views.company.detail.spaces import CompanySpacesListView
+from web_app.views.company.detail.contacts import CompanyContactsListView
+from web_app.views.company.detail.files import CompanyFilesListView
 from web_app.views.company.update import company_update
 from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal

@@ -35,6 +35,7 @@ class RequestDetailView(TemplateView):
             for form in formset:
                 error = None
                 sender_event = None
+                company = form.input_request.request.space.company
                 if form.input_request.upload_request:
                     upload_request = form.input_request.upload_request
                     uploaded_files = form.cleaned_data.get('files')
@@ -64,7 +65,8 @@ class RequestDetailView(TemplateView):
                                                 file_type=uploaded_file.content_type,
                                                 destination=destination,
                                                 uid=file_url,
-                                                sender_event=sender_event)
+                                                sender_event=sender_event,
+                                                company=company)
                 elif form.input_request.text_request:
                     text_request = form.input_request.text_request
                     sender_event = SenderEvent.objects.create(sender=sender,

@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from djstripe.mixins import PaymentsContextMixin
 from djstripe.models import Plan, Customer, APIKey
 from djstripe.settings import djstripe_settings
-from django.conf import settings
+from web_app.utils.svg_icon_paths import svg_icons_path as paths
 from django.utils.translation import gettext_lazy as _
 
 from web_app.models import Organization, Space, UploadRequest, Request, Company
@@ -118,4 +118,44 @@ class CompanySideBarMixin(SideBarMixin):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['sidebar']['company'] = True
+        return data
+
+
+class CompanyTabMixin:
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['company_tab'] = {
+            'detail': {
+                'active': False,
+                'alternative_text': _('Detail'),
+                'url_name': 'company_detail',
+                'svg_path': paths['detail']
+            },
+            # 'contacts': {
+            #     'active': False,
+            #     'alternative_text': _('Contacts'),
+            #     'url_name': 'company_contacts',
+            #     'svg_path': paths['contacts']
+            # },
+            'spaces': {
+                'active': False,
+                'alternative_text': _('Spaces'),
+                'url_name': 'company_spaces',
+                'svg_path': paths['spaces']
+            },
+            # 'requests': {
+            #     'active': False,
+            #     'alternative_text': _('Requests'),
+            #     'url_name': 'company_detail',
+            #     'svg_path': paths['requests']
+            # },
+
+            'documents': {
+                'active': False,
+                'alternative_text': _('Documents'),
+                'url_name': 'company_detail',
+                'svg_path': paths['documents']
+            },
+
+        }
         return data
