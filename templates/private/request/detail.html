@@ -1,7 +1,6 @@
 {% extends "private/_base.html" %}
 {% load static i18n %}
 {% block private_content %}
-
     {{ file_name_tags |json_script:"file-name-tags" }}
 
     <!-- Display non-field errors -->
@@ -28,103 +27,6 @@
             {% include "components/buttons/submit_with_loader.html" with button_text=submit_text loading="True" extra_classes="min-w-[100px] min-h-[42px]" %}
             {% if False %}<span class="hidden min-w-[100px] min-h-[42px]"></span>{% endif %}
         </div>
-        {% comment %}
-
-            <!-- DESTINATION FOLDER -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <label for="{{ form.some_destination_field.id_for_label }}"
-                       class="block text-sm font-medium text-gray-900 dark:text-white">{% translate 'Destination folder' %} </label>
-                {% translate "MANDATORY" as title %}
-                {% include 'components/tooltip.html' with title=title content=form.destination_id.help_text target_prefix='requests' target=form.destination_type.name %}
-            </div>
-
-
-            <section class="relative w-full my-2">
-
-                <div class="flex flex-col-reverse gap-4 md:flex-row">
-                    <div class="flex-1 w-full">
-                        <div class="flex flex-col sm:flex-row">
-
-                            <div class="flex flex-col w-full sm:w-1/3 h-[36px]">
-                                <div class="inline-flex border-x sm:border-r-0 border-gray-300 bg-gray-50 border-t sm:border-y h-[36px]">
-
-                                    {% include 'private/space/create/components/destination/destination_logo.html' with tag=form.instance.destination.tag %}
-
-                                    <div class="w-full border-gray-300 sm:border-r">
-                                        {{ form.destination_display }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {% include 'private/space/create/components/destination/destination_search.html'  %}
-                        </div>
-                    </div>
-
-
-                    {% include 'private/space/create/components/destination/sharepoint_site_container.html' %}
-                    <div class="w-full sm:w-1/3 md:w-48 h-full  shrink-0 md:h-[36px]">
-                        {{ form.destination_type_select }}
-                    </div>
-
-                </div>
-                <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=form.destination_id.errors %}</div>
-                {{ form.destination_id }}
-                {{ form.sharepoint_site_id }}
-                {{ form.destination_type }}
-
-            </section>
-        </div>
-        <!-- REQUEST INSTRUCTIONS -->
-                <div class="mb-3">
-            <div class="flex items-center mb-2 space-x-2">
-                <label for="{{ form.file_template.id_for_label }}"
-                       class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.file_template.label }} </label>
-                {% include 'components/tooltip.html' with content=form.file_template.help_text target=form.file_template.name %}
-            </div>
-            {{ form.file_template }}
-            {% include 'components/forms/error_widget.html' with errors=form.file_template.errors %}
-        </div>
-        <!-- REQUEST multiple files -->
-        <div class="flex items-center mb-2">
-            <div class="flex items-center h-5">
-                {{ form.multiple_files }}
-                <label for="{{ form.multiple_files.id_for_label }}"
-                       class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.multiple_files.label }}</label>
-            </div>
-
-            {% include 'components/tooltip.html' with content=form.multiple_files.help_text target=form.multiple_files.name %}
-
-            {% include 'components/forms/error_widget.html' with errors=form.multiple_files.errors %}
-        </div>
-
-        <!--TOGGLES -->
-        <div class="mb-2">
-            <div class="flex items-center mb-2 nl-1">
-                {{ form.rename }}
-                <label for="{{ form.rename.id_for_label }}"
-                       class="hidden block ml-2 text-xs font-medium text-gray-900 dark:text-white">{{ form.rename.label }} </label>
-                {% include 'components/tooltip.html' with content=form.rename.help_text target=form.rename.name %}
-            </div>
-            <!-- CUSTOM FILE NAME SELECTOR -->
-            <div class="container hidden file-name-container">
-
-                <!-- Flex container for textInput and dropdown -->
-                <div class="flex max-w-3xl gap-2 items-top">
-                    <!-- Hidden input for form submission -->
-                    <div class="flex-col grow">
-                        {{ form.file_naming_formula }}
-
-
-                    </div>
-                    <!-- Dropdown for Valid Tags -->
-                    {{ form.available_tags_dropdown }}
-                    {% include 'components/tooltip.html' with content=form.file_naming_formula.help_text target=form.file_naming_formula.name placement="left" %}
-
-                </div>
-                <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=form.file_naming_formula.errors %}</div>
-            </div>
-        </div>{% endcomment %}
 
     </form>
     {% url 'upload_request_create' kezyy_request.pk as upload_request_create_url %}
@@ -133,13 +35,41 @@
     {% url 'text_request_create' kezyy_request.pk as text_request_create_url %}
     {% translate 'Add text request' as button_text %}
     {% include "components/buttons/generic.html" with button_text=button_text extra_classes="my-2" hx_get=text_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
-    <form id="requests-container" class="sortable">
-            {% csrf_token %}
-        {% for input_request in kezyy_request.input_requests.all %}
-            {% include 'private/request/input_request.html' with input_request=input_request %}
+    <form id="requests-container"
+          class="sortable"
+          hx-post="{% url 'request_update_order' kezyy_request.pk %}"
+          hx-indicator="#loading-indicator-sort"
+          hx-trigger="end">
+        {% csrf_token %}
+        {% block sorted_requests %}
+
+            <div id="loading-indicator-sort"
+                 class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
+                <div role="status" class="flex spinner ml-0.5">
+                    {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            {{ kezyy_request }}
+            {% for input_request in kezyy_request.input_requests_position_sorted %}
+                {% include 'private/request/input_request.html' with input_request=input_request %}
+
+            {% endfor %}
+        {% endblock sorted_requests %}
+
+    </form>
+    {% comment %}
+    <form id="requests-container" class="sortable" hx-post="{% url 'request_update_order' kezyy_request.pk %}"
+          hx-trigger="end from:document">
+        {% csrf_token %}
+        {% for input_request in kezyy_request.input_requests_position_sorted %}
+            <div>
+                {{ input_request.pk }}
+            </div>
 
         {% endfor %}
 
 
     </form>
+{% endcomment %}
 {% endblock %}

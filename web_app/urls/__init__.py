@@ -47,6 +47,7 @@ urlpatterns = [
     path('spaces/<uuid:space_uuid>/senders/', views.SenderListView.as_view(), name='senders'),
     path('spaces/<uuid:space_uuid>/requests/create/', views.request_create, name='request_create'),
     path('requests/<uuid:request_uuid>/detail/', views.RequestDetailView.as_view(), name='request_detail'),
+    path('requests/<uuid:request_uuid>/update/', views.request_update_order, name='request_update_order'),
     path('requests/<uuid:request_uuid>/upload-requests/create/', views.upload_request_create, name='upload_request_create'),
     path('upload-requests/<uuid:upload_request_uuid>/update/', views.upload_request_update,
          name='upload_request_update'),

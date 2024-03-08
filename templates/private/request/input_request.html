@@ -1,7 +1,11 @@
 {% load i18n %}
-{% if input_request.upload_request %}
-    {% include 'private/request/upload_request.html' with upload_request=input_request.upload_request %}
-{% elif input_request.text_request %}
+<div class="border border-gray-400 shadow my-3 p-2 max-w-screen-md mb-6">
+    <input type="hidden" value="{{ input_request.pk }}" name="input_request_order[]">
+    {% if input_request.upload_request %}
+        {% include 'private/request/upload_request.html' with upload_request=input_request.upload_request %}
+    {% elif input_request.text_request %}
         {% include 'private/request/text_request.html' with text_request=input_request.text_request %}
 
-{% endif %}
+    {% endif %}
+</div>
+
