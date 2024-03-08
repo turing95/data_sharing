@@ -18,10 +18,10 @@ class UploadRequestForm(ModelForm):
         f"- <strong>{{{tag[1]}}}</strong>"
         for tag in UploadRequest.FileNameTag.choices
     ])
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
-                                                          'required': 'required',
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
                                                           'class': css_classes.text_request_title_input,
                                                           'hx-trigger': 'blur changed'}),
+                            required=False,
                             label=_('Request title - MANDATORY'),
                             help_text=_(
                                 """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
@@ -57,6 +57,7 @@ class UploadRequestForm(ModelForm):
             (SharePoint.TAG, 'SharePoint'),
             (Kezyy.TAG, 'Kezyy'),
         ],
+        required=False,
         label="Destination folder",
         widget=forms.Select(
             attrs={
@@ -83,7 +84,8 @@ class UploadRequestForm(ModelForm):
         'hx-swap': "outerHTML",
         'hx-include': 'this'
     }),
-        label=_("Destination type")
+        label=_("Destination type"),
+        required=False
 
     )
 
@@ -201,12 +203,8 @@ class UploadRequestForm(ModelForm):
 
 
 class TextRequestForm(ModelForm):
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
-                                                          'required': 'required',
-                                                          'class': css_classes.text_request_title_input}),
-                            label=_('Request title - MANDATORY'),
-                            help_text=_(
-                                """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
+    title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
+                                                                          'class': css_classes.text_request_title_input}))
 
     class Meta:
         model = TextRequest
@@ -221,7 +219,7 @@ class TextRequestForm(ModelForm):
 class RequestForm(ModelForm):
     instance: Request
 
-    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request*'),
+    title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
                                                           'required': 'required',
                                                           'class': css_classes.text_request_title_input,
                                                           'hx-trigger': 'blur changed'}),

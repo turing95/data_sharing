@@ -21,24 +21,22 @@ window.selectContact = selectContact;
 
 htmx.onLoad(function (content) {
     const sortables = content.querySelectorAll(".sortable");
-    console.log(sortables);
     for (let i = 0; i < sortables.length; i++) {
         let sortable = sortables[i];
-        console.log(sortable);
         let sortableInstance = new Sortable(sortable, {
             animation: 150,
-            ghostClass: 'blue-background-class',
+            dragClass: 'bg-blue-100',
 
             // Make the `.htmx-indicator` unsortable
-            filter: ".htmx-indicator",
+            filter: ".my-htmx-indicator",
             onMove: function (evt) {
-                return evt.related.className.indexOf('htmx-indicator') === -1;
+                return evt.related.className.indexOf('my-htmx-indicator') === -1;
             },
 
             // Disable sorting on the `end` event
             onEnd: function (evt) {
-                this.option("disabled", true);
-            }
+            this.option("disabled", true);
+          }
         });
 
         // Re-enable sorting on the `htmx:afterSwap` event

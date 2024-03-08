@@ -1,6 +1,8 @@
 from copy import deepcopy
 
 from django.db import models
+from django.db.models import Max
+
 from utils.strings import fill_template
 from web_app.models import BaseModel, ActiveModel
 import arrow
@@ -95,8 +97,22 @@ class Request(BaseModel):
     title = models.CharField(max_length=250, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
 
+    def get_new_position(self):
+        from web_app.models import InputRequest
+        # Retrieve the highest current position for InputRequest associated with the space_request
+        last_position = InputRequest.objects.filter(request=self).aggregate(Max('position'))['position__max']
+
+        # If there are no existing InputRequests, start with position 1, otherwise increment by 1
+        new_position = 1 if last_position is None else last_position + 1
+        return new_position
+
+    @property
+    def input_requests_position_sorted(self):
+        return self.input_requests.order_by('position')
+
 
 class InputRequest(BaseModel):
     upload_request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE, null=True)
     text_request = models.ForeignKey('TextRequest', on_delete=models.CASCADE, null=True)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='input_requests', null=True)
+    position = models.PositiveIntegerField(default=1)

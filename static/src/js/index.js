@@ -26,7 +26,7 @@ document.addEventListener('htmx:beforeSwap', function(evt) {
 });
 
 document.body.addEventListener('htmx:afterSwap', function(evt) {
-
+    initFlowbite();
     if (evt.target.id.startsWith('htmx-modal')) {
         const modalElement = evt.target.children[0];
         if (modalElement) {
