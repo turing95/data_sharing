@@ -1,25 +1,37 @@
 {% load custom_tags %}
 {% load i18n %}
-<div class="mb-6">
+<div class="inline-flex w-full mb-6">
+    <div class="flex-grow">
     {{ upload_request.request_form.title }}
-
-
-</div>
-<div class="upload-request-detail-container">
-    {% block upload_request_detail %}
+    </div>
+    <div class="p-1 pl-2 pr-0 text-gray-500 hover:text-marian-blue-400">
         {% if show_more %}
             <button type="button"
                     hx-get="{% url 'upload_request_detail_show' upload_request.pk %}"
                     hx-target="closest .upload-request-detail-container"
-                    hx-indicator="next .my-htmx-indicator">show less
+                    hx-indicator="next .my-htmx-indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                    </svg>
+                    
             </button>
         {% else %}
             <button type="button"
                     hx-get="{% url 'upload_request_detail_show' upload_request.pk %}?show_more=1"
                     hx-target="closest .upload-request-detail-container"
-                    hx-indicator="#loader_{{ upload_request.pk }}">show more
+                    hx-indicator="#loader_{{ upload_request.pk }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25" />
+                        </svg>
+                    
             </button>
         {% endif %}
+    </div>
+</div>
+<div class="upload-request-detail-container">
+    
+    {% block upload_request_detail %}
+
         {% with 'loader_'|addstr:upload_request.uuid as loader_id %}
             {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
         {% endwith %}
