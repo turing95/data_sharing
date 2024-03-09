@@ -4,9 +4,9 @@
 {% block company_content %}
 
       <!-- ADD NEW BUTTON-->
-      {% url 'contact_create' organization.pk as url %}
+      {% url 'contact_create' organization.pk as href %}
       {% translate 'Create new contact' as button_text %}
-      {% include "components/buttons/light_add_button.html" with url=url button_text=button_text %}
+      {% include "components/buttons/light_add_button.html" with href=href button_text=button_text %}
 
 
   {% if page_obj %}

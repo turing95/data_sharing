@@ -3,13 +3,49 @@
 {% block private_content %}
     {% include 'private/request/request_form.html' with form=form %}
 
-    {% url 'upload_request_create' kezyy_request.pk as upload_request_create_url %}
-    {% translate 'Add file request' as button_text %}
-    {% include "components/buttons/generic.html" with button_text=button_text extra_classes="my-2" hx_get=upload_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
-    {% url 'text_request_create' kezyy_request.pk as text_request_create_url %}
-    {% translate 'Add text request' as button_text %}
-    {% include "components/buttons/generic.html" with button_text=button_text extra_classes="my-2" hx_get=text_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
-    <form id="requests-container"
+ 
+
+    <div class="flex items-center mb-2 space-x-2">
+        <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Input fields' %}</h3>
+        {% translate "Add input fields to your request below" as content %}
+        {% include 'components/tooltip.html' with content=content%}
+    </div>
+
+    
+
+    <!-- Add buttons -->
+    <div class="flex items-center gap-2">
+        <!-- Line before the first button -->
+        <div class="flex-grow border-t border-gray-300"></div>
+    
+        <!-- Button 1 -->
+        <div class="min-w-[10px] inline-flex justify-center">
+            {% url 'upload_request_create' kezyy_request.pk as upload_request_create_url %}
+            {% translate 'text field' as button_text %}
+            {% include "components/buttons/light_add_button.html" with button_text=button_text extra_classes="my-2" hx_get=upload_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
+        </div>
+
+        <!-- Line between -->
+        <div class=" border-t border-gray-300 w-[30px]"></div>
+    
+        <!-- Button 2 -->
+        <div class="min-w-[100px] inline-flex justify-center">
+            {% url 'text_request_create' kezyy_request.pk as text_request_create_url %}
+            {% translate 'file field' as button_text %}
+            {% include "components/buttons/light_add_button.html" with  button_text=button_text extra_classes="my-2" hx_get=text_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
+            {% if False %} <div class="w-[100px] hidden"></div>{% endif %} 
+        </div>
+    
+        <!-- Line after the second button -->
+        <div class="flex-grow border-t border-gray-300"></div>
+    </div>
+
+
+
+
+
+      
+    <form id="requests-container flex flex-col"
           class="sortable"
           hx-post="{% url 'request_update_order' kezyy_request.pk %}"
           hx-indicator="#loading-indicator-sort"
@@ -22,7 +58,6 @@
 
             {% for input_request in kezyy_request.input_requests_position_sorted %}
                 {% include 'private/request/input_request.html' with input_request=input_request %}
-
             {% endfor %}
         {% endblock sorted_requests %}
 
