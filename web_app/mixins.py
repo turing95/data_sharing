@@ -153,7 +153,7 @@ class CompanyTabMixin:
             'documents': {
                 'active': False,
                 'alternative_text': _('Documents'),
-                'url_name': 'company_detail',
+                'url_name': 'company_files',
                 'svg_path': paths['documents']
             },
 
