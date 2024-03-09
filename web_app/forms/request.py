@@ -217,16 +217,19 @@ class TextRequestForm(ModelForm):
 
 
 class RequestForm(ModelForm):
-    instance: Request 
+    instance: Request
 
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
                                                           'required': 'required',
                                                           'class': css_classes.text_space_title_input,
-                                                          'hx-trigger': 'blur changed'}),
+                                                          'hx-trigger': 'blur changed',
+                                                          'hx-target': 'closest .request-form',
+                                                          'hx-swap': 'outerHTML'
+                                                          }),
                             label=_('Title - MANDATORY'),
                             help_text=_(
                                 """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""),
-                            error_messages={'required': _("The title must no be empty.")})
+                            error_messages={'required': _("The title can't be empty.")})
 
     instructions = forms.CharField(
         required=False,
@@ -234,7 +237,9 @@ class RequestForm(ModelForm):
             'placeholder': _('Add instructions here'),
             'rows': 3,
             'class': css_classes.text_area,
-            'hx-trigger': 'blur changed'
+            'hx-trigger': 'blur changed',
+            'hx-target': 'closest .request-form',
+            'hx-swap': 'outerHTML'
         }),
         label=_('Instructions'),
         help_text=_("""Use this to provide information for your invitees.

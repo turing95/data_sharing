@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 
 from web_app.models import Company
-from web_app.forms import CompanyUpdateForm
 
 
 @login_required
@@ -11,7 +10,7 @@ from web_app.forms import CompanyUpdateForm
 def company_update(request, company_uuid):
     company = Company.objects.get(pk=company_uuid)
     if request.method == 'POST':
-        form = CompanyUpdateForm(request.POST, instance=company)
+        form = company.form(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponse()
