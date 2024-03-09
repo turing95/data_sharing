@@ -8,9 +8,9 @@
         {% include 'private/page_title.html' with title=title%}
 
         <!-- ADD NEW BUTTON-->
-        {% url 'company_create' organization.pk as url %}
+        {% url 'company_create' organization.pk as href %}
         {% translate 'Create new company' as button_text %}
-        {% include "components/buttons/light_add_button.html" with url=url button_text=button_text %}
+        {% include "components/buttons/light_add_button.html" with href=href button_text=button_text %}
 
     {% if page_obj %}
 
