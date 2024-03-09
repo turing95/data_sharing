@@ -12,10 +12,13 @@ class Company(BaseModel):
     def __str__(self):
         return self.name
 
-    def form(self,request_post=None):
-        from web_app.forms import CompanyTitleForm
-        return CompanyTitleForm(request_post,instance=self)
+    def name_form(self, request_post=None):
+        from web_app.forms import CompanyNameForm
+        return CompanyNameForm(request_post, instance=self)
 
+    def form(self,request_post=None):
+        from web_app.forms import CompanyForm
+        return CompanyForm(request_post, instance=self, organization=self.organization)
 
 class CompanyField(BaseModel):
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='fields')

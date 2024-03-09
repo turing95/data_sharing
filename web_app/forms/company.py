@@ -41,7 +41,8 @@ class CompanyForm(forms.ModelForm):
         self.fields['email'].widget.attrs['hx-post'] = reverse_lazy('search_contacts',
                                                                     kwargs={'organization_uuid': self.organization.pk})
         if self.instance is not None:
-            self.fields['email'].initial = self.instance.reference_contact.email
+            if self.instance.reference_contact:
+                self.fields['email'].initial = self.instance.reference_contact.email
             self.fields['address'].widget.attrs['hx-post'] = reverse_lazy('company_update',
                                                                           kwargs={'company_uuid': self.instance.pk})
             self.fields['reference_contact'].widget.attrs['hx-post'] = reverse_lazy('company_update',
@@ -49,11 +50,15 @@ class CompanyForm(forms.ModelForm):
                                                                                         'company_uuid': self.instance.pk})
 
 
-class CompanyTitleForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled Space*'),
+class CompanyNameForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Unnamed company*'),
                                                          'class': css_classes.text_space_title_input,
-                                                         'hx-trigger': 'blur changed'}),
-                           label=_('Company title')
+                                                         'hx-trigger': 'blur changed',
+                                                         'hx-target': 'closest form',
+                                                         'hx-swap': 'outerHTML',
+                                                         }),
+                           label=_('Company name'),
+                           error_messages={'required': _("The name can't be empty.")}
                            )
 
     class Meta:
@@ -63,7 +68,7 @@ class CompanyTitleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance is not None:
-            self.fields['name'].widget.attrs['hx-post'] = reverse_lazy('company_update',
+            self.fields['name'].widget.attrs['hx-post'] = reverse_lazy('company_update_name',
                                                                        kwargs={'company_uuid': self.instance.pk})
 
 

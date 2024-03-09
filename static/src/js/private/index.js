@@ -10,6 +10,8 @@ function selectContact(liElement, contactEmail, contactId) {
     let contactInput = widgetContainer.querySelector('input[type="hidden"]');
     searchContainer.querySelector('input').value = contactEmail;
     contactInput.value = contactId;
+    contactInput.dispatchEvent(new CustomEvent("change"));
+
 }
 
 document.addEventListener('click', function (event) {
