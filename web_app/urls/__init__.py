@@ -105,6 +105,8 @@ urlpatterns = [
     path('senders/<uuid:sender_uuid>/notify_invitation/', views.notify_invitation, name='notify_invitation'),
     path('senders/sender-upload-notification/', views.sender_upload_notification, name='sender_upload_notification'),
     path('companies/<uuid:company_uuid>/update/', views.company_update, name='company_update'),
+    path('companies/<uuid:company_uuid>/company-fields/create/', views.company_field_create, name='company_field_create'),
+    path('company-fields/<uuid:company_field_uuid>/update/', views.company_field_update, name='company_field_update'),
     path('organizations/<uuid:organization_uuid>/contacts/search/', views.search_contacts, name='search_contacts'),
     path('organizations/<uuid:organization_uuid>/contacts/create/modal/', views.contact_create_modal,
          name='contact_create_modal'),
