@@ -228,8 +228,7 @@ class RequestForm(ModelForm):
                                                           }),
                             label=_('Title - MANDATORY'),
                             help_text=_(
-                                """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""),
-                            error_messages={'required': _("The title can't be empty.")})
+                                """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
 
     instructions = forms.CharField(
         required=False,
