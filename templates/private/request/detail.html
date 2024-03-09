@@ -20,7 +20,7 @@
 
 
 
-      
+    {% include 'components/custom_htmx_indicator.html' with loader_id='loading-indicator-sort' %}
     <form id="requests-container"
           class="sortable"
           hx-post="{% url 'request_update_order' kezyy_request.pk %}"
@@ -29,9 +29,7 @@
           data-accordion="collapse"
     >
         {% csrf_token %}
-        {% block sorted_requests %}
-            {% include 'components/custom_htmx_indicator.html' with loader_id='loading-indicator-sort' %}
-
+        {% block sorted_requests %}    
             {% for input_request in kezyy_request.input_requests_position_sorted %}
                 {% include 'private/request/input_request.html' with input_request=input_request %}
             {% endfor %}

@@ -8,17 +8,17 @@
         <div class="min-w-[10px] inline-flex justify-center">
             {% url 'upload_request_create' kezyy_request.pk as upload_request_create_url %}
             {% translate 'file field' as button_text %}
-            {% include "components/buttons/light_add_button.html" with button_text=button_text extra_classes="my-2" hx_get=upload_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
+            {% include "components/buttons/light_add_button.html" with button_text=button_text query_string=query_string extra_classes="my-2" hx_get=upload_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
         </div>
 
         <!-- Line between -->
         <div class=" border-t border-gray-300 w-[30px]"></div>
-    
+        
         <!-- Button 2 -->
         <div class="min-w-[100px] inline-flex justify-center">
-            {% url 'text_request_create' kezyy_request.pk as text_request_create_url %}
+            {% url 'text_request_create' kezyy_request.pk  as text_request_create_url %}
             {% translate 'text field' as button_text %}
-            {% include "components/buttons/light_add_button.html" with  button_text=button_text extra_classes="my-2" hx_get=text_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
+            {% include "components/buttons/light_add_button.html" with  button_text=button_text query_string=query_string extra_classes="my-2" hx_get=text_request_create_url hx_target="#requests-container" hx_swap="beforeend" %}
             {% if False %} <div class="w-[100px] hidden"></div>{% endif %} 
         </div>
     

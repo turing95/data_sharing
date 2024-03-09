@@ -5,10 +5,12 @@
        target="{{ target|default_if_none:"_self" }}"
             {% if button_id %} id="{{ button_id }}" {% endif %}
             {% if hx_get %}
-       hx-get="{{ hx_get }}"
+       hx-get="{{ hx_get }}{% if query_string %}?{{ query_string }}{% endif %}"
             {% endif %}
             {% if hx_post %}
-       hx-post="{{ hx_post }}"
+            {% endif %}
+            {% if hx_post %}
+       hx-post="{{ hx_post }}{% if query_string %}?{{ query_string }}{% endif %}"
             {% endif %}
             {% if hx_trigger %}
        hx-trigger="{{ hx_trigger }}"
@@ -32,10 +34,10 @@
             {% if data_modal_toggle %} data-modal-toggle="{{ data_modal_toggle }}" {% endif %}
             {% if data_modal_target %} data-modal-target="{{ data_modal_target }}" {% endif %}
             {% if hx_get %}
-            hx-get="{{ hx_get }}"
+            hx-get="{{ hx_get }}{% if query_string %}?{{ query_string }}{% endif %}"
             {% endif %}
             {% if hx_post %}
-            hx-post="{{ hx_post }}"
+            hx-post="{{ hx_post }}{% if query_string %}?{{ query_string }}{% endif %}"
             {% endif %}
             {% if hx_trigger %}
             hx-trigger="{{ hx_trigger }}"

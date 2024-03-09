@@ -1,34 +1,59 @@
 {% load i18n %}
-<div class="flex my-3 mb-6">
-<!-- add cursor on over hand and grabbing hand on click hold-->
-<div class="flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded-tl rounded-bl cursor-grab active:cursor-grabbing">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.75 10.75" class="h-[30px]" fill="currentColor">
-        <path d="
-        M 0,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-        M 0,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-        M 0,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-        M 0,7.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-        M 0,10.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
 
-        
-        M 1.5,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-        M 1.5,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-        M 1.5,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-        M 1.5,7.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-        M 1.5,10.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+<div class="flex-col my-2" data-position="{% if data_position %}{{data_position}}{%else%} {%endif%}">
+    <div class="flex">        
+        <div class="px-2 ml-4 mr-auto text-[0.6rem] leading-[0.75rem] bg-gray-100{% if input_request.upload_request %} text-orange-400 {% elif input_request.text_request %} text-green-400 {% endif %} rounded-tl rounded-tr">
+            {% if input_request.upload_request %}
+                {% translate 'file input' %}
+            {% elif input_request.text_request %}
+                {% translate 'text input' %}
+            {% endif %}
+        </div>
+    </div>
 
-        " />
-    </svg>
-</div>
-<div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px]">
-    <input type="hidden" value="{{ input_request.pk }}" name="input_request_order[]">
-    {% if input_request.upload_request %}
-        {% include 'private/request/upload_request.html' with upload_request=input_request.upload_request %}
-    {% elif input_request.text_request %}
-        {% include 'private/request/text_request.html' with text_request=input_request.text_request %}
+    <div class="flex">
+        <!-- add cursor on over hand and grabbing hand on click hold-->
+        <div class="flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded-tl rounded-bl cursor-grab active:cursor-grabbing">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.75 10.75" class="h-[30px]" fill="currentColor">
+                <path d="
+                M 0,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,7.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,10.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
 
-    {% endif %}
-</div>
+                
+                M 1.5,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,7.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,10.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+
+                " />
+            </svg>
+        </div>
+        <div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px]">
+            <input type="hidden" value="{{ input_request.pk }}" name="input_request_order[]">
+            {% if input_request.upload_request %}
+                {% include 'private/request/upload_request.html' with upload_request=input_request.upload_request %}
+            {% elif input_request.text_request %}
+                {% include 'private/request/text_request.html' with text_request=input_request.text_request %}
+
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="group"> <!-- Parent element with group class -->
+        <div class="block overflow-hidden transition-all duration-300 max-h-3 group-hover:max-h-[100px]">    
+
+            {% with query_string="input_request_uuid="|add:input_request.pk.hex %}
+            
+                {% include 'private/request/add_section_buttons.html' with query_string=query_string %}
+            {% endwith %}
+
+        </div>
+        <!-- Other content here -->
+    </div>
 </div>
 
 

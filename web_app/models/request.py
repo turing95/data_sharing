@@ -97,15 +97,21 @@ class Request(BaseModel):
     title = models.CharField(max_length=250, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
 
-    def get_new_position(self):
+    def get_new_position(self, ):
         from web_app.models import InputRequest
+        #
         # Retrieve the highest current position for InputRequest associated with the space_request
         last_position = InputRequest.objects.filter(request=self).aggregate(Max('position'))['position__max']
 
         # If there are no existing InputRequests, start with position 1, otherwise increment by 1
         new_position = 1 if last_position is None else last_position + 1
         return new_position
-
+    
+    def update_positions_pre_addition(self, inserting_position):
+        from web_app.models import InputRequest  
+        # the number of all input requests that have a position greater than or equal to the inserting position must be incremented by 1
+        InputRequest.objects.filter(request=self, position__gte=inserting_position).update(position=models.F('position') + 1)
+        
     @property
     def input_requests_position_sorted(self):
         return self.input_requests.order_by('position')

@@ -44,6 +44,25 @@ htmx.onLoad(function (content) {
         // Re-enable sorting on the `htmx:afterSwap` event
         sortable.addEventListener("htmx:afterSwap", function () {
             sortableInstance.option("disabled", false);
+
+            const children = sortableInstance.el.children;
+            if (children.length > 0) {
+                const lastItem = children[children.length - 1];
+                //get target position of last item, if empty was not added in this swap
+                let desiredPosition = parseInt(lastItem.getAttribute("data-position")); 
+                if (!isNaN(desiredPosition)) {
+                    // Ensure desiredPosition is within bounds before attempting to move the element
+                    if (desiredPosition > 0 && desiredPosition <= children.length-1) {
+                        const targetChild = children[desiredPosition];
+                        if (targetChild !== lastItem) { // avoid moving if it's already in the correct position
+                            sortableInstance.el.insertBefore(lastItem, targetChild);                            
+                        }
+                        
+                    }
+                    lastItem.setAttribute("data-position", ""); // Clear the attribute 
+                }
+            }
+            
         });
     }
 })
