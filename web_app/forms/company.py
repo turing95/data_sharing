@@ -41,10 +41,11 @@ class CompanyForm(forms.ModelForm):
         self.fields['email'].widget.attrs['hx-post'] = reverse_lazy('search_contacts',
                                                                     kwargs={'organization_uuid': self.organization.pk})
         if self.instance is not None:
-            self.fields['email'].initial = self.instance.reference_contact.email
-            self.fields['address'].widget.attrs['hx-post'] = reverse_lazy('company_update_name',
+            if self.instance.reference_contact:
+                self.fields['email'].initial = self.instance.reference_contact.email
+            self.fields['address'].widget.attrs['hx-post'] = reverse_lazy('company_update',
                                                                           kwargs={'company_uuid': self.instance.pk})
-            self.fields['reference_contact'].widget.attrs['hx-post'] = reverse_lazy('company_update_name',
+            self.fields['reference_contact'].widget.attrs['hx-post'] = reverse_lazy('company_update',
                                                                                     kwargs={
                                                                                         'company_uuid': self.instance.pk})
 

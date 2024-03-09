@@ -52,7 +52,7 @@ from web_app.views.company.detail.home import CompanyDetailView
 from web_app.views.company.detail.spaces import CompanySpacesListView
 from web_app.views.company.detail.contacts import CompanyContactsListView
 from web_app.views.company.detail.files import CompanyFilesListView
-from web_app.views.company.update import company_update_name
+from web_app.views.company.update import company_update_name, company_update
 from web_app.views.company_field.update import company_field_update
 from web_app.views.company_field.create import company_field_create
 from web_app.views.language import custom_set_language

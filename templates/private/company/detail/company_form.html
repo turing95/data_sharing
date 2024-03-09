@@ -1,0 +1,21 @@
+<form method="POST" id="edit-company-form" class="company-form">
+    {% csrf_token %}
+    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div class="mx-2">
+            <label for="{{ form.address.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.address.label }}
+            </label>
+            {{ form.address }}
+            {% include 'components/forms/error_widget.html' with errors=form.address.errors %}
+        </div>
+        <div class="mx-2">
+            <label for="{{ form.reference_contact.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.reference_contact.label }}
+            </label>
+            {% include 'private/space/create/components/contacts/search_contacts_widget.html' with input=form.reference_contact search_input=form.email %}
+            {% include 'components/forms/error_widget.html' with errors=form.reference_contact.errors %}
+        </div>
+
+    </div>
+</form>
