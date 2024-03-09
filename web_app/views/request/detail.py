@@ -1,16 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_GET
 from django.views.generic import FormView
 from django.utils.translation import gettext_lazy as _
-
-from utils.render_block import render_block_to_string
 from web_app.mixins import SpaceSideBarMixin, RequestMixin, SubscriptionMixin
-from web_app.models import Request, GenericDestination, File, Sender
+from web_app.models import Request, File, Sender
 from web_app.forms import RequestForm, FileSelectForm
 
 

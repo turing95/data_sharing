@@ -12,9 +12,9 @@ class Company(BaseModel):
     def __str__(self):
         return self.name
 
-    def form(self,request_post=None):
-        from web_app.forms import CompanyTitleForm
-        return CompanyTitleForm(request_post,instance=self)
+    def name_form(self, request_post=None):
+        from web_app.forms import CompanyNameForm
+        return CompanyNameForm(request_post, instance=self)
 
 
 class CompanyField(BaseModel):
