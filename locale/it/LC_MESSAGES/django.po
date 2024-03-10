@@ -1309,7 +1309,7 @@ msgstr ""
 
 #: templates/public/public_landing.html:142
 msgid "Space dashboard"
-msgstr "Dashboard deglo spazio di caricamento"
+msgstr "Dashboard dello spazio di caricamento"
 
 #: templates/public/public_landing.html:144
 msgid ""

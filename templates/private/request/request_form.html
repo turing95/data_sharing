@@ -18,6 +18,9 @@
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
 
+    <!--TABS MENU -->
+    {% include "private/tabs_menu.html" with tabs_data=request_tab  pk=kezyy_request.pk%}
+
     <!-- INSTRUCTIONS -->
     <div class="mb-3">
         <div class="flex items-center mb-2 space-x-2">

@@ -6,12 +6,12 @@ from django.urls import reverse
 from django.views.decorators.http import require_GET
 from django.views.generic import FormView
 from django.utils.translation import gettext_lazy as _
-from web_app.mixins import SpaceSideBarMixin, RequestMixin, SubscriptionMixin
+from web_app.mixins import SpaceSideBarMixin, RequestMixin, SubscriptionMixin, RequestTabMixin
 from web_app.models import Request, File, Sender
 from web_app.forms import RequestForm, FileSelectForm
 
 
-class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, FormView):
+class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, RequestTabMixin, FormView):
     model = Request
     form_class = RequestForm
     template_name = 'private/request/detail.html'
@@ -20,6 +20,7 @@ class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, Spa
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['request_form'] = True
+        context['request_tab']['edit']['active'] = True
         context['back'] = {'url': reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk}),
                            'text': _('Back to Space')}
         context['submit_text'] = _('Save request')

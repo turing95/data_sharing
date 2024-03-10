@@ -159,3 +159,34 @@ class CompanyTabMixin:
 
         }
         return data
+
+
+class RequestTabMixin:
+    
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['request_tab'] = {
+            'content_inbox': {
+                'active': False,  
+                'alternative_text': _('Content Inbox'),  
+                'url_name': 'request_detail',  
+                'svg_path': paths['inbox']
+            },
+            'edit': {
+                'active': False,
+                'alternative_text': _('Edit'),
+                'url_name': 'request_detail',
+                'svg_path': paths['edit']
+            },
+            'history': {
+                'active': False,  
+                'alternative_text': _('History'),  
+                'url_name': 'request_detail',  
+                'svg_path': paths['history']
+            }, 
+
+
+
+
+        }
+        return data
