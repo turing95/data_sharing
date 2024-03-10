@@ -71,13 +71,15 @@ class CompanyNameForm(forms.ModelForm):
             self.fields['name'].widget.attrs['hx-post'] = reverse_lazy('company_update_name',
                                                                        kwargs={'company_uuid': self.instance.pk})
 
- 
+
 class CompanyFieldForm(forms.ModelForm):
     label = forms.CharField(widget=forms.TextInput(attrs={'class': css_classes.text_input,
+                                                          'hx-trigger': 'blur changed',
+                                                          'hx-target': 'closest form',
+                                                          'hx-swap': 'outerHTML'
                                                           }),
                             )
-    value = forms.CharField(required=False,
-                            widget=forms.TextInput(attrs={'class': css_classes.text_input,
+    value = forms.CharField(widget=forms.TextInput(attrs={'class': css_classes.text_input,
                                                           'hx-trigger': 'blur changed',
                                                           'hx-target': 'closest form',
                                                           'hx-swap': 'outerHTML'
@@ -90,7 +92,8 @@ class CompanyFieldForm(forms.ModelForm):
         if self.instance is not None:
             self.fields['value'].widget.attrs['hx-post'] = reverse_lazy('company_field_update',
                                                                         kwargs={'company_field_uuid': self.instance.pk})
-  
+            self.fields['label'].widget.attrs['hx-post'] = reverse_lazy('company_field_update',
+                                                                        kwargs={'company_field_uuid': self.instance.pk})
 
     class Meta:
         model = CompanyField

@@ -107,9 +107,6 @@ urlpatterns = [
     path('companies/<uuid:company_uuid>/update-name/', views.company_update_name, name='company_update_name'),
     path('companies/<uuid:company_uuid>/update/', views.company_update, name='company_update'),
     path('companies/<uuid:company_uuid>/company-fields/create/', views.company_field_create, name='company_field_create'),
-    # company_uuid
-    path('companies/<uuid:company_uuid>/company-field/create/modal/', views.company_field_create_modal,
-         name='company_field_create_modal'),
     path('company-fields/<uuid:company_field_uuid>/update/', views.company_field_update, name='company_field_update'),
     path('organizations/<uuid:organization_uuid>/contacts/search/', views.search_contacts, name='search_contacts'),
     path('organizations/<uuid:organization_uuid>/contacts/create/modal/', views.contact_create_modal,

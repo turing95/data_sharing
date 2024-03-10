@@ -54,7 +54,7 @@ from web_app.views.company.detail.contacts import CompanyContactsListView
 from web_app.views.company.detail.files import CompanyFilesListView
 from web_app.views.company.update import company_update_name, company_update
 from web_app.views.company_field.update import company_field_update
-from web_app.views.company_field.create import company_field_create, company_field_create_modal
+from web_app.views.company_field.create import company_field_create
 from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.list import ContactListView, search_contacts
