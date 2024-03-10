@@ -1,36 +1,46 @@
+<label class="relative inline-flex items-center cursor-pointer h-7">
 
-    <label class="relative inline-flex items-center cursor-pointer h-7">
+    {% include 'django/forms/widgets/input.html' %}
 
-        {% include 'django/forms/widgets/input.html' %}
+    <div class="z-[2] w-9 h-5 {% if widget.toggle_color_off_soft %} bg-{{ widget.toggle_color_off }}-200 {% else %} bg-{{ widget.toggle_color_off }}-400 {% endif %} {% if peer_focus %}peer-focus:outline-none peer-focus:ring peer-focus:ring-blue-300{% endif %} rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:left-[2px] after:-translate-y-1/2 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{ widget.toggle_color_on }}-400"></div>
 
-        <div class="z-[2] w-9 h-5 {% if widget.toggle_color_off_soft %} bg-{{ widget.toggle_color_off }}-200 {% else %} bg-{{ widget.toggle_color_off }}-400 {%endif%} peer-focus:outline-none peer-focus:ring peer-focus:ring-blue-300 dark:peer-focus:ring-gray-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:left-[2px] after:-translate-y-1/2 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{ widget.toggle_color_on }}-400"></div>
-        
-        {% if widget.label_wrap and widget.label_wrap_mono %}
-            <!-- mono wrap on -->
-            <div class="absolute inset-0 bg-{{widget.color_on}}-200 z-[1] peer-checked:inline-block hidden rounded-full"></div>
-            <!-- mono wrap off -->
-            <div class="absolute inset-0 bg-{{widget.color_off}}-200 z-[1] peer-checked:hidden rounded-full"></div>
-        {% endif %}
+    {% if widget.label_wrap and widget.label_wrap_mono %}
+        <!-- mono wrap on -->
+        <div class="absolute inset-0 bg-{{ widget.color_on }}-200 z-[1] peer-checked:inline-block hidden rounded-full"></div>
+        <!-- mono wrap off -->
+        <div class="absolute inset-0 bg-{{ widget.color_off }}-200 z-[1] peer-checked:hidden rounded-full"></div>
+    {% endif %}
+    {% if widget.label_on %}
         <!-- Text for "active" state -->
-        <span class="ml-2 text-sm text-{{ widget.label_on_color }}-800 z-[2] align-middle peer-checked:inline-block hidden {% if widget.label_wrap %} bg-{{widget.color_on}}-200 rounded-full px-[6px] inline-block items-center justify-center{%endif%}">{{ widget.label_on}}</span>                             
-
+        <span class="ml-2 text-sm text-{{ widget.label_on_color }}-800 z-[2] align-middle peer-checked:inline-block hidden {% if widget.label_wrap %} bg-{{ widget.color_on }}-200 rounded-full px-[6px] inline-block items-center justify-center{% endif %}">{{ widget.label_on }}</span>
+    {% endif %}
+    {% if widget.label_off %}
 
         <!-- Text for "inactive" state -->
-        <span class="inline-block z-[2] ml-2 text-sm {% if widget.soft_off_label %} text-{{ widget.label_off_color }}-400 {% else %} text-{{ widget.label_off_color }}-800 {% endif %} align-middle peer-checked:hidden {% if widget.label_wrap %} bg-{{widget.color_off}}-200 rounded-full px-[6px] inline-block items-center justify-center{%endif%}">{{ widget.label_off}}</span>   
-
-    </label>
+        <span class="inline-block z-[2] ml-2 text-sm {% if widget.soft_off_label %} text-{{ widget.label_off_color }}-400 {% else %} text-{{ widget.label_off_color }}-800 {% endif %} align-middle peer-checked:hidden {% if widget.label_wrap %} bg-{{ widget.color_off }}-200 rounded-full px-[6px] inline-block items-center justify-center{% endif %}">{{ widget.label_off }}</span>
+    {% endif %}
+</label>
 
 {% if False %}
-<!-- Hidden div with specific color classes for purge -->
-<div class="hidden">
-    <div id="background_off soft" class="bg-gray-200 bg-red-200 bg-orange-200 bg-green-200 bg-blue-200 bg-marian-blue-200"></div>
-    <div id="background_off/on_color" class="bg-gray-500 bg-red-500 bg-orange-500 bg-green-500 bg-blue-500 bg-marian-blue-500"></div>
-    <div id="background_off/on_color_alternative" class="bg-gray-400 bg-red-400 bg-orange-400 bg-green-400 bg-blue-400 bg-marian-blue-400"></div>
-    <div id="background_on" class="peer-checked:bg-gray-500 peer-checked:bg-red-500 peer-checked:bg-orange-500 peer-checked:bg-green-500 peer-checked:bg-blue-500 peer-checked:bg-marian-blue-500"></div>
-    <div id="background_on" class="peer-checked:bg-gray-400 peer-checked:bg-red-400 peer-checked:bg-orange-400 peer-checked:bg-green-400 peer-checked:bg-blue-400 peer-checked:bg-marian-blue-400"></div>
-    <div id="label_on_color" class="text-gray-800 text-red-800 text-orange-800 text-green-800 text-blue-800 text-marian-blue-800"></div>
-    <div id="soft_label_off" class="text-gray-400 text-red-400 text-orange-400 text-green-400 text-blue-400 text-marian-blue-400"></div>
-    <div id="background_wrap" class="bg-gray-300 bg-red-300 bg-orange-300 bg-green-300 bg-blue-300 bg-marian-blue-300"></div>
-    <div id="background_wrap_alternative" class="bg-gray-200 bg-red-200 bg-orange-200 bg-green-200 bg-blue-200 bg-marian-blue-200"></div>
-</div>
+    <!-- Hidden div with specific color classes for purge -->
+    <div class="hidden">
+        <div id="background_off soft"
+             class="bg-gray-200 bg-red-200 bg-orange-200 bg-green-200 bg-blue-200 bg-marian-blue-200"></div>
+        <div id="background_off/on_color"
+             class="bg-gray-500 bg-red-500 bg-orange-500 bg-green-500 bg-blue-500 bg-marian-blue-500"></div>
+        <div id="background_off/on_color_alternative"
+             class="bg-gray-400 bg-red-400 bg-orange-400 bg-green-400 bg-blue-400 bg-marian-blue-400"></div>
+        <div id="background_on"
+             class="peer-checked:bg-gray-500 peer-checked:bg-red-500 peer-checked:bg-orange-500 peer-checked:bg-green-500 peer-checked:bg-blue-500 peer-checked:bg-marian-blue-500"></div>
+        <div id="background_on"
+             class="peer-checked:bg-gray-400 peer-checked:bg-red-400 peer-checked:bg-orange-400 peer-checked:bg-green-400 peer-checked:bg-blue-400 peer-checked:bg-marian-blue-400"></div>
+        <div id="label_on_color"
+             class="text-gray-800 text-red-800 text-orange-800 text-green-800 text-blue-800 text-marian-blue-800"></div>
+        <div id="soft_label_off"
+             class="text-gray-400 text-red-400 text-orange-400 text-green-400 text-blue-400 text-marian-blue-400"></div>
+        <div id="background_wrap"
+             class="bg-gray-300 bg-red-300 bg-orange-300 bg-green-300 bg-blue-300 bg-marian-blue-300"></div>
+        <div id="background_wrap_alternative"
+             class="bg-gray-200 bg-red-200 bg-orange-200 bg-green-200 bg-blue-200 bg-marian-blue-200"></div>
+    </div>
 {% endif %}

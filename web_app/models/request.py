@@ -37,15 +37,6 @@ class UploadRequest(BaseModel, ActiveModel):
         return new_request
 
     @property
-    def google_drive_destination(self):
-        from web_app.models import GenericDestination, GoogleDrive
-        generic_destination: GenericDestination = self.destinations.filter(tag=GoogleDrive.TAG, is_active=True).first()
-        if generic_destination is None:
-            return None
-        google_drive_destination: GoogleDrive = generic_destination.related_object
-        return google_drive_destination
-
-    @property
     def destination(self):
         destination = self.destinations.filter(is_active=True).order_by('-created_at').first()
         if destination is None:

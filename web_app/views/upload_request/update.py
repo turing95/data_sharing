@@ -28,13 +28,24 @@ def handle_destination(request, form):
 @login_required
 @require_POST
 def upload_request_update(request, upload_request_uuid):
-    upload_request = get_object_or_404(UploadRequest, pk=upload_request_uuid)
-    upload_request_form = UploadRequestForm(request.POST,prefix=upload_request.pk, instance=upload_request,user=request.user)
-    if upload_request_form.is_valid():
-        upload_request_form.save()
-        if upload_request_form.cleaned_data.get('destination_type'):
-            handle_destination(request, upload_request_form)
+    if request.method == 'POST':
+        upload_request = get_object_or_404(UploadRequest, pk=upload_request_uuid)
+        upload_request_form = UploadRequestForm(request.POST, prefix=upload_request.pk, instance=upload_request,
+                                                user=request.user)
+        if upload_request_form.is_valid():
+            upload_request_form.save()
+            if upload_request_form.cleaned_data.get('destination_type'):
+                handle_destination(request, upload_request_form)
+            return HttpResponse()
+    return HttpResponseBadRequest()
+
+
+@login_required
+@require_POST
+def upload_request_update_active(request, upload_request_uuid):
+    if request.method == 'POST':
+        upload_request = get_object_or_404(UploadRequest, pk=upload_request_uuid)
+        upload_request.is_active = not upload_request.is_active
+        upload_request.save()
         return HttpResponse()
-    else:
-        print(upload_request_form.errors)
     return HttpResponseBadRequest()

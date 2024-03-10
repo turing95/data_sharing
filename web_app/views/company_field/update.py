@@ -13,8 +13,7 @@ def company_field_update(request, company_field_uuid):
         form = company_field.form(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'private/company/detail/company_field.html',
-                          {'form': company_field.form()})
+            form = company_field.form()
         return render(request, 'private/company/detail/company_field.html',
                       {'form': form})
     return HttpResponseBadRequest()

@@ -5,6 +5,7 @@ from web_app.forms.widgets import SenderToggle
 from web_app.models import Sender, SenderEvent, UploadRequest, File
 from web_app.forms.widgets.toggle import ToggleWidget
 import arrow
+
 register = template.Library()
 
 
@@ -65,17 +66,6 @@ def render_sender_activate_toggle(sender, name, value, **kwargs):
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
-def render_space_public_link_toggle(space, name, value):
-    return ToggleWidget(label_on='Public link', label_off='Public link').get_context(name, value,
-                                                                                     {
-                                                                                         'hx-post': reverse(
-                                                                                             'toggle_space_public',
-                                                                                             kwargs={
-                                                                                                 'space_uuid': space.pk}),
-                                                                                         'hx-swap': 'morph:outerHTML'})
-
-
-@register.inclusion_tag("forms/widgets/toggle.html")
 def render_sender_notification_activate_toggle(request):
     return ToggleWidget(label_on='Get receipt', label_off='Get receipt').get_context('sender_upload_notification',
                                                                                      request.session.get(
@@ -86,3 +76,11 @@ def render_sender_notification_activate_toggle(request):
                                                                                          'hx-post': reverse(
                                                                                              'sender_upload_notification'),
                                                                                          'hx-swap': 'none'})
+
+
+@register.inclusion_tag("forms/widgets/toggle.html")
+def render_upload_request_activate_toggle(upload_request, **kwargs):
+    return ToggleWidget(**kwargs).get_context('upload_request_toggle', upload_request.is_active,
+                                              {'hx-post': reverse('upload_request_update_active',
+                                                                  kwargs={'upload_request_uuid': upload_request.pk}),
+                                               'hx-trigger': "click", 'hx-swap': 'none'})
