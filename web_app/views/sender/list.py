@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from web_app.models import Sender
 from web_app.mixins import SubscriptionMixin, SpaceMixin, SpaceSideBarMixin
-from web_app.views.space.detail import SpaceTabMixin
+from web_app.mixins import SpaceTabMixin
 
 
 class SenderListView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, SpaceTabMixin,  ListView):

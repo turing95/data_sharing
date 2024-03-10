@@ -63,9 +63,10 @@ class SpaceMixin:
         data['organization'] = self.get_space().organization
         return data
 
+
 class CompanyMixin:
     _company = None  # Placeholder for the cached object
-    
+
     def get_company(self):
         if not self._company:
             self._company = Company.objects.get(pk=self.kwargs.get('company_uuid'))
@@ -76,6 +77,7 @@ class CompanyMixin:
         context['organization'] = self.get_company().organization
         context['company'] = self.get_company()
         return context
+
 
 class RequestMixin:
     _request = None  # Placeholder for the cached object
@@ -162,14 +164,14 @@ class CompanyTabMixin:
 
 
 class RequestTabMixin:
-    
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['request_tab'] = {
             'content_inbox': {
-                'active': False,  
-                'alternative_text': _('Content Inbox'),  
-                'url_name': 'request_detail',  
+                'active': False,
+                'alternative_text': _('Content Inbox'),
+                'url_name': 'request_detail',
                 'svg_path': paths['inbox']
             },
             'edit': {
@@ -179,14 +181,56 @@ class RequestTabMixin:
                 'svg_path': paths['edit']
             },
             'history': {
-                'active': False,  
-                'alternative_text': _('History'),  
-                'url_name': 'request_detail',  
+                'active': False,
+                'alternative_text': _('History'),
+                'url_name': 'request_detail',
                 'svg_path': paths['history']
-            }, 
+            },
+
+        }
+        return data
 
 
-
+class SpaceTabMixin:
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['space_tab'] = {
+            'content': {
+                'active': False,
+                'alternative_text': _('Content'),
+                'url_name': 'space_content',
+                'svg_path': paths['content']
+            },
+            'requests': {
+                'active': False,
+                'alternative_text': _('Requests'),
+                'url_name': 'receiver_space_detail',
+                'svg_path': paths['requests']
+            },
+            'share': {
+                'active': False,
+                'alternative_text': _('Share'),
+                'url_name': 'senders',
+                'svg_path': paths['share']
+            },
+            'history': {
+                'active': False,
+                'alternative_text': _('History'),
+                'url_name': 'space_history',
+                'svg_path': paths['history']
+            },
+            'documents': {
+                'active': False,
+                'alternative_text': _('Documents'),
+                'url_name': "space_documents",
+                'svg_path': paths['documents']
+            },
+            'settings': {
+                'active': False,
+                'alternative_text': _('Settings'),
+                'url_name': 'space_settings',
+                'svg_path': paths['settings']
+            },
 
         }
         return data
