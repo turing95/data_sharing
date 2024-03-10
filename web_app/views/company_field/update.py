@@ -6,7 +6,7 @@ from web_app.models import CompanyField
 
 
 @login_required
-@require_POST
+@require_POST 
 def company_field_update(request, company_field_uuid):
     if request.method == 'POST':
         company_field = CompanyField.objects.get(pk=company_field_uuid)
