@@ -1,0 +1,11 @@
+{% extends "private/_base.html" %}
+{% load static %}
+{% load i18n %}
+{% block private_content%}
+
+        <!-- TITLE -->   
+        {% translate "Organization Settings" as title %}     
+        {% include 'private/page_title.html' with title=title%}
+
+   
+{% endblock private_content%}
