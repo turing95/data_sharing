@@ -7,7 +7,7 @@ from django.views.generic import FormView, TemplateView
 from django.utils.translation import gettext_lazy as _
 from web_app.utils.svg_icon_paths import svg_icons_path as paths
 
-from web_app.forms import SpaceSettingsForm, SpaceUpdateForm
+from web_app.forms import SpaceSettingsForm, SpaceUpdateForm, SpaceContentForm
 from web_app.mixins import SubscriptionMixin, SpaceMixin, SpaceSideBarMixin
 from web_app.models import Space, Contact, Sender
 from web_app.tasks.notifications import notify_invitation
@@ -19,7 +19,7 @@ class SpaceTabMixin:
             'content': {
                 'active': False,  
                 'alternative_text': _('Content'),  
-                'url_name': 'receiver_space_detail',  
+                'url_name': 'space_content',  
                 'svg_path': paths['content']
             },
             'requests': {
@@ -43,7 +43,7 @@ class SpaceTabMixin:
             'documents': {
                 'active': False,  
                 'alternative_text': _('Documents'),  
-                'url_name': "space_history",  
+                'url_name': "space_documents",  
                 'svg_path': paths['documents']
             },
             'settings': {
@@ -55,6 +55,23 @@ class SpaceTabMixin:
 
         }
         return data
+    
+class SpaceDocumentsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin,SpaceTabMixin, TemplateView):
+    template_name = "private/space/detail/documents.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['space_tab']['documents']['active'] = True
+        return context
+
+class SpaceContentView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin,SpaceTabMixin, FormView):
+    template_name = "private/space/detail/content.html"
+    form_class = SpaceContentForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['space_tab']['content']['active'] = True
+        return context
     
 class SpaceDetailView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin,SpaceTabMixin, TemplateView):
     template_name = "private/space/detail/base.html"

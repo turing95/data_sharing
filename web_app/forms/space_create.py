@@ -244,3 +244,11 @@ class SpaceUpdateForm(ModelForm):
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
             self.fields['title'].widget.attrs['hx-post'] = reverse_lazy('space_edit',
                                                                         kwargs={'space_uuid': self.instance.pk})
+
+class SpaceContentForm(ModelForm):
+    placeholder = forms.CharField(widget=forms.TextInput())
+
+    class Meta:
+        model = Space
+        fields = ['placeholder']
+  

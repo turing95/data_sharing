@@ -9,7 +9,7 @@ from web_app.mixins import OrganizationMixin, SubscriptionMixin, SideBarMixin
 from web_app.forms import TeamInviteForm
 from web_app.models import Organization, OrganizationInvitation, User, UserOrganization
 from django.utils.translation import gettext_lazy as _
-
+ 
 
 class TeamSideBarMixin(SideBarMixin):
     def get_context_data(self, **kwargs):

@@ -1,4 +1,4 @@
-from web_app.forms.space_create import SpaceSettingsForm, SpaceUpdateForm
+from web_app.forms.space_create import SpaceSettingsForm, SpaceUpdateForm, SpaceContentForm
 from web_app.forms.request import RequestForm, UploadRequestForm, TextRequestForm
 from web_app.forms.authentication.signup import SignupForm
 from web_app.forms.authentication.login import LoginForm

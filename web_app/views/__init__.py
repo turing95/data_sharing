@@ -1,6 +1,6 @@
 from web_app.views.space.list import SpacesView
 from web_app.views.space.create import space_create
-from web_app.views.space.detail import SpaceSettingsView, SpaceDetailView, space_edit
+from web_app.views.space.detail import SpaceContentView, SpaceSettingsView, SpaceDetailView, space_edit, SpaceDocumentsView
 from web_app.views.space.sender.detail import SpaceDetailView as SpaceDetailFormViewSender
 from web_app.views.request.create import RequestCreateView, request_create
 from web_app.views.request.detail import RequestDetailView, request_modal
@@ -58,3 +58,4 @@ from web_app.views.company_field.create import company_field_create, company_fie
 from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.list import ContactListView, search_contacts
+from web_app.views.organization.settings import OrganizationSettingsView
