@@ -18,10 +18,19 @@
 
     {% block company_content %}
         {% include 'private/company/detail/company_form.html' with form=company.form %}
-        {% translate 'Add custom field' as button_text %}
-        {% url 'company_field_create' company.pk as field_create_url %}
-        {% include "components/buttons/generic.html" with button_text=button_text hx_post=field_create_url hx_target='.custom-fields-container' hx_swap='beforeend' extra_classes="my-2" %}
-        <div class="custom-fields-container">
+        {% comment %} {% translate 'Add custom field' as button_text %}
+        {% url 'company_field_create' company.pk as field_create_url %} {% endcomment %}
+
+
+
+        {% url 'company_field_create_modal' company.pk as get_url %}
+        {% translate "Add custom field" as button_text %}
+        {% include 'components/buttons/add.html' with button_text=button_text hx_get=get_url hx_trigger="click" hx_target="#htmx-modal" hx_swap="innerHTML"%}
+        
+        {% comment %} {% include "components/buttons/generic.html" with button_text=button_text button_id="field_crate_modal_button" extra_classes="w-full inline-flex" %}
+
+        {% include "components/buttons/generic.html" with button_text=button_text hx_post=field_create_url hx_target='.custom-fields-container' hx_swap='beforeend' extra_classes="my-2" %} {% endcomment %}
+        <div id="custom_field_container_id" class="custom-fields-container">
             {% for field in company.fields.all %}
                 {% include 'private/company/detail/company_field.html' with form=field.form %}
             {% endfor %}
