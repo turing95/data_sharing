@@ -48,7 +48,7 @@
 
             {% with query_string="input_request_uuid="|add:input_request.pk.hex %}
             
-                {% include 'private/request/add_section_buttons.html' with query_string=query_string %}
+                {% include 'private/request/add_buttons.html' with query_string=query_string %}
             {% endwith %}
 
         </div>
