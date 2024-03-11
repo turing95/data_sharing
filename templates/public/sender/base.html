@@ -99,6 +99,20 @@
                     </div>
                 {% endif %}
             {% endif %}
+
+            {% for space_section in space.sections_position_sorted %}
+                {% if space_section.text_section %}
+                    <h2 class="mb-4 text-2xl font-bold border-b">
+                        {{ space_section.text_section.title }}
+                    </h2>
+                    {{ space_section.text_section.content }}
+                {% else %}
+                    <h2 class="mb-4 text-2xl font-bold border-b">
+                        {{ space_section.file_section.title }}
+                    </h2>
+                    {{ space_section.file_section.content }}
+                {% endif %}
+            {% endfor %}
         </div>
     {% endblock sender_content %}
     <!-- Main Content -->

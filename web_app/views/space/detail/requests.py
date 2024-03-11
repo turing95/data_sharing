@@ -5,7 +5,7 @@ from web_app.mixins import SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, Spa
 
 class SpaceRequestsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, SpaceTabMixin,
                         TemplateView):
-    template_name = "private/space/detail/base.html"
+    template_name = "private/space/detail/requests.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

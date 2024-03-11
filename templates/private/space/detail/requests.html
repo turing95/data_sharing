@@ -1,0 +1,47 @@
+{% extends "private/space/detail/base.html" %}
+{% load static %}
+{% load l10n %}
+{% load i18n %}
+
+
+
+{% block space_content %}
+    <!-- INSTRUCTIONS -->
+    <form action="">
+        {% csrf_token %}
+        <div class="mt-2 mb-3">
+            <div class="bg-transparent text-gray-900 p-2.5 w-4/6 border-0 text-4xl">
+                {{ form.instructions }}
+            </div>
+
+        </div>
+
+    </form>
+
+
+    <!-- DETAILS -->
+    <div class="mb-6 mt-2 pl-2.5">
+        {% block details %}
+            <div hx-target="this">
+
+
+                <div class="mt-6 mb-6">
+                    <div class="flex justify-end">
+                        {% url 'request_create' space.pk as request_create_url %}
+                        {% translate 'Add request' as button_text %}
+                        {% include "components/buttons/generic.html" with button_text=button_text href=request_create_url extra_classes="my-2" %}
+                    </div>
+
+
+                    {% include "private/space/detail/components/request_table.html" %}
+                </div>
+
+
+            </div>
+        {% endblock details %}
+
+
+    </div>
+{% endblock space_content %}
+
+
