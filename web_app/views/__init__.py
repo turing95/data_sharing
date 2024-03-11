@@ -71,3 +71,6 @@ from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.list import ContactListView, search_contacts
 from web_app.views.organization.settings import OrganizationSettingsView
+from web_app.views.grant.create import grant_create
+from web_app.views.grant.detail import GrantDetailView
+from web_app.views.grant.list import GrantListView
