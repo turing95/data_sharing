@@ -91,6 +91,7 @@
           hx-post="{% url 'space_section_update_order' space.pk %}"
           hx-indicator="#loading-indicator-sort"
           hx-trigger="end"
+          enctype="multipart/form-data"
           data-accordion="collapse"
     >
         {% csrf_token %}

@@ -8,7 +8,7 @@ from web_app.models import FileSection, Space, SpaceSection
 @require_GET
 def file_section_create(request, space_uuid):
     space = get_object_or_404(Space, pk=space_uuid)
-    file_section = FileSection.objects.create()
+    file_section = FileSection.objects.create(space=space)
     space_section = SpaceSection.objects.create(space=space,
                                                 file_section=file_section,
                                                 position=SpaceSection.get_new_section_position(space))

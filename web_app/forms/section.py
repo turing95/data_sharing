@@ -24,12 +24,24 @@ class TextSectionForm(ModelForm):
 class FileSectionForm(ModelForm):
     title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled section'),
                                                                           'class': css_classes.text_request_title_input}))
+    file = forms.FileField(required=False,
+                           widget=forms.ClearableFileInput(attrs={'hx-encoding': 'multipart/form-data'}))
+    description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.text_area,
+                                                                               'rows': 5,
+                                                                               'cols': 5}))
 
     class Meta:
         model = FileSection
-        fields = ['title']
+        fields = ['title', 'description']
+
+    def clean_file(self):
+        super().clean()
+        file = self.cleaned_data.get('file')
+        return file
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        update_url = reverse_lazy('file_section_update', kwargs={'file_section_uuid': self.instance.pk})
-        self.fields['title'].widget.attrs['hx-post'] = update_url
+        self.update_url = reverse_lazy('file_section_update', kwargs={'file_section_uuid': self.instance.pk})
+        self.fields['title'].widget.attrs['hx-post'] = self.update_url
+        self.fields['description'].widget.attrs['hx-post'] = self.update_url
+        self.fields['file'].widget.attrs['hx-post'] = self.update_url

@@ -8,7 +8,7 @@ from web_app.models import TextSection, Space, SpaceSection
 @require_GET
 def text_section_create(request, space_uuid):
     space = get_object_or_404(Space, pk=space_uuid)
-    text_section = TextSection.objects.create()
+    text_section = TextSection.objects.create(space=space)
     space_section = SpaceSection.objects.create(space=space,
                                                 text_section=text_section,
                                                 position=SpaceSection.get_new_section_position(space))

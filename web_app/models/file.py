@@ -3,6 +3,7 @@ from django.db import models
 from web_app.storage_backends import PrivateMediaStorage
 from django.utils.translation import gettext_lazy as _
 
+
 class File(BaseModel):
     class FileStatus(models.TextChoices):
         ACCEPTED = 'Accepted', _('Accepted')
@@ -10,12 +11,12 @@ class File(BaseModel):
         PENDING = 'Pending', _('Pending')
 
     original_name = models.CharField(max_length=255)
-    uid = models.CharField(max_length=255,default='noid')
+    uid = models.CharField(max_length=255, default='noid')
     size = models.IntegerField()
     file_type = models.CharField(max_length=255)
-    sender_event = models.ForeignKey('SenderEvent', on_delete=models.CASCADE, related_name='files')
+    sender_event = models.ForeignKey('SenderEvent', on_delete=models.CASCADE, related_name='files',null=True,blank=True)
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='files', null=True)
-    destination = models.ForeignKey('GenericDestination', on_delete=models.CASCADE, related_name='files',null=True)
+    destination = models.ForeignKey('GenericDestination', on_delete=models.CASCADE, related_name='files', null=True)
     status = models.CharField(
         max_length=50,
         choices=FileStatus.choices,
