@@ -9,6 +9,15 @@ from web_app.forms.widgets import SearchContactWidget
 from web_app.models import Company, Contact, CompanyField
 
 
+class CompanyCreateForm(forms.ModelForm):
+    name = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Unnamed company*')}))
+
+    class Meta:
+        model = Company
+        fields = ('name',)
+
+
+
 class CompanyForm(forms.ModelForm):
     address = forms.CharField(label=_("Address"),
                               required=False,
@@ -33,7 +42,7 @@ class CompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
-        fields = ('reference_contact', 'address')
+        fields = ('name', 'reference_contact', 'address')
 
     def __init__(self, *args, **kwargs):
         self.organization = kwargs.pop('organization')
@@ -71,7 +80,7 @@ class CompanyNameForm(forms.ModelForm):
             self.fields['name'].widget.attrs['hx-post'] = reverse_lazy('company_update_name',
                                                                        kwargs={'company_uuid': self.instance.pk})
 
- 
+
 class CompanyFieldForm(forms.ModelForm):
     label = forms.CharField(widget=forms.TextInput(attrs={'class': css_classes.text_input,
                                                           }),
@@ -90,7 +99,6 @@ class CompanyFieldForm(forms.ModelForm):
         if self.instance is not None:
             self.fields['value'].widget.attrs['hx-post'] = reverse_lazy('company_field_update',
                                                                         kwargs={'company_field_uuid': self.instance.pk})
-  
 
     class Meta:
         model = CompanyField

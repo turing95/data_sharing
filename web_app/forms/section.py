@@ -23,12 +23,15 @@ class TextSectionForm(ModelForm):
 
 class FileSectionForm(ModelForm):
     title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled section'),
-                                                                          'class': css_classes.text_request_title_input}))
+                                                                          'class': css_classes.text_request_title_input,
+                                                                          'hx-target': 'closest .file-section-container'}))
     file = forms.FileField(required=False,
-                           widget=forms.ClearableFileInput(attrs={'hx-encoding': 'multipart/form-data'}))
+                           widget=forms.ClearableFileInput(attrs={'hx-encoding': 'multipart/form-data',
+                                                                  'hx-target': 'closest .file-section-container'}))
     description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.text_area,
                                                                                'rows': 5,
-                                                                               'cols': 5}))
+                                                                               'cols': 5,
+                                                                               'hx-target': 'closest .file-section-container'}))
 
     class Meta:
         model = FileSection

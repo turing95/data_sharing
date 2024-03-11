@@ -5,14 +5,14 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.views.generic import FormView
 
-from web_app.forms import CompanyForm
+from web_app.forms import CompanyCreateForm
 from web_app.mixins import OrganizationMixin, CompanySideBarMixin, SubscriptionMixin
 from web_app.models import Company
 
 
 class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, FormView):
     template_name = "private/company/create.html"
-    form_class = CompanyForm
+    form_class = CompanyCreateForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,7 +26,6 @@ class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixi
                                          organization=self.get_organization())
 
         return redirect(reverse('company_detail', kwargs={'company_uuid': company.pk}))
-
     def form_valid(self, form):
         company = form.save(commit=False)
         company.organization = self.get_organization()
