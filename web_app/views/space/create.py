@@ -17,4 +17,5 @@ def space_create(request, organization_uuid):
                                  user=request.user,
                                  organization_id=organization_uuid,
                                  locale=translation.get_language())
+    space.setup()
     return redirect(reverse('receiver_space_detail', kwargs={'space_uuid': space.pk}))

@@ -12,12 +12,13 @@ class Kezyy(BaseModel):
     generic_destination = GenericRelation('GenericDestination')
 
     @classmethod
-    def create(cls, upload_request, user):
+    def create(cls, upload_request,space, user):
         from web_app.models import GenericDestination
         kezyy_destination = cls(user=user)
 
         generic_destination = GenericDestination(
             request=upload_request,
+            space=space,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=kezyy_destination.pk,
             user=user,

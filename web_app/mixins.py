@@ -1,5 +1,6 @@
 import stripe
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from djstripe.mixins import PaymentsContextMixin
 from djstripe.models import Plan, Customer, APIKey
 from djstripe.settings import djstripe_settings
@@ -107,6 +108,8 @@ class RequestMixin:
         data['kezyy_request'] = self.get_request()
         data['space'] = self.get_request().space
         data['organization'] = self.get_request().space.organization
+        data['back'] = {'url': reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk}),
+                           'text': _('Back to Space')}
         return data
 
 
@@ -190,16 +193,16 @@ class RequestTabMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['request_tab'] = {
-            'content_inbox': {
+            'detail': {
                 'active': False,
-                'alternative_text': _('Content Inbox'),
+                'alternative_text': _('Content'),
                 'url_name': 'request_detail',
                 'svg_path': paths['inbox']
             },
             'edit': {
                 'active': False,
                 'alternative_text': _('Edit'),
-                'url_name': 'request_detail',
+                'url_name': 'request_edit',
                 'svg_path': paths['edit']
             },
             'history': {

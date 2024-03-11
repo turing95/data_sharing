@@ -15,6 +15,6 @@ def space_section_update_order(request, space_uuid):
         space_section = SpaceSection.objects.get(pk=uuid)
         space_section.position = i + 1
         space_section.save()
-    html_string = render_block_to_string('private/space/detail/content.html', 'sorted_sections',
+    html_string = render_block_to_string("private/space/detail/base.html", 'sorted_sections',
                                          {'space': space}, request)
     return HttpResponse(html_string)

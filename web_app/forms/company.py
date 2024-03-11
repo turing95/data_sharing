@@ -10,6 +10,15 @@ from web_app.models import Company, Contact, CompanyField
 from django.core.exceptions import ValidationError
 
 
+class CompanyCreateForm(forms.ModelForm):
+    name = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Unnamed company*')}))
+
+    class Meta:
+        model = Company
+        fields = ('name',)
+
+
+
 class CompanyForm(forms.ModelForm):
     address = forms.CharField(label=_("Address"),
                               required=False,
@@ -34,7 +43,7 @@ class CompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
-        fields = ('reference_contact', 'address')
+        fields = ('name', 'reference_contact', 'address')
 
     def __init__(self, *args, **kwargs):
         self.organization = kwargs.pop('organization')

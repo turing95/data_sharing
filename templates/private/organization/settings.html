@@ -1,11 +1,15 @@
 {% extends "private/_base.html" %}
 {% load static %}
 {% load i18n %}
-{% block private_content%}
+{% block private_content %}
 
-        <!-- TITLE -->   
-        {% translate "Organization Settings" as title %}     
-        {% include 'private/page_title.html' with title=title%}
+    <!-- TITLE -->
+    {% translate "Organization Settings" as title %}
+    {% include 'private/page_title.html' with title=title %}
+    <div class="flex-col mb-8">
+        <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Sender Notifications' %}</h2>
+        {% include 'private/settings/notifications_form.html' with form=sender_notifications_form %}
 
-   
-{% endblock private_content%}
+    </div>
+
+{% endblock private_content %}

@@ -110,7 +110,8 @@
                     <h2 class="mb-4 text-2xl font-bold border-b">
                         {{ space_section.file_section.title }}
                     </h2>
-                    {{ space_section.file_section.content }}
+                    <a href="{{ space_section.file_section.file.url }}" target="_blank" class="underline">{{ space_section.file_section.file }} </a> <br>
+                    {{ space_section.file_section.description }}
                 {% endif %}
             {% endfor %}
         </div>

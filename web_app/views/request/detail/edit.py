@@ -11,18 +11,16 @@ from web_app.models import Request, File, Sender
 from web_app.forms import RequestForm, FileSelectForm
 
 
-class RequestDetailView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, RequestTabMixin, FormView):
+class RequestEditView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, RequestTabMixin, FormView):
     model = Request
     form_class = RequestForm
-    template_name = 'private/request/detail.html'
+    template_name = 'private/request/edit.html'
     _request = None  # Placeholder for the cached object
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['request_form'] = True
         context['request_tab']['edit']['active'] = True
-        context['back'] = {'url': reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk}),
-                           'text': _('Back to Space')}
         context['submit_text'] = _('Save request')
         context['space'] = self.get_request().space
         return context

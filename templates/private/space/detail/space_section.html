@@ -32,7 +32,7 @@
                 " />
             </svg>
         </div>
-        <div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px]">
+        <div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px] input-request-container">
             <input type="hidden" value="{{ space_section.pk }}" name="space_section_order[]">
             {% if space_section.file_section  %}
                 {% include 'private/space/detail/file_section.html' with file_section=space_section.file_section %}

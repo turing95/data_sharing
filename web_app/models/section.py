@@ -16,6 +16,7 @@ class SpaceSection(BaseModel):
 
 
 class TextSection(BaseModel):
+    space = models.ForeignKey('Space', on_delete=models.CASCADE, null=True, blank=True, related_name='text_sections')
     title = models.CharField(max_length=255)
     content = models.TextField()
 
@@ -25,8 +26,10 @@ class TextSection(BaseModel):
 
 
 class FileSection(BaseModel):
+    space = models.ForeignKey('Space', on_delete=models.CASCADE, null=True, blank=True, related_name='file_sections')
     title = models.CharField(max_length=255)
-    content = models.TextField()
+    file = models.ForeignKey('File', on_delete=models.CASCADE, null=True, blank=True)
+    description = models.TextField()
 
     def section_form(self):
         from web_app.forms import FileSectionForm
