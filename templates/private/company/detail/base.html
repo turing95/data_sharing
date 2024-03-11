@@ -23,11 +23,7 @@
         {% translate "Add custom field" as button_text %}
         {% include 'components/buttons/add.html' with button_text=button_text hx_get=get_url hx_trigger="click" hx_target="#htmx-modal" hx_swap="innerHTML"%}
         
-        <div id="custom_field_container_id" class="custom-fields-container">
-            {% for field in company.fields.all %}
-                {% include 'private/company/detail/field/fill_form.html' with field=field %}
-            {% endfor %}
-        </div>
+        {% include 'private/company/detail/field/list.html' %}
 
     {% endblock company_content %}
 {% endblock %}

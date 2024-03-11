@@ -11,10 +11,8 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-from django.template.loader import render_to_string
 
 
 class CompanyFieldCreateView(CompanyMixin, SideBarMixin,  SubscriptionMixin, FormView):

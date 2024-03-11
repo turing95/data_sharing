@@ -131,6 +131,7 @@ urlpatterns = [
     path('company-fields/<uuid:company_field_uuid>/update/modal/', views.company_field_update_modal,
          name='company_field_update_modal'),
     path('company-fields/<uuid:company_field_uuid>/update/', views.company_field_update, name='company_field_update'),
+    path('company-fields/<uuid:company_field_uuid>/delete/', views.company_field_delete, name='company_field_delete'),
     path('company-fields/<uuid:company_field_uuid>/update-value/', views.company_field_update_value, name='company_field_update_value'),
     path('organizations/<uuid:organization_uuid>/contacts/search/', views.search_contacts, name='search_contacts'),
     path('organizations/<uuid:organization_uuid>/contacts/create/modal/', views.contact_create_modal,
