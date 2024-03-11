@@ -54,11 +54,11 @@ from web_app.views.organization.create import create_organization, create_organi
 from web_app.views.destination import search_folder, select_destination_type, get_destination_logo
 from web_app.views.profile import profile
 from web_app.views.file import request_changes, accept_all, accept_single
-from web_app.views.settings import sender_notifications_settings, account_notifications
+from web_app.views.settings import sender_notifications_settings_update, account_notifications, OrganizationSettingsView
 from web_app.views.payments.checkout import create_checkout_session
 from web_app.views.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook
-from web_app.views.company.list import CompanyListView,search_companies
+from web_app.views.company.list import CompanyListView, search_companies
 from web_app.views.company.create import CompanyCreateView
 from web_app.views.company.detail.home import CompanyDetailView
 from web_app.views.company.detail.spaces import CompanySpacesListView
@@ -70,7 +70,6 @@ from web_app.views.company_field.create import company_field_create, company_fie
 from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.list import ContactListView, search_contacts
-from web_app.views.organization.settings import OrganizationSettingsView
 from web_app.views.grant.create import grant_create
 from web_app.views.grant.detail import GrantDetailView
 from web_app.views.grant.list import GrantListView
