@@ -26,7 +26,7 @@ def handle_destination(request, form):
 
 
 @login_required
-@require_POST
+@require_POST 
 def upload_request_update(request, upload_request_uuid):
     if request.method == 'POST':
         upload_request = get_object_or_404(UploadRequest, pk=upload_request_uuid)

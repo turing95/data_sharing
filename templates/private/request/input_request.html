@@ -2,7 +2,7 @@
 
 
 
-<div class="flex-col my-1" data-position="{% if data_position %}{{data_position}}{%else%} {%endif%}">
+<div class="flex-col my-1" data-position="{% if data_position %}{{data_position}}{%endif%}">
     <div class="flex">        
         <div class="px-2 ml-4 mr-auto text-[0.6rem] leading-[0.75rem] bg-gray-100{% if input_request.upload_request %} text-orange-400 {% elif input_request.text_request %} text-green-400 {% endif %} rounded-tl rounded-tr">
             {% if input_request.upload_request %}
@@ -59,10 +59,11 @@
 
     <div class="relative flex flex-col items-center justify-center w-full h-2 mt-1"> <!-- Parent element with group class -->
         <div class="absolute z-[1000] transition-opacity duration-300 opacity-0 hover:opacity-100 w-full">    
-
-            {% with query_string="input_request_uuid="|add:input_request.pk.hex %}
             
-                {% include 'private/request/add_section_buttons.html' with query_string=query_string %}
+            {% with input_request_position_str=input_request.position|stringformat:"s" %}
+                {% with query_string="input_request_position="|add:input_request_position_str %}
+                    {% include 'private/request/add_buttons.html' with query_string=query_string %}
+                {% endwith %}
             {% endwith %}
 
         </div>
