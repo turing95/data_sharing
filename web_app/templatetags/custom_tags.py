@@ -79,8 +79,8 @@ def render_sender_notification_activate_toggle(request):
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
-def render_upload_request_activate_toggle(upload_request, **kwargs):
-    return ToggleWidget(**kwargs).get_context('upload_request_toggle', upload_request.is_active,
-                                              {'hx-post': reverse('upload_request_update_active',
-                                                                  kwargs={'upload_request_uuid': upload_request.pk}),
+def render_input_request_activate_toggle(input_request, **kwargs):
+    return ToggleWidget(**kwargs).get_context('input_request_toggle', input_request.is_active,
+                                              {'hx-post': reverse('input_request_update_active',
+                                                                  kwargs={'input_request_uuid': input_request.pk}),
                                                'hx-trigger': "click", 'hx-swap': 'none'})

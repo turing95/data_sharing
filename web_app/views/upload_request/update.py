@@ -39,13 +39,3 @@ def upload_request_update(request, upload_request_uuid):
             return HttpResponse()
     return HttpResponseBadRequest()
 
-
-@login_required
-@require_POST
-def upload_request_update_active(request, upload_request_uuid):
-    if request.method == 'POST':
-        upload_request = get_object_or_404(UploadRequest, pk=upload_request_uuid)
-        upload_request.is_active = not upload_request.is_active
-        upload_request.save()
-        return HttpResponse()
-    return HttpResponseBadRequest()

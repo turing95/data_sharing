@@ -3,7 +3,8 @@ from django import forms
 from web_app.forms import css_classes
 from web_app.models import File
 from django.utils.translation import gettext_lazy as _
-            
+
+
 class MultipleFileField(forms.ModelMultipleChoiceField):
     def label_from_instance(self, obj):
         return obj
