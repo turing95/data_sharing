@@ -1,0 +1,10 @@
+{% extends "private/_base.html" %}
+{% load static i18n %}
+{% block private_content %}
+    {% include 'private/request/request_form.html' with form=form %}
+
+    {% include "components/tabs_menu.html" with tabs_data=request_tab  pk=kezyy_request.pk %}
+
+    {% block request_content %}
+    {% endblock request_content %}
+{% endblock %}
