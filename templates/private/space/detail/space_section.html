@@ -1,0 +1,48 @@
+{% load i18n %}
+
+<div class="flex-col my-2">
+    <div class="flex">        
+        <div class="px-2 ml-4 mr-auto text-[0.6rem] leading-[0.75rem] bg-gray-100{% if space_section.file_section %} text-orange-400 {% elif space_section.text_section  %} text-green-400 {% endif %} rounded-tl rounded-tr">
+            {% if space_section.text_section %}
+                {% translate 'text section' %}
+            {% elif space_section.file_section %}
+                {% translate 'file section' %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="flex">
+        <!-- add cursor on over hand and grabbing hand on click hold-->
+        <div class="flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded-tl rounded-bl cursor-grab active:cursor-grabbing">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.75 10.75" class="h-[30px]" fill="currentColor">
+                <path d="
+                M 0,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,7.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,10.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+
+                
+                M 1.5,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,7.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,10.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+
+                " />
+            </svg>
+        </div>
+        <div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px]">
+            <input type="hidden" value="{{ space_section.pk }}" name="space_section_order[]">
+            {% if space_section.file_section  %}
+                {% include 'private/space/detail/file_section.html' with file_section=space_section.file_section %}
+            {% elif space_section.text_section %}
+                {% include 'private/space/detail/text_section.html' with text_section=space_section.text_section %}
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+

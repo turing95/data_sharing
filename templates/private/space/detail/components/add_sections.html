@@ -1,0 +1,27 @@
+{% load i18n %}
+    <!-- Add buttons -->
+    <div class="flex items-center gap-2">
+        <!-- Line before the first button -->
+        <div class="flex-grow border-t border-gray-300"></div>
+    
+        <!-- Button 1 -->
+        <div class="min-w-[10px] inline-flex justify-center">
+            {% url 'file_section_create' space.pk as text_section_create_url %}
+            {% translate 'file section' as button_text %}
+            {% include "components/buttons/light_add_button.html" with button_text=button_text extra_classes="my-2" hx_get=text_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+        </div>
+
+        <!-- Line between -->
+        <div class=" border-t border-gray-300 w-[30px]"></div>
+        
+        <!-- Button 2 -->
+        <div class="min-w-[100px] inline-flex justify-center">
+            {% url 'text_section_create' space.pk  as file_section_create_url %}
+            {% translate 'text section' as button_text %}
+            {% include "components/buttons/light_add_button.html" with  button_text=button_text extra_classes="my-2" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+            {% if False %} <div class="w-[100px] hidden"></div>{% endif %} 
+        </div>
+    
+        <!-- Line after the second button -->
+        <div class="flex-grow border-t border-gray-300"></div>
+    </div>

@@ -88,10 +88,8 @@ class Request(BaseModel):
     title = models.CharField(max_length=250, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
 
-    def get_new_position(self, ):
+    def get_new_position(self):
         from web_app.models import InputRequest
-        #
-        # Retrieve the highest current position for InputRequest associated with the space_request
         last_position = InputRequest.objects.filter(request=self).aggregate(Max('position'))['position__max']
 
         # If there are no existing InputRequests, start with position 1, otherwise increment by 1

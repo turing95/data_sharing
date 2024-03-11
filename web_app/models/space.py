@@ -37,6 +37,10 @@ class Space(BaseModel, DeleteModel):
         })
 
     @property
+    def sections_position_sorted(self):
+        return self.sections.order_by('position')
+
+    @property
     def deadline_notification_datetime(self):
         if not self.deadline or self.deadline_notice_days is None or self.deadline_notice_hours is None:
             return None
