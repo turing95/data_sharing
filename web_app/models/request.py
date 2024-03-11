@@ -8,7 +8,7 @@ from web_app.models import BaseModel, ActiveModel
 import arrow
 
 
-class UploadRequest(BaseModel, ActiveModel):
+class UploadRequest(BaseModel):
     class FileNameTag(models.TextChoices):
         ORIGINAL_FILE_NAME = 'ORIGINAL_FILE_NAME', 'original_file_name'  # "The name with which the file is uploaded"
         SENDER_EMAIL = 'SENDER_EMAIL', 'sender_email'  # "The email associated with the upload space link"
@@ -19,7 +19,6 @@ class UploadRequest(BaseModel, ActiveModel):
         REQUEST_TITLE = 'REQUEST_TITLE', 'request_title'  # "The title of the request"
 
     title = models.CharField(max_length=250, null=True, blank=True)
-    is_completed = models.BooleanField(default=False)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='upload_requests', null=True)
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
     file_template = models.URLField(null=True, blank=True)
@@ -75,10 +74,9 @@ class UploadRequest(BaseModel, ActiveModel):
         return UploadRequestForm(instance=self, user=self.request.space.user, prefix=self.uuid)
 
 
-class TextRequest(BaseModel,ActiveModel):
+class TextRequest(BaseModel):
     title = models.CharField(max_length=250, null=True, blank=True)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='text_requests')
-    is_completed = models.BooleanField(default=False)
 
 
     def request_form(self):
@@ -135,3 +133,5 @@ class InputRequest(BaseModel):
     text_request = models.ForeignKey('TextRequest', on_delete=models.CASCADE, null=True)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='input_requests', null=True)
     position = models.PositiveIntegerField(default=1)
+    is_completed = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)

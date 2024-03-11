@@ -6,7 +6,7 @@ from djstripe.settings import djstripe_settings
 from web_app.utils.svg_icon_paths import svg_icons_path as paths
 from django.utils.translation import gettext_lazy as _
 
-from web_app.models import Organization, Space, UploadRequest, Request, Company, Sender
+from web_app.models import Organization, Space, Request, Company, Sender, Grant
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -79,6 +79,21 @@ class CompanyMixin:
         return context
 
 
+class GrantMixin:
+    _grant = None  # Placeholder for the cached object
+
+    def get_grant(self):
+        if not self._grant:
+            self._grant = Grant.objects.get(pk=self.kwargs.get('grant_uuid'))
+        return self._grant
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['grant'] = self.get_grant()
+        context['organization'] = self.get_grant().organization
+        return context
+
+
 class RequestMixin:
     _request = None  # Placeholder for the cached object
 
@@ -98,7 +113,7 @@ class RequestMixin:
 class SideBarMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['sidebar'] = {'team': False, 'space': False, 'company': False, 'organization': False}
+        data['sidebar'] = {'team': False, 'space': False, 'company': False, 'organization': False, 'grant': False}
         return data
 
 
@@ -120,6 +135,13 @@ class CompanySideBarMixin(SideBarMixin):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['sidebar']['company'] = True
+        return data
+
+
+class GrantSideBarMixin(SideBarMixin):
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sidebar']['grant'] = True
         return data
 
 
@@ -239,6 +261,7 @@ class SpaceTabMixin:
 class SpaceSenderMixin:
     _sender = None
     _space = None
+
     def get_sender(self):
         if not self._sender:
             self._sender = get_object_or_404(Sender, pk=self.kwargs.get('sender_uuid'), is_active=True)

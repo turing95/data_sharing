@@ -18,7 +18,8 @@ from web_app.views.request.update import request_update_order
 from web_app.views.space.detail.section.update import space_section_update_order
 from web_app.views.request.sender import RequestDetailView as SenderRequestDetailView
 from web_app.views.upload_request.create import upload_request_create
-from web_app.views.upload_request.update import upload_request_update, upload_request_update_active
+from web_app.views.upload_request.update import upload_request_update
+from web_app.views.request.update import input_request_update_active
 from web_app.views.upload_request.detail import upload_request_detail_show
 from web_app.views.text_request.update import text_request_update
 from web_app.views.text_request.create import text_request_create
@@ -70,3 +71,6 @@ from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.list import ContactListView, search_contacts
 from web_app.views.organization.settings import OrganizationSettingsView
+from web_app.views.grant.create import grant_create
+from web_app.views.grant.detail import GrantDetailView
+from web_app.views.grant.list import GrantListView

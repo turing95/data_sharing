@@ -1,0 +1,11 @@
+{% load custom_tags static %}
+
+<tr class="bg-white border-b sender-pull dark:bg-gray-800 dark:border-gray-700">
+    <th scope="row"
+        class="sticky left-[30px] z-10 max-w-xs px-3 py-2 font-medium text-gray-900 break-words whitespace-normal bg-white dark:text-white">
+        <a href="{% url 'grant_detail' grant.pk %}" class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
+            {{ grant.name }}
+        </a>
+    </th>
+
+</tr>

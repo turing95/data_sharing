@@ -37,9 +37,9 @@
         <div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px]">
             <input type="hidden" value="{{ input_request.pk }}" name="input_request_order[]">
             {% if input_request.upload_request %}
-                {% include 'private/request/upload_request.html' with upload_request=input_request.upload_request %}
+                {% include 'private/request/upload_request.html' with input_request=input_request upload_request=input_request.upload_request %}
             {% elif input_request.text_request %}
-                {% include 'private/request/text_request.html' with text_request=input_request.text_request %}
+                {% include 'private/request/text_request.html' with input_request=input_request text_request=input_request.text_request %}
 
             {% endif %}
         </div>

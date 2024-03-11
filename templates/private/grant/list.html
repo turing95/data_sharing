@@ -1,0 +1,44 @@
+{% extends "private/_base.html" %}
+{% load static %}
+{% load i18n %}
+{% block private_content%}
+
+        <!-- TITLE -->   
+        {% translate "Grants" as title %}     
+        {% include 'private/page_title.html' with title=title%}
+
+        <!-- ADD NEW BUTTON-->
+        {% url 'grant_create' organization.pk as href %}
+        {% translate 'Create new grant' as button_text %}
+        {% include "components/buttons/light_add_button.html" with href=href button_text=button_text %}
+
+    {% if page_obj %}
+
+
+<div class="relative overflow-x-auto custom-scrollbar">
+    <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+        <thead class="text-xs text-gray-700 uppercase border-b">
+        <tr>
+            <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 text-sm">
+                {% translate 'Name' %}
+            </th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for grant in page_obj %}
+            {% include 'private/grant/grant_row.html' with grant=grant %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+    {% translate 'Grants' as objs_name %}
+    {% include 'components/pagination.html' with objs_name=objs_name %} 
+    {% else %}
+        <div class="flex flex-col items-center justify-center mt-12">
+            <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no grants yet' %}</p>
+        </div>
+    {% endif %}
+    {% endblock private_content%}

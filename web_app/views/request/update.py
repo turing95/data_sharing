@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 
 from utils.render_block import render_block_to_string
@@ -18,3 +19,14 @@ def request_update_order(request, request_uuid):
     html_string = render_block_to_string('private/request/detail.html', 'sorted_requests',
                                          {'kezyy_request': kezyy_request}, request)
     return HttpResponse(html_string)
+
+
+@login_required
+@require_POST
+def input_request_update_active(request, input_request_uuid):
+    if request.method == 'POST':
+        input_request = get_object_or_404(InputRequest, pk=input_request_uuid)
+        input_request.is_active = not input_request.is_active
+        input_request.save()
+        return HttpResponse()
+    return HttpResponseBadRequest()
