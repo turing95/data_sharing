@@ -13,16 +13,14 @@
         {% include 'components/custom_htmx_indicator.html' with loader_id='loading-indicator-sort' %}
     </div>
 
-    
-
+      
 
     {% include 'private/request/add_section_buttons.html' %}
 
 
 
 
-
-    
+      
     <form id="requests-container"
           class="sortable"
           hx-post="{% url 'request_update_order' kezyy_request.pk %}"
