@@ -97,8 +97,29 @@ class Request(BaseModel,ActiveModel):
         new_position = 1 if last_position is None else last_position + 1
         return new_position
     
+    def add_input_request(self, space_request, specific_input_request, prev_request_position=None):
+        
+        if prev_request_position:
+            inserting_position = int(prev_request_position) + 1
+        else:
+            inserting_position = 1
+        
+        self.update_positions_pre_addition(inserting_position)
+        # check the model class of specific_input_request and create the input request accordingly
+        if specific_input_request.__class__.__name__ == 'UploadRequest':
+            input_request = InputRequest.objects.create(request=space_request, upload_request=specific_input_request, position=inserting_position)
+        elif specific_input_request.__class__.__name__ == 'TextRequest':
+            input_request = InputRequest.objects.create(request=space_request, text_request=specific_input_request, position=inserting_position)
+        else:
+            raise ValueError('Invalid request type')
+        return input_request
+      
+          
+
+        
     def update_positions_pre_addition(self, inserting_position):
-        from web_app.models import InputRequest  
+        # increase by 1 all the positions of the input requests that have a position greater than or equal to the inserting position
+        from web_app.models import InputRequest        
         # the number of all input requests that have a position greater than or equal to the inserting position must be incremented by 1
         InputRequest.objects.filter(request=self, position__gte=inserting_position).update(position=models.F('position') + 1)
         
