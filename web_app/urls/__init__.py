@@ -81,10 +81,10 @@ urlpatterns = [
     path('spaces/duplicate/<uuid:space_uuid>/', views.duplicate, name='space_duplicate'),
     path('stripe/create-checkout-session/', views.create_checkout_session, name='create_checkout_session'),
     path('stripe/create-billing-session/', views.create_billing_session, name='create_billing_session'),
-    # Sender views
-    path('spaces/<uuid:space_uuid>/', views.SpaceDetailFormViewSender.as_view(), name='sender_space_detail_public'),
     path('senders/<uuid:sender_uuid>/spaces/<uuid:space_uuid>/', views.SpaceDetailFormViewSender.as_view(),
          name='sender_space_detail'),
+    path('senders/<uuid:sender_uuid>/spaces/<uuid:space_uuid>/requests/', views.RequestListViewSender.as_view(),
+         name='sender_space_requests'),
     path('senders/<uuid:sender_uuid>/request/<uuid:request_uuid>/', views.SenderRequestDetailView.as_view(),
          name='sender_request_detail'),
     # Error views

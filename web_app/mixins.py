@@ -6,7 +6,7 @@ from djstripe.settings import djstripe_settings
 from web_app.utils.svg_icon_paths import svg_icons_path as paths
 from django.utils.translation import gettext_lazy as _
 
-from web_app.models import Organization, Space, UploadRequest, Request, Company
+from web_app.models import Organization, Space, UploadRequest, Request, Company, Sender
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -231,6 +231,55 @@ class SpaceTabMixin:
                 'url_name': 'space_settings',
                 'svg_path': paths['settings']
             },
+
+        }
+        return data
+
+
+class SpaceSenderMixin:
+    _sender = None
+    _space = None
+    def get_sender(self):
+        if not self._sender:
+            self._sender = get_object_or_404(Sender, pk=self.kwargs.get('sender_uuid'), is_active=True)
+        return self._sender
+
+    def get_space(self):
+        if not self._space:
+            space_id = self.kwargs.get('space_uuid')
+            sender = self.get_sender()
+
+            filter_criteria = {
+                'pk': space_id,
+                'is_deleted': False,
+                'senders__uuid': sender.pk
+            }
+            self._space = get_object_or_404(Space, **filter_criteria)
+        return self._space
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sender'] = self.get_sender()
+        data['space'] = self.get_space()
+        return data
+
+
+class SenderTabMixin:
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sender_tab'] = {
+            'detail': {
+                'active': False,
+                'alternative_text': _('Content'),
+                'url_name': 'sender_space_detail',
+                'svg_path': paths['content']
+            },
+            'requests': {
+                'active': False,
+                'alternative_text': _('Requests'),
+                'url_name': 'sender_space_requests',
+                'svg_path': paths['requests']
+            }
 
         }
         return data

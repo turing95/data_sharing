@@ -1,0 +1,15 @@
+{% extends 'public/sender/base.html' %}
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+{% load custom_tags %}
+
+
+{% block sender_content %}
+    <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
+        {% for kezyy_request in space.requests.all %}
+            <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}">{{ kezyy_request.title }}</a>
+        {% endfor %}
+    </div>
+{% endblock sender_content %}
+
