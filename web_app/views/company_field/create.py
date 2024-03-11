@@ -26,10 +26,11 @@ def company_field_create(request, company_uuid):
         return render(request, 'components/messages.html', {'from_htmx': True})
 
     field = CompanyField.objects.create(company=company, label=label)
-
-    return render(request, 'private/company/detail/company_field.html', {'form': field.form()})
-
     
+    
+    response = render(request, 'private/company/detail/company_field.html',  {'form': field.form()})
+    response['HX-Trigger'] = 'closeModal'
+    return response
     # company = Company.objects.get(pk=company_uuid)
     # field = CompanyField.objects.create(company=company, label='Untitled field')
     # return render(request, 'private/company/detail/company_field.html',
