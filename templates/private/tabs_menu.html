@@ -1,8 +1,0 @@
-<div class="mb-2 border-b border-gray-200 dark:border-gray-700">
-    <ul class="flex justify-center -mb-px font-medium text-center text-gray-500 text-medium dark:text-gray-400">
-        {% for key, tab in tabs_data.items %}
-            {% url tab.url_name pk as url %}            
-            {% include "private/tab_menu_element.html" with url=url alternative_text=tab.alternative_text svg_path=tab.svg_path selected=tab.active %}
-        {% endfor %}
-    </ul>
-</div>
