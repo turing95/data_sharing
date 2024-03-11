@@ -3,11 +3,6 @@
 {% block space_content %}
 
     <div class="inline-flex mb-2">
-        <div class="flex items-center mr-2 space-x-2">
-            <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Sections' %}</h3>
-            {% translate "Add sections below" as content %}
-            {% include 'components/tooltip.html' with content=content %}
-        </div>
         {% include 'components/custom_htmx_indicator.html' with loader_id='loading-indicator-sort' %}
     </div>
     

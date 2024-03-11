@@ -14,7 +14,7 @@
 
 
     <!-- TABS MENU-->
-    {% include "private/tabs_menu.html" with tabs_data=company_tab  pk=company.pk %}
+    {% include "components/tabs_menu.html" with tabs_data=company_tab  pk=company.pk %}
 
     {% block company_content %}
         {% include 'private/company/detail/company_form.html' with form=company.form %}
