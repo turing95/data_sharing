@@ -25,47 +25,10 @@
                 </button>
             </div>
             <div class="items-center justify-between p-2 border-b md:p-3 dark:border-gray-600">
-        
-                <form hx-post=" {% url 'company_field_create' company_uuid %}"
-                id="field_create_form"
-                hx-target='#custom_field_container_id',
-                hx-swap='beforeend'>
-                    {% csrf_token %}
-                    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
-                    <div class="grid gap-6 mb-6 md:grid-cols-2">
-                        <div class="mx-2">
-                            <label for="{{ form.label.id_for_label }}"
-                                   class="font-medium text-gray-900 dark:text-white">{{ form.label.label }}
-                            </label>
-                            {{ form.label }}
-                            {% include 'components/forms/error_widget.html' with errors=form.label.errors %}
-                        </div>
-                    </div>
-                    <div class="flex justify-end mx-2">
-                        {% translate "Add field" as button_text %}
-                        {% include 'components/buttons/submit_with_loader.html' with button_text=button_text %}
-                    </div>
-                </form>
+                    {% include "private/company/detail/field/set_form.html" with confirm_button_text=confirm_button_text %}
                 {% if show_msg %}
                     {% include 'components/messages.html' %}
                 {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div>
         </div>

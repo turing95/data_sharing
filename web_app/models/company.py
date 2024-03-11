@@ -26,5 +26,5 @@ class CompanyField(BaseModel):
     value = models.CharField(max_length=500, null=True, blank=True)
 
     def form(self, request_post=None):
-        from web_app.forms import CompanyFieldForm
-        return CompanyFieldForm(request_post, instance=self, prefix=self.pk)
+        from web_app.forms import CompanyFieldFillForm
+        return CompanyFieldFillForm(request_post, instance=self, prefix=self.pk)

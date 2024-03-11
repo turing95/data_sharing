@@ -1,0 +1,21 @@
+<form id="field_form_{{field.pk}}">
+    {% csrf_token %}
+    {% include 'components/forms/error_widget.html' with errors=field.form.non_field_errors %}
+        <div class="mx-2">
+            <div class="inline-flex group">
+                <label for="{{ field.form.value.id_for_label }}"
+                    class="font-medium text-gray-900 dark:text-white">{{ field.label }}
+                </label>
+                
+                {% url 'company_field_create_modal' company.pk as edit_url %}                
+                <button hx-get="{% url 'company_field_update_modal' field.pk %}" hx-trigger="click" hx-target="#htmx-modal" hx-swap="innerHTML"
+                class="ml-1 my-auto group-hover:scale-[1.05] text-gray-800 transition-transform duration-200 ease-in-ou">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" class="w-4 h-4 ">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                      </svg>
+                    </button>  
+            </div>
+            {{ field.form.value }}
+            {% include 'components/forms/error_widget.html' with errors=form.value.errors %}
+        </div>
+</form>
