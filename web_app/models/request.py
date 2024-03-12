@@ -78,6 +78,10 @@ class UploadRequest(BaseModel):
         from web_app.models import File
         return File.objects.filter(sender_event__upload_request=self)
 
+    @property
+    def last_file(self):
+        return self.files.order_by('-created_at').first()
+
 
 class TextRequest(BaseModel):
     title = models.CharField(max_length=250, null=True, blank=True)

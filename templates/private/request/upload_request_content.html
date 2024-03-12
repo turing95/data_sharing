@@ -7,7 +7,7 @@
     {% render_input_request_complete_toggle input_request %}
     {% render_input_request_activate_toggle input_request %}
 </div>
-<div class="upload-request-content">
+<div class="upload-request-content flex">
     {% if upload_request.multiple_files %}
         {% for file in upload_request.files %}
             {% if file.status == file.FileStatus.PENDING %}
@@ -22,7 +22,8 @@
             {% endif %}
         {% endfor %}
     {% else %}
-        {% with file=upload_request.files.first %}
+        {% if upload_request.last_file %}
+            {% with file=upload_request.last_file %}
             {% if file.status == file.FileStatus.PENDING %}
 
                 <span class="ml-2 text-sm min-w-[75px] text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
@@ -33,6 +34,19 @@
                 <span class="ml-2 text-sm min-w-[75px]  text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
 
             {% endif %}
-        {% endwith %}
+            <button type="button"
+                    hx-post="{% url 'accept_single' file.pk %}"
+                    hx-swap="none"
+                    class="inline-flex items-center text-sm font-medium text-center text-green-500 border border-green-500 files-push max-h-5 hover:bg-green-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-green-300 me-2 dark:border-blue-green dark:text-blue-green dark:hover:text-white dark:focus:ring-blue-green dark:hover:bg-green-500">
+                <svg class="w-4 h-4" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+                </svg>
+                <span class="sr-only">Accept File</span>
+            </button>
+            {% endwith %}
+        {% endif %}
     {% endif %}
 </div>
