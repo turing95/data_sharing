@@ -16,7 +16,7 @@ class RequestDetailView(TemplateView):
 
     def get_formset(self):
         InputRequestFormset = formset_factory(InputRequestForm, formset=BaseInputRequestFormSet,
-                                              extra=self.get_request().input_requests.count())
+                                              extra=self.get_request().input_requests.filter(is_active=True,is_complete=False).count())
         return InputRequestFormset(self.request.POST or None, self.request.FILES or None,
                                    form_kwargs={'request': self.get_request()})
 
@@ -80,6 +80,7 @@ class RequestDetailView(TemplateView):
                 if not error:
                     messages.success(request, _(f"Your upload has completed"))
             return redirect(request.path)
+        print(formset.errors)
         return self.render_to_response(self.get_context_data(formset=formset))
 
     def get_request(self):

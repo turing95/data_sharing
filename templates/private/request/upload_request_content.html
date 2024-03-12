@@ -3,5 +3,36 @@
     <div class="flex-grow">
         {{ upload_request.title }}
     </div>
+
+    {% render_input_request_complete_toggle input_request %}
     {% render_input_request_activate_toggle input_request %}
+</div>
+<div class="upload-request-content">
+    {% if upload_request.multiple_files %}
+        {% for file in upload_request.files %}
+            {% if file.status == file.FileStatus.PENDING %}
+
+                <span class="ml-2 text-sm min-w-[75px] text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+            {% elif  file.status == file.FileStatus.ACCEPTED %}
+                <span class="ml-2 text-sm min-w-[75px] text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+
+            {% elif file.status == file.FileStatus.REJECTED %}
+                <span class="ml-2 text-sm min-w-[75px]  text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% with file=upload_request.files.first %}
+            {% if file.status == file.FileStatus.PENDING %}
+
+                <span class="ml-2 text-sm min-w-[75px] text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+            {% elif  file.status == file.FileStatus.ACCEPTED %}
+                <span class="ml-2 text-sm min-w-[75px] text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+
+            {% elif file.status == file.FileStatus.REJECTED %}
+                <span class="ml-2 text-sm min-w-[75px]  text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] flex items-center justify-center">{{ file.status }}</span>
+
+            {% endif %}
+        {% endwith %}
+    {% endif %}
 </div>

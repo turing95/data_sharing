@@ -73,18 +73,22 @@ class UploadRequest(BaseModel):
         from web_app.forms import UploadRequestForm
         return UploadRequestForm(instance=self, user=self.request.space.user, prefix=self.uuid)
 
+    @property
+    def files(self):
+        from web_app.models import File
+        return File.objects.filter(sender_event__upload_request=self)
+
 
 class TextRequest(BaseModel):
     title = models.CharField(max_length=250, null=True, blank=True)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='text_requests')
-
 
     def request_form(self):
         from web_app.forms import TextRequestForm
         return TextRequestForm(instance=self, prefix=self.uuid)
 
 
-class Request(BaseModel,ActiveModel):
+class Request(BaseModel, ActiveModel):
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='requests')
     title = models.CharField(max_length=250, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
@@ -96,33 +100,33 @@ class Request(BaseModel,ActiveModel):
         # If there are no existing InputRequests, start with position 1, otherwise increment by 1
         new_position = 1 if last_position is None else last_position + 1
         return new_position
-    
+
     def add_input_request(self, space_request, specific_input_request, prev_request_position=None):
-        
+
         if prev_request_position:
             inserting_position = int(prev_request_position) + 1
         else:
             inserting_position = 1
-        
+
         self.update_positions_pre_addition(inserting_position)
         # check the model class of specific_input_request and create the input request accordingly
         if specific_input_request.__class__.__name__ == 'UploadRequest':
-            input_request = InputRequest.objects.create(request=space_request, upload_request=specific_input_request, position=inserting_position)
+            input_request = InputRequest.objects.create(request=space_request, upload_request=specific_input_request,
+                                                        position=inserting_position)
         elif specific_input_request.__class__.__name__ == 'TextRequest':
-            input_request = InputRequest.objects.create(request=space_request, text_request=specific_input_request, position=inserting_position)
+            input_request = InputRequest.objects.create(request=space_request, text_request=specific_input_request,
+                                                        position=inserting_position)
         else:
             raise ValueError('Invalid request type')
         return input_request
-      
-          
 
-        
     def update_positions_pre_addition(self, inserting_position):
         # increase by 1 all the positions of the input requests that have a position greater than or equal to the inserting position
-        from web_app.models import InputRequest        
+        from web_app.models import InputRequest
         # the number of all input requests that have a position greater than or equal to the inserting position must be incremented by 1
-        InputRequest.objects.filter(request=self, position__gte=inserting_position).update(position=models.F('position') + 1)
-        
+        InputRequest.objects.filter(request=self, position__gte=inserting_position).update(
+            position=models.F('position') + 1)
+
     @property
     def input_requests_position_sorted(self):
         return self.input_requests.order_by('position')
@@ -133,5 +137,5 @@ class InputRequest(BaseModel):
     text_request = models.ForeignKey('TextRequest', on_delete=models.CASCADE, null=True)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='input_requests', null=True)
     position = models.PositiveIntegerField(default=1)
-    is_completed = models.BooleanField(default=False)
+    is_complete = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)

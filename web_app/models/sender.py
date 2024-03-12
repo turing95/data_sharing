@@ -27,11 +27,11 @@ class Sender(BaseModel, ActiveModel):
 
     @property
     def company(self):
-        return self.contact.company or ''
+        return (self.contact.company or '') if self.contact else ''
 
     @property
     def full_name(self):
-        return f'{self.contact.first_name} {self.contact.last_name}'
+        return (f'{self.contact.first_name} {self.contact.last_name}') if self.contact else ''
 
     def duplicate(self, space):
         new_sender = deepcopy(self)

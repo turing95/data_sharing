@@ -30,3 +30,14 @@ def input_request_update_active(request, input_request_uuid):
         input_request.save()
         return HttpResponse()
     return HttpResponseBadRequest()
+
+
+@login_required
+@require_POST
+def input_request_update_complete(request, input_request_uuid):
+    if request.method == 'POST':
+        input_request = get_object_or_404(InputRequest, pk=input_request_uuid)
+        input_request.is_complete = not input_request.is_complete
+        input_request.save()
+        return HttpResponse()
+    return HttpResponseBadRequest()

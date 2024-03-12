@@ -63,6 +63,8 @@
 
 
                 {% for form in formset.forms reversed %}
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
                     {% if form.upload_request %}
                         {% if form.upload_request.destination.alive %}
                             <div class="mb-2 border border-gray-300">
