@@ -1,7 +1,6 @@
 import {initForm} from "./form.js";
 import {hideShowSearch} from "./eventHandlers.js";
 import {processInputText} from "./emailInput.js";
-import { set_modal_to_close_on_success } from "../../../utils/htmxModal.js";
 
 window.processInputText = processInputText;
 document.addEventListener('DOMContentLoaded', function () {
