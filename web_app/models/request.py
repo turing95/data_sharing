@@ -135,6 +135,14 @@ class Request(BaseModel, ActiveModel):
     def input_requests_position_sorted(self):
         return self.input_requests.order_by('position')
 
+    @property
+    def completed_input_requests(self):
+        return self.input_requests.filter(is_complete=True)
+
+    @property
+    def is_complete(self):
+        return self.input_requests.filter(is_complete=False).count() == 0
+
 
 class InputRequest(BaseModel):
     upload_request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE, null=True)

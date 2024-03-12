@@ -7,8 +7,23 @@
 
 {% block sender_content %}
     <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
+        TO DO
         {% for kezyy_request in space.requests.all %}
-            <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}">{{ kezyy_request.title }}</a>
+            {% if kezyy_request.is_complete is False %}
+                <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}">{{ kezyy_request.title }}</a>
+                {% translate 'completed inputs' %} {{ kezyy_request.completed_input_requests.count }}/
+                {{ kezyy_request.input_requests.count }}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
+        COMPLETED
+        {% for kezyy_request in space.requests.all %}
+            {% if kezyy_request.is_complete is True %}
+                <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}">{{ kezyy_request.title }}</a>
+                {% translate 'completed inputs' %} {{ kezyy_request.completed_input_requests.count }}/
+                {{ kezyy_request.input_requests.count }}
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock sender_content %}
