@@ -1,0 +1,7 @@
+{% load custom_tags %}
+<div class="inline-flex w-full">
+    <div class="flex-grow">
+        {{ upload_request.title }}
+    </div>
+    {% render_input_request_activate_toggle input_request %}
+</div>

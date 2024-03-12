@@ -13,7 +13,6 @@ def upload_request_create(request, request_uuid):
     upload_request = UploadRequest.objects.create(request=space_request) 
     input_request = space_request.add_input_request(space_request, specific_input_request=upload_request,
                                                     prev_request_position=request.GET.get('input_request_position'))
-    GenericDestination.create_provider(upload_request, Kezyy.TAG, request.user)
     if request.headers.get('HX-Request'):
         return render(request,
                       'private/request/input_request.html',

@@ -16,7 +16,7 @@ def request_update_order(request, request_uuid):
         kezyy_request = input_request.request
         input_request.position = i + 1
         input_request.save()
-    html_string = render_block_to_string('private/request/detail.html', 'sorted_requests',
+    html_string = render_block_to_string('private/request/edit.html', 'sorted_requests',
                                          {'kezyy_request': kezyy_request}, request)
     return HttpResponse(html_string)
 
