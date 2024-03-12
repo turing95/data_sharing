@@ -109,7 +109,7 @@ urlpatterns = [
     path('upload-requests/<uuid:upload_request_uuid>/destinations/get-logo/', views.get_destination_logo,
          name='get_destination_logo'),
     path('spaces/<uuid:space_uuid>/history-table/', views.history_table, name='history_table'),
-    path('spaces/<uuid:space_uuid>/update/', views.space_edit, name='space_edit'),
+    path('spaces/<uuid:space_uuid>/update/', views.space_update, name='space_update'),
     path('spaces/<uuid:space_uuid>/all-senders-modal/', views.all_senders_modal, name='all_senders_modal'),
     path('spaces/<uuid:space_uuid>/invite-all-senders/', views.bulk_notify_invitation, name='bulk_notify_invitation'),
     path('spaces/<uuid:space_uuid>/notify-all-senders/', views.bulk_notify_deadline, name='bulk_notify_deadline'),

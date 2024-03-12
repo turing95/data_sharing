@@ -60,9 +60,9 @@ class Space(BaseModel, DeleteModel):
         GenericDestination.create_provider(Kezyy.TAG,
                                            self.user, space=self)
 
-    def form(self):
-        from web_app.forms import SpaceUpdateForm
-        return SpaceUpdateForm(instance=self)
+    def title_form(self,request_post=None):
+        from web_app.forms import SpaceTitleForm
+        return SpaceTitleForm(request_post,instance=self)
 
     def duplicate(self, user):
 

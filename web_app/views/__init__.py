@@ -9,7 +9,7 @@ from web_app.views.space.detail.documents import SpaceDocumentsView
 from web_app.views.space.detail.requests import SpaceRequestsView
 from web_app.views.space.detail.settings import SpaceSettingsView
 from web_app.views.space.detail.history import HistoryListView
-from web_app.views.space.update import space_edit
+from web_app.views.space.update import space_update
 from web_app.views.space.sender.detail import SpaceDetailView as SpaceDetailFormViewSender
 from web_app.views.space.sender.request.list import RequestListView as RequestListViewSender
 from web_app.views.request.create import request_create

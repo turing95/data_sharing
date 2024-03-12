@@ -228,10 +228,13 @@ class SpaceSettingsForm(ModelForm):
         return instance
 
 
-class SpaceUpdateForm(ModelForm):
+class SpaceTitleForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled Space*'),
                                                           'class': css_classes.text_space_title_input,
-                                                          'hx-trigger': 'blur changed'}),
+                                                          'hx-trigger': 'blur changed',
+                                                          'hx-target': 'closest form',
+                                                          'hx-swap': 'outerHTML'
+                                                          }),
                             label=_('Space title - MANDATORY'),
                             help_text=_("It will be displayed to your invitees"))
 
@@ -242,7 +245,7 @@ class SpaceUpdateForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
-            self.fields['title'].widget.attrs['hx-post'] = reverse_lazy('space_edit',
+            self.fields['title'].widget.attrs['hx-post'] = reverse_lazy('space_update',
                                                                         kwargs={'space_uuid': self.instance.pk})
 
 class SpaceContentForm(ModelForm):
