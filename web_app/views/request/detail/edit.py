@@ -1,19 +1,19 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.http import HttpResponseBadRequest, HttpResponse
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.decorators.http import require_GET
-from django.views.generic import FormView
+from django.views.decorators.http import require_GET, require_POST
+from django.views.generic import FormView, TemplateView
 from django.utils.translation import gettext_lazy as _
 from web_app.mixins import SpaceSideBarMixin, RequestMixin, SubscriptionMixin, RequestTabMixin
 from web_app.models import Request, File, Sender
-from web_app.forms import RequestForm, FileSelectForm
+from web_app.forms import FileSelectForm
 
 
-class RequestEditView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, RequestTabMixin, FormView):
-    model = Request
-    form_class = RequestForm
+class RequestEditView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, RequestTabMixin,
+                      TemplateView):
     template_name = 'private/request/edit.html'
     _request = None  # Placeholder for the cached object
 
@@ -21,31 +21,42 @@ class RequestEditView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, Space
         context = super().get_context_data(*args, **kwargs)
         context['request_form'] = True
         context['request_tab']['edit']['active'] = True
-        context['submit_text'] = _('Save request')
         context['space'] = self.get_request().space
         return context
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['instance'] = self.get_request()
-        return kwargs
 
-    def form_valid(self, form):
-        form.save()
-        if self.request.headers.get('HX-Request'):
-            messages.success(self.request, _('Request saved'))
-            return render(self.request, 'private/request/request_form.html',
-                          {'from_htmx': True, 'form': self.form_class(instance=self.get_request())})
-        return super().form_valid(form)
+@login_required
+@require_POST
+def request_title_update(request, request_uuid):
+    if request.method == 'POST':
+        kezyy_request = get_object_or_404(Request, pk=request_uuid)
+        form = kezyy_request.title_form(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Request saved'))
+            return render(request, 'private/request/request_title_form.html',
+                          {'from_htmx': True, 'form': kezyy_request.title_form()})
+        messages.error(request, form.errors)
+        return render(request, 'private/request/request_title_form.html',
+                      {'from_htmx': True, 'form': kezyy_request.title_form()})
+    return HttpResponseBadRequest()
 
-    def form_invalid(self, form):
 
-        if self.request.headers.get('HX-Request'):
-            title_errors = form.errors.get('title', None)
-            messages.error(self.request, title_errors)
-            return render(self.request, 'private/request/request_form.html',
-                          {'from_htmx': True, 'form': self.form_class(instance=self.get_request())})
-        return self.render_to_response(self.get_context_data(form=form))
+@login_required
+@require_POST
+def request_instructions_update(request, request_uuid):
+    if request.method == 'POST':
+        kezyy_request = get_object_or_404(Request, pk=request_uuid)
+        form = kezyy_request.instructions_form(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Request saved'))
+            return render(request, 'private/request/request_instructions_form.html',
+                          {'from_htmx': True, 'form': kezyy_request.instructions_form()})
+        messages.error(request, form.errors)
+        return render(request, 'private/request/request_instructions_form.html',
+                      {'from_htmx': True, 'form': kezyy_request.instructions_form()})
+    return HttpResponseBadRequest()
 
 
 @login_required

@@ -1,11 +1,13 @@
 {% extends "private/_base.html" %}
 {% load static i18n %}
 {% block private_content %}
-    {% include 'private/request/request_form.html' with form=form %}
+    {% include 'private/request/request_title_form.html' with form=kezyy_request.title_form %}
 
     {% include "components/tabs_menu.html" with tabs_data=request_tab  pk=kezyy_request.pk %}
 
     {% block request_content %}
+        {% include 'private/request/request_instructions_form.html' with form=kezyy_request.instructions_form %}
+
         {% for input_request in kezyy_request.input_requests_position_sorted %}
             {% include 'private/request/input_request_content.html' with input_request=input_request %}
         {% endfor %}

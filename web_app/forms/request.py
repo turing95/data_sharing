@@ -146,8 +146,6 @@ class UploadRequestForm(ModelForm):
         self.fields['rename'].widget.attrs['hx-post'] = update_url
         self.fields['destination_type'].widget.attrs[
             'hx-post'] = reverse_lazy('get_destination_logo', kwargs={'upload_request_uuid': self.instance.pk})
-        self.fields['destination_type'].widget.attrs[
-            'hx-post'] = reverse_lazy('get_destination_logo', kwargs={'upload_request_uuid': self.instance.pk})
         self.fields['destination_type_select'].widget.attrs[
             'hx-get'] = reverse_lazy('select_destination_type', kwargs={'upload_request_uuid': self.instance.pk})
         '''self.fields['destination_type_select'].widget.attrs[
@@ -215,20 +213,33 @@ class TextRequestForm(ModelForm):
         self.fields['title'].widget.attrs['hx-post'] = update_url
 
 
-class RequestForm(ModelForm):
+class RequestTitleForm(ModelForm):
     instance: Request
 
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
                                                           'required': 'required',
                                                           'class': css_classes.text_space_title_input,
                                                           'hx-trigger': 'blur changed',
-                                                          'hx-target': 'closest .request-form',
+                                                          'hx-target': '#request-title-form',
                                                           'hx-swap': 'outerHTML'
                                                           }),
                             label=_('Title - MANDATORY'),
                             help_text=_(
                                 """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""),
                             error_messages={'required': _("The title can't be empty.")})
+
+    class Meta:
+        model = Request
+        fields = ['title']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        update_url = reverse_lazy('request_title_update', kwargs={'request_uuid': self.instance.pk})
+        self.fields['title'].widget.attrs['hx-post'] = update_url
+
+
+class RequestInstructionsForm(ModelForm):
+    instance: Request
 
     instructions = forms.CharField(
         required=False,
@@ -237,7 +248,7 @@ class RequestForm(ModelForm):
             'rows': 3,
             'class': css_classes.text_area,
             'hx-trigger': 'blur changed',
-            'hx-target': 'closest .request-form',
+            'hx-target': '#request-instructions-form',
             'hx-swap': 'outerHTML'
         }),
         label=_('Instructions'),
@@ -247,10 +258,9 @@ class RequestForm(ModelForm):
 
     class Meta:
         model = Request
-        fields = ['title', 'instructions']
+        fields = ['instructions']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        update_url = reverse_lazy('request_detail', kwargs={'request_uuid': self.instance.pk})
-        self.fields['title'].widget.attrs['hx-post'] = update_url
+        update_url = reverse_lazy('request_instructions_update', kwargs={'request_uuid': self.instance.pk})
         self.fields['instructions'].widget.attrs['hx-post'] = update_url

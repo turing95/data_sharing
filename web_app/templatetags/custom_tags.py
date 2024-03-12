@@ -83,7 +83,7 @@ def render_input_request_activate_toggle(input_request, **kwargs):
     return ToggleWidget(**kwargs).get_context('input_request_active_toggle', input_request.is_active,
                                               {'hx-post': reverse('input_request_update_active',
                                                                   kwargs={'input_request_uuid': input_request.pk}),
-                                               'hx-trigger': "click", 'hx-swap': 'none'})
+                                               'hx-trigger': "click", 'hx-swap': 'outerHTML','hx-target':'closest .toggle-container'})
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")

@@ -12,8 +12,8 @@ from web_app.views.space.detail.history import HistoryListView
 from web_app.views.space.update import space_edit
 from web_app.views.space.sender.detail import SpaceDetailView as SpaceDetailFormViewSender
 from web_app.views.space.sender.request.list import RequestListView as RequestListViewSender
-from web_app.views.request.create import RequestCreateView, request_create
-from web_app.views.request.detail.edit import RequestEditView, request_modal
+from web_app.views.request.create import request_create
+from web_app.views.request.detail.edit import RequestEditView, request_modal,request_title_update,request_instructions_update
 from web_app.views.request.detail.content import RequestDetailView
 from web_app.views.request.update import request_update_order
 from web_app.views.space.detail.section.update import space_section_update_order
