@@ -205,12 +205,12 @@ class RequestTabMixin:
                 'url_name': 'request_edit',
                 'svg_path': paths['edit']
             },
-            'history': {
-                'active': False,
-                'alternative_text': _('History'),
-                'url_name': 'request_detail',
-                'svg_path': paths['history']
-            },
+            # 'history': {
+            #     'active': False,
+            #     'alternative_text': _('History'),
+            #     'url_name': 'request_detail',
+            #     'svg_path': paths['history']
+            # },
 
         }
         return data
