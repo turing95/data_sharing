@@ -22,13 +22,6 @@ class SettingsView(LoginRequiredMixin, SubscriptionMixin, TemplateView):
         context = super().get_context_data(*args, **kwargs)
         context['user_form'] = UserForm(instance=self.request.user)
         try:
-            context['sender_notifications_form'] = SenderNotificationsSettingsForm(
-                instance=self.request.user.sender_notifications_settings)
-        except SenderNotificationsSettings.DoesNotExist:
-            SenderNotificationsSettings.objects.create(user=self.request.user)
-            context['sender_notifications_form'] = SenderNotificationsSettingsForm(
-                instance=self.request.user.sender_notifications_settings)
-        try:
             context['notifications_form'] = NotificationsSettingsForm(instance=self.request.user.notifications_settings)
         except NotificationsSettings.DoesNotExist:
             NotificationsSettings.objects.create(user=self.request.user)

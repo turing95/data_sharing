@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
-from web_app.models import Space, UploadRequest, GenericDestination
+from web_app.models import Space, UploadRequest, GenericDestination, InputRequest
 from django.utils.translation import gettext_lazy as _
 
 class AccountDeleteView(LoginRequiredMixin, DeleteView):
@@ -19,9 +19,9 @@ class AccountDeleteView(LoginRequiredMixin, DeleteView):
         User = get_user_model()
         user = User.objects.get(pk=user_pk)
         spaces_to_delete = Space.objects.filter(user_id=user_pk,organization__in=user.created_organizations.all())
-        UploadRequest.objects.filter(space__in=spaces_to_delete).update(is_active=False)
+        InputRequest.objects.filter(request__space__in=spaces_to_delete).update(is_active=False)
         dests = GenericDestination.objects.filter(user=user)
-        UploadRequest.objects.filter(destinations__in=dests).update(is_active=False)
+        InputRequest.objects.filter(upload_request__destinations__in=dests).update(is_active=False)
         dests.update(is_active=False)
         spaces_to_delete.update(is_deleted=True)
         user.delete()

@@ -53,11 +53,6 @@
             <p>{% translate 'No providers available.' %}</p>
         {% endif %}
     </div>
-    <div class="flex-col mb-8">
-        <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Sender Notifications' %}</h2>
-        {% include 'private/settings/notifications_form.html' with form=sender_notifications_form %}
-
-    </div>
 
     <div class="flex-col mb-8">
         <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Close your account' %}</h2>

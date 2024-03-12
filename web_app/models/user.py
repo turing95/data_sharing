@@ -69,9 +69,8 @@ class User(AbstractUser):
         return MicrosoftService(self.microsoft_account).get_sites()
 
     def setup(self, request):
-        from web_app.models import Organization, SenderNotificationsSettings, NotificationsSettings, \
+        from web_app.models import Organization, NotificationsSettings, \
             OrganizationInvitation
-        SenderNotificationsSettings.objects.get_or_create(user=self)
         NotificationsSettings.objects.get_or_create(user=self)
 
         # If no personal org, create it and add it to the user's organizations
