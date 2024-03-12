@@ -14,7 +14,7 @@ class SpaceSideBarMixin(SideBarMixin):
 
 class SpacesView(AccessMixin, SubscriptionMixin, OrganizationMixin, SpaceSideBarMixin, ListView):
     model = Space
-    template_name = "private/space/list.html"
+    template_name = "private/space/list/list.html"
     paginate_by = 12
 
     def dispatch(self, request, *args, **kwargs):
