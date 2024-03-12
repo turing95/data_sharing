@@ -3,13 +3,17 @@ from django.urls import reverse_lazy
 
 from web_app.forms import css_classes
 from web_app.forms.widgets import SearchContactWidget, SenderToggle
-from web_app.models import Sender
+from web_app.models import Sender, Contact
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
 
 class SenderCreateForm(ModelForm):
-    contact_id = forms.CharField(required=False, widget=forms.HiddenInput())
+    contact = forms.ModelChoiceField(
+        queryset=Contact.objects.all(),
+        widget=forms.HiddenInput(),
+        required=False
+    )
     email = forms.EmailField(
         required=False,
 
@@ -22,7 +26,7 @@ class SenderCreateForm(ModelForm):
 
     class Meta:
         model = Sender
-        fields = ['email', 'contact_id', 'is_active']
+        fields = ['email', 'contact', 'is_active']
 
     def __init__(self, *args, **kwargs):
         self.organization = kwargs.pop('organization')
