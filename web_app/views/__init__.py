@@ -23,7 +23,7 @@ from web_app.views.upload_request.update import upload_request_update
 from web_app.views.input_request.update import input_request_update_active,input_request_update_complete
 from web_app.views.input_request.detail import input_request_detail_show
 from web_app.views.output.update import accept as output_accept, reject as output_reject
-from web_app.views.output.detail import output_detail
+from web_app.views.output.detail import output_detail, output_reject_modal
 from web_app.views.upload_request.detail import upload_request_detail_show
 from web_app.views.text_request.update import text_request_update
 from web_app.views.text_request.create import text_request_create
@@ -70,7 +70,7 @@ from web_app.views.company.detail.contacts import CompanyContactsListView
 from web_app.views.company.detail.files import CompanyFilesListView
 from web_app.views.company.update import company_update_name, company_update
 from web_app.views.company_field.update import company_field_update, company_field_update_modal, company_field_update_value, company_field_fill_form_refresh
-from web_app.views.company_field.create import company_field_create_modal, CompanyFieldCreateView
+from web_app.views.company_field.create import company_field_create_modal, company_field_create
 from web_app.views.company_field.delete import company_field_delete
 from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal

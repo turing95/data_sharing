@@ -76,6 +76,8 @@ urlpatterns = [
          name='output_accept'),
     path('outputs/<uuid:output_uuid>/reject/', views.output_reject,
          name='output_reject'),
+    path('outputs/<uuid:output_uuid>/reject-modal/', views.output_reject_modal,
+         name='output_reject_modal'),
     path('outputs/<uuid:output_uuid>/detail/', views.output_detail,
          name='output_detail'),
     path('upload-requests/<uuid:upload_request_uuid>/detail-show/', views.upload_request_detail_show,
@@ -138,7 +140,7 @@ urlpatterns = [
     path('senders/sender-upload-notification/', views.sender_upload_notification, name='sender_upload_notification'),
     path('companies/<uuid:company_uuid>/update-name/', views.company_update_name, name='company_update_name'),
     path('companies/<uuid:company_uuid>/update/', views.company_update, name='company_update'),
-    path('companies/<uuid:company_uuid>/company-fields/create/', views.CompanyFieldCreateView.as_view(),
+    path('companies/<uuid:company_uuid>/company-fields/create/', views.company_field_create,
          name='company_field_create'),
     # company_uuid
     path('companies/<uuid:company_uuid>/company-field/create/modal/', views.company_field_create_modal,

@@ -1,4 +1,4 @@
-<div class="output-content flex justify-between" hx-get="{% url 'output_detail' output.pk %}" hx-trigger="{{ output.update_event }}" hx-swap="outerHTML">
+<div class="output-content flex justify-between" hx-get="{% url 'output_detail' output.pk %}" hx-trigger="{{ output.update_event }} from:body" hx-swap="outerHTML">
     <div class="flex">
         <span>{{ output.content }}</span>
         {% if output.status == output.OutputStatus.PENDING %}
@@ -28,8 +28,11 @@
             <span class="sr-only">Accept</span>
         </button>
         <button type="button"
-                hx-post="{% url 'output_reject' output.pk %}"
-                hx-swap="none"
+                hx-get="{% url 'output_reject_modal' output.pk %}"
+                hx-target="#htmx-modal"
+                data-modal-target="{{ output.pk }}_reject_modal"
+                data-modal-toggle="{{ output.pk }}_reject_modal"
+                hx-swap="innerHTML"
                 class="inline-flex items-center text-sm font-medium text-center text-red-500 border border-red-500 files-push max-h-5 hover:bg-red-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-red-300 me-2 ">
             <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                  height="24" fill="none" viewBox="0 0 24 24">
