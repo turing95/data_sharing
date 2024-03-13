@@ -4,11 +4,20 @@
     {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
 {% endwith %}
 {% if show_more %}
+    <div class="mb-3">
+        <div class="flex items-center mb-2 space-x-2">
+            <label for="{{ upload_request.request_form.instructions.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ upload_request.request_form.instructions.label }} </label>
+            {% include 'components/tooltip.html' with content=upload_request.request_form.instructions.help_text target=upload_request.request_form.instructions.name %}
+        </div>
+        {{ upload_request.request_form.instructions }}
+        {% include 'components/forms/error_widget.html' with errors=upload_request.request_form.instructions.errors %}
+    </div>
     <div class="mb-6">
         <div class="flex items-center mb-2 space-x-2">
-            <label for="{{ upload_request.request_form.some_destination_field.id_for_label }}"
+            <label for="{{ upload_request.request_form.destination_id.id_for_label }}"
                    class="block text-sm font-medium text-gray-900 dark:text-white">{% translate 'Destination folder' %} </label>
-            {% include 'components/tooltip.html' with content=upload_request.request_form.destination_id.help_text target_prefix='requests' target=upload_request.request_form.destination_type.name %}
+            {% include 'components/tooltip.html' with content=upload_request.request_form.destination_id.help_text target_prefix='requests' target=upload_request.request_form.destination_id.name %}
         </div>
 
 
@@ -100,5 +109,5 @@
 {% endif %}
 
 {% if from_htmx %}
-    {% include 'private/request/upload_request_detail_button.html' with upload_request=upload_request from_htmx=from_htmx %}
+    {% include 'private/request/input_request_detail_button.html' with input_request=upload_request.input_request from_htmx=from_htmx %}
 {% endif %}

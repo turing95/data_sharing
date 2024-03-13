@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load custom_tags %}
+{% with 'loader_'|addstr:text_request.uuid as loader_id %}
+    {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
+{% endwith %}
+{% if show_more %}
+    <div class="mb-3">
+        <div class="flex items-center mb-2 space-x-2">
+            <label for="{{ text_request.request_form.instructions.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ text_request.request_form.instructions.label }} </label>
+            {% include 'components/tooltip.html' with content=text_request.request_form.instructions.help_text target=text_request.request_form.instructions.name %}
+        </div>
+        {{ text_request.request_form.instructions }}
+        {% include 'components/forms/error_widget.html' with errors=text_request.request_form.instructions.errors %}
+    </div>
+{% endif %}
+
+{% if from_htmx %}
+    {% include 'private/request/input_request_detail_button.html' with input_request=text_request.input_request from_htmx=from_htmx %}
+{% endif %}

@@ -1,0 +1,14 @@
+{% load static %}
+{% load custom_tags %}
+{% load i18n %}
+<div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700">
+    <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
+        <a href="{% url 'request_detail' kezyy_request.uuid %}">{{ kezyy_request.title }}</a>
+    </div>
+    <div class="inline-flex items-center justify-center">
+        {% translate 'completed inputs' %} {{ kezyy_request.completed_input_requests.count }}/
+        {{ kezyy_request.input_requests.count }}
+    </div>
+
+</div>
+

@@ -27,5 +27,5 @@ def file_section_update(request, file_section_uuid):
                                            company=file_section.space.company)
                 file_section.file = file
                 file_section.save()
-        return render(request, 'private/space/detail/file_section.html', {'file_section': file_section})
+        return render(request, 'private/space/detail/content/file_section.html', {'file_section': file_section})
     return HttpResponseBadRequest()

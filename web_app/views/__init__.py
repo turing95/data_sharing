@@ -20,7 +20,9 @@ from web_app.views.space.detail.section.update import space_section_update_order
 from web_app.views.request.sender import RequestDetailView as SenderRequestDetailView
 from web_app.views.upload_request.create import upload_request_create
 from web_app.views.upload_request.update import upload_request_update
-from web_app.views.request.update import input_request_update_active,input_request_update_complete
+from web_app.views.input_request.update import input_request_update_active,input_request_update_complete
+from web_app.views.input_request.detail import input_request_detail_show
+from web_app.views.output.update import accept as output_accept, reject as output_reject
 from web_app.views.upload_request.detail import upload_request_detail_show
 from web_app.views.text_request.update import text_request_update
 from web_app.views.text_request.create import text_request_create
