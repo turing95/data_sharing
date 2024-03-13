@@ -5,12 +5,18 @@
 
 {% block space_content %}
 
+
+
+
         <div class="mt-6 mb-6 pl-2.5">
             <div class="flex justify-end">
                 {% url 'request_create' space.pk as request_create_url %}
                 {% translate 'Add request' as button_text %}
                 {% include "components/buttons/generic.html" with button_text=button_text href=request_create_url extra_classes="my-2" %}
             </div>
+
+           {% include 'private/space/detail/request/table.html'%}
+
             {% for kezyy_request in space.requests.all reversed %}
                 {% include 'private/space/detail/request/request_row.html' with kezyy_request=kezyy_request %}
             {% endfor %}
