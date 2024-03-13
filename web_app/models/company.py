@@ -28,3 +28,7 @@ class CompanyField(BaseModel):
     def form(self, request_post=None):
         from web_app.forms import CompanyFieldFillForm
         return CompanyFieldFillForm(request_post, instance=self, prefix=self.pk)
+    
+    @property
+    def update_event(self):
+        return f'companyFieldUpdated-{self.pk}'

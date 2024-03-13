@@ -148,6 +148,8 @@ urlpatterns = [
     path('company-fields/<uuid:company_field_uuid>/update/modal/', views.company_field_update_modal,
          name='company_field_update_modal'),
     path('company-fields/<uuid:company_field_uuid>/update/', views.company_field_update, name='company_field_update'),
+    path('company-fields/<uuid:company_field_uuid>/fill-form/refresh/', views.company_field_fill_form_refresh,
+         name='company_field_fill_form_refresh'),
     path('company-fields/<uuid:company_field_uuid>/delete/', views.company_field_delete, name='company_field_delete'),
     path('company-fields/<uuid:company_field_uuid>/update-value/', views.company_field_update_value,
          name='company_field_update_value'),
