@@ -14,12 +14,14 @@ def accept(request, output_uuid):
         output = get_object_or_404(Output, pk=output_uuid)
         output.status = Output.OutputStatus.ACCEPTED
         output.save()
-        messages.success(request, _('Accepted'))
-        return render(
+        response = render(
             request,
             'components/messages.html',
             {'from_htmx': True}
         )
+        response['HX-Trigger'] = output.update_event
+        return response
+
     return HttpResponseBadRequest()
 
 
@@ -30,10 +32,11 @@ def reject(request, output_uuid):
         output = get_object_or_404(Output, pk=output_uuid)
         output.status = Output.OutputStatus.REJECTED
         output.save()
-        messages.success(request, _('Rejected'))
-        return render(
+        response = render(
             request,
             'components/messages.html',
             {'from_htmx': True}
         )
+        response['HX-Trigger'] = output.update_event
+        return response
     return HttpResponseBadRequest()

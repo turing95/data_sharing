@@ -7,18 +7,17 @@
     {% render_input_request_complete_toggle input_request %}
     {% render_input_request_activate_toggle input_request %}
 </div>
-<div class="upload-request-content flex justify-between">
+
     {% if upload_request.multiple_files %}
         {% for output in upload_request.outputs %}
 
-            {% include 'private/request/output.html' with output=output content=output.file.name %}
+            {% include 'private/request/output.html' with output=output %}
         {% endfor %}
     {% else %}
         {% if upload_request.last_output %}
             {% with output=upload_request.last_output %}
-                {% include 'private/request/output.html' with output=output content=output.file.name %}
+                {% include 'private/request/output.html' with output=output %}
 
             {% endwith %}
         {% endif %}
     {% endif %}
-</div>

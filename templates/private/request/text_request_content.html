@@ -8,12 +8,10 @@
 
 </div>
 
-<div class="text-request-content flex justify-between">
-    {% if text_request.last_output %}
-        {% with output=text_request.last_output content=text_request.last_output.text_output.text %}
-            {% include 'private/request/output.html' with output=output content=content %}
-        {% endwith %}
-    {% endif %}
+{% if text_request.last_output %}
+    {% with output=text_request.last_output %}
+        {% include 'private/request/output.html' with output=output %}
+    {% endwith %}
+{% endif %}
 
-</div>
 
