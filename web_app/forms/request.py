@@ -24,6 +24,15 @@ class UploadRequestForm(ModelForm):
                             label=_('Request title - MANDATORY'),
                             help_text=_(
                                 """This will be displayed to your invitees. Assign a meaningful title to your request to help your invitees understand what you are asking for."""))
+    instructions = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'placeholder': _('Add instructions here'),
+                                    'rows': 3,
+                                    'class': css_classes.text_area,'hx-trigger': 'blur changed'}),
+        label=_('Instructions'),
+        help_text=_("""Use this to provide information for your invitees.
+                                Leave blank if not necessary.
+                            """))
 
     # handling of the parametric file name
     file_naming_formula = forms.CharField(required=False,
@@ -132,7 +141,7 @@ class UploadRequestForm(ModelForm):
 
     class Meta:
         model = UploadRequest
-        fields = ['title', 'file_naming_formula', 'multiple_files', 'file_template']
+        fields = ['title','instructions', 'file_naming_formula', 'multiple_files', 'file_template']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -140,6 +149,7 @@ class UploadRequestForm(ModelForm):
         update_url = reverse_lazy('upload_request_update', kwargs={'upload_request_uuid': self.instance.pk})
         self.fields['destination_id'].widget.attrs['hx-post'] = update_url
         self.fields['title'].widget.attrs['hx-post'] = update_url
+        self.fields['instructions'].widget.attrs['hx-post'] = update_url
         self.fields['file_naming_formula'].widget.attrs['hx-post'] = update_url
         self.fields['file_template'].widget.attrs['hx-post'] = update_url
         self.fields['multiple_files'].widget.attrs['hx-post'] = update_url
@@ -201,16 +211,26 @@ class UploadRequestForm(ModelForm):
 
 class TextRequestForm(ModelForm):
     title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
-                                                                          'class': css_classes.text_request_title_input}))
+                                                                          'class': css_classes.text_request_title_input,'hx-trigger': 'blur changed'}))
+    instructions = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'placeholder': _('Add instructions here'),
+                                    'rows': 3,
+                                    'class': css_classes.text_area,'hx-trigger': 'blur changed'}),
+        label=_('Instructions'),
+        help_text=_("""Use this to provide information for your invitees.
+                                Leave blank if not necessary.
+                            """))
 
     class Meta:
         model = TextRequest
-        fields = ['title']
+        fields = ['title','instructions']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         update_url = reverse_lazy('text_request_update', kwargs={'text_request_uuid': self.instance.pk})
         self.fields['title'].widget.attrs['hx-post'] = update_url
+        self.fields['instructions'].widget.attrs['hx-post'] = update_url
 
 
 class RequestTitleForm(ModelForm):

@@ -164,8 +164,10 @@ class Request(BaseModel, ActiveModel):
 
 
 class InputRequest(BaseModel):
-    upload_request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE, null=True)
-    text_request = models.ForeignKey('TextRequest', on_delete=models.CASCADE, null=True)
+    upload_request = models.OneToOneField('UploadRequest', on_delete=models.CASCADE, null=True,
+                                          related_name='input_request')
+    text_request = models.OneToOneField('TextRequest', on_delete=models.CASCADE, null=True,
+                                        related_name='input_request')
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='input_requests', null=True)
     position = models.PositiveIntegerField(default=1)
     is_complete = models.BooleanField(default=False)
