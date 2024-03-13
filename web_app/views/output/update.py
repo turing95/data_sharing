@@ -14,7 +14,6 @@ def accept(request, output_uuid):
         output = get_object_or_404(Output, pk=output_uuid)
         output.status = Output.OutputStatus.ACCEPTED
         output.save()
-        messages.success(request, _('Accepted'))
         response = render(
             request,
             'components/messages.html',
@@ -33,7 +32,6 @@ def reject(request, output_uuid):
         output = get_object_or_404(Output, pk=output_uuid)
         output.status = Output.OutputStatus.REJECTED
         output.save()
-        messages.success(request, _('Rejected'))
         response = render(
             request,
             'components/messages.html',
