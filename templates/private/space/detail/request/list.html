@@ -4,24 +4,35 @@
 {% load i18n %}
 
 {% block space_content %}
+<div class="mt-6 mb-6 pl-2.5">
+    <div class="flex justify-end">
+        {% url 'request_create' space.pk as request_create_url %}
+        {% translate 'Add request' as button_text %}
+        {% include "components/buttons/generic.html" with button_text=button_text href=request_create_url extra_classes="my-2" %}
+    </div>
 
 
-
-
-        <div class="mt-6 mb-6 pl-2.5">
-            <div class="flex justify-end">
-                {% url 'request_create' space.pk as request_create_url %}
-                {% translate 'Add request' as button_text %}
-                {% include "components/buttons/generic.html" with button_text=button_text href=request_create_url extra_classes="my-2" %}
-            </div>
-
-           {% include 'private/space/detail/request/table.html'%}
-
-            {% for kezyy_request in space.requests.all reversed %}
-                {% include 'private/space/detail/request/request_row.html' with kezyy_request=kezyy_request %}
-            {% endfor %}
-
+    <div class="w-full">
+    <div class="flex text-left border-b border-gray-200">
+        <div class="flex-1 px-4 py-2 font-bold min-w-[150px] shrink">
+            {% translate 'Title' %}
         </div>
+        <div class="flex-1 px-4 py-2 font-bold min-w-[150px] shrink">
+            {% translate 'Inputs Status' %}
+        </div>
+        <div class="flex-1 px-4 py-2 font-bold min-w-[150px] shrink">
+            {% translate 'Last upload' %}
+        </div>
+        <div class="flex-1 px-4 py-2 font-bold min-w-[150px] shrink">
+            {% translate 'Status' %}
+        </div>
+        <div class="px-4 py-2 ml-auto font-bold w-[40px]">
+        </div>
+    </div>
+    {% for kezyy_request in space.requests.all reversed %}
+        {% include 'private/space/detail/request/request_row.html' with kezyy_request=kezyy_request %}
+    {% endfor %}
+</div> 
 
 {% endblock space_content %}
 

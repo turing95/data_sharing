@@ -141,6 +141,13 @@ class Request(BaseModel, ActiveModel):
         # the number of all input requests that have a position greater than or equal to the inserting position must be incremented by 1
         InputRequest.objects.filter(request=self, position__gte=inserting_position).update(
             position=models.F('position') + 1)
+    
+    @property
+    def latest_event_date(self):
+        from django.db.models import Max
+        events = self.events
+        latest_event_date = events.aggregate(Max('created_at'))['created_at__max']
+        return latest_event_date
 
     @property
     def input_requests_position_sorted(self):
