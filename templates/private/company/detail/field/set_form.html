@@ -4,18 +4,20 @@
 {%if from_htmx %}
     hx-swap-oob="true"
 {% endif %}
-{% if field_uuid %}
-    hx-post=" {% url 'company_field_update' field_uuid %}" 
+
+{% if field %}
+    hx-post="{% url 'company_field_update' field.pk %}" 
 {% else %}
-    hx-post=" {% url 'company_field_create' company_uuid %}"
+    hx-post="{% url 'company_field_create' company_uuid %}"
 {% endif %}
-{% if field_uuid %}
+
+{% if field %}
 hx-target='this'
 {% else %}
 hx-target='#custom_field_container'
 {% endif %}
 
-{%if field_uuid %}
+{%if field %}
     hx-swap='outerHTML'
 {%else%}
     hx-swap='beforeend'

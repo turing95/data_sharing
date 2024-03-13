@@ -11,17 +11,7 @@
 {#               required="" id="id_title">{% endcomment %}#}
 {#    </h2>#}
     {% include 'private/company/detail/company_name.html' with form=company.name_form %}
-<script>
-    document.addEventListener('puttanaMadonna', function(event) {
-        console.log('Event received diopporco:', event);
-        // Your handling code here
-    });
-    document.addEventListener('closeModal', function(event) {
-        console.log('Event received diopporco:', event);
-        // Your handling code here
-    });
 
-</script>
 
     <!-- TABS MENU-->
     {% include "components/tabs_menu.html" with tabs_data=company_tab  pk=company.pk %}
