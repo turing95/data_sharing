@@ -23,6 +23,7 @@ from web_app.views.upload_request.update import upload_request_update
 from web_app.views.input_request.update import input_request_update_active,input_request_update_complete
 from web_app.views.input_request.detail import input_request_detail_show
 from web_app.views.output.update import accept as output_accept, reject as output_reject
+from web_app.views.output.detail import output_detail
 from web_app.views.upload_request.detail import upload_request_detail_show
 from web_app.views.text_request.update import text_request_update
 from web_app.views.text_request.create import text_request_create

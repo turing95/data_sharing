@@ -20,3 +20,15 @@ class Output(BaseModel):
     text_output = models.OneToOneField('TextOutput', on_delete=models.CASCADE, related_name='output', null=True,
                                        blank=True)
     file = models.OneToOneField('File', on_delete=models.CASCADE, related_name='file', null=True, blank=True)
+
+    @property
+    def content(self):
+        if self.text_output:
+            return self.text_output.text
+        elif self.file:
+            return self.file.name
+        return None
+
+    @property
+    def update_event(self):
+        return f'outputUpdated-{self.pk}'

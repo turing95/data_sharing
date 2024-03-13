@@ -1,42 +1,43 @@
-<div class="flex">
-    <span>{{ content }}</span>
-    {% if output.status == output.OutputStatus.PENDING %}
+<div class="output-content flex justify-between" hx-get="{% url 'output_detail' output.pk %}" hx-trigger="{{ output.update_event }}" hx-swap="outerHTML">
+    <div class="flex">
+        <span>{{ output.content }}</span>
+        {% if output.status == output.OutputStatus.PENDING %}
 
-        <span class="ml-2 text-sm min-w-[75px] text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] flex items-center justify-center">{{ output.status }}</span>
-    {% elif  output.status == output.OutputStatus.ACCEPTED %}
-        <span class="ml-2 text-sm min-w-[75px] text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] flex items-center justify-center">{{ output.status }}</span>
+            <span class="ml-2 text-sm min-w-[75px] text-blue-800 z-[2] align-middle peer-checked:inline-block bg-blue-200 rounded-full px-[6px] flex items-center justify-center">{{ output.status }}</span>
+        {% elif  output.status == output.OutputStatus.ACCEPTED %}
+            <span class="ml-2 text-sm min-w-[75px] text-green-800 z-[2] align-middle peer-checked:inline-block bg-green-200 rounded-full px-[6px] flex items-center justify-center">{{ output.status }}</span>
 
-    {% elif output.status == output.OutputStatus.REJECTED %}
-        <span class="ml-2 text-sm min-w-[75px]  text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] flex items-center justify-center">{{ output.status }}</span>
+        {% elif output.status == output.OutputStatus.REJECTED %}
+            <span class="ml-2 text-sm min-w-[75px]  text-red-800 z-[2] align-middle peer-checked:inline-block bg-red-200 rounded-full px-[6px] flex items-center justify-center">{{ output.status }}</span>
 
-    {% endif %}
-    <span>{{ output.sender_event.notes|default_if_none:"" }}</span>
+        {% endif %}
+        <span>{{ output.sender_event.notes|default_if_none:"" }}</span>
 
+    </div>
+    <div>
+        <button type="button"
+                hx-post="{% url 'output_accept' output.pk %}"
+                hx-swap="none"
+                class="inline-flex items-center text-sm font-medium text-center text-green-500 border border-green-500 files-push max-h-5 hover:bg-green-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-green-300 me-2">
+            <svg class="w-4 h-4" aria-hidden="true"
+                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+            </svg>
+            <span class="sr-only">Accept</span>
+        </button>
+        <button type="button"
+                hx-post="{% url 'output_reject' output.pk %}"
+                hx-swap="none"
+                class="inline-flex items-center text-sm font-medium text-center text-red-500 border border-red-500 files-push max-h-5 hover:bg-red-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-red-300 me-2 ">
+            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                 height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M6 18 17.94 6M18 18 6.06 6"/>
+            </svg>
+
+            <span class="sr-only">Reject</span>
+        </button>
+    </div>
 </div>
-<div>
-    <button type="button"
-            hx-post="{% url 'output_accept' output.pk %}"
-            hx-swap="none"
-            class="inline-flex items-center text-sm font-medium text-center text-green-500 border border-green-500 files-push max-h-5 hover:bg-green-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-green-300 me-2">
-        <svg class="w-4 h-4" aria-hidden="true"
-             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
-        </svg>
-        <span class="sr-only">Accept</span>
-    </button>
-    <button type="button"
-            hx-post="{% url 'output_reject' output.pk %}"
-            hx-swap="none"
-            class="inline-flex items-center text-sm font-medium text-center text-red-500 border border-red-500 files-push max-h-5 hover:bg-red-700 hover:text-white focus:ring-2 focus:outline-none focus:ring-red-300 me-2 ">
-        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-             height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M6 18 17.94 6M18 18 6.06 6"/>
-        </svg>
-
-        <span class="sr-only">Reject</span>
-    </button>
-</div>
-
