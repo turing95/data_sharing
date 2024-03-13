@@ -35,3 +35,6 @@ def input_request_update_complete(request, input_request_uuid):
         input_request.save()
         return HttpResponse()
     return HttpResponseBadRequest()
+
+
+
