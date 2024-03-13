@@ -70,7 +70,7 @@ from web_app.views.company.detail.contacts import CompanyContactsListView
 from web_app.views.company.detail.files import CompanyFilesListView
 from web_app.views.company.update import company_update_name, company_update
 from web_app.views.company_field.update import company_field_update, company_field_update_modal, company_field_update_value, company_field_fill_form_refresh
-from web_app.views.company_field.create import company_field_create_modal, CompanyFieldCreateView
+from web_app.views.company_field.create import company_field_create_modal, company_field_create
 from web_app.views.company_field.delete import company_field_delete
 from web_app.views.language import custom_set_language
 from web_app.views.contact.create import ContactCreateView, contact_create_modal

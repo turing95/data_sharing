@@ -30,8 +30,6 @@
                 {{ field.form.value }}
                 {% include 'components/forms/error_widget.html' with errors=form.value.errors %}
             </div>
-            {% if from_htmx %}
-            {% include 'components/messages.html' %}
-        {% endif %}
+
     </form>
 </div>

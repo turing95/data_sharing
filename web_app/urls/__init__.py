@@ -140,7 +140,7 @@ urlpatterns = [
     path('senders/sender-upload-notification/', views.sender_upload_notification, name='sender_upload_notification'),
     path('companies/<uuid:company_uuid>/update-name/', views.company_update_name, name='company_update_name'),
     path('companies/<uuid:company_uuid>/update/', views.company_update, name='company_update'),
-    path('companies/<uuid:company_uuid>/company-fields/create/', views.CompanyFieldCreateView.as_view(),
+    path('companies/<uuid:company_uuid>/company-fields/create/', views.company_field_create,
          name='company_field_create'),
     # company_uuid
     path('companies/<uuid:company_uuid>/company-field/create/modal/', views.company_field_create_modal,
