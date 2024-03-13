@@ -32,3 +32,7 @@ class Output(BaseModel):
     @property
     def update_event(self):
         return f'outputUpdated-{self.pk}'
+
+    def reject_form(self,request_post=None):
+        from web_app.forms import OutputRejectForm
+        return OutputRejectForm(request_post)

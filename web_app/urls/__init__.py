@@ -76,6 +76,8 @@ urlpatterns = [
          name='output_accept'),
     path('outputs/<uuid:output_uuid>/reject/', views.output_reject,
          name='output_reject'),
+    path('outputs/<uuid:output_uuid>/reject-modal/', views.output_reject_modal,
+         name='output_reject_modal'),
     path('outputs/<uuid:output_uuid>/detail/', views.output_detail,
          name='output_detail'),
     path('upload-requests/<uuid:upload_request_uuid>/detail-show/', views.upload_request_detail_show,
