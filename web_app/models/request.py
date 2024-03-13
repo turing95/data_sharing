@@ -75,13 +75,13 @@ class UploadRequest(BaseModel):
         return UploadRequestForm(instance=self, user=self.request.space.user, prefix=self.uuid)
 
     @property
-    def files(self):
-        from web_app.models import File
-        return File.objects.filter(sender_event__upload_request=self)
+    def outputs(self):
+        from web_app.models import Output
+        return Output.objects.filter(sender_event__upload_request=self)
 
     @property
-    def last_file(self):
-        return self.files.order_by('-created_at').first()
+    def last_output(self):
+        return self.outputs.order_by('-created_at').first()
 
 
 class TextRequest(BaseModel):
@@ -92,6 +92,15 @@ class TextRequest(BaseModel):
     def request_form(self):
         from web_app.forms import TextRequestForm
         return TextRequestForm(instance=self, prefix=self.uuid)
+
+    @property
+    def outputs(self):
+        from web_app.models import Output
+        return Output.objects.filter(sender_event__text_request=self)
+
+    @property
+    def last_output(self):
+        return self.outputs.order_by('-created_at').first()
 
 
 class Request(BaseModel, ActiveModel):

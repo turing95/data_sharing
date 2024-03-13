@@ -3,7 +3,8 @@ from django.http import Http404
 from django.forms import formset_factory
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
-from web_app.models import Space, GenericDestination, Sender, SenderEvent, UploadRequest, File, Request
+from web_app.models import Space, GenericDestination, Sender, SenderEvent, UploadRequest, File, Request, TextOutput, \
+    Output
 from web_app.forms import InputRequestForm, BaseInputRequestFormSet
 from django.utils.translation import gettext_lazy as _
 
@@ -60,21 +61,27 @@ class RequestDetailView(TemplateView):
                                 error = True
                                 messages.error(request, _(f"An error occurred while uploading file {uploaded_file.name}"))
                                 continue
-                            File.objects.create(original_name=uploaded_file.name,
+                            file = File.objects.create(original_name=uploaded_file.name,
                                                 size=uploaded_file.size,
                                                 file_type=uploaded_file.content_type,
                                                 destination=destination,
                                                 uid=file_url,
                                                 sender_event=sender_event,
                                                 company=company)
+                            Output.objects.create(file=file, company=company, sender_event=sender_event)
+
                 elif form.input_request.text_request:
                     text_request = form.input_request.text_request
                     sender_event = SenderEvent.objects.create(sender=sender,
                                                               text_request=text_request,
                                                               request=text_request.request,
                                                               space=text_request.request.space,
-                                                              event_type=SenderEvent.EventType.TEXT_CREATED,
-                                                              text=form.cleaned_data.get('text'))
+                                                              event_type=SenderEvent.EventType.TEXT_CREATED
+                                                              )
+                    text_output = TextOutput.objects.create(text=form.cleaned_data.get('text'),
+                                                            sender_event=sender_event,
+                                                            company=company)
+                    Output.objects.create(text_output=text_output,company=company,sender_event=sender_event)
                 if sender_event is not None:
                     sender_event.notify(request.session.get('sender_upload_notification', False))
                 if not error:

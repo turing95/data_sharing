@@ -5,10 +5,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class File(BaseModel):
-    class FileStatus(models.TextChoices):
-        ACCEPTED = 'Accepted', _('Accepted')
-        REJECTED = 'Rejected', _('Rejected')
-        PENDING = 'Pending', _('Pending')
 
     original_name = models.CharField(max_length=255)
     uid = models.CharField(max_length=255, default='noid')
@@ -17,11 +13,6 @@ class File(BaseModel):
     sender_event = models.ForeignKey('SenderEvent', on_delete=models.CASCADE, related_name='files',null=True,blank=True)
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='files', null=True)
     destination = models.ForeignKey('GenericDestination', on_delete=models.CASCADE, related_name='files', null=True)
-    status = models.CharField(
-        max_length=50,
-        choices=FileStatus.choices,
-        default=FileStatus.PENDING,
-    )
 
     def __str__(self):
         return self.name
