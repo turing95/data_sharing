@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<form
+<form id="field_create_update_form"
 {%if from_htmx %}
     hx-swap-oob="true"
 {% endif %}
@@ -9,12 +9,12 @@
 {% else %}
     hx-post=" {% url 'company_field_create' company_uuid %}"
 {% endif %}
-id="field_create_update_form"
-{%if field_uuid %}
-    hx-target="#field_form_{{field_uuid}}"
+{% if field_uuid %}
+hx-target='this'
 {% else %}
-    hx-target='#custom_field_container_id'
+hx-target='#custom_field_container'
 {% endif %}
+
 {%if field_uuid %}
     hx-swap='outerHTML'
 {%else%}

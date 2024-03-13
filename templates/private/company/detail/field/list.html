@@ -1,4 +1,4 @@
-<div id="custom_field_container_id" class="custom-fields-container">
+<div id="custom_field_container" class="custom-fields-container">
     {% for field in company.fields.all %}
         {% include 'private/company/detail/field/fill_form.html' with field=field %}
     {% endfor %}

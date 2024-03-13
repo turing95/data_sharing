@@ -36,7 +36,7 @@ class ContactCreateView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixi
             form = ContactForm(organization=Organization.objects.get(pk=self.get_organization().pk))
             return render(self.request,
                           'private/space/create/components/contacts/create_form.html',
-                          {'form': form, 'show_msg': True, 'from_htmx': True, 'organization_uuid': self.get_organization().pk}
+                          {'form': form, 'from_htmx': True, 'organization_uuid': self.get_organization().pk}
                           )
         return super().form_valid(form)
 
@@ -44,7 +44,7 @@ class ContactCreateView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixi
         if self.request.headers.get('HX-Request'):
             return render(self.request,
                           'private/space/create/components/contacts/create_form.html',
-                          {'form': form, 'show_msg': True, 'from_htmx': True, 'organization_uuid': self.get_organization().pk}
+                          {'form': form, 'from_htmx': True, 'organization_uuid': self.get_organization().pk}
                           )
         return super().form_invalid(form)
     def get_form_kwargs(self):

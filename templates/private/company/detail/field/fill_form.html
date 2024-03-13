@@ -1,5 +1,5 @@
 {% load i18n %}
-<form id="field_form_{{field.pk}}">
+<form id="field_form_{{field.pk}}" hx-post="{% url 'company_field_update_value' field.pk %}" hx-target="this" hx-swap="outerHTML" hx-trigger="company-field-update-{{field.pk}}">
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=field.form.non_field_errors %}
         <div class="mx-2">
@@ -28,4 +28,7 @@
             {{ field.form.value }}
             {% include 'components/forms/error_widget.html' with errors=form.value.errors %}
         </div>
+        {% if from_htmx %}
+        {% include 'components/messages.html' %}
+    {% endif %}
 </form>

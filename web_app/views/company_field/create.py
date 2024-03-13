@@ -24,7 +24,9 @@ class CompanyFieldCreateView(CompanyMixin, SideBarMixin,  SubscriptionMixin, For
         field.company = self.get_company()
         field.save()
         messages.success(self.request, _('New field created successfully'))
-        response = render(self.request, 'private/company/detail/field/fill_form.html',  {'field': field})
+        response = render(self.request, 'private/company/detail/field/fill_form.html',  {'field': field,
+                                                                                        'from_htmx': True,
+                                                                                        })
         response['HX-Trigger'] = 'closeModal'
         return response
 
@@ -32,7 +34,7 @@ class CompanyFieldCreateView(CompanyMixin, SideBarMixin,  SubscriptionMixin, For
         if self.request.headers.get('HX-Request'):
             return render(self.request,
                           'private/company/detail/field/set_form.html',
-                          {'form': form, 'show_msg': True, 'from_htmx': True, 'company_uuid': self.get_company().pk, 'confirm_button_text': _('Create field')}
+                          {'form': form, 'from_htmx': True, 'company_uuid': self.get_company().pk, 'confirm_button_text': _('Create field')}
                           )
     
         return super().form_invalid(form)
