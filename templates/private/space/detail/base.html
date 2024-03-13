@@ -97,7 +97,7 @@
             {% csrf_token %}
             {% block sorted_sections %}
                 {% for space_section in space.sections_position_sorted %}
-                    {% include 'private/space/detail/space_section.html' with space_section=space_section %}
+                    {% include 'private/space/detail/content/space_section.html' with space_section=space_section %}
                 {% endfor %}
             {% endblock sorted_sections %}
 

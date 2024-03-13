@@ -15,7 +15,7 @@ def text_section_create(request, space_uuid):
 
     if request.headers.get('HX-Request'):
         return render(request,
-                      'private/space/detail/space_section.html',
+                      'private/space/detail/content/space_section.html',
                       {'space_section': space_section,
                        'space': space}
                       )
