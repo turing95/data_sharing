@@ -96,7 +96,7 @@ class CompanyFieldSetForm(forms.ModelForm):
         label = self.cleaned_data['label']        
 
         if self.company.fields.filter(label=label).exclude(pk=self.instance.pk).exists():
-            raise ValidationError("A field with this label already exists for this company.")
+            raise ValidationError(_("A field with this label already exists for this company."))
         
         return label
     

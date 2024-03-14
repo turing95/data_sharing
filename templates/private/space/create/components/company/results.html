@@ -1,26 +1,25 @@
-{% if companies %}
-    <ul class="border-b border-gray-200 folders-list border-x">
+
+<ul class="border-b border-gray-200 folders-list border-x">
+    {% if companies %}
         {% for company in companies %}
             <li class="cursor-pointer hover:bg-gray-200"
                 onclick="selectCompany(this,'{{ company.name }}','{{ company.uuid }}')">
                 <span class="ml-2">{{ company.name }}</span>
             </li>
         {% endfor %}
-    </ul>
-{% else %}
-    {% if search_query %}
-        <ul class="border-b border-gray-200 folders-list border-x">
-            <li class="border-b border-gray-400">
-                <span class="ml-2">No companies found</span>
-            </li>
-            <li class="cursor-pointer hover:bg-gray-200"
-                hx-trigger="click"
-                hx-target="#search-companies-results-container"
-                hx-swap="innerHTML"
-                hx-vals='{"name": "{{ search_query }}"}'
-                hx-post="{% url 'company_create' organization.pk %}">
-                <span class="ml-2">Create company {{ search_query }}</span>
-            </li>
-        </ul>
+    {% elif search_query %}
+        <li class="">
+            <span class="ml-2">No companies found</span>
+        </li>
     {% endif %}
-{% endif %}
+    {% if search_query %}        
+                <li class="border-t border-gray-400 cursor-pointer hover:bg-gray-200 hover:text-marian-blue-400"
+                    hx-trigger="click"
+                    hx-target="#search-companies-results-container"
+                    hx-swap="innerHTML"
+                    hx-vals='{"name": "{{ search_query }}"}'
+                    hx-post="{% url 'company_create' organization.pk %}">
+                    <span class="ml-2">Create company<span> <span class="font-semibold"> {{ search_query }}</span>
+                </li>       
+    {% endif %}
+</ul>

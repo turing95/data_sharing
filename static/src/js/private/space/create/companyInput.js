@@ -7,4 +7,11 @@ export function selectCompany(liElement,companyName,companyId) {
     let companyInput = widgetContainer.querySelector('input[type="hidden"]');
     searchContainer.querySelector('input').value = companyName;
     companyInput.value = companyId;
+    // clean error messages if any
+    let parentElement = searchContainer.parentNode.parentNode;
+    let errorMessages = parentElement.querySelectorAll('.error-message');
+    errorMessages.forEach(errorMessage => {
+        errorMessage.textContent = ''; // Clear the content of each error message
+    });
+   
 }

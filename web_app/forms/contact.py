@@ -62,3 +62,14 @@ class ContactForm(forms.ModelForm):
         super(ContactForm, self).__init__(*args, **kwargs)
         self.fields['search_company'].widget.attrs['hx-post'] = reverse('search_companies', kwargs={
             'organization_uuid': self.organization.pk})
+        if self.instance.company:
+            self.fields['search_company'].initial = self.instance.company.name
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        search_company = cleaned_data.get('search_company', None)
+        if search_company:
+            company = cleaned_data.get('company', None)
+            if company and company.name != search_company:
+                self.add_error('search_company', _("Select a company from the list or leave blank."))
+        return cleaned_data

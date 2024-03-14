@@ -44,7 +44,8 @@
                    class="font-medium text-gray-900 dark:text-white">{{ form.company.label }}
             </label>
         {% include 'private/space/create/components/company/widget.html' with input=form.company search_input=form.search_company %}
-            {% include 'components/forms/error_widget.html' with errors=form.company.errors %}
+        {% include 'components/forms/error_widget.html' with errors=form.search_company.errors %}
+        {% include 'components/forms/error_widget.html' with errors=form.company.errors %}
         </div>
 
     </div>
