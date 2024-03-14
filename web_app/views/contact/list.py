@@ -11,7 +11,7 @@ from web_app.models import Organization
 
 class ContactListView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixin, ListView):
     template_name = "private/contact/list.html"
-    paginate_by = 12
+    paginate_by = 2
 
     def get_queryset(self):
         return self.get_organization().contacts.all().order_by('first_name', 'last_name', 'created_at')
