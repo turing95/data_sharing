@@ -28,10 +28,12 @@ class ContactCreateView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixi
         if self.request.headers.get('HX-Request'):
             messages.success(self.request, _('Contact created successfully'))
             form = ContactForm(organization=Organization.objects.get(pk=self.get_organization().pk))
-            return render(self.request,
-                          'private/space/create/components/contacts/create_form.html',
-                          {'form': form, 'from_htmx': True, 'organization_uuid': self.get_organization().pk}
-                          )
+            response = render(self.request,
+                              'private/space/create/components/contacts/create_form.html',
+                              {'form': form, 'from_htmx': True, 'organization_uuid': self.get_organization().pk}
+                              )
+            response['HX-Trigger'] = 'closeModal'
+            return response
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -41,6 +43,7 @@ class ContactCreateView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixi
                           {'form': form, 'from_htmx': True, 'organization_uuid': self.get_organization().pk}
                           )
         return super().form_invalid(form)
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['organization'] = self.get_organization()
@@ -52,8 +55,8 @@ class ContactCreateView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixi
 def contact_create_modal(request, organization_uuid):
     if request.method == 'GET':
         form = ContactForm(
-                           initial={'email': request.GET.get('search-contacts', None)},
-                           organization=Organization.objects.get(pk=organization_uuid))
+            initial={'email': request.GET.get('search-contacts', None)},
+            organization=Organization.objects.get(pk=organization_uuid))
         return render(request,
                       'private/space/create/components/contacts/create_modal.html',
                       {'form': form, 'organization_uuid': organization_uuid})

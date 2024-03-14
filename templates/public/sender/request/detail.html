@@ -101,7 +101,7 @@
             {% translate 'Get an email with a summary of the files uploaded' as receipt_text %}
             {% include 'components/tooltip.html' with content=receipt_text target='sender_upload_notification' %}
 
-            {% if space.upload_after_deadline or not space.deadline_expired %}
+            {% if kezyy_request.upload_after_deadline or not kezyy_request.deadline_expired %}
                 <div class="sticky flex justify-center bottom-4">
                     {% translate 'Confirm and Upload' as confirm_text %}
                     {% include "components/buttons/submit_with_loader.html" with button_text=confirm_text loading="True" extra_classes="min-w-[200px] min-h-[42px]" %}
