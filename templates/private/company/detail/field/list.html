@@ -1,5 +1,9 @@
-<div id="custom_field_container" class="custom-fields-container">
+<div id="custom_field_container">
     {% for field in company.fields.all %}
-        {% include 'private/company/detail/field/fill_form.html' with field=field %}
+        <div id="field_form_container_{{ field.pk }}"
+             hx-get="{% url 'company_field_detail' field.pk %}"
+             hx-trigger="{{ field.update_event }} from:body">
+            {% include 'private/company/detail/field/fill_form.html' with field=field %}
+        </div>
     {% endfor %}
 </div>

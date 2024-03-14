@@ -16,9 +16,10 @@ class Company(BaseModel):
         from web_app.forms import CompanyNameForm
         return CompanyNameForm(request_post, instance=self)
 
-    def form(self,request_post=None):
+    def form(self, request_post=None):
         from web_app.forms import CompanyForm
         return CompanyForm(request_post, instance=self, organization=self.organization)
+
 
 class CompanyField(BaseModel):
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='fields')
@@ -28,7 +29,7 @@ class CompanyField(BaseModel):
     def form(self, request_post=None):
         from web_app.forms import CompanyFieldFillForm
         return CompanyFieldFillForm(request_post, instance=self, prefix=self.pk)
-    
+
     @property
     def update_event(self):
-        return f'companyFieldUpdated-{self.pk}'
+        return f'companyUpdate-{self.pk}'
