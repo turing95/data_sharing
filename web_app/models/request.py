@@ -107,6 +107,11 @@ class Request(BaseModel, ActiveModel):
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='requests')
     title = models.CharField(max_length=250, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
+    deadline = models.DateTimeField(null=True, blank=True)
+    upload_after_deadline = models.BooleanField(default=False)
+    notify_deadline = models.BooleanField(default=False)
+    deadline_notice_days = models.PositiveSmallIntegerField(blank=True, null=True)
+    deadline_notice_hours = models.PositiveSmallIntegerField(blank=True, null=True)
 
     def get_new_position(self):
         from web_app.models import InputRequest
@@ -153,8 +158,8 @@ class Request(BaseModel, ActiveModel):
         return RequestTitleForm(request_post, instance=self)
 
     def instructions_form(self, request_post=None):
-        from web_app.forms import RequestInstructionsForm
-        return RequestInstructionsForm(request_post, instance=self)
+        from web_app.forms import RequestEditForm
+        return RequestEditForm(request_post, instance=self)
 
 
 class InputRequest(BaseModel):

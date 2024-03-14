@@ -1,4 +1,6 @@
 import re
+
+import arrow
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from web_app.models import Request, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy, TextRequest
 from web_app.forms import css_classes
@@ -27,8 +29,8 @@ class UploadRequestForm(ModelForm):
     instructions = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={'placeholder': _('Add instructions here'),
-                                    'rows': 3,
-                                    'class': css_classes.text_area,'hx-trigger': 'blur changed'}),
+                                     'rows': 3,
+                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed'}),
         label=_('Instructions'),
         help_text=_("""Use this to provide information for your invitees.
                                 Leave blank if not necessary.
@@ -141,7 +143,7 @@ class UploadRequestForm(ModelForm):
 
     class Meta:
         model = UploadRequest
-        fields = ['title','instructions', 'file_naming_formula', 'multiple_files', 'file_template']
+        fields = ['title', 'instructions', 'file_naming_formula', 'multiple_files', 'file_template']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -211,12 +213,13 @@ class UploadRequestForm(ModelForm):
 
 class TextRequestForm(ModelForm):
     title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
-                                                                          'class': css_classes.text_request_title_input,'hx-trigger': 'blur changed'}))
+                                                                          'class': css_classes.text_request_title_input,
+                                                                          'hx-trigger': 'blur changed'}))
     instructions = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={'placeholder': _('Add instructions here'),
-                                    'rows': 3,
-                                    'class': css_classes.text_area,'hx-trigger': 'blur changed'}),
+                                     'rows': 3,
+                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed'}),
         label=_('Instructions'),
         help_text=_("""Use this to provide information for your invitees.
                                 Leave blank if not necessary.
@@ -224,7 +227,7 @@ class TextRequestForm(ModelForm):
 
     class Meta:
         model = TextRequest
-        fields = ['title','instructions']
+        fields = ['title', 'instructions']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -258,7 +261,7 @@ class RequestTitleForm(ModelForm):
         self.fields['title'].widget.attrs['hx-post'] = update_url
 
 
-class RequestInstructionsForm(ModelForm):
+class RequestEditForm(ModelForm):
     instance: Request
 
     instructions = forms.CharField(
@@ -276,11 +279,110 @@ class RequestInstructionsForm(ModelForm):
                                 Leave blank if not necessary.
                             """))
 
+    deadline = forms.DateTimeField(
+        required=False,
+        widget=forms.DateTimeInput(attrs={
+            'type': 'datetime-local',
+            'class': css_classes.datetime_input
+        }, format='%Y-%m-%dT%H:%M:%S'),
+        help_text=_("""The deadline applies to all invitees and is visible in their upload page.
+                                You can customize what happens once the deadline is reached.
+                                """))
+    deadline_notice_days = forms.IntegerField(
+        required=False,
+        min_value=0,
+        max_value=15,
+        localize=True,
+        widget=forms.NumberInput(attrs={
+            'placeholder': _('Days'),
+            'step': '1',  # Set step for increments
+            'value': '1',  # Default value
+            'class': css_classes.inline_text_input
+        }),
+        label=_('Days before deadline'),
+        help_text=_('Number of days before the deadline to send notifications.')
+    )
+
+    deadline_notice_hours = forms.IntegerField(
+        required=False,
+        localize=True,
+        min_value=0,
+        max_value=23,
+        widget=forms.NumberInput(attrs={
+            'placeholder': _('Hours'),
+            'step': '1',  # Set step for increments
+            'value': '0',  # Default value
+            'class': css_classes.inline_text_input
+        }),
+        label=_('Hours before deadline'),
+        help_text=_('Number of hours before the deadline to send notifications.')
+    )
+
+    upload_after_deadline = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
+        required=False,
+        label=_('Uploads after deadline'),
+        help_text=_("""Your invitees will be able to upload files after the deadline if this is enabled.
+        You can change this setting at any time."""))
+
+    notify_deadline = forms.BooleanField(
+        widget=ToggleWidget(label_on=_('Notification'),
+                            label_off=_('Notification')),
+        required=False,
+        label=_('Notify deadline'),
+        help_text=_("""Set a number of days and hours before the deadline to send a notification to your invitees."""))
+
     class Meta:
         model = Request
-        fields = ['instructions']
+        fields = ['instructions', 'deadline', 'notify_deadline', 'upload_after_deadline', 'deadline_notice_days',
+                  'deadline_notice_hours']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         update_url = reverse_lazy('request_instructions_update', kwargs={'request_uuid': self.instance.pk})
         self.fields['instructions'].widget.attrs['hx-post'] = update_url
+
+    def clean_deadline(self):
+        deadline = self.cleaned_data.get('deadline', None)
+
+        if deadline is not None:
+            '''# Ensure the datetime is timezone-aware
+            if not is_aware(deadline):
+                deadline = make_aware(deadline)'''
+            # Convert to UTC
+            deadline = arrow.get(deadline).to('UTC')
+            if deadline < arrow.utcnow():
+                if self.instance is None or self.instance.deadline != deadline:
+                    raise forms.ValidationError(
+                        _("Deadline must be in the future.")
+                    )
+
+            return deadline.isoformat()
+        return deadline
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        # Assuming you have a field for deadline in your form
+        deadline = cleaned_data.get('deadline')
+        notify_deadline = cleaned_data.get('notify_deadline')
+        deadline_notice_days = cleaned_data.get('deadline_notice_days')
+        deadline_notice_hours = cleaned_data.get('deadline_notice_hours')
+
+        if not deadline or not notify_deadline:
+            cleaned_data['deadline_notice_days'] = None
+            cleaned_data['deadline_notice_hours'] = None
+        else:
+            # Calculate notification datetime in the server timezone
+            notification_dt = arrow.get(deadline).shift(days=-deadline_notice_days, hours=-deadline_notice_hours)
+
+            # Get the current time in the server timezone
+            current_dt = arrow.now()
+
+            # Check if current time is past the notification time
+            if current_dt > notification_dt:
+                error_message = _("Current time is past the deadline notification time.")
+                self.add_error('deadline_notice_days', error_message)
+                self.add_error('deadline_notice_hours', error_message)
+
+        return cleaned_data

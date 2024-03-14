@@ -18,12 +18,6 @@ class Space(BaseModel):
     company = models.ForeignKey('Company', null=True, on_delete=models.SET_NULL, related_name='spaces')
     is_public = models.BooleanField(default=False)
     instructions = models.TextField(null=True, blank=True)
-    deadline = models.DateTimeField(null=True, blank=True)
-    upload_after_deadline = models.BooleanField(default=False)
-    notify_deadline = models.BooleanField(default=False)
-    notify_invitation = models.BooleanField(default=False)
-    deadline_notice_days = models.PositiveSmallIntegerField(blank=True, null=True)
-    deadline_notice_hours = models.PositiveSmallIntegerField(blank=True, null=True)
     timezone = models.CharField(
         max_length=50,
         choices=TIMEZONE_CHOICES
