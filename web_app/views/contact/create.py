@@ -10,13 +10,7 @@ from django.views.decorators.http import require_POST, require_GET
 from web_app.forms import ContactForm
 from web_app.models import Contact, Organization
 from django.utils.translation import gettext_lazy as _
-
-
-class ContactSideBarMixin(SideBarMixin):
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['sidebar']['contact'] = True
-        return data
+from web_app.mixins import ContactSideBarMixin
 
 
 class ContactCreateView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixin, FormView):

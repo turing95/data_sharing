@@ -1,6 +1,13 @@
 {% extends "private/_base.html" %}
 {% block private_content %}
-    <form action="{% url 'contact_create' organization.pk %}" id="create-contact-form" method="POST">
+
+<form id="create-contact-form" method="POST"
+    {% if contact %} 
+        action="{% url 'contact_edit' contact.pk %}"
+    {% else %}
+        action="{% url 'contact_create' organization.pk %}"
+    {% endif %} >
+
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -24,6 +31,13 @@
             </label>
             {{ form.email }}
             {% include 'components/forms/error_widget.html' with errors=form.email.errors %}
+        </div>
+        <div class="mx-2">
+            <label for="{{ form.phone.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.phone.label }}
+            </label>
+            {{ form.phone }}
+            {% include 'components/forms/error_widget.html' with errors=form.phone.errors %}
         </div>
         <div class="mx-2">
             <label for="{{ form.company.id_for_label }}"

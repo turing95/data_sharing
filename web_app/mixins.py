@@ -7,7 +7,7 @@ from djstripe.settings import djstripe_settings
 from web_app.utils.svg_icon_paths import svg_icons_path as paths
 from django.utils.translation import gettext_lazy as _
 
-from web_app.models import Organization, Space, Request, Company, Sender, Grant
+from web_app.models import Organization, Space, Request, Company, Sender, Grant, Contact
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -64,6 +64,25 @@ class SpaceMixin:
         data['organization'] = self.get_space().organization
         return data
 
+class ContactMixin:
+    _contact = None  # Placeholder for the cached object
+    _organization = None  # Placeholder for the cached object
+
+    def get_contact(self) -> Contact:
+        if self._contact is None:
+            self._contact = get_object_or_404(Contact, pk=self.kwargs.get('contact_uuid'))
+        return self._contact        
+
+    def get_organization(self) -> Organization:
+        if self._organization is None:
+            self._organization = self.get_contact().organization 
+        return self._organization
+    
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['organization'] = self.get_organization()
+        data['contact'] = self.get_organization()
+        return data
 
 class CompanyMixin:
     _company = None  # Placeholder for the cached object
