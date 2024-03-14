@@ -1,9 +1,7 @@
 import {initEmailInput} from "./emailInput.js";
-import {initDeadlineInput} from "./deadlineInput.js";
 export function initForm(){
     preventFormSubmit();
     initEmailInput();
-    initDeadlineInput();
 }
 function preventFormSubmit(){
     const form = document.querySelector('form');

@@ -36,3 +36,30 @@ export function toggleRename(checkbox) {
         childDiv1.classList.add('hidden');
     }
 }
+
+
+export function toggleDeadlineSettings(elOrEvent) {
+    const deadlineEl = elOrEvent.target || elOrEvent;
+    const parentDiv = deadlineEl.closest('#deadline-section');
+    const childDiv1 = parentDiv.querySelector('.deadline-settings-container');
+    if (!childDiv1) return;
+
+    if (isNaN(deadlineEl.value)) {
+        childDiv1.classList.remove('hidden');
+    } else {
+        childDiv1.classList.add('hidden');
+    }
+}
+
+export function toggleDeadlineNotify(checkboxOrEvent) {
+    const checkbox = checkboxOrEvent.target || checkboxOrEvent;
+    const parentDiv = checkbox.closest('#deadline-section');
+    const childDiv1 = parentDiv.querySelector('.deadline-notice-container');
+    if (!childDiv1) return;
+
+    if (checkbox.checked) {
+        childDiv1.classList.remove('hidden');
+    } else {
+        childDiv1.classList.add('hidden');
+    }
+}

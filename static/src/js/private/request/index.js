@@ -1,5 +1,6 @@
 import {handleTagDropdownChange,toggleRename} from './eventHandlers.js';
 import {selectFolder}  from './folderPicker.js'
+import {initDeadlineInput} from "./deadlineInput.js";
 
 window.toggleRename = toggleRename;
 window.handleTagDropdownChange = handleTagDropdownChange;
@@ -8,9 +9,16 @@ export function initRequestForms() {
     document.querySelectorAll('input[id*="-rename"]').forEach(element => {
             toggleRename(element);
     });
+    initDeadlineInput();
+
 }
 document.addEventListener('DOMContentLoaded', function () {
     initRequestForms();
+});
+
+
+document.body.addEventListener('htmx:afterSwap', function(evt) {
+    initDeadlineInput();
 });
 
 document.addEventListener('htmx:afterRequest', function (evt) {

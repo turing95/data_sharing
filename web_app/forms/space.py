@@ -104,64 +104,10 @@ class SpaceSettingsForm(ModelForm):
         help_text=_("""These instructions will be displayed to your invitees. They refer to all the file requests in the space.
                             """))
 
-    deadline = forms.DateTimeField(
-        required=False,
-        widget=forms.DateTimeInput(attrs={
-            'type': 'datetime-local',
-            'class': css_classes.datetime_input
-        }, format='%Y-%m-%dT%H:%M:%S'),
-        help_text=_("""The deadline applies to all invitees and is visible in their upload page.
-                                You can customize what happens once the deadline is reached.
-                                """))
-    deadline_notice_days = forms.IntegerField(
-        required=False,
-        min_value=0,
-        max_value=15,
-        localize=True,
-        widget=forms.NumberInput(attrs={
-            'placeholder': _('Days'),
-            'step': '1',  # Set step for increments
-            'value': '1',  # Default value
-            'class': css_classes.inline_text_input
-        }),
-        label=_('Days before deadline'),
-        help_text=_('Number of days before the deadline to send notifications.')
-    )
-
-    deadline_notice_hours = forms.IntegerField(
-        required=False,
-        localize=True,
-        min_value=0,
-        max_value=23,
-        widget=forms.NumberInput(attrs={
-            'placeholder': _('Hours'),
-            'step': '1',  # Set step for increments
-            'value': '0',  # Default value
-            'class': css_classes.inline_text_input
-        }),
-        label=_('Hours before deadline'),
-        help_text=_('Number of hours before the deadline to send notifications.')
-    )
-
-    upload_after_deadline = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
-        required=False,
-        label=_('Uploads after deadline'),
-        help_text=_("""Your invitees will be able to upload files after the deadline if this is enabled.
-        You can change this setting at any time."""))
-
-    notify_deadline = forms.BooleanField(
-        widget=ToggleWidget(label_on=_('Notification'),
-                            label_off=_('Notification')),
-        required=False,
-        label=_('Notify deadline'),
-        help_text=_("""Set a number of days and hours before the deadline to send a notification to your invitees."""))
 
     class Meta:
         model = Space
-        fields = ['is_public', 'instructions', 'senders_emails', 'deadline', 'notify_deadline',
-                  'notify_invitation', 'company',
-                  'upload_after_deadline', 'deadline_notice_days', 'deadline_notice_hours']
+        fields = ['is_public', 'instructions', 'senders_emails', 'notify_invitation', 'company']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -176,50 +122,7 @@ class SpaceSettingsForm(ModelForm):
             self.fields['senders_emails'].initial = ','.join(
                 [sender.email for sender in space.senders.filter(is_active=True)])
 
-    def clean_deadline(self):
-        deadline = self.cleaned_data.get('deadline', None)
 
-        if deadline is not None:
-            '''# Ensure the datetime is timezone-aware
-            if not is_aware(deadline):
-                deadline = make_aware(deadline)'''
-            # Convert to UTC
-            deadline = arrow.get(deadline).to('UTC')
-            if deadline < arrow.utcnow():
-                if self.instance is None or self.instance.deadline != deadline:
-                    raise forms.ValidationError(
-                        _("Deadline must be in the future.")
-                    )
-
-            return deadline.isoformat()
-        return deadline
-
-    def clean(self):
-        cleaned_data = super().clean()
-
-        # Assuming you have a field for deadline in your form
-        deadline = cleaned_data.get('deadline')
-        notify_deadline = cleaned_data.get('notify_deadline')
-        deadline_notice_days = cleaned_data.get('deadline_notice_days')
-        deadline_notice_hours = cleaned_data.get('deadline_notice_hours')
-
-        if not deadline or not notify_deadline:
-            cleaned_data['deadline_notice_days'] = None
-            cleaned_data['deadline_notice_hours'] = None
-        else:
-            # Calculate notification datetime in the server timezone
-            notification_dt = arrow.get(deadline).shift(days=-deadline_notice_days, hours=-deadline_notice_hours)
-
-            # Get the current time in the server timezone
-            current_dt = arrow.now()
-
-            # Check if current time is past the notification time
-            if current_dt > notification_dt:
-                error_message = _("Current time is past the deadline notification time.")
-                self.add_error('deadline_notice_days', error_message)
-                self.add_error('deadline_notice_hours', error_message)
-
-        return cleaned_data
 
     def save(self, commit=True):
         instance = super().save()

@@ -125,6 +125,7 @@ class RequestMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['kezyy_request'] = self.get_request()
+        data['request_js'] = True
         data['space'] = self.get_request().space
         data['organization'] = self.get_request().space.organization
         data['back'] = {'url': reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk}),
