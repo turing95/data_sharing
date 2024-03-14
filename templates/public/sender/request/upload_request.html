@@ -37,7 +37,7 @@
              aria-labelledby="accordion-open-heading-{{ forloop.counter0 }}">
 
             <div class="col-span-2 p-1 sm:col-span-1">
-                {% if space.upload_after_deadline or not space.deadline_expired %}
+                {% if kezyy_request.upload_after_deadline or not kezyy_request.deadline_expired %}
                     <div class="flex items-center justify-center w-full">
                         <label for="{{ form.files.id_for_label }}"
                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -98,7 +98,26 @@
                 </div>
             {% endif %}
 
+            <div class="p-5"
+                 hx-get="{% url 'sender_history_table' space.uuid %}?request_uuid={{ form.upload_request.uuid }}&sender_uuid={{ sender.uuid }}"
+                 hx-trigger="intersect once, filesUpdated from:document"
+                 hx-target="#history-table-{{ forloop.counter0 }}"
+                 hx-indicator="#loading-indicator-history-table-{{ forloop.counter0 }}">
+                <div class="flex items-center mb-3">
+                    <h3 class="text-sm font-semibold ">{% translate 'Previous uploads' %}</h3>
 
+                    <!-- Loading Indicator -->
+                    <div id="loading-indicator-history-table-{{ forloop.counter0 }}"
+                         class="items-center justify-center opacity-0 htmx-indicator">
+                        <div role="status" class="ml-2 spinner">
+                            {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="history-table-{{ forloop.counter0 }}">
+                </div>
+            </div>
         </div>
     </div>
 
