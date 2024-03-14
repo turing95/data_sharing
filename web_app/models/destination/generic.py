@@ -6,9 +6,9 @@ from django.db import models
 
 class GenericDestination(PolymorphicRelationModel, ActiveModel):
     tag = models.CharField(max_length=50)
-    request = models.ForeignKey('UploadRequest', on_delete=models.CASCADE, related_name='destinations', blank=True,
+    request = models.ForeignKey('UploadRequest', on_delete=models.SET_NULL, related_name='destinations', blank=True,
                                 null=True)
-    space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='destinations', blank=True, null=True)
+    space = models.ForeignKey('Space', on_delete=models.SET_NULL, related_name='destinations', blank=True, null=True)
     social_account = models.ForeignKey(SocialAccount, on_delete=models.SET_NULL, null=True, blank=True)
     user = models.ForeignKey('web_app.User', on_delete=models.CASCADE, null=True)
 

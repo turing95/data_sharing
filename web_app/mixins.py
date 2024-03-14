@@ -277,7 +277,6 @@ class SpaceSenderMixin:
 
             filter_criteria = {
                 'pk': space_id,
-                'is_deleted': False,
                 'senders__uuid': sender.pk
             }
             self._space = get_object_or_404(Space, **filter_criteria)

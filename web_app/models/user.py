@@ -34,8 +34,7 @@ class User(AbstractUser):
         customer, _created = Customer.get_or_create(
             subscriber=self
         )
-        if not customer.subscription and self.spaces.filter(
-                is_deleted=False).count() >= settings.MAX_FREE_SPACES:
+        if not customer.subscription and self.spaces.count() >= settings.MAX_FREE_SPACES:
             return False
         return True
 
@@ -88,7 +87,7 @@ class User(AbstractUser):
         from web_app.models import NotificationsSettings
         from web_app.utils import get_base_context_for_email
         try:
-            if sender_event.space.is_deleted is False and self.notifications_settings.on_sender_upload:
+            if self.notifications_settings.on_sender_upload:
                 context = get_base_context_for_email()
                 pre_header_text_1 = _('New Upload to')
                 pre_header_text_2 = _('in space')

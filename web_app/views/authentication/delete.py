@@ -23,7 +23,6 @@ class AccountDeleteView(LoginRequiredMixin, DeleteView):
         dests = GenericDestination.objects.filter(user=user)
         InputRequest.objects.filter(upload_request__destinations__in=dests).update(is_active=False)
         dests.update(is_active=False)
-        spaces_to_delete.update(is_deleted=True)
         user.delete()
         messages.success(self.request, _('Account successfully deleted'))
         return super().form_valid(form)

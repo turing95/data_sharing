@@ -13,4 +13,4 @@ class CompanyContactsListView(SubscriptionMixin, CompanySideBarMixin, CompanyTab
         return context
 
     def get_queryset(self):
-        return self.get_company().spaces.filter(is_deleted=False).order_by('created_at')
+        return self.get_company().spaces.order_by('created_at')

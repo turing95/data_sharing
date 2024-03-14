@@ -9,12 +9,12 @@ import pytz
 import arrow
 
 
-class Space(BaseModel, DeleteModel):
+class Space(BaseModel):
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
 
     title = models.CharField(max_length=250)
     user = models.ForeignKey('User', null=True, on_delete=models.SET_NULL, related_name='spaces')
-    organization = models.ForeignKey('Organization', null=True, on_delete=models.SET_NULL, related_name='spaces')
+    organization = models.ForeignKey('Organization', null=True, on_delete=models.CASCADE, related_name='spaces')
     company = models.ForeignKey('Company', null=True, on_delete=models.SET_NULL, related_name='spaces')
     is_public = models.BooleanField(default=False)
     instructions = models.TextField(null=True, blank=True)

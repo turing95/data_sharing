@@ -31,5 +31,4 @@ class SpacesView(AccessMixin, SubscriptionMixin, OrganizationMixin, SpaceSideBar
 
     def get_queryset(self):
         return self.model.objects.filter(organization=self.kwargs.get('organization_uuid'),
-                                         organization__in=self.request.user.organizations.all(),
-                                         is_deleted=False)
+                                         organization__in=self.request.user.organizations.all())
