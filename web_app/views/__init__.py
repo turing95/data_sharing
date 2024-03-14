@@ -5,7 +5,7 @@ from web_app.views.space.detail.file_section.update import file_section_update
 from web_app.views.space.detail.file_section.create import file_section_create
 from web_app.views.space.detail.text_section.update import text_section_update
 from web_app.views.space.detail.text_section.create import text_section_create
-from web_app.views.space.detail.documents import SpaceDocumentsView
+from web_app.views.space.detail.files import SpaceDocumentsView
 from web_app.views.space.detail.requests import SpaceRequestsView
 from web_app.views.space.detail.settings import SpaceSettingsView
 from web_app.views.space.detail.history import HistoryListView
