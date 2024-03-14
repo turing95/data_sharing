@@ -12,7 +12,47 @@
         {% include "components/buttons/light_add_button.html" with href=href button_text=button_text %}
 
 
-    {% if page_obj %}
+
+        {% if page_obj %}
+    <div class="w-full">
+    <div class="flex text-left border-b border-gray-200">
+        <div class="flex-1 px-4 py-2 font-bold min-w-[150px] shrink">
+            {% translate 'Name' %}
+        </div>
+        <div class="flex-1 px-4 py-2 font-bold min-w-[150px] shrink">
+            {% translate 'Email' %}
+        </div>
+        <div class="flex-1 px-4 py-2 font-bold min-w-[150px] shrink">
+            {% translate 'Phone number' %}
+        </div>
+        <div class="flex-1 px-4 py-2 font-bold min-w-[150px] shrink">
+            {% translate 'Company' %}
+        </div>
+        <div class="px-4 py-2 ml-auto font-bold w-[40px]">
+        </div>
+    </div>
+    {% for contact in page_obj %}
+        {% include 'private/contact/contact_row.html' with contact=contact %}
+    {% endfor %}
+
+</div> 
+{% if page_obj.end_index > 1 %}
+    {% translate "Contacts" as obj_name %}
+    {% include 'components/pagination.html' with objs_name=obj_name %} 
+{% endif %}
+{% else %}
+    <div class="flex flex-col items-center justify-center mt-12">
+        <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no Contacts yet' %}</p>
+    </div>
+{% endif %}
+
+{% endblock private_content %}
+
+
+
+
+
+    {% comment %} {% if page_obj %}
 
 
         <div class="relative mt-3 overflow-x-auto border-t custom-scrollbar">
@@ -44,4 +84,4 @@
             <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no contacts yet' %}</p>
         </div>
     {% endif %}
-{% endblock private_content %}
+{% endblock private_content %} {% endcomment %}

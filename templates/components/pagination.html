@@ -15,7 +15,7 @@
 
         <!-- Pagination Info -->
         <span class="text-xs text-gray-700 dark:text-gray-400">
-            <span class="font-semibold text-gray-900 dark:text-white">{{ page_obj.end_index }}</span> {% translate 'of' %} <span class="font-semibold text-gray-900 dark:text-white">{{ page_obj.paginator.count }}</span> {{ objs_name }}
+            {{ objs_name }} <span class="font-semibold text-gray-900 dark:text-white">{{page_obj.start_index}}</span> - <span class="font-semibold text-gray-900 dark:text-white">{{page_obj.end_index}}</span> {% translate 'of' %} <span class="font-semibold text-gray-900 dark:text-white">{{ page_obj.paginator.count }}</span> 
         </span>
 
 
