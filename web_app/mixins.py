@@ -82,6 +82,8 @@ class ContactMixin:
         data = super().get_context_data(**kwargs)
         data['organization'] = self.get_organization()
         data['contact'] = self.get_contact()
+        data['back'] = {'url': reverse('contacts', kwargs={'organization_uuid': self.get_organization().pk}),
+                        'text': _('Back to Contacts')}
         return data
 
 class CompanyMixin:
