@@ -71,21 +71,21 @@ class RequestDetailView(TemplateView):
                             Output.objects.create(file=file, company=company, sender_event=sender_event)
 
                 elif form.input_request.text_request:
-                    text_request = form.input_request.text_request
-                    sender_event = SenderEvent.objects.create(sender=sender,
-                                                              text_request=text_request,
-                                                              request=text_request.request,
-                                                              space=text_request.request.space,
-                                                              event_type=SenderEvent.EventType.TEXT_CREATED
-                                                              )
-                    text_output = TextOutput.objects.create(text=form.cleaned_data.get('text'),
-                                                            sender_event=sender_event,
-                                                            company=company)
-                    Output.objects.create(text_output=text_output,company=company,sender_event=sender_event)
+                    if form.cleaned_data.get('text'):
+                        text_request = form.input_request.text_request
+                        sender_event = SenderEvent.objects.create(sender=sender,
+                                                                  text_request=text_request,
+                                                                  request=text_request.request,
+                                                                  space=text_request.request.space,
+                                                                  event_type=SenderEvent.EventType.TEXT_CREATED
+                                                                  )
+                        text_output = TextOutput.objects.create(text=form.cleaned_data.get('text'),
+                                                                sender_event=sender_event,
+                                                                company=company)
+                        Output.objects.create(text_output=text_output,company=company,sender_event=sender_event)
                 if sender_event is not None:
                     sender_event.notify(request.session.get('sender_upload_notification', False))
-                if not error:
-                    messages.success(request, _(f"Your upload has completed"))
+            messages.success(request, _(f"Your upload has completed"))
             return redirect(request.path)
         print(formset.errors)
         return self.render_to_response(self.get_context_data(formset=formset))

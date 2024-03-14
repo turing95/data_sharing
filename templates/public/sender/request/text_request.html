@@ -29,11 +29,9 @@
     </div>
 
     <div id="accordion-open-body-{{ forloop.counter0 }}"
-         class="grid grid-cols-2 p-5 request-accordion-body md:grid-cols-3"
          aria-labelledby="accordion-open-heading-{{ forloop.counter0 }}">
-
-
-        <div class="col-span-2 p-1 sm:col-span-1 md:col-span-2">
+        <div class="grid grid-cols-2 p-5 request-accordion-body md:grid-cols-3">
+                    <div class="col-span-2 p-1 sm:col-span-1 md:col-span-2">
 
             <div class="dark:border-gray-700 dark:bg-gray-900">
                 {{ form.text }}
@@ -42,5 +40,28 @@
 
 
         </div>
+
+        </div>
+
+        <div class="p-5"
+                 hx-get="{% url 'sender_history_table' space.uuid %}?request_uuid={{ form.upload_request.uuid }}&sender_uuid={{ sender.uuid }}"
+                 hx-trigger="intersect once, filesUpdated from:document"
+                 hx-target="#history-table-{{ forloop.counter0 }}"
+                 hx-indicator="#loading-indicator-history-table-{{ forloop.counter0 }}">
+                <div class="flex items-center mb-3">
+                    <h3 class="text-sm font-semibold ">{% translate 'Previous uploads' %}</h3>
+
+                    <!-- Loading Indicator -->
+                    <div id="loading-indicator-history-table-{{ forloop.counter0 }}"
+                         class="items-center justify-center opacity-0 htmx-indicator">
+                        <div role="status" class="ml-2 spinner">
+                            {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="history-table-{{ forloop.counter0 }}">
+                </div>
+            </div>
     </div>
 </div>
