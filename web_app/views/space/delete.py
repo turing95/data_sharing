@@ -14,6 +14,5 @@ class DeleteSpaceView(LoginRequiredMixin, DeleteView):
 
 
     def form_valid(self, form):
-        self.object.is_deleted = True
-        self.object.save()
+        self.object.delete()
         return redirect(reverse('spaces', kwargs={'organization_uuid': self.object.organization.pk}))

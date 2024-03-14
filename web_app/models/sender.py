@@ -84,7 +84,7 @@ class Sender(BaseModel, ActiveModel):
     def notify_deadline(self):
         current_language = get_language()  # Store the current language
         try:
-            if self.is_active and self.space.is_deleted is False:
+            if self.is_active:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 pre_header_text = _('Remember to complete the upload to the space:')
@@ -122,7 +122,7 @@ class Sender(BaseModel, ActiveModel):
     def notify_invitation(self):
         current_language = get_language()  # Store the current language
         try:
-            if self.is_active and self.space.is_deleted is False:
+            if self.is_active:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 pre_header_text = _('invites you to upload files to the space:')
@@ -172,7 +172,7 @@ class Sender(BaseModel, ActiveModel):
     def notify_changes_request(self, upload_request, files, notes):
         current_language = get_language()  # Store the current language
         try:
-            if self.is_active and self.space.is_deleted is False:
+            if self.is_active:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 context[
@@ -220,7 +220,7 @@ class Sender(BaseModel, ActiveModel):
     def notify_upload(self, sender_event):
         current_language = get_language()  # Store the current language
         try:
-            if self.is_active and self.space.is_deleted is False:
+            if self.is_active:
                 activate(self.space.user.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 context[
