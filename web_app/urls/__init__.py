@@ -158,7 +158,7 @@ urlpatterns = [
          name='contact_create_modal'),
     path('organizations/<uuid:organization_uuid>/contacts/create/', views.ContactCreateView.as_view(),
          name='contact_create'),
-    path('contacts/<uuid:contact_uuid>/edit/', views.ContactDetailView.as_view(), name='contact_edit'),
+    path('contacts/<uuid:contact_uuid>/detail/', views.ContactDetailView.as_view(), name='contact_detail'),
     path('organizations/create/', views.create_organization, name='create_organization'),
     path('organizations/create/modal/', views.create_organization_modal, name='create_organization_modal'),
 ]

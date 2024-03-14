@@ -3,7 +3,7 @@
 
 <form id="create-contact-form" method="POST"
     {% if contact %} 
-        action="{% url 'contact_edit' contact.pk %}"
+        action="{% url 'contact_detail' contact.pk %}"
     {% else %}
         action="{% url 'contact_create' organization.pk %}"
     {% endif %} >
