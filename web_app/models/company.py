@@ -25,6 +25,7 @@ class CompanyField(BaseModel):
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='fields')
     label = models.CharField(max_length=250)
     value = models.CharField(max_length=500, null=True, blank=True)
+    position = models.PositiveIntegerField(default=1)
 
     def form(self, request_post=None):
         from web_app.forms import CompanyFieldFillForm
