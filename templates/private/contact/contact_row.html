@@ -1,9 +1,9 @@
 {% load custom_tags static i18n %}
 <div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50">
     <div class="flex-1 px-4 py-2 min-w-[150px] shrink group">
-        <a href="{% url 'contact_edit' contact.pk %}" 
+        <a href="{% url 'contact_detail' contact.pk %}"
             class="inline-block relative after:content-[''] after:block after:w-full after:h-[1px] after:bg-current after:absolute after:left-0 after:-bottom-[1px] after:scale-x-0 group-hover:after:scale-x-100 after:origin-bottom-left after:transition-transform after:duration-300 after:bg-gradient-to-r after:from-transparent after:via-transparent after:to-current">
-            {{ contact.full_name}}
+            {{ contact.full_name|default_if_none:""}}
         </a>
     </div>
     <div class="flex-1 px-4 py-2 min-w-[150px] shrink">

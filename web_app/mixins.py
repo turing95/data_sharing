@@ -81,7 +81,7 @@ class ContactMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['organization'] = self.get_organization()
-        data['contact'] = self.get_organization()
+        data['contact'] = self.get_contact()
         return data
 
 class CompanyMixin:

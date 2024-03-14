@@ -31,8 +31,9 @@ class ContactForm(forms.ModelForm):
                                 widget=forms.TextInput(attrs={'placeholder': _('Last Name'), 'class': text_input}))
     email = forms.EmailField(label=_("Email"),
                              widget=forms.EmailInput(attrs={'placeholder': _('Email*'), 'class': text_input}))
-    phone = forms.EmailField(label=_("Phone Number"),
-                            widget=forms.EmailInput(attrs={'placeholder': _('Phone Number'), 'class': text_input}))
+    phone = forms.CharField(label=_("Phone Number"),
+                             required=False,
+                            widget=forms.TextInput(attrs={'placeholder': _('Phone Number'), 'class': text_input}))
     
     company = forms.ModelChoiceField(
         queryset=Company.objects.all(),
@@ -58,15 +59,6 @@ class ContactForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.organization = kwargs.pop('organization', None)
-        self.contact = kwargs.pop('contact', None)
         super(ContactForm, self).__init__(*args, **kwargs)
         self.fields['search_company'].widget.attrs['hx-post'] = reverse('search_companies', kwargs={
             'organization_uuid': self.organization.pk})
-
-    '''
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if Contact.objects.filter(user=self.request.user, email=email).exists():
-            raise forms.ValidationError(_("This user and email combination already exists."))
-        return email
-    '''
