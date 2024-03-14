@@ -4380,10 +4380,6 @@ input[type="search"]::-webkit-search-cancel-button {
     grid-column: span 3 / span 3;
   }
 
-  .md\:col-span-1 {
-    grid-column: span 1 / span 1;
-  }
-
   .md\:me-0 {
     margin-inline-end: 0px;
   }

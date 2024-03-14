@@ -1,5 +1,5 @@
 <div id="custom_field_container">
-    {% for field in company.fields.all %}
+    {% for field in company.fields.all reversed%}
         
             {% include 'private/company/detail/field/fill_form.html' with field=field %}
         
