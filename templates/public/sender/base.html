@@ -52,53 +52,6 @@
                 </div>
             {% endif %}
 
-            {% if space.deadline %}
-                <!-- Deadline -->
-                <div class="mt-4 mb-2 mb-4 text-base">
-                    <span class="">{% translate 'Deadline:' %}</span>
-                    {% localize on %}
-                        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
-                    <img src="{% static 'images/icons/calendar-blue.svg' %}" alt="clock icon"
-                         class="w-[13px] h-[13px] mr-1">
-                    {{ space.deadline|date }} 
-                </span>
-                        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                    <img src="{% static 'images/icons/clock-blue.svg' %}" alt="clock icon"
-                         class="w-[13px] h-[13px] mr-1">
-                    {{ space.deadline|time }} {{ space.deadline|date:"T" }}
-                </span>
-
-                    {% endlocalize %}
-                    {% if space.deadline_expired %}
-                        <span class="inline-flex items-center  bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                        {% translate 'Deadline expired!' %}
-                    </span>
-                    {% else %}
-                        {% if space.upload_after_deadline is False %}
-                            <span class="inline-flex items-center text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                            {% translate 'You will not be able to upload files after the deadline.' %}
-                    </span>
-                        {% endif %}
-                    {% endif %}
-
-
-                </div>
-                {% if space.upload_after_deadline is False and space.deadline_expired %}
-
-                    <!-- Deadline Expired Message -->
-                    <div class="flex items-center justify-center w-4/5 mx-auto my-8">
-                        <div class="p-4 text-center bg-red-100 border border-red-300 shadow-lg">
-                            <h2 class="mt-2 text-xl font-bold text-red-800">{% translate 'Deadline Expired' %}</h2>
-                            <p class="mt-2 text-red-700 text-md">
-                                {% translate 'It is not possible to upload files anymore. For any inquiries, contact:' %}<br>
-                                <a
-                                        href="mailto:{{ space.user.email }}"
-                                        class="text-blue-500 underline">{{ space.user.email }}</a>
-                            </p>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endif %}
 
             {% for space_section in space.sections_position_sorted %}
                 {% if space_section.text_section %}
