@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class RequestDetailView(TemplateView):
-    template_name = "public/sender/request/detail.html"
+    template_name = "sender/request/detail.html"
 
     _request = None
     _sender = None
