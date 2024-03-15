@@ -1,13 +1,9 @@
 {% load i18n %}
-{% load custom_tags %}
 <div class="inline-flex w-full">
     <div class="flex-grow">
 {{ text_request.request_form.title }}
     </div>
-    {% render_input_request_activate_toggle input_request %}
-    <div class="p-1 pl-2 pr-0 text-gray-500 hover:text-marian-blue-400">
-    {% include 'private/request/input_request_detail_button.html' with input_request=input_request %}
-    </div>
+  
 </div>
 <div class="input-request-detail-container">
 

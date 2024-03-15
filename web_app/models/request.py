@@ -113,14 +113,6 @@ class Request(BaseModel, ActiveModel):
     deadline_notice_days = models.PositiveSmallIntegerField(blank=True, null=True)
     deadline_notice_hours = models.PositiveSmallIntegerField(blank=True, null=True)
 
-    def get_new_position(self):
-        from web_app.models import InputRequest
-        last_position = InputRequest.objects.filter(request=self).aggregate(Max('position'))['position__max']
-
-        # If there are no existing InputRequests, start with position 1, otherwise increment by 1
-        new_position = 1 if last_position is None else last_position + 1
-        return new_position
-
     def add_input_request(self, space_request, text_request=None, upload_request=None, prev_request_position=None):
         from web_app.models import InputRequest
         if prev_request_position:
@@ -132,7 +124,7 @@ class Request(BaseModel, ActiveModel):
             position=models.F('position') + 1)
         input_request = InputRequest.objects.create(request=space_request, upload_request=upload_request, text_request=text_request,
                                                     position=inserting_position)
-        return input_request
+        
     
     @property
     def latest_event_date(self):

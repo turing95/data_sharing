@@ -7,9 +7,6 @@
 
     {% block request_content %}
         {% include 'private/request/request_instructions_form.html' with form=kezyy_request.instructions_form %}
-
-        {% for input_request in kezyy_request.input_requests_position_sorted %}
-            {% include 'private/request/input_request_content.html' with input_request=input_request %}
-        {% endfor %}
+        {% include 'private/request/sortable_elements/container.html' with content_template='private/request/input_request_content.html' sorted_elements=kezyy_request.input_requests_position_sorted %}
     {% endblock request_content %}
 {% endblock %}
