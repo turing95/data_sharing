@@ -6,7 +6,7 @@ from web_app.models import File
 
 class SpaceDocumentsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, SpaceTabMixin,
                          TemplateView):
-    template_name = "private/company/detail/files.html"
+    template_name = "private/space/detail/documents.html"
     model = File
     paginate_by = 10
     ordering = ['-created_at']
