@@ -1,4 +1,4 @@
-import {selectCompany} from "./space/create/companyInput.js";
+import {selectCompany} from "./company/companyInput.js";
 import {hideShowSearch} from "./space/create/eventHandlers.js";
 
 function selectContact(liElement, contactEmail, contactId) {
