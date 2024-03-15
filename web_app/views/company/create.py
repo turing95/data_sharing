@@ -1,3 +1,5 @@
+import json
+
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render
@@ -26,13 +28,16 @@ class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixi
                                          organization=self.get_organization())
 
         return redirect(reverse('company_detail', kwargs={'company_uuid': company.pk}))
+
     def form_valid(self, form):
         company = form.save(commit=False)
         company.organization = self.get_organization()
         company.save()
         if self.request.headers.get('HX-Request'):
             messages.success(self.request, _('Company created'))
-            return render(self.request, 'components/messages.html', {'from_htmx': True})
+            response = render(self.request, 'components/messages.html', {'from_htmx': True})
+            response['HX-Trigger'] = json.dumps({'selectCompany': {'name': company.name, 'uuid': str(company.pk)}})
+            return response
         return super().form_valid(form)
 
     def form_invalid(self, form):

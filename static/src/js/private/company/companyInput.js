@@ -1,6 +1,6 @@
-export function selectCompany(liElement,companyName,companyId) {
-    let searchContainer =liElement.closest('.company-search-container');
-    let widgetContainer = liElement.closest('.company-widget-container');
+export function selectCompany(companyName,companyId) {
+    let searchContainer =document.querySelector('.company-search-container');
+    let widgetContainer = document.querySelector('.company-widget-container');
     if (!searchContainer || !widgetContainer) {
         return;
     }
@@ -15,3 +15,7 @@ export function selectCompany(liElement,companyName,companyId) {
     });
    
 }
+
+document.body.addEventListener("selectCompany", function(evt){
+    selectCompany(evt.detail.name,evt.detail.uuid)
+})

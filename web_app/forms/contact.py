@@ -5,23 +5,8 @@ from web_app.forms import css_classes
 from web_app.forms.css_classes.inputs import text_input
 from django.utils.translation import gettext_lazy as _
 
+from web_app.forms.widgets import SearchCompanyWidget
 from web_app.models import Contact, Company
-
-
-class CompanyField(forms.CharField):
-
-    def to_python(self, value):
-        if not value:
-            return None
-        try:
-            return Company.objects.get(pk=value)
-        except Company.DoesNotExist:
-            raise forms.ValidationError(_("Company not found."))
-
-    def prepare_value(self, value):
-        if isinstance(value, Company):
-            return value.uuid
-        return super().prepare_value(value)
 
 
 class ContactForm(forms.ModelForm):
@@ -32,9 +17,9 @@ class ContactForm(forms.ModelForm):
     email = forms.EmailField(label=_("Email"),
                              widget=forms.EmailInput(attrs={'placeholder': _('Email*'), 'class': text_input}))
     phone = forms.CharField(label=_("Phone Number"),
-                             required=False,
+                            required=False,
                             widget=forms.TextInput(attrs={'placeholder': _('Phone Number'), 'class': text_input}))
-    
+
     company = forms.ModelChoiceField(
         queryset=Company.objects.all(),
         widget=forms.HiddenInput(),
@@ -44,13 +29,7 @@ class ContactForm(forms.ModelForm):
     search_company = forms.CharField(
         required=False,
 
-        widget=forms.TextInput(attrs={'placeholder': _('Type to search companies'),
-                                      'hx-trigger': 'input changed delay:500ms, search',
-                                      'hx-indicator': '#loading-indicator-companies-search',
-                                      'hx-target': '#search-companies-results-container',
-                                      'hx-params': 'search_company',
-                                      'class': css_classes.search_input,
-                                      'autocomplete': 'off'}),
+        widget=SearchCompanyWidget(),
         help_text=_("Type the company name to search for it."))
 
     class Meta:
@@ -64,12 +43,12 @@ class ContactForm(forms.ModelForm):
             'organization_uuid': self.organization.pk})
         if self.instance.company:
             self.fields['search_company'].initial = self.instance.company.name
-    
+
     def clean(self):
         cleaned_data = super().clean()
         search_company = cleaned_data.get('search_company', None)
         if search_company:
             company = cleaned_data.get('company', None)
             if company and company.name != search_company:
-                self.add_error('search_company', _("Select a company from the list or leave blank."))
+                self.add_error('search_company', _('Select a company from the list or leave blank.'))
         return cleaned_data
