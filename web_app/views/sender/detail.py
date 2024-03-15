@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST, require_GET
 from web_app.models import Sender, Space
 from web_app.tasks.notifications import bulk_notify_deadline as bulk_notify_deadline_task, \
@@ -112,5 +112,29 @@ def all_senders_modal(request, space_uuid):
 @require_POST
 def sender_upload_notification(request):
     request.session['sender_upload_notification'] = request.POST['sender_upload_notification']
-    print(request.session['sender_upload_notification'])
     return HttpResponse(status=204)
+
+
+@login_required
+@require_GET
+def sender_notify_modal(request, sender_uuid):
+    return render(request, 'private/space/detail/sender/sender_notify_modal.html', {
+        'sender': get_object_or_404(Sender, pk=sender_uuid)
+    })
+
+
+@login_required
+@require_POST
+def sender_notify(request, sender_uuid):
+    sender = get_object_or_404(Sender, pk=sender_uuid)
+    form = sender.notify_form(request.POST)
+    if form.is_valid():
+        sender.notify_space(form.cleaned_data['subject'], form.cleaned_data['content'])
+        response = HttpResponse()
+        response['HX-Trigger'] = 'closeModal'
+        return response
+    else:
+        return render(request, 'private/space/detail/sender/notify_form.html', {
+            'sender': sender,
+            'form': form
+        })

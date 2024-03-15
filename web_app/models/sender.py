@@ -63,7 +63,7 @@ class Sender(BaseModel, ActiveModel):
 
     @property
     def link_for_email(self):
-        return settings.BASE_URL + reverse('sender_space_detail_private', kwargs={
+        return settings.BASE_URL + reverse('sender_space_detail', kwargs={
             'space_uuid': self.space.uuid,
             'sender_uuid': self.uuid
         })
@@ -179,9 +179,9 @@ class Sender(BaseModel, ActiveModel):
             pre_header_text = _('invites you to upload files to the space:')
             invitation_title_text = _('Invitation:')
             context['pre_header_text'] = subject or format_lazy('{reference_name} {pre_header_text} {title}',
-                                                     reference_name=context["reference_name"],
-                                                     pre_header_text=pre_header_text,
-                                                     title=self.space.title)
+                                                                reference_name=context["reference_name"],
+                                                                pre_header_text=pre_header_text,
+                                                                title=self.space.title)
             email_html = render_to_string('emails/sender_invite.html', context)
             from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
             subject = subject or format_lazy('{invitation_title_text} {reference_name} {pre_header_text} {title}',
@@ -297,3 +297,7 @@ class Sender(BaseModel, ActiveModel):
             return False
         finally:
             activate(current_language)  # Restore the original language
+
+    def notify_form(self,request_post=None):
+        from web_app.forms import SenderNotifyForm
+        return SenderNotifyForm(request_post)
