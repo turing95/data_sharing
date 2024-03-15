@@ -20,6 +20,9 @@
         <span class="inline-block z-[2] ml-2 text-sm {% if widget.soft_off_label %} text-{{ widget.label_off_color }}-400 {% else %} text-{{ widget.label_off_color }}-800 {% endif %} align-middle peer-checked:hidden {% if widget.label_wrap %} bg-{{ widget.color_off }}-200 rounded-full px-[6px] inline-block items-center justify-center{% endif %}">{{ widget.label_off }}</span>
     {% endif %}
 </label>
+{% if show_msg %}
+    {% include 'components/messages.html' %}
+{% endif %}
 
 {% if False %}
     <!-- Hidden div with specific color classes for purge -->

@@ -15,7 +15,10 @@
 
     {% include 'private/request/add_buttons.html' %}
 
-
+    <div  hx-get="{% url 'request_set_order' kezyy_request.pk %}"
+    hx-indicator="#loading-indicator-sort"
+    hx-trigger="update_order from:body"
+    hx-target="#requests-container">
     <form id="requests-container"
           class="sortable"
           hx-post="{% url 'request_update_order' kezyy_request.pk %}"
@@ -24,15 +27,14 @@
           data-accordion="collapse"
     >
         {% csrf_token %}
-        <div  hx-get="{% url 'request_set_order' kezyy_request.pk %}"
-        hx-indicator="#loading-indicator-sort"
-        hx-trigger="update_order from:body">
+
             {% block sorted_requests %}
                 {% for input_request in kezyy_request.input_requests_position_sorted %}
                     {% include 'private/request/input_request.html' with input_request=input_request %}
                 {% endfor %}
             {% endblock sorted_requests %}
-        </div>
+        
 
     </form>
+</div>
 {% endblock request_content %}

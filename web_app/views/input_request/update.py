@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST
 from web_app.forms.widgets import ToggleWidget
 from web_app.models import InputRequest
+from django.contrib import messages
+from django.utils.translation import gettext as _
 
 
 @login_required
@@ -16,6 +18,11 @@ def input_request_update_active(request, input_request_uuid):
             if input_request.upload_request.active_destination:
                 input_request.is_active = not input_request.is_active
                 input_request.save()
+            else:
+                
+                messages.error(request,_("Please select a destination before activating the input"))
+                return render(request, 'components/messages.html', {'from_htmx': True, 'show_msg': True})
+                
         elif input_request.text_request:
             input_request.is_active = not input_request.is_active
             input_request.save()

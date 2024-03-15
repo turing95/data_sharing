@@ -1488,6 +1488,10 @@ input:checked + .toggle-bg {
   margin-top: 2px;
 }
 
+.ml-\[3px\] {
+  margin-left: 3px;
+}
+
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
