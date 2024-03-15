@@ -1,6 +1,6 @@
-import {selectCompany} from "./company/companyInput.js";
-import {hideShowSearch} from "./space/create/eventHandlers.js";
-
+import {hideShowSearch} from "./space/eventHandlers.js";
+window.selectCompany = selectCompany;
+window.selectContact = selectContact;
 function selectContact(liElement, contactEmail, contactId) {
     let searchContainer = liElement.closest('.contact-search-container');
     let widgetContainer = liElement.closest('.contact-widget-container');
@@ -13,12 +13,32 @@ function selectContact(liElement, contactEmail, contactId) {
     contactInput.dispatchEvent(new CustomEvent("change"));
 
 }
+export function selectCompany(companyName,companyId) {
+    let searchContainer =document.querySelector('.company-search-container');
+    let widgetContainer = document.querySelector('.company-widget-container');
+    if (!searchContainer || !widgetContainer) {
+        return;
+    }
+    let companyInput = widgetContainer.querySelector('input[type="hidden"]');
+    searchContainer.querySelector('input').value = companyName;
+    companyInput.value = companyId;
+    // clean error messages if any
+    let parentElement = searchContainer.parentNode.parentNode;
+    let errorMessages = parentElement.querySelectorAll('.error-message');
+    errorMessages.forEach(errorMessage => {
+        errorMessage.textContent = ''; // Clear the content of each error message
+    });
+
+}
+
+document.body.addEventListener("selectCompany", function(evt){
+    selectCompany(evt.detail.name,evt.detail.uuid)
+})
 
 document.addEventListener('click', function (event) {
     hideShowSearch(event);
 });
-window.selectCompany = selectCompany;
-window.selectContact = selectContact;
+
 
 
 htmx.onLoad(function (content) {

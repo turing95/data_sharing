@@ -5,4 +5,5 @@ export function initTooltip(labelElement) {
         return;
     }
     let tooltip = new Tooltip(element, button);
+    initTooltips
 }

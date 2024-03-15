@@ -1,6 +1,3 @@
-
-
-
 export function hideShowSearch(event) {
     let clickedElement = event.target;
 

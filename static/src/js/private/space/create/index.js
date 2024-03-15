@@ -1,27 +1,31 @@
-import {initForm} from "./form.js";
-import {hideShowSearch} from "./eventHandlers.js";
-import {processInputText} from "./emailInput.js";
-
-window.processInputText = processInputText;
 document.addEventListener('DOMContentLoaded', function () {
-    initForm();
-});
-document.addEventListener('click', function (event) {
-    hideShowSearch(event);
-
+    preventFormSubmit();
 });
 
-// USE TRIGGER FROM BACKEND INSTEAD, TRIGGER closeModal via HX-Trigger
-document.addEventListener('htmx:afterRequest', function (evt) {
-    if (evt.detail.successful && evt.detail.xhr.status === 200) {
-        if (evt.target.id === 'create-contact-form'){
-            const modal = FlowbiteInstances.getInstance('Modal', document.getElementById('htmx-modal').children[0].id);
-            modal.hide();
+
+function preventFormSubmit(){
+    const form = document.querySelector('form');
+    form.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.matches('input:not([type="submit"]):not([type="button"]):not([type="hidden"]):not([class*="email-input"]), select')) {
+        e.preventDefault(); // Prevent form submission
+
+        const formInputs = Array.from(form.querySelectorAll('input:not([type="submit"]):not([type="button"]):not([type="hidden"]), select, textarea'));
+        const currentIndex = formInputs.indexOf(e.target);
+
+        if (currentIndex !== -1) {
+            let nextIndex = currentIndex + 1;
+            while (nextIndex < formInputs.length) {
+                const nextInput = formInputs[nextIndex];
+                if (!nextInput.disabled) { // add && !nextInput.readOnly to include read only fields
+                    nextInput.focus();
+                    if (document.activeElement === nextInput) {
+                        break; // Focus successfully moved
+                    }
+                }
+                nextIndex++;
+            }
         }
     }
-
 });
-
-
-
+}
 
