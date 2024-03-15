@@ -34,21 +34,6 @@ class Space(BaseModel):
     def sections_position_sorted(self):
         return self.sections.order_by('position')
 
-    @property
-    def deadline_notification_datetime(self):
-        if not self.deadline or self.deadline_notice_days is None or self.deadline_notice_hours is None:
-            return None
-        notice_days = self.deadline_notice_days or 0
-        notice_hours = self.deadline_notice_hours or 0
-
-        # Calculate notification datetime in the server timezone
-        notification_dt = arrow.get(self.deadline).shift(days=-notice_days, hours=-notice_hours)
-        return notification_dt.datetime
-
-    @property
-    def deadline_expired(self):
-        return bool(self.deadline) and self.deadline < arrow.utcnow()
-
     def setup(self):
         from web_app.models import GenericDestination, Kezyy
         GenericDestination.create_provider(Kezyy.TAG,
@@ -59,7 +44,7 @@ class Space(BaseModel):
         return SpaceTitleForm(request_post,instance=self)
 
     def duplicate(self, user):
-
+        #TODO fix
         new_space = deepcopy(self)
         new_space.pk = None
         new_space.user = user
@@ -72,45 +57,7 @@ class Space(BaseModel):
             request.duplicate(new_space)
         return new_space
 
-    @property
-    def public_upload_events(self):
-        return self.events.filter(sender__isnull=True)
 
-    def get_deadline_url_ics(self, sender):
-        # Format the deadline as YYYYMMDDTHHMMSSZ 
-        if self.deadline is None:
-            return None, None
-        formatted_deadline = self.deadline.strftime('%Y%m%dT%H%M%SZ')
-
-        '''# Calculate the reminder date (one day before the deadline)
-        reminder_date = deadline - timedelta(days=self.deadline_reminder)
-        formatted_reminder_date = reminder_date.strftime('%Y%m%dT%H%M%SZ')'''
-
-        # Construct the calendar URL
-        space_link = sender.link_for_email
-        event_details = f"""You have been invited by: {self.user.email}<br><br>Go to Space: <a href="{space_link}">{self.title}</a>"""
-
-        event_title = f"DEADLINE for upload space: {self.title}"
-
-        ics_content = (
-                "BEGIN:VCALENDAR\n"
-                "VERSION:2.0\n"
-                "PRODID:-//Your Company//Your Product//EN\n"
-                "BEGIN:VEVENT\n"
-                f"UID:{formatted_deadline}-space-{sender.uuid}@yourdomain.com\n"
-                "DTSTAMP:" + formatted_deadline + "\n"
-                                                  "DTSTART:" + formatted_deadline + "\n"
-                                                                                    "DTEND:" + formatted_deadline + "\n"
-                                                                                                                    f"SUMMARY:{event_title}\n"
-                                                                                                                    f"DESCRIPTION:{event_details}\n"
-                                                                                                                    "LOCATION:Online\n"
-                                                                                                                    "END:VEVENT\n"
-                                                                                                                    "END:VCALENDAR"
-        )
-        event_details = event_details.replace(' ', '+')
-        event_title = event_title.replace(' ', '+')
-        calendar_url = f'https://www.google.com/calendar/render?action=TEMPLATE&text={event_title}&dates={formatted_deadline}/{formatted_deadline}&details={event_details}&location=Online'
-        return calendar_url, ics_content
 
     class Meta:
         ordering = ['-created_at']
