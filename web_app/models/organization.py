@@ -57,6 +57,10 @@ class Organization(BaseModel):
                 msg.attach_alternative(email_html, 'text/html')
                 msg.send()
 
+    def notify_upload(self, sender_events):
+        for user in self.users.all():
+            user.notify_upload(sender_events)
+
 
 class UserOrganization(BaseModel):
     user = models.ForeignKey('User', on_delete=models.CASCADE)

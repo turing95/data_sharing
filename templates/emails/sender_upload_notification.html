@@ -19,6 +19,7 @@
                     </td>
 
                 </tr>
+            {% for sender_event in sender_events %}
                 <tr>
                     <td style="padding:10px 0;">
                         {% blocktranslate trimmed %}
@@ -54,6 +55,7 @@
                         </td>
                     </tr>
                 {% endif %}
+            {% endfor %}
             </table>
         </td>
     </tr>
