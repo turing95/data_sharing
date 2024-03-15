@@ -28,7 +28,6 @@ class ContactForm(forms.ModelForm):
         help_text=_("Select the company to which the space belongs."))
     search_company = forms.CharField(
         required=False,
-
         widget=SearchCompanyWidget(),
         help_text=_("Type the company name to search for it."))
 

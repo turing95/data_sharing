@@ -15,4 +15,4 @@ class SearchCompanyWidget(forms.widgets.TextInput):
                            'hx-params': 'search_company',
                            'class': css_classes.search_input,
                            'type': 'search',
-                           'autocomplete': 'off'})
+                           'autocomplete': 'one-time-code'})
