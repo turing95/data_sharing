@@ -33,3 +33,12 @@ class SenderCreateForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['email'].widget.attrs['hx-post'] = reverse_lazy('search_contacts',
                                                                     kwargs={'organization_uuid': self.organization.pk})
+
+
+class SenderNotifyForm(forms.Form):
+    subject = forms.CharField(widget=forms.TextInput(attrs={'class': css_classes.text_input,
+                                                            }), required=False
+                              )
+    content = forms.CharField(widget=forms.TextInput(attrs={'class': css_classes.text_area,
+                                                            }), required=False
+                              )

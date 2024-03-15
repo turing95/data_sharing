@@ -23,24 +23,52 @@
 
         </div>
         {% render_sender_activate_toggle sender 'sender_toggle' sender.is_active %}
+        <div class="px-2 py-2 transition-transform duration-150 ease-in-out w-[40px] hover:text-marian-blue-300">
+            <button type="button" aria-expanded="false"
+                    data-dropdown-toggle="sender_row_dropdown_{{ sender.pk }}" data-dropdown-placement="left">
+                <span class="sr-only">Open contact dropdown</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
+                </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div class="z-50 hidden my-4 text-base font-normal list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+                 id="sender_row_dropdown_{{ sender.pk }}">
+                <ul class="py-2" aria-labelledby="sender_row_dropdown_{{ sender.pk }}">
+                    <li>
+                        <button class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer justify-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                hx-get="{% url 'sender_notify_modal' sender.pk %}"
+                                hx-target="#htmx-modal"
+                                data-modal-target="{{ sender.pk }}_notify_modal"
+                                data-modal-toggle="{{ sender.pk }}_notify_modal"
+                                hx-swap="innerHTML">
+                            {% translate 'Notify' %}
+                        </button>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
     </div>
 {% elif create_sender %}
     <div class="sender-create-row">
         <form hx-post="{% url 'sender_create' space.pk %}" hx-swap="outerHTML" hx-target="closest .sender-create-row">
-                <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700 sender-create-row">
+            <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700 sender-create-row">
 
-            <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
+                <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
 
-                {% include 'private/space/create/components/contacts/search_contacts_widget.html' with input=form.contact search_input=form.email %}
-            </div>
-            <div class="inline-flex items-center">
-            {{ form.is_active }}
-            </div>
-            <div class="inline-flex items-center">
-            {% translate 'Confirm' as button_text %}
-            {% include 'components/buttons/submit_with_loader.html' with button_text=button_text %}
-            </div>
+                    {% include 'private/space/create/components/contacts/search_contacts_widget.html' with input=form.contact search_input=form.email %}
                 </div>
+                <div class="inline-flex items-center">
+                    {{ form.is_active }}
+                </div>
+                <div class="inline-flex items-center">
+                    {% translate 'Confirm' as button_text %}
+                    {% include 'components/buttons/submit_with_loader.html' with button_text=button_text %}
+                </div>
+            </div>
         </form>
 
 
