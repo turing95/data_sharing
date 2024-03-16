@@ -21,7 +21,7 @@ class UploadRequestForm(ModelForm):
     ])
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
                                                           'class': css_classes.text_request_title_input,
-                                                          'hx-trigger': 'blur changed'}),
+                                                          'hx-trigger': 'blur changed', 'hx-swap': 'none'}),
                             required=False,
                             label=_('Request title - MANDATORY'),
                             help_text=_(
@@ -30,7 +30,7 @@ class UploadRequestForm(ModelForm):
         required=False,
         widget=forms.Textarea(attrs={'placeholder': _('Add instructions here'),
                                      'rows': 3,
-                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed'}),
+                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed', 'hx-swap': 'none'}),
         label=_('Instructions'),
         help_text=_("""Use this to provide information for your invitees.
                                 Leave blank if not necessary.
@@ -43,6 +43,7 @@ class UploadRequestForm(ModelForm):
                                           widget=forms.TextInput(
                                               attrs={'placeholder': _('Insert file name, use tags for dynamic naming'),
                                                      'hx-trigger': 'blur changed',
+                                                     'hx-swap': 'none',
                                                      'class': "file-naming-formula placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input}),
                                           label=_('File naming formula'))
 
@@ -135,7 +136,7 @@ class UploadRequestForm(ModelForm):
         widget=forms.URLInput(
             attrs={'placeholder': _('Insert file template URL'),
                    'class': css_classes.text_input,
-                   'hx-trigger': 'blur changed'}),
+                   'hx-trigger': 'blur changed','hx-swap':'none'}),
         help_text=_("""
                 You can provide a template file that will be available for download to your invitees. 
                 Leave blank if not necessary.
@@ -214,12 +215,13 @@ class UploadRequestForm(ModelForm):
 class TextRequestForm(ModelForm):
     title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
                                                                           'class': css_classes.text_request_title_input,
-                                                                          'hx-trigger': 'blur changed'}))
+                                                                          'hx-trigger': 'blur changed',
+                                                                          'hx-swap': 'none'}))
     instructions = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={'placeholder': _('Add instructions here'),
                                      'rows': 3,
-                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed'}),
+                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed', 'hx-swap': 'none'}),
         label=_('Instructions'),
         help_text=_("""Use this to provide information for your invitees.
                                 Leave blank if not necessary.
