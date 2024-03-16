@@ -14,7 +14,7 @@ from web_app.forms import FileSelectForm
 
 class RequestEditView(LoginRequiredMixin, SubscriptionMixin, RequestMixin, SpaceSideBarMixin, RequestTabMixin,
                       TemplateView):
-    template_name = 'private/request/base.html'
+    template_name = 'private/request/edit.html'
     _request = None  # Placeholder for the cached object
 
     def get_context_data(self, *args, **kwargs):
