@@ -9,7 +9,7 @@ from django.http import HttpResponse
 def text_request_create(request, request_uuid):
     space_request = get_object_or_404(Request, pk=request_uuid)
     text_request = TextRequest.objects.create(request=space_request,title='Untitled')
-    space_request.add_input_request(space_request, text_request=text_request,
+    space_request.add_input_request(text_request=text_request,
                                                 prev_request_position=request.GET.get('input_request_position'))
 
     if request.headers.get('HX-Request'):

@@ -13,7 +13,7 @@ from web_app.models import Request, UploadRequest, GenericDestination, Kezyy, In
 def upload_request_create(request, request_uuid):
     space_request = get_object_or_404(Request, pk=request_uuid)
     upload_request = UploadRequest.objects.create(request=space_request,title='Untitled')
-    space_request.add_input_request(space_request, upload_request=upload_request,
+    space_request.add_input_request(upload_request=upload_request,
                                                     prev_request_position=request.GET.get('input_request_position'))
     if request.headers.get('HX-Request'):
         response = HttpResponse()
