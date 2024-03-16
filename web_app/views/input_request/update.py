@@ -21,15 +21,22 @@ def input_request_update_active(request, input_request_uuid):
             else:
                 
                 messages.error(request,_("Please select a destination before activating the input"))
-                return render(request, 'components/messages.html', {'from_htmx': True, 'show_msg': True})
                 
         elif input_request.text_request:
             input_request.is_active = not input_request.is_active
             input_request.save()
-        return render(request,'forms/widgets/toggle.html', ToggleWidget().get_context('input_request_active_toggle', input_request.is_active,
-                                              {'hx-post': reverse('input_request_update_active',
-                                                                  kwargs={'input_request_uuid': input_request.pk}),
-                                               'hx-trigger': "click", 'hx-swap': 'outerHTML','hx-target':'closest .toggle-container'}))
+            
+        # Get the initial context from ToggleWidget().get_context
+        context = ToggleWidget().get_context('input_request_active_toggle', input_request.is_active, {
+            'hx-post': reverse('input_request_update_active', kwargs={'input_request_uuid': input_request.pk}),
+            'hx-trigger': "click", 
+            'hx-swap': 'outerHTML', 
+            'hx-target':'closest .toggle-container'
+        })
+        context.update({'from_htmx': True, 'show_msg': True})
+
+        return render(request, 'forms/widgets/toggle.html', context)
+    
     return HttpResponseBadRequest()
 
 

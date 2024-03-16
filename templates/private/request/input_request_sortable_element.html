@@ -1,0 +1,116 @@
+{% load i18n %}
+{% load custom_tags %}
+
+<div class="flex-col my-1">
+    <div class="flex">        
+        <div class="px-2 ml-4 mr-auto text-[0.6rem] leading-[0.75rem] bg-gray-100{% if input_request.upload_request %} text-orange-400 {% elif input_request.text_request %} text-green-400 {% endif %} rounded-tl rounded-tr">
+            {% if input_request.upload_request %}
+                {% translate 'file input' %}
+            {% elif input_request.text_request %}
+                {% translate 'text input' %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="flex">
+        <!-- add cursor on over hand and grabbing hand on click hold-->
+        <div class="flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded-tl rounded-bl cursor-grab active:cursor-grabbing">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.75 10.75" class="h-[30px]" fill="currentColor">
+                <path d="
+                M 0,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,7.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 0,10.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+
+                
+                M 1.5,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,7.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+                M 1.5,10.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
+
+                " />
+            </svg>
+        </div>
+        <div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px]">
+            <input type="hidden" value="{{ input_request.pk }}" name="input_request_order[]">
+
+            {% if request_tab.edit.active %}
+                {% translate 'private/request/edit/upload_request.html' as upload_template %}
+                {% translate 'private/request/edit/text_request.html' as text_template %}
+            {% else %}
+                {% translate 'private/request/detail/upload_request_content.html' as upload_template %}
+                {% translate 'private/request/detail/text_request_content.html' as text_template %}
+            {% endif %}
+
+            {% if input_request.upload_request %}
+                {% include upload_template with input_request=input_request upload_request=input_request.upload_request %}
+            {% elif input_request.text_request %}
+                {% include text_template with input_request=input_request text_request=input_request.text_request %}
+            {% endif %}
+
+        </div>
+
+         <!-- ending commands -->
+         <div class="flex-col items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded-tr rounded-br">
+            <div class="flex flex-col">
+
+                <div class="inline-flex group hover:text-marian-blue-400">
+                    <div class="scale-[0.75] -ml-[3px] -mb-[4px] -mt-[2px]">
+                    {% render_input_request_activate_toggle input_request %}
+                    </div>
+                    <span class=" mt-[2px] hidden text-sm transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100 ">{% translate "Active" %}</span>        
+                </div>
+
+                {% if request_tab.edit.active %}
+                    <button hx-post="{% url 'input_request_delete' input_request.pk %}"
+                    hx-trigger="click"
+                    hx-confirm="{% translate "Are you sure you want to delete this input?" %}"
+                    class="inline-flex my-auto hover:text-marian-blue-400 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 ml-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                        </svg>
+                        <span class="w-[46px] text-sm  ml-[3px] hidden transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100">{% translate "Delete" %}</span>
+                    </button> 
+
+                    <div class="inline-flex group hover:text-marian-blue-400">
+                            <div class="ml-1">
+                            {% include 'private/request/input_request_detail_button.html' with input_request=input_request %}
+                            </div>
+                        <span class=" w-[46px] text-sm ml-[3px] hidden transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100">{% translate "Expand" %}</span>
+                    </div>
+                {% else %}
+                <div class="inline-flex group hover:text-marian-blue-400">
+                    <div class="scale-[0.75] -ml-[3px] -mb-[4px] -mt-[2px]">
+                    {% render_input_request_complete_toggle input_request %}
+                    </div>
+                    <span class=" mt-[2px] hidden text-sm transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100 ">{% translate "Complete" %}</span>        
+                </div>
+                {% endif %}
+
+            </div>
+            
+        </div>
+    </div>
+
+    {% if request_tab.edit.active %}
+        <div class="relative flex flex-col items-center justify-center w-full h-2 mt-1">
+            <div class="absolute z-[1000] transition-opacity duration-300 opacity-0 hover:opacity-100 w-full">    
+                
+                {% with input_request_position_str=input_request.position|stringformat:"s" %}
+                    {% with query_string="input_request_position="|add:input_request_position_str %}
+                        {% include 'private/request/add_buttons.html' with query_string=query_string %}
+                    {% endwith %}
+                {% endwith %}
+
+            </div>
+            <!-- Other content here -->
+        </div>
+    {% endif %}
+
+
+</div>
+
+
+
