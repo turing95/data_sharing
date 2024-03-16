@@ -1,8 +1,6 @@
 {% load i18n %}
 {% load custom_tags %}
-{% with 'loader_'|addstr:upload_request.uuid as loader_id %}
-    {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
-{% endwith %}
+
 {% if show_more %}
     <div class="mb-3">
         <div class="flex items-center mb-2 space-x-2">

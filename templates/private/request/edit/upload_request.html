@@ -1,10 +1,14 @@
 {% load i18n %}
+{% load custom_tags %}
 <div class="inline-flex w-full">
     <div class="flex-grow">
         {{ upload_request.request_form.title }}
     </div>
    
 </div>
+{% with 'loader_'|addstr:input_request.uuid as loader_id %}
+    {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
+{% endwith %}
 <div class="input-request-detail-container">
 
     {% include 'private/request/edit/upload_request_detail.html' with upload_request=upload_request %}
