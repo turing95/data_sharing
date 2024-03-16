@@ -129,7 +129,6 @@ urlpatterns = [
     path('requests/<uuid:request_uuid>/modal/', views.request_modal, name='request_modal'),
     path('requests/<uuid:request_uuid>/files/changes/', views.request_changes, name='request_changes'),
     path('requests/<uuid:request_uuid>/files/accept/', views.accept_all, name='accept_all'),
-    path('requests/<uuid:request_uuid>/delete/', views.delete_request, name='request_delete'),
     path('spaces/<uuid:space_uuid>/senders-history-table/', views.history_table, name='sender_history_table'),
     path('spaces/<uuid:space_uuid>/senders/create-row/', views.sender_create_row, name='sender_create_row'),
     path('spaces/<uuid:space_uuid>/senders/create/', views.sender_create, name='sender_create'),

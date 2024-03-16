@@ -1,6 +1,6 @@
-import {selectCompany} from "./company/companyInput.js";
-import {hideShowSearch} from "./space/create/eventHandlers.js";
-
+import {hideShowSearch} from "./eventHandlers.js";
+window.selectCompany = selectCompany;
+window.selectContact = selectContact;
 function selectContact(liElement, contactEmail, contactId) {
     let searchContainer = liElement.closest('.contact-search-container');
     let widgetContainer = liElement.closest('.contact-widget-container');
@@ -13,12 +13,35 @@ function selectContact(liElement, contactEmail, contactId) {
     contactInput.dispatchEvent(new CustomEvent("change"));
 
 }
+export function selectCompany(companyName,companyId) {
+    let searchContainer =document.querySelector('.company-search-container');
+    let widgetContainer = document.querySelector('.company-widget-container');
+    if (!searchContainer || !widgetContainer) {
+        return;
+    }
+    let companyInput = widgetContainer.querySelector('input[type="hidden"]');
+    searchContainer.querySelector('input').value = companyName;
+    companyInput.value = companyId;
+    // clean error messages if any
+    let parentElement = searchContainer.parentNode.parentNode;
+    let errorMessages = parentElement.querySelectorAll('.error-message');
+    errorMessages.forEach(errorMessage => {
+        errorMessage.textContent = ''; // Clear the content of each error message
+    });
+
+}
+
+document.body.addEventListener("selectCompany", function(evt){
+    selectCompany(evt.detail.name,evt.detail.uuid)
+})
 
 document.addEventListener('click', function (event) {
     hideShowSearch(event);
 });
-window.selectCompany = selectCompany;
-window.selectContact = selectContact;
+
+document.addEventListener('DOMContentLoaded', function () {
+    preventFormSubmit();
+});
 
 
 htmx.onLoad(function (content) {
@@ -48,3 +71,30 @@ htmx.onLoad(function (content) {
         });
     }
 })
+
+
+function preventFormSubmit(){
+    const form = document.querySelector('form');
+    form.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.matches('input:not([type="submit"]):not([type="button"]):not([type="hidden"]):not([class*="email-input"]), select')) {
+        e.preventDefault(); // Prevent form submission
+
+        const formInputs = Array.from(form.querySelectorAll('input:not([type="submit"]):not([type="button"]):not([type="hidden"]), select, textarea'));
+        const currentIndex = formInputs.indexOf(e.target);
+
+        if (currentIndex !== -1) {
+            let nextIndex = currentIndex + 1;
+            while (nextIndex < formInputs.length) {
+                const nextInput = formInputs[nextIndex];
+                if (!nextInput.disabled) { // add && !nextInput.readOnly to include read only fields
+                    nextInput.focus();
+                    if (document.activeElement === nextInput) {
+                        break; // Focus successfully moved
+                    }
+                }
+                nextIndex++;
+            }
+        }
+    }
+});
+}

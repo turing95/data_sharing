@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 class SignupView(AllauthSignupView):
     form_class = SignupForm
-    template_name = 'public/authentication/signup.html'
+    template_name = 'authentication/signup.html'
     success_url = reverse_lazy('spaces')
 
     def get_form_kwargs(self):

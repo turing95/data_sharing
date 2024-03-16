@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class RequestDetailView(TemplateView):
-    template_name = "public/sender/request/detail.html"
+    template_name = "sender/request/detail.html"
 
     _request = None
     _sender = None
@@ -33,6 +33,8 @@ class RequestDetailView(TemplateView):
         formset = self.get_formset()
         if formset.is_valid():
             sender = self.get_sender()
+            sender_events = []
+            organization = self.get_request().space.organization
             for form in formset:
                 error = None
                 sender_event = None
@@ -84,7 +86,10 @@ class RequestDetailView(TemplateView):
                                                                 company=company)
                         Output.objects.create(text_output=text_output,company=company,sender_event=sender_event)
                 if sender_event is not None:
-                    sender_event.notify(request.session.get('sender_upload_notification', False))
+                    sender_events.append(sender_event)
+            if sender_events and request.session.get('sender_upload_notification', False):
+                sender.notify_upload(sender_events)
+            organization.notify_upload(sender_events)
             messages.success(request, _(f"Your upload has completed"))
             return redirect(request.path)
         print(formset.errors)

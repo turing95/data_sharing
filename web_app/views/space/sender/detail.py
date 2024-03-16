@@ -3,7 +3,7 @@ from web_app.mixins import SenderTabMixin, SpaceSenderMixin
 
 
 class SpaceDetailView(SenderTabMixin, SpaceSenderMixin, TemplateView):
-    template_name = "public/sender/base.html"
+    template_name = "sender/base.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

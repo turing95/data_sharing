@@ -14,7 +14,6 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['space_form'] = True
         context['submit_text'] = _('Save space')
         context['space_tab']['settings']['active'] = True
         return context

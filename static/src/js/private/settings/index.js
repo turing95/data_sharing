@@ -1,10 +1,17 @@
-import { initSocialAccountsTable } from './socialAccounts.js';
-import {initTooltip} from "../../utils/tooltip.js";
-
 document.addEventListener('DOMContentLoaded', function() {
     initSocialAccountsTable();
 });
 
-document.body.addEventListener('htmx:afterSettle', function(evt) {
-    evt.target.querySelectorAll('label').forEach(initTooltip);
-});
+export function initSocialAccountsTable() {
+    // get all element in dom with class 'social-account-input' and loop through them
+    document.querySelectorAll('.account-to-disconnect-input').forEach(function (input) {
+        //get the form id
+        const id = input.closest('form').id;
+        //if id ends with google, set the value of the input to 'google'
+        if (id.endsWith('-custom_google')) {
+            input.value = 'custom_google';
+        } else if (id.endsWith('-custom_microsoft')) {
+            input.value = 'custom_microsoft';
+        }
+    });
+}

@@ -83,22 +83,20 @@ class User(AbstractUser):
             del request.session['invitation_uuid']
             invitation.delete()
 
-    def notify_upload(self, sender_event):
+    def notify_upload(self, sender_events):
         from web_app.models import NotificationsSettings
         from web_app.utils import get_base_context_for_email
         try:
             if self.notifications_settings.on_sender_upload:
+                space = sender_events[0].space
                 context = get_base_context_for_email()
-                pre_header_text_1 = _('New Upload to')
-                pre_header_text_2 = _('in space')
+                pre_header_text_1 = _('New Upload in space')
                 context['pre_header_text'] = format_lazy(
-                    '{pre_header_text_1} {req_title} {pre_header_text_2} {space_title}',
+                    '{pre_header_text_1} {space_title}',
                     pre_header_text_1=pre_header_text_1,
-                    pre_header_text_2=pre_header_text_2,
-                    space_title=sender_event.space.title,
-                    req_title=sender_event.request.title
+                    space_title=space.title,
                 )
-                context['sender_event'] = sender_event
+                context['sender_events'] = sender_events
 
                 email_html = render_to_string('emails/receiver_upload_notification.html', context)
                 from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"

@@ -262,7 +262,7 @@ class Sender(BaseModel, ActiveModel):
         finally:
             activate(current_language)  # Restore the original language
 
-    def notify_upload(self, sender_event):
+    def notify_upload(self, sender_events):
         current_language = get_language()  # Store the current language
         try:
             if self.is_active:
@@ -270,7 +270,7 @@ class Sender(BaseModel, ActiveModel):
                 context = self.get_context_for_email()
                 context[
                     'pre_header_text'] = _('Your Upload receipt')
-                context['sender_event'] = sender_event
+                context['sender_events'] = sender_events
 
                 email_html = render_to_string('emails/sender_upload_notification.html', context)
                 from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"

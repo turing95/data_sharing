@@ -2,7 +2,7 @@
 {% load static i18n %}
 <a href="{{ href }}" class="w-full flex justify-center items-center hover:bg-gray-100 border border-black focus:ring-2 focus:outline-none focus:ring-marian-blue-100 font-medium text-sm px-7 py-2.5 text-center dark:focus:ring-gray-100 me-2 mb-2">
     {% if provider_id == "google" %}
-        <img src="{% static 'images/social_account_providers/google-logo-color.svg' %}"  alt="Google Logo" class= "h-[21px] w-[21px] mr-2" />
+        <img src="{% static 'images/social_account_providers/google-logo-color.svg' %}" alt="Google Logo" class= "h-[21px] w-[21px] mr-2" />
     {% elif provider_id == "microsoft" %}
         <img src="{% static 'images/social_account_providers/microsoft-logo-color.svg' %}" class="mr-2" alt="MS Logo" />
     {% endif %}
