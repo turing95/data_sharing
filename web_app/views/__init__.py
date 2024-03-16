@@ -16,7 +16,8 @@ from web_app.views.request.create import request_create
 from web_app.views.request.detail.edit import RequestEditView, request_modal,request_title_update,request_instructions_update
 from web_app.views.request.detail.content import RequestDetailView
 from web_app.views.request.update import request_update_order, request_set_order
-from web_app.views.space.detail.section.update import space_section_update_order
+from web_app.views.space.detail.section.update import space_section_update_order, sections_set_order
+from web_app.views.space.detail.section.delete import section_delete
 from web_app.views.request.sender import RequestDetailView as SenderRequestDetailView
 from web_app.views.upload_request.create import upload_request_create
 from web_app.views.upload_request.update import upload_request_update

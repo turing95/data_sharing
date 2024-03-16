@@ -79,29 +79,38 @@
                 {% endwith %}
             </div>
         {% endif %}
-
+        
         <div class="inline-flex mb-2">
+            <div class="flex items-center mr-2 space-x-2">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Content sections' %}</h3>
+                {% translate 'Add contents below. Your invitees will be able to access it via their space link' as inputs_tooltip_content %}
+                {% include 'components/tooltip.html' with content=inputs_tooltip_content %}
+            </div>
             {% include 'components/custom_htmx_indicator.html' with loader_id='loading-indicator-sort' %}
         </div>
 
         {% include 'private/space/detail/components/add_sections.html' %}
+        <div  hx-get="{% url 'sections_set_order' space.pk %}"
+        hx-indicator="#loading-indicator-sort"
+        hx-trigger="update_order from:body"
+        hx-target="#sections-container">
+            <form id="sections-container"
+                class="sortable"
+                hx-post="{% url 'space_section_update_order' space.pk %}"
+                hx-indicator="#loading-indicator-sort"
+                hx-trigger="end"
+                enctype="multipart/form-data"
+                data-accordion="collapse"
+            >
+                {% csrf_token %}
+                {% block sorted_sections %}
+                    {% for space_section in space.sections_position_sorted %}
+                        {% include 'private/space/detail/content/space_section.html' with space_section=space_section %}
+                    {% endfor %}
+                {% endblock sorted_sections %}
 
-        <form id="sections-container"
-              class="sortable"
-              hx-post="{% url 'space_section_update_order' space.pk %}"
-              hx-indicator="#loading-indicator-sort"
-              hx-trigger="end"
-              enctype="multipart/form-data"
-              data-accordion="collapse"
-        >
-            {% csrf_token %}
-            {% block sorted_sections %}
-                {% for space_section in space.sections_position_sorted %}
-                    {% include 'private/space/detail/content/space_section.html' with space_section=space_section %}
-                {% endfor %}
-            {% endblock sorted_sections %}
-
-        </form>
+            </form>
+        </div>
 
     {% endblock space_content %}
 

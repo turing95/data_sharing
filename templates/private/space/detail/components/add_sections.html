@@ -1,25 +1,25 @@
- te{% load i18n %}
+{% load i18n %}
     <!-- Add buttons -->
-    <div class="flex items-center gap-2">
+    <div class="flex items-center w-full gap-2">
         <!-- Line before the first button -->
         <div class="flex-grow border-t border-gray-300"></div>
     
         <!-- Button 1 -->
-        <div class="min-w-[10px] inline-flex justify-center">
+        <div class="min-w-[10px] inline-flex justify-center my-1">
             {% url 'file_section_create' space.pk as text_section_create_url %}
-            {% translate 'file section' as button_text %}
-            {% include "components/buttons/light_add_button.html" with button_text=button_text extra_classes="my-2" hx_get=text_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+            {% translate 'add file' as button_text %}
+            {% include "components/buttons/light_add_button.html" with button_text=button_text extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=text_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
         </div>
 
         <!-- Line between -->
         <div class=" border-t border-gray-300 w-[30px]"></div>
         
         <!-- Button 2 -->
-        <div class="min-w-[100px] inline-flex justify-center">
+        <div class="min-w-[100px] inline-flex justify-center my-1">
             {% url 'text_section_create' space.pk  as file_section_create_url %}
-            {% translate 'text section' as button_text %}
-            {% include "components/buttons/light_add_button.html" with  button_text=button_text extra_classes="my-2" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
-            {% if False %} <div class="w-[100px] hidden"></div>{% endif %} 
+            {% translate 'add text' as button_text %}           
+            {% include "components/buttons/light_add_button.html" with  button_text=button_text extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+            {% if False %} <div class="w-[100px] hidden border  bg-white hover:bg-gray-50 rounded border-blue-500"></div>{% endif %} 
         </div>
     
         <!-- Line after the second button -->

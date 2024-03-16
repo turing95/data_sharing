@@ -33,6 +33,20 @@ class Space(BaseModel):
     @property
     def sections_position_sorted(self):
         return self.sections.order_by('position')
+    
+    def add_section(self, text_section=None, file_section=None, prev_section_position=None):
+        from web_app.models import SpaceSection
+        if prev_section_position:
+            inserting_position = int(prev_section_position) + 1
+        else:
+            inserting_position = 1
+        # increase by 1 all the positions of the sections that have a position greater than or equal to the inserting position
+        self.sections.filter(position__gte=inserting_position).update(
+            position=models.F('position') + 1)
+        space_section = SpaceSection.objects.create(space=self, file_section=file_section,
+                                                    text_section=text_section,
+                                                    position=inserting_position)
+        
 
     def setup(self):
         from web_app.models import GenericDestination, Kezyy
