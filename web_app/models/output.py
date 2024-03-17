@@ -21,6 +21,8 @@ class Output(BaseModel):
                                        blank=True)
     file = models.OneToOneField('File', on_delete=models.CASCADE, related_name='file', null=True, blank=True)
 
+    feedback = models.OneToOneField('Feedback', on_delete=models.CASCADE, related_name='output', null=True, blank=True)
+
     @property
     def content(self):
         if self.text_output:
@@ -33,6 +35,10 @@ class Output(BaseModel):
     def update_event(self):
         return f'outputUpdated-{self.pk}'
 
-    def reject_form(self,request_post=None):
+    def reject_form(self, request_post=None):
         from web_app.forms import OutputRejectForm
         return OutputRejectForm(request_post)
+
+
+class Feedback(BaseModel):
+    notes = models.TextField(null=True, blank=True)

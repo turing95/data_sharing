@@ -18,4 +18,4 @@ from web_app.models.company import Company, CompanyField
 from web_app.models.grant import Grant
 from web_app.models.section import SpaceSection, TextSection, FileSection
 from web_app.models.text_output import TextOutput
-from web_app.models.output import Output
+from web_app.models.output import Output, Feedback

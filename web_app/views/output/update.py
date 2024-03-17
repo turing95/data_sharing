@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
 from web_app.models import File, Output, Sender
@@ -20,9 +20,12 @@ def accept(request, output_uuid):
 @login_required
 def reject(request, output_uuid):
     output = get_object_or_404(Output, pk=output_uuid)
-    notes = output.reject_form(request.POST)
-    output.status = Output.OutputStatus.REJECTED
-    output.save()
-    response = HttpResponse()
-    response['HX-Trigger'] = f'{output.update_event}, closeModal'
-    return response
+    reject_form = output.reject_form(request.POST)
+    if reject_form.is_valid():
+        output.status = Output.OutputStatus.REJECTED
+        output.feedback = reject_form.save()
+        output.save()
+        response = HttpResponse()
+        response['HX-Trigger'] = f'{output.update_event}, closeModal'
+        return response
+    return HttpResponseBadRequest()
