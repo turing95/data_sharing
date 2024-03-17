@@ -19,9 +19,10 @@ def space_section_update_order(request, space_uuid):
                                          {'space': space}, request)
     return HttpResponse(html_string)
 
+
 @login_required
 @require_GET
-def sections_set_order(request, space_uuid):
+def sections(request, space_uuid):
     space = get_object_or_404(Space, pk=space_uuid)
     html_string = render_block_to_string("private/space/detail/base.html", 'sorted_sections',
                                          {'space': space}, request)

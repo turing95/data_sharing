@@ -90,7 +90,7 @@
         </div>
 
         {% include 'private/space/detail/components/add_sections.html' %}
-        <div  hx-get="{% url 'sections_set_order' space.pk %}"
+        <div  hx-get="{% url 'sections' space.pk %}"
         hx-indicator="#loading-indicator-sort"
         hx-trigger="update_order from:body"
         hx-target="#sections-container">

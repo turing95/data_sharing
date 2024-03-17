@@ -15,8 +15,8 @@ from web_app.views.space.sender.request.list import RequestListView as RequestLi
 from web_app.views.request.create import request_create
 from web_app.views.request.detail.edit import RequestEditView, request_modal,request_title_update,request_instructions_update
 from web_app.views.request.detail.content import RequestDetailView
-from web_app.views.request.update import request_update_order, request_set_order
-from web_app.views.space.detail.section.update import space_section_update_order, sections_set_order
+from web_app.views.request.update import request_update_order, input_requests
+from web_app.views.space.detail.section.update import space_section_update_order, sections
 from web_app.views.space.detail.section.delete import section_delete
 from web_app.views.request.sender import RequestDetailView as SenderRequestDetailView
 from web_app.views.upload_request.create import upload_request_create
@@ -50,10 +50,9 @@ from web_app.views.settings import SettingsView
 from web_app.views.beta_access_request import BetaAccessRequestFormView
 from web_app.views.custom_http_errors import custom_page_not_found, custom_server_error
 
-from web_app.views.sender.detail import (toggle_sender_active, notify_deadline, notify_invitation, sender_modal,
-                                         sender_info,
-                                         sender_row, all_senders_modal, bulk_notify_invitation, bulk_notify_deadline,
-                                         sender_upload_notification,sender_notify_modal,sender_notify)
+from web_app.views.sender.detail import (toggle_sender_active, notify_deadline, notify_invitation,
+                                         sender_row, bulk_notify_invitation, bulk_notify_deadline,
+                                         sender_upload_notification,sender_notify)
 from web_app.views.sender.create import sender_create_row, sender_create
 from web_app.views.organization.create import create_organization, create_organization_modal
 from web_app.views.destination import search_folder, select_destination_type, get_destination_logo

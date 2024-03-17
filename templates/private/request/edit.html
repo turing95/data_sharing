@@ -16,7 +16,7 @@
         
         {% include 'private/request/add_buttons.html' %}
         
-        <div  hx-get="{% url 'request_set_order' kezyy_request.pk %}"
+        <div  hx-get="{% url 'input_requests' kezyy_request.pk %}"
         hx-indicator="#loading-indicator-sort"
         hx-trigger="update_order from:body"
         hx-target="#requests-container">
