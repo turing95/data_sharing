@@ -101,3 +101,10 @@ def sender_notify(request, sender_uuid):
             'sender': sender,
             'form': form
         })
+
+@login_required
+@require_GET
+def sender_notify_modal(request, sender_uuid):
+    return render(request, 'private/space/detail/sender/sender_notify_modal.html', {
+        'sender': get_object_or_404(Sender, pk=sender_uuid)
+    })

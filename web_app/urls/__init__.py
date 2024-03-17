@@ -136,6 +136,7 @@ urlpatterns = [
     path('senders/<uuid:sender_uuid>/notify_invitation/', views.notify_invitation, name='notify_invitation'),
     path('senders/sender-upload-notification/', views.sender_upload_notification, name='sender_upload_notification'),
     path('companies/<uuid:company_uuid>/update-name/', views.company_update_name, name='company_update_name'),
+    path('senders/<uuid:sender_uuid>/notify-modal/', views.sender_notify_modal, name='sender_notify_modal'),
     path('companies/<uuid:company_uuid>/update/', views.company_update, name='company_update'),
     path('companies/<uuid:company_uuid>/company-fields/create/', views.company_field_create,
          name='company_field_create'),
