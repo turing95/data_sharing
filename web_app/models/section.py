@@ -8,11 +8,6 @@ class SpaceSection(BaseModel):
     text_section = models.ForeignKey('TextSection', on_delete=models.CASCADE, null=True, blank=True)
     file_section = models.ForeignKey('FileSection', on_delete=models.CASCADE, null=True, blank=True)
 
-    @classmethod
-    def get_new_section_position(cls, space):
-        last_position = cls.objects.filter(space=space).aggregate(models.Max('position'))['position__max']
-        new_position = 1 if last_position is None else last_position + 1
-        return new_position
 
 
 class TextSection(BaseModel):

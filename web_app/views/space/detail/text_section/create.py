@@ -10,9 +10,7 @@ from django.http import HttpResponse
 def text_section_create(request, space_uuid):
     space = get_object_or_404(Space, pk=space_uuid)
     text_section = TextSection.objects.create(space=space)
-    SpaceSection.objects.create(space=space,
-                                                text_section=text_section,
-                                                position=SpaceSection.get_new_section_position(space))
+                    
     
     space.add_section(text_section=text_section, prev_section_position=request.GET.get('section_position'))
     if request.headers.get('HX-Request'):
