@@ -72,55 +72,18 @@ def bulk_notify_invitation(request, space_uuid):
 
 @login_required
 @require_GET
-def sender_modal(request, sender_uuid):
-    sender = Sender.objects.get(pk=sender_uuid)
-
-    return render(request,
-                  'private/space/detail/components/../../../templates/private/space/detail/sender/sender_modal.html',
-                  {'sender': sender})
-
-
-@login_required
-@require_GET
-def sender_info(request, sender_uuid):
-    sender = Sender.objects.get(pk=sender_uuid)
-
-    return render(request,
-                  'private/space/detail/components/../../../templates/private/space/detail/sender/sender_info.html',
-                  {'sender': sender})
-
-
-@login_required
-@require_GET
 def sender_row(request, sender_uuid):
     sender = Sender.objects.get(pk=sender_uuid)
 
     return render(request,
-                  'private/space/detail/components/../../../templates/private/space/detail/sender/sender_row.html',
+                  'private/space/detail/sender/sender_row.html',
                   {'sender': sender})
-
-
-@login_required
-@require_GET
-def all_senders_modal(request, space_uuid):
-    space = Space.objects.get(pk=space_uuid)
-
-    return render(request, 'private/space/detail/components/all_senders_modal.html',
-                  {'space': space})
 
 
 @require_POST
 def sender_upload_notification(request):
     request.session['sender_upload_notification'] = request.POST['sender_upload_notification']
     return HttpResponse(status=204)
-
-
-@login_required
-@require_GET
-def sender_notify_modal(request, sender_uuid):
-    return render(request, 'private/space/detail/sender/sender_notify_modal.html', {
-        'sender': get_object_or_404(Sender, pk=sender_uuid)
-    })
 
 
 @login_required
