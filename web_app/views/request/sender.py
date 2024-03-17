@@ -87,9 +87,10 @@ class RequestDetailView(TemplateView):
                         Output.objects.create(text_output=text_output,company=company,sender_event=sender_event)
                 if sender_event is not None:
                     sender_events.append(sender_event)
-            if sender_events and request.session.get('sender_upload_notification', False):
-                sender.notify_upload(sender_events)
-            organization.notify_upload(sender_events)
+            if sender_events:
+                if request.session.get('sender_upload_notification', False):
+                    sender.notify_upload(sender_events)
+                organization.notify_upload(sender_events)
             messages.success(request, _(f"Your upload has completed"))
             return redirect(request.path)
         print(formset.errors)
