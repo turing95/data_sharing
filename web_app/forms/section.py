@@ -9,7 +9,9 @@ from django.utils.translation import gettext_lazy as _
 
 class TextSectionForm(ModelForm):
     title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled section'),
-                                                                          'class': css_classes.text_request_title_input}))
+                                                                          'class': css_classes.text_request_title_input,
+                                                                          'hx-trigger': 'blur changed',
+                                                                          'hx-swap': 'none'}))
 
     class Meta:
         model = TextSection
