@@ -13,8 +13,7 @@
     {% translate 'Access the requests and provide the required content' as inputs_tooltip_content %}
     {% include 'components/tooltip.html' with content=inputs_tooltip_content %}
 </div>
-{% has_incomplete_requests space.requests.all as has_incomplete %}
-{% if has_incomplete %}
+{% if space.has_incomplete_requests %}
     <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
         {% for kezyy_request in space.requests.all %}
             {% if kezyy_request.is_complete is False %}
@@ -50,8 +49,7 @@
 
 
 <!-- Completed requests -->
-{% has_complete_requests space.requests.all as has_complete %}
-{% if has_complete %}
+{% if space.has_complete_requests%}
 <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
     <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Completed requests' %}</h3>
 </div>

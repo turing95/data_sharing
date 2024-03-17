@@ -25,6 +25,15 @@ class Space(BaseModel):
     locale = models.CharField(max_length=10, null=True, blank=True, default='en-us')
 
     @property
+    def has_complete_requests(self):
+        return any(req.is_complete for req in self.requests.all())
+
+    @property
+    def has_incomplete_requests(self):
+        return any(not req.is_complete for req in self.requests.all())
+
+
+    @property
     def link_for_email(self):
         return settings.BASE_URL + reverse('receiver_space_detail', kwargs={
             'space_uuid': self.uuid
