@@ -81,7 +81,14 @@
                                                 
             </div>
             {% endif %} 
-            {% endif %} 
+            {% else %} 
+            <div class="px-5 pt-1 pb-3">
+                   
+                {{ form.text }}
+                {% include 'components/forms/error_widget.html' with errors=form.text.errors %}
+                                        
+    </div>
+    {% endif %}
 
 
     </div>
