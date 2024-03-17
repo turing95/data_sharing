@@ -38,6 +38,13 @@ def get_message_color(value):
     }
     return colors.get(value, "blue")
 
+@register.simple_tag
+def has_complete_requests(requests):
+    return any(req.is_complete for req in requests)
+
+@register.simple_tag
+def has_incomplete_requests(requests):
+    return any(not request.is_complete for request in requests)
 
 @register.simple_tag
 def get_count_uploaded_files(upload_request: UploadRequest, sender: Sender = None, public=False):

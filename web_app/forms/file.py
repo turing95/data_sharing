@@ -107,7 +107,9 @@ class InputRequestForm(Form):
             self.upload_request = input_request.upload_request
         elif input_request.text_request:
             self.fields['text'] = forms.CharField(label=input_request.text_request.title, required=False,
-                                                  widget=forms.Textarea(attrs={'rows': 2}))
+                                                  widget=forms.Textarea(attrs={'rows': 1, 
+                                                                               'class':css_classes.text_area + "text-sm",
+                                                                               'placeholder': _('Type your input here...')}),)
             self.fields['request_uuid'].initial = input_request.text_request.pk
             self.text_request = input_request.text_request
         self.input_request = input_request

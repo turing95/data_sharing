@@ -118,9 +118,9 @@
                     {{ form.errors }}
                     {{ form.non_field_errors }}
                     {% if form.upload_request %}
-                        {% include 'public/sender/request/upload_request.html' %}
+                        {% include 'sender/request/upload_request.html' %}
                     {% elif form.text_request %}
-                        {% include 'public/sender/request/text_request.html' %}
+                        {% include 'sender/request/text_request.html' %}
                     {% endif %}
                 {% endfor %}
             </div>

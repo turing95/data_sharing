@@ -1,5 +1,5 @@
 {% load static %}
-<button data-tooltip-target="tooltip-{{num|default:0}}-{% if target_prefix %}{{ target_prefix }}-{% endif %}{{target}}" data-tooltip-style="light" data-tooltip-placement={{placement|default:"top"}} type="button"
+<button data-tooltip-trigger={%if trigger %}{{trigger}}{%else%}"hover"{%endif%} data-tooltip-target="tooltip-{{num|default:0}}-{% if target_prefix %}{{ target_prefix }}-{% endif %}{{target}}" data-tooltip-style="light" data-tooltip-placement={{placement|default:"top"}} type="button"
 class="inline-flex items-center ml-2 text-gray-600 transition-all transition-colors duration-75 duration-300 rounded hover:text-gray-800 group shrink-0">
 <img src="{% static 'images/icons/tooltip.svg' %}" alt="Copy Link Icon" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110">
 </button>

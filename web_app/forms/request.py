@@ -124,7 +124,8 @@ class UploadRequestForm(ModelForm):
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """))
     multiple_files = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
+        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input,
+                                                  'hx-trigger': 'changed', 'hx-swap': 'none'}),
         required=False,
         label=_('Multiple Files'),
         help_text=_("""
@@ -285,7 +286,8 @@ class RequestEditForm(ModelForm):
         required=False,
         widget=forms.DateTimeInput(attrs={
             'type': 'datetime-local',
-            'class': css_classes.datetime_input
+            'class': css_classes.datetime_input,
+            'hx-trigger': 'changed', 'hx-swap': 'none'
         }, format='%Y-%m-%dT%H:%M:%S'),
         help_text=_("""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.

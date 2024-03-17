@@ -6,25 +6,72 @@
 
 
 {% block sender_content %}
+
+<!-- PENDING REQUESTS -->
+<div class="inline-flex w-full max-w-4xl px-10 pb-2 mx-auto">
+    <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Pending requests' %}</h3>
+    {% translate 'Access the requests and provide the required content' as inputs_tooltip_content %}
+    {% include 'components/tooltip.html' with content=inputs_tooltip_content %}
+</div>
+{% has_incomplete_requests space.requests.all as has_incomplete %}
+{% if has_incomplete %}
     <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
-        TO DO
         {% for kezyy_request in space.requests.all %}
             {% if kezyy_request.is_complete is False %}
-                <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}">{{ kezyy_request.title }}</a>
-                {% translate 'completed inputs' %} {{ kezyy_request.completed_input_requests.count }}/
-                {{ kezyy_request.input_requests.count }}
-            {% endif %}
+                <div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50">
+                    <div class="flex-1 px-4 py-2 min-w-[150px] shrink group">
+                        <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}" class="inline-block relative after:content-[''] after:block after:w-full after:h-[1px] after:bg-current after:absolute after:left-0 after:-bottom-[1px] after:scale-x-0 group-hover:after:scale-x-100 after:origin-bottom-left after:transition-transform after:duration-300 after:bg-gradient-to-r after:from-transparent after:via-transparent after:to-current">
+                            {{ kezyy_request.title }}
+                        </a>
+                    </div>
+                    <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
+                        {{ kezyy_request.completed_input_requests.count }}/
+                        {{ kezyy_request.input_requests.count }} {% translate 'Inputs complete'%}
+                    </div>
+                    <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
+                        {% if kezyy_request.deadline %}
+                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 ml-2">            
+                            {% localize on %}
+                            Complete before:  {{ kezyy_request.deadline|time }}
+                            {% endlocalize %}      
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif%}
         {% endfor %}
     </div>
+{% else %}
     <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
-        COMPLETED
-        {% for kezyy_request in space.requests.all %}
-            {% if kezyy_request.is_complete is True %}
-                <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}">{{ kezyy_request.title }}</a>
-                {% translate 'completed inputs' %} {{ kezyy_request.completed_input_requests.count }}/
-                {{ kezyy_request.input_requests.count }}
-            {% endif %}
-        {% endfor %}
+        <p class="text-gray-500 dark:text-gray-400">{% translate 'No pending requests' %}</p>
     </div>
+{% endif %}
+
+
+
+<!-- Completed requests -->
+{% has_complete_requests space.requests.all as has_complete %}
+{% if has_complete %}
+<div class="w-full max-w-4xl px-10 pb-2 mx-auto">
+    <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Completed requests' %}</h3>
+</div>
+
+
+<div class="w-full max-w-4xl px-10 pb-2 mx-auto">
+    {% for kezyy_request in space.requests.all %}
+        {% if kezyy_request.is_complete is True %}
+
+            <div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50">
+                <div class="flex-1 px-4 py-2 min-w-[150px] shrink group">
+                    <a href="{% url 'sender_request_detail' sender.pk kezyy_request.pk %}" class="inline-block relative after:content-[''] after:block after:w-full after:h-[1px] after:bg-current after:absolute after:left-0 after:-bottom-[1px] after:scale-x-0 group-hover:after:scale-x-100 after:origin-bottom-left after:transition-transform after:duration-300 after:bg-gradient-to-r after:from-transparent after:via-transparent after:to-current">
+                        {{ kezyy_request.title }}
+                    </a>
+                </div>            
+            </div>
+        {% endif%}
+    {% endfor %}
+</div>
+{% endif %}
+
 {% endblock sender_content %}
 

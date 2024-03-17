@@ -1,0 +1,29 @@
+{% load static i18n %}
+<div class="mx-2 text-sm min-w-[75px] {% if color == 'blue'%} text-blue-800 bg-blue-200{% elif color == 'green' %} text-green-800 bg-green-200 {% elif color == 'red' %} text-red-800 bg-red-200{%endif%} align-middle  rounded-full px-[8px] flex items-center justify-center whitespace-nowrap"
+{% if html_title %}title="{{html_title}}"{%endif%}>
+    <span class="text-sm  align-middle rounded-full px-[8px] flex items-center justify-center whitespace-nowrap">
+        {{ status }}
+    </span>
+
+    {% if feedback %}
+        <button data-tooltip-trigger="click"
+        data-tooltip-target="tag-tooltip-{{num|default:0}}-{% if target_prefix %}{{ target_prefix }}-{% endif %}{{target}}"
+        data-tooltip-style="light"
+        data-tooltip-placement={{placement|default:"top"}}
+        type="button"
+        title="{% translate 'Additional details' %}"
+        class="inline-flex items-center transition-all duration-300 rounded group shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" class="w-4 h-4 transition-transform duration-300 hover:scale-110">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+          </svg>
+          
+          
+        </button>
+
+        <div id="tag-tooltip-{{num|default:0}}-{% if target_prefix %}{{ target_prefix }}-{% endif %}{{target}}" role="tooltip" class="max-w-[300px] absolute z-50 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip -translate-x-1/2 left-1/2 bottom-full mb-2">
+            {% comment %}{% if title %}<p class="mb-1 font-bold">{{ feedback_title }}</p>{% endif %}{% endcomment %}
+            <p>{{ feedback }}</p>
+        </div>
+    {% endif %}
+    
+</div>
