@@ -64,6 +64,7 @@ class SpaceMixin:
         data['organization'] = self.get_space().organization
         return data
 
+
 class ContactMixin:
     _contact = None  # Placeholder for the cached object
     _organization = None  # Placeholder for the cached object
@@ -71,13 +72,13 @@ class ContactMixin:
     def get_contact(self) -> Contact:
         if self._contact is None:
             self._contact = get_object_or_404(Contact, pk=self.kwargs.get('contact_uuid'))
-        return self._contact        
+        return self._contact
 
     def get_organization(self) -> Organization:
         if self._organization is None:
-            self._organization = self.get_contact().organization 
+            self._organization = self.get_contact().organization
         return self._organization
-    
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['organization'] = self.get_organization()
@@ -86,8 +87,15 @@ class ContactMixin:
                         'text': _('Back to Contacts')}
         return data
 
+
 class CompanyMixin:
     _company = None  # Placeholder for the cached object
+    _organization = None  # Placeholder for the cached object
+
+    def get_organization(self) -> Organization:
+        if self._organization is None:
+            self._organization = self.get_company().organization
+        return self._organization
 
     def get_company(self):
         if not self._company:
@@ -98,6 +106,8 @@ class CompanyMixin:
         context = super().get_context_data(**kwargs)
         context['organization'] = self.get_company().organization
         context['company'] = self.get_company()
+        context['back'] = {'url': reverse('companies', kwargs={'organization_uuid': self.get_organization().pk}),
+                        'text': _('Back to Companies')}
         return context
 
 
@@ -131,7 +141,7 @@ class RequestMixin:
         data['space'] = self.get_request().space
         data['organization'] = self.get_request().space.organization
         data['back'] = {'url': reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk}),
-                           'text': _('Back to Space')}
+                        'text': _('Back to Space')}
         return data
 
 
