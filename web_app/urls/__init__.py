@@ -42,6 +42,7 @@ urlpatterns = [
     path('organizations/<uuid:organization_uuid>/grants/', views.GrantListView.as_view(), name='grants'),
     path('organizations/<uuid:organization_uuid>/grants/create/', views.grant_create, name='grant_create'),
     path('grants/<uuid:grant_uuid>/detail/', views.GrantDetailView.as_view(), name='grant_detail'),
+    path('grants/<uuid:grant_uuid>/delete/', views.GrantDeleteView.as_view(), name='grant_delete'),
     path('companies/<uuid:company_uuid>/detail/', views.CompanyDetailView.as_view(), name='company_detail'),
     path('companies/<uuid:company_uuid>/spaces/', views.CompanySpacesListView.as_view(), name='company_spaces'),
     path('companies/<uuid:company_uuid>/contacts/', views.CompanyContactsListView.as_view(), name='company_contacts'),

@@ -1,51 +1,49 @@
-{% load custom_tags static i18n %}
+{% load static i18n %}
 <div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50">
     <div class="flex-1 px-4 py-2 min-w-[150px] shrink group">
         <a href="{% url 'contact_detail' contact.pk %}"
-            class="inline-block relative after:content-[''] after:block after:w-full after:h-[1px] after:bg-current after:absolute after:left-0 after:-bottom-[1px] after:scale-x-0 group-hover:after:scale-x-100 after:origin-bottom-left after:transition-transform after:duration-300 after:bg-gradient-to-r after:from-transparent after:via-transparent after:to-current">
-            {{ contact.full_name|default_if_none:""}}
+           class="inline-block relative after:content-[''] after:block after:w-full after:h-[1px] after:bg-current after:absolute after:left-0 after:-bottom-[1px] after:scale-x-0 group-hover:after:scale-x-100 after:origin-bottom-left after:transition-transform after:duration-300 after:bg-gradient-to-r after:from-transparent after:via-transparent after:to-current">
+            {{ contact.full_name|default_if_none:"" }}
         </a>
     </div>
     <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
         {{ contact.email }}
     </div>
     <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
-        {{contact.phone}}
+        {{ contact.phone }}
     </div>
     <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
-        {{contact.company}}
+        {{ contact.company }}
     </div>
     <div class="px-2 py-2 ml-auto transition-transform duration-150 ease-in-out w-[40px] hover:text-marian-blue-300">
-        <button type="button"  id="contact_row_dropdown_button_{{ contact.pk }}" aria-expanded="false"
-        data-dropdown-toggle="contact_row_dropdown_{{ contact.pk }}" data-dropdown-placement="left">
-        <span class="sr-only">Open contact dropdown</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-            </svg> 
+        <button type="button" id="contact_row_dropdown_button_{{ contact.pk }}" aria-expanded="false"
+                data-dropdown-toggle="contact_row_dropdown_{{ contact.pk }}" data-dropdown-placement="left">
+            <span class="sr-only">Open contact dropdown</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
+            </svg>
         </button>
-<!-- Dropdown menu -->
-<div class="z-50 hidden my-4 text-base font-normal list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
-     id="contact_row_dropdown_{{ contact.pk }}">
-    <ul class="py-2" aria-labelledby="contact_row_dropdown_{{ contact.pk}}">
-        <li>
-            <form action="{% url 'contact_delete' contact.pk %}" method="post">
-                {% csrf_token %}
-                <button class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer justify-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                    {% translate 'Delete' %}
-                </button>
-            </form>
-        </li>
+        <!-- Dropdown menu -->
+        <div class="z-50 hidden my-4 text-base font-normal list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+             id="contact_row_dropdown_{{ contact.pk }}">
+            <ul class="py-2" aria-labelledby="contact_row_dropdown_{{ contact.pk }}">
+                <li>
+                    <form action="{% url 'contact_delete' contact.pk %}" method="post">
+                        {% csrf_token %}
+                        <button class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer justify-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            {% translate 'Delete' %}
+                        </button>
+                    </form>
+                </li>
 
-    </ul>
-</div>
-
-
-
-
+            </ul>
+        </div>
 
 
     </div>
-    
+
 </div>
 
 {% comment %} <tr class="bg-white border-b sender-pull dark:bg-gray-800 dark:border-gray-700">
