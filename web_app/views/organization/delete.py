@@ -12,4 +12,4 @@ class OrganizationDeleteView(LoginRequiredMixin, DeleteView):
 
     def form_valid(self, form):
         self.object.delete()
-        return redirect(reverse('organizations', kwargs={'organization_uuid': self.object.organization.pk}))
+        return redirect(reverse('spaces'))
