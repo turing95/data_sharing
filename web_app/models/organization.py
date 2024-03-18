@@ -61,6 +61,16 @@ class Organization(BaseModel):
         for user in self.users.all():
             user.notify_upload(sender_events)
 
+    def can_delete(self, user):
+        if user.created_organizations.count() >= 1:
+            if self.created_by == user:
+                return True
+        return False
+
+    def form(self,request_post=None):
+        from web_app.forms import OrganizationCreateForm
+        return OrganizationCreateForm(request_post, instance=self)
+
 
 class UserOrganization(BaseModel):
     user = models.ForeignKey('User', on_delete=models.CASCADE)

@@ -55,10 +55,13 @@ from web_app.views.sender.detail import (toggle_sender_active, notify_deadline, 
                                          sender_upload_notification,sender_notify,sender_notify_modal)
 from web_app.views.sender.create import sender_create_row, sender_create
 from web_app.views.organization.create import create_organization, create_organization_modal
+from web_app.views.organization.settings import OrganizationSettingsView
+from web_app.views.organization.delete import OrganizationDeleteView
+from web_app.views.organization.update import organization_update
 from web_app.views.destination import search_folder, select_destination_type, get_destination_logo
 from web_app.views.profile import profile
 from web_app.views.file import request_changes, accept_all, accept_single
-from web_app.views.settings import sender_notifications_settings_update, account_notifications, OrganizationSettingsView
+from web_app.views.settings import sender_notifications_settings_update, account_notifications
 from web_app.views.payments.checkout import create_checkout_session
 from web_app.views.payments.billing import create_billing_session
 from web_app.views.djstripe_webhooks.payment import custom_webhook
