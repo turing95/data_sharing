@@ -7,9 +7,38 @@
     {% translate "Organization Settings" as title %}
     {% include 'private/page_title.html' with title=title %}
     <div class="flex-col mb-8">
+        <form action="{% url 'organization_update' organization.pk %}"
+              method="post"
+              class="flex flex-col">
+            {% csrf_token %}
+            <div class="w-3/4 mb-3 md:w-1/4">
+                {{ organization.form.name }}
+            </div>
+            <div class="flex w-3/4 mb-3 md:w-1/4">
+                {% translate "Save" as button_text %}
+                {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text=button_text %}
+            </div>
+        </form>
+    </div>
+    <div class="flex-col mb-8">
         <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Sender Notifications' %}</h2>
         {% include 'private/settings/notifications_form.html' with form=sender_notifications_form %}
 
     </div>
+    {% if organization_can_delete %}
+        <div class="flex-col mb-8">
+            <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Close organization' %}</h2>
+
+            <form action="{% url 'organization_delete' organization.pk %}"
+                  onsubmit="return confirm('{% translate "Are you sure you want to delete this organization?" %}');"
+                  method="post">
+                {% csrf_token %}
+                <div class="flex w-3/4 mb-3 md:w-1/4">
+                    {% translate "Delete organization" as button_text %}
+                    {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text=button_text %}
+                </div>
+            </form>
+        </div>
+    {% endif %}
 
 {% endblock private_content %}

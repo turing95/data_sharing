@@ -5,14 +5,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
 from django.utils.translation import gettext_lazy as _
-from web_app.forms import OrganizationForm
+from web_app.forms import OrganizationCreateForm
 
 
 @require_GET
 @login_required
 def create_organization_modal(request):
     if request.method == 'GET':
-        form = OrganizationForm()
+        form = OrganizationCreateForm()
         return render(request,
                       'private/organization/create_modal.html', {'form': form})
 
@@ -23,7 +23,7 @@ def create_organization_modal(request):
 @login_required
 def create_organization(request):
     if request.method == 'POST':
-        form = OrganizationForm(request.POST)
+        form = OrganizationCreateForm(request.POST)
         if form.is_valid():
             organization = form.save(commit=False)
             organization.created_by = request.user

@@ -11,7 +11,7 @@ from web_app.forms.beta_access_request import BetaAccessRequestForm
 from web_app.forms.user import UserForm
 from web_app.forms.settings import SenderNotificationsSettingsForm, NotificationsSettingsForm
 from web_app.forms.contact import ContactForm
-from web_app.forms.organization import OrganizationForm
+from web_app.forms.organization import OrganizationCreateForm
 from web_app.forms.team import TeamInviteForm
 from web_app.forms.file_changes import FileSelectForm
 from web_app.forms.company import CompanyForm, CompanyNameForm, CompanyFieldSetForm, CompanyFieldFillForm, CompanyCreateForm

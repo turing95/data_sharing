@@ -31,21 +31,6 @@ class SettingsView(LoginRequiredMixin, SubscriptionMixin, TemplateView):
         return context
 
 
-class OrganizationSettingsView(LoginRequiredMixin, OrganizationMixin, SideBarMixin, SubscriptionMixin, TemplateView):
-    template_name = "private/organization/settings.html"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        try:
-            context['sender_notifications_form'] = SenderNotificationsSettingsForm(
-                instance=self.get_organization().sender_notifications_settings)
-        except SenderNotificationsSettings.DoesNotExist:
-            SenderNotificationsSettings.objects.create(organization=self.get_organization())
-            context['sender_notifications_form'] = SenderNotificationsSettingsForm(
-                instance=self.get_organization().sender_notifications_settings)
-        return context
-
-
 @login_required
 @require_POST
 def sender_notifications_settings_update(request, notifications_settings_uuid):
