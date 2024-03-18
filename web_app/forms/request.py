@@ -125,7 +125,7 @@ class UploadRequestForm(ModelForm):
             """))
     multiple_files = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input,
-                                                  'hx-trigger': 'changed', 'hx-swap': 'none'}),
+                                          'hx-trigger': 'change', 'hx-swap': 'none'}),
         required=False,
         label=_('Multiple Files'),
         help_text=_("""
@@ -137,7 +137,7 @@ class UploadRequestForm(ModelForm):
         widget=forms.URLInput(
             attrs={'placeholder': _('Insert file template URL'),
                    'class': css_classes.text_input,
-                   'hx-trigger': 'blur changed','hx-swap':'none'}),
+                   'hx-trigger': 'blur changed', 'hx-swap': 'none'}),
         help_text=_("""
                 You can provide a template file that will be available for download to your invitees. 
                 Leave blank if not necessary.
@@ -287,12 +287,13 @@ class RequestEditForm(ModelForm):
         widget=forms.DateTimeInput(attrs={
             'type': 'datetime-local',
             'class': css_classes.datetime_input,
-            'hx-trigger': 'changed', 'hx-swap': 'none'
+            'hx-trigger': 'change',
+            'hx-swap': 'none'
         }, format='%Y-%m-%dT%H:%M:%S'),
         help_text=_("""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.
                                 """))
-    deadline_notice_days = forms.IntegerField(
+    '''deadline_notice_days = forms.IntegerField(
         required=False,
         min_value=0,
         max_value=15,
@@ -321,30 +322,31 @@ class RequestEditForm(ModelForm):
         label=_('Hours before deadline'),
         help_text=_('Number of hours before the deadline to send notifications.')
     )
-
-    upload_after_deadline = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
-        required=False,
-        label=_('Uploads after deadline'),
-        help_text=_("""Your invitees will be able to upload files after the deadline if this is enabled.
-        You can change this setting at any time."""))
-
     notify_deadline = forms.BooleanField(
         widget=ToggleWidget(label_on=_('Notification'),
                             label_off=_('Notification')),
         required=False,
         label=_('Notify deadline'),
-        help_text=_("""Set a number of days and hours before the deadline to send a notification to your invitees."""))
+        help_text=_("""Set a number of days and hours before the deadline to send a notification to your invitees."""))'''
+
+    upload_after_deadline = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input, 'hx-trigger': 'change',
+                                          'hx-swap': 'none'}),
+        required=False,
+        label=_('Uploads after deadline'),
+        help_text=_("""Your invitees will be able to upload files after the deadline if this is enabled.
+        You can change this setting at any time."""))
 
     class Meta:
         model = Request
-        fields = ['instructions', 'deadline', 'notify_deadline', 'upload_after_deadline', 'deadline_notice_days',
-                  'deadline_notice_hours']
+        fields = ['instructions', 'deadline', 'upload_after_deadline']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         update_url = reverse_lazy('request_instructions_update', kwargs={'request_uuid': self.instance.pk})
         self.fields['instructions'].widget.attrs['hx-post'] = update_url
+        self.fields['deadline'].widget.attrs['hx-post'] = update_url
+        self.fields['upload_after_deadline'].widget.attrs['hx-post'] = update_url
 
     def clean_deadline(self):
         deadline = self.cleaned_data.get('deadline', None)
@@ -364,9 +366,7 @@ class RequestEditForm(ModelForm):
             return deadline.isoformat()
         return deadline
 
-    def clean(self):
-        cleaned_data = super().clean()
-
+    def validate_deadline_settings(self, cleaned_data):
         # Assuming you have a field for deadline in your form
         deadline = cleaned_data.get('deadline')
         notify_deadline = cleaned_data.get('notify_deadline')
@@ -389,4 +389,7 @@ class RequestEditForm(ModelForm):
                 self.add_error('deadline_notice_days', error_message)
                 self.add_error('deadline_notice_hours', error_message)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        # self.validate_deadline_settings(cleaned_data)
         return cleaned_data

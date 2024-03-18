@@ -30,8 +30,8 @@
                 {% include 'components/forms/error_widget.html' with errors=form.deadline.errors %}
             </div>
             <div class="hidden deadline-settings-container">
-
-                <div class="flex items-center my-2 space-x-2">
+                {% comment %}
+                                <div class="flex items-center my-2 space-x-2">
                     <div class="flex items-center h-5">
                         {{ form.notify_deadline }}
                         <label for="{{ form.notify_deadline.id_for_label }}"
@@ -49,8 +49,8 @@
 
                 </div>
                 {% include 'components/forms/error_widget.html' with errors=form.deadline_notice_days.errors %}
-
-
+                {% endcomment %}
+                
                 <div class="flex items-center mb-2 space-x-2">
                     <div class="flex items-center h-5">
                         {{ form.upload_after_deadline }}
