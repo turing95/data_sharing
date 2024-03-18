@@ -44,6 +44,7 @@ urlpatterns = [
     path('grants/<uuid:grant_uuid>/detail/', views.GrantDetailView.as_view(), name='grant_detail'),
     path('grants/<uuid:grant_uuid>/delete/', views.GrantDeleteView.as_view(), name='grant_delete'),
     path('companies/<uuid:company_uuid>/detail/', views.CompanyDetailView.as_view(), name='company_detail'),
+    path('companies/<uuid:company_uuid>/delete/', views.CompanyDeleteView.as_view(), name='company_delete'),
     path('companies/<uuid:company_uuid>/spaces/', views.CompanySpacesListView.as_view(), name='company_spaces'),
     path('companies/<uuid:company_uuid>/contacts/', views.CompanyContactsListView.as_view(), name='company_contacts'),
     path('companies/<uuid:company_uuid>/files/', views.CompanyFilesListView.as_view(), name='company_files'),

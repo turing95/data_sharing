@@ -65,6 +65,7 @@ from web_app.views.djstripe_webhooks.payment import custom_webhook
 from web_app.views.company.list import CompanyListView, search_companies
 from web_app.views.company.create import CompanyCreateView
 from web_app.views.company.detail.home import CompanyDetailView
+from web_app.views.company.delete import CompanyDeleteView
 from web_app.views.company.detail.spaces import CompanySpacesListView
 from web_app.views.company.detail.contacts import CompanyContactsListView
 from web_app.views.company.detail.files import CompanyFilesListView
