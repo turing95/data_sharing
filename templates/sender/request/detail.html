@@ -118,13 +118,17 @@
                     {{ form.errors }}
                     {{ form.non_field_errors }}
                     {% if form.upload_request %}
-                        {% include 'sender/request/upload_request.html' %}
+                        {% if form.upload_request.multiple_files %}
+                            {% include 'sender/request/multi_upload_request.html' %}
+                        {% else %}
+                            {% include 'sender/request/upload_request.html' %}
+                        {% endif %}
                     {% elif form.text_request %}
                         {% include 'sender/request/text_request.html' %}
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="p-5"
+            {% comment %} <div class="p-5"
                  hx-get="{% url 'sender_history_table' space.uuid %}?request_uuid={{ form.upload_request.uuid }}&sender_uuid={{ sender.uuid }}"
                  hx-trigger="intersect once, filesUpdated from:document"
                  hx-target="#history-table-{{ forloop.counter0 }}"
@@ -143,7 +147,7 @@
                 </div>
                 <div id="history-table-{{ forloop.counter0 }}">
                 </div>
-            </div>
+            </div> {% endcomment %}
 
             {% render_sender_notification_activate_toggle request %}
             {% translate 'Get an email with a summary of the files uploaded' as receipt_text %}

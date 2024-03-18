@@ -89,7 +89,7 @@ class InputRequestForm(Form):
         self.input_request_index = kwargs.pop('input_request_index')
         self.request = kwargs.pop('request')
         super().__init__(**kwargs)
-        input_request = self.request.input_requests.filter(is_active=True,is_complete=False).order_by('position')[self.input_request_index]
+        input_request = self.request.input_requests.filter(is_active=True).order_by('position')[self.input_request_index]
         if input_request.upload_request:
             self.fields['files'] = MultipleFileField(upload_request=input_request.upload_request, label='Files',
                                                      required=False)

@@ -17,7 +17,7 @@ class RequestDetailView(TemplateView):
 
     def get_formset(self):
         InputRequestFormset = formset_factory(InputRequestForm, formset=BaseInputRequestFormSet,
-                                              extra=self.get_request().input_requests.filter(is_active=True,is_complete=False).count())
+                                              extra=self.get_request().input_requests.filter(is_active=True).count())
         return InputRequestFormset(self.request.POST or None, self.request.FILES or None,
                                    form_kwargs={'request': self.get_request()})
 
