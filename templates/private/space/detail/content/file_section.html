@@ -42,11 +42,13 @@
     </div>
     {% if file_section.file %}
     <div class="flex items-start ">
-        <div class="inline-flex mr-auto cursor-pointer group">
-            <!-- Thumbnail with preview-->
-            {% include 'private/space/detail/content/simple_file_thumbnail.html' with file=file_section.file %}
-            <div class="my-auto ml-1 text-sm font-semibold break-all">{{ file_section.file }}</div>
-        </div>
+        <a href="{{ file_section.file.url }}" download target="_blank">
+            <div class="inline-flex mr-auto cursor-pointer group">
+                <!-- Thumbnail with preview-->
+                {% include 'private/space/detail/content/simple_file_thumbnail.html' with file=file_section.file %}
+                <div class="my-auto ml-1 text-sm font-semibold break-all">{{ file_section.file.original_name }}</div>
+            </div>
+        </a>
     </div>
     {% endif %}
 </div>

@@ -3641,6 +3641,10 @@ input[type="search"]::-webkit-search-cancel-button {
   content: var(--tw-content);
 }
 
+.hover\:flex:hover {
+  display: flex;
+}
+
 .hover\:scale-110:hover {
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
@@ -3962,6 +3966,10 @@ input[type="search"]::-webkit-search-cancel-button {
   display: inline;
 }
 
+.group:hover .group-hover\:flex {
+  display: flex;
+}
+
 .group:hover .group-hover\:scale-110 {
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
@@ -3980,6 +3988,10 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}
+
+.group:hover .group-hover\:opacity-\[1\] {
   opacity: 1;
 }
 
