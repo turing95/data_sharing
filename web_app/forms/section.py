@@ -8,12 +8,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 class TextSectionForm(ModelForm):
-    title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled section'),
+    title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Add a section title...'),
                                                                           'class': css_classes.text_request_title_input,
                                                                           'hx-trigger': 'blur changed',
                                                                           'hx-swap': 'none'}))
     content = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.text_area,
-                                                                            'rows': 5,
+                                                                           'placeholder': _('Add a paragraph...'),
+                                                                            'rows': 2,
                                                                             'cols': 5,                                                                            
                                                                             'hx-trigger': 'blur changed',
                                                                             'hx-swap': 'none'}))
@@ -29,15 +30,19 @@ class TextSectionForm(ModelForm):
         self.fields['content'].widget.attrs['hx-post'] = update_url
 
 
+
+
 class FileSectionForm(ModelForm):
-    title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Untitled section'),
+    title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Add a title for the file...'),
                                                                           'class': css_classes.text_request_title_input,
                                                                           'hx-target': 'closest .file-section-container'}))
     file = forms.FileField(required=False,
-                           widget=forms.ClearableFileInput(attrs={'hx-encoding': 'multipart/form-data',
+                           widget=forms.ClearableFileInput(attrs={'hidden': True,
+                               'hx-encoding': 'multipart/form-data',
                                                                   'hx-target': 'closest .file-section-container'}))
     description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.text_area,
-                                                                               'rows': 5,
+                                                                               'placeholder': _('Add a description to the file...'),
+                                                                               'rows': 2,
                                                                                'cols': 5,
                                                                                'hx-target': 'closest .file-section-container'}))
 
