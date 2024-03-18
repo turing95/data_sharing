@@ -93,7 +93,7 @@ urlpatterns = [
     path('spaces/<uuid:space_uuid>/file-sections/create/', views.file_section_create, name='file_section_create'),
     path('text-requests/<uuid:text_request_uuid>/update/', views.text_request_update,
          name='text_request_update'),
-    path('text-sections/<uuid:text_section_uuid>/update/', views.text_section_update,
+    path('text-sections/<uuid:section_uuid>/update/', views.text_section_update,
          name='text_section_update'),
     path('file-sections/<uuid:file_section_uuid>/update/', views.file_section_update,
          name='file_section_update'),

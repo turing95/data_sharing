@@ -47,17 +47,18 @@
         <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
 
             {% for space_section in space.sections_position_sorted %}
-                {% if space_section.text_section %}
-                {% if space_section.text_section.title %}
-                    <h2 class="mt-2 mb-4 text-2xl font-bold border-b">
-                        {{ space_section.text_section.title }}
-                    </h2>
-                {% endif %}
-                {% if space_section.text_section.content %}
-                    <div class= "mb-3 text-sm">                        
-                        {{ space_section.text_section.content }}
-                    </div>
-                {% endif %}
+                {% if space_section.heading_section %}
+                    {% if space_section.heading_section.title %}
+                        <h2 class="mt-2 mb-4 text-2xl font-bold border-b">
+                            {{ space_section.heading_section.title }}
+                        </h2>
+                    {% endif %}
+                {% elif space_section.paragraph_section %}
+                    {% if space_section.paragraph_section.content %}
+                        <div class= "mb-3 text-sm">                        
+                            {{ space_section.paragraph_section.content }}
+                        </div>
+                    {% endif %}
                 {% elif space_section.file_section %}
                     {% if space_section.file_section.file %}
 

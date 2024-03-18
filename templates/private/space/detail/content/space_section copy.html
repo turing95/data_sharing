@@ -2,11 +2,9 @@
 
 <div class="flex-col my-1">
     <div class="flex">        
-        <div class="px-2 ml-4 mr-auto text-[0.6rem] leading-[0.75rem] bg-gray-100{% if space_section.file_section %} text-orange-400 {% elif space_section.heading_section  %} text-blue-400 {% elif space_section.paragraph_section  %} text-green-400 {% endif %} rounded-tl rounded-tr">
-            {% if space_section.heading_section %}
-                {% translate 'heading section' %}
-            {% elif space_section.paragraph_section %}
-                {% translate 'paragraph section' %}
+        <div class="px-2 ml-4 mr-auto text-[0.6rem] leading-[0.75rem] bg-gray-100{% if space_section.file_section %} text-orange-400 {% elif space_section.text_section  %} text-green-400 {% endif %} rounded-tl rounded-tr">
+            {% if space_section.text_section %}
+                {% translate 'text section' %}
             {% elif space_section.file_section %}
                 {% translate 'file section' %}
             {% endif %}
@@ -38,10 +36,8 @@
             <input type="hidden" value="{{ space_section.pk }}" name="space_section_order[]">
             {% if space_section.file_section  %}
                 {% include 'private/space/detail/content/file_section.html' with file_section=space_section.file_section %}
-            {% elif space_section.heading_section %}
-                {% include 'private/space/detail/content/heading_section.html' with heading_section=space_section.heading_section %}
-            {% elif space_section.paragraph_section %}
-                {% include 'private/space/detail/content/paragraph_section.html' with paragraph_section=space_section.paragraph_section %}
+            {% elif space_section.text_section %}
+                {% include 'private/space/detail/content/text_section.html' with text_section=space_section.text_section %}
             {% endif %}
         </div>
 

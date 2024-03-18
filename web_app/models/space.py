@@ -43,7 +43,7 @@ class Space(BaseModel):
     def sections_position_sorted(self):
         return self.sections.order_by('position')
     
-    def add_section(self, text_section=None, file_section=None, prev_section_position=None):
+    def add_section(self, heading_section=None, paragraph_section=None, file_section=None, prev_section_position=None):
         from web_app.models import SpaceSection
         if prev_section_position:
             inserting_position = int(prev_section_position) + 1
@@ -53,7 +53,8 @@ class Space(BaseModel):
         self.sections.filter(position__gte=inserting_position).update(
             position=models.F('position') + 1)
         space_section = SpaceSection.objects.create(space=self, file_section=file_section,
-                                                    text_section=text_section,
+                                                    heading_section=heading_section,
+                                                    paragraph_section=paragraph_section,
                                                     position=inserting_position)
         
 

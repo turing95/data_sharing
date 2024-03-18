@@ -2,16 +2,31 @@ from django.forms import ModelForm
 from django.urls import reverse_lazy
 
 from web_app.forms import css_classes
-from web_app.models import TextSection, FileSection
+from web_app.models import HeadingSection, ParagraphSection, FileSection
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from urllib.parse import urlencode
 
 
-class TextSectionForm(ModelForm):
+class HeadingSectionForm(ModelForm):
     title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Add a section title...'),
                                                                           'class': css_classes.text_request_title_input,
                                                                           'hx-trigger': 'blur changed',
                                                                           'hx-swap': 'none'}))
+
+    class Meta:
+        model = HeadingSection
+        fields = ['title']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        update_url = reverse_lazy('text_section_update', kwargs={'section_uuid': self.instance.pk})
+        # Add query parameters
+        query_params = urlencode({'section_type': 'heading'})
+        update_url_with_query = f"{update_url}?{query_params}"
+        self.fields['title'].widget.attrs['hx-post'] = update_url_with_query
+
+class ParagraphSectionForm(ModelForm):
     content = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.text_area,
                                                                            'placeholder': _('Add a paragraph...'),
                                                                             'rows': 2,
@@ -20,15 +35,17 @@ class TextSectionForm(ModelForm):
                                                                             'hx-swap': 'none'}))
 
     class Meta:
-        model = TextSection
-        fields = ['title', 'content']
+        model = ParagraphSection
+        fields = ['content']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        update_url = reverse_lazy('text_section_update', kwargs={'text_section_uuid': self.instance.pk})
-        self.fields['title'].widget.attrs['hx-post'] = update_url
-        self.fields['content'].widget.attrs['hx-post'] = update_url
-
+        update_url = reverse_lazy('text_section_update', kwargs={'section_uuid': self.instance.pk})
+        # Add query parameters
+        query_params = urlencode({'section_type': 'paragraph'})
+        update_url_with_query = f"{update_url}?{query_params}"
+        self.fields['content'].widget.attrs['hx-post'] = update_url_with_query
+        
 
 
 

@@ -1,6 +1,6 @@
 from web_app.forms.space import SpaceSettingsForm, SpaceTitleForm, SpaceContentForm
 from web_app.forms.request import RequestTitleForm,RequestEditForm, UploadRequestForm, TextRequestForm
-from web_app.forms.section import FileSectionForm,TextSectionForm
+from web_app.forms.section import FileSectionForm,ParagraphSectionForm, HeadingSectionForm
 from web_app.forms.authentication.signup import SignupForm
 from web_app.forms.authentication.login import LoginForm
 from web_app.forms.authentication.delete import DeleteForm
