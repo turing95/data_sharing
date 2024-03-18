@@ -26,11 +26,13 @@ class Space(BaseModel):
 
     @property
     def has_complete_requests(self):
-        return any(req.is_complete for req in self.requests.all())
+        from web_app.models import InputRequest
+        return InputRequest.objects.filter(request__space=self, is_complete=True).exists()
 
     @property
     def has_incomplete_requests(self):
-        return any(not req.is_complete for req in self.requests.all())
+        from web_app.models import InputRequest
+        return InputRequest.objects.filter(request__space=self, is_complete=False).exists()
 
 
     @property
