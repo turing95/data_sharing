@@ -1,7 +1,7 @@
 from django.db import models
 from web_app.models import BaseModel
 
-
+ 
 class SpaceSection(BaseModel):
     space = models.ForeignKey('Space', on_delete=models.CASCADE, null=True, blank=True, related_name='sections')
     position = models.PositiveIntegerField(default=1)

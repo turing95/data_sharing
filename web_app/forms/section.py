@@ -12,15 +12,21 @@ class TextSectionForm(ModelForm):
                                                                           'class': css_classes.text_request_title_input,
                                                                           'hx-trigger': 'blur changed',
                                                                           'hx-swap': 'none'}))
+    content = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.text_area,
+                                                                            'rows': 5,
+                                                                            'cols': 5,                                                                            
+                                                                            'hx-trigger': 'blur changed',
+                                                                            'hx-swap': 'none'}))
 
     class Meta:
         model = TextSection
-        fields = ['title']
+        fields = ['title', 'content']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         update_url = reverse_lazy('text_section_update', kwargs={'text_section_uuid': self.instance.pk})
         self.fields['title'].widget.attrs['hx-post'] = update_url
+        self.fields['content'].widget.attrs['hx-post'] = update_url
 
 
 class FileSectionForm(ModelForm):

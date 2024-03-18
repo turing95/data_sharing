@@ -18,6 +18,7 @@
             <p class="text-xs text-gray-700"><strong>{% translate 'Invited by:' %}</strong> {{ space.user.email }}</p>
         </div>
     </div>
+
     <!-- Title Bar  -->
     <div class="bg-center bg-cover h-25 bg-marian-blue-200">
         <div class="flex-col max-w-4xl px-10 mx-auto">
@@ -36,7 +37,7 @@
 
             </div>
             <label for="{{ space.title.id_for_label }}"
-                   class="block pt-3 text-xs font-bold text-gray-900 dark:text-white">{% translate 'Upload Space' %}</label>
+                   class="block pt-3 text-xs font-bold text-gray-900 dark:text-white">{% translate 'Space' %}</label>
             <h1 class="pb-3 text-3xl font-bold text-black">{{ space.title }}</h1>
         </div>
 
@@ -45,26 +46,39 @@
     {% block sender_content %}
         <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
 
-            <!-- Instructions Section -->
-            {% if space.instructions %}
-                <div class="mt-3">
-                    <p class="text-sm">{{ space.instructions|linebreaks }}</p>
-                </div>
-            {% endif %}
-
-
             {% for space_section in space.sections_position_sorted %}
                 {% if space_section.text_section %}
-                    <h2 class="mb-4 text-2xl font-bold border-b">
+                {% if space_section.text_section.title %}
+                    <h2 class="mt-2 mb-4 text-2xl font-bold border-b">
                         {{ space_section.text_section.title }}
                     </h2>
-                    {{ space_section.text_section.content }}
-                {% else %}
-                    <h2 class="mb-4 text-2xl font-bold border-b">
-                        {{ space_section.file_section.title }}
-                    </h2>
-                    <a href="{{ space_section.file_section.file.url }}" target="_blank" class="underline">{{ space_section.file_section.file }} </a> <br>
-                    {{ space_section.file_section.description }}
+                {% endif %}
+                {% if space_section.text_section.content %}
+                    <div class= "mb-3 text-sm">                        
+                        {{ space_section.text_section.content }}
+                    </div>
+                {% endif %}
+                {% elif space_section.file_section %}
+                    {% if space_section.file_section.file %}
+
+                    <div class="flex items-start p-3 mb-3 space-x-4">
+                        <!-- Thumbnail -->
+                        <a href="{{ space_section.file_section.file.url }}" target="_blank">
+                            {% include 'sender/file_thumbnail.html' with file=space_section.file_section.file %}
+                        </a>
+                        <!-- Content Container -->
+                        <div class="flex flex-col flex-grow">
+                            <div class="mb-1.5">
+                          <!-- Title -->
+                          <h2 class="text-lg font-semibold">{{space_section.file_section.title}}</h2>
+                          <!-- Subtitle -->
+                          <p class="{% if space_section.file_section.title %} text-xs font-medium text-gray-600 {% else %} text-lg font-semibold {% endif %}">{{space_section.file_section.file.original_name}}</p>
+                            </div>
+                          <!-- Description -->
+                          <p class="text-sm text-gray-800">{{space_section.file_section.description}}</p>
+                        </div>
+                      </div>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
