@@ -125,7 +125,7 @@ class UploadRequestForm(ModelForm):
             """))
     multiple_files = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input,
-                                          'hx-trigger': 'changed', 'hx-swap': 'none'}),
+                                          'hx-trigger': 'change', 'hx-swap': 'none'}),
         required=False,
         label=_('Multiple Files'),
         help_text=_("""
