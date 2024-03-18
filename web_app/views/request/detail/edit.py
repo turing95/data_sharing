@@ -58,28 +58,3 @@ def request_instructions_update(request, request_uuid):
         return render(request, 'private/request/request_instructions_form.html',
                       {'from_htmx': True, 'form': kezyy_request.instructions_form()})
     return HttpResponseBadRequest()
-
-
-@login_required
-@require_GET
-def request_modal(request, request_uuid):
-    upload_request = Request.objects.get(pk=request_uuid)
-
-    sender = None
-    public = False
-    files = File.objects.filter(sender_event__request=upload_request)
-    if request.GET.get('public'):
-        public = True
-        files = files.filter(sender_event__sender=None)
-    elif request.GET.get('sender_uuid'):
-        sender_uuid = request.GET.get('sender_uuid')
-        sender = Sender.objects.get(pk=sender_uuid)
-        files = files.filter(sender_event__sender=sender)
-    changes_form = FileSelectForm(upload_request=upload_request, sender=sender, public=public)
-
-    return render(request, 'private/space/detail/components/upload_request_modal.html',
-                  {'req': upload_request,
-                   'sender': sender,
-                   'files': files,
-                   'public': public,
-                   'changes_form': changes_form})
