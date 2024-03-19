@@ -164,7 +164,7 @@ class UploadRequestForm(ModelForm):
             self.fields['destination_type_select'].widget.attrs[
                 'hx-get'] = reverse_lazy('select_destination_type', kwargs={'upload_request_uuid': self.instance.pk})
             self.fields['destination_type_select'].widget.attrs[
-                'hx-get'] += f'?next={reverse_lazy('request_edit',kwargs={"request_uuid":self.instance.request.pk})}'
+                'hx-get'] += f"?next={reverse_lazy('request_edit',kwargs={'request_uuid':self.instance.request.pk})}"
             if not user.sharepoint_sites:
                 self.fields['destination_type_select'].choices = [
                     (GoogleDrive.TAG, 'Google Drive'),

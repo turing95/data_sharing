@@ -1,21 +1,10 @@
 {% load i18n %}
 
-<div class="flex-col my-1">
-    <div class="flex">        
-        <div class="px-2 ml-4 mr-auto text-[0.6rem] leading-[0.75rem] bg-gray-100{% if space_section.file_section %} text-orange-400 {% elif space_section.heading_section  %} text-blue-400 {% elif space_section.paragraph_section  %} text-green-400 {% endif %} rounded-tl rounded-tr">
-            {% if space_section.heading_section %}
-                {% translate 'heading section' %}
-            {% elif space_section.paragraph_section %}
-                {% translate 'paragraph section' %}
-            {% elif space_section.file_section %}
-                {% translate 'file section' %}
-            {% endif %}
-        </div>
-    </div>
+<div class="flex-col my-1 group">
 
     <div class="flex">
         <!-- add cursor on over hand and grabbing hand on click hold-->
-        <div class="flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded-tl rounded-bl cursor-grab active:cursor-grabbing">
+        <div class="opacity-0 group-hover:opacity-100 flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded cursor-grab active:cursor-grabbing">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.75 10.75" class="h-[30px]" fill="currentColor">
                 <path d="
                 M 0,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
@@ -34,7 +23,7 @@
                 " />
             </svg>
         </div>
-        <div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px] input-request-container">
+        <div class="flex-grow max-w-screen-md p-2 input-request-container">
             <input type="hidden" value="{{ space_section.pk }}" name="space_section_order[]">
             {% if space_section.file_section  %}
                 {% include 'private/space/detail/content/file_section.html' with file_section=space_section.file_section %}
@@ -46,7 +35,7 @@
         </div>
 
          <!-- ending commands -->
-         <div class="flex-col items-center justify-center px-0.5  text-gray-500 bg-gray-100 rounded-tr rounded-br">
+         <div class="opacity-0 group-hover:opacity-100 flex-col items-center justify-center px-0.5  text-gray-500 bg-gray-white rounded-tr rounded-br">
             <div class="flex flex-col">
 
                 <button hx-post="{% url 'section_delete' space_section.pk %}"
@@ -56,7 +45,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mt-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                     </svg>
-                    <span class="w-[46px] text-sm  ml-[3px] hidden transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100 mt-1">{% translate "Delete" %}</span>
+                    {% comment %} <span class="w-[46px] text-sm  ml-[3px] hidden transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100 mt-1">{% translate "Delete" %}</span> {% endcomment %}
                 </button> 
             </div>
             

@@ -10,7 +10,7 @@ from urllib.parse import urlencode
 
 class HeadingSectionForm(ModelForm):
     title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': _('Add a section title...'),
-                                                                          'class': css_classes.text_request_title_input,
+                                                                          'class': css_classes.space_section_title_input,
                                                                           'hx-trigger': 'blur changed',
                                                                           'hx-swap': 'none'}))
 
@@ -26,10 +26,10 @@ class HeadingSectionForm(ModelForm):
         update_url_with_query = f"{update_url}?{query_params}"
         self.fields['title'].widget.attrs['hx-post'] = update_url_with_query
 
-class ParagraphSectionForm(ModelForm):
-    content = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.text_area,
-                                                                           'placeholder': _('Add a paragraph...'),
-                                                                            'rows': 2,
+class ParagraphSectionForm(ModelForm): 
+    content = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.paragraph_section_text_area,
+                                                                           'placeholder': _('Add paragraph text...'),
+                                                                            'rows': 3,
                                                                             'cols': 5,                                                                            
                                                                             'hx-trigger': 'blur changed',
                                                                             'hx-swap': 'none'}))
@@ -57,7 +57,7 @@ class FileSectionForm(ModelForm):
                            widget=forms.ClearableFileInput(attrs={'hidden': True,
                                'hx-encoding': 'multipart/form-data',
                                                                   'hx-target': 'closest .file-section-container'}))
-    description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.text_area,
+    description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': css_classes.paragraph_section_text_area,
                                                                                'placeholder': _('Add a description to the file...'),
                                                                                'rows': 2,
                                                                                'cols': 5,
