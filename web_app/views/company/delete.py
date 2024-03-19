@@ -15,4 +15,6 @@ class CompanyDeleteView(LoginRequiredMixin, DeleteView):
     def form_valid(self, form):
         self.object.delete()
         messages.success(self.request, _('Company deleted successfully'))
+        if self.request.GET.get('next'):
+            return redirect(self.request.GET.get('next'))
         return redirect(reverse('companies', kwargs={'organization_uuid': self.object.organization.pk}))
