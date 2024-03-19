@@ -30,7 +30,7 @@
              id="contact_row_dropdown_{{ contact.pk }}">
             <ul class="py-2" aria-labelledby="contact_row_dropdown_{{ contact.pk }}">
                 <li>
-                    <form action="{% url 'contact_delete' contact.pk %}"
+                    <form action="{% url 'contact_delete' contact.pk %}?next={{ request.get_full_path }}"
                           onsubmit="return confirm('{% translate "Are you sure you want to delete this contact?" %}');"
                           method="post">
                         {% csrf_token %}

@@ -14,4 +14,6 @@ class GrantDeleteView(LoginRequiredMixin, DeleteView):
     def form_valid(self, form):
         self.object.delete()
         messages.success(self.request, _('Grant deleted successfully'))
+        if self.request.GET.get('next'):
+            return redirect(self.request.GET.get('next'))
         return redirect(reverse('grants', kwargs={'organization_uuid': self.object.organization.pk}))
