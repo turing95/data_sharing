@@ -158,27 +158,28 @@ class UploadRequestForm(ModelForm):
         self.fields['file_template'].widget.attrs['hx-post'] = update_url
         self.fields['multiple_files'].widget.attrs['hx-post'] = update_url
         self.fields['rename'].widget.attrs['hx-post'] = update_url
-        self.fields['destination_type'].widget.attrs[
-            'hx-post'] = reverse_lazy('get_destination_logo', kwargs={'upload_request_uuid': self.instance.pk})
-        self.fields['destination_type_select'].widget.attrs[
-            'hx-get'] = reverse_lazy('select_destination_type', kwargs={'upload_request_uuid': self.instance.pk})
-        '''self.fields['destination_type_select'].widget.attrs[
-            'hx-get'] += f'?next={request.get_full_path()}'''
-        if not user.sharepoint_sites:
-            self.fields['destination_type_select'].choices = [
-                (GoogleDrive.TAG, 'Google Drive'),
-                (OneDrive.TAG, 'OneDrive'),
-                (Kezyy.TAG, 'Kezyy'),
-            ]
-        if self.instance and UploadRequest.objects.filter(pk=self.instance.pk).exists():
-            destination = self.instance.destination
-            if self.instance.file_naming_formula is not None:
-                self.fields['rename'].initial = True
-            if destination:
-                self.fields['destination_id'].initial = destination.folder_id
-                self.fields['destination_display'].initial = destination.name
-                self.fields['destination_type'].initial = destination.tag
-                self.fields['destination_type_select'].initial = destination.tag
+        if self.instance:
+            self.fields['destination_type'].widget.attrs[
+                'hx-post'] = reverse_lazy('get_destination_logo', kwargs={'upload_request_uuid': self.instance.pk})
+            self.fields['destination_type_select'].widget.attrs[
+                'hx-get'] = reverse_lazy('select_destination_type', kwargs={'upload_request_uuid': self.instance.pk})
+            self.fields['destination_type_select'].widget.attrs[
+                'hx-get'] += f'?next={reverse_lazy('request_edit',kwargs={"request_uuid":self.instance.request.pk})}'
+            if not user.sharepoint_sites:
+                self.fields['destination_type_select'].choices = [
+                    (GoogleDrive.TAG, 'Google Drive'),
+                    (OneDrive.TAG, 'OneDrive'),
+                    (Kezyy.TAG, 'Kezyy'),
+                ]
+            if UploadRequest.objects.filter(pk=self.instance.pk).exists():
+                destination = self.instance.destination
+                if self.instance.file_naming_formula is not None:
+                    self.fields['rename'].initial = True
+                if destination:
+                    self.fields['destination_id'].initial = destination.folder_id
+                    self.fields['destination_display'].initial = destination.name
+                    self.fields['destination_type'].initial = destination.tag
+                    self.fields['destination_type_select'].initial = destination.tag
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')

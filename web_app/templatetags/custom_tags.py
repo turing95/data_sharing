@@ -1,7 +1,6 @@
 from django import template
 from django.urls import reverse
 
-from web_app.forms.widgets import SenderToggle
 from web_app.models import Sender, SenderEvent, UploadRequest, File
 from web_app.forms.widgets.toggle import ToggleWidget
 import arrow
@@ -58,6 +57,8 @@ def get_list_of_upload_events_per_request(sender, upload_request):
 
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_sender_activate_toggle(sender, name, value, **kwargs):
+    from web_app.forms.widgets import SenderToggle
+
     return SenderToggle(**kwargs).get_context(name, value,
                                               {'hx-post': reverse('toggle_sender_active',
                                                                   kwargs={'sender_uuid': sender.pk}),
