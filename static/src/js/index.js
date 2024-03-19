@@ -3,7 +3,7 @@ import { initSubmitButtons } from './utils/submitButton.js';
 import { initNav } from './utils/navbar.js';
 import {initHtmxModal} from "./utils/htmxModal.js";
 import {handleHtmxError} from "./utils/errors.js";
-
+import {preventEnter} from "./utils/forms.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // e.g. "America/New_York"
@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initSubmitButtons();
     initMessageBar();
     initNav();
+    preventEnter();
 });
 document.addEventListener('htmx:afterRequest', function(evt) {
     initMessageBar();
 });
 document.body.addEventListener('htmx:afterSwap', function(evt) {
     initFlowbite();
+    preventEnter();
     if (evt.target.id.startsWith('htmx-modal')) {
         const modalElement = evt.target.children[0];
         if (modalElement) {
