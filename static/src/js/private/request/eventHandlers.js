@@ -26,7 +26,7 @@ function insertText(textInput, selectedValue) {
 }
 
 export function toggleRename(checkbox) {
-    const parentDiv = checkbox.closest('form');
+    const parentDiv = checkbox.closest('.rename-container');
     const childDiv1= parentDiv.querySelector('.file-name-container');
     if (!childDiv1) return;
 

@@ -116,7 +116,7 @@ class UploadRequestForm(ModelForm):
         widget=ToggleWidget(label_on=_('Custom file names'),
                             label_off=_('Custom file names'),
                             attrs={
-                                'onclick': 'toggleRename(this)'
+                                'onclick': 'toggleRename(this)','hx-trigger': 'change', 'hx-swap': 'none'
                             }),
         required=False,
         label=_('File Naming'),
