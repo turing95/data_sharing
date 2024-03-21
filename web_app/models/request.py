@@ -144,7 +144,7 @@ class Request(BaseModel, ActiveModel):
 
     @property
     def is_complete(self):
-        return self.input_requests.filter(is_complete=False).exists()
+        return self.input_requests.filter(is_complete=False).exists() is False
 
     def title_form(self, request_post=None):
         from web_app.forms import RequestTitleForm
