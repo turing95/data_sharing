@@ -11,15 +11,25 @@
               method="post"
               class="flex flex-col">
             {% csrf_token %}
-            <div class="w-3/4 mb-3 md:w-1/4">
+
+            <div class="mb-3 max-w-[300px]">
+                <div class="flex items-center mb-2 space-x-2">
+                    <label for="{{ organization.form.name.id_for_label }}"
+                           class="font-medium text-gray-900 dark:text-white">{{ organization.form.name.label }} </label>
+                    {% include 'components/tooltip.html' with content=organization.form.name.help_text target=organization.form.name.name %}
+                </div>
                 {{ organization.form.name }}
+                {% include 'components/forms/error_widget.html' with errors=organization.form.name.errors %}
             </div>
-            <div class="flex w-3/4 mb-3 md:w-1/4">
+
+
+            <div class="flex max-w-[300px]">
                 {% translate "Save" as button_text %}
                 {% include 'components/buttons/submit_with_loader.html' with extra_classes="ml-auto" button_text=button_text %}
             </div>
         </form>
     </div>
+    
     <div class="flex-col mb-8">
         <h2 class="mb-4 text-2xl font-bold border-b">{% translate 'Sender Notifications' %}</h2>
         {% include 'private/settings/notifications_form.html' with form=sender_notifications_form %}

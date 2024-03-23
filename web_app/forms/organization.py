@@ -15,8 +15,9 @@ class OrganizationCreateForm(forms.ModelForm):
 
 
 class OrganizationForm(forms.ModelForm):
-    name = forms.CharField(label=_("Name"),
-                           widget=forms.TextInput(attrs={'placeholder': _('Name'), 'class': text_input}))
+    name = forms.CharField(label=_("Organization name"),
+                           widget=forms.TextInput(attrs={'placeholder': _('Name'), 'class': text_input}),
+                           help_text=_("Organization name"))
 
     class Meta:
         model = Organization
