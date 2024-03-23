@@ -3,7 +3,7 @@
 {% block private_content %}
     {% include 'private/request/request_title_form.html' with form=kezyy_request.title_form %}
 
-    {% include "components/tabs_menu.html" with tabs_data=request_tab  pk=kezyy_request.pk %}
+    {% include "components/tabs_menu.html" with tabs_data=request_tab  pk=kezyy_request.pk secondary_pk=kezyy_request.space.pk %} 
 
 
     {% block request_content %}

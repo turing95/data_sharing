@@ -248,6 +248,14 @@ class RequestTabMixin:
                 'url_name': 'request_edit',
                 'svg_path': paths['edit']
             },
+            'space_links': {
+                'active': False,
+                'alternative_text': _('Space Links'),
+                'url_name': 'senders',
+                'secondary_pk': True, # to use when the menu links to a different area and the url needs a different pk
+                'blank': True, # set to true to open the tab in another browser tab by default
+                'svg_path': paths['share']
+            },
             # 'history': {
             #     'active': False,
             #     'alternative_text': _('History'),
