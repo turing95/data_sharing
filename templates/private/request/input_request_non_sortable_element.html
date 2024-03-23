@@ -1,15 +1,17 @@
 {% load i18n %}
 {% load custom_tags %}
 
-<div class="flex-col mb-4">
+<div class="flex-col mb-4 group">
 
-    <div class="flex ">
-        <div class="flex-grow max-w-screen-md p-2">
+    <div class="flex-col ">
+        <div class=" ml-4 -mb-[10px] w-full ">
+            {% include 'private/request/input_request_top_tags.html' with input_request=input_request%}
+            
+        </div>
+        <div class="flex-grow max-w-screen-md p-2 border-2 border-gray-100">
+            <div class="mb-2 font-bold"> {{ input_request.upload_request.title }}</div>
 
-            <div class="flex flex-col w-full ">
-                {% include 'private/request/input_request_top_tags.html' with input_request=input_request%}
-                <div class="mb-2 font-bold"> {{ input_request.upload_request.title }}</div>
-            </div>
+
 
             {% if input_request.upload_request.outputs %}
                 {% if input_request.upload_request.multiple_files %}
@@ -39,26 +41,6 @@
 
         </div>
 
-         {% comment %} <!-- ending commands -->
-         <div class="flex-col items-center justify-center px-0.5 text-gray-500 rounded-tr rounded-br">
-            <div class="flex flex-col">
-
-                <div class="inline-flex opacity-0 group hover:text-marian-blue-400 outer-group-hover:opacity-100">
-                    <div class="scale-[0.75] -ml-[3px] -mb-[4px] -mt-[2px]">
-                    {% render_input_request_activate_toggle input_request %}
-                    </div>
-                    <span class=" mt-[2px] hidden text-sm transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100 ">{% translate "Active" %}</span>        
-                </div>
-
-                <div class="inline-flex opacity-0 group hover:text-marian-blue-400 outer-group-hover:opacity-100">
-                    <div class="scale-[0.75] -ml-[3px] -mb-[4px] -mt-[2px]">
-                    {% render_input_request_complete_toggle input_request %}
-                    </div>
-                    <span class=" mt-[2px] hidden text-sm transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100 ">{% translate "Complete" %}</span>        
-                </div>
-            </div>
-            
-        </div> {% endcomment %}
     </div>
 
 </div>

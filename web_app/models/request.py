@@ -70,6 +70,7 @@ class UploadRequest(BaseModel):
             file_name = original_file_name
         return file_name
 
+    @property
     def request_form(self):
         from web_app.forms import UploadRequestForm
         return UploadRequestForm(instance=self, user=self.request.space.user, prefix=self.uuid)

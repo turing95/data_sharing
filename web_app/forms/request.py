@@ -86,13 +86,17 @@ class UploadRequestForm(ModelForm):
 
     destination_id = forms.CharField(
         required=False,
-        widget=forms.HiddenInput(attrs={'class': 'destination'}),
+        widget=forms.HiddenInput(attrs={'class': 'destination',
+                                        'hx-target': 'closest .input-request-detail-container',
+                                        'hx-swap': 'innerHTML'}),
         label=_("Destination folder ID"),
         help_text=_(
             """The file uploaded for this request will be sent to the folder selected here. Choose a cloud storage provider and search for a folder and select it."""))
+    
     sharepoint_site_id = forms.CharField(
         required=False,
         widget=forms.HiddenInput(attrs={'class': 'sharepoint-site', 'hx-trigger': 'change'}))
+    
     destination_type = forms.CharField(widget=forms.HiddenInput(attrs={
         'class': 'destination-type',
         'hx-trigger': "change, load, intersect once",
