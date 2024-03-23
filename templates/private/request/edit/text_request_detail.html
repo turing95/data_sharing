@@ -2,12 +2,12 @@
 {% if show_more %}
     <div class="mb-3">
         <div class="flex items-center mb-2 space-x-2">
-            <label for="{{ text_request.request_form.instructions.id_for_label }}"
-                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ text_request.request_form.instructions.label }} </label>
-            {% include 'components/tooltip.html' with content=text_request.request_form.instructions.help_text target=text_request.request_form.instructions.name %}
+            <label for="{{ form.instructions.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
+            {% include 'components/tooltip.html' with content=form.instructions.help_text target=form.instructions.name %}
         </div>
-        {{ text_request.request_form.instructions }}
-        {% include 'components/forms/error_widget.html' with errors=text_request.request_form.instructions.errors %}
+        {{ form.instructions }}
+        {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
     </div>
 {% endif %}
 

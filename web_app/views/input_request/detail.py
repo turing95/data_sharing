@@ -17,14 +17,14 @@ def input_request_detail_show(request, input_request_uuid):
             show_more = request.GET.get('show_more', False)
 
             return render(request, 'private/request/edit/upload_request_detail.html',
-                          {'upload_request': upload_request, 'show_more': show_more, 'from_htmx': True, 
+                          {'upload_request': upload_request, 'show_more': show_more, 'from_htmx': True,  'form': input_request.upload_request.request_form
                            })
         elif input_request.text_request:
             text_request = input_request.text_request
             show_more = request.GET.get('show_more', False)
 
             return render(request, 'private/request/edit/text_request_detail.html',
-                          {'text_request': text_request, 'show_more': show_more, 'from_htmx': True,
+                          {'text_request': text_request, 'show_more': show_more, 'from_htmx': True, 'form': input_request.text_request.request_form
                            })
     return HttpResponseBadRequest()
 

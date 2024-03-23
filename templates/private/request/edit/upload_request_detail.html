@@ -4,18 +4,18 @@
 {% if show_more %}
     <div class="mb-3">
         <div class="flex items-center mb-2 space-x-2">
-            <label for="{{ upload_request.request_form.instructions.id_for_label }}"
-                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ upload_request.request_form.instructions.label }} </label>
-            {% include 'components/tooltip.html' with content=upload_request.request_form.instructions.help_text target=upload_request.request_form.instructions.name %}
+            <label for="{{ form.instructions.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
+            {% include 'components/tooltip.html' with content=form.instructions.help_text target=form.instructions.name %}
         </div>
-        {{ upload_request.request_form.instructions }}
-        {% include 'components/forms/error_widget.html' with errors=upload_request.request_form.instructions.errors %}
+        {{ form.instructions }}
+        {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
     </div>
     <div class="mb-6">
         <div class="flex items-center mb-2 space-x-2">
-            <label for="{{ upload_request.request_form.destination_id.id_for_label }}"
+            <label for="{{ form.destination_id.id_for_label }}"
                    class="block text-sm font-medium text-gray-900 dark:text-white">{% translate 'Destination folder' %} </label>
-            {% include 'components/tooltip.html' with content=upload_request.request_form.destination_id.help_text target_prefix='requests' target=upload_request.request_form.destination_id.name %}
+            {% include 'components/tooltip.html' with content=form.destination_id.help_text target_prefix='requests' target=form.destination_id.name %}
         </div>
 
 
@@ -28,10 +28,10 @@
                         <div class="flex flex-col w-full sm:w-1/3 h-[36px]">
                             <div class="inline-flex border-x sm:border-r-0 border-gray-300 bg-gray-50 border-t sm:border-y h-[36px]">
 
-                                {% include 'private/space/create/components/destination/destination_logo.html' with tag=upload_request.request_form.instance.destination.tag %}
+                                {% include 'private/space/create/components/destination/destination_logo.html' with tag=form.instance.destination.tag %}
 
                                 <div class="w-full border-gray-300 sm:border-r">
-                                    {{ upload_request.request_form.destination_display }}
+                                    {{ form.destination_display }}
                                 </div>
                             </div>
                         </div>
@@ -43,47 +43,47 @@
 
                 {% include 'private/space/create/components/destination/sharepoint_site_container.html' %}
                 <div class="w-full sm:w-1/3 md:w-48 h-full  shrink-0 md:h-[36px]">
-                    {{ upload_request.request_form.destination_type_select }}
+                    {{ form.destination_type_select }}
                 </div>
 
             </div>
-            <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=upload_request.request_form.destination_id.errors %}</div>
-            {{ upload_request.request_form.destination_id }}
-            {{ upload_request.request_form.sharepoint_site_id }}
-            {{ upload_request.request_form.destination_type }}
+            <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=form.destination_id.errors %}</div>
+            {{ form.destination_id }}
+            {{ form.sharepoint_site_id }}
+            {{ form.destination_type }}
 
         </section>
     </div>
     <!-- REQUEST INSTRUCTIONS -->
     <div class="mb-3">
         <div class="flex items-center mb-2 space-x-2">
-            <label for="{{ upload_request.request_form.file_template.id_for_label }}"
-                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ upload_request.request_form.file_template.label }} </label>
-            {% include 'components/tooltip.html' with content=upload_request.request_form.file_template.help_text target=request_form.file_template.name %}
+            <label for="{{ form.file_template.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.file_template.label }} </label>
+            {% include 'components/tooltip.html' with content=form.file_template.help_text target=request_form.file_template.name %}
         </div>
-        {{ upload_request.request_form.file_template }}
-        {% include 'components/forms/error_widget.html' with errors=upload_request.request_form.file_template.errors %}
+        {{ form.file_template }}
+        {% include 'components/forms/error_widget.html' with errors=form.file_template.errors %}
     </div>
     <!-- REQUEST multiple files -->
     <div class="flex items-center mb-2">
         <div class="flex items-center h-5">
-            {{ upload_request.request_form.multiple_files }}
-            <label for="{{ upload_request.request_form.multiple_files.id_for_label }}"
-                   class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ upload_request.request_form.multiple_files.label }}</label>
+            {{ form.multiple_files }}
+            <label for="{{ form.multiple_files.id_for_label }}"
+                   class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.multiple_files.label }}</label>
         </div>
 
-        {% include 'components/tooltip.html' with content=upload_request.request_form.multiple_files.help_text target=upload_request.request_form.multiple_files.name %}
+        {% include 'components/tooltip.html' with content=form.multiple_files.help_text target=form.multiple_files.name %}
 
-        {% include 'components/forms/error_widget.html' with errors=upload_request.request_form.multiple_files.errors %}
+        {% include 'components/forms/error_widget.html' with errors=form.multiple_files.errors %}
     </div>
 
     <!--TOGGLES -->
     <div class="mb-2 rename-container">
         <div class="flex items-center mb-2 nl-1">
-            {{ upload_request.request_form.rename }}
-            <label for="{{ upload_request.request_form.rename.id_for_label }}"
-                   class="hidden block ml-2 text-xs font-medium text-gray-900 dark:text-white">{{ upload_request.request_form.rename.label }} </label>
-            {% include 'components/tooltip.html' with content=upload_request.request_form.rename.help_text target=request_form.rename.name %}
+            {{ form.rename }}
+            <label for="{{ form.rename.id_for_label }}"
+                   class="hidden block ml-2 text-xs font-medium text-gray-900 dark:text-white">{{ form.rename.label }} </label>
+            {% include 'components/tooltip.html' with content=form.rename.help_text target=request_form.rename.name %}
         </div>
         <!-- CUSTOM FILE NAME SELECTOR -->
         <div class="container hidden file-name-container">
@@ -92,16 +92,16 @@
             <div class="flex max-w-3xl gap-2 items-top">
                 <!-- Hidden input for request_form submission -->
                 <div class="flex-col grow">
-                    {{ upload_request.request_form.file_naming_formula }}
+                    {{ form.file_naming_formula }}
 
 
                 </div>
                 <!-- Dropdown for Valid Tags -->
-                {{ upload_request.request_form.available_tags_dropdown }}
-                {% include 'components/tooltip.html' with content=upload_request.request_form.file_naming_formula.help_text target=upload_request.request_form.file_naming_formula.name placement="left" %}
+                {{ form.available_tags_dropdown }}
+                {% include 'components/tooltip.html' with content=form.file_naming_formula.help_text target=form.file_naming_formula.name placement="left" %}
 
             </div>
-            <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=upload_request.request_form.file_naming_formula.errors %}</div>
+            <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=form.file_naming_formula.errors %}</div>
         </div>
     </div>
 {% endif %}

@@ -13,5 +13,10 @@ def text_request_update(request, text_request_uuid):
     text_request_form = TextRequestForm(request.POST, prefix=text_request.pk, instance=text_request)
     if text_request_form.is_valid():
         text_request_form.save()
+    # check if changed data includes 'title'
+    if 'title' in text_request_form.changed_data:
         return HttpResponse()
-    return HttpResponseBadRequest()
+    
+    return render(request, 'private/request/edit/upload_request_detail.html', {
+        'text_request': text_request, 'show_more': True, 'form':text_request_form
+    })

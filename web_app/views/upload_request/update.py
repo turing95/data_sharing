@@ -36,6 +36,12 @@ def upload_request_update(request, upload_request_uuid):
             upload_request_form.save()
             if upload_request_form.cleaned_data.get('destination_type'):
                 handle_destination(request, upload_request_form)
+        # check if changed data includes 'title'
+        if 'title' in upload_request_form.changed_data:
             return HttpResponse()
+
+        return render(request, 'private/request/edit/upload_request_detail.html', {
+            'upload_request': upload_request, 'show_more': True, 'form':upload_request_form
+        })
     return HttpResponseBadRequest()
 

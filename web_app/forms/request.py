@@ -21,7 +21,8 @@ class UploadRequestForm(ModelForm):
     ])
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': _('Untitled request'),
                                                           'class': css_classes.text_request_title_input,
-                                                          'hx-trigger': 'blur changed', 'hx-swap': 'none'}),
+                                                          'hx-trigger': 'blur changed',
+                                                          'hx-swap': 'none'}),
                             required=False,
                             label=_('Request title - MANDATORY'),
                             help_text=_(
@@ -30,7 +31,10 @@ class UploadRequestForm(ModelForm):
         required=False,
         widget=forms.Textarea(attrs={'placeholder': _('Add instructions here'),
                                      'rows': 3,
-                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed', 'hx-swap': 'none'}),
+                                     'class': css_classes.text_area,
+                                     'hx-trigger': 'blur changed',
+                                     'hx-target': 'closest .input-request-detail-container',
+                                     'hx-swap': 'innerHTML'}),
         label=_('Instructions'),
         help_text=_("""Use this to provide information for your invitees.
                                 Leave blank if not necessary.
@@ -42,9 +46,10 @@ class UploadRequestForm(ModelForm):
                                               f"<div class='text-xs'>{FILE_NAME_INSTRUCTIONS}{FILE_NAME_TAGS}</div>"),
                                           widget=forms.TextInput(
                                               attrs={'placeholder': _('Insert file name, use tags for dynamic naming'),
+                                                     'class': "file-naming-formula placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input,
                                                      'hx-trigger': 'blur changed',
-                                                     'hx-swap': 'none',
-                                                     'class': "file-naming-formula placeholder-gray-500 my-1 min-h-[42px] min-h-32" + css_classes.text_input}),
+                                                     'hx-target': 'closest .input-request-detail-container',
+                                                     'hx-swap': 'innerHTML'}),
                                           label=_('File naming formula'))
 
     # Preparing the choices for the dropdown
@@ -116,28 +121,37 @@ class UploadRequestForm(ModelForm):
         widget=ToggleWidget(label_on=_('Custom file names'),
                             label_off=_('Custom file names'),
                             attrs={
-                                'onclick': 'toggleRename(this)','hx-trigger': 'change', 'hx-swap': 'none'
-                            }),
+                                'onclick': 'toggleRename(this)',
+                                'hx-trigger': 'change', 
+                                'hx-target': 'closest .input-request-detail-container',
+                                'hx-swap': 'innerHTML'},
+                            ),
         required=False,
         label=_('File Naming'),
         help_text=_("""By default, files are saved to your destination folder with the name they have been uploaded with.
                 You can choose to apply a custom file name to add parametric information to the file names to make them more meaningful and standardized
             """))
+    
     multiple_files = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input,
-                                          'hx-trigger': 'change', 'hx-swap': 'none'}),
+                                        'hx-trigger': 'change',  
+                                        'hx-target': 'closest .input-request-detail-container',
+                                        'hx-swap': 'innerHTML'}),
         required=False,
         label=_('Multiple Files'),
         help_text=_("""
                 By default, each request can only contain one file. You can choose to enable multiple files upload for this request.
             """))
+    
     file_template = forms.URLField(
         required=False,
         label=_('File Template'),
         widget=forms.URLInput(
             attrs={'placeholder': _('Insert file template URL'),
                    'class': css_classes.text_input,
-                   'hx-trigger': 'blur changed', 'hx-swap': 'none'}),
+                   'hx-trigger': 'blur changed',
+                    'hx-target': 'closest .input-request-detail-container',
+                    'hx-swap': 'innerHTML'}),
         help_text=_("""
                 You can provide a template file that will be available for download to your invitees. 
                 Leave blank if not necessary.
@@ -223,7 +237,9 @@ class TextRequestForm(ModelForm):
         required=False,
         widget=forms.Textarea(attrs={'placeholder': _('Add instructions here'),
                                      'rows': 3,
-                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed', 'hx-swap': 'none'}),
+                                     'class': css_classes.text_area, 'hx-trigger': 'blur changed',
+                                     'hx-target': 'closest .input-request-detail-container',
+                                     'hx-swap': 'innerHTML'}),
         label=_('Instructions'),
         help_text=_("""Use this to provide information for your invitees.
                                 Leave blank if not necessary.

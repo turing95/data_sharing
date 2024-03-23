@@ -13,5 +13,5 @@
 {% endwith %}
 <div class="mt-1 input-request-detail-container">
 
-    {% include 'private/request/edit/upload_request_detail.html' with upload_request=upload_request %}
+    {% include 'private/request/edit/upload_request_detail.html' with upload_request=upload_request  form=upload_request.request_form %}
 </div>
