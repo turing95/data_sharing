@@ -9,7 +9,7 @@
                     <h3 class="text-xl font-bold text-gray-900 uppercase dark:text-white">
 
                         <span class="line-clamp-2">
-                            {% translate 'Reject output' %}</span>
+                            {% translate 'Reject content' %}</span>
 
                     </h3>
                 </div>
@@ -25,7 +25,10 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
+            
             <div class="items-center justify-between p-2 border-b md:p-3 dark:border-gray-600">
+                <div class="mx-2 mb-2 text-lg font-bold"> {{output.title}}</div>
+                <div class="mx-2 mb-2"> {{output.content}}</div>
                 {% include "private/request/detail/reject_form.html" with form=output.reject_form %}
 
             </div>

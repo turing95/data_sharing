@@ -30,6 +30,15 @@ class Output(BaseModel):
         elif self.file:
             return self.file.name
         return None
+    
+    @property
+    def title(self):
+        if self.sender_event:
+            if self.sender_event.upload_request:
+                return self.sender_event.upload_request.title
+            elif self.sender_event.text_request:
+                return self.sender_event.text_request.title
+        return None
 
     @property
     def update_event(self):

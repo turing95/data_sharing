@@ -215,3 +215,11 @@ class InputRequest(BaseModel):
     position = models.PositiveIntegerField(default=1)
     is_complete = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+
+    @property
+    def title(self):
+        if self.upload_request:
+            return self.upload_request.title
+        elif self.text_request:
+            return self.text_request.title
+        return None

@@ -1,10 +1,12 @@
+{% load i18n %}
 {% if show_more %}
     <button type="button"
             id="button_{{ input_request.pk }}"
             {% if from_htmx %}hx-swap-oob="true"{% endif %}
             hx-get="{% url 'input_request_detail_show' input_request.pk %}"
             hx-target="previous .input-request-detail-container"
-            hx-indicator="#loader_{{ input_request.pk }}">
+            hx-indicator="#loader_{{ input_request.pk }}"
+            title="{% translate 'Expand' %}">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
              stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -18,7 +20,8 @@
             {% if from_htmx %}hx-swap-oob="true"{% endif %}
             hx-get="{% url 'input_request_detail_show' input_request.pk %}?show_more=1"
             hx-target="previous .input-request-detail-container"
-            hx-indicator="#loader_{{ input_request.pk }}">
+            hx-indicator="#loader_{{ input_request.pk }}"
+            title="{% translate 'Collapse' %}">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
              stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round"

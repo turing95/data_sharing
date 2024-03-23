@@ -65,7 +65,7 @@
                     <div class="flex items-start p-3 mb-3 space-x-4">
                         <!-- Thumbnail -->
                         <a href="{{ space_section.file_section.file.url }}" download target="_blank">
-                            {% include 'sender/file_thumbnail.html' with file=space_section.file_section.file %}
+                            {% include 'sender/file_thumbnail.html' with file=space_section.file_section.file dim=65%}
                         </a>
                         <!-- Content Container -->
                         <div class="flex flex-col flex-grow">

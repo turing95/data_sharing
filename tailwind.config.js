@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin'); // Ensure this line is present
 module.exports = {
     content: [
         './templates/**/*.html',
@@ -8,7 +9,20 @@ module.exports = {
         './static/**/*.svg'
     ],
     plugins: [
-        require('flowbite/plugin')
+        require('flowbite/plugin'),
+        // Custom group-hover functionality
+        plugin(function({ addVariant, e }) {
+            addVariant('outer-group-hover', ({ modifySelectors, separator }) => {
+                modifySelectors(({ className }) => {
+                    return `.outer-group:hover .${e(`outer-group-hover${separator}${className}`)}`;
+                });
+            });
+            addVariant('inner-group-hover', ({ modifySelectors, separator }) => {
+                modifySelectors(({ className }) => {
+                    return `.inner-group:hover .${e(`inner-group-hover${separator}${className}`)}`;
+                });
+            });
+        }),
     ],
     theme: {
         extend: {

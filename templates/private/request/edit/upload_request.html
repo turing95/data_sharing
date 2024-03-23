@@ -7,9 +7,11 @@
    
 </div>
 {% with 'loader_'|addstr:input_request.uuid as loader_id %}
-    {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
+    <div class="flex my-0.5 w-full justify-center items-center">
+        {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
+    </div>
 {% endwith %}
-<div class="input-request-detail-container">
+<div class="mt-1 input-request-detail-container">
 
     {% include 'private/request/edit/upload_request_detail.html' with upload_request=upload_request %}
 </div>

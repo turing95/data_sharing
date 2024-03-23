@@ -7,12 +7,10 @@
 
 
     {% block request_content %}
-
-        {% include 'private/request/request_instructions_form.html' with form=kezyy_request.instructions_form %}
         {% if kezyy_request.input_requests_position_sorted %}
             <div class="inline-flex mb-2">
                 <div class="flex items-center mr-2 space-x-2">
-                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Input fields' %}</h3>
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Received content' %}</h3>
 
                     {% include 'components/tooltip.html' with content=inputs_tooltip_content %}
                 </div>

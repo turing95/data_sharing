@@ -1,45 +1,56 @@
 {% load i18n %}
 {% load custom_tags %}
 
-<div class="flex-col my-1">
-    <div class="flex">        
-        <div class="px-2 ml-4 mr-auto text-[0.6rem] leading-[0.75rem] bg-gray-100{% if input_request.upload_request %} text-orange-400 {% elif input_request.text_request %} text-green-400 {% endif %} rounded-tl rounded-tr">
-            {% if input_request.upload_request %}
-                {% translate 'file input' %}
-            {% elif input_request.text_request %}
-                {% translate 'text input' %}
-            {% endif %} 
-        </div>
-    </div>
+<div class="flex-col mb-4">
 
-    <div class="flex">
-        <!-- add cursor on over hand and grabbing hand on click hold-->
-        <div class="flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded-tl rounded-bl cursor-grab active:cursor-grabbing">
-        </div>
-        <div class="flex-grow max-w-screen-md p-2 border-gray-100 border-r-[2px] border-y-[2px]">
-            <input type="hidden" value="{{ input_request.pk }}" name="input_request_order[]">
+    <div class="flex ">
+        <div class="flex-grow max-w-screen-md p-2">
 
+            <div class="flex flex-col w-full ">
+                {% include 'private/request/input_request_top_tags.html' with input_request=input_request%}
+                <div class="mb-2 font-bold"> {{ input_request.upload_request.title }}</div>
+            </div>
 
-            {% if input_request.upload_request %}
-                {% include 'private/request/detail/upload_request_content.html' with input_request=input_request upload_request=input_request.upload_request %}
-            {% elif input_request.text_request %}
-                {% include 'private/request/detail/text_request_content.html' with input_request=input_request text_request=input_request.text_request %}
+            {% if input_request.upload_request.outputs %}
+                {% if input_request.upload_request.multiple_files %}
+                    {% for output in input_request.upload_request.outputs %}
+                        {% include 'private/request/detail/output.html' with output=output %}
+                    {% endfor %}
+                {% else %}
+                    {% if input_request.upload_request.last_output %}
+                        {% with output=input_request.upload_request.last_output %}
+                            {% include 'private/request/detail/output.html' with output=output %}            
+                        {% endwith %}
+                    {% endif %}
+                {% endif %}
+
+            {% elif input_request.text_request.outputs %}
+                {% if input_request.text_request.last_output %}
+                    {% with output=input_request.text_request.last_output %}
+                        {% include 'private/request/detail/output.html' with output=output %}
+                    {% endwith %}
+                {% endif %}
+            {% else %}
+                <div class="ml-2 text-xs text-gray-400">
+                    {% translate "No content received yet" %}
+                </div>
+
             {% endif %}
 
         </div>
 
-         <!-- ending commands -->
-         <div class="flex-col items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded-tr rounded-br">
+         {% comment %} <!-- ending commands -->
+         <div class="flex-col items-center justify-center px-0.5 text-gray-500 rounded-tr rounded-br">
             <div class="flex flex-col">
 
-                <div class="inline-flex group hover:text-marian-blue-400">
+                <div class="inline-flex opacity-0 group hover:text-marian-blue-400 outer-group-hover:opacity-100">
                     <div class="scale-[0.75] -ml-[3px] -mb-[4px] -mt-[2px]">
                     {% render_input_request_activate_toggle input_request %}
                     </div>
                     <span class=" mt-[2px] hidden text-sm transition-opacity duration-300 opacity-0 group-hover:inline group-hover:opacity-100 ">{% translate "Active" %}</span>        
                 </div>
 
-                <div class="inline-flex group hover:text-marian-blue-400">
+                <div class="inline-flex opacity-0 group hover:text-marian-blue-400 outer-group-hover:opacity-100">
                     <div class="scale-[0.75] -ml-[3px] -mb-[4px] -mt-[2px]">
                     {% render_input_request_complete_toggle input_request %}
                     </div>
@@ -47,7 +58,7 @@
                 </div>
             </div>
             
-        </div>
+        </div> {% endcomment %}
     </div>
 
 </div>

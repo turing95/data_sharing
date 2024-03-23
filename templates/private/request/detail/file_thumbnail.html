@@ -2,11 +2,24 @@
 {% load i18n %}
 <!-- from https://www.svgrepo.com/collection/files-8/ -->
 
-<div class="relative mt-2">
+
+
+
+<div class="relative">
     {% include 'components/file_thumbnail_logo.html' with dim=dim %}
 
+        <!-- Download Icon Overlay -->
+    <div class="absolute inset-0 flex items-center justify-center text-gray-600 transition-opacity duration-300 ease-in-out bg-white bg-opacity-50 opacity-0 inner-group-hover:opacity-100">
+        <!-- Download Icon (SVG) -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+        </svg>
+        
+    </div>
+</div>
+
     
-    <div class="absolute inset-0 bg-white bg-opacity-0 hover:bg-opacity-70">
+    {% comment %} <div class="absolute inset-0 bg-white bg-opacity-0 hover:bg-opacity-70">
         <!-- change file Icon Overlay -->
         <div class="flex items-center justify-center w-full transition-opacity duration-300 ease-in-out rounded opacity-0 cursor-pointer h-1/2 hover:opacity-100 text-marian-blue-400">
             <label for="{{ file_section.section_form.file.id_for_label }}" class="cursor-pointer ">
@@ -39,5 +52,5 @@
         </div>
     </div>
 {% include 'components/forms/error_widget.html' with errors=file_section.section_form.file.errors %}  
-</div>
+</div> {% endcomment %}
 

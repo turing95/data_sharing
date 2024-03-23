@@ -30,12 +30,12 @@ def input_request_update_active(request, input_request_uuid):
         context = ToggleWidget().get_context('input_request_active_toggle', input_request.is_active, {
             'hx-post': reverse('input_request_update_active', kwargs={'input_request_uuid': input_request.pk}),
             'hx-trigger': "click", 
-            'hx-swap': 'outerHTML', 
-            'hx-target':'closest .toggle-container'
+            'hx-swap': 'innerHTML', 
+            'hx-target':'closest .activation-toggle-container'
         })
-        context.update({'from_htmx': True, 'show_msg': True})
+        context.update({'from_htmx': True, 'show_msg': True, 'input_request':input_request})
 
-        return render(request, 'forms/widgets/toggle.html', context)
+        return render(request, 'private/request/activation_toggle.html', context )
     
     return HttpResponseBadRequest()
 
@@ -43,11 +43,31 @@ def input_request_update_active(request, input_request_uuid):
 @login_required
 @require_POST
 def input_request_update_complete(request, input_request_uuid):
+    # if request.method == 'POST':
+    #     input_request = get_object_or_404(InputRequest, pk=input_request_uuid)
+    #     input_request.is_complete = not input_request.is_complete
+    #     input_request.save()
+    #     return HttpResponse()
+    # return HttpResponseBadRequest()
+
+
     if request.method == 'POST':
         input_request = get_object_or_404(InputRequest, pk=input_request_uuid)
         input_request.is_complete = not input_request.is_complete
         input_request.save()
-        return HttpResponse()
+
+            
+        # Get the initial context from ToggleWidget().get_context
+        context = ToggleWidget().get_context('input_request_complete_toggle', input_request.is_complete, {
+            'hx-post': reverse('input_request_update_complete', kwargs={'input_request_uuid': input_request.pk}),
+            'hx-trigger': "click", 
+            'hx-swap': 'innerHTML', 
+            'hx-target':'closest .completion-toggle-container'
+        })
+        context.update({'input_request':input_request})
+
+        return render(request, 'private/request/completion_toggle.html', context )
+    
     return HttpResponseBadRequest()
 
 

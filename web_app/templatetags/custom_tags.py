@@ -83,12 +83,12 @@ def render_input_request_activate_toggle(input_request, **kwargs):
     return ToggleWidget(**kwargs).get_context('input_request_active_toggle', input_request.is_active,
                                               {'hx-post': reverse('input_request_update_active',
                                                                   kwargs={'input_request_uuid': input_request.pk}),
-                                               'hx-trigger': "click", 'hx-swap': 'outerHTML','hx-target':'closest .toggle-container'})
+                                               'hx-trigger': "click", 'hx-swap': 'innerHTML','hx-target':'closest .activation-toggle-container'})
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_input_request_complete_toggle(input_request, **kwargs):
-    return ToggleWidget(color_on='green',color_off='red',**kwargs).get_context('input_request_complete_toggle', input_request.is_complete,
+    return ToggleWidget(color_on='green',color_off='gray',**kwargs).get_context('input_request_complete_toggle', input_request.is_complete,
                                               {'hx-post': reverse('input_request_update_complete',
                                                                   kwargs={'input_request_uuid': input_request.pk}),
-                                               'hx-trigger': "click", 'hx-swap': 'none'})
+                                               'hx-trigger': "click", 'hx-swap': 'innerHTML','hx-target':'closest .completion-toggle-container'})

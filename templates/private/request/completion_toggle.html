@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load custom_tags %}
+{% if input_request.is_complete %}
+    <span class="w-[56px] font-normal ml-2 my-auto text-[0.6rem] leading-[0.75rem] bg-green-200 z-[2] align-middle peer-checked:inline-block text-green-700 rounded-full px-[6px] flex items-center justify-center">{% translate 'Complete' %}</span>
+{%else%}
+    <span class="w-[56px] font-normal ml-2 my-auto text-[0.6rem] leading-[0.75rem] bg-gray-200 z-[2] align-middle peer-checked:inline-block text-gray-700 rounded-full px-[6px] flex items-center justify-center">{% translate 'Incomplete' %}</span>
+{% endif %}
+
+<div class="inline-flex opacity-0 inner-group-hover:opacity-100 group hover:text-marian-blue-400">
+    <div class="scale-[0.65] -ml-[3px] -my-[8px] -mr-[5px]">
+    {% render_input_request_complete_toggle input_request %}
+    </div>
+</div>
