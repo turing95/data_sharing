@@ -97,6 +97,10 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
 <script type="module" src="{% static 'src/js/index.js' %}"></script>
 <!-- should be included only when needed -->
 
+<script type="module">
+    import pdfjsDist from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.379/+esm'
+    </script>
+
 
 {% if log_queries %}
     <ul>

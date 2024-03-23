@@ -151,7 +151,18 @@ class SideBarMixin:
         data['sidebar'] = {'team': False, 'space': False, 'company': False, 'organization': False, 'grant': False}
         return data
 
+class TeamSideBarMixin(SideBarMixin):
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sidebar']['team'] = True
+        return data
 
+class OrganizationSettingsSideBarMixin(SideBarMixin):
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sidebar']['organization_settings'] = True
+        return data
+    
 class SpaceSideBarMixin(SideBarMixin):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

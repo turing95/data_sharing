@@ -5,17 +5,10 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.http import require_POST, require_GET
 from django.views.generic import ListView
-from web_app.mixins import OrganizationMixin, SubscriptionMixin, SideBarMixin
+from web_app.mixins import OrganizationMixin, SubscriptionMixin, TeamSideBarMixin
 from web_app.forms import TeamInviteForm
 from web_app.models import Organization, OrganizationInvitation, User, UserOrganization
 from django.utils.translation import gettext_lazy as _
- 
-
-class TeamSideBarMixin(SideBarMixin):
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['sidebar']['team'] = True
-        return data
 
 
 class TeamView(SubscriptionMixin, OrganizationMixin, TeamSideBarMixin, ListView):
