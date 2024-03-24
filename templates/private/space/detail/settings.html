@@ -7,22 +7,10 @@
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     <form id="space-form" action="" method="POST" class="max-w-screen-md">
         {% csrf_token %}
-                <!-- INSTRUCTIONS -->
-        <div class="mb-6">
-            <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Instructions</h3>
-                {% include 'components/tooltip.html' with content=form.instructions.help_text target=form.instructions.name %}
-            </div>
-            <label for="{{ form.instructions.id_for_label }}"
-                   class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
-            {{ form.instructions }}
-            {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
-        </div>
-
 
         <div class="mb-6">
             <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Company</h3>
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Company' %}</h3>
                 {% include 'components/tooltip.html' with content=form.company.help_text target=form.company.name %}
             </div>
             {% include 'private/space/create/components/company/widget.html' with input=form.company search_input=form.search_company %}

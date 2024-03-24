@@ -5,12 +5,14 @@
 
         <!-- TITLE -->   
         {% translate "Grants" as title %}     
-        {% include 'private/page_title.html' with title=title%}
+        {% url 'grant_create' organization.pk as href %}
+        {% translate 'New grant' as button_text %}
+        {% include 'private/page_title.html' with title=title href=href button_text=button_text %} 
 
-        <!-- ADD NEW BUTTON-->
+        {% comment %} <!-- ADD NEW BUTTON-->
         {% url 'grant_create' organization.pk as href %}
         {% translate 'Create new grant' as button_text %}
-        {% include "components/buttons/light_add_button.html" with href=href button_text=button_text %}
+        {% include "components/buttons/light_add_button.html" with href=href button_text=button_text %} {% endcomment %}
 
     {% if page_obj %}
 

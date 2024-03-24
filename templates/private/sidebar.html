@@ -73,17 +73,7 @@
         </div>
 
 
-        <ul class="space-y-2 font-medium">
-            <li class="my-3">
-                {% if request.user.can_create_space is True %}
-                    {% url 'space_create' organization.uuid as space_detail_url %}
-                    {% include "components/buttons/generic.html" with button_text=new_space_button_text href=space_detail_url extra_classes="w-full inline-flex" %}
-                    <!-- Pricing plan modal -->
-                {% else %}
-                    {% include "components/buttons/generic.html" with button_text=new_space_button_text button_id="plan_pricing_modal_button_list" extra_classes="w-full inline-flex" %}
-
-                {% endif %}
-            </li>
+        <ul class="mt-2 space-y-2 font-medium">
             <li>
                 <a href="{% if organization %}{% url 'spaces' organization.pk %}{% else %}{% url 'spaces' %}{% endif %}"
                    class="flex items-center p-2 dark:text-white {% if sidebar.space %}bg-gray-100{% endif %} hover:bg-gray-100 dark:hover:bg-gray-700 group">

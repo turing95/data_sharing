@@ -5,7 +5,15 @@
 
         <!-- title  -->
         <div class="flex items-center justify-between mb-2">
-            <h1 class="text-2xl font-bold text-gray-800">{% translate 'Spaces in' %} {{organization.name}}</h1>
+            <h1 class="text-2xl font-bold text-gray-800">{% translate 'Spaces' %}</h1>
+            <div class="h-8 ml-auto">
+                {% if request.user.can_create_space is True %}
+                    {% url 'space_create' organization.uuid as space_detail_url %}
+                    {% include "components/buttons/generic.html" with button_text=new_space_button_text href=space_detail_url extra_classes="h-8 inline-flex" %}
+                {% else %}
+                    {% include "components/buttons/generic.html" with button_text=new_space_button_text button_id="plan_pricing_modal_button_list" extra_classes="h-8 inline-flex" %}
+                {% endif %}
+            </div>
 
         </div>
 

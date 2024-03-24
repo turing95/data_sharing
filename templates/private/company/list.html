@@ -3,14 +3,12 @@
 {% load i18n %}
 {% block private_content %}
 
-    <!-- TITLE -->
+    <!-- TITLE --> <!-- ADD NEW BUTTON-->
     {% translate "Companies" as title %}
-    {% include 'private/page_title.html' with title=title %}
-
-    <!-- ADD NEW BUTTON-->
     {% url 'company_create' organization.pk as href %}
-    {% translate 'Create new company' as button_text %}
-    {% include "components/buttons/light_add_button.html" with href=href button_text=button_text %}
+    {% translate 'New company' as button_text %}
+    {% include 'private/page_title.html' with title=title href=href button_text=button_text %}
+
 
     {% if page_obj %}
 

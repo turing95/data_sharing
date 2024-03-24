@@ -1,26 +1,37 @@
 {% load static i18n %}
-<div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50">
-    <div class="flex-1 px-4 py-2 min-w-[150px] shrink group">
+<div class="flex text-xs text-left border-b border-gray-200 hover:bg-gray-50">
+    <div class="flex-1  p-2 min-w-[150px] shrink group">
         <a href="{% url 'contact_detail' contact.pk %}"
            class="inline-block relative after:content-[''] after:block after:w-full after:h-[1px] after:bg-current after:absolute after:left-0 after:-bottom-[1px] after:scale-x-0 group-hover:after:scale-x-100 after:origin-bottom-left after:transition-transform after:duration-300 after:bg-gradient-to-r after:from-transparent after:via-transparent after:to-current">
             {{ contact.full_name|default_if_none:"" }}
         </a>
     </div>
-    <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
+    <div class="flex-1  p-2 min-w-[150px] shrink break-all cursor-pointer hover:underline focus:text-marian-blue-400"
+    title="{% translate 'Copy:' %} {{ contact.email }}"
+    onclick="navigator.clipboard.writeText('{{ contact.email }}')">
         {{ contact.email }}
     </div>
-    <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
+
+    <div class="flex-1  p-2 min-w-[150px] shrink break-all cursor-pointer hover:underline focus:text-marian-blue-400"
+    title="{% translate 'Copy:' %} {{ contact.phone }}"
+    onclick="navigator.clipboard.writeText('{{ contact.phone }}')">
         {{ contact.phone }}
     </div>
-    <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
-        {{ contact.company }}
+
+    <div class="flex-1 p-2 min-w-[150px] shrink cursor-pointer hover:underline"
+    title="{% translate 'Go to:' %} {{ contact.company.name }}">
+         <a href="{% url 'company_detail' contact.company.pk %}"
+           class="inline-flex items-center justify-center text-gray-600 duration-300 cursor-pointer hover:underline transition-c colors hover:text-gray-800 group hover:cursor-pointer">
+            {{ contact.company.name }}
+        </a>
     </div>
+    
     <div class="px-2 py-2 ml-auto transition-transform duration-150 ease-in-out w-[40px] hover:text-marian-blue-300">
         <button type="button" id="contact_row_dropdown_button_{{ contact.pk }}" aria-expanded="false"
                 data-dropdown-toggle="contact_row_dropdown_{{ contact.pk }}" data-dropdown-placement="left">
             <span class="sr-only">Open contact dropdown</span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="currentColor" class="w-6 h-6">
+                 stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
             </svg>
