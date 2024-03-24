@@ -19,19 +19,21 @@
     {% if page_obj %}
     <div class="w-full">
     <div class="flex text-left border-b border-gray-200">
-        <div class="flex-1 p-2 font-bold min-w-[150px] shrink">
+        <div class="p-1  w-[32px] flex">
+        </div>
+        <div class="flex-1 py-2 px-1.5 font-bold min-w-[150px] shrink">
             {% translate 'Name' %}
         </div>
-        <div class="flex-1 p-2 font-bold min-w-[150px] shrink">
+        <div class="flex-1 py-2 px-1.5 font-bold min-w-[150px] shrink">
             {% translate 'Email' %}
         </div>
-        <div class="flex-1 p-2 font-bold min-w-[150px] shrink">
+        <div class="flex-1 py-2 px-1.5 font-bold min-w-[150px] shrink">
             {% translate 'Phone number' %}
         </div>
-        <div class="flex-1 p-2 font-bold min-w-[150px] shrink">
+        <div class="flex-1 py-2 px-1.5 font-bold min-w-[150px] shrink">
             {% translate 'Company' %}
         </div>
-        <div class="px-4 p-2 ml-auto font-bold w-[40px]">
+        <div class="p-1  w-[32px] flex">
         </div>
     </div>
     {% for contact in page_obj %}
