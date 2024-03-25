@@ -1709,6 +1709,10 @@ input:checked + .toggle-bg {
   height: 100vh;
 }
 
+.h-\[10px\] {
+  height: 10px;
+}
+
 .max-h-5 {
   max-height: 1.25rem;
 }
@@ -1903,6 +1907,10 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[10px\] {
+  width: 10px;
 }
 
 .min-w-0 {

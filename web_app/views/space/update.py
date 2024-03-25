@@ -16,9 +16,9 @@ def space_update(request, space_uuid):
         if form.is_valid():
             form.save()
             messages.success(request, _('Space saved'))
-            return render(request, 'private/request/request_title_form.html',
-                          {'from_htmx': True, 'form': space.title_form()})
+            return render(request, 'private/space/detail/space_title_form.html',
+                          {'from_htmx': True, 'form': space.title_form(), 'space': space})
         messages.error(request, form.errors)
-        return render(request, 'private/request/request_title_form.html',
-                      {'from_htmx': True, 'form': space.title_form()})
+        return render(request, 'private/space/detail/space_title_form.html',
+                      {'from_htmx': True, 'form': space.title_form(), 'space': space})
     return HttpResponseBadRequest()

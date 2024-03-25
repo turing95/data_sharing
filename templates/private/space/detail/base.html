@@ -8,79 +8,16 @@
         {% include 'private/space/detail/space_title_form.html' with form=space.title_form %}
         {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=0 %}
     </div>
+    
+
 
 
     <!-- TABS MENU-->
     {% include "components/tabs_menu.html" with tabs_data=space_tab  pk=space.pk %}
 
 
-    {% block space_content %}
-        <!-- created at-->
-        <div class="mb-2 text-base">
-            <span class="">Created at:</span>
-            <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5">
-                <img src="{% static 'images/icons/calendar-green.svg' %}" alt="clock icon"
-                     class="w-[13px] h-[13px] mr-1">
-                {% localize on %}
-                    {{ space.created_at|date }}
-
-
-                    </span>
-                    <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                    <img src="{% static 'images/icons/clock-green.svg' %}" alt="clock icon"
-                         class="w-[13px] h-[13px] mr-1">
-                    {{ space.created_at|time }}
-                {% endlocalize %}
-                </span>
-        </div>
-
-        {% if space.deadline %}
-            <!-- Deadline -->
-            <div class="mb-2 text-base">
-                <span class="">{% translate 'Deadline:' %}</span>
-                {% localize on %}
-                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
-                <img src="{% static 'images/icons/calendar-blue.svg' %}" alt="clock icon"
-                     class="w-[13px] h-[13px] mr-1">
-                {{ space.deadline|date }} 
-            </span>
-                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                <img src="{% static 'images/icons/clock-blue.svg' %}" alt="clock icon" class="w-[13px] h-[13px] mr-1">
-                {{ space.deadline|time }}
-            </span>
-                {% endlocalize %}
-                {% if space.deadline_expired %}
-                    <span class="inline-flex items-center  bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
-                            {% translate 'Deadline expired!' %}
-                </span>
-                {% endif %}
-                {% translate "To change this setting edit the space" as title %}
-                <span class="inline-flex items-center  bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2"
-                      title={{ title }}>
-
-                            {% if space.upload_after_deadline %}
-                                {% translate 'Uploads allowed after the deadline' %}
-                            {% else %}
-                                {% translate 'Uploads forbidden after the deadline' %}
-                            {% endif %}
-                            </span>
-                {% with space.deadline_notification_datetime as deadline_notification_datetime %}
-                    {% if deadline_notification_datetime %}
-                        {% translate "To change this setting edit the space" as title %}
-                        <span class="inline-flex items-center  bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 ml-2"
-                              title=title>
-           
-                                  {% translate 'Notifications will be sent out on' %} {% localize on %}
-                            {{ deadline_notification_datetime|date }} {% translate 'at' %}
-                            {{ deadline_notification_datetime|time }}{% endlocalize %}
-                         
-                            </span>
-                    {% endif %}
-                {% endwith %}
-            </div>
-        {% endif %}
-        
-        <div class="inline-flex mb-2">
+    {% block space_content %}        
+        <div class="inline-flex mt-2 mb-2">
             <div class="flex items-center mr-2 space-x-2">
                 <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Content sections' %}</h3>
                 {% translate 'Add contents below. Your invitees will be able to access it via their space link' as inputs_tooltip_content %}
@@ -104,9 +41,17 @@
             >
                 {% csrf_token %}
                 {% block sorted_sections %}
+                {% if space.sections_position_sorted %}
                     {% for space_section in space.sections_position_sorted %}
                         {% include 'private/space/detail/content/space_section.html' with space_section=space_section %}
                     {% endfor %}
+                {% else %}
+                    <div class="flex flex-col items-center justify-center mt-12 mb-3">
+                        <p class="text-2xl text-center text-gray-400">{% translate 'You have not added contant yet' %}</p>
+                        <p class="text-sm text-center text-gray-400">{% translate 'Add a title, paragraph, or file to get started' %}</p>
+                    </div>
+                {% endif %}
+                
                 {% endblock sorted_sections %}
 
             </form>

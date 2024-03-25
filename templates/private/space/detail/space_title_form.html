@@ -1,3 +1,6 @@
+{% load static %}
+{% load l10n %}
+{% load i18n %}
 {% if from_htmx %}
     {% include 'components/messages.html' %}
 {% endif %}
@@ -6,12 +9,31 @@
     {% csrf_token %}
 
     <!-- TITLE -->
-    <div class="mt-2 mb-6">
-        <div class="flex">
+    <div class="">
+        <div class="flex mb-1">
             <label for="{{ form.title.id_for_label }}"
                    class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.title.label }} </label>
             {{ form.title }}
             {% include 'components/tooltip.html' with content=form.title.help_text target=form.title.name placement="bottom" %}
+        </div>
+        <!-- LINE BELOW TITLE -->
+        <!-- Created at -->
+        <div class="text-xs">
+            <span class="">{% translate 'Last update' %}:</span>
+            <span class="inline-flex items-center bg-green-100 text-green-800 text-[0.6rem] leading-[0.75rem] font-semibold px-2.5 py-0.5">
+                <img src="{% static 'images/icons/calendar-green.svg' %}" alt="clock icon"
+                    class="w-[10px] h-[10px] mr-1">
+                {% localize on %}
+                    {{ space.updated_at|date }}
+
+
+                    </span>
+                    <span class="inline-flex items-center bg-green-100 text-green-800 text-[0.6rem] leading-[0.75rem] font-semibold px-2.5 py-0.5 ml-2">
+                    <img src="{% static 'images/icons/clock-green.svg' %}" alt="clock icon"
+                        class="w-[10px] h-[10px] mr-1">
+                    {{ space.updated_at|time }}
+                {% endlocalize %}
+                </span>
         </div>
         {% include 'components/forms/error_widget.html' with errors=form.title.errors %}
     </div>
