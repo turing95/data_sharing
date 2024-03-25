@@ -45,32 +45,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 htmx.onLoad(function (content) {
+    initializeSortables(content);
+});
+
+function initializeSortables(content) {
     const sortables = content.querySelectorAll(".sortable");
-    for (let i = 0; i < sortables.length; i++) {
-        let sortable = sortables[i];
+    sortables.forEach(function(sortable) {
         let sortableInstance = new Sortable(sortable, {
             animation: 150,
             dragClass: 'bg-blue-100',
-
-            // Make the `.htmx-indicator` unsortable
             filter: ".my-htmx-indicator",
             onMove: function (evt) {
                 return evt.related.className.indexOf('my-htmx-indicator') === -1;
             },
-
-            // Disable sorting on the `end` event
             onEnd: function (evt) {
-            this.option("disabled", true);
-          }
+                this.option("disabled", true);
+            },
+            disabled: true,
         });
 
-        // Re-enable sorting on the `htmx:afterSwap` event
+        attachHoverListeners(sortable, sortableInstance);
+
+        // Re-initialize sorting enable-hover logic on HTMX afterSwap
         sortable.addEventListener("htmx:afterSwap", function () {
-            sortableInstance.option("disabled", false);
-
+            attachHoverListeners(sortable, sortableInstance);
+            // Potentially re-enable or re-disable sorting based on current hover state
+            if (sortable.querySelector('.sort-enable-hover:hover')) {
+                sortableInstance.option("disabled", false);
+            } else {
+                sortableInstance.option("disabled", true);
+            }
         });
-    }
-})
+    });
+}
+
+function attachHoverListeners(sortable, sortableInstance) {
+    let sortEnableHoverElements = sortable.querySelectorAll('.sort-enable-hover');
+    sortEnableHoverElements.forEach(function(sortEnableHoverElement) {
+        sortEnableHoverElement.onmouseenter = function () {
+            sortableInstance.option("disabled", false);
+        };
+
+        sortEnableHoverElement.onmouseleave = function () {
+            setTimeout(() => {
+                // If not hovering over any sort-enable-hover elements, disable sorting
+                if (!sortable.querySelector('.sort-enable-hover:hover')) {
+                    sortableInstance.option("disabled", true);
+                }
+            }, 100);
+        };
+    });
+}
 
 
 function preventFormSubmit(){
