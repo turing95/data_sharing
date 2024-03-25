@@ -1164,6 +1164,10 @@ input:checked + .toggle-bg {
   right: 0px;
 }
 
+.right-5 {
+  right: 1.25rem;
+}
+
 .start-0 {
   inset-inline-start: 0px;
 }
@@ -1174,6 +1178,46 @@ input:checked + .toggle-bg {
 
 .top-2 {
   top: 0.5rem;
+}
+
+.right-\[50px\] {
+  right: 50px;
+}
+
+.right-\[150px\] {
+  right: 150px;
+}
+
+.left-\[150px\] {
+  left: 150px;
+}
+
+.top-\[10px\] {
+  top: 10px;
+}
+
+.left-\[10px\] {
+  left: 10px;
+}
+
+.top-\[5px\] {
+  top: 5px;
+}
+
+.-top-\[5px\] {
+  top: -5px;
+}
+
+.left-\[20px\] {
+  left: 20px;
+}
+
+.-top-\[2\.9px\] {
+  top: -2.9px;
+}
+
+.left-\[22px\] {
+  left: 22px;
 }
 
 .z-10 {
@@ -1323,10 +1367,6 @@ input:checked + .toggle-bg {
   margin-bottom: -10px;
 }
 
-.-mb-\[4px\] {
-  margin-bottom: -4px;
-}
-
 .-mb-px {
   margin-bottom: -1px;
 }
@@ -1337,10 +1377,6 @@ input:checked + .toggle-bg {
 
 .-mr-\[5px\] {
   margin-right: -5px;
-}
-
-.-mt-\[2px\] {
-  margin-top: -2px;
 }
 
 .mb-0 {
@@ -1479,14 +1515,6 @@ input:checked + .toggle-bg {
   margin-inline-start: auto;
 }
 
-.mt-0 {
-  margin-top: 0px;
-}
-
-.mt-0\.5 {
-  margin-top: 0.125rem;
-}
-
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -1517,10 +1545,6 @@ input:checked + .toggle-bg {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mt-\[2px\] {
-  margin-top: 2px;
 }
 
 .mt-auto {
@@ -1837,6 +1861,14 @@ input:checked + .toggle-bg {
   width: 30px;
 }
 
+.w-\[32px\] {
+  width: 32px;
+}
+
+.w-\[35px\] {
+  width: 35px;
+}
+
 .w-\[40px\] {
   width: 40px;
 }
@@ -1871,18 +1903,6 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
-}
-
-.w-\[45px\] {
-  width: 45px;
-}
-
-.w-\[35px\] {
-  width: 35px;
-}
-
-.w-\[32px\] {
-  width: 32px;
 }
 
 .min-w-0 {
@@ -1921,8 +1941,16 @@ input:checked + .toggle-bg {
   min-width: 25px;
 }
 
+.min-w-\[60px\] {
+  min-width: 60px;
+}
+
 .min-w-\[75px\] {
   min-width: 75px;
+}
+
+.min-w-\[50px\] {
+  min-width: 50px;
 }
 
 .max-w-2xl {
@@ -2074,27 +2102,9 @@ input:checked + .toggle-bg {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.scale-\[0\.75\] {
-  --tw-scale-x: 0.75;
-  --tw-scale-y: 0.75;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.scale-90 {
-  --tw-scale-x: .9;
-  --tw-scale-y: .9;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.scale-95 {
-  --tw-scale-x: .95;
-  --tw-scale-y: .95;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.scale-\[98\] {
-  --tw-scale-x: 98;
-  --tw-scale-y: 98;
+.scale-\[0\.95\] {
+  --tw-scale-x: 0.95;
+  --tw-scale-y: 0.95;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -2757,11 +2767,6 @@ input:checked + .toggle-bg {
   background-color: rgb(253 253 234 / var(--tw-bg-opacity));
 }
 
-.bg-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
 .bg-opacity-0 {
   --tw-bg-opacity: 0;
 }
@@ -2790,6 +2795,10 @@ input:checked + .toggle-bg {
   padding: 0px;
 }
 
+.p-0\.5 {
+  padding: 0.125rem;
+}
+
 .p-1 {
   padding: 0.25rem;
 }
@@ -2816,10 +2825,6 @@ input:checked + .toggle-bg {
 
 .p-5 {
   padding: 1.25rem;
-}
-
-.p-0\.5 {
-  padding: 0.125rem;
 }
 
 .px-0 {
@@ -3412,6 +3417,10 @@ input:checked + .toggle-bg {
   transition-duration: 150ms;
 }
 
+.duration-100 {
+  transition-duration: 100ms;
+}
+
 .duration-150 {
   transition-duration: 150ms;
 }
@@ -3848,11 +3857,6 @@ input[type="search"]::-webkit-search-cancel-button {
 .focus\:bg-marian-blue-400:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(43 80 194 / var(--tw-bg-opacity));
-}
-
-.focus\:text-marian-blue-400:focus {
-  --tw-text-opacity: 1;
-  color: rgb(43 80 194 / var(--tw-text-opacity));
 }
 
 .focus\:outline-none:focus {
