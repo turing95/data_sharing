@@ -12,7 +12,7 @@
         </a>
     </div> {% endcomment %}
 
-    <a class="font-semibold flex-1 py-2 px-1.5 min-w-[150px] shrink break-all cursor-pointer hover:underline transition duration-150 ease-in-out transform"
+    <a class=" bg-gray-100 border-r font-semibold flex-1 py-2 px-1.5 min-w-[150px] shrink break-all cursor-pointer hover:underline transition duration-150 ease-in-out transform"
     href="{% url 'contact_detail' contact.pk %}"
     title="{% translate 'Open:' %} {{ contact.full_name|default_if_none:"" }}"
     onmousedown="this.classList.add('scale-[0.98]', 'text-marian-blue-400')"

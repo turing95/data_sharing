@@ -4,6 +4,7 @@ from web_app import views
 urlpatterns = [
     # Generic views
     path('accounts/set-language/', views.custom_set_language, name='set_user_language'),
+    path('accounts/language-modal/', views.language_modal, name='language_modal'),
     path('terms-of-service/', views.TermsOfServiceView.as_view(), name='generic_terms_of_service'),
     path('privacy-policy/', views.privacy_policy, name='generic_privacy_policy'),
     path('cookie-policy/', views.cookie_policy, name='generic_cookie_policy'),

@@ -6,10 +6,11 @@ from django.views.generic import TemplateView
 from web_app.models import Space, GenericDestination, Sender, SenderEvent, UploadRequest, File, Request, TextOutput, \
     Output
 from web_app.forms import InputRequestForm, BaseInputRequestFormSet
+from web_app.mixins import SenderTabMixin
 from django.utils.translation import gettext_lazy as _
 
 
-class RequestDetailView(TemplateView):
+class RequestDetailView( SenderTabMixin,TemplateView):
     template_name = "sender/request/detail.html"
 
     _request = None
@@ -27,6 +28,7 @@ class RequestDetailView(TemplateView):
         context['space'] = self.get_request().space
         context['sender'] = self.get_sender()
         context['formset'] = formset or self.get_formset()
+        context['sender_tab']['requests']['active'] = True
         return context
 
     def post(self, request, *args, **kwargs):

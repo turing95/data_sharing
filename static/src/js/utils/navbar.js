@@ -1,3 +1,5 @@
+import { initLanguageForm } from "./forms.js";
+
 export function initNav()  {
     // Handle click event on navbar links
     const navLinks = document.querySelectorAll('#navbar-menu a:not(.signin)');
@@ -132,16 +134,5 @@ export function initNav()  {
     }
 
     // init submit button of the language modal
-    const languageSelectionButtons = document.querySelectorAll('.language-selection-button');
-    languageSelectionButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            // get the language code from the button data-language attribute
-            const languageCode = button.getAttribute('data-language');
-            // set the language and submit the form
-            document.getElementById('languageInput').value = languageCode;
-            document.getElementById('languageForm').submit();
-        });
-    });
-
-
+    initLanguageForm();
 }

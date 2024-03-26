@@ -77,7 +77,7 @@ from web_app.views.company_field.update import company_field_update, company_fie
 from web_app.views.company_field.create import company_field_create_modal, company_field_create
 from web_app.views.company_field.delete import company_field_delete
 from web_app.views.company_field.detail import company_field_detail
-from web_app.views.language import custom_set_language
+from web_app.views.language import custom_set_language, language_modal
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.delete import DeleteContactView
 from web_app.views.contact.detail import ContactDetailView

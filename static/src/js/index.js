@@ -4,6 +4,7 @@ import { initNav } from './utils/navbar.js';
 import {initHtmxModal} from "./utils/htmxModal.js";
 import {handleHtmxError} from "./utils/errors.js";
 import {preventEnter} from "./utils/forms.js";
+import {initLanguageForm} from "./utils/forms.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // e.g. "America/New_York"
@@ -36,4 +37,9 @@ document.body.addEventListener('htmx:sendError', function(evt) {
 document.body.addEventListener('htmx:responseError', function(evt) {
     handleHtmxError(evt);
 
+});
+
+
+document.addEventListener('htmx:afterSettle', function(evt) {
+    initLanguageForm();
 });
