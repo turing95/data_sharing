@@ -26,9 +26,12 @@
                 </button>
             </div>
             <div class="items-center justify-between p-2 border-b md:p-3 dark:border-gray-600">
-                {% include 'private/space/create/components/contacts/create_form.html' with form=form %}
+                {% include 'private/space/create/components/contacts/create_form.html' with form=form sender_uuid=sender_uuid %}
 
             </div>
         </div>
     </div>
 </div>
+{% if show_msg %}
+    {% include 'components/messages.html' %}
+{% endif %}

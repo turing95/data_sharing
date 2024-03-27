@@ -7,7 +7,7 @@ from web_app.models import Sender, Contact
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-
+  
 class SenderCreateForm(ModelForm):
     contact = forms.ModelChoiceField(
         queryset=Contact.objects.all(),
@@ -16,23 +16,23 @@ class SenderCreateForm(ModelForm):
     )
     email = forms.EmailField(
         required=False,
-
-        widget=SearchContactWidget(),
         help_text=_("Type the company name to search for it."))
-    is_active = forms.BooleanField(
-        required=False,
-        widget=SenderToggle()
-    )
+ 
 
     class Meta:
         model = Sender
-        fields = ['email', 'contact', 'is_active']
+        fields = ['email', 'contact']
 
     def __init__(self, *args, **kwargs):
         self.organization = kwargs.pop('organization')
         super().__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs['hx-post'] = reverse_lazy('search_contacts',
-                                                                    kwargs={'organization_uuid': self.organization.pk})
+        sender = kwargs['instance']
+        url = reverse_lazy('search_contacts', kwargs={'organization_uuid': self.organization.pk})
+        query_param = '?sender_uuid=' + str(sender.pk)
+        full_url = str(url) + query_param        
+        self.fields['email'].widget=SearchContactWidget(sender_uuid=sender.pk)
+        self.fields['email'].widget.attrs['hx-post'] = full_url
+        
 
 
 class SenderNotifyForm(forms.Form):

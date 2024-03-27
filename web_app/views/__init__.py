@@ -53,7 +53,7 @@ from web_app.views.custom_http_errors import custom_page_not_found, custom_serve
 from web_app.views.sender.detail import (toggle_sender_active, notify_deadline, notify_invitation,
                                          sender_row, bulk_notify_invitation, bulk_notify_deadline,
                                          sender_upload_notification,sender_notify,sender_notify_modal)
-from web_app.views.sender.create import sender_create_row, sender_create
+from web_app.views.sender.create import sender_create_row,  sender_contact_update
 from web_app.views.organization.create import create_organization, create_organization_modal
 from web_app.views.organization.settings import OrganizationSettingsView
 from web_app.views.organization.delete import OrganizationDeleteView

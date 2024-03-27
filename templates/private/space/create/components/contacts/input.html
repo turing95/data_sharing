@@ -2,7 +2,7 @@
 
     {{ search_input }}
     <!-- Loading Indicator -->
-    <div id="loading-indicator-contacts-search"
+    <div id="loading-indicator-contacts-search-{{sender_uuid}}"
          class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
         <div role="status" class="flex spinner ml-0.5">
             {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}

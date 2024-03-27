@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
 from web_app.mixins import ContactSideBarMixin
 from web_app.models import Organization
+import json
 
 
 class ContactListView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixin, ListView):
@@ -31,7 +32,12 @@ def search_contacts(request, organization_uuid):
                 Q(email__icontains=search_query) |
                 Q(company__name__icontains=search_query)
             )
-        return render(request,
+        response =  render(request,
                       'private/space/create/components/contacts/results.html',
-                      {'contacts': contacts})
+                      {'contacts': contacts, 'search_query': search_query, 'organization': organization})
+
+        sender_uuid = request.GET.get('sender_uuid', None)
+        if sender_uuid:
+            response['HX-Trigger'] = json.dumps({'contactSearchResults': {'sender_uuid': sender_uuid}})
+        return response
     return HttpResponseBadRequest()

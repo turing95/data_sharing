@@ -1929,6 +1929,18 @@ input:checked + .toggle-bg {
   min-width: 75px;
 }
 
+.min-w-\[190px\] {
+  min-width: 190px;
+}
+
+.min-w-\[250px\] {
+  min-width: 250px;
+}
+
+.min-w-\[2500px\] {
+  min-width: 2500px;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -4451,10 +4463,6 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .sm\:mt-0 {
     margin-top: 0px;
-  }
-
-  .sm\:flex {
-    display: flex;
   }
 
   .sm\:hidden {

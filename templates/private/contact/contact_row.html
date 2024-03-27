@@ -1,6 +1,6 @@
 {% load static i18n %}
 {% if False %} <div class="scale-[0.98]"></div> {% endif %}
-<div class="flex text-xs text-left border-b border-gray-200 hover:bg-gray-50 group">
+<div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50 group">
     
     {% comment %} <div class="opacity-0 p-1 w-[32px] flex transition-opacity duration-300 ease-in-out group-hover:opacity-100">
         <a href="{% url 'contact_detail' contact.pk %}"
@@ -12,41 +12,32 @@
         </a>
     </div> {% endcomment %}
 
-    <a class=" bg-gray-100 border-r font-semibold flex-1 py-2 px-1.5 min-w-[150px] shrink break-all cursor-pointer hover:underline transition duration-150 ease-in-out transform"
+    <div class="inline-felx flex inner-group bg-gray-100 border-r flex-1 py-2 px-1.5 min-w-[250px] shrink">
+    <a class="font-semibold break-all transition duration-150 ease-in-out transform cursor-pointer hover:underline"
     href="{% url 'contact_detail' contact.pk %}"
-    title="{% translate 'Open:' %} {{ contact.full_name|default_if_none:"" }}"
+    title="{% translate 'Open:' %} {{ contact.email}}"
     onmousedown="this.classList.add('scale-[0.98]', 'text-marian-blue-400')"
     onmouseup="this.classList.remove('scale-[0.98]', 'text-marian-blue-400')"
     onmouseleave="this.classList.remove('scale-[0.98]', 'text-marian-blue-400')"
     ontouchstart="this.classList.add('scale-[0.98]', 'text-marian-blue-400')"
     ontouchend="this.classList.remove('scale-[0.98]', 'text-marian-blue-400')"
-    onclick="navigator.clipboard.writeText('{{ contact.full_name|default_if_none:"" }}')">
-       {{ contact.full_name|default_if_none:"" }}
+    onclick="navigator.clipboard.writeText('{{ contact.email}}')">
+       {{ contact.email}}
     </a>
-
-
- 
-    {% comment %} <div class=" flex-1 inline-flex py-2 px-1.5 min-w-[150px] shrink break-all inner-group"
-    title="{{ contact.email }}">    
-        {{ contact.email }}
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-        class="relative w-4 h-4 text-gray-600 transition duration-150 ease-in-out transform cursor-pointer hover:text-marian-blue-400 ml-0.5 opacity-0 inner-group-hover:opacity-100"
-        onclick="navigator.clipboard.writeText('{{ contact.email }}')"
-        onmousedown="this.classList.add('scale-[0.95]')"
-        onmouseup="this.classList.remove('scale-[0.95]')"
-        onmouseleave="this.classList.remove('scale-[0.95]')"
-        ontouchstart="this.classList.add('scale-[0.95]')"
-        ontouchend="this.classList.remove('scale-[0.95]')">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6" />
-        </svg> 
-        <div class="absolute left-0 w-full h-full bg-white opacity-0 top-18 inner-group-hover:opacity-100">copied</div>   
-    </div> {% endcomment %}
+    {% if contact.email %}
+       <div class="my-auto opacity-0 inner-group-hover:opacity-100">
+           {% include 'components/buttons/copy_button.html' with text=contact.email %}
+       </div>
+    {% endif %}
+    </div>
 
     <div class="flex-1 inline-flex py-2 px-1.5 min-w-[150px] shrink break-all items-center inner-group">
-        {{ contact.email }}
+        {{ contact.full_name|default_if_none:"" }}
+        {% if contact.full_name %}
         <div class="opacity-0 inner-group-hover:opacity-100">
-            {% include 'components/buttons/copy_button.html' with text=contact.email %}
+            {% include 'components/buttons/copy_button.html' with text=contact.full_name %}
         </div>
+        {% endif %}
     </div>
     <div class="flex-1 inline-flex py-2 px-1.5 min-w-[150px] shrink break-all items-center inner-group">
         {{ contact.phone }}
@@ -94,7 +85,6 @@
 
             </ul>
         </div>
-
 
     </div>
 

@@ -15,6 +15,7 @@
             </label>
             {% include 'private/space/create/components/contacts/search_contacts_widget.html' with input=form.reference_contact search_input=form.email %}
             {% include 'components/forms/error_widget.html' with errors=form.reference_contact.errors %}
+            {% include 'components/forms/error_widget.html' with errors=form.email.errors %}
         </div>
 
     </div>

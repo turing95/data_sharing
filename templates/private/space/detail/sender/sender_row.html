@@ -2,10 +2,22 @@
 {% load custom_tags %}
 {% load i18n %}
 {% if sender %}
+<div class="sender-create-row">
     <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700">
+        {% if sender.email %}
         <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
             {{ sender.email }}
         </div>
+        {% else %}
+        <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
+            <form hx-post="{% url 'sender_contact_update' sender.pk %}" hx-swap="outerHTML" hx-target="closest .sender-create-row" hx-trigger="contactUpdated from:body">
+                {% csrf_token %}
+                {% include 'private/space/create/components/contacts/search_contacts_widget.html' with input=sender.form.contact search_input=sender.form.email sender_uuid=sender.pk %}
+    
+            </form>
+        </div>
+        {% endif %}
+
         {% url 'sender_space_detail'  sender.uuid  sender.space.uuid as sender_path %}
         <div class="inline-flex items-center">
             <a href="{{ sender_path }}" target="_blank"
@@ -52,7 +64,8 @@
             </div>
         </div>
     </div>
-{% elif create_sender %}
+</div>
+{% comment %} {% elif create_sender %}
     <div class="sender-create-row">
         <form hx-post="{% url 'sender_create' space.pk %}" hx-swap="outerHTML" hx-target="closest .sender-create-row">
             <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700 sender-create-row">
@@ -72,5 +85,5 @@
         </form>
 
 
-    </div>
+    </div> {% endcomment %}
 {% endif %}

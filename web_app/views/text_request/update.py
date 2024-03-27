@@ -17,6 +17,6 @@ def text_request_update(request, text_request_uuid):
     if 'title' in text_request_form.changed_data:
         return HttpResponse()
     
-    return render(request, 'private/request/edit/upload_request_detail.html', {
+    return render(request, 'private/request/edit/text_request_detail.html', {
         'text_request': text_request, 'show_more': True, 'form':text_request_form
     })

@@ -43,7 +43,7 @@ class CompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
-        fields = ('name', 'reference_contact', 'address')
+        fields = ('reference_contact', 'address')
 
     def __init__(self, *args, **kwargs):
         self.organization = kwargs.pop('organization')
@@ -57,7 +57,16 @@ class CompanyForm(forms.ModelForm):
                                                                           kwargs={'company_uuid': self.instance.pk})
             self.fields['reference_contact'].widget.attrs['hx-post'] = reverse_lazy('company_update',
                                                                                     kwargs={
-                                                                                        'company_uuid': self.instance.pk})
+                                                                                    'company_uuid': self.instance.pk})
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        search_query = cleaned_data.get('email', None)
+        if search_query:
+            reference_contact = cleaned_data.get('reference_contact', None)
+            if reference_contact and reference_contact.email != search_query:
+                self.add_error('email', _('Select a contact from the list, create a new one, or leave blank.'))
+        return cleaned_data
 
 
 class CompanyNameForm(forms.ModelForm):

@@ -1,5 +1,5 @@
 import json
-from copy import deepcopy
+from copy import deepcopy 
 
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
@@ -301,3 +301,8 @@ class Sender(BaseModel, ActiveModel):
     def notify_form(self,request_post=None):
         from web_app.forms import SenderNotifyForm
         return SenderNotifyForm(request_post)
+    
+    @property
+    def form(self, request_post=None):
+        from web_app.forms import SenderCreateForm
+        return SenderCreateForm(request_post, instance=self, organization=self.space.organization)

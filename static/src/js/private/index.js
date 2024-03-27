@@ -1,6 +1,7 @@
 import {hideShowSearch} from "./eventHandlers.js";
 window.selectCompany = selectCompany;
 window.selectContact = selectContact;
+
 function selectContact(liElement, contactEmail, contactId) {
     let searchContainer = liElement.closest('.contact-search-container');
     let widgetContainer = liElement.closest('.contact-widget-container');
@@ -11,8 +12,24 @@ function selectContact(liElement, contactEmail, contactId) {
     searchContainer.querySelector('input').value = contactEmail;
     contactInput.value = contactId;
     contactInput.dispatchEvent(new CustomEvent("change"));
+    document.body.dispatchEvent(new CustomEvent("contactUpdated"));
 
 }
+document.body.addEventListener("htmx:afterSwap", function(evt) {
+    if (evt.detail.target.id.startsWith('search-contacts-results-container')) {
+        const searchContainer = evt.detail.target;
+        const sender_uuid = searchContainer.getAttribute('data-sender-uuid');
+        const newContactEl = searchContainer.querySelector(".new-contact-el");
+        if (!newContactEl) {
+            return;
+        }
+        // Prepare the hx-vals data with sender_uuid
+        const hxValsData = JSON.stringify({ sender_uuid: sender_uuid });
+        // Set the hx-vals attribute on the .new-contact-el element
+        newContactEl.setAttribute('hx-vals', hxValsData);
+    }
+});
+
 export function selectCompany(companyName,companyId) {
     let searchContainer =document.querySelector('.company-search-container');
     let widgetContainer = document.querySelector('.company-widget-container');
@@ -123,3 +140,4 @@ function preventFormSubmit(){
     }
 });
 }
+

@@ -1,9 +1,24 @@
-{% if contacts %}
-    <ul class="border-b border-gray-200 folders-list border-x">
+{% if search_query %} 
+<ul class="border-b border-gray-200 folders-list border-x">
+    {% if contacts %}
         {% for contact in contacts %}
-            <li class="cursor-pointer hover:bg-gray-200" onclick="selectContact(this,'{{ contact.email }}','{{ contact.uuid }}')">
-                <span class="ml-2">{{ contact.email }} {{ contact.full_name|default_if_none:'' }} {{ contact.company|default_if_none:'' }} </span>
+            <li class="cursor-pointer hover:bg-gray-200"
+                onclick="selectContact(this, '{{ contact.email }}','{{ contact.uuid }}')">
+                <span class="ml-2">{{ contact.email }}</span>
             </li>
         {% endfor %}
-    </ul>
+    {% else %}
+        <li class="">
+            <span class="ml-2">No contact found</span>
+        </li>
+    {% endif %}
+           
+    <li class="border-t border-gray-400 cursor-pointer hover:bg-gray-200 hover:text-marian-blue-400 new-contact-el"
+        hx-trigger="click"
+        hx-get= "{% url 'contact_create_modal' organization.pk %}?query_search={{ search_query }}"
+        hx-target="#htmx-modal"
+        hx-swap="innerHTML">
+        <span class="ml-2">Create contact </span> <span class="font-semibold"> {{ search_query }}</span>
+    </li>
+</ul>
 {% endif %}

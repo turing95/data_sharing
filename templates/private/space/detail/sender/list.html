@@ -10,39 +10,7 @@
         {% include "components/buttons/generic.html" with button_text=button_text hx_swap="beforeend" hx_get=sender_create_row_url hx_target='#link-container' extra_classes="my-2" %}
     </div><!-- UPLOAD STATUS -->
     <div class="mt-6 mb-6" id="link-container">
-        {% comment %}<div class="relative overflow-x-auto custom-scrollbar">
-            <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-3 py-3 w-[30px] max-w-[30px] sticky left-0 z-10 bg-gray-100">
-                        <div class="inline-flex  justify-center items-center w-[20px] duration-300 transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer"
-                             hx-get="{% url 'all_senders_modal' space.uuid %}"
-                             hx-trigger="click"
-                             hx-target="#htmx-modal"
-                             hx-swap="innerHTML">
-                            <img src="{% static 'images/icons/three-dots.svg' %}" alt="three dots icon" stroke=""
-                                 class="w-[20px] h-[20px] transition-transform duration-300 bi bi-folder group-hover:scale-[1.15]">
-                        </div>
-                    </th>
-                    <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10 bg-gray-100">
-                        {% translate 'Invitee' %}
-                    </th>
-                    <th scope="col" class="px-3 py-3 min-w-[200px]">
-                        {% translate 'Space Link' %}
-                    </th>
-                    <th scope="col" class="px-3 py-3 min-w-[200px]">
-                        {% translate 'Link Status' %}
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for sender in page_obj %}
-                    {% include 'private/space/detail/sender/sender_row.html' with sender=sender %}
-                {% endfor %}
-
-                </tbody>
-            </table>
-        </div>{% endcomment %}
+       
         {% for sender in page_obj %}
             {% include 'private/space/detail/sender/sender_row.html' %}
         {% endfor %}
