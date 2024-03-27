@@ -15,7 +15,8 @@ class ContactListView(OrganizationMixin, ContactSideBarMixin, SubscriptionMixin,
     paginate_by = 12
 
     def get_queryset(self):
-        return self.get_organization().contacts.all().order_by('first_name', 'last_name', 'created_at')
+        return self.get_organization().contacts.all().order_by('email', '-created_at')
+
 
 
 @require_POST

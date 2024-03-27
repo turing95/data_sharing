@@ -15,7 +15,7 @@ class CompanyListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin,
         return context
 
     def get_queryset(self):
-        return self.get_organization().companies.all().order_by('created_at')
+        return self.get_organization().companies.all().order_by('name', '-created_at')
 
 
 @require_POST
