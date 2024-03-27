@@ -6,17 +6,13 @@ from web_app.forms import TextRequestForm
 from web_app.models import TextRequest
 
 
-@login_required 
+@login_required
 @require_POST
 def text_request_update(request, text_request_uuid):
     text_request = get_object_or_404(TextRequest, pk=text_request_uuid)
     text_request_form = TextRequestForm(request.POST, prefix=text_request.pk, instance=text_request)
     if text_request_form.is_valid():
         text_request_form.save()
-    # check if changed data includes 'title'
-    if 'title' in text_request_form.changed_data:
-        return HttpResponse()
-    
-    return render(request, 'private/request/edit/upload_request_detail.html', {
-        'text_request': text_request, 'show_more': True, 'form':text_request_form
+    return render(request, 'private/request/edit/text_request_detail.html', {
+        'text_request': text_request, 'show_more': True, 'form': text_request_form
     })
