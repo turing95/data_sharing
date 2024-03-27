@@ -26,22 +26,16 @@ def handle_destination(request, form):
 
 
 @login_required
-@require_POST 
+@require_POST
 def upload_request_update(request, upload_request_uuid):
-    if request.method == 'POST':
-        upload_request = get_object_or_404(UploadRequest, pk=upload_request_uuid)
-        upload_request_form = UploadRequestForm(request.POST, prefix=upload_request.pk, instance=upload_request,
-                                                user=request.user)
-        if upload_request_form.is_valid():
-            upload_request_form.save()
-            if upload_request_form.cleaned_data.get('destination_type'):
-                handle_destination(request, upload_request_form)
-        # check if changed data includes 'title'
-        if 'title' in upload_request_form.changed_data:
-            return HttpResponse()
+    upload_request = get_object_or_404(UploadRequest, pk=upload_request_uuid)
+    upload_request_form = UploadRequestForm(request.POST, prefix=upload_request.pk, instance=upload_request,
+                                            user=request.user)
+    if upload_request_form.is_valid():
+        upload_request_form.save()
+        if upload_request_form.cleaned_data.get('destination_type'):
+            handle_destination(request, upload_request_form)
 
-        return render(request, 'private/request/edit/upload_request_detail.html', {
-            'upload_request': upload_request, 'show_more': True, 'form':upload_request_form
-        })
-    return HttpResponseBadRequest()
-
+    return render(request, 'private/request/edit/upload_request_detail.html', {
+        'upload_request': upload_request, 'show_more': True, 'form': upload_request_form
+    })
