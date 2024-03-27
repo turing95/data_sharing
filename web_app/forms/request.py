@@ -309,7 +309,8 @@ class RequestEditForm(ModelForm):
             'type': 'datetime-local',
             'class': css_classes.datetime_input,
             'hx-trigger': 'change',
-            'hx-swap': 'none'
+            'hx-target': '#request-instructions-form',
+            'hx-swap': 'outerHTML',
         }, format='%Y-%m-%dT%H:%M:%S'),
         help_text=_("""The deadline applies to all invitees and is visible in their upload page.
                                 You can customize what happens once the deadline is reached.

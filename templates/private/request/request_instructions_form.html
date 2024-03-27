@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if from_htmx %}
     {% include 'components/messages.html' %}
 {% endif %}
@@ -18,12 +19,12 @@
         {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
     </div>
     <!-- DEADLINE -->
-        <div class="mb-6" id="deadline-section">
+        <div class="flex flex-col mb-6 " id="deadline-section">
             <div class="flex items-center mb-2 space-x-2">
-                <h3 class="text-xl font-medium text-gray-900 dark:text-white">Deadline</h3>
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Deadline' %}</h3>
                 {% include 'components/tooltip.html' with content=form.deadline.help_text target=form.deadline.name %}
             </div>
-            <div id="deadline-input-container" class="my-1 border-0">
+            <div id="deadline-input-container" class="my-1 mr-auto border-0">
                 <label for="{{ form.deadline.id_for_label }}"
                        class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
                 {{ form.deadline }}

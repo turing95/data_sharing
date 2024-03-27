@@ -54,7 +54,6 @@ def request_instructions_update(request, request_uuid):
             messages.success(request, _('Request saved'))
             return render(request, 'private/request/request_instructions_form.html',
                           {'from_htmx': True, 'form': kezyy_request.instructions_form()})
-        messages.error(request, form.errors)
         return render(request, 'private/request/request_instructions_form.html',
-                      {'from_htmx': True, 'form': kezyy_request.instructions_form()})
+                      {'from_htmx': True, 'form': form})
     return HttpResponseBadRequest()
