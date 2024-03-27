@@ -40,7 +40,7 @@
     {% endfor %}
 
 </div> 
-{% if page_obj.end_index > 1 %}
+{% if page_obj.paginator.num_pages > 1 %}
     {% translate "Contacts" as obj_name %}
     {% include 'components/pagination.html' with objs_name=obj_name %} 
 {% endif %}

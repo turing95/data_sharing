@@ -62,6 +62,6 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
                 sender.save()
             else:
                 sender.delete()
-        for sender in space_instance.senders.all():
-            if space_instance.deadline_notification_datetime is not None:
-                sender.schedule_deadline_notification()
+        # for sender in space_instance.senders.all():
+        #     if space_instance.deadline_notification_datetime is not None:
+        #         sender.schedule_deadline_notification()
