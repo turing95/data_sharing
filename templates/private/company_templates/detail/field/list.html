@@ -1,0 +1,7 @@
+<div id="custom_field_container">
+    {% for field in company.fields.all reversed%}
+        
+            {% include 'private/company_templates/detail/field/detail.html' with field=field %}
+        
+    {% endfor %}
+</div>

@@ -1,0 +1,13 @@
+{% extends "private/_base.html" %}
+{% load i18n %}
+{% block private_content %}
+    {% comment %}{% include 'private/company/detail/template_name.html' with form=template.name_form %}
+    {% endcomment %}
+    {{ template.name }}
+
+    {% block template_content %}
+        
+        {% include 'private/company_templates/detail/group/list.html' %}
+
+    {% endblock template_content %}
+{% endblock %}

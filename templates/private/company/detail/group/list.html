@@ -1,0 +1,6 @@
+{% load i18n %}
+<div id="groups-container">
+    {% for group in company.field_groups.all reversed %}
+        {% include 'private/company/detail/group/detail.html' with group=group %}
+    {% endfor %}
+</div>

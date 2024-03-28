@@ -14,6 +14,6 @@ from web_app.forms.contact import ContactForm
 from web_app.forms.organization import OrganizationCreateForm
 from web_app.forms.team import TeamInviteForm
 from web_app.forms.file_changes import FileSelectForm
-from web_app.forms.company import CompanyForm, CompanyNameForm, CompanyFieldSetForm, CompanyFieldFillForm, CompanyCreateForm
+from web_app.forms.company import CompanyForm, CompanyNameForm, CompanyFieldSetForm, CompanyFieldFillForm, CompanyCreateForm, CompanyFieldGroupSetForm
 from web_app.forms.sender import SenderCreateForm, SenderNotifyForm
 from web_app.forms.output import OutputRejectForm
