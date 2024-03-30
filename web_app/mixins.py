@@ -62,6 +62,24 @@ class SpaceMixin:
         data = super().get_context_data(**kwargs)
         data['space'] = self.get_space()
         data['organization'] = self.get_space().organization
+        back_links = []
+        space = data['space']
+        if space.company:
+            back_links.append({
+                'url': reverse('company_detail', kwargs={'company_uuid': space.company.pk}),
+                'text': space.company.name,
+                'svg_path': paths['company']
+            })
+            
+            back_links.append({
+                'url': reverse('receiver_space_detail', kwargs={'space_uuid': space.pk}),
+                'text': space.title,  # Or use space.name if you prefer the space name here
+                'svg_path': paths['spaces']
+            })
+
+            # add back only if there is a company
+            data['back'] = back_links
+        
         return data
 
 
@@ -109,6 +127,7 @@ class CompanyTemplateMixin:
         context['back'] = {'url': reverse('company_templates', kwargs={'organization_uuid': self.get_organization().pk}),
                         'text': _('Back to Company templates')}
         return context
+
 class CompanyMixin:
     _company = None  # Placeholder for the cached object
     _organization = None  # Placeholder for the cached object
@@ -160,8 +179,30 @@ class RequestMixin:
         data['request_js'] = True
         data['space'] = self.get_request().space
         data['organization'] = self.get_request().space.organization
-        data['back'] = {'url': reverse('receiver_space_detail', kwargs={'space_uuid': self.get_request().space.pk}),
-                        'text': _('Back to Space')}
+
+        back_links = []
+        space = data['space']
+        if space.company:
+            back_links.append({
+                'url': reverse('company_detail', kwargs={'company_uuid': space.company.pk}),
+                'text': space.company.name,
+                'svg_path': paths['company']
+            })
+            
+        back_links.append({
+            'url': reverse('receiver_space_detail', kwargs={'space_uuid': space.pk}),
+            'text': space.title,  # Or use space.name if you prefer the space name here
+            'svg_path': paths['spaces']
+        })
+
+        back_links.append({
+            'url': reverse('request_detail', kwargs={'request_uuid': data['kezyy_request'].pk}),
+            'text': data['kezyy_request'].title,  # Or use request.name or similar attribute if available
+            'svg_path': paths['requests']
+        })
+
+        data['back'] = back_links
+        
         return data
 
 

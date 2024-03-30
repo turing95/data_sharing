@@ -7,7 +7,7 @@
 
 <div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50 group">
 
-    <div class="inline-felx flex inner-group bg-gray-100 border-r flex-1 py-2 px-1.5 min-w-[200px] max-w-[250px] shrink">
+    <div class=" flex inner-group bg-gray-100 border-r flex-1 py-2 px-1.5 min-w-[200px] max-w-[250px] shrink">
         <a class="font-medium break-all transition duration-150 ease-in-out transform cursor-pointer hover:underline"
         href="{% url 'receiver_space_detail' space.uuid  %}"
         title="{% translate 'Open:' %} {{ space.title}}"
@@ -23,7 +23,7 @@
            {% include 'components/buttons/copy_button.html' with text=space.title %}
        </div>
     </div>
-    <div class="inline-felx flex inner-group flex-1 py-2 px-1.5 min-w-[190px] shrink">
+    <div class=" flex inner-group flex-1 py-2 px-1.5 min-w-[190px] shrink">
         {% if space.company %}
         <a class="break-all transition duration-150 ease-in-out transform cursor-pointer hover:underline"
         href="{% url 'company_detail' space.company.pk %}"
