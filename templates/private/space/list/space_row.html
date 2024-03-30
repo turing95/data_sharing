@@ -43,29 +43,4 @@
     {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=forloop.counter %}
 </div>
 
-   
-    
-
-
-
-
-
-
-
-
-
-
-
-{% comment %} 
-
-
-<div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700">
-    <div class="inline-flex items-center justify-center duration-300 cursor-pointer hover:underline transition-ctext-gray-600 colors hover:text-gray-800 group hover:cursor-pointer">
-       <a href="{% url 'receiver_space_detail' space.uuid  %}">{{ space.title }}</a> 
-    </div>
-    <!-- space settings dropdown -->
-    <div class="flex justify-end mt-auto">
-        {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=forloop.counter %}
-    </div>
-</div>
- {% endcomment %}
+  
