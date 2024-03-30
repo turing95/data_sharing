@@ -23,7 +23,7 @@
 
     {% if output.sender_event.notes %}
         <button data-tooltip-trigger="click"
-        data-tooltip-target="tooltip-tag-{{output.pk}}"
+        data-tooltip-target="tooltip-notes-{{output.pk}}"
         data-tooltip-style="light"
         data-tooltip-placement="top"
         type="button"
@@ -34,7 +34,7 @@
             </svg>  
         </button>
 
-        <div id="tooltip-tag-{{output.pk}}"
+        <div id="tooltip-notes-{{output.pk}}"
         role="tooltip"
         class="max-w-[300px] absolute z-50 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip -translate-x-1/2 left-1/2 bottom-full mb-2  bg-white">
             <p>{{ output.sender_event.notes }}</p>
