@@ -1,31 +1,49 @@
 {% extends "private/company/detail/base.html" %}
 {% load static  i18n%}
 {% block company_content %}
-    {% if page_obj %}
 
-        <div class="relative overflow-x-auto custom-scrollbar">
-            <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100">
-                <thead class="text-xs text-gray-700 uppercase border-b">
-                <tr>
-                    <th scope="col" class="px-3 py-3 min-w-[100px] sticky left-[30px] z-10">
-                        Space Title
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
+<div class="flex justify-end">
+    {% url 'space_create' organization.uuid as space_create_url %}
+    {% translate 'Add space' as button_text %}
+    {% with query_string="company_uuid="|add:company.pk.hex %}
+        {% include "components/buttons/generic.html" with button_text=button_text href=space_create_url query_string=query_string extra_classes="my-2" %}
+    {% endwith %}
+</div>
 
-                {% for space in page_obj %}
-                    {% include 'private/company/detail/space_row.html' with space=space %}
-                {% endfor %}
+{% if page_obj %}
+    <div class="w-full">
+        <div class="flex text-left border-b border-gray-200">
 
-                </tbody>
-            </table>
+            <div class="flex-1 py-2 px-1.5 font-bold min-w-[200px] max-w-[250px] shrink uppercase text-sm">
+
+            </div>
+            <div class="flex-1 py-2 px-1.5 font-bold min-w-[190px] shrink uppercase text-sm grow">
+                {% translate 'Company' %}
+            </div>
+            <div class="p-1  w-[32px] flex">
+            </div>
         </div>
+        {% for space in page_obj %}
+            {% include 'private/space/list/space_row.html' %}
+        {% endfor %}
 
-        {% include 'components/pagination.html' with objs_name='Spaces' %}
-    {% else %}
-        <div class="flex flex-col items-center justify-center mt-12">
-            <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no spaces yet' %}</p>
-        </div>
+    </div>
+    {% if page_obj.paginator.num_pages > 1 %}
+        {% translate "Spaces" as obj_name %}
+        {% include 'components/pagination.html' with objs_name=obj_name %}
     {% endif %}
+{% else %}
+    <div class="flex flex-col items-center justify-center mt-12">
+        <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no Spaces yet' %}</p>
+    </div> 
+    {% comment %} <div class="flex flex-col items-center justify-center mt-10">
+        <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'You have not created any spaces yet' %}</p>
+        {% url 'space_create' organization.uuid as space_create_url %}
+        {% translate "Create your first space" as button_text %}
+        {% include 'components/buttons/generic.html' with button_text=button_text href=space_create_url %}
+        <p class="m-3 text-center text-gray-500">{% translate "Don't know where to start?" %} <a
+                href="{{ doc_url }}" target="_blank"
+                class="text-blue-500 hover:underline">{% translate 'Read our guide' %}</a></p>
+    </div> {% endcomment %}
+{% endif %}
 {% endblock company_content %}

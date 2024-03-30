@@ -1,5 +1,5 @@
 {% if href %}
-    <a href="{{ href }}"
+    <a href="{{ href }}{% if query_string %}?{{ query_string }}{% endif %}"
        target="{{ target|default_if_none:"_self" }}"
             {% if button_id %} id="{{ button_id }}" {% endif %}
             {% if hx_get %}
