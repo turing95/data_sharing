@@ -6,7 +6,7 @@ from web_app.forms.css_classes.inputs import text_input
 from django.utils.translation import gettext_lazy as _
 
 from web_app.forms.widgets import SearchContactWidget
-from web_app.models import Company, Contact, CompanyField
+from web_app.models import Company, Contact, CompanyField, CompanyFieldGroup
 from django.core.exceptions import ValidationError
 
 
@@ -16,7 +16,6 @@ class CompanyCreateForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ('name',)
-
 
 
 class CompanyForm(forms.ModelForm):
@@ -90,28 +89,55 @@ class CompanyNameForm(forms.ModelForm):
             self.fields['name'].widget.attrs['hx-post'] = reverse_lazy('company_update_name',
                                                                        kwargs={'company_uuid': self.instance.pk})
 
- 
+
 class CompanyFieldSetForm(forms.ModelForm):
     label = forms.CharField(widget=forms.TextInput(attrs={'class': css_classes.text_input,
-                                                          }),
-                            )
+                                                          }))
+    multiple = forms.BooleanField(required=False,
+                                  widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input,
+                                                                    }),
+                                  label=_('Multiple values'))
 
-    def __init__(self, *args, **kwargs):
-        self.company = kwargs.pop('company')
-        super().__init__(*args, **kwargs)
-
-  
-    def clean_label(self):
-        label = self.cleaned_data['label']        
-
-        if self.company.fields.filter(label=label).exclude(pk=self.instance.pk).exists():
-            raise ValidationError(_("A field with this label already exists for this company."))
-        
-        return label
-    
     class Meta:
         model = CompanyField
-        fields = ['label']
+        fields = ['label', 'multiple']
+
+    def __init__(self, *args, **kwargs):
+        self.group = kwargs.pop('group')
+        super().__init__(*args, **kwargs)
+
+    def clean_label(self):
+        label = self.cleaned_data['label']
+
+        if self.group.fields.filter(label=label).exclude(pk=self.instance.pk).exists():
+            raise ValidationError(_("A field with this label already exists in this group."))
+
+        return label
+
+
+class CompanyFieldGroupSetForm(forms.ModelForm):
+    label = forms.CharField(widget=forms.TextInput(attrs={'class': css_classes.text_input,
+                                                          }))
+    multiple = forms.BooleanField(required=False,
+                                  widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input,
+                                                                    }),
+                                  label=_('Multiple values'))
+
+    class Meta:
+        model = CompanyFieldGroup
+        fields = ['label', 'multiple']
+
+    def __init__(self, *args, **kwargs):
+        self.group = kwargs.pop('group')
+        super().__init__(*args, **kwargs)
+
+    def clean_label(self):
+        label = self.cleaned_data['label']
+
+        if self.group is not None and self.group.groups.filter(label=label).exclude(pk=self.instance.pk).exists():
+            raise ValidationError(_("A group with this label already exists in this group."))
+
+        return label
 
 
 class CompanyFieldFillForm(forms.ModelForm):
@@ -123,14 +149,13 @@ class CompanyFieldFillForm(forms.ModelForm):
 
                                                           }),
                             )
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance is not None:
             self.fields['value'].widget.attrs['hx-post'] = reverse_lazy('company_field_update_value',
                                                                         kwargs={'company_field_uuid': self.instance.pk})
 
-    
     class Meta:
         model = CompanyField
         fields = ['value']

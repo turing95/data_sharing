@@ -7,7 +7,7 @@ from djstripe.settings import djstripe_settings
 from web_app.utils.svg_icon_paths import svg_icons_path as paths
 from django.utils.translation import gettext_lazy as _
 
-from web_app.models import Organization, Space, Request, Company, Sender, Grant, Contact
+from web_app.models import Organization, Space, Request, Company, Sender, Grant, Contact, CompanyTemplate
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -88,6 +88,27 @@ class ContactMixin:
         return data
 
 
+class CompanyTemplateMixin:
+    _company_template = None  # Placeholder for the cached object
+    _organization = None  # Placeholder for the cached object
+
+    def get_organization(self) -> Organization:
+        if self._organization is None:
+            self._organization = self.get_company_template().organization
+        return self._organization
+
+    def get_company_template(self):
+        if not self._company_template:
+            self._company_template = CompanyTemplate.objects.get(pk=self.kwargs.get('company_template_uuid'))
+        return self._company_template
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['organization'] = self.get_organization()
+        context['template'] = self.get_company_template()
+        context['back'] = {'url': reverse('company_templates', kwargs={'organization_uuid': self.get_organization().pk}),
+                        'text': _('Back to Company templates')}
+        return context
 class CompanyMixin:
     _company = None  # Placeholder for the cached object
     _organization = None  # Placeholder for the cached object
@@ -109,7 +130,6 @@ class CompanyMixin:
         context['back'] = {'url': reverse('companies', kwargs={'organization_uuid': self.get_organization().pk}),
                         'text': _('Back to Companies')}
         return context
-
 
 class GrantMixin:
     _grant = None  # Placeholder for the cached object
@@ -148,7 +168,7 @@ class RequestMixin:
 class SideBarMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['sidebar'] = {'team': False, 'space': False, 'company': False, 'organization': False, 'grant': False}
+        data['sidebar'] = {'team': False, 'space': False, 'company': False,'templates':False, 'organization': False, 'grant': False}
         return data
 
 class TeamSideBarMixin(SideBarMixin):

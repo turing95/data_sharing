@@ -73,10 +73,14 @@ from web_app.views.company.detail.spaces import CompanySpacesListView
 from web_app.views.company.detail.contacts import CompanyContactsListView
 from web_app.views.company.detail.files import CompanyFilesListView
 from web_app.views.company.update import company_update_name, company_update
-from web_app.views.company_field.update import company_field_update, company_field_update_modal, company_field_update_value
-from web_app.views.company_field.create import company_field_create_modal, company_field_create
-from web_app.views.company_field.delete import company_field_delete
+from web_app.views.company_field.update import company_field_update, company_field_update_modal, company_field_update_value, company_field_group_update, company_field_group_update_modal, company_field_group_add_template
+from web_app.views.company_field.create import company_field_create_modal, company_field_create, company_field_duplicate, company_field_group_create_modal,company_field_group_create, company_field_to_template,company_field_group_to_template
+from web_app.views.company_field.delete import company_field_delete, company_field_group_delete
 from web_app.views.company_field.detail import company_field_detail
+from web_app.views.company_field.list import group_elements
+from web_app.views.company_templates.list import CompanyTemplatesListView, search_templates
+from web_app.views.company_templates.detail import CompanyTemplateDetailView
+from web_app.views.company_templates.delete import CompanyTemplateDeleteView
 from web_app.views.language import custom_set_language, language_modal
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.delete import DeleteContactView

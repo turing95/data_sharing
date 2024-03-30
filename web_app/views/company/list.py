@@ -6,13 +6,10 @@ from django.views.generic import ListView
 from web_app.mixins import OrganizationMixin, CompanySideBarMixin, SubscriptionMixin
 from web_app.models import Organization
 
+
 class CompanyListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, ListView):
     template_name = "private/company/list.html"
     paginate_by = 12
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
     def get_queryset(self):
         return self.get_organization().companies.all().order_by('name', '-created_at')

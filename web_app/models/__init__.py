@@ -14,7 +14,7 @@ from web_app.models.user import User
 from web_app.models.settings import SenderNotificationsSettings, NotificationsSettings
 from web_app.models.organization import Organization, UserOrganization, OrganizationInvitation
 from web_app.models.beta_access_request import BetaAccessRequest
-from web_app.models.company import Company, CompanyField
+from web_app.models.company import Company, CompanyField, CompanyGroupElement, CompanyFieldGroup, CompanyTemplate
 from web_app.models.grant import Grant
 from web_app.models.section import SpaceSection, HeadingSection, ParagraphSection, FileSection
 from web_app.models.text_output import TextOutput
