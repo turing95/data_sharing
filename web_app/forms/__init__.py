@@ -17,3 +17,4 @@ from web_app.forms.file_changes import FileSelectForm
 from web_app.forms.company import CompanyForm, CompanyNameForm, CompanyFieldSetForm, CompanyFieldFillForm, CompanyCreateForm, CompanyFieldGroupSetForm
 from web_app.forms.sender import SenderCreateForm, SenderNotifyForm
 from web_app.forms.output import OutputRejectForm
+from web_app.forms.grant import GrantForm, GrantNameForm

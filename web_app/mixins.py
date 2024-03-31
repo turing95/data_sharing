@@ -152,6 +152,12 @@ class CompanyMixin:
 
 class GrantMixin:
     _grant = None  # Placeholder for the cached object
+    _organization = None  # Placeholder for the cached object
+
+    def get_organization(self) -> Organization:
+        if self._organization is None:
+            self._organization = self.get_grant().organization
+        return self._organization
 
     def get_grant(self):
         if not self._grant:
@@ -162,6 +168,8 @@ class GrantMixin:
         context = super().get_context_data(**kwargs)
         context['grant'] = self.get_grant()
         context['organization'] = self.get_grant().organization
+        context['back'] = {'url': reverse('grants', kwargs={'organization_uuid': self.get_organization().pk}),
+                'text': _('Back to Grants')}
         return context
 
 
@@ -287,6 +295,27 @@ class CompanyTabMixin:
                 'url_name': 'company_files',
                 'svg_path': paths['documents']
             },
+
+        }
+        return data
+
+class GrantTabMixin:
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['grant_tab'] = {
+            # 'detail': {
+            #     'active': False,
+            #     'alternative_text': _('Detail'),
+            #     'url_name': 'grant_detail',
+            #     'svg_path': paths['detail']
+            # },
+          
+            # 'spaces': {
+            #     'active': False,
+            #     'alternative_text': _('Spaces'),
+            #     'url_name': 'grant_spaces',
+            #     'svg_path': paths['spaces']
+            # },
 
         }
         return data

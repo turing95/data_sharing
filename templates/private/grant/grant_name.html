@@ -1,7 +1,7 @@
 {% if from_htmx %}
     {% include 'components/messages.html' %}
 {% endif %}
-<form id="grant-name-form" action="" method="POST" class="max-w-screen-md company-title-form">
+<form id="grant-name-form" action="" method="POST" class="max-w-screen-md">
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     {% csrf_token %}
 

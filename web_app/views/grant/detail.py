@@ -1,6 +1,28 @@
-from django.views.generic import TemplateView
-from web_app.mixins import SubscriptionMixin, GrantSideBarMixin, GrantMixin
+from django.views.generic import FormView
+from web_app.mixins import SubscriptionMixin, GrantSideBarMixin, GrantMixin, GrantTabMixin
+from django.urls import reverse
+from web_app.forms import GrantForm
 
-
-class GrantDetailView(SubscriptionMixin, GrantSideBarMixin,GrantMixin, TemplateView):
+class GrantDetailView(SubscriptionMixin, GrantSideBarMixin, GrantTabMixin, GrantMixin, FormView):
     template_name = "private/grant/detail.html"
+    form_class = GrantForm
+    
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['grant_tab']['detail']['active'] = True
+        return context
+
+    # def get_success_url(self):
+    #     return reverse('companies', kwargs={'organization_uuid': self.get_company().organization.pk})
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.get_grant()
+        kwargs['organization'] = self.get_grant().organization
+        return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)

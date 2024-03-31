@@ -10,5 +10,6 @@ from web_app.models import Organization, Grant
 @require_GET
 def grant_create(request, organization_uuid):
     organization = get_object_or_404(Organization, pk=organization_uuid)
-    grant = Grant.objects.create(organization=organization)
+    grant = Grant.objects.create(organization=organization, name="Unnamed grant")
     return redirect(reverse('grant_detail', kwargs={'grant_uuid': grant.pk}))
+
