@@ -3,10 +3,9 @@ from django.db import models
 
 
 class Grant(BaseModel):
-    name = models.CharField(max_length=250, null=True, blank=True) # full name of the grant like "Fabriq quarto 2020 innovazioni dei quartieri"
-    alias = models.CharField(max_length=250, null=True, blank=True) # shorter version of name like "fabriq"
+    official_name = models.CharField(max_length=250, null=True, blank=True) # full name of the grant like "Fabriq quarto 2020 innovazioni dei quartieri"
+    name = models.CharField(max_length=250, null=True, blank=True) # shorter version of name like "fabriq"
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='grants')
-    alias = models.CharField(max_length=250, null=True, blank=True)
     type = models.CharField(max_length=250, null=True, blank=True)
     tags = models.TextField(null=True, blank=True) # comma separated list of tags
     status = models.CharField(max_length=250, null=True, blank=True)
@@ -31,4 +30,12 @@ class Grant(BaseModel):
     # checklist (company like fields)
     # tags
     # it will be needed a non descriptive version of the allowed expenses, activities, beneficiaries, 
+    # contacts for more details
     
+    def name_form(self, request_post=None):
+        from web_app.forms import GrantNameForm
+        return GrantNameForm(request_post, instance=self)
+
+    def form(self, request_post=None):
+        from web_app.forms import GrantForm
+        return GrantForm(request_post, instance=self, organization=self.organization)
