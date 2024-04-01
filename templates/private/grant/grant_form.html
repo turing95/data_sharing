@@ -127,7 +127,7 @@
             {% include 'components/forms/error_widget.html' with errors=form.descriptive_other.errors %}
         </div>
 
-        <div class="mx-2">
+        <div class="flex flex-col mx-2">
             <label for="{{ form.de_minimis.id_for_label }}"
                    class="font-medium text-gray-900 dark:text-white">{{ form.de_minimis.label }}
             </label>

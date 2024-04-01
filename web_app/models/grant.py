@@ -31,7 +31,7 @@ class Grant(BaseModel):
     descriptive_application_iter = models.TextField(null=True, blank=True)
     official_page_link = models.URLField(null=True, blank=True)
     application_page_link = models.URLField(null=True, blank=True)
-    de_minimis = models.BooleanField(default=False)
+    de_minimis = models.BooleanField(default=False, null=True, blank=True)
     descriptive_other = models.TextField(null=True, blank=True) # other notes generic field
     
     

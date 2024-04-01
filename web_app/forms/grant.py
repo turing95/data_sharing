@@ -187,14 +187,25 @@ class GrantForm(forms.ModelForm):
         help_text=_(""" """))
     
 
-    de_minimis = forms.BooleanField(
+    DE_MINIMIS_CHOICES = (
+        (None, _('Unknown')),  
+        (True, _('Applies')),     
+        (False, _('Does not apply')),     
+    )
+    
+    de_minimis = forms.ChoiceField(
         required=False,
-        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input,
-                                          'hx-trigger': 'change',
-                                          'hx-target': 'closest form',
-                                          'hx-swap': 'outerHTML'}),
+        choices=DE_MINIMIS_CHOICES,
+        initial=None,
+        widget=forms.Select(attrs={
+            'class': css_classes.dropdown,
+            'hx-trigger': 'change',
+            'hx-target': 'closest form',
+            'hx-swap': 'outerHTML',
+        }),
         label=_('De minimis'),
-        help_text=_(""""""))
+        help_text=_("")
+    )
 
     class Meta:
         model = Grant
