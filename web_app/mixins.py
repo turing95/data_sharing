@@ -303,12 +303,19 @@ class GrantTabMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['grant_tab'] = {
-            # 'detail': {
-            #     'active': False,
-            #     'alternative_text': _('Detail'),
-            #     'url_name': 'grant_detail',
-            #     'svg_path': paths['detail']
-            # },
+            'detail': {
+                'active': False,
+                'alternative_text': _('Detail'),
+                'url_name': 'grant_detail',
+                'svg_path': paths['detail']
+            },
+            
+            'edit': {
+                'active': False,
+                'alternative_text': _('Edit'),
+                'url_name': 'grant_edit',
+                'svg_path': paths['edit']
+            },
           
             # 'spaces': {
             #     'active': False,

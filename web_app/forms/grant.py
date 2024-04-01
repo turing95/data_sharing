@@ -1,5 +1,6 @@
 from django import forms
 from django.urls import reverse_lazy
+from django.core.validators import validate_email
 
 from web_app.forms import css_classes
 from web_app.forms.css_classes.inputs import text_input
@@ -16,7 +17,7 @@ from django.core.exceptions import ValidationError
     
     
 class GrantForm(forms.ModelForm):
-    official_name = forms.CharField(label=_("official Name"),
+    official_name = forms.CharField(label=_("Official name"),
                               required=False,
                               widget=forms.TextInput(attrs={'placeholder': _('Official Name'),
                                                             'class': text_input,
@@ -24,6 +25,27 @@ class GrantForm(forms.ModelForm):
                                                             'hx-target': 'closest form',
                                                             'hx-swap': 'outerHTML'
                                                             }))
+    
+    status = forms.ChoiceField(
+        choices=Grant.GrantStatus.choices,
+        initial=Grant.GrantStatus.ANNOUNCED,
+        required=False,
+        label=_('Status'),
+        widget=forms.Select(attrs={'class': css_classes.dropdown,
+                                   'hx-trigger': 'change',
+                                    'hx-target': 'closest form',
+                                    'hx-swap': 'outerHTML'
+                                   })
+    )
+    
+    support_email = forms.CharField(required=False,
+                                  widget=forms.TextInput(
+                                      attrs={'placeholder': _('Contact email for the grant'),
+                                             'class': css_classes.text_input + "email-input",
+                                                'hx-trigger': 'blur changed',
+                                                'hx-target': 'closest form',
+                                                'hx-swap': 'outerHTML'}))
+    
     official_page_link = forms.URLField(
         required=False,
         label=_('Official grant page website'),
@@ -172,20 +194,27 @@ class GrantForm(forms.ModelForm):
                                           'hx-target': 'closest form',
                                           'hx-swap': 'outerHTML'}),
         label=_('De minimis'),
-        help_text=_(""" """))
+        help_text=_(""""""))
 
     class Meta:
         model = Grant
-        fields = ('official_name', 'financer_name', 'financer_website_link', 'descriptive_timeline')
-
+        fields = ('official_name', 'status', 'support_email', 'official_page_link', 'application_page_link', 'financer_name', 'financer_website_link', 'descriptive_timeline', 'descriptive_beneficiaries', 'descriptive_goals', 'descriptive_funds', 'descriptive_allowed_activities', 'descriptive_admitted_expenses', 'descriptive_not_admitted_expenses', 'descriptive_application_iter', 'descriptive_other', 'de_minimis')
+   
     def __init__(self, *args, **kwargs):
         self.organization = kwargs.pop('organization')
         super().__init__(*args, **kwargs)
         update_url = reverse_lazy('grant_update', kwargs={'grant_uuid': self.instance.pk})
-        self.fields['official_name'].widget.attrs['hx-post'] = update_url
-        self.fields['financer_name'].widget.attrs['hx-post'] = update_url
-        self.fields['financer_website_link'].widget.attrs['hx-post'] = update_url
-        self.fields['descriptive_timeline'].widget.attrs['hx-post'] = update_url
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs['hx-post'] = update_url
+    
+    def clean_user_email(self):
+        email = self.cleaned_data.get('support_email', None)
+        try:
+            validate_email(email)
+        except ValidationError:
+            raise ValidationError(_(f"{email} is not a valid email address"))
+        return email
+        
 
     
     # def clean(self):

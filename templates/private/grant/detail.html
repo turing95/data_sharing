@@ -1,12 +1,50 @@
-{% extends "private/_base.html" %}
+{% extends "private/grant/_base.html" %}
 {% load i18n %}
 
-{% block private_content %}
-    {% include 'private/grant/grant_name.html' with form=grant.name_form %}
+{% block grant_content %}
     
-    {% include "components/tabs_menu.html" with tabs_data=grant_tab  pk=grant.pk %}
 
-    {% block grant_content %}
-        {% include 'private/grant/grant_form.html' with form=grant.form %}
-    {% endblock grant_content %}
-{% endblock %}
+
+<div class="inline-flex mt-4">    
+    
+    <!--GRANT OFFICIAL NAME-->
+    {% if grant.official_name %}
+        <h2 class="mr-4 text-3xl font-bold">{{ grant.official_name }}</h2>
+    {% else %}
+        <h2 class="mr-4 text-3xl font-bold">{% translate 'No official name' %}</h2>
+    {% endif %}
+
+    <!--GRANT STATUS-->
+    <div class="mx-2 text-sm my-auto  {% if grant.status == grant.GrantStatus.ANNOUNCED %} text-blue-800 bg-blue-200 {% elif grant.status == grant.GrantStatus.PUBLISHED %} text-green-800 bg-green-200 {% elif grant.status == grant.GrantStatus.CLOSED %} text-red-800 bg-red-200{%endif%} align-middle  rounded-full px-[8px] flex items-center justify-center">
+        <span class="text-sm  align-middle rounded-full px-[8px] flex items-center justify-center whitespace-nowrap">
+            {{ grant.status }}
+        </span>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock grant_content %}

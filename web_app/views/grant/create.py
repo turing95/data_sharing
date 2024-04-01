@@ -11,5 +11,5 @@ from web_app.models import Organization, Grant
 def grant_create(request, organization_uuid):
     organization = get_object_or_404(Organization, pk=organization_uuid)
     grant = Grant.objects.create(organization=organization, name="Unnamed grant")
-    return redirect(reverse('grant_detail', kwargs={'grant_uuid': grant.pk}))
+    return redirect(reverse('grant_edit', kwargs={'grant_uuid': grant.pk}))
 

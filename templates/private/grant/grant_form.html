@@ -2,6 +2,7 @@
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
     <div class="grid gap-6 mb-6 md:grid-cols-2">
+
         <div class="mx-2">
             <label for="{{ form.official_name.id_for_label }}"
                    class="font-medium text-gray-900 dark:text-white">{{ form.official_name.label }}
@@ -9,6 +10,38 @@
             {{ form.official_name }}
             {% include 'components/forms/error_widget.html' with errors=form.official_name.errors %}
         </div>
+
+        <div class="flex flex-col mx-2">
+            <label for="{{ form.status.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.status.label }}
+            </label>
+            {{ form.status }}
+            {% include 'components/forms/error_widget.html' with errors=form.status.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.support_email.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.support_email.label }}
+            </label>
+            {{ form.support_email }}
+            {% include 'components/forms/error_widget.html' with errors=form.support_email.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.official_page_link.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.official_page_link.label }}
+            </label>
+            {{ form.official_page_link }}
+            {% include 'components/forms/error_widget.html' with errors=form.official_page_link.errors %}
+        </div>
+        <div class="mx-2">
+            <label for="{{ form.application_page_link.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.application_page_link.label }}
+            </label>
+            {{ form.application_page_link }}
+            {% include 'components/forms/error_widget.html' with errors=form.application_page_link.errors %}
+        </div>
+
         <div class="mx-2">
             <label for="{{ form.financer_name.id_for_label }}"
                    class="font-medium text-gray-900 dark:text-white">{{ form.financer_name.label }}
@@ -16,6 +49,7 @@
             {{ form.financer_name }}
             {% include 'components/forms/error_widget.html' with errors=form.financer_name.errors %}
         </div>
+
         <div class="mx-2">
             <label for="{{ form.financer_website_link.id_for_label }}"
                    class="font-medium text-gray-900 dark:text-white">{{ form.financer_website_link.label }}
@@ -30,5 +64,76 @@
             {{ form.descriptive_timeline }}
             {% include 'components/forms/error_widget.html' with errors=form.descriptive_timeline.errors %}
         </div>
+        <div class="mx-2">
+            <label for="{{ form.descriptive_beneficiaries.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.descriptive_beneficiaries.label }}
+            </label>
+            {{ form.descriptive_beneficiaries }}
+            {% include 'components/forms/error_widget.html' with errors=form.descriptive_beneficiaries.errors %}
+        </div>
+        <div class="mx-2">
+            <label for="{{ form.descriptive_goals.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.descriptive_goals.label }}
+            </label>
+            {{ form.descriptive_goals }}
+            {% include 'components/forms/error_widget.html' with errors=form.descriptive_goals.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.descriptive_funds.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.descriptive_funds.label }}
+            </label>
+            {{ form.descriptive_funds }}
+            {% include 'components/forms/error_widget.html' with errors=form.descriptive_funds.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.descriptive_allowed_activities.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.descriptive_allowed_activities.label }}
+            </label>
+            {{ form.descriptive_allowed_activities }}
+            {% include 'components/forms/error_widget.html' with errors=form.descriptive_allowed_activities.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.descriptive_admitted_expenses.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.descriptive_admitted_expenses.label }}
+            </label>
+            {{ form.descriptive_admitted_expenses }}
+            {% include 'components/forms/error_widget.html' with errors=form.descriptive_admitted_expenses.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.descriptive_not_admitted_expenses.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.descriptive_not_admitted_expenses.label }}
+            </label>
+            {{ form.descriptive_not_admitted_expenses }}
+            {% include 'components/forms/error_widget.html' with errors=form.descriptive_not_admitted_expenses.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.descriptive_application_iter.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.descriptive_application_iter.label }}
+            </label>
+            {{ form.descriptive_application_iter }}
+            {% include 'components/forms/error_widget.html' with errors=form.descriptive_application_iter.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.descriptive_other.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.descriptive_other.label }}
+            </label>
+            {{ form.descriptive_other }}
+            {% include 'components/forms/error_widget.html' with errors=form.descriptive_other.errors %}
+        </div>
+
+        <div class="mx-2">
+            <label for="{{ form.de_minimis.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.de_minimis.label }}
+            </label>
+            {{ form.de_minimis }}
+            {% include 'components/forms/error_widget.html' with errors=form.de_minimis.errors %}
+        </div>
+        
     </div>
 </form>

@@ -1,0 +1,6 @@
+{% extends "private/grant/_base.html" %}
+{% load i18n %}
+
+{% block grant_content %}
+    {% include 'private/grant/grant_form.html' with form=grant.form %}
+{% endblock grant_content %}

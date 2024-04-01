@@ -43,6 +43,7 @@ urlpatterns = [
     path('organizations/<uuid:organization_uuid>/grants/', views.GrantListView.as_view(), name='grants'),
     path('organizations/<uuid:organization_uuid>/grants/create/', views.grant_create, name='grant_create'),
     path('grants/<uuid:grant_uuid>/detail/', views.GrantDetailView.as_view(), name='grant_detail'),
+    path('grants/<uuid:grant_uuid>/edit/', views.GrantEditView.as_view(), name='grant_edit'),
     path('grants/<uuid:grant_uuid>/delete/', views.GrantDeleteView.as_view(), name='grant_delete'),
     path('grants/<uuid:grant_uuid>/update/', views.grant_update, name='grant_update'),
     path('grants/<uuid:grant_uuid>/update-name/', views.grant_update_name, name='grant_update_name'),
