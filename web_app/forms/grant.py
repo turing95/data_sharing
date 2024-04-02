@@ -7,7 +7,7 @@ from web_app.forms.css_classes.inputs import text_input
 from django.utils.translation import gettext_lazy as _
 
 from web_app.forms.widgets import SearchContactWidget
-from web_app.models import Grant, Contact, CompanyField, CompanyFieldGroup
+from web_app.models import Grant, Contact, CompanyTextField, CompanyFieldGroup
 from django.core.exceptions import ValidationError
 
     # type = models.CharField(max_length=250, null=True, blank=True)

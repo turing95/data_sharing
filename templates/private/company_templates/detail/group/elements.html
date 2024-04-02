@@ -1,9 +1,9 @@
 <div class="group-elements-containers" hx-swap="outerHTML" hx-get="{% url 'group_elements' group.pk %}?template=1" hx-trigger="{{ group.update_event }} from:body">
     {% for element in group.ordered_elements %}
-        {% if element.field %}
-            {% include 'private/company_templates/detail/field/detail.html' with field=element.field %}
+        {% if element.text_field %}
+            {% include 'private/company_templates/detail/field/detail.html' with field=element.text_field %}
         {% else %}
-        {% include 'private/company_templates/detail/group/detail.html' with group=element.group %}
+            {% include 'private/company_templates/detail/group/detail.html' with group=element.group %}
         {% endif %}
     {% endfor %}
 </div>

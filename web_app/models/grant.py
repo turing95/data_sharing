@@ -49,3 +49,7 @@ class Grant(BaseModel):
     def form(self, request_post=None):
         from web_app.forms import GrantForm
         return GrantForm(request_post, instance=self, organization=self.organization)
+
+
+class GrantAttachment(BaseModel):
+    file = models.OneToOneField('File',on_delete=models.CASCADE,related_name='grant_attachment')

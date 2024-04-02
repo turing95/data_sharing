@@ -11,7 +11,7 @@ class CompanyTemplatesListView(OrganizationMixin, CompanySideBarMixin, Subscript
     paginate_by = 12
 
     def get_queryset(self):
-        return self.get_organization().company_templates.all().order_by('name', '-created_at')
+        return self.get_organization().company_templates.all().order_by('-created_at')
 
 
 @require_POST
@@ -22,7 +22,7 @@ def search_templates(request, group_uuid):
     search_query = request.POST.get('search-templates')
     if search_query:
         templates = group.organization.company_templates.filter(
-            name__icontains=search_query
+            group__label__icontains=search_query
         )
     return render(request,
                   'private/company_templates/search/results.html',

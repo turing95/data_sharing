@@ -2,7 +2,6 @@ from web_app.models import BaseModel
 from django.db import models
 from copy import deepcopy
 
-
 class Company(BaseModel):
     name = models.CharField(max_length=50)
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='companies')
@@ -23,11 +22,9 @@ class Company(BaseModel):
 
 
 class CompanyTemplate(BaseModel):
-    name = models.CharField(max_length=50, null=True, blank=True)
-    group = models.ForeignKey('CompanyFieldGroup', on_delete=models.CASCADE, related_name='templates', null=True,
-                              blank=True)
-    field = models.ForeignKey('CompanyField', on_delete=models.CASCADE, related_name='templates', null=True, blank=True)
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='company_templates')
+    group = models.OneToOneField('CompanyFieldGroup', on_delete=models.CASCADE, related_name='derived_template',
+                                 null=True)
 
 
 class CompanyGroupElement(BaseModel):
@@ -38,8 +35,8 @@ class CompanyGroupElement(BaseModel):
 
     group = models.OneToOneField('CompanyFieldGroup', on_delete=models.CASCADE, related_name='element', null=True,
                                  blank=True)
-    field = models.OneToOneField('CompanyField', on_delete=models.CASCADE, related_name='element', null=True,
-                                 blank=True)
+    text_field = models.OneToOneField('CompanyTextField', on_delete=models.CASCADE, related_name='element', null=True,
+                                      blank=True)
 
     def duplicate(self, for_template=False, parent_group=None):
         new_element = deepcopy(self)
@@ -48,19 +45,20 @@ class CompanyGroupElement(BaseModel):
             new_element.parent_group = parent_group
         if self.group is not None:
             new_element.group = self.group.duplicate(for_template=for_template, group=parent_group)
-        if self.field is not None:
-            new_element.field = self.field.duplicate(for_template=for_template, group=parent_group)
+        if self.text_field is not None:
+            new_element.text_field = self.text_field.duplicate(for_template=for_template, group=parent_group)
         new_element.save()
         return new_element
 
 
 class CompanyFieldGroup(BaseModel):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='company_field_groups', null=True)
+    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='company_field_groups',
+                                     null=True)
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='field_groups', null=True, blank=True)
     group = models.ForeignKey('CompanyFieldGroup', on_delete=models.CASCADE, related_name='groups', null=True,
                               blank=True)
-    template = models.ForeignKey('CompanyTemplate', on_delete=models.CASCADE, related_name='groups', null=True,
-                                 blank=True)
+    template = models.OneToOneField('CompanyTemplate', on_delete=models.CASCADE, related_name='groups', null=True,
+                                    blank=True)
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250, null=True, blank=True)
 
@@ -78,18 +76,14 @@ class CompanyFieldGroup(BaseModel):
 
     def duplicate(self, for_template=False, group=None):
         new_group = deepcopy(self)
-        if for_template is False:
-            new_group.pk = None
-            if group is not None:
-                new_group.group = group
-                new_group.organization = group.organization
-            new_group.save()
-        else:
-            new_group.pk = None
+        new_group.pk = None
+        if group is not None:
             new_group.group = group
+            new_group.organization = group.organization
+        if for_template is True:
             new_group.template = None
             new_group.company = None
-            new_group.save()
+        new_group.save()
         for element in self.children_elements.all():
             element.duplicate(for_template=for_template, parent_group=new_group)
         return new_group
@@ -107,13 +101,11 @@ class CompanyFieldGroup(BaseModel):
         CompanyGroupElement.objects.create(parent_group=self, group=group, position=self.children_elements.count() + 1)
 
 
-class CompanyField(BaseModel):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='company_fields', null=True)
-    company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='fields', null=True, blank=True)
+class CompanyTextField(BaseModel):
+    company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='fields', null=True,
+                                blank=True)  # maybe remove? field must be in a group
     group = models.ForeignKey('CompanyFieldGroup', on_delete=models.CASCADE, related_name='fields', null=True,
                               blank=True)
-    template = models.ForeignKey('CompanyTemplate', on_delete=models.CASCADE, related_name='fields', null=True,
-                                 blank=True)
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250)
     value = models.CharField(max_length=500, null=True, blank=True)
@@ -126,30 +118,13 @@ class CompanyField(BaseModel):
         from web_app.forms import CompanyFieldSetForm
         return CompanyFieldSetForm(request_post, instance=self, group=self.group)
 
-    @property
-    def update_event(self):
-        return f'companyUpdate-{self.pk}'
-
     def duplicate(self, for_template=False, group=None):
         new_field = deepcopy(self)
-        if for_template is False:
-            new_field.pk = None
-            if group is not None:
-                new_field.group = group
-                new_field.organization = group.organization
-            new_field.save()
-        else:
-            new_field.pk = None
+        new_field.pk = None
+        if group is not None:
             new_field.group = group
+        if for_template is True:
             new_field.template = None
             new_field.company = None
-            new_field.save()
+        new_field.save()
         return new_field
-
-    def to_template(self):
-        company = self.company
-        field = self.duplicate(for_template=True)
-        template = CompanyTemplate.objects.create(name=field.label, field=field, organization=company.organization)
-        self.template = template
-        self.save()
-        return template

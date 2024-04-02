@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_POST, require_GET
-from web_app.models import CompanyField, CompanyFieldGroup, CompanyTemplate
+from web_app.models import CompanyTextField, CompanyFieldGroup, CompanyTemplate
 from django.utils.translation import gettext_lazy as _
 from web_app.forms import CompanyFieldSetForm
 from django.shortcuts import render, get_object_or_404
@@ -14,7 +14,7 @@ from django.http import HttpResponse
 @login_required
 @require_POST
 def company_field_update(request, company_field_uuid):
-    company_field = get_object_or_404(CompanyField, pk=company_field_uuid)
+    company_field = get_object_or_404(CompanyTextField, pk=company_field_uuid)
     form = company_field.set_form(request.POST)
     if form.is_valid():
         form.save()
@@ -46,7 +46,7 @@ def company_field_group_update(request, group_uuid):
 @login_required
 @require_POST
 def company_field_update_value(request, company_field_uuid):
-    company_field = get_object_or_404(CompanyField, pk=company_field_uuid)
+    company_field = get_object_or_404(CompanyTextField, pk=company_field_uuid)
     form = company_field.form(request.POST)
     if form.is_valid():
         form.save()
@@ -59,7 +59,7 @@ def company_field_update_value(request, company_field_uuid):
 @login_required
 @require_GET
 def company_field_update_modal(request, company_field_uuid):
-    field = get_object_or_404(CompanyField, pk=company_field_uuid)
+    field = get_object_or_404(CompanyTextField, pk=company_field_uuid)
     form = field.set_form()
     return render(request,
                   'private/company/detail/field/create_update_modal.html',

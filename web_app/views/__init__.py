@@ -13,7 +13,7 @@ from web_app.views.space.update import space_update
 from web_app.views.space.sender.detail import SpaceDetailView as SpaceDetailFormViewSender
 from web_app.views.space.sender.request.list import RequestListView as RequestListViewSender
 from web_app.views.request.create import request_create
-from web_app.views.request.detail.edit import RequestEditView,request_title_update,request_instructions_update
+from web_app.views.request.detail.edit import RequestEditView, request_title_update, request_instructions_update
 from web_app.views.request.detail.content import RequestDetailView
 from web_app.views.request.update import request_update_order, input_requests
 from web_app.views.space.detail.section.update import space_section_update_order, sections
@@ -21,7 +21,7 @@ from web_app.views.space.detail.section.delete import section_delete
 from web_app.views.request.sender import RequestDetailView as SenderRequestDetailView
 from web_app.views.upload_request.create import upload_request_create
 from web_app.views.upload_request.update import upload_request_update
-from web_app.views.input_request.update import input_request_update_active,input_request_update_complete
+from web_app.views.input_request.update import input_request_update_active, input_request_update_complete
 from web_app.views.input_request.detail import input_request_detail_show
 from web_app.views.input_request.delete import input_request_delete
 from web_app.views.output.update import accept as output_accept, reject as output_reject
@@ -52,8 +52,8 @@ from web_app.views.custom_http_errors import custom_page_not_found, custom_serve
 
 from web_app.views.sender.detail import (toggle_sender_active, notify_deadline, notify_invitation,
                                          sender_row, bulk_notify_invitation, bulk_notify_deadline,
-                                         sender_upload_notification,sender_notify,sender_notify_modal)
-from web_app.views.sender.create import sender_create_row,  sender_contact_update
+                                         sender_upload_notification, sender_notify, sender_notify_modal)
+from web_app.views.sender.create import sender_create_row, sender_contact_update
 from web_app.views.organization.create import create_organization, create_organization_modal
 from web_app.views.organization.settings import OrganizationSettingsView
 from web_app.views.organization.delete import OrganizationDeleteView
@@ -73,8 +73,12 @@ from web_app.views.company.detail.spaces import CompanySpacesListView
 from web_app.views.company.detail.contacts import CompanyContactsListView
 from web_app.views.company.detail.files import CompanyFilesListView
 from web_app.views.company.update import company_update_name, company_update
-from web_app.views.company_field.update import company_field_update, company_field_update_modal, company_field_update_value, company_field_group_update, company_field_group_update_modal, company_field_group_add_template
-from web_app.views.company_field.create import company_field_create_modal, company_field_create, company_field_duplicate, company_field_group_create_modal,company_field_group_create, company_field_to_template,company_field_group_to_template
+from web_app.views.company_field.update import company_field_update, company_field_update_modal, \
+    company_field_update_value, company_field_group_update, company_field_group_update_modal, \
+    company_field_group_add_template
+from web_app.views.company_field.create import company_field_create_modal, company_text_field_create, \
+    company_text_field_duplicate, company_field_group_create_modal, company_field_group_create, \
+    company_field_group_to_template
 from web_app.views.company_field.delete import company_field_delete, company_field_group_delete
 from web_app.views.company_field.detail import company_field_detail
 from web_app.views.company_field.list import group_elements

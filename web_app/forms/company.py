@@ -6,7 +6,7 @@ from web_app.forms.css_classes.inputs import text_input
 from django.utils.translation import gettext_lazy as _
 
 from web_app.forms.widgets import SearchContactWidget
-from web_app.models import Company, Contact, CompanyField, CompanyFieldGroup
+from web_app.models import Company, Contact, CompanyTextField, CompanyFieldGroup
 from django.core.exceptions import ValidationError
 
 
@@ -99,7 +99,7 @@ class CompanyFieldSetForm(forms.ModelForm):
                                   label=_('Multiple values'))
 
     class Meta:
-        model = CompanyField
+        model = CompanyTextField
         fields = ['label', 'multiple']
 
     def __init__(self, *args, **kwargs):
@@ -157,5 +157,5 @@ class CompanyFieldFillForm(forms.ModelForm):
                                                                         kwargs={'company_field_uuid': self.instance.pk})
 
     class Meta:
-        model = CompanyField
+        model = CompanyTextField
         fields = ['value']
