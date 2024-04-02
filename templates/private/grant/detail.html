@@ -55,6 +55,15 @@
             {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_application_iter label=grant.form.descriptive_application_iter.label %}
             {% translate 'Other information' as info %}
             {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_other label=info %}
+            {% if grant.de_minimis %}
+                {% if grant.de_minimis is False %}
+                    {% translate 'The de minimis scheme does not apply' as description %}
+                {% else %}
+                    {% translate 'The de minimis scheme applies' as description %}
+                {% endif %}
+                {% translate 'De minimis scheme' as info %}
+                {% include 'private/grant/detail_descriptive_accordion_section.html' with description=description label=info %}
+            {% endif %}
         </div>
     </div>
     <div class="right-section w-full mt-4 md:w-[280px] flex flex-col text-sm justify-start">
