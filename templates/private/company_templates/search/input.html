@@ -1,8 +1,9 @@
+{% load i18n %}
 <div class="inline-flex w-full bg-gray-50 border-gray-300 border h-[36px] pr-1.5">
 
     <input type="text"
            name="search-templates"
-           placeholder="Type to search templates"
+           placeholder="{% translate "Type to search a template and add it..." %}"
            hx-trigger="input changed delay:500ms, search"
            hx-indicator="#loading-indicator-templates-search-{{ group.pk }}"
            hx-target="#search-templates-results-container-{{ group.pk }}"

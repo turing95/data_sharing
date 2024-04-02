@@ -32,6 +32,7 @@ def company_field_group_create_modal(request, group_uuid):
                   {'form': form,
                    'group_uuid': group_uuid,
                    'confirm_button_text': _('Create group'),
+                   'heading': _('Create a new group of fields'),
                    })
 
 
@@ -78,7 +79,8 @@ def company_field_group_create(request, group_uuid):
         return render(request,
                       'private/company/detail/group/set_form.html',
                       {'form': form, 'from_htmx': True, 'group_uuid': group.pk,
-                       'confirm_button_text': _('Create group')}
+                       'confirm_button_text': _('Create group'),
+                       }
                       )
 
 

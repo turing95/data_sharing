@@ -5,6 +5,9 @@
 
 <!-- TITLE --> <!-- ADD NEW BUTTON-->
 {% translate "Company templates" as title %}
+{% comment %} {% url 'company_create' organization.pk as href %} {% endcomment %}
+{% translate 'New template' as button_text %}
+
 {% include 'private/page_title.html' with title=title href=href button_text=button_text %}
 
 

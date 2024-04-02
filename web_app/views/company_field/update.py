@@ -79,6 +79,7 @@ def company_field_group_update_modal(request, group_uuid):
                   {'form': form,
                    'group': group,
                    'confirm_button_text': _('Update group'),
+                   'heading': _('Update group of fields')
                    })
 
 
