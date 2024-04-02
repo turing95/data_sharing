@@ -79,6 +79,10 @@ class SpaceMixin:
 
             # add back only if there is a company
             data['back'] = back_links
+        else:
+            data['back'] = {'url': reverse('spaces', kwargs={'organization_uuid': data['organization'].pk}),
+                'text': _('Back to spaces')}
+            
         
         return data
 

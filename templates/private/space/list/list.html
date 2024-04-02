@@ -6,9 +6,9 @@
 {% translate "Spaces" as title %}
 {% if request.user.can_create_space is True %}
     {% url 'space_create' organization.uuid as href %}
+{% else %}
     {% translate 'plan_pricing_modal_button_list' as button_id %}
 {% endif %}
-{% translate 'New company' as button_text %}
 {% include 'private/page_title.html' with title=title href=href button_text=new_space_button_text button_id=button_id %}
 {% comment %} 
         <!-- title  -->

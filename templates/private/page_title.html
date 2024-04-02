@@ -4,7 +4,7 @@
     <h1 class="text-2xl font-bold text-gray-800">
     {{title}}
     </h1>
-    {% if href %}
+    {% if href or button_id %}
     <div class="h-8 ml-auto">
         {% include "components/buttons/generic.html" with button_text=button_text href=href extra_classes="h-8 inline-flex" button_id=button_id %}
     </div>
