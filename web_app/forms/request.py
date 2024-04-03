@@ -2,7 +2,7 @@ import re
 
 import arrow
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
-from web_app.models import Request, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy, TextRequest
+from web_app.models import Request, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy, TextRequest, Space
 from web_app.forms import css_classes
 from django.urls import reverse_lazy
 from django import forms
@@ -254,10 +254,19 @@ class TextRequestForm(ModelForm):
         fields = ['title', 'instructions']
 
     def __init__(self, *args, **kwargs):
+        self.space: Space|None = kwargs.pop('space', None)
         super().__init__(*args, **kwargs)
         update_url = reverse_lazy('text_request_update', kwargs={'text_request_uuid': self.instance.pk})
         self.fields['title'].widget.attrs['hx-post'] = update_url
         self.fields['instructions'].widget.attrs['hx-post'] = update_url
+        if self.space is not None:
+            self.fields['target'] = forms.ModelChoiceField(
+                queryset=self.space.company.field_groups.all(),
+                required=False,
+                label=_('Target'),
+                widget=forms.Select(attrs={'class': css_classes.dropdown}),
+                help_text=_("Select the target field for the text request.")
+            )
 
 
 class RequestTitleForm(ModelForm):

@@ -7,6 +7,7 @@
             {% include 'components/tooltip.html' with content=form.instructions.help_text target=form.instructions.name %}
         </div>
         {{ form.instructions }}
+        {{ form.target }}
         {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
     </div>
 {% endif %}

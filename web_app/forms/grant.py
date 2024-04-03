@@ -6,13 +6,9 @@ from web_app.forms import css_classes
 from web_app.forms.css_classes.inputs import text_input
 from django.utils.translation import gettext_lazy as _
 
-from web_app.forms.widgets import SearchContactWidget
-from web_app.models import Grant, Contact, CompanyTextField, CompanyFieldGroup
+from web_app.models import Grant
 from django.core.exceptions import ValidationError
 
-    # type = models.CharField(max_length=250, null=True, blank=True)
-    # tags = models.TextField(null=True, blank=True) # comma separated list of tags
-    # status = models.CharField(max_length=250, null=True, blank=True)
 
     
     

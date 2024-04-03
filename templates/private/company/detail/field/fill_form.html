@@ -1,10 +1,10 @@
 {% load i18n %}
 <div id="field-container-{{ field.pk }}"
-     hx-get="{% url 'company_field_detail' field.pk %}"
+     hx-get="{% url 'text_field_detail' field.pk %}"
      hx-trigger="{{ field.update_event }} from:body"
      hx-swap="outerHTML">
     <form id="field_form_{{ field.pk }}"
-          hx-post="{% url 'company_field_update_value' field.pk %}">
+          hx-post="{% url 'text_field_update_value' field.pk %}">
         {% csrf_token %}
         {% include 'components/forms/error_widget.html' with errors=field.form.non_field_errors %}
         <div class="mx-2">
@@ -12,7 +12,7 @@
                 <label for="{{ field.form.value.id_for_label }}"
                        class="font-medium text-gray-900 dark:text-white">{{ field.label }}
                 </label>
-                <button hx-get="{% url 'company_field_update_modal' field.pk %}"
+                <button hx-get="{% url 'text_field_update_modal' field.pk %}"
                         hx-target="#htmx-modal"
                         hx-swap="innerHTML"
                         class="my-auto ml-1 transition-opacity duration-200 ease-in-out opacity-0 inner-group-hover:opacity-100 hover:text-marian-blue-400">
@@ -24,7 +24,7 @@
                 </button>
 
                 {% translate "Are you sure you want to delete this field?" as confirm_message %}
-                <button hx-post="{% url 'company_field_delete' field.pk %}"
+                <button hx-post="{% url 'text_field_delete' field.pk %}"
                         hx-target="#field-container-{{ field.pk }}"
                         hx-swap="outerHTML"
                         hx-confirm="{{ confirm_message }}"
@@ -43,7 +43,7 @@
 
     </form>
     {% if field.multiple %}
-        {% url 'company_field_duplicate' field.pk as get_url %}
+        {% url 'text_field_duplicate' field.pk as get_url %}
         {% translate "Add another" as button_text %}
 
         {% include 'components/buttons/add.html' with button_text=button_text hx_get=get_url hx_swap="none" %}
