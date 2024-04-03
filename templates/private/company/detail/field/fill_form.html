@@ -3,6 +3,7 @@
      hx-get="{% url 'text_field_detail' field.pk %}"
      hx-trigger="{{ field.update_event }} from:body"
      hx-swap="outerHTML">
+
     <form id="field_form_{{ field.pk }}"
           hx-post="{% url 'text_field_update_value' field.pk %}">
         {% csrf_token %}
@@ -60,7 +61,6 @@
     {% if field.multiple %}
         {% url 'text_field_duplicate' field.pk as get_url %}
         {% translate "Add another" as button_text %}
-
         {% include 'components/buttons/add.html' with button_text=button_text hx_get=get_url hx_swap="none" %}
     {% endif %}
 </div>

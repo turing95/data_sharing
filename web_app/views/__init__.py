@@ -81,7 +81,7 @@ from web_app.views.fields.create import text_field_create_modal, text_field_crea
     field_group_to_template, field_group_duplicate
 from web_app.views.fields.delete import text_field_delete, field_group_delete
 from web_app.views.fields.detail import text_field_detail
-from web_app.views.fields.list import group_elements
+from web_app.views.fields.list import group_elements, group_elements_update_order
 from web_app.views.field_group_templates.list import FieldGroupTemplatesListView, search_templates
 from web_app.views.field_group_templates.detail import FieldGroupTemplateDetailView
 from web_app.views.field_group_templates.delete import FieldGroupTemplateDeleteView

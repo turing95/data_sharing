@@ -173,6 +173,7 @@ urlpatterns = [
          name='text_field_duplicate'),
     path('field-groups/<uuid:group_uuid>/elements/', views.group_elements,
          name='group_elements'),
+    path('field-groups/<uuid:group_uuid>/update-order/', views.group_elements_update_order, name='group_elements_update_order'),
     path('field-groups/<uuid:group_uuid>/update/modal/', views.field_group_create_modal,
          name='field_group_update_modal'),
     path('field-groups/<uuid:group_uuid>/update/', views.field_group_update,
