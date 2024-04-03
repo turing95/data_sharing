@@ -89,10 +89,11 @@ class TextRequest(BaseModel):
     title = models.CharField(max_length=250, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='text_requests')
+    target = models.OneToOneField('TextField', on_delete=models.CASCADE, related_name='target', null=True)
 
-    def request_form(self):
+    def request_form(self, request_post=None):
         from web_app.forms import TextRequestForm
-        return TextRequestForm(instance=self, prefix=self.uuid)
+        return TextRequestForm(request_post, instance=self, prefix=self.uuid, space=self.request.space)
 
     @property
     def outputs(self):
@@ -126,8 +127,7 @@ class Request(BaseModel, ActiveModel):
         input_request = InputRequest.objects.create(request=self, upload_request=upload_request,
                                                     text_request=text_request,
                                                     position=inserting_position)
-        
-    
+
     @property
     def latest_event_date(self):
         from django.db.models import Max

@@ -3,9 +3,9 @@
 <form id="field_create_update_form"
 
         {% if field %}
-      hx-post="{% url 'company_field_update' field.pk %}"
+      hx-post="{% url 'text_field_update' field.pk %}"
         {% else %}
-      hx-post="{% url 'company_field_create' group_uuid %}"
+      hx-post="{% url 'text_field_create' group_uuid %}"
         {% endif %}
 >
 

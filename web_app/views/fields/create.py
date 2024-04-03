@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST, require_GET
-from web_app.models import CompanyTextField, CompanyFieldGroup, CompanyGroupElement
-from web_app.forms import CompanyFieldSetForm, CompanyFieldGroupSetForm
+from web_app.models import TextField, FieldGroup, GroupElement
+from web_app.forms import TextFieldSetForm, FieldGroupSetForm
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
@@ -9,9 +9,9 @@ from django.utils.translation import gettext_lazy as _
 
 @login_required
 @require_GET
-def company_field_create_modal(request, group_uuid):
-    group = get_object_or_404(CompanyFieldGroup, pk=group_uuid)
-    form = CompanyFieldSetForm(group=group)
+def text_field_create_modal(request, group_uuid):
+    group = get_object_or_404(FieldGroup, pk=group_uuid)
+    form = TextFieldSetForm(group=group)
 
     return render(request,
                   'private/company/detail/field/create_update_modal.html',
@@ -23,9 +23,9 @@ def company_field_create_modal(request, group_uuid):
 
 @login_required
 @require_GET
-def company_field_group_create_modal(request, group_uuid):
-    group = get_object_or_404(CompanyFieldGroup, pk=group_uuid)
-    form = CompanyFieldGroupSetForm(group=group)
+def field_group_create_modal(request, group_uuid):
+    group = get_object_or_404(FieldGroup, pk=group_uuid)
+    form = FieldGroupSetForm(group=group)
 
     return render(request,
                   'private/company/detail/group/create_update_modal.html',
@@ -38,16 +38,16 @@ def company_field_group_create_modal(request, group_uuid):
 
 @login_required
 @require_POST
-def company_text_field_create(request, group_uuid):
-    group = get_object_or_404(CompanyFieldGroup, pk=group_uuid)
-    form = CompanyFieldSetForm(request.POST, group=group)
+def text_field_create(request, group_uuid):
+    group = get_object_or_404(FieldGroup, pk=group_uuid)
+    form = TextFieldSetForm(request.POST, group=group)
     if form.is_valid():
         field = form.save(commit=False)
         field.group = group
         field.organization = group.organization
         field.save()
-        CompanyGroupElement.objects.create(parent_group=group, text_field=field,
-                                           position=group.children_elements.count() + 1)
+        GroupElement.objects.create(parent_group=group, text_field=field,
+                                    position=group.children_elements.count() + 1)
         response = HttpResponse()
         response['HX-Trigger'] = f'{group.update_event},closeModal'
         return response
@@ -61,17 +61,17 @@ def company_text_field_create(request, group_uuid):
 
 @login_required
 @require_POST
-def company_field_group_create(request, group_uuid):
-    group = get_object_or_404(CompanyFieldGroup, pk=group_uuid)
-    form = CompanyFieldGroupSetForm(request.POST, group=group)
+def field_group_create(request, group_uuid):
+    group = get_object_or_404(FieldGroup, pk=group_uuid)
+    form = FieldGroupSetForm(request.POST, group=group)
     if form.is_valid():
         new_group = form.save(commit=False)
         new_group.group = group
         new_group.company = group.company
         new_group.organization = group.organization
         new_group.save()
-        CompanyGroupElement.objects.create(parent_group=group, group=new_group,
-                                           position=group.children_elements.count() + 1)
+        GroupElement.objects.create(parent_group=group, group=new_group,
+                                    position=group.children_elements.count() + 1)
         response = HttpResponse()
         response['HX-Trigger'] = f'{group.update_event},closeModal'
         return response
@@ -86,19 +86,31 @@ def company_field_group_create(request, group_uuid):
 
 @login_required
 @require_GET
-def company_text_field_duplicate(request, company_field_uuid):
-    field = get_object_or_404(CompanyTextField, pk=company_field_uuid)
+def text_field_duplicate(request, field_uuid):
+    field = get_object_or_404(TextField, pk=field_uuid)
     new_field = field.duplicate()
-    CompanyGroupElement.objects.create(parent_group=new_field.group, field=new_field,
-                                       position=new_field.group.children_elements.count() + 1)
+    GroupElement.objects.create(parent_group=new_field.group, field=new_field,
+                                position=new_field.group.children_elements.count() + 1)
     response = HttpResponse()
     response['HX-Trigger'] = new_field.group.update_event
     return response
 
 
 @login_required
+@require_GET
+def field_group_duplicate(request, group_uuid):
+    group = get_object_or_404(FieldGroup, pk=group_uuid)
+    new_group = group.duplicate()
+    GroupElement.objects.create(parent_group=new_group.group, group=new_group,
+                                position=new_group.group.children_elements.count() + 1)
+    response = HttpResponse()
+    response['HX-Trigger'] = new_group.group.update_event
+    return response
+
+
+@login_required
 @require_POST
-def company_field_group_to_template(request, group_uuid):
-    group = get_object_or_404(CompanyFieldGroup, pk=group_uuid)
+def field_group_to_template(request, group_uuid):
+    group = get_object_or_404(FieldGroup, pk=group_uuid)
     group.to_template()
     return HttpResponse(status=204)

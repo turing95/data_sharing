@@ -9,7 +9,7 @@ from django.views.generic import FormView
 
 from web_app.forms import CompanyCreateForm
 from web_app.mixins import OrganizationMixin, CompanySideBarMixin, SubscriptionMixin
-from web_app.models import Company, CompanyFieldGroup
+from web_app.models import Company, FieldGroup
 
 
 class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, FormView):
@@ -26,7 +26,7 @@ class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixi
     def get(self, request, *args, **kwargs):
         company = Company.objects.create(name='New company',
                                          organization=self.get_organization())
-        CompanyFieldGroup.objects.create(company=company,organization=self.get_organization())
+        FieldGroup.objects.create(company=company,organization=self.get_organization())
 
         return redirect(reverse('company_detail', kwargs={'company_uuid': company.pk}))
 
