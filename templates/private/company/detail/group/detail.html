@@ -1,8 +1,8 @@
 {% load i18n %}       
-<div class="my-3">
-    <div class="flex flex-col ">        
+<div class="my-4">
+    <div class="flex flex-col">        
         {% if group.label %}
-        <div class="inline-flex w-full mb-2">
+        <div class="inline-flex w-full mb-2 inner-group">
             <div class="sort-enable-hover opacity-0 inner-group-hover:opacity-100 flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded cursor-grab active:cursor-grabbing mr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.5 5.75" class="h-[18.5px]" fill="currentColor">
                     <path class="mx-auto" d="
@@ -16,7 +16,7 @@
                     " />
                 </svg>
             </div>
-            <div class="inline-flex text-xl font-semibold text-gray-800 border-b border-gray-200">
+            <div class="inline-flex w-full text-xl font-semibold text-gray-800 border-b border-gray-200">
                 <!--GROUP LABEL-->
                 
                     <span class="me-2">{{group.label}}</span>
@@ -54,7 +54,7 @@
         {% endif%} 
 
         <!-- ADD ELEMENTS RIBBON -->
-        <div class="flex flex-row mb-2">
+        <div class="flex flex-row mb-2 {% if group.group %} ml-[16.039px] {%endif%}">
             <div class="w-[300px] mr-3">
                 {% include 'private/company_templates/search/widget.html' %}
             </div>
@@ -70,10 +70,11 @@
             </div>
         </div>
 
-        <div {% if group.group %}class="pl-2 border-l border-gray-200"{%endif%}>
+        <div {% if group.group %}class="border-l border-gray-200 ml-[16.039px]"{%endif%}>
             {% include 'private/company/detail/group/elements.html' with group=group %}
         </div>     
     </div>
+</div>
     {% comment %} <div class="inline-flex group">
         {% if group.label %}
             <span

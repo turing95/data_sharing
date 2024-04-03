@@ -66,7 +66,10 @@ htmx.onLoad(function (content) {
 });
 
 function initializeSortables(content) {
-    const sortables = content.querySelectorAll(".sortable");
+    let sortables = Array.from(content.querySelectorAll(".sortable"));
+    if (content.classList.contains('sortable')) {
+        sortables.push(content);
+    }
     sortables.forEach(function(sortable) {
         let sortableInstance = new Sortable(sortable, {
             animation: 150,

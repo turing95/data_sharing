@@ -4,12 +4,12 @@
         <!-- Line before the first button -->
         <div class="flex-grow border-t border-gray-300"></div>
 
-        <!-- Button 1 -->
+        <!-- Button 1 --> 
         <div class="min-w-[100px] inline-flex justify-center my-1">
-            {% with query_string="section_type=heading" %}
+            {% with query_string_type="section_type=heading" %}
             {% url 'text_section_create' space.pk  as file_section_create_url %}
             {% translate 'add title' as button_text %}           
-            {% include "components/buttons/light_add_button.html" with  button_text=button_text query_string=query_string extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+            {% include "components/buttons/light_add_button.html" with  button_text=button_text query_string_two=query_string_type query_string=query_string extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
             {% endwith %}
             {% if False %} <div class="w-[100px] hidden border  bg-white hover:bg-gray-50 rounded border-blue-500"></div>{% endif %} 
         </div>
@@ -20,10 +20,10 @@
         
         <!-- Button 2 -->
         <div class="min-w-[100px] inline-flex justify-center my-1">
-            {% with query_string="section_type=paragraph" %}
+            {% with query_string_type="section_type=paragraph" %}
             {% url 'text_section_create' space.pk  as file_section_create_url %}
             {% translate 'add paragraph' as button_text %}           
-            {% include "components/buttons/light_add_button.html" with  button_text=button_text  query_string=query_string extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+            {% include "components/buttons/light_add_button.html" with  button_text=button_text  query_string_two=query_string_type query_string=query_string extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
             {% endwith %}
             {% if False %} <div class="w-[100px] hidden border  bg-white hover:bg-gray-50 rounded border-blue-500"></div>{% endif %} 
         </div>
