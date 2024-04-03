@@ -1,12 +1,14 @@
-<div class="group-elements-containers"
+<div class="group-elements-containers sortable"
      hx-swap="outerHTML"
      hx-get="{% url 'group_elements' group.pk %}"
      hx-trigger="{{ group.update_event }} from:body">
     {% for element in group.ordered_elements %}
+        <div class=" inner-group">
         {% if element.text_field %}
             {% include 'private/company/detail/field/fill_form.html' with field=element.text_field %}
         {% else %}
             {% include 'private/company/detail/group/detail.html' with group=element.group %}
         {% endif %}
+        </div>
     {% endfor %}
 </div>

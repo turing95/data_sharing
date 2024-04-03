@@ -1693,6 +1693,14 @@ input:checked + .toggle-bg {
   height: 32px;
 }
 
+.h-\[18x\] {
+  height: 18x;
+}
+
+.h-\[18\.5px\] {
+  height: 18.5px;
+}
+
 .max-h-5 {
   max-height: 1.25rem;
 }
