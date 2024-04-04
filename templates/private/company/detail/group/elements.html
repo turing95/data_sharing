@@ -3,7 +3,7 @@
      hx-get="{% url 'group_elements' group.pk %}"
      hx-trigger="{{ group.update_event }} from:body">
      {% comment %} <form id="sections-container" {% endcomment %}
-        <div
+        <form
         class="sortable"
         hx-post="{% url 'group_elements_update_order' group.pk %}"
         hx-indicator="#loading-indicator-sort"
@@ -21,5 +21,5 @@
                 {% endif %}
                 </div>
             {% endfor %}
-            </div>
+        </form>
 </div>
