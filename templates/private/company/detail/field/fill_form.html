@@ -4,9 +4,8 @@
      hx-trigger="{{ field.update_event }} from:body"
      hx-swap="outerHTML"> 
 
-    <div id="field_form_{{ field.pk }}"
-          hx-post="{% url 'text_field_update_value' field.pk %}">
-        {% csrf_token %}
+    <div class="ex-form">
+
         {% include 'components/forms/error_widget.html' with errors=field.form.non_field_errors %}
         <div class="my-1">
             <div class="inline-flex w-full inner-group">
