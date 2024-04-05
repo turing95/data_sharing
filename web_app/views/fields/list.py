@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_GET, require_POST
+from django.http import Http404, HttpResponse
 
 from web_app.models import FieldGroup, GroupElement
+
 
 
 @login_required
@@ -33,15 +35,10 @@ def group_elements_update_order(request, group_uuid):
             group_element = GroupElement.objects.get(pk=uuid)  # Ensuring it belongs to the correct group
             group_element.position = i + 1
             group_element.save()
+        
+    response = HttpResponse()
+    response['HX-Trigger'] = f'{group.update_event}'
+    return response
 
-    if request.GET.get('template'):
-        return render(request,
-                    'private/company_templates/detail/group/elements.html',
-                    {'group': group}
-                    )
-    else:
-        return render(request,
-                    'private/company/detail/group/elements.html',
-                    {'group': group}
-                    )
+  
 

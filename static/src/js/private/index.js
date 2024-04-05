@@ -94,9 +94,6 @@ document.addEventListener('end', function (event) {
     // Now dispatch a custom event named "endSort" with the original targetItem as the target
     let endSortEvent = new CustomEvent('endSort');
     targetItem.dispatchEvent(endSortEvent);
-
-    // For debugging: log the updated hx-vals attribute value
-    console.log(sortableAncestor.getAttribute('hx-vals'));
 });
 
 

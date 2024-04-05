@@ -6,12 +6,10 @@
         <div
         class="sortable"
         hx-post="{% url 'group_elements_update_order' group.pk %}"
-        hx-indicator="#loading-indicator-sort"
+       
         hx-trigger="endSort"
-        hx-vals=""
         enctype="multipart/form-data" 
         data-accordion="collapse">
-            {% csrf_token %}
             {% for element in group.ordered_elements %}
                 <div class="-ml-[6.5px] sort-el">
                     <input type="hidden" value="{{ element.pk }}" name="group_element_order[]">
@@ -22,5 +20,5 @@
                 {% endif %}
                 </div>
             {% endfor %}
-            </div>
+        </div>
 </div>
