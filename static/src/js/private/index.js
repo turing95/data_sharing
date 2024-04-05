@@ -60,6 +60,45 @@ document.addEventListener('DOMContentLoaded', function () {
     preventFormSubmit();
 });
 
+document.addEventListener('end', function (event) {
+    // Get the item that triggered the event
+    let targetItem = event.target;
+
+    // Get the first ancestor with class "sortable" of the item that triggered the event
+    let sortableAncestor = targetItem.closest('.sortable');
+
+    // Get all the first level children with class "sort-el" of the sortable ancestor
+    let sortElements = sortableAncestor.querySelectorAll(':scope > .sort-el');
+
+    // Initialize an object to hold the query string components
+    let queryStringComponents = {};
+
+    // Loop through the list of sort-el elements
+    sortElements.forEach((element, index) => {
+        // Get the first child of the element
+        let firstChildElement = element.children[0];
+
+        // Check if the first child element exists and has a "value" property
+        if (firstChildElement && firstChildElement.value) {
+            // Construct an object with the name and value
+            queryStringComponents[`el_${index + 1}`] = firstChildElement.value;
+        }
+    });
+
+    // Convert the object to a JSON string
+    let queryString = JSON.stringify(queryStringComponents);
+
+    // Update the hx-vals attribute with the new value
+    sortableAncestor.setAttribute('hx-vals', queryString);
+
+    // Now dispatch a custom event named "endSort" with the original targetItem as the target
+    let endSortEvent = new CustomEvent('endSort');
+    targetItem.dispatchEvent(endSortEvent);
+
+    // For debugging: log the updated hx-vals attribute value
+    console.log(sortableAncestor.getAttribute('hx-vals'));
+});
+
 
 htmx.onLoad(function (content) {
     initializeSortables(content);
