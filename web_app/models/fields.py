@@ -18,6 +18,8 @@ class GroupElement(BaseModel):
                                  blank=True)
     text_field = models.OneToOneField('TextField', on_delete=models.CASCADE, related_name='element', null=True,
                                       blank=True)
+    file_field = models.OneToOneField('FileField', on_delete=models.CASCADE, related_name='element', null=True,
+                                      blank=True)
 
     def duplicate(self, for_template=False, parent_group=None):
         new_element = deepcopy(self)
@@ -28,6 +30,8 @@ class GroupElement(BaseModel):
             new_element.group = self.group.duplicate(for_template=for_template, group=parent_group)
         if self.text_field is not None:
             new_element.text_field = self.text_field.duplicate(for_template=for_template, group=parent_group)
+        if self.file_field is not None:
+            new_element.file_field = self.file_field.duplicate(for_template=for_template, group=parent_group)
         new_element.save()
         return new_element
 
@@ -72,8 +76,9 @@ class FieldGroup(BaseModel):
 
     def to_template(self):
         group = self.duplicate(for_template=True)
-        template = FieldGroupTemplate.objects.create(name=group.label if group.group else self.company.name, group=group,
-                                                  organization=self.company.organization)
+        template = FieldGroupTemplate.objects.create(name=group.label if group.group else self.company.name,
+                                                     group=group,
+                                                     organization=self.company.organization)
         self.template = template
         self.save()
         return template
@@ -84,7 +89,7 @@ class FieldGroup(BaseModel):
 
 
 class TextField(BaseModel):
-    group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='fields', null=True,
+    group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='text_fields', null=True,
                               blank=True)
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250)
@@ -97,6 +102,32 @@ class TextField(BaseModel):
     def set_form(self, request_post=None):
         from web_app.forms import TextFieldSetForm
         return TextFieldSetForm(request_post, instance=self, group=self.group)
+
+    def duplicate(self, for_template=False, group=None):
+        new_field = deepcopy(self)
+        new_field.pk = None
+        if group is not None:
+            new_field.group = group
+        if for_template is True:
+            new_field.template = None
+        new_field.save()
+        return new_field
+
+
+class FileField(BaseModel):
+    group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='file_fields', null=True,
+                              blank=True)
+    multiple = models.BooleanField(default=False)
+    label = models.CharField(max_length=250)
+    multiple_files = models.BooleanField(default=False)
+
+    def form(self, request_post=None):
+        from web_app.forms import FileFieldFillForm
+        return FileFieldFillForm(request_post, instance=self, prefix=self.pk)
+
+    def set_form(self, request_post=None):
+        from web_app.forms import FileFieldSetForm
+        return FileFieldSetForm(request_post, instance=self, group=self.group)
 
     def duplicate(self, for_template=False, group=None):
         new_field = deepcopy(self)

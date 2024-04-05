@@ -75,12 +75,12 @@ from web_app.views.company.detail.files import CompanyFilesListView
 from web_app.views.company.update import company_update_name, company_update
 from web_app.views.fields.update import text_field_update, text_field_update_modal, \
     text_field_update_value, field_group_update, field_group_update_modal, \
-    field_group_add_template
-from web_app.views.fields.create import text_field_create_modal, text_field_create, \
+    field_group_add_template, file_field_update, file_field_update_modal
+from web_app.views.fields.create import text_field_create_modal,file_field_create_modal,file_field_create, text_field_create, \
     text_field_duplicate, field_group_create_modal, field_group_create, \
-    field_group_to_template, field_group_duplicate
-from web_app.views.fields.delete import text_field_delete, field_group_delete
-from web_app.views.fields.detail import text_field_detail
+    field_group_to_template, field_group_duplicate, file_field_duplicate
+from web_app.views.fields.delete import text_field_delete, field_group_delete, file_field_delete
+from web_app.views.fields.detail import text_field_detail, file_field_detail
 from web_app.views.fields.list import group_elements, group_elements_update_order
 from web_app.views.field_group_templates.list import FieldGroupTemplatesListView, search_templates
 from web_app.views.field_group_templates.detail import FieldGroupTemplateDetailView
