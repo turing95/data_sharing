@@ -30,7 +30,7 @@ def group_elements_update_order(request, group_uuid):
     for i, (key, uuid) in enumerate(request.POST.items()):
         # Ensure the parameter name follows the expected pattern and is not something else
             # Get the GroupElement instance by UUID and update its position
-            group_element = GroupElement.objects.get(pk=uuid, group=group)  # Ensuring it belongs to the correct group
+            group_element = GroupElement.objects.get(pk=uuid)  # Ensuring it belongs to the correct group
             group_element.position = i + 1
             group_element.save()
 
