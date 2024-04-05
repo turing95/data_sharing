@@ -61,6 +61,7 @@ class FieldGroup(BaseModel):
         if group is not None:
             new_group.group = group
             new_group.organization = group.organization
+            new_group.company = group.company
         if for_template is True:
             new_group.template = None
             new_group.company = None

@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST, require_GET
-from web_app.forms import TextRequestForm
 from web_app.models import TextRequest
 
 

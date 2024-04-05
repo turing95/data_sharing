@@ -11,6 +11,12 @@ def accept(request, output_uuid):
     output = get_object_or_404(Output, pk=output_uuid)
     output.status = Output.OutputStatus.ACCEPTED
     output.save()
+    if output.sender_event.text_request:
+        text_request = output.sender_event.text_request
+        if text_request.target:
+            target = text_request.target
+            target.value = output.content
+            target.save()
     response = HttpResponse()
     response['HX-Trigger'] = output.update_event
     return response
