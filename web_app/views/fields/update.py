@@ -78,6 +78,7 @@ def file_field_update_value(request, field_uuid):
     form = file_field.form(request.POST, request.FILES)
     if form.is_valid():
         uploaded_files = form.cleaned_data.pop('files')
+        uploaded_files = uploaded_files if isinstance(uploaded_files, list) else [uploaded_files]
         for uploaded_file in uploaded_files:
             kezyy_destination = GenericDestination.create_provider(Kezyy.TAG)
             file_url = kezyy_destination.upload_file(uploaded_file,

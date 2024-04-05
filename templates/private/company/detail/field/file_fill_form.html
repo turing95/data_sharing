@@ -59,9 +59,14 @@
 
 
             </div>
+        {% if field.multiple_files %}
             {% for file in field.files.all %}
                 <a target="_blank" href="{{ file.file.url }}">{{ file.file.original_name }}</a>
             {% endfor %}
+        {% else %}
+            <a target="_blank" href="{{ field.files.first.file.url }}">{{ field.files.first.file.original_name }}</a>
+
+        {% endif %}
         </div>
 
     </div>

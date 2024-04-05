@@ -143,3 +143,6 @@ class FileField(BaseModel):
 class FileFileField(BaseModel):
     field = models.ForeignKey('FileField', on_delete=models.CASCADE, related_name='files')
     file = models.OneToOneField('File', on_delete=models.CASCADE, related_name='file_field', null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
