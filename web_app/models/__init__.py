@@ -16,7 +16,7 @@ from web_app.models.organization import Organization, UserOrganization, Organiza
 from web_app.models.beta_access_request import BetaAccessRequest
 from web_app.models.company import Company
 from web_app.models.fields import TextField, GroupElement, FieldGroup, FieldGroupTemplate
-from web_app.models.grant import Grant
+from web_app.models.grant import Grant, GrantDeadline, GrantAttachment
 from web_app.models.section import SpaceSection, HeadingSection, ParagraphSection, FileSection
 from web_app.models.text_output import TextOutput
 from web_app.models.output import Output, Feedback

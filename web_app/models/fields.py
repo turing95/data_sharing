@@ -83,8 +83,6 @@ class FieldGroup(BaseModel):
 
 
 class TextField(BaseModel):
-    company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='fields', null=True,
-                                blank=True)  # maybe remove? field must be in a group
     group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='fields', null=True,
                               blank=True)
     multiple = models.BooleanField(default=False)
@@ -106,6 +104,5 @@ class TextField(BaseModel):
             new_field.group = group
         if for_template is True:
             new_field.template = None
-            new_field.company = None
         new_field.save()
         return new_field

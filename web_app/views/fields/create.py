@@ -89,7 +89,7 @@ def field_group_create(request, group_uuid):
 def text_field_duplicate(request, field_uuid):
     field = get_object_or_404(TextField, pk=field_uuid)
     new_field = field.duplicate()
-    GroupElement.objects.create(parent_group=new_field.group, field=new_field,
+    GroupElement.objects.create(parent_group=new_field.group, text_field=new_field,
                                 position=new_field.group.children_elements.count() + 1)
     response = HttpResponse()
     response['HX-Trigger'] = new_field.group.update_event

@@ -52,4 +52,13 @@ class Grant(BaseModel):
 
 
 class GrantAttachment(BaseModel):
-    file = models.OneToOneField('File',on_delete=models.CASCADE,related_name='grant_attachment')
+    file = models.OneToOneField('File', on_delete=models.CASCADE,related_name='grant_attachment')
+    grant = models.ForeignKey('Grant', on_delete=models.CASCADE, related_name='attachments')
+
+
+class GrantDeadline(BaseModel):
+    grant = models.ForeignKey('Grant', on_delete=models.CASCADE, related_name='deadlines')
+    date = models.DateTimeField()
+    description = models.TextField(null=True, blank=True)
+    sender_visibility = models.BooleanField(default=False)
+
