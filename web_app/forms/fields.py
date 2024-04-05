@@ -73,8 +73,7 @@ class TextFieldFillForm(forms.ModelForm):
     value = forms.CharField(required=False,
                             widget=forms.TextInput(attrs={'class': css_classes.text_input,
                                                           'hx-trigger': 'blur changed',
-                                                          'hx-target': 'closest form',
-                                                          'hx-swap': 'outerHTML'
+                                                          'hx-swap': 'none'
 
                                                           }),
                             )
@@ -103,6 +102,8 @@ class FileFieldFillForm(forms.ModelForm):
         if self.instance is not None:
             self.fields['files'] = MultipleFileField(multiple_files=self.instance.multiple_files, label='Files',
                                                      required=False)
-            self.fields['files'].widget.attrs['hx-target'] = 'closest form'
-            self.fields['files'].widget.attrs['hx-swap'] = 'outerHTML'
+            self.fields['files'].widget.attrs['hx-post'] = reverse_lazy('file_field_update_value',
+                                                                       kwargs={'field_uuid': self.instance.pk})
+            self.fields['files'].widget.attrs['hx-swap'] = 'none'
+            self.fields['files'].widget.attrs['hx-trigger'] = 'change'
 

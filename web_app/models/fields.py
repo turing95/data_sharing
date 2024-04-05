@@ -121,9 +121,9 @@ class FileField(BaseModel):
     label = models.CharField(max_length=250)
     multiple_files = models.BooleanField(default=False)
 
-    def form(self, request_post=None):
+    def form(self, request_post=None, files=None):
         from web_app.forms import FileFieldFillForm
-        return FileFieldFillForm(request_post, instance=self, prefix=self.pk)
+        return FileFieldFillForm(request_post, files, instance=self, prefix=self.pk)
 
     def set_form(self, request_post=None):
         from web_app.forms import FileFieldSetForm
@@ -138,3 +138,8 @@ class FileField(BaseModel):
             new_field.template = None
         new_field.save()
         return new_field
+
+
+class FileFileField(BaseModel):
+    field = models.ForeignKey('FileField', on_delete=models.CASCADE, related_name='files')
+    file = models.OneToOneField('File', on_delete=models.CASCADE, related_name='file_field', null=True, blank=True)

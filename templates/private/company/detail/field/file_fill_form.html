@@ -2,7 +2,7 @@
 <div id="field-container-{{ field.pk }}"
      hx-get="{% url 'file_field_detail' field.pk %}"
      hx-trigger="{{ field.update_event }} from:body"
-     hx-swap="outerHTML"> 
+     hx-swap="outerHTML">
 
     <div class="ex-form">
 
@@ -10,7 +10,8 @@
         <div class="my-1">
             <div class="inline-flex w-full inner-group">
                 <div class="sort-enable-hover opacity-0 inner-group-hover:opacity-100 flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded cursor-grab active:cursor-grabbing mr-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.5 5.75" class="h-[18.5px]" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2.5 5.75" class="h-[18.5px]"
+                         fill="currentColor">
                         <path class="mx-auto" d="
                         M 0,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
                         M 0,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
@@ -19,7 +20,7 @@
                         M 1.5,0.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
                         M 1.5,2.875 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
                         M 1.5,5.375 a 0.375,0.375 0 1,0 0.75,0 a 0.375,0.375 0 1,0 -0.75,0
-                        " />
+                        "/>
                     </svg>
                 </div>
                 <label for="{{ field.form.value.id_for_label }}"
@@ -51,9 +52,16 @@
                 </button>
             </div>
             <div class="ml-[16.039px]">
-                {{ field.form.files }}
-                {% include 'components/forms/error_widget.html' with errors=form.value.errors %}
+                <form id='form' hx-encoding='multipart/form-data'>
+                    {{ field.form.files }}
+                    {% include 'components/forms/error_widget.html' with errors=form.value.errors %}
+                </form>
+
+
             </div>
+            {% for file in field.files.all %}
+                <a target="_blank" href="{{ file.file.url }}">{{ file.file.original_name }}</a>
+            {% endfor %}
         </div>
 
     </div>

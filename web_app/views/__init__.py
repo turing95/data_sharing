@@ -75,7 +75,7 @@ from web_app.views.company.detail.files import CompanyFilesListView
 from web_app.views.company.update import company_update_name, company_update
 from web_app.views.fields.update import text_field_update, text_field_update_modal, \
     text_field_update_value, field_group_update, field_group_update_modal, \
-    field_group_add_template, file_field_update, file_field_update_modal
+    field_group_add_template, file_field_update, file_field_update_modal, file_field_update_value
 from web_app.views.fields.create import text_field_create_modal,file_field_create_modal,file_field_create, text_field_create, \
     text_field_duplicate, field_group_create_modal, field_group_create, \
     field_group_to_template, field_group_duplicate, file_field_duplicate

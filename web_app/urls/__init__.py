@@ -198,6 +198,8 @@ urlpatterns = [
     path('field-groups/<uuid:group_uuid>/delete/', views.field_group_delete, name='field_group_delete'),
     path('text-fields/<uuid:field_uuid>/update-value/', views.text_field_update_value,
          name='text_field_update_value'),
+    path('file-fields/<uuid:field_uuid>/update-value/', views.file_field_update_value,
+         name='file_field_update_value'),
     path('organizations/<uuid:organization_uuid>/contacts/search/', views.search_contacts, name='search_contacts'),
     path('organizations/<uuid:organization_uuid>/contacts/create/modal/', views.contact_create_modal,
          name='contact_create_modal'),
