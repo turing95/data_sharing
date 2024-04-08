@@ -24,6 +24,7 @@ class UploadRequest(BaseModel):
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
     file_template = models.URLField(null=True, blank=True)
     multiple_files = models.BooleanField(default=False)
+    target = models.OneToOneField('FileField', on_delete=models.CASCADE, related_name='target', null=True)
 
     class Meta:
         ordering = ['-created_at']
