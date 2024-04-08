@@ -21,10 +21,10 @@ class Company(BaseModel):
         from web_app.forms import CompanyForm
         return CompanyForm(request_post, instance=self, organization=self.organization)
 
-    def to_space(self):
+    def to_space(self,user=None):
         from web_app.models import Space
-        space = Space.objects.create(title=self.name, organization=self.organization, company=self)
+        space = Space.objects.create(title=self.name, organization=self.organization, company=self,user)
         root_group = self.field_groups.filter(group=None).first()
         if root_group:
-            root_group.to_request(space,label=self.name)
+            root_group.to_request(space, label=self.name)
         return space

@@ -41,5 +41,5 @@ def company_update(request, company_uuid):
 @require_GET
 def company_to_space(request, company_uuid):
     company = get_object_or_404(Company, pk=company_uuid)
-    space = company.to_space()
+    space = company.to_space(user=request.user)
     return redirect('receiver_space_detail', space_uuid=space.pk)
