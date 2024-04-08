@@ -7,4 +7,4 @@ class GrantListView(OrganizationMixin, GrantSideBarMixin, SubscriptionMixin, Lis
     paginate_by = 12
 
     def get_queryset(self):
-        return self.get_organization().grants.all().order_by('created_at')
+        return self.get_organization().grants.filter(space__isnull=True).order_by('created_at')
