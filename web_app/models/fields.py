@@ -40,6 +40,7 @@ class FieldGroup(BaseModel):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='field_groups',
                                      null=True)
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='field_groups', null=True, blank=True)
+    grant = models.ForeignKey('Grant', on_delete=models.CASCADE, related_name='field_groups', null=True, blank=True)
     group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='groups', null=True,
                               blank=True)
     template = models.OneToOneField('FieldGroupTemplate', on_delete=models.CASCADE, related_name='groups', null=True,
@@ -59,16 +60,18 @@ class FieldGroup(BaseModel):
         from web_app.forms import FieldGroupSetForm
         return FieldGroupSetForm(request_post, instance=self, group=self.group)
 
-    def duplicate(self, for_template=False, group=None):
+    def duplicate(self, for_template=False, group=None,grant=None):
         new_group = deepcopy(self)
         new_group.pk = None
         if group is not None:
             new_group.group = group
             new_group.organization = group.organization
             new_group.company = group.company
+            new_group.grant = grant or group.grant
         if for_template is True:
             new_group.template = None
             new_group.company = None
+            new_group.grant = None
         new_group.save()
         for element in self.children_elements.all():
             element.duplicate(for_template=for_template, parent_group=new_group)
@@ -76,9 +79,11 @@ class FieldGroup(BaseModel):
 
     def to_template(self):
         group = self.duplicate(for_template=True)
-        template = FieldGroupTemplate.objects.create(name=group.label if group.group else self.company.name,
+        organization = self.company.organization if self.company is not None else self.grant.organization
+
+        template = FieldGroupTemplate.objects.create(name=group.label if group.group else (self.company.name if self.company else self.grant.name),
                                                      group=group,
-                                                     organization=self.company.organization)
+                                                     organization=organization)
         self.template = template
         self.save()
         return template

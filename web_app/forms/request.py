@@ -3,7 +3,7 @@ import re
 import arrow
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from web_app.models import Request, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy, TextRequest, Space, \
-    TextField
+    TextField, Grant
 from web_app.forms import css_classes
 from django.urls import reverse_lazy
 from django import forms
@@ -270,7 +270,15 @@ class TextRequestForm(ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs['hx-post'] = update_url
         if self.space is not None:
-            self.fields['target'].queryset = TextField.objects.filter(group__company=self.space.company)
+            target_queryset = TextField.objects.none()
+            if self.space.company is not None:
+                target_queryset = target_queryset | TextField.objects.filter(group__company=self.space.company)
+            try:
+                grant = Grant.objects.get(space=self.space)
+                target_queryset = target_queryset | TextField.objects.filter(group__grant=grant)
+            except Grant.DoesNotExist:
+                pass
+            self.fields['target'].queryset = target_queryset
 
 
 class RequestTitleForm(ModelForm):
