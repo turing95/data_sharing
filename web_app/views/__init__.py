@@ -91,7 +91,7 @@ from web_app.views.contact.delete import DeleteContactView
 from web_app.views.contact.detail import ContactDetailView
 from web_app.views.contact.list import ContactListView, search_contacts
 from web_app.views.grant.create import grant_create
-from web_app.views.grant.detail import GrantDetailView
+from web_app.views.grant.detail import GrantDetailView, GrantChecklistView
 from web_app.views.grant.list import GrantListView
 from web_app.views.grant.delete import GrantDeleteView
 from web_app.views.grant.update import grant_update_name, grant_update, GrantEditView

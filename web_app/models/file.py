@@ -5,12 +5,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class File(BaseModel):
-
     original_name = models.CharField(max_length=255)
     uid = models.CharField(max_length=255, default='noid')
     size = models.IntegerField()
     file_type = models.CharField(max_length=255)
-    sender_event = models.ForeignKey('SenderEvent', on_delete=models.SET_NULL, related_name='files',null=True,blank=True)
+    sender_event = models.ForeignKey('SenderEvent', on_delete=models.SET_NULL, related_name='files', null=True,
+                                     blank=True)
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='files', null=True)
     destination = models.ForeignKey('GenericDestination', on_delete=models.CASCADE, related_name='files', null=True)
 
@@ -28,3 +28,9 @@ class File(BaseModel):
         if self.destination is None:
             return None
         return self.destination.get_file_name(self.uid)
+
+    @property
+    def file(self):
+        if self.destination is None:
+            return None
+        return self.destination.get_file(self.uid)

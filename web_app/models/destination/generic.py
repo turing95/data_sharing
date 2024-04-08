@@ -66,6 +66,9 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
     def get_file_name(self, file_id):
         return self.related_object.get_file_name(file_id)
 
+    def get_file(self, file_id):
+        return self.related_object.get_file(file_id)
+
     @classmethod
     def create_from_form(cls, request, form):
         cls.objects.filter(request=form.instance).update(is_active=False)

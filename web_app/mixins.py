@@ -320,6 +320,12 @@ class GrantTabMixin:
                 'url_name': 'grant_edit',
                 'svg_path': paths['edit']
             },
+            'checklist': {
+                'active': False,
+                'alternative_text': _('Checklist'),
+                'url_name': 'grant_checklist',
+                'svg_path': paths['edit']
+            }
           
             # 'spaces': {
             #     'active': False,

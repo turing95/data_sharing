@@ -60,8 +60,12 @@ class Kezyy(BaseModel):
     def get_file_url(self, file_id):
         return KezyyFile.objects.get(upload=file_id).upload.url
 
+    def get_file(self,file_id):
+        return KezyyFile.objects.get(upload=file_id).upload
+
 
 class KezyyFile(BaseModel):
     destination = models.ForeignKey('Kezyy', on_delete=models.CASCADE, related_name='files')
     file = models.OneToOneField('File', on_delete=models.CASCADE, related_name='kezyy_file', null=True, blank=True)
     upload = models.FileField(storage=PrivateMediaStorage())
+

@@ -1,6 +1,7 @@
 from web_app.models import BaseModel
 from django.db import models
 from copy import deepcopy
+from docxtpl import DocxTemplate
 
 
 class FieldGroupTemplate(BaseModel):
@@ -93,7 +94,7 @@ class FieldGroup(BaseModel):
         group = template.group.duplicate(for_template=False, group=self)
         GroupElement.objects.create(parent_group=self, group=group, position=self.children_elements.count() + 1)
 
-    def to_request(self, space,label=None):
+    def to_request(self, space, label=None):
         from web_app.models import Request, InputRequest, TextRequest, UploadRequest
         request = Request.objects.create(space=space, title=label or self.label)
         position = 1
@@ -104,12 +105,14 @@ class FieldGroup(BaseModel):
                 position += 1
             elif element.text_field:
                 TextRequest.objects.filter(target=element.text_field).update(target=None)
-                text_request = TextRequest.objects.create(request=request, target=element.text_field,title=element.text_field.label)
+                text_request = TextRequest.objects.create(request=request, target=element.text_field,
+                                                          title=element.text_field.label)
                 InputRequest.objects.create(request=request, text_request=text_request, position=position)
                 position += 1
             elif element.file_field:
                 UploadRequest.objects.filter(target=element.file_field).update(target=None)
-                upload_request = UploadRequest.objects.create(request=request, target=element.file_field, title=element.file_field.label)
+                upload_request = UploadRequest.objects.create(request=request, target=element.file_field,
+                                                              title=element.file_field.label)
                 InputRequest.objects.create(request=request, upload_request=upload_request, position=position)
                 position += 1
         return request
@@ -170,6 +173,21 @@ class FileField(BaseModel):
 class FileFileField(BaseModel):
     field = models.ForeignKey('FileField', on_delete=models.CASCADE, related_name='files')
     file = models.OneToOneField('File', on_delete=models.CASCADE, related_name='file_field', null=True, blank=True)
+    template = models.OneToOneField('File', on_delete=models.CASCADE, related_name='file_field_template', null=True, )
 
     class Meta:
         ordering = ['-created_at']
+
+    def get_filled_template(self):
+        # return FileResponse(open(path_to_file, 'rb'), as_attachment=True, filename="my_filename")
+        with open(self.file.file, 'rb') as f:
+            try:
+                doc = DocxTemplate(f)
+            except Exception as e:
+                return None
+            company = self.field.group.company
+            grant = self.field.group.grant
+            context = {'company': company,'grant': grant}
+            doc.render(context)
+            doc.save("filled_template.docx")
+            return doc.docx
