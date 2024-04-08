@@ -136,20 +136,83 @@ function initializeSortables(content) {
 }
 
 function attachHoverListeners(sortable, sortableInstance) {
+    // Flag to track dragging state
+    let isDragging = false;
+    // Function to add or remove the 'hidden' class on drag-hidden elements of siblings
+    function toggleHiddenClassOnSiblings(add) {
+        // Find the parent node to get siblings from
+        const parent = draggableParent.parentNode;
+        // Iterate over each child of the parent node
+        Array.from(parent.children).forEach(child => {
+            // Skip if the child is the draggableParent itself
+           
+            // For each sibling, find .drag-hidden elements and toggle 'hidden' class
+            const elementsToHide = child.querySelectorAll('.drag-hidden');
+            elementsToHide.forEach(el => {
+                if (add) {
+                    el.classList.add('hidden');
+                } else {
+                    el.classList.remove('hidden');
+                }
+            });
+            
+        });
+    }
+
     let sortEnableHoverElements = sortable.querySelectorAll('.sort-enable-hover');
     sortEnableHoverElements.forEach(function(sortEnableHoverElement) {
         sortEnableHoverElement.onmouseenter = function () {
-            sortableInstance.option("disabled", false);
+            // Enable sorting on mouse enter if not dragging
+            if (!isDragging) {
+                sortableInstance.option("disabled", false);
+            }
         };
 
         sortEnableHoverElement.onmouseleave = function () {
             setTimeout(() => {
-                // If not hovering over any sort-enable-hover elements, disable sorting
-                if (!sortable.querySelector('.sort-enable-hover:hover')) {
+                // Only disable sorting on mouse leave if not dragging
+                if (!isDragging) {
                     sortableInstance.option("disabled", true);
+                    console.log('left'); // For debugging
                 }
             }, 100);
         };
+
+        let draggableParent = sortEnableHoverElement.closest('.sort-el');
+
+        // Listen for the start of dragging to set isDragging flag
+        draggableParent.addEventListener('dragstart', function() {
+            isDragging = true;
+            console.log('drag  ')
+             // Find all child elements that should be hidden during the drag
+            // let elementsToHide = draggableParent.querySelectorAll('.drag-hidden');
+            // elementsToHide.forEach(function(el) {
+            //     el.classList.add('hidden'); // Add the 'hidden' class to hide the element
+            // });
+            // const parent = draggableParent.parentNode;
+            // // Iterate over each child of the parent node
+            // Array.from(parent.children).forEach(child => {
+            //     // Skip if the child is the draggableParent itself
+            
+            //     // For each sibling, find .drag-hidden elements and toggle 'hidden' class
+            //     const elementsToHide = child.querySelectorAll('.drag-hidden');
+            //     elementsToHide.forEach(el => {
+            //             el.classList.add('hidden');
+            //    });
+                
+            //});
+        });
+
+        // Listen for the dragend event to clear the isDragging flag
+        // This might need to be attached more broadly, depending on your application's structure
+        draggableParent.addEventListener('dragend', function() {
+            isDragging = false;
+            console.log('drag stop ')
+            // let elementsToHide = draggableParent.querySelectorAll('.drag-hidden');
+            // elementsToHide.forEach(function(el) {
+            //     el.classList.remove('hidden'); // Remove the 'hidden' class to show the element again
+            // });
+        });
     });
 }
 

@@ -1,5 +1,5 @@
 {% load i18n %}
-<div id="field-container-{{ field.pk }}"
+<div id="field-container-{{ field.pk }}" class="field-container"
      hx-get="{% url 'text_field_detail' field.pk %}"
      hx-trigger="{{ field.update_event }} from:body"
      hx-swap="outerHTML"> 

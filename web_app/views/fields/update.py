@@ -51,7 +51,7 @@ def text_field_update_value(request, field_uuid):
     if form.is_valid():
         form.save()
         response = HttpResponse(status=204)
-        response['HX-Trigger'] = text_field.group.update_event # togliere questo per aggionare solo field 
+        response['HX-Trigger'] = text_field.update_event # togliere questo per aggionare solo field 
         return response
     return HttpResponseBadRequest()
 

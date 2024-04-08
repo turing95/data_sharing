@@ -61,7 +61,7 @@ class TextFieldFillForm(forms.ModelForm):
     value = forms.CharField(required=False,
                             widget=forms.TextInput(attrs={'class': css_classes.text_input,
                                                           'hx-trigger': 'blur changed',
-                                                          'hx-target': 'closest form',
+                                                          'hx-target': 'closest .field-container',
                                                           'hx-swap': 'outerHTML'
 
                                                           }),

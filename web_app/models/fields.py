@@ -91,6 +91,10 @@ class TextField(BaseModel):
     label = models.CharField(max_length=250)
     value = models.CharField(max_length=500, null=True, blank=True)
 
+    @property
+    def update_event(self):
+        return f'fieldUpdate-{self.pk}'
+
     def form(self, request_post=None):
         from web_app.forms import TextFieldFillForm
         return TextFieldFillForm(request_post, instance=self, prefix=self.pk)
