@@ -3,7 +3,7 @@ import re
 import arrow
 from django.forms import BaseInlineFormSet, inlineformset_factory, ModelForm
 from web_app.models import Request, UploadRequest, GoogleDrive, OneDrive, SharePoint, Kezyy, TextRequest, Space, \
-    TextField, Grant
+    TextField, Grant, FileField
 from web_app.forms import css_classes
 from django.urls import reverse_lazy
 from django import forms
@@ -162,12 +162,24 @@ class UploadRequestForm(ModelForm):
                 Leave blank if not necessary.
             """))
 
+    target = forms.ModelChoiceField(
+        queryset=FileField.objects.none(),
+        required=False,
+        label=_('Target'),
+        widget=forms.Select(
+            attrs={'class': css_classes.dropdown, 'hx-target': 'closest .input-request-detail-container',
+                   'hx-trigger': 'change',
+                   'hx-swap': 'innerHTML'}),
+        help_text=_("Select the target field for the text request."),
+    )
+
     class Meta:
         model = UploadRequest
-        fields = ['title', 'instructions', 'file_naming_formula', 'multiple_files', 'file_template']
+        fields = ['title', 'instructions', 'file_naming_formula', 'multiple_files', 'file_template', 'target']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
+        self.space: Space | None = kwargs.pop('space', None)
         super().__init__(*args, **kwargs)
         update_url = reverse_lazy('upload_request_update', kwargs={'upload_request_uuid': self.instance.pk})
         self.fields['destination_id'].widget.attrs['hx-post'] = update_url
@@ -177,6 +189,7 @@ class UploadRequestForm(ModelForm):
         self.fields['file_template'].widget.attrs['hx-post'] = update_url
         self.fields['multiple_files'].widget.attrs['hx-post'] = update_url
         self.fields['rename'].widget.attrs['hx-post'] = update_url
+        self.fields['target'].widget.attrs['hx-post'] = update_url
         if self.instance:
             self.fields['destination_type'].widget.attrs[
                 'hx-post'] = reverse_lazy('get_destination_logo', kwargs={'upload_request_uuid': self.instance.pk})
@@ -199,6 +212,16 @@ class UploadRequestForm(ModelForm):
                     self.fields['destination_display'].initial = destination.name
                     self.fields['destination_type'].initial = destination.tag
                     self.fields['destination_type_select'].initial = destination.tag
+        if self.space is not None:
+            target_queryset = FileField.objects.none()
+            if self.space.company is not None:
+                target_queryset = target_queryset | FileField.objects.filter(group__company=self.space.company)
+            try:
+                grant = Grant.objects.get(space=self.space)
+                target_queryset = target_queryset | FileField.objects.filter(group__grant=grant)
+            except Grant.DoesNotExist:
+                pass
+            self.fields['target'].queryset = target_queryset
 
     def clean_file_naming_formula(self):
         file_naming_formula = self.cleaned_data.get('file_naming_formula')
@@ -250,18 +273,20 @@ class TextRequestForm(ModelForm):
                                 Leave blank if not necessary.
                             """))
     target = forms.ModelChoiceField(
-        queryset=None,
+        queryset=TextField.objects.none(),
         required=False,
         label=_('Target'),
         widget=forms.Select(
-            attrs={'class': css_classes.dropdown, 'hx-target': 'closest .input-request-detail-container',
+            attrs={'class': css_classes.dropdown,
+                   'hx-target': 'closest .input-request-detail-container',
+                   'hx-trigger': 'change',
                    'hx-swap': 'innerHTML'}),
         help_text=_("Select the target field for the text request."),
     )
 
     class Meta:
         model = TextRequest
-        fields = ['title', 'instructions','target']
+        fields = ['title', 'instructions', 'target']
 
     def __init__(self, *args, **kwargs):
         self.space: Space | None = kwargs.pop('space', None)
