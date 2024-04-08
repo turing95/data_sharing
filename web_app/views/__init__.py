@@ -12,7 +12,7 @@ from web_app.views.space.detail.history import HistoryListView
 from web_app.views.space.update import space_update
 from web_app.views.space.sender.detail import SpaceDetailView as SpaceDetailFormViewSender
 from web_app.views.space.sender.request.list import RequestListView as RequestListViewSender
-from web_app.views.request.create import request_create
+from web_app.views.request.create import request_create, request_create_nested
 from web_app.views.request.detail.edit import RequestEditView, request_title_update, request_instructions_update
 from web_app.views.request.detail.content import RequestDetailView
 from web_app.views.request.update import request_update_order, input_requests
@@ -72,7 +72,7 @@ from web_app.views.company.delete import CompanyDeleteView
 from web_app.views.company.detail.spaces import CompanySpacesListView
 from web_app.views.company.detail.contacts import CompanyContactsListView
 from web_app.views.company.detail.files import CompanyFilesListView
-from web_app.views.company.update import company_update_name, company_update
+from web_app.views.company.update import company_update_name, company_update, company_to_space
 from web_app.views.fields.update import text_field_update, text_field_update_modal, \
     text_field_update_value, field_group_update, field_group_update_modal, \
     field_group_add_template, file_field_update, file_field_update_modal, file_field_update_value

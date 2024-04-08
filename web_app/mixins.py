@@ -419,7 +419,7 @@ class SpaceSenderMixin:
 
     def get_sender(self):
         if not self._sender:
-            self._sender = get_object_or_404(Sender, pk=self.kwargs.get('sender_uuid'), is_active=True)
+            self._sender = get_object_or_404(Sender, pk=self.kwargs.get('sender_uuid'))
         return self._sender
 
     def get_space(self):

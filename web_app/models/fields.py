@@ -60,7 +60,7 @@ class FieldGroup(BaseModel):
         from web_app.forms import FieldGroupSetForm
         return FieldGroupSetForm(request_post, instance=self, group=self.group)
 
-    def duplicate(self, for_template=False, group=None,grant=None):
+    def duplicate(self, for_template=False, group=None, grant=None):
         new_group = deepcopy(self)
         new_group.pk = None
         if group is not None:
@@ -81,9 +81,10 @@ class FieldGroup(BaseModel):
         group = self.duplicate(for_template=True)
         organization = self.company.organization if self.company is not None else self.grant.organization
 
-        template = FieldGroupTemplate.objects.create(name=group.label if group.group else (self.company.name if self.company else self.grant.name),
-                                                     group=group,
-                                                     organization=organization)
+        template = FieldGroupTemplate.objects.create(
+            name=group.label if group.group else (self.company.name if self.company else self.grant.name),
+            group=group,
+            organization=organization)
         self.template = template
         self.save()
         return template
@@ -91,6 +92,27 @@ class FieldGroup(BaseModel):
     def add_template(self, template):
         group = template.group.duplicate(for_template=False, group=self)
         GroupElement.objects.create(parent_group=self, group=group, position=self.children_elements.count() + 1)
+
+    def to_request(self, space,label=None):
+        from web_app.models import Request, InputRequest, TextRequest, UploadRequest
+        request = Request.objects.create(space=space, title=label or self.label)
+        position = 1
+        for element in self.children_elements.all():
+            if element.group:
+                child_request = element.group.to_request(space)
+                InputRequest.objects.create(request=request, child_request=child_request, position=position)
+                position += 1
+            elif element.text_field:
+                TextRequest.objects.filter(target=element.text_field).update(target=None)
+                text_request = TextRequest.objects.create(request=request, target=element.text_field,title=element.text_field.label)
+                InputRequest.objects.create(request=request, text_request=text_request, position=position)
+                position += 1
+            elif element.file_field:
+                UploadRequest.objects.filter(target=element.file_field).update(target=None)
+                upload_request = UploadRequest.objects.create(request=request, target=element.file_field, title=element.file_field.label)
+                InputRequest.objects.create(request=request, upload_request=upload_request, position=position)
+                position += 1
+        return request
 
 
 class TextField(BaseModel):
