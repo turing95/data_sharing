@@ -24,6 +24,7 @@ class UploadRequest(BaseModel):
     file_naming_formula = models.CharField(max_length=255, null=True, blank=True)
     file_template = models.URLField(null=True, blank=True)
     multiple_files = models.BooleanField(default=False)
+    target = models.OneToOneField('FileField', on_delete=models.CASCADE, related_name='target', null=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -70,10 +71,9 @@ class UploadRequest(BaseModel):
             file_name = original_file_name
         return file_name
 
-    @property
-    def request_form(self):
+    def request_form(self,request_post=None):
         from web_app.forms import UploadRequestForm
-        return UploadRequestForm(instance=self, user=self.request.space.user, prefix=self.uuid)
+        return UploadRequestForm(request_post,instance=self, user=self.request.space.user, prefix=self.uuid,space=self.request.space)
 
     @property
     def outputs(self):
@@ -107,6 +107,7 @@ class TextRequest(BaseModel):
 
 class Request(BaseModel, ActiveModel):
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='requests')
+    request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='child_requests', null=True)
     title = models.CharField(max_length=250, null=True, blank=True)
     instructions = models.TextField(null=True, blank=True)
     deadline = models.DateTimeField(null=True, blank=True)
@@ -115,7 +116,7 @@ class Request(BaseModel, ActiveModel):
     deadline_notice_days = models.PositiveSmallIntegerField(blank=True, null=True)
     deadline_notice_hours = models.PositiveSmallIntegerField(blank=True, null=True)
 
-    def add_input_request(self, text_request=None, upload_request=None, prev_request_position=None):
+    def add_input_request(self, text_request=None, upload_request=None,child_request=None, prev_request_position=None):
         from web_app.models import InputRequest
         if prev_request_position:
             inserting_position = int(prev_request_position) + 1
@@ -124,7 +125,7 @@ class Request(BaseModel, ActiveModel):
         # increase by 1 all the positions of the input requests that have a position greater than or equal to the inserting position
         self.input_requests.filter(position__gte=inserting_position).update(
             position=models.F('position') + 1)
-        input_request = InputRequest.objects.create(request=self, upload_request=upload_request,
+        input_request = InputRequest.objects.create(request=self, upload_request=upload_request,child_request=child_request,
                                                     text_request=text_request,
                                                     position=inserting_position)
 
@@ -212,6 +213,7 @@ class InputRequest(BaseModel):
                                           related_name='input_request')
     text_request = models.OneToOneField('TextRequest', on_delete=models.CASCADE, null=True,
                                         related_name='input_request')
+    child_request = models.OneToOneField('Request', on_delete=models.CASCADE, null=True, related_name='input_request')
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='input_requests', null=True)
     position = models.PositiveIntegerField(default=1)
     is_complete = models.BooleanField(default=False)

@@ -45,7 +45,7 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
         return self.related_object.upload_file(file, file_name)
 
     @classmethod
-    def create_provider(cls, destination_type, user, folder_id=None, sharepoint_site=None, request_instance=None,
+    def create_provider(cls, destination_type, user=None, folder_id=None, sharepoint_site=None, request_instance=None,
                         space=None):
         from web_app.models import GoogleDrive, OneDrive, SharePoint, Kezyy
         if destination_type == GoogleDrive.TAG:
@@ -65,6 +65,9 @@ class GenericDestination(PolymorphicRelationModel, ActiveModel):
 
     def get_file_name(self, file_id):
         return self.related_object.get_file_name(file_id)
+
+    def get_file(self, file_id):
+        return self.related_object.get_file(file_id)
 
     @classmethod
     def create_from_form(cls, request, form):

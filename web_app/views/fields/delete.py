@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
-from web_app.models import TextField, FieldGroup
+from web_app.models import TextField, FieldGroup, FileField
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
@@ -9,6 +9,17 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def text_field_delete(request, field_uuid):
     field = get_object_or_404(TextField, pk=field_uuid)
+    field.delete()
+
+    response = HttpResponse()
+    response['HX-Trigger'] = f'{field.group.update_event}'
+    return response
+
+
+@require_POST
+@login_required
+def file_field_delete(request, field_uuid):
+    field = get_object_or_404(FileField, pk=field_uuid)
     field.delete()
 
     response = HttpResponse()

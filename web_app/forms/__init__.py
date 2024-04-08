@@ -1,4 +1,4 @@
-from web_app.forms.space import SpaceSettingsForm, SpaceTitleForm, SpaceContentForm
+from web_app.forms.space import SpaceSettingsForm, SpaceTitleForm
 from web_app.forms.request import RequestTitleForm,RequestEditForm, UploadRequestForm, TextRequestForm
 from web_app.forms.section import FileSectionForm,ParagraphSectionForm, HeadingSectionForm
 from web_app.forms.authentication.signup import SignupForm
@@ -15,7 +15,7 @@ from web_app.forms.organization import OrganizationCreateForm
 from web_app.forms.team import TeamInviteForm
 from web_app.forms.file_changes import FileSelectForm
 from web_app.forms.company import CompanyForm, CompanyNameForm,CompanyCreateForm
-from web_app.forms.fields import TextFieldSetForm, TextFieldFillForm, FieldGroupSetForm
+from web_app.forms.fields import TextFieldSetForm, TextFieldFillForm, FieldGroupSetForm, FileFieldFillForm,FileFieldSetForm
 from web_app.forms.sender import SenderCreateForm, SenderNotifyForm
 from web_app.forms.output import OutputRejectForm
 from web_app.forms.grant import GrantForm, GrantNameForm

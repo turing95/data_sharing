@@ -2,6 +2,7 @@ from web_app.models import BaseModel
 from django.db import models
 from copy import deepcopy
 
+
 class Company(BaseModel):
     name = models.CharField(max_length=50)
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='companies')
@@ -20,5 +21,10 @@ class Company(BaseModel):
         from web_app.forms import CompanyForm
         return CompanyForm(request_post, instance=self, organization=self.organization)
 
-
-
+    def to_space(self,user=None):
+        from web_app.models import Space
+        space = Space.objects.create(title=self.name, organization=self.organization, company=user)
+        root_group = self.field_groups.filter(group=None).first()
+        if root_group:
+            root_group.to_request(space, label=self.name)
+        return space

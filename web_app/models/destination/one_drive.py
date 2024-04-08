@@ -57,3 +57,6 @@ class OneDrive(BaseModel):
 
     def get_file_url(self, file_id):
         return self.service.get_file_url(file_id)
+
+    def get_file(self, file_id):
+        raise NotImplementedError

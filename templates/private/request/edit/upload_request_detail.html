@@ -104,6 +104,16 @@
             <div class="max-w-3xl">{% include 'components/forms/error_widget.html' with errors=form.file_naming_formula.errors %}</div>
         </div>
     </div>
+    
+    <div class="mb-3">
+        <div class="flex items-center mb-2 space-x-2">
+            <label for="{{ form.target.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.target.label }} </label>
+            {% include 'components/tooltip.html' with content=form.target.help_text target=form.target.name %}
+        </div>
+        {{ form.target }}
+        {% include 'components/forms/error_widget.html' with errors=form.target.errors %}
+    </div>
 {% endif %}
 
 {% if from_htmx %}

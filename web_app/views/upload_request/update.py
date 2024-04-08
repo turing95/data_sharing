@@ -29,8 +29,7 @@ def handle_destination(request, form):
 @require_POST
 def upload_request_update(request, upload_request_uuid):
     upload_request = get_object_or_404(UploadRequest, pk=upload_request_uuid)
-    upload_request_form = UploadRequestForm(request.POST, prefix=upload_request.pk, instance=upload_request,
-                                            user=request.user)
+    upload_request_form = upload_request.request_form(request.POST)
     if upload_request_form.is_valid():
         upload_request_form.save()
         if upload_request_form.cleaned_data.get('destination_type'):

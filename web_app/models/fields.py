@@ -1,6 +1,7 @@
 from web_app.models import BaseModel
 from django.db import models
 from copy import deepcopy
+from docxtpl import DocxTemplate
 
 
 class FieldGroupTemplate(BaseModel):
@@ -18,6 +19,8 @@ class GroupElement(BaseModel):
                                  blank=True)
     text_field = models.OneToOneField('TextField', on_delete=models.CASCADE, related_name='element', null=True,
                                       blank=True)
+    file_field = models.OneToOneField('FileField', on_delete=models.CASCADE, related_name='element', null=True,
+                                      blank=True)
 
     def duplicate(self, for_template=False, parent_group=None):
         new_element = deepcopy(self)
@@ -28,6 +31,8 @@ class GroupElement(BaseModel):
             new_element.group = self.group.duplicate(for_template=for_template, group=parent_group)
         if self.text_field is not None:
             new_element.text_field = self.text_field.duplicate(for_template=for_template, group=parent_group)
+        if self.file_field is not None:
+            new_element.file_field = self.file_field.duplicate(for_template=for_template, group=parent_group)
         new_element.save()
         return new_element
 
@@ -36,6 +41,7 @@ class FieldGroup(BaseModel):
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='field_groups',
                                      null=True)
     company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='field_groups', null=True, blank=True)
+    grant = models.ForeignKey('Grant', on_delete=models.CASCADE, related_name='field_groups', null=True, blank=True)
     group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='groups', null=True,
                               blank=True)
     template = models.OneToOneField('FieldGroupTemplate', on_delete=models.CASCADE, related_name='groups', null=True,
@@ -55,15 +61,18 @@ class FieldGroup(BaseModel):
         from web_app.forms import FieldGroupSetForm
         return FieldGroupSetForm(request_post, instance=self, group=self.group)
 
-    def duplicate(self, for_template=False, group=None):
+    def duplicate(self, for_template=False, group=None, grant=None):
         new_group = deepcopy(self)
         new_group.pk = None
         if group is not None:
             new_group.group = group
             new_group.organization = group.organization
+            new_group.company = group.company
+            new_group.grant = grant or group.grant
         if for_template is True:
             new_group.template = None
             new_group.company = None
+            new_group.grant = None
         new_group.save()
         for element in self.children_elements.all():
             element.duplicate(for_template=for_template, parent_group=new_group)
@@ -71,8 +80,12 @@ class FieldGroup(BaseModel):
 
     def to_template(self):
         group = self.duplicate(for_template=True)
-        template = FieldGroupTemplate.objects.create(name=group.label if group.group else self.company.name, group=group,
-                                                  organization=self.company.organization)
+        organization = self.company.organization if self.company is not None else self.grant.organization
+
+        template = FieldGroupTemplate.objects.create(
+            name=group.label if group.group else (self.company.name if self.company else self.grant.name),
+            group=group,
+            organization=organization)
         self.template = template
         self.save()
         return template
@@ -81,11 +94,32 @@ class FieldGroup(BaseModel):
         group = template.group.duplicate(for_template=False, group=self)
         GroupElement.objects.create(parent_group=self, group=group, position=self.children_elements.count() + 1)
 
+    def to_request(self, space, label=None):
+        from web_app.models import Request, InputRequest, TextRequest, UploadRequest
+        request = Request.objects.create(space=space, title=label or self.label)
+        position = 1
+        for element in self.children_elements.all():
+            if element.group:
+                child_request = element.group.to_request(space)
+                InputRequest.objects.create(request=request, child_request=child_request, position=position)
+                position += 1
+            elif element.text_field:
+                TextRequest.objects.filter(target=element.text_field).update(target=None)
+                text_request = TextRequest.objects.create(request=request, target=element.text_field,
+                                                          title=element.text_field.label)
+                InputRequest.objects.create(request=request, text_request=text_request, position=position)
+                position += 1
+            elif element.file_field:
+                UploadRequest.objects.filter(target=element.file_field).update(target=None)
+                upload_request = UploadRequest.objects.create(request=request, target=element.file_field,
+                                                              title=element.file_field.label)
+                InputRequest.objects.create(request=request, upload_request=upload_request, position=position)
+                position += 1
+        return request
+
 
 class TextField(BaseModel):
-    company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='fields', null=True,
-                                blank=True)  # maybe remove? field must be in a group
-    group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='fields', null=True,
+    group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='text_fields', null=True,
                               blank=True)
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250)
@@ -110,6 +144,54 @@ class TextField(BaseModel):
             new_field.group = group
         if for_template is True:
             new_field.template = None
-            new_field.company = None
         new_field.save()
         return new_field
+
+
+class FileField(BaseModel):
+    group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='file_fields', null=True,
+                              blank=True)
+    multiple = models.BooleanField(default=False)
+    label = models.CharField(max_length=250)
+    multiple_files = models.BooleanField(default=False)
+
+    def form(self, request_post=None, files=None):
+        from web_app.forms import FileFieldFillForm
+        return FileFieldFillForm(request_post, files, instance=self, prefix=self.pk)
+
+    def set_form(self, request_post=None):
+        from web_app.forms import FileFieldSetForm
+        return FileFieldSetForm(request_post, instance=self, group=self.group)
+
+    def duplicate(self, for_template=False, group=None):
+        new_field = deepcopy(self)
+        new_field.pk = None
+        if group is not None:
+            new_field.group = group
+        if for_template is True:
+            new_field.template = None
+        new_field.save()
+        return new_field
+
+
+class FileFileField(BaseModel):
+    field = models.ForeignKey('FileField', on_delete=models.CASCADE, related_name='files')
+    file = models.OneToOneField('File', on_delete=models.CASCADE, related_name='file_field', null=True, blank=True)
+    template = models.OneToOneField('File', on_delete=models.CASCADE, related_name='file_field_template', null=True, )
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def get_filled_template(self):
+        # return FileResponse(open(path_to_file, 'rb'), as_attachment=True, filename="my_filename")
+        with open(self.file.file, 'rb') as f:
+            try:
+                doc = DocxTemplate(f)
+            except Exception as e:
+                return None
+            company = self.field.group.company
+            grant = self.field.group.grant
+            context = {'company': company,'grant': grant}
+            doc.render(context)
+            doc.save("filled_template.docx")
+            return doc.docx

@@ -10,7 +10,7 @@ from web_app.mixins import SenderTabMixin
 from django.utils.translation import gettext_lazy as _
 
 
-class RequestDetailView( SenderTabMixin,TemplateView):
+class RequestDetailView(SenderTabMixin, TemplateView):
     template_name = "sender/request/detail.html"
 
     _request = None
@@ -38,7 +38,6 @@ class RequestDetailView( SenderTabMixin,TemplateView):
             sender_events = []
             organization = self.get_request().space.organization
             for form in formset:
-                error = None
                 sender_event = None
                 company = form.input_request.request.space.company
                 if form.input_request.upload_request:
@@ -47,7 +46,6 @@ class RequestDetailView( SenderTabMixin,TemplateView):
                     if uploaded_files:
                         destination: GenericDestination = upload_request.destination
                         sender_event = None
-                        error = False
                         uploaded_files = uploaded_files if isinstance(uploaded_files, list) else [uploaded_files]
                         for uploaded_file in uploaded_files:
                             if sender_event is None:
@@ -62,16 +60,16 @@ class RequestDetailView( SenderTabMixin,TemplateView):
                             try:
                                 file_url = destination.upload_file(uploaded_file, file_name)
                             except Exception:
-                                error = True
-                                messages.error(request, _(f"An error occurred while uploading file {uploaded_file.name}"))
+                                messages.error(request,
+                                               _(f"An error occurred while uploading file {uploaded_file.name}"))
                                 continue
                             file = File.objects.create(original_name=uploaded_file.name,
-                                                size=uploaded_file.size,
-                                                file_type=uploaded_file.content_type,
-                                                destination=destination,
-                                                uid=file_url,
-                                                sender_event=sender_event,
-                                                company=company)
+                                                       size=uploaded_file.size,
+                                                       file_type=uploaded_file.content_type,
+                                                       destination=destination,
+                                                       uid=file_url,
+                                                       sender_event=sender_event,
+                                                       company=company)
                             Output.objects.create(file=file, company=company, sender_event=sender_event)
 
                 elif form.input_request.text_request:
@@ -86,7 +84,7 @@ class RequestDetailView( SenderTabMixin,TemplateView):
                         text_output = TextOutput.objects.create(text=form.cleaned_data.get('text'),
                                                                 sender_event=sender_event,
                                                                 company=company)
-                        Output.objects.create(text_output=text_output,company=company,sender_event=sender_event)
+                        Output.objects.create(text_output=text_output, company=company, sender_event=sender_event)
                 if sender_event is not None:
                     sender_events.append(sender_event)
             if sender_events:

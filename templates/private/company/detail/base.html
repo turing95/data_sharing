@@ -2,12 +2,15 @@
 {% load i18n %}
 {% block private_content %}
     {% include 'private/company/detail/company_name.html' with form=company.name_form %}
-    
+
     {% include "components/tabs_menu.html" with tabs_data=company_tab  pk=company.pk %}
 
     {% block company_content %}
+        {% url 'company_to_space' company.pk  as subscribe_url %}
+        {% translate 'To space' as to_space_text %}
+        {% include 'components/buttons/generic.html' with href=subscribe_url button_text=to_space_text extra_classes="flex" %}
         {% include 'private/company/detail/company_form.html' with form=company.form %}
-        
+
         {% include 'private/company/detail/group/list.html' %}
 
     {% endblock company_content %}

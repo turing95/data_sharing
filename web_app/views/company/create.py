@@ -1,10 +1,12 @@
 import json
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import redirect
+from django.views.decorators.http import require_POST
 from django.views.generic import FormView
 
 from web_app.forms import CompanyCreateForm
@@ -46,3 +48,5 @@ class CompanyCreateView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixi
             messages.error(self.request, _('Company not created'))
             return render(self.request, 'components/messages.html', {'from_htmx': True})
         return super().form_invalid(form)
+
+
