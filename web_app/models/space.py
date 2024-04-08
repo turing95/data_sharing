@@ -16,6 +16,7 @@ class Space(BaseModel):
     user = models.ForeignKey('User', null=True, on_delete=models.SET_NULL, related_name='spaces')
     organization = models.ForeignKey('Organization', null=True, on_delete=models.CASCADE, related_name='spaces')
     company = models.ForeignKey('Company', null=True, on_delete=models.SET_NULL, related_name='spaces')
+    source_grant = models.ForeignKey('Grant', null=True, on_delete=models.SET_NULL,related_name='linked_spaces')
     is_public = models.BooleanField(default=False)
     instructions = models.TextField(null=True, blank=True)
     timezone = models.CharField(
@@ -23,6 +24,9 @@ class Space(BaseModel):
         choices=TIMEZONE_CHOICES
     )
     locale = models.CharField(max_length=10, null=True, blank=True, default='en-us')
+
+    class Meta:
+        ordering = ['-created_at']
 
     @property
     def has_complete_requests(self):
@@ -34,7 +38,6 @@ class Space(BaseModel):
         from web_app.models import InputRequest
         return InputRequest.objects.filter(request__space=self, is_complete=False).exists()
 
-
     @property
     def link_for_email(self):
         return settings.BASE_URL + reverse('receiver_space_detail', kwargs={
@@ -44,7 +47,7 @@ class Space(BaseModel):
     @property
     def sections_position_sorted(self):
         return self.sections.order_by('position')
-    
+
     def add_section(self, heading_section=None, paragraph_section=None, file_section=None, prev_section_position=None):
         from web_app.models import SpaceSection
         if prev_section_position:
@@ -58,16 +61,15 @@ class Space(BaseModel):
                                                     heading_section=heading_section,
                                                     paragraph_section=paragraph_section,
                                                     position=inserting_position)
-        
 
     def setup(self):
         from web_app.models import GenericDestination, Kezyy
         GenericDestination.create_provider(Kezyy.TAG,
                                            self.user, space=self)
 
-    def title_form(self,request_post=None):
+    def title_form(self, request_post=None):
         from web_app.forms import SpaceTitleForm
-        return SpaceTitleForm(request_post,instance=self)
+        return SpaceTitleForm(request_post, instance=self)
 
     def duplicate(self, user):
         #TODO fix
@@ -82,8 +84,3 @@ class Space(BaseModel):
         for request in self.requests.all().order_by('created_at'):
             request.duplicate(new_space)
         return new_space
-
-
-
-    class Meta:
-        ordering = ['-created_at']

@@ -17,6 +17,15 @@
             {% include 'components/forms/error_widget.html' with errors=form.company.errors %}
 
         </div>
+            <div class="mb-6">
+            <div class="flex items-center mb-2 space-x-2">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Grant' %}</h3>
+                {% include 'components/tooltip.html' with content=form.source_grant.help_text target=form.source_grant.name %}
+            </div>
+                {{ form.source_grant }}
+                {% include 'components/forms/error_widget.html' with errors=form.source_grant.errors %}
+
+        </div>
 
 
 

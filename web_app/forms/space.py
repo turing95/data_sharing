@@ -67,47 +67,22 @@ class SpaceSettingsForm(ModelForm):
                                       'class': css_classes.search_input,
                                       'autocomplete': 'off'}),
         help_text=_("Type the company name to search for it."))
-
-    senders_emails = CommaSeparatedEmailField(
-        widget=forms.HiddenInput(),
-        label=_('Senders emails'),
-        required=False,
-        help_text=_(
-            "Each invitee will have their own access link and will not be able to see any other invitee in the list."))
-
-    email_input = forms.CharField(required=False,
-                                  widget=forms.TextInput(
-                                      attrs={'placeholder': _('Type or paste email addresses of invitees'),
-                                             'class': css_classes.text_input + "email-input"}))
     notify_invitation = forms.BooleanField(
         widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
         required=False,
         label=_('Invitation notification'),
         help_text=_(
             """All invitees will receive an email with the link to the space upon creation. You can re-send the invitation at any time."""))
-    is_public = forms.BooleanField(
-        widget=forms.CheckboxInput(attrs={'class': css_classes.checkbox_input}),
+    source_grant = forms.ModelChoiceField(
+        queryset=None,
         required=False,
-        label=_('Public link'),
-        help_text=_("""The public link will not be tied to a specific email address and can be used to collect inputs from the general public, when there is not the need to distinguish one upload from another.
-                            The link can be enabled and disabled at any time, and can coexist with the invitees links.
-                            """))
-
-    instructions = forms.CharField(
-        required=False,
-        widget=forms.Textarea(attrs={
-            'placeholder': _('Explain what files you are requesting'),
-            'rows': 3,
-            'class': css_classes.text_area,
-        }),
-        label=_('Instructions'),
-        help_text=_("""These instructions will be displayed to your invitees. They refer to all the file requests in the space.
-                            """))
+        label=_('Grant'),
+        help_text=_("Select the grant that originated this space."))
 
 
     class Meta:
         model = Space
-        fields = ['is_public', 'instructions', 'senders_emails', 'notify_invitation', 'company']
+        fields = ['company','source_grant']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -115,12 +90,10 @@ class SpaceSettingsForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['search_company'].widget.attrs['hx-post'] = reverse('search_companies', kwargs={
             'organization_uuid': self.organization.pk})
+        self.fields['source_grant'].queryset = self.organization.grants.filter(space__isnull=True)
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
-            space = self.instance
-            if space.company:
-                self.fields['search_company'].initial = space.company.name
-            self.fields['senders_emails'].initial = ','.join(
-                [sender.email for sender in space.senders.filter(is_active=True)])
+            if self.instance.company:
+                self.fields['search_company'].initial = self.instance.company.name
 
 
 
@@ -150,11 +123,4 @@ class SpaceTitleForm(ModelForm):
         if self.instance is not None and Space.objects.filter(pk=self.instance.pk).exists():
             self.fields['title'].widget.attrs['hx-post'] = reverse_lazy('space_update',
                                                                         kwargs={'space_uuid': self.instance.pk})
-
-class SpaceContentForm(ModelForm):
-    placeholder = forms.CharField(widget=forms.TextInput())
-
-    class Meta:
-        model = Space
-        fields = ['placeholder']
   

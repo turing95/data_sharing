@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from web_app.forms import SpaceSettingsForm
 from web_app.mixins import SubscriptionMixin, SpaceMixin, SpaceSideBarMixin, SpaceTabMixin
-from web_app.models import Space, Contact, Sender
+from web_app.models import Space, Contact, Sender, Grant
 from web_app.tasks.notifications import notify_invitation
 
 
@@ -22,10 +22,10 @@ class SpaceSettingsView(LoginRequiredMixin, SubscriptionMixin, SpaceMixin, Space
         form = self.get_form()
 
         if form.is_valid():
-            space_instance = form.save(commit=False)
-            space_instance.user = request.user
-            space_instance.save()
-            self.handle_senders(form.cleaned_data.get('senders_emails', []), space_instance)
+            space_instance = form.save()
+            if 'source_grant' in form.changed_data and space_instance.source_grant is not None:
+                Grant.objects.filter(space=space_instance).delete()
+                space_instance.source_grant.duplicate_for_space(space_instance)
             return self.form_valid(form)
         return self.form_invalid(form)
 

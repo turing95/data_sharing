@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from web_app.models import BaseModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -12,6 +14,7 @@ class Grant(BaseModel):
     official_name = models.CharField(max_length=250, null=True, blank=True) # full name of the grant like "Fabriq quarto 2020 innovazioni dei quartieri"
     name = models.CharField(max_length=250, null=True, blank=True) # shorter version of name like "fabriq"
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='grants')
+    space = models.OneToOneField('Space', on_delete=models.CASCADE, related_name='grant', null=True, blank=True)
     type = models.CharField(max_length=250, null=True, blank=True)
     tags = models.TextField(null=True, blank=True) # comma separated list of tags
     status = models.CharField(
@@ -50,7 +53,16 @@ class Grant(BaseModel):
         from web_app.forms import GrantForm
         return GrantForm(request_post, instance=self, organization=self.organization)
 
-
+    def duplicate_for_space(self, space):
+        new_grant = deepcopy(self)
+        new_grant.pk = None
+        new_grant.space = space
+        new_grant.save()
+        for attachment in self.attachments.all():
+            GrantAttachment.objects.create(grant=new_grant, file=attachment.file)
+        for deadline in self.deadlines.all():
+            GrantDeadline.objects.create(grant=new_grant, date=deadline.date, description=deadline.description, sender_visibility=deadline.sender_visibility)
+        return new_grant
 class GrantAttachment(BaseModel):
     file = models.OneToOneField('File', on_delete=models.CASCADE,related_name='grant_attachment')
     grant = models.ForeignKey('Grant', on_delete=models.CASCADE, related_name='attachments')
