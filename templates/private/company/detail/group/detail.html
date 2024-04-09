@@ -1,6 +1,8 @@
 {% load i18n %}
+
+  
 <div class="my-4">
-    <div class="flex flex-col">
+    <div class="flex flex-col" >
         {% if group.label %}
             <div class="inline-flex w-full mb-2 inner-group">
                 <div class="sort-enable-hover opacity-0 inner-group-hover:opacity-100 flex items-center justify-center px-0.5 text-gray-500 bg-gray-100 rounded cursor-grab active:cursor-grabbing mr-1">
@@ -53,7 +55,13 @@
                         </svg>
                     </button>
                 </div>
+                <button type="button" style="background: none !important;"  data-collapsible-target="#collapsible-body-{{group.pk}}" aria-expanded="false" aria-controls="collapsible-body-{{group.pk}}">
+                    <svg class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5 5 1 1 5"/>
+                    </svg>
+                </button>
             </div>
+            
         {% endif %}
 
         <!-- ADD ELEMENTS RIBBON -->
@@ -78,7 +86,7 @@
             </div>
         </div>
 
-        <div {% if group.group %}class=" drag-hidden border-l border-gray-200 ml-[16.039px]"{%endif%}>
+        <div {% if group.group %}class=" drag-hidden border-l border-gray-200 ml-[16.039px]" id="collapsible-body-{{group.pk}}" aria-labelledby="collapsible-heading-{{group.pk}}"{%endif%}>
             {% include 'private/company/detail/group/elements.html' with group=group %}
         </div>
     </div>
