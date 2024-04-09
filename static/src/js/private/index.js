@@ -243,3 +243,50 @@ function preventFormSubmit(){
 });
 }
 
+// Function to toggle visibility and rotate the arrow
+function initializeCollapsibles() {
+    // Iterate over each element with the `data-collapsible-target` attribute
+    document.querySelectorAll('[data-collapsible-target]').forEach(button => {
+        toggleCollapsible(button)
+    });
+  }
+
+function toggleCollapsible(button) {
+    button.addEventListener('click', function() {
+        // Get the ID of the target from the button's `data-collapsible-target` attribute
+        const targetId = this.getAttribute('data-collapsible-target');
+        // Find the corresponding div by its ID
+        const targetDiv = document.querySelector(targetId);
+  
+        // Toggle the hidden property of the target div
+        if (targetDiv) {
+          targetDiv.hidden = !targetDiv.hidden;
+        }
+  
+        // Assuming the first child is the SVG you want to rotate
+        const svgArrow = this.children[0];
+        if (svgArrow) {
+          // Toggle the `rotate-180` class on the SVG arrow
+          svgArrow.classList.toggle('rotate-180');
+        }
+      });
+}
+  
+  // Call the function when the document is ready
+  document.addEventListener('DOMContentLoaded', initializeCollapsibles);
+
+  document.body.addEventListener('htmx:afterSwap', function(event) {
+    // The event.target contains the newly loaded content
+    // You can apply any necessary JavaScript behaviors here
+  
+    // For example, find all elements with `data-collapsible-target` within the new content and reapply behaviors
+    event.target.querySelectorAll('[data-collapsible-target]').forEach(button => {
+      // Since we're using delegation, you might want to ensure you're not adding multiple listeners
+      // One way to do this is to add a class to mark that we've initialized this element and check for it
+      if (!button.classList.contains('js-initialized')) {
+        button.classList.add('js-initialized');
+        // Your code to initialize the button, like adding specific event listeners or classes, goes here
+        toggleCollapsible(button)
+      }
+    });
+  });
