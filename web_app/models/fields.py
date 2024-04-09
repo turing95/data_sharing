@@ -103,13 +103,13 @@ class FieldGroup(BaseModel):
                 child_request = element.group.to_request(space)
                 InputRequest.objects.create(request=request, child_request=child_request, position=position)
                 position += 1
-            elif element.text_field:
+            elif element.text_field and element.text_field.fill_from is False:
                 TextRequest.objects.filter(target=element.text_field).update(target=None)
                 text_request = TextRequest.objects.create(request=request, target=element.text_field,
                                                           title=element.text_field.label)
                 InputRequest.objects.create(request=request, text_request=text_request, position=position)
                 position += 1
-            elif element.file_field:
+            elif element.file_field and element.text_field.fill_from is False:
                 UploadRequest.objects.filter(target=element.file_field).update(target=None)
                 upload_request = UploadRequest.objects.create(request=request, target=element.file_field,
                                                               title=element.file_field.label)
@@ -124,6 +124,7 @@ class TextField(BaseModel):
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250)
     value = models.CharField(max_length=500, null=True, blank=True)
+    fill_from = models.ForeignKey('TextField', on_delete=models.SET_NULL, related_name='filling_fields', null=True)
 
     @property
     def update_event(self):
@@ -147,13 +148,19 @@ class TextField(BaseModel):
         new_field.save()
         return new_field
 
-
+    def fill(self, value=None):
+        if value is not None:
+            self.value = value
+            self.save()
+        for field in self.filling_fields.all():
+            field.fill(self.value)
 class FileField(BaseModel):
     group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='file_fields', null=True,
                               blank=True)
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250)
     multiple_files = models.BooleanField(default=False)
+    fill_from = models.ForeignKey('FileField', on_delete=models.SET_NULL, related_name='filling_fields', null=True)
 
     def form(self, request_post=None, files=None):
         from web_app.forms import FileFieldFillForm
@@ -173,6 +180,12 @@ class FileField(BaseModel):
         new_field.save()
         return new_field
 
+    def fill(self,file=None):
+        from web_app.models import FileFileField
+        if file is not None:
+            FileFileField.objects.get_or_create(field=self, file=file)
+        for field in self.filling_fields.all():
+            field.fill(file)
 
 class FileFileField(BaseModel):
     field = models.ForeignKey('FileField', on_delete=models.CASCADE, related_name='files')

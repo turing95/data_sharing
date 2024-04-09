@@ -69,6 +69,14 @@ class Grant(BaseModel):
             checklist.duplicate(grant=new_grant)
         return new_grant
 
+    def to_space(self, user=None, space=None):
+        from web_app.models import Space
+        if space is None:
+            space = Space.objects.create(title=self.name, organization=self.organization, user=user, grant=self)
+        root_group = self.field_groups.filter(group=None).first()
+        if root_group:
+            root_group.to_request(space, label=self.name)
+        return space
 
 class GrantAttachment(BaseModel):
     file = models.OneToOneField('File', on_delete=models.CASCADE, related_name='grant_attachment')

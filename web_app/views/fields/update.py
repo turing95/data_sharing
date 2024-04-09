@@ -64,7 +64,7 @@ def text_field_update_value(request, field_uuid):
     text_field = get_object_or_404(TextField, pk=field_uuid)
     form = text_field.form(request.POST)
     if form.is_valid():
-        form.save()
+        text_field.fill(form.cleaned_data['value'])
         response = HttpResponse(status=204)
         response['HX-Trigger'] = text_field.update_event
         return response
@@ -88,8 +88,7 @@ def file_field_update_value(request, field_uuid):
                                        file_type=uploaded_file.content_type,
                                        destination=kezyy_destination,
                                        uid=file_url)
-            FileFileField.objects.create(file=file, field=file_field)
-
+            file_field.fill(file)
             response = HttpResponse(status=204)
             response['HX-Trigger'] = file_field.group.update_event
             return response
