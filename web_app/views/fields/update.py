@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.views.decorators.http import require_POST, require_GET
-from web_app.models import TextField, FieldGroup, FieldGroupTemplate, FileField, File, GenericDestination, Kezyy, \
+from web_app.models import TextField, FieldGroup, FieldTemplate, FileField, File, GenericDestination, Kezyy, \
     FileFileField
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import render, get_object_or_404
@@ -141,7 +141,7 @@ def field_group_update_modal(request, group_uuid):
 @require_POST
 def field_group_add_template(request, group_uuid, template_uuid):
     group = get_object_or_404(FieldGroup, pk=group_uuid)
-    template = get_object_or_404(FieldGroupTemplate, pk=template_uuid)
+    template = get_object_or_404(FieldTemplate, pk=template_uuid)
     group.add_template(template)
     response = HttpResponse(status=204)
     response['HX-Trigger'] = f"{group.update_event}"

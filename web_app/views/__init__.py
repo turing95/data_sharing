@@ -78,13 +78,13 @@ from web_app.views.fields.update import text_field_update, text_field_update_mod
     field_group_add_template, file_field_update, file_field_update_modal, file_field_update_value
 from web_app.views.fields.create import text_field_create_modal,file_field_create_modal,file_field_create, text_field_create, \
     text_field_duplicate, field_group_create_modal, field_group_create, \
-    field_group_to_template, field_group_duplicate, file_field_duplicate
+    field_group_to_template, field_group_duplicate, file_field_duplicate, text_field_to_template,file_field_to_template
 from web_app.views.fields.delete import text_field_delete, field_group_delete, file_field_delete
 from web_app.views.fields.detail import text_field_detail, file_field_detail
 from web_app.views.fields.list import group_elements, group_elements_update_order
-from web_app.views.field_group_templates.list import FieldGroupTemplatesListView, search_templates
-from web_app.views.field_group_templates.detail import FieldGroupTemplateDetailView
-from web_app.views.field_group_templates.delete import FieldGroupTemplateDeleteView
+from web_app.views.field_templates.list import FieldTemplatesListView, search_templates
+from web_app.views.field_templates.detail import FieldTemplateDetailView
+from web_app.views.field_templates.delete import FieldTemplateDeleteView
 from web_app.views.language import custom_set_language, language_modal
 from web_app.views.contact.create import ContactCreateView, contact_create_modal
 from web_app.views.contact.delete import DeleteContactView

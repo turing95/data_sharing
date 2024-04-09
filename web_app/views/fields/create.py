@@ -134,6 +134,15 @@ def text_field_duplicate(request, field_uuid):
     response['HX-Trigger'] = new_field.group.update_event
     return response
 
+
+@login_required
+@require_POST
+def text_field_to_template(request, text_field_uuid):
+    text_field = get_object_or_404(TextField, pk=text_field_uuid)
+    text_field.to_template()
+    return HttpResponse(status=204)
+
+
 @login_required
 @require_GET
 def file_field_duplicate(request, field_uuid):
@@ -144,6 +153,14 @@ def file_field_duplicate(request, field_uuid):
     response = HttpResponse()
     response['HX-Trigger'] = new_field.group.update_event
     return response
+
+
+@login_required
+@require_POST
+def file_field_to_template(request, file_field_uuid):
+    file_field = get_object_or_404(FileField, pk=file_field_uuid)
+    file_field.to_template()
+    return HttpResponse(status=204)
 
 
 @login_required

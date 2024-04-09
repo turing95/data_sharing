@@ -4,10 +4,13 @@ from copy import deepcopy
 from docxtpl import DocxTemplate
 
 
-class FieldGroupTemplate(BaseModel):
+class FieldTemplate(BaseModel):
+    name = models.CharField(max_length=250, null=True, blank=True)
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='field_group_templates')
     group = models.OneToOneField('FieldGroup', on_delete=models.CASCADE, related_name='derived_template',
                                  null=True)
+    text_field = models.OneToOneField('TextField', on_delete=models.CASCADE, related_name='derived_template', null=True)
+    file_field = models.OneToOneField('FileField', on_delete=models.CASCADE, related_name='derived_template', null=True)
 
 
 class GroupElement(BaseModel):
@@ -44,8 +47,8 @@ class FieldGroup(BaseModel):
     grant = models.ForeignKey('Grant', on_delete=models.CASCADE, related_name='field_groups', null=True, blank=True)
     group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='groups', null=True,
                               blank=True)
-    template = models.OneToOneField('FieldGroupTemplate', on_delete=models.CASCADE, related_name='groups', null=True,
-                                    blank=True)
+    template = models.ForeignKey('FieldTemplate', on_delete=models.CASCADE, related_name='groups', null=True,
+                                 blank=True)
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250, null=True, blank=True)
 
@@ -82,7 +85,7 @@ class FieldGroup(BaseModel):
         group = self.duplicate(for_template=True)
         organization = self.company.organization if self.company is not None else self.grant.organization
 
-        template = FieldGroupTemplate.objects.create(
+        template = FieldTemplate.objects.create(
             name=group.label if group.group else (self.company.name if self.company else self.grant.name),
             group=group,
             organization=organization)
@@ -91,8 +94,17 @@ class FieldGroup(BaseModel):
         return template
 
     def add_template(self, template):
-        group = template.group.duplicate(for_template=False, group=self)
-        GroupElement.objects.create(parent_group=self, group=group, position=self.children_elements.count() + 1)
+        if template.group:
+            group = template.group.duplicate(for_template=False, group=self)
+            GroupElement.objects.create(parent_group=self, group=group, position=self.children_elements.count() + 1)
+        elif template.text_field:
+            text_field = template.text_field.duplicate(for_template=False, group=self)
+            GroupElement.objects.create(parent_group=self, text_field=text_field,
+                                        position=self.children_elements.count() + 1)
+        elif template.file_field:
+            file_field = template.file_field.duplicate(for_template=False, group=self)
+            GroupElement.objects.create(parent_group=self, file_field=file_field,
+                                        position=self.children_elements.count() + 1)
 
     def to_request(self, space, label=None):
         from web_app.models import Request, InputRequest, TextRequest, UploadRequest
@@ -121,6 +133,7 @@ class FieldGroup(BaseModel):
 class TextField(BaseModel):
     group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='text_fields', null=True,
                               blank=True)
+    template = models.ForeignKey('FieldTemplate', on_delete=models.CASCADE, related_name='text_fields', null=True)
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250)
     value = models.CharField(max_length=500, null=True, blank=True)
@@ -154,9 +167,23 @@ class TextField(BaseModel):
             self.save()
         for field in self.filling_fields.all():
             field.fill(self.value)
+
+    def to_template(self):
+        text_field = self.duplicate(for_template=True)
+        organization = self.group.organization
+        template = FieldTemplate.objects.create(
+            name=text_field.label,
+            text_field=text_field,
+            organization=organization)
+        self.template = template
+        self.save()
+        return template
+
+
 class FileField(BaseModel):
     group = models.ForeignKey('FieldGroup', on_delete=models.CASCADE, related_name='file_fields', null=True,
                               blank=True)
+    template = models.ForeignKey('FieldTemplate', on_delete=models.CASCADE, related_name='file_fields', null=True)
     multiple = models.BooleanField(default=False)
     label = models.CharField(max_length=250)
     multiple_files = models.BooleanField(default=False)
@@ -180,12 +207,24 @@ class FileField(BaseModel):
         new_field.save()
         return new_field
 
-    def fill(self,file=None):
+    def fill(self, file=None):
         from web_app.models import FileFileField
         if file is not None:
             FileFileField.objects.get_or_create(field=self, file=file)
         for field in self.filling_fields.all():
             field.fill(file)
+
+    def to_template(self):
+        file_field = self.duplicate(for_template=True)
+        organization = self.group.organization
+        template = FieldTemplate.objects.create(
+            name=file_field.label,
+            file_field=file_field,
+            organization=organization)
+        self.template = template
+        self.save()
+        return template
+
 
 class FileFileField(BaseModel):
     field = models.ForeignKey('FileField', on_delete=models.CASCADE, related_name='files')
@@ -204,7 +243,7 @@ class FileFileField(BaseModel):
                 return None
             company = self.field.group.company
             grant = self.field.group.grant
-            context = {'company': company,'grant': grant}
+            context = {'company': company, 'grant': grant}
             doc.render(context)
             doc.save("filled_template.docx")
             return doc.docx

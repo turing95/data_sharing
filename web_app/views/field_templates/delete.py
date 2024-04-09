@@ -2,15 +2,14 @@ from allauth.core.internal.http import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import DeleteView
-from web_app.models import FieldGroupTemplate
+from web_app.models import FieldTemplate
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
 
-class FieldGroupTemplateDeleteView(LoginRequiredMixin, DeleteView):
-    model = FieldGroupTemplate
+class FieldTemplateDeleteView(LoginRequiredMixin, DeleteView):
+    model = FieldTemplate
     pk_url_kwarg = "template_uuid"
-
 
     def form_valid(self, form):
         self.object.delete()

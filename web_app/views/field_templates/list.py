@@ -6,7 +6,7 @@ from web_app.mixins import OrganizationMixin, CompanySideBarMixin, SubscriptionM
 from web_app.models import Organization, FieldGroup
 
 
-class FieldGroupTemplatesListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, ListView):
+class FieldTemplatesListView(OrganizationMixin, CompanySideBarMixin, SubscriptionMixin, ListView):
     template_name = "private/company_templates/list.html"
     paginate_by = 12
 
@@ -22,7 +22,7 @@ def search_templates(request, group_uuid):
     search_query = request.POST.get('search-templates')
     if search_query:
         templates = group.organization.field_group_templates.filter(
-            group__label__icontains=search_query
+            name__icontains=search_query
         )
     return render(request,
                   'private/company_templates/search/results.html',

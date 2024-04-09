@@ -7,7 +7,7 @@ from djstripe.settings import djstripe_settings
 from web_app.utils.svg_icon_paths import svg_icons_path as paths
 from django.utils.translation import gettext_lazy as _
 
-from web_app.models import Organization, Space, Request, Company, Sender, Grant, Contact, FieldGroupTemplate
+from web_app.models import Organization, Space, Request, Company, Sender, Grant, Contact, FieldTemplate
 
 
 class SubscriptionMixin(PaymentsContextMixin):
@@ -70,7 +70,7 @@ class SpaceMixin:
                 'text': space.company.name,
                 'svg_path': paths['company']
             })
-            
+
             back_links.append({
                 'url': reverse('receiver_space_detail', kwargs={'space_uuid': space.pk}),
                 'text': space.title,  # Or use space.name if you prefer the space name here
@@ -81,9 +81,8 @@ class SpaceMixin:
             data['back'] = back_links
         else:
             data['back'] = {'url': reverse('spaces', kwargs={'organization_uuid': data['organization'].pk}),
-                'text': _('Back to spaces')}
-            
-        
+                            'text': _('Back to spaces')}
+
         return data
 
 
@@ -110,7 +109,7 @@ class ContactMixin:
         return data
 
 
-class FieldGroupTemplateMixin:
+class FieldTemplateMixin:
     _template = None  # Placeholder for the cached object
     _organization = None  # Placeholder for the cached object
 
@@ -121,16 +120,18 @@ class FieldGroupTemplateMixin:
 
     def get_template(self):
         if not self._template:
-            self._template = FieldGroupTemplate.objects.get(pk=self.kwargs.get('template_uuid'))
+            self._template = FieldTemplate.objects.get(pk=self.kwargs.get('template_uuid'))
         return self._template
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['organization'] = self.get_organization()
         context['template'] = self.get_template()
-        context['back'] = {'url': reverse('field_group_templates', kwargs={'organization_uuid': self.get_organization().pk}),
-                        'text': _('Back to templates')}
+        context['back'] = {
+            'url': reverse('field_group_templates', kwargs={'organization_uuid': self.get_organization().pk}),
+            'text': _('Back to templates')}
         return context
+
 
 class CompanyMixin:
     _company = None  # Placeholder for the cached object
@@ -151,8 +152,9 @@ class CompanyMixin:
         context['organization'] = self.get_company().organization
         context['company'] = self.get_company()
         context['back'] = {'url': reverse('companies', kwargs={'organization_uuid': self.get_organization().pk}),
-                        'text': _('Back to Companies')}
+                           'text': _('Back to Companies')}
         return context
+
 
 class GrantMixin:
     _grant = None  # Placeholder for the cached object
@@ -173,7 +175,7 @@ class GrantMixin:
         context['grant'] = self.get_grant()
         context['organization'] = self.get_grant().organization
         context['back'] = {'url': reverse('grants', kwargs={'organization_uuid': self.get_organization().pk}),
-                'text': _('Back to Grants')}
+                           'text': _('Back to Grants')}
         return context
 
 
@@ -200,7 +202,7 @@ class RequestMixin:
                 'text': space.company.name,
                 'svg_path': paths['company']
             })
-            
+
         back_links.append({
             'url': reverse('receiver_space_detail', kwargs={'space_uuid': space.pk}),
             'text': space.title,  # Or use space.name if you prefer the space name here
@@ -214,15 +216,17 @@ class RequestMixin:
         })
 
         data['back'] = back_links
-        
+
         return data
 
 
 class SideBarMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['sidebar'] = {'team': False, 'space': False, 'company': False,'templates':False, 'organization': False, 'grant': False}
+        data['sidebar'] = {'team': False, 'space': False, 'company': False, 'templates': False, 'organization': False,
+                           'grant': False}
         return data
+
 
 class TeamSideBarMixin(SideBarMixin):
     def get_context_data(self, **kwargs):
@@ -230,12 +234,14 @@ class TeamSideBarMixin(SideBarMixin):
         data['sidebar']['team'] = True
         return data
 
+
 class OrganizationSettingsSideBarMixin(SideBarMixin):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['sidebar']['organization_settings'] = True
         return data
-    
+
+
 class SpaceSideBarMixin(SideBarMixin):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -303,6 +309,7 @@ class CompanyTabMixin:
         }
         return data
 
+
 class GrantTabMixin:
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -313,7 +320,7 @@ class GrantTabMixin:
                 'url_name': 'grant_detail',
                 'svg_path': paths['detail']
             },
-            
+
             'edit': {
                 'active': False,
                 'alternative_text': _('Edit'),
@@ -326,7 +333,7 @@ class GrantTabMixin:
                 'url_name': 'grant_checklist',
                 'svg_path': paths['edit']
             }
-          
+
             # 'spaces': {
             #     'active': False,
             #     'alternative_text': _('Spaces'),
@@ -359,8 +366,8 @@ class RequestTabMixin:
                 'active': False,
                 'alternative_text': _('Space Links'),
                 'url_name': 'senders',
-                'secondary_pk': True, # to use when the menu links to a different area and the url needs a different pk
-                'blank': True, # set to true to open the tab in another browser tab by default
+                'secondary_pk': True,  # to use when the menu links to a different area and the url needs a different pk
+                'blank': True,  # set to true to open the tab in another browser tab by default
                 'svg_path': paths['share']
             },
             # 'history': {
@@ -413,9 +420,19 @@ class SpaceTabMixin:
                 'alternative_text': _('Settings'),
                 'url_name': 'space_settings',
                 'svg_path': paths['settings']
-            },
+            }
 
         }
+        try:
+            if self.get_space().grant:
+                data['space_tab']['grant'] = {
+                    'active': False,
+                    'alternative_text': _('Grant'),
+                    'url_name': 'space_grant_detail',
+                    'svg_path': paths['settings']
+                }
+        except Grant.DoesNotExist:
+            pass
         return data
 
 

@@ -4,7 +4,7 @@
         {% for template in templates %}
             <li 
                     class="cursor-pointer hover:bg-gray-200"
-                    hx-post="{% url 'company_field_group_add_template' group.pk template.pk %}"
+                    hx-post="{% url 'field_group_add_template' group.pk template.pk %}"
                     hx-trigger="click"
                     hx-swap="none"
             >
