@@ -14,13 +14,11 @@ def accept(request, output_uuid):
     if output.sender_event.text_request:
         text_request = output.sender_event.text_request
         if text_request.target:
-            target = text_request.target
-            target.value = output.content
-            target.save()
+            text_request.target.fill(value=output.content)
     elif output.sender_event.upload_request:
         upload_request = output.sender_event.upload_request
         if upload_request.target:
-            FileFileField.objects.create(field=upload_request.target, file=output.file)
+            upload_request.target.fill(file=output.file)
     response = HttpResponse()
     response['HX-Trigger'] = output.update_event
     return response
