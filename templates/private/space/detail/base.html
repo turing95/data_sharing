@@ -1,14 +1,62 @@
 {% extends "private/_base.html" %}
+{% load static %}
+{% load l10n %}
+{% load i18n %}
 {% block private_content %}
+    <!-- EDITABLE TITLE-->
+    <div class="flex">
+        {% include 'private/space/detail/space_title_form.html' with form=space.title_form %}
+        {% include 'private/space/components/space_actions_dropdown.html' with space=space space_num=0 %}
+    </div>
+    
 
-    <!-- TAB SELECTOR -->
-    {% include 'components/buttons/two_way_selector.html' with path_left=request.path  text_left='Summary' path_right="?status=edit" text_right='Edit'  %}
 
-    {% if status == 'edit' %}
-        {% include 'private/space/components/delete_form.html' with space=form.instance %}
-        {% include 'private/space/create/components/form.html' with action='edit' %}
-    {% else %}
-        {% include 'private/space/detail/components/summary.html' %}
-    {% endif %}
-{% endblock %}
 
+    <!-- TABS MENU-->
+    {% include "components/tabs_menu.html" with tabs_data=space_tab  pk=space.pk %}
+
+
+    {% block space_content %}        
+        <div class="inline-flex mt-2 mb-2">
+            <div class="flex items-center mr-2 space-x-2">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Content sections' %}</h3>
+                {% translate 'Add contents below. Your invitees will be able to access it via their space link' as inputs_tooltip_content %}
+                {% include 'components/tooltip.html' with content=inputs_tooltip_content %}
+            </div>
+            {% include 'components/custom_htmx_indicator.html' with loader_id='loading-indicator-sort' %}
+        </div>
+
+        {% include 'private/space/detail/components/add_sections.html' %}
+        <div  hx-get="{% url 'sections' space.pk %}"
+        hx-indicator="#loading-indicator-sort"
+        hx-trigger="update_order from:body"
+        hx-target="#sections-container">
+            <form id="sections-container"
+                class="sortable"
+                hx-post="{% url 'space_section_update_order' space.pk %}"
+                hx-indicator="#loading-indicator-sort"
+                hx-trigger="end"
+                enctype="multipart/form-data" 
+                data-accordion="collapse"
+            >
+                {% csrf_token %}
+                {% block sorted_sections %}
+                {% if space.sections_position_sorted %}
+                    {% for space_section in space.sections_position_sorted %}
+                        {% include 'private/space/detail/content/space_section.html' with space_section=space_section %}
+                    {% endfor %}
+                {% else %}
+                    <div class="flex flex-col items-center justify-center mt-12 mb-3">
+                        <p class="text-2xl text-center text-gray-400">{% translate 'You have not added contant yet' %}</p>
+                        <p class="text-sm text-center text-gray-400">{% translate 'Add a title, paragraph, or file to get started' %}</p>
+                    </div>
+                {% endif %}
+                
+                {% endblock sorted_sections %}
+
+            </form>
+        </div>
+
+    {% endblock space_content %}
+
+{% endblock private_content %}

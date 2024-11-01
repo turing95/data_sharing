@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load custom_tags %}
+
+<div class="inline-flex w-full">
+    <div class="flex-grow">
+        {{ text_request.request_form.title }}
+    </div>  
+</div>
+
+{% with 'loader_'|addstr:input_request.uuid as loader_id %}
+    <div class="flex my-0.5 w-full justify-center items-center">
+        {% include 'components/custom_htmx_indicator.html' with loader_id=loader_id %}
+    </div>
+{% endwith %}
+
+<div class="input-request-detail-container">
+    {% include 'private/request/edit/text_request_detail.html' with text_request=text_request form=text_request.request_form %}
+</div>
+

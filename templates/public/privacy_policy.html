@@ -1,8 +1,9 @@
 {% extends 'public/_base.html' %}
 {% load static %}
+{% load i18n %}
 {% block public_content %}
-<div class="max-w-4xl mx-auto p-4 pl-10 w-full">
-    <h1 class="text-4xl font-bold mb-4">Privacy Policy</h1>
+<div class="w-full max-w-4xl p-4 pl-10 mx-auto">
+    <h1 class="mb-4 text-4xl font-bold">{% translate 'Privacy Policy' %}</h1>
     <p class="mb-2">
         [Your Privacy Policy content here...]
     </p>

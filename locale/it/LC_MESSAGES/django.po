@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 10:31+0000\n"
+"POT-Creation-Date: 2024-03-08 18:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,154 +18,292 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: custom_oauth_views.py:61
+#, python-brace-format
+msgid ""
+"You already have an account with {provider.name}, reconnect or disconnect "
+"the existing one."
+msgstr ""
+"Hai già un account con {provider.name}, riconnetti o disconneti quello "
+"esistente."
+
 #: data_sharing/settings.py:163
-msgid "english"
-msgstr "inglese"
+msgid "English"
+msgstr "Inglese"
 
 #: data_sharing/settings.py:164
-msgid "italian"
-msgstr "italiano"
+msgid "Italian"
+msgstr "Italiano"
+
+#: templates/404.html:4
+msgid "Page Not Found"
+msgstr "Pagina Non Trovata"
+
+#: templates/404.html:5
+msgid ""
+"The page you are looking for might have been removed, had its name changed, "
+"or is temporarily unavailable."
+msgstr ""
+"La pagina che stai cercando potrebbe essere stata rimossa, aver cambiato "
+"nome o essere temporaneamente non disponibile."
+
+#: templates/500.html:4
+msgid "Internal Server Error"
+msgstr "Errore Interno del Server"
+
+#: templates/500.html:5
+msgid ""
+"Something went wrong on our end. Please try again later or contact support "
+"if the problem persists."
+msgstr ""
+"Qualcosa è andato storto da parte nostra. Prova di nuovo più tardi o "
+"contatta il supporto se il problema persiste."
+
+#: templates/_base.html:37 templates/_base.html:47
+msgid "Kezyy - Effortless File Collection"
+msgstr "Kezyy - Gestione Documenti Senza Sforzo"
+
+#: templates/_base.html:40
+msgid ""
+"Kezyy simplifies file collection, allowing you to effortlessly receive files "
+"from anyone, anywhere."
+msgstr ""
+"Kezyy semplifica la raccolta di file, permettendoti di ricevere file senza "
+"sforzo."
+
+#: templates/_base.html:49
+msgid ""
+"Simplify your file collection process with Kezyy. Receive files from anyone, "
+"anytime."
+msgstr ""
+"Semplifica il tuo processo di raccolta file con Kezyy. Ricevi file da "
+"chiunque, in qualsiasi momento."
+
+#: templates/components/custom_error.html:14
+#: templates/public/authentication/password_reset_done.html:13
+#: templates/public/beta_access_request.html:14
+msgid "Back to homepage"
+msgstr "Torna alla homepage"
+
+#: templates/components/footer.html:5
+msgid "© 2024 Kezyy™. All Rights Reserved."
+msgstr "© 2024 Kezyy™. Tutti i diritti riservati."
+
+#: templates/components/footer.html:11 templates/public/privacy_policy.html:6
+msgid "Privacy Policy"
+msgstr "Politica sulla Privacy"
+
+#: templates/components/footer.html:15
+msgid "Terms of Service"
+msgstr "Termini del Servizio"
+
+#: templates/components/footer.html:27
+#: templates/emails/components/footer.html:19
+msgid "Contact us"
+msgstr "Contattaci"
 
 #: templates/components/language_modal.html:16
 msgid "Choose a language:"
-msgstr ""
+msgstr "Scegli una lingua:"
 
-#: templates/components/navbar.html:94 templates/components/navbar.html:140
-#: templates/public/authentication/signup.html:55
+#: templates/components/navbar.html:44
+msgid "Logged in as:"
+msgstr "Accesso effettuato come:"
+
+#: templates/components/navbar.html:51 templates/private/space/list.html:57
+#: web_app/mixins.py:142
+msgid "Spaces"
+msgstr "Spazi"
+
+#: templates/components/navbar.html:60
+msgid "My plan"
+msgstr "Il mio piano"
+
+#: templates/components/navbar.html:62
+msgid "Upgrade plan"
+msgstr "Upgrade"
+
+#: templates/components/navbar.html:69
+#: templates/private/settings/settings.html:8
+#: templates/private/space/detail/base.html:43
+#: templates/private/space/detail/sidebar.html:32
+#: web_app/views/space/detail.py:51
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: templates/components/navbar.html:75
+msgid "Help Center"
+msgstr "Centro Assistenza"
+
+#: templates/components/navbar.html:81
+msgid "Sign out"
+msgstr "Scollegati"
+
+#: templates/components/navbar.html:103 templates/components/navbar.html:149
+#: templates/public/authentication/login_cancelled.html:13
+#: templates/public/authentication/password_reset_from_key_done.html:8
+#: templates/public/authentication/signup.html:54
 msgid "Sign in"
 msgstr "Accedi"
 
-#: templates/components/navbar.html:96 templates/components/navbar.html:143
+#: templates/components/navbar.html:105 templates/components/navbar.html:152
 #: templates/public/beta_access_request.html:157
 msgid "Access beta"
 msgstr "Accedi alla beta"
 
-#: templates/components/navbar.html:119
+#: templates/components/navbar.html:128
 msgid "Home"
 msgstr "Home"
 
-#: templates/components/navbar.html:123
+#: templates/components/navbar.html:132
 msgid "Demo"
-msgstr ""
+msgstr "Demo"
 
-#: templates/components/navbar.html:127
+#: templates/components/navbar.html:136
 msgid "Features"
 msgstr "Funzionalità"
 
-#: templates/components/navbar.html:131
+#: templates/components/navbar.html:140
 msgid "Pricing"
 msgstr "Prezzi"
 
-#: templates/components/navbar.html:135
+#: templates/components/navbar.html:144
 msgid "Help"
 msgstr "Supporto"
 
+#: templates/components/pagination.html:5
+msgid "of"
+msgstr "di"
+
+#: templates/components/pagination.html:14
+msgid "Prev"
+msgstr "Precedente"
+
+#: templates/components/pagination.html:21
+msgid "Next"
+msgstr "Prossimo"
+
 #: templates/components/pricing.html:11
+msgid "Basic"
+msgstr "Base"
+
+#: templates/components/pricing.html:13
 msgid "Test out what Kezyy can do to streamline your file collection"
 msgstr "Valuta cosa Kezyy può fare per semplificare la raccolta di documenti"
 
-#: templates/components/pricing.html:13
+#: templates/components/pricing.html:15
 msgid "Free"
 msgstr "Gratis"
 
-#: templates/components/pricing.html:18
+#: templates/components/pricing.html:20
 msgid "Key features:"
 msgstr "Funzionalità principali:"
 
-#: templates/components/pricing.html:28
+#: templates/components/pricing.html:30
 #, python-format
 msgid ""
-"<span>Max spaces: <span class=\"font-semibold\">%(max_free_spaces)s spaces</"
+"<span> Max spaces: <span class=\"font-semibold\">%(max_free_spaces)s spaces</"
 "span></span>"
 msgstr ""
 "<span>Massimo numero di spazi: <span class=\"font-"
 "semibold\">%(max_free_spaces)s spazi</span></span>"
 
-#: templates/components/pricing.html:38
-msgid "Google Drive and One Drive integration"
-msgstr "Integrazione con Google Drive e OneDrive e Sharepoint"
+#: templates/components/pricing.html:41
+msgid "Google Drive, OneDrive and Sharepoint integration"
+msgstr "Integrazione con Google Drive, OneDrive e Sharepoint"
 
-#: templates/components/pricing.html:48
+#: templates/components/pricing.html:51
 msgid "Deadlines and reminders"
 msgstr "Scadenze e promemoria"
 
-#: templates/components/pricing.html:58
+#: templates/components/pricing.html:61
 msgid "Unlimited invitees per space"
 msgstr "Numero illimitato di invitati per spazio"
 
-#: templates/components/pricing.html:68
+#: templates/components/pricing.html:71
 msgid "Unlimited file requests per space"
 msgstr "Numero illimitato di richieste di documenti per spazio"
 
-#: templates/components/pricing.html:78
+#: templates/components/pricing.html:81
 msgid "Self service knowledge base"
 msgstr "Accesso alla knowledge base"
 
-#: templates/components/pricing.html:88 templates/components/pricing.html:149
-msgid "Get started"
-msgstr "Inizia ora"
-
-#: templates/components/pricing.html:106
-msgid "All basic features, plus:"
-msgstr "Tutte le funzionalità base, più:"
-
-#: templates/components/pricing.html:116
-msgid "Unlimited spaces"
-msgstr "Spazi illimitati"
-
-#: templates/components/pricing.html:126
-msgid "Email support"
-msgstr "Supporto via email"
-
-#: templates/components/pricing.html:131
+#: templates/components/pricing.html:87 templates/components/pricing.html:134
 msgid "Current plan"
 msgstr "Piano attuale"
 
-#: templates/components/pricing.html:135
+#: templates/components/pricing.html:91 templates/components/pricing.html:152
+msgid "Get started"
+msgstr "Inizia ora"
+
+#: templates/components/pricing.html:101
+msgid "Make Kezyy your file collection companion"
+msgstr ""
+
+#: templates/components/pricing.html:104
+msgid "/month"
+msgstr ""
+
+#: templates/components/pricing.html:109
+msgid "All basic features, plus:"
+msgstr "Tutte le funzionalità base, più:"
+
+#: templates/components/pricing.html:119
+msgid "Unlimited spaces"
+msgstr "Spazi illimitati"
+
+#: templates/components/pricing.html:129
+msgid "Email support"
+msgstr "Supporto via email"
+
+#: templates/components/pricing.html:138
 msgid "Will cancel on"
 msgstr "Scadrà il"
 
-#: templates/components/pricing.html:140
+#: templates/components/pricing.html:143
 msgid "Manage my subscription"
 msgstr "Gestisci la mia iscrizione"
 
-#: templates/components/pricing.html:145
+#: templates/components/pricing.html:148
 msgid "Upgrade"
 msgstr "Upgrade"
 
-#: templates/components/pricing.html:160
+#: templates/components/pricing.html:163
 msgid "Need Enterprise features?"
 msgstr "Ti servono funzionalità Enterprise?"
 
-#: templates/components/pricing.html:162
-#, fuzzy
-#| msgid "Contact us"
+#: templates/components/pricing.html:165
 msgid "Contact us at:"
-msgstr "Contattaci"
+msgstr "Contattaci tramite:"
 
-#: templates/components/pricing.html:169
+#: templates/components/pricing.html:172
 msgid "Tell us more"
 msgstr "Dicci di più"
+
+#: templates/components/pricing_modal.html:17
+msgid "Chose the right plan for you"
+msgstr "Scegli il piano giusto per te"
 
 #: templates/emails/changes_notification.html:11
 #, python-format
 msgid ""
-"%(receiver_name)s has requested changes to  %(title)s, click to access the "
-"space <br>"
+"%(receiver_name)s has requested changes to the file  %(title)s, click to "
+"access the space <br>"
 msgstr ""
-"%(receiver_name)s ha richiesto dei cambiamenti a  %(title)s, clicca per "
-"accedere allo spazio <br>"
+"%(receiver_name)s ha richiesto delle modifiche al file  %(title)s, clicca "
+"per accedere allo spazio <br>"
 
-#: templates/emails/changes_notification.html:25
+#: templates/emails/changes_notification.html:26
 msgid "File to change:"
 msgstr "documenti da ricaricare:"
 
-#: templates/emails/changes_notification.html:41
-#, python-format
-msgid "Notes from the receiver: %(notes)s"
-msgstr "Note dal richiedente: %(notes)s"
+#: templates/emails/changes_notification.html:42
+#, fuzzy, python-format
+#| msgid "Notes from the receiver: %(notes)s"
+msgid "Request for change note: %(notes)s"
+msgstr "Note per la richista di modifiche: %(notes)s"
 
-#: templates/emails/changes_notification.html:50
+#: templates/emails/changes_notification.html:51
 #: templates/emails/deadline_notification.html:26
 #: templates/emails/sender_invite.html:26
 #: templates/emails/sender_upload_notification.html:50
@@ -181,9 +319,9 @@ msgstr "Hai tempo fino a "
 msgid "Add the deadline to your calendar"
 msgstr "Aggiungi la scadenza al tuo calendario"
 
-#: templates/emails/components/footer.html:18
-msgid "Contact us"
-msgstr "Contattaci"
+#: templates/emails/components/footer.html:41
+msgid "Copyright 2024 Kezyy. All rights reserved."
+msgstr "Copiright 2024 Kezyy. Tutti i diritti riservati."
 
 #: templates/emails/components/main_section.html:14
 msgid "Go to Space for more details"
@@ -199,8 +337,8 @@ msgid ""
 "Remember to complete the upload at<br> <a href=\"%(space_link)s\" "
 "style=\"text-decoration:underline;\"> %(title)s </a>"
 msgstr ""
-"Ricorda di completare l'upload a<br> <a href=\"%(space_link)s\" style=\"text-"
-"decoration:underline;\"> %(title)s </a>"
+"Ricorda di completare il caricamento a<br> <a href=\"%(space_link)s\" "
+"style=\"text-decoration:underline;\"> %(title)s </a>"
 
 #: templates/emails/password_reset.html:5
 msgid ""
@@ -209,29 +347,31 @@ msgid ""
 "It can be safely ignored if you did not request a password reset. Click the "
 "link below to reset your password."
 msgstr ""
+"Stai ricevendo questa email perché tu o qualcuno altro ha richiesto il reset "
+"della password per il tuo account.\n"
+"Può essere tranquillamente ignorata se non hai richiesto un reset della "
+"password. Clicca sul link qui sotto per reimpostare la tua password."
 
 #: templates/emails/password_reset.html:10
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
-msgstr ""
+msgstr "Nel caso tu l'abbia dimenticato, il tuo nome utente è %(username)s."
 
 #: templates/emails/receiver_upload_notification.html:11
 #, python-format
 msgid "%(sender_email)s has uploaded files to  <b>%(req_title)s</b>, in space"
 msgstr ""
+"%(sender_email)s ha caricato file in <b>%(req_title)s</b>, nello spazio"
 
 #: templates/emails/receiver_upload_notification.html:24
 #: templates/emails/sender_upload_notification.html:24
-#, fuzzy
-#| msgid "File to change:"
 msgid "File uploaded:"
-msgstr "documenti da ricaricare:"
+msgstr "File caricato:"
 
 #: templates/emails/receiver_upload_notification.html:41
-#, fuzzy, python-format
-#| msgid "Notes from the receiver: %(notes)s"
+#, python-format
 msgid "Notes from the sender: %(notes)s"
-msgstr "Note dal richiedente: %(notes)s"
+msgstr "Note da parte del caricatore: %(notes)s"
 
 #: templates/emails/sender_invite.html:11
 #, python-format
@@ -245,26 +385,624 @@ msgstr ""
 #: templates/emails/sender_upload_notification.html:11
 #, python-format
 msgid "You have uploaded files to  <b>%(req_title)s</b>, in space"
-msgstr ""
+msgstr "Hai caricato file in <b>%(req_title)s</b>, nello spazio"
 
 #: templates/emails/sender_upload_notification.html:41
 #, python-format
 msgid "Upload notes: %(notes)s"
-msgstr ""
+msgstr "Note di caricamento: %(notes)s"
 
 #: templates/emails/team_invitation.html:10
 #, python-format
 msgid "%(user_identifier)s wants you to join %(org_name)s:"
-msgstr ""
+msgstr "%(user_identifier)s vuole che tu ti unisca a %(org_name)s:"
 
 #: templates/emails/team_invitation.html:19 web_app/models/organization.py:27
+msgid "Accept invitation"
+msgstr "Accetta l'invito"
+
+#: templates/private/company/detail/contacts_list.html:8
+#: templates/private/contact/list.html:11
+msgid "Create new contact"
+msgstr "Crea un nuovo contatto"
+
+#: templates/private/company/detail/contacts_list.html:20
+#: templates/private/company/list.html:23
+#: templates/private/contact/list.html:23
+#: templates/public/beta_access_request.html:86 web_app/forms/organization.py:9
+#: web_app/forms/organization.py:10 web_app/forms/settings.py:10
+#: web_app/forms/settings.py:11
+msgid "Name"
+msgstr "Nome"
+
+#: templates/private/company/detail/contacts_list.html:23
+#: templates/private/contact/list.html:26
+#: templates/private/settings/profile_form.html:13
+#: templates/public/beta_access_request.html:97 web_app/forms/contact.py:32
+msgid "Email"
+msgstr "Email"
+
+#: templates/private/company/detail/contacts_list.html:26
+#: templates/private/contact/list.html:29
+#: web_app/forms/beta_access_request.py:35 web_app/forms/contact.py:43
+#: web_app/forms/space_create.py:57
+msgid "Company"
+msgstr "Azienda"
+
+#: templates/private/company/detail/contacts_list.html:41
+#: templates/private/contact/list.html:44
+msgid "There are no contacts yet"
+msgstr "Ancora non ci sono contatti"
+
+#: templates/private/company/list.html:7 templates/private/company/list.html:37
+#: templates/private/sidebar.html:79
+msgid "Companies"
+msgstr "Aziende"
+
+#: templates/private/company/list.html:12
+msgid "Create new company"
+msgstr "Crea una nuova azienda"
+
+#: templates/private/company/list.html:41
+msgid "There are no companies yet"
+msgstr "Non ci sono ancora aziende"
+
+#: templates/private/contact/list.html:6 templates/private/sidebar.html:90
+msgid "Contacts"
+msgstr "Contatti"
+
+#: templates/private/organization/create_form.html:19
+msgid "Save organization"
+msgstr "Salva organizzazione"
+
+#: templates/private/organization/create_modal.html:10
+msgid "Add new organization"
+msgstr "Aggiungi una nuova organizzazione"
+
+#: templates/private/organization/team_invitation_form.html:19
+#: templates/private/space/detail/sender/sender_info.html:36
+msgid "Send invitation"
+msgstr "Manda invito"
+
+#: templates/private/organization/team_list.html:8
+#: templates/private/organization/team_list.html:71
+msgid "Members"
+msgstr "Membri"
+
+#: templates/private/organization/team_list.html:32
+msgid "Owner"
+msgstr "Proprietario"
+
+#: templates/private/organization/team_list.html:37
+msgid "Member"
+msgstr "Membro"
+
+#: templates/private/organization/team_list.html:47
+msgid "return confirm('Are you sure you want to remove this member?');"
+msgstr "return confirm('Sei sicuro di voler rimuovere questo membro?');"
+
+#: templates/private/organization/team_list.html:49
+msgid "return confirm('Are you sure you want to leave this organization?');"
+msgstr "return confirm('Sei sicuro di voler lasciare questa organizzazione?');"
+
+#: templates/private/organization/team_list.html:54
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: templates/private/organization/team_list.html:57
+msgid "Leave"
+msgstr "Lascia"
+
+#: templates/private/organization/team_list.html:76
+msgid "There are no users yet"
+msgstr "Non ci sono ancora utenti"
+
+#: templates/private/organization/team_list.html:84
 #, fuzzy
 #| msgid "Invitation:"
-msgid "Accept invitation"
-msgstr "Invito:"
+msgid "Pending invitations"
+msgstr "Inviti pendenti"
+
+#: templates/private/organization/team_list.html:101
+msgid "return confirm('Are you sure you want to revoke this invitation?');"
+msgstr "return confirm('Sei sicuro di voler revocare questo invito?');"
+
+#: templates/private/organization/team_list.html:104
+msgid "Revoke"
+msgstr "Revoca"
+
+#: templates/private/request/detail.html:37
+#, fuzzy
+#| msgid "Untitled request*"
+msgid "Add file request"
+msgstr "Richiesta senza titolo*"
+
+#: templates/private/request/detail.html:40
+#, fuzzy
+#| msgid "Untitled request*"
+msgid "Add text request"
+msgstr "Richiesta senza titolo*"
+
+#: templates/private/request/upload_request.html:30
+#: templates/private/space/create/components/destination/widget.html:4
+msgid "Destination folder"
+msgstr "Cartella di destinazione"
+
+#: templates/private/request/upload_request.html:31
+#: templates/private/space/create/components/destination/widget.html:5
+msgid "MANDATORY"
+msgstr "OBBLIGATORIO"
+
+#: templates/private/settings/language_selector.html:6
+#: templates/private/settings/settings.html:16 web_app/forms/settings.py:17
+msgid "Language"
+msgstr "Lingua"
+
+#: templates/private/settings/notifications_form.html:36
+#: templates/private/settings/profile_form.html:35
+#: templates/private/settings/receiver_notifications_form.html:19
+msgid "Save"
+msgstr "Salva"
+
+#: templates/private/settings/settings.html:11
+msgid "Profile"
+msgstr "Profilo"
+
+#: templates/private/settings/settings.html:21
+#: templates/private/space/detail/components/all_senders_modal.html:33
+#: templates/private/space/detail/sender/sender_info.html:14
+msgid "Notifications"
+msgstr "Notifiche"
+
+#: templates/private/settings/settings.html:26
+msgid "Connections"
+msgstr "Connessioni"
+
+#: templates/private/settings/settings.html:34
+msgid "Provider"
+msgstr "Fornitore"
+
+#: templates/private/settings/settings.html:35
+msgid "Cloud Storage"
+msgstr "Archiviazione Cloud"
+
+#: templates/private/settings/settings.html:36
+msgid "Status"
+msgstr "Stato"
+
+#: templates/private/settings/settings.html:37
+msgid "Options"
+msgstr "Opzioni"
+
+#: templates/private/settings/settings.html:53
+msgid "No providers available."
+msgstr "Nessun fornitore disponibile"
+
+#: templates/private/settings/settings.html:57
+msgid "Sender Notifications"
+msgstr "Notifiche per il caricatore"
+
+#: templates/private/settings/settings.html:63
+msgid "Close your account"
+msgstr "Chiudi il tuo account"
+
+#: templates/private/settings/settings.html:69
+msgid "Delete account"
+msgstr "Cancella account"
+
+#: templates/private/settings/social_accounts_row.html:40
+msgid "Connected"
+msgstr "Connesso"
+
+#: templates/private/settings/social_accounts_row.html:46
+msgid "Connection expired"
+msgstr "Connessione scaduta"
+
+#: templates/private/settings/social_accounts_row.html:52
+msgid "Not connected"
+msgstr "Non connesso"
+
+#: templates/private/settings/social_accounts_row.html:62
+msgid "Connect"
+msgstr "Connesso"
+
+#: templates/private/settings/social_accounts_row.html:67
+msgid "Reconnect"
+msgstr "Reconnect"
+
+#: templates/private/settings/socialaccount_disconnect.html:5
+msgid ""
+"return confirm('Are you sure you want to disconnect this account? All "
+"associated requests will be suspended.')"
+msgstr ""
+"return confirm('Sei sicuro di voler disconnettere questo account? Tutte le "
+"richieste associate verranno sospese.')"
+
+#: templates/private/settings/socialaccount_disconnect.html:8
+msgid "Disconnect"
+msgstr "Disconnetti"
+
+#: templates/private/sidebar.html:5
+msgid "Organization"
+msgstr "Organizzazione"
+
+#: templates/private/sidebar.html:43
+msgid "Create new organization"
+msgstr "Crea una nuova organizzazione"
+
+#: templates/private/sidebar.html:67
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: templates/private/sidebar.html:103
+msgid "Team"
+msgstr "Team"
+
+#: templates/private/space/components/delete_form.html:3
+#: templates/private/space/components/space_actions_dropdown.html:26
+msgid "return confirm('Are you sure you want to delete this space?');"
+msgstr "return confirm('Sei sicuro di voler eliminare questo spazio?');"
+
+#: templates/private/space/components/space_actions_dropdown.html:21
+msgid "Duplicate"
+msgstr "Duplica"
+
+#: templates/private/space/components/space_actions_dropdown.html:29
+msgid "Delete"
+msgstr "Elimina"
+
+#: templates/private/space/create/components/contacts/add_contact.html:3
+msgid "Add contact"
+msgstr "Aggiungi contatto"
+
+#: templates/private/space/create/components/contacts/create_form.html:37
+msgid "Save contact"
+msgstr "Salva contatto"
+
+#: templates/private/space/create/components/contacts/create_modal.html:11
+msgid "Add new contact"
+msgstr "Aggiungi nuovo contatto"
+
+#: templates/private/space/create/components/destination/destination_search.html:38
+#: templates/private/space/create/components/destination/destination_search.html:50
+msgid "To access service:"
+msgstr "Per accedere al servizio:"
+
+#: templates/private/space/create/components/destination/destination_search.html:42
+#, fuzzy, python-format
+#| msgid "Connect a %(missing_provider.name|title)s Account"
+msgid "Connect a %(provider_name)s Account"
+msgstr "Collega un account %(missing_provider.name|title)s"
+
+#: templates/private/space/create/components/destination/destination_search.html:54
+msgid "Reconnect your"
+msgstr "Riconnetti il tuo"
+
+#: templates/private/space/create/components/destination/destination_search.html:57
+msgid "Account"
+msgstr "Account"
+
+#: templates/private/space/create/components/destination/folders_search_results.html:10
+msgid "Open"
+msgstr "Apri"
+
+#: templates/private/space/create/components/destination/folders_search_results.html:16
+msgid "No results found"
+msgstr "Nessun risultato trovato"
+
+#: templates/private/space/create/components/request_form.html:6
+#: web_app/views/space/detail.py:27
+msgid "Requests"
+msgstr "Richieste"
+
+#: templates/private/space/create/components/request_form.html:26
+msgid "Are you sure you want to delete this request?"
+msgstr "Sei sicuro di voler eliminare questa richiesta?"
+
+#: templates/private/space/create/components/request_form.html:84
+msgid "Request is suspended, select a destination to activate it again"
+msgstr ""
+"La richiesta è sospesa, seleziona una destinazione per attivarla nuovamente"
+
+#: templates/private/space/detail/base.html:32
+#: templates/private/space/detail/sidebar.html:19
+#: templates/private/space/list.html:36
+msgid "Summary"
+msgstr "Riassunto"
+
+#: templates/private/space/detail/base.html:53
+#: templates/private/space/detail/components/upload_request_modal.html:103
+#: templates/private/space/detail/sidebar.html:45
+#: web_app/views/space/detail.py:39
+#, fuzzy
+#| msgid "Uploads History"
+msgid "History"
+msgstr "Cronologia dei caricamenti"
+
+#: templates/private/space/detail/base.html:64
+#: templates/private/space/detail/sidebar.html:57
+#: web_app/views/space/detail.py:33
+msgid "Share"
+msgstr ""
+
+#: templates/private/space/detail/base.html:110
+#: templates/public/sender/space_detail.html:58
+msgid "Deadline:"
+msgstr "Deadline:"
+
+#: templates/private/space/detail/base.html:124
+#: templates/public/sender/space_detail.html:74
+msgid "Deadline expired!"
+msgstr "Deadline superata!"
+
+#: templates/private/space/detail/base.html:127
+#: templates/private/space/detail/base.html:139
+msgid "To change this setting edit the space"
+msgstr "Per modificare questa impostazione modifica lo spazio"
+
+#: templates/private/space/detail/base.html:132
+msgid "Uploads allowed after the deadline"
+msgstr "Caricamenti consentiti dopo la scadenza"
+
+#: templates/private/space/detail/base.html:134
+msgid "Uploads forbidden after the deadline"
+msgstr "Caricamenti vietati dopo la scadenza"
+
+#: templates/private/space/detail/base.html:143
+msgid "Notifications will be sent out on"
+msgstr "Le notifiche verranno inviate il"
+
+#: templates/private/space/detail/base.html:144
+msgid "at"
+msgstr "alle"
+
+#: templates/private/space/detail/base.html:154
+msgid "Request Summary"
+msgstr "Riepilogo delle richieste"
+
+#: templates/private/space/detail/base.html:156
+#, fuzzy
+#| msgid "Request"
+msgid "Add request"
+msgstr "Richiesta"
+
+#: templates/private/space/detail/components/all_senders_modal.html:11
+msgid "Everyone"
+msgstr "Chiunque"
+
+#: templates/private/space/detail/components/all_senders_modal.html:38
+#: templates/private/space/detail/sender/sender_info.html:19
+msgid "Invitation"
+msgstr "Invito"
+
+#: templates/private/space/detail/components/all_senders_modal.html:47
+msgid "Send invitation to everyone"
+msgstr "Manda invito a tutti"
+
+#: templates/private/space/detail/components/all_senders_modal.html:60
+#: templates/private/space/detail/sender/sender_info.html:52
+msgid "Deadline Reminder"
+msgstr "Promemoria della deadline"
+
+#: templates/private/space/detail/components/all_senders_modal.html:67
+msgid "Send reminder to everyone"
+msgstr "Manda promemoria a tutti"
+
+#: templates/private/space/detail/components/changes_form.html:31
+#: templates/private/space/detail/components/upload_request_modal.html:77
+msgid "Request changes"
+msgstr "Richiedi modifiche"
+
+#: templates/private/space/detail/components/history_table.html:9
+msgid "Upload Timestamp"
+msgstr "Data e ora di caricamento"
+
+#: templates/private/space/detail/components/history_table.html:13
+msgid "Uploader email"
+msgstr "Email del caricatore"
+
+#: templates/private/space/detail/components/history_table.html:18
+#: templates/public/sender/request_detail.html:48
+msgid "Request"
+msgstr "Richiesta"
+
+#: templates/private/space/detail/components/history_table.html:22
+#: web_app/forms/file.py:42 web_app/forms/file.py:103
+msgid "Notes"
+msgstr "Note"
+
+#: templates/private/space/detail/components/history_table.html:25
+msgid "File"
+msgstr "File"
+
+#: templates/private/space/detail/components/history_table.html:52
+msgid "from public link"
+msgstr "da link pubblico"
+
+#: templates/private/space/detail/components/history_table.html:170
+#: templates/private/space/detail/components/history_table.html:172
+msgid "No uploads"
+msgstr "Nessun caricamento"
+
+#: templates/private/space/detail/components/request_table.html:13
+#: templates/private/space/detail/components/upload_request_table.html:13
+msgid "Request Title"
+msgstr "Titolo della richiesta"
+
+#: templates/private/space/detail/components/sender_table.html:20
+#, fuzzy
+#| msgid "Invited by:"
+msgid "Invitee"
+msgstr "Invitato"
+
+#: templates/private/space/detail/components/sender_table.html:23
+msgid "Space Link"
+msgstr "Link dello Spazio"
+
+#: templates/private/space/detail/components/sender_table.html:26
+msgid "Link Status"
+msgstr "Stato del Link"
+
+#: templates/private/space/detail/components/sender_table.html:53
+#: templates/private/space/detail/components/upload_request_row.html:42
+msgid "(suspended)"
+msgstr "(sospeso)"
+
+#: templates/private/space/detail/components/sender_table.html:54
+#: templates/private/space/detail/components/upload_request_row.html:43
+msgid "Request suspended, add a destination to activate it again"
+msgstr "Richiesta sospesa, aggiungi una destinazione per attivarla nuovamente"
+
+#: templates/private/space/detail/components/sender_table.html:75
+msgid "Everyone (public)"
+msgstr "Tutti (pubblico)"
+
+#: templates/private/space/detail/components/sender_table.html:82
+msgid "public space link"
+msgstr "link dello spazio pubblico"
+
+#: templates/private/space/detail/components/sender_table.html:84
+#: templates/private/space/detail/sender/sender_info.html:101
+#: templates/private/space/detail/sender/sender_row.html:15
+#: templates/private/space/detail/sender/sender_row_upload.html:37
+msgid "Copy link"
+msgstr "Copia link"
+
+#: templates/private/space/detail/components/sender_table.html:102
+msgid "inactive"
+msgstr "inattivo"
+
+#: templates/private/space/detail/components/sender_table.html:106
+msgid "active"
+msgstr "attivo"
+
+#: templates/private/space/detail/components/sender_table.html:123
+#: templates/private/space/detail/components/upload_request_row.html:78
+#: templates/private/space/detail/sender/sender_row_upload.html:61
+msgid "files"
+msgstr "file"
+
+#: templates/private/space/detail/components/upload_request_modal.html:24
+#, fuzzy, python-format
+#| msgid "Uploads by: %(sender.email)s"
+msgid "Uploads by: %(sender_email)s"
+msgstr "Caricamenti di: %(sender.email)s"
+
+#: templates/private/space/detail/components/upload_request_modal.html:27
+msgid "Uploads via public link"
+msgstr "Caricamenti tramite link pubblico"
+
+#: templates/private/space/detail/components/upload_request_modal.html:55
+#: templates/private/space/detail/components/upload_request_modal.html:60
+#: templates/private/space/detail/components/upload_request_modal.html:64
+msgid "Accept all files"
+msgstr "Accetta tutti i file"
+
+#: templates/private/space/detail/components/upload_request_row.html:56
+#: templates/private/space/detail/components/upload_request_row.html:60
+msgid "Unable to retrieve name"
+msgstr "Impossibile recuperare il nome"
+
+#: templates/private/space/detail/components/upload_request_row.html:64
+msgid "No active destination"
+msgstr "Nessuna destinazione attiva"
+
+#: templates/private/space/detail/components/upload_request_table.html:16
+msgid "Current destination"
+msgstr "Destinazione attuale"
+
+#: templates/private/space/detail/components/upload_request_table.html:19
+msgid "Uploaded files"
+msgstr "File caricati"
+
+#: templates/private/space/detail/event/history.html:30
+msgid "Type to search..."
+msgstr "Digita per cercare..."
+
+#: templates/private/space/detail/sender/list.html:9
+msgid "Add link"
+msgstr ""
+
+#: templates/private/space/detail/sender/sender_info.html:22
+msgid "Last invitation:"
+msgstr "Ultimo invito:"
+
+#: templates/private/space/detail/sender/sender_info.html:25
+msgid "Never invited"
+msgstr "Mai invitato"
+
+#: templates/private/space/detail/sender/sender_info.html:55
+msgid "Last notification:"
+msgstr "Ultimo invito:"
+
+#: templates/private/space/detail/sender/sender_info.html:60
+msgid "Never notified"
+msgstr "Mai notificato"
+
+#: templates/private/space/detail/sender/sender_info.html:72
+msgid "Send reminder"
+msgstr "Invia promemoria"
+
+#: templates/private/space/detail/sender/sender_info.html:91
+msgid "Space link"
+msgstr "Link dello spazio"
+
+#: templates/private/space/detail/sender/sender_info.html:95
+msgid "Link to space:"
+msgstr "Link allo spazio"
+
+#: templates/private/space/detail/sender/sender_info.html:99
+#: templates/private/space/detail/sender/sender_row.html:13
+#: templates/private/space/detail/sender/sender_row_upload.html:35
+msgid "space link"
+msgstr "link dello spazio"
+
+#: templates/private/space/detail/sender/sender_info.html:113
+msgid "Link status:"
+msgstr "Stato del link"
+
+#: templates/private/space/detail/sender/sender_modal.html:30
+msgid "Uploads"
+msgstr "Caricamenti"
+
+#: templates/private/space/detail/sender/sender_row.html:40
+msgid "Confirm"
+msgstr ""
+
+#: templates/private/space/detail/sender/sender_row_upload.html:59
+msgid "number of uploaded files"
+msgstr "numero di file caricati"
+
+#: templates/private/space/list.html:8
+msgid "Your Spaces"
+msgstr "I tuoi Spazi"
+
+#: templates/private/space/list.html:40
+msgid "Edit"
+msgstr "Modifica"
+
+#: templates/private/space/list.html:61
+msgid "You have not created any spaces yet"
+msgstr "Non hai ancora creato nessuno spazio"
+
+#: templates/private/space/list.html:63
+msgid "Create your first space"
+msgstr "Crea il tuo primo spazio"
+
+#: templates/private/space/list.html:65
+msgid "Don't know where to start?"
+msgstr "Non sai da dove iniziare?"
+
+#: templates/private/space/list.html:65
+msgid "Read our guide"
+msgstr "Leggi la nostra guida"
+
+#: templates/public/authentication/login.html:7
+msgid "Log in"
+msgstr "Accedi"
 
 #: templates/public/authentication/login.html:53
-#: templates/public/authentication/signup.html:61
+#: templates/public/authentication/signup.html:60
 msgid "or"
 msgstr "oppure"
 
@@ -280,6 +1018,34 @@ msgstr ""
 msgid "Request beta access"
 msgstr "Richiedi accesso alla beta"
 
+#: templates/public/authentication/login_cancelled.html:8
+msgid "Login Cancelled"
+msgstr "Accesso Annullato"
+
+#: templates/public/authentication/login_cancelled.html:12
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to"
+msgstr ""
+"Hai deciso di annullare l'accesso al nostro sito utilizzando uno dei tuoi "
+"account esistenti. Se è stato un errore,per favore procedi a"
+
+#: templates/public/authentication/password_reset_done.html:5
+msgid "Password Reset"
+msgstr "Reimpostazione Password"
+
+#: templates/public/authentication/password_reset_done.html:6
+msgid "Email sent"
+msgstr "Email inviata"
+
+#: templates/public/authentication/password_reset_done.html:7
+msgid ""
+"We have sent you an email. If you have not received it please check your "
+"spam folder. Otherwise contact us if you do not receive it in a few minutes."
+msgstr ""
+"Ti abbiamo inviato un'email. Se non l'hai ricevuta controlla nella tua "
+"cartella spam. Altrimenti contattaci se non la ricevi entro pochi minuti."
+
 #: templates/public/authentication/password_reset_from_key.html:5
 #: templates/public/authentication/password_reset_from_key.html:13
 #: templates/public/authentication/password_reset_from_key.html:38
@@ -289,7 +1055,18 @@ msgstr "Modifica Password"
 
 #: templates/public/authentication/password_reset_from_key.html:10
 msgid "Bad Token"
+msgstr "Token non valido"
+
+#: templates/public/authentication/password_reset_from_key.html:19
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a> ."
 msgstr ""
+"Il link di reimpostazione della password non era valido, probabilmente "
+"perché già utilizzato. Si prega di richiedere una <a "
+"href=\"%(passwd_reset_url)s\">nuova reimpostazione della password</a>."
 
 #: templates/public/authentication/password_reset_from_key.html:28
 msgid "Back to hompage"
@@ -315,15 +1092,15 @@ msgstr ""
 msgid "Reset password"
 msgstr "Reimposta la Password"
 
-#: templates/public/authentication/signup.html:8
+#: templates/public/authentication/signup.html:7
 msgid "Create a new account"
 msgstr "Crea un nuovo account"
 
-#: templates/public/authentication/signup.html:50
+#: templates/public/authentication/signup.html:49
 msgid "Register new account"
 msgstr "Crea nuovo account"
 
-#: templates/public/authentication/signup.html:55
+#: templates/public/authentication/signup.html:54
 msgid "Already have an account?"
 msgstr "Hai già un account?"
 
@@ -335,10 +1112,6 @@ msgstr "Grazie per aver richiesto l'accesso alla Beta di Kezyy"
 msgid ""
 "We'll get back to you in a few hours after we have reviewed your request."
 msgstr "Ti risponderemo in poche ore dopo aver elaborato la tua richiesta."
-
-#: templates/public/beta_access_request.html:14
-msgid "Back to homepage"
-msgstr "Torna alla homepage"
 
 #: templates/public/beta_access_request.html:25
 msgid "Kezyy's Beta Access"
@@ -387,18 +1160,10 @@ msgid "Book a demo instead"
 msgstr "Prenota una demo invece"
 
 #: templates/public/beta_access_request.html:86
-msgid "Name"
-msgstr "Nome"
-
-#: templates/public/beta_access_request.html:86
 #: templates/public/beta_access_request.html:99
 #: templates/public/beta_access_request.html:113
 msgid "required"
 msgstr "obbligatorio"
-
-#: templates/public/beta_access_request.html:97
-msgid "Email"
-msgstr "Email"
 
 #: templates/public/beta_access_request.html:112
 msgid "Briefly describe how and why you collect files?"
@@ -433,12 +1198,12 @@ msgstr ""
 "documenti nominati a tuo piacimento sul tuo drive."
 
 #: templates/public/public_landing.html:22
-#: templates/public/public_landing.html:228
+#: templates/public/public_landing.html:241
 msgid "Access beta for free"
 msgstr "Accedi gratuitamente alla beta"
 
 #: templates/public/public_landing.html:24
-#: templates/public/public_landing.html:230
+#: templates/public/public_landing.html:243
 msgid "No credit card required"
 msgstr "Nessuna carta di credito richiesta"
 
@@ -470,20 +1235,16 @@ msgstr ""
 "Colleziona documenti da più controparti, inviando a ciascuna il suo link. "
 "Per loro non è richiesta alcuna registrazione."
 
-#: templates/public/public_landing.html:69
-msgid "images/home_features/sender_link.png"
-msgstr ""
-
 #: templates/public/public_landing.html:71
 #: templates/public/public_landing.html:83
-#: templates/public/public_landing.html:94
-#: templates/public/public_landing.html:105
-#: templates/public/public_landing.html:116
-#: templates/public/public_landing.html:128
-#: templates/public/public_landing.html:139
-#: templates/public/public_landing.html:150
+#: templates/public/public_landing.html:96
+#: templates/public/public_landing.html:109
+#: templates/public/public_landing.html:122
+#: templates/public/public_landing.html:135
+#: templates/public/public_landing.html:148
+#: templates/public/public_landing.html:161
 msgid "disable sender link gif"
-msgstr "disabilita il link del mittente gif"
+msgstr "disabilita il link del mittente - gif"
 
 #: templates/public/public_landing.html:77
 msgid "All instructions in one place"
@@ -497,16 +1258,12 @@ msgstr ""
 "Sostituisci lunghi scambi di email specificando le istruzioni in un unico "
 "posto. Aggiorna i dettagli in qualunque momento."
 
-#: templates/public/public_landing.html:81
-msgid "images/home_features/instructions.png"
-msgstr ""
-
-#: templates/public/public_landing.html:88
+#: templates/public/public_landing.html:90
 msgid "No awkward follow-ups with deadlines and reminders"
 msgstr ""
 "Nessun imbarazzante sollecito grazie a scadenze e promemoria automatici"
 
-#: templates/public/public_landing.html:90
+#: templates/public/public_landing.html:92
 msgid ""
 "Set deadlines visible in calendars and let automated gentle reminders "
 "replace awkward pings."
@@ -514,29 +1271,21 @@ msgstr ""
 "Imposta scadenze da aggiungere al calendario e lascia che i promemoria "
 "automatici non ti facciano passare per insistente."
 
-#: templates/public/public_landing.html:92
-msgid "images/home_features/deadline.png"
-msgstr ""
-
-#: templates/public/public_landing.html:99
+#: templates/public/public_landing.html:103
 msgid "Predefined file destination"
 msgstr "Cartelle di destinazione preimpostate per ogni documento"
 
-#: templates/public/public_landing.html:101
+#: templates/public/public_landing.html:105
 msgid "Assign to each file a specific destination in your drive system."
 msgstr ""
 "Assegna a ciascun documenti una una cartella di destinazione specifica nel "
 "tuo drive."
 
-#: templates/public/public_landing.html:103
-msgid "images/home_features/destination.png"
-msgstr ""
-
-#: templates/public/public_landing.html:110
+#: templates/public/public_landing.html:116
 msgid "Parametric file names"
 msgstr "Nomi parametrici per i documenti"
 
-#: templates/public/public_landing.html:112
+#: templates/public/public_landing.html:118
 msgid ""
 "Stop renaming every attachment you receive, set a name that will tell what's "
 "inside including the upload date, sender email, and more."
@@ -545,15 +1294,11 @@ msgstr ""
 "rappresentativi  del contenuto grazie a componenti parametriche tra cui la "
 "data di caricamento, il nome del mittente e altro ancora."
 
-#: templates/public/public_landing.html:114
-msgid "images/home_features/naming.png"
-msgstr ""
-
-#: templates/public/public_landing.html:122
+#: templates/public/public_landing.html:129
 msgid "Multiple file requests via one link"
 msgstr "Colleziona più documenti tramite un unico link"
 
-#: templates/public/public_landing.html:124
+#: templates/public/public_landing.html:131
 msgid ""
 "Never ask to send the missing file again. Add multiple file requests to each "
 "upload space and set dedicated instructions and rules."
@@ -562,15 +1307,11 @@ msgstr ""
 "spazio di caricamento senza modificare il link di accesso e imposta "
 "istruzioni dedicate per ogni richiesta."
 
-#: templates/public/public_landing.html:126
-msgid "images/home_features/multi_request.png"
-msgstr ""
-
-#: templates/public/public_landing.html:133
+#: templates/public/public_landing.html:142
 msgid "Space dashboard"
-msgstr "Dashboard deglo spazio di caricamento"
+msgstr "Dashboard dello spazio di caricamento"
 
-#: templates/public/public_landing.html:135
+#: templates/public/public_landing.html:144
 msgid ""
 "Don't go through your email to see what's missing, the space dashboard has "
 "everything you need."
@@ -578,15 +1319,11 @@ msgstr ""
 "Non cercare tra le tue email per vedere cosa manca, la dashboard dello "
 "spazio ha tutto ciò di cui hai bisogno."
 
-#: templates/public/public_landing.html:137
-msgid "images/home_features/summary.png"
-msgstr ""
-
-#: templates/public/public_landing.html:144
+#: templates/public/public_landing.html:155
 msgid "No more wrong files"
-msgstr ""
+msgstr "Mai più file sbagliati"
 
-#: templates/public/public_landing.html:146
+#: templates/public/public_landing.html:157
 msgid ""
 "Counterparties upload files in one dedicated space. Each file is instantly "
 "validated by your rules, making progress transparent to all."
@@ -594,23 +1331,19 @@ msgstr ""
 "Ogni documento caricato viene validato secondo le tue regole istantaneamente "
 "per notificare subito l'invitato che qualcosa non è corretto."
 
-#: templates/public/public_landing.html:148
-msgid "images/home_features/restrictions.png"
-msgstr ""
-
-#: templates/public/public_landing.html:162
+#: templates/public/public_landing.html:175
 msgid "Choose the right plan for you and your team"
 msgstr "Scegli il piano giusto per te e il tuo team"
 
-#: templates/public/public_landing.html:173
+#: templates/public/public_landing.html:186
 msgid "Security first"
 msgstr "Sicurezza al primo posto"
 
-#: templates/public/public_landing.html:174
+#: templates/public/public_landing.html:187
 msgid "Kezyy never stores your files"
 msgstr "Kezyy non salva mai i tuoi documenti"
 
-#: templates/public/public_landing.html:175
+#: templates/public/public_landing.html:188
 msgid ""
 "Kezyy ensures direct transfers from your counterparties to your storage "
 "system, keeping files extra safe and confidential."
@@ -618,24 +1351,24 @@ msgstr ""
 "Kezyy garantisce trasferimenti diretti dai tuoi partner al tuo sistema di "
 "archiviazione, mantenendo i documenti sicuri e confidenziali."
 
-#: templates/public/public_landing.html:181
+#: templates/public/public_landing.html:194
 msgid "Google Drive<br>connection"
 msgstr "Connessione a<br>Google Drive"
 
-#: templates/public/public_landing.html:182
+#: templates/public/public_landing.html:195
 msgid "Receive files on shared folders too."
 msgstr "Ricevi documenti anche in cartelle condivise."
 
-#: templates/public/public_landing.html:186
+#: templates/public/public_landing.html:199
 msgid "OneDrive<br>connection"
 msgstr "Connessione a<br>OneDrive"
 
-#: templates/public/public_landing.html:187
+#: templates/public/public_landing.html:200
 msgid "Make received files instantly available to your peers."
 msgstr ""
 "Rendi i documenti ricevuti immediatamente disponibili ai tuoi colleghi."
 
-#: templates/public/public_landing.html:202
+#: templates/public/public_landing.html:215
 msgid ""
 "\"Managing hundreds of weekly customer files via email, from download to "
 "Drive upload, was tedious, especially tracking missing submissions. With "
@@ -648,70 +1381,74 @@ msgstr ""
 "direttamente dove li voglio. Con Kezyy, i file arrivano direttamente dove "
 "necessario, e siamo percepiti come più organizzati.\""
 
-#: templates/public/public_landing.html:223
+#: templates/public/public_landing.html:236
 msgid "Get started for free"
 msgstr "Inizia gratuitamente"
 
-#: templates/public/public_landing.html:224
+#: templates/public/public_landing.html:237
 msgid "Start collecting files on autopilot"
 msgstr "Inizia a raccogliere documenti con il pilota automatico"
 
-#: templates/public/sender_space_detail.html:14
+#: templates/public/sender/request_detail.html:14
+#: templates/public/sender/space_detail.html:14
 msgid "Accessing as:"
 msgstr "Accesso come:"
 
-#: templates/public/sender_space_detail.html:16
+#: templates/public/sender/request_detail.html:16
+#: templates/public/sender/space_detail.html:16
 msgid "Accessing via public link"
 msgstr "Accesso tramite link pubblico"
 
-#: templates/public/sender_space_detail.html:18
+#: templates/public/sender/request_detail.html:18
+#: templates/public/sender/space_detail.html:18
 msgid "Invited by:"
 msgstr "Invitato da:"
 
-#: templates/public/sender_space_detail.html:39
+#: templates/public/sender/request_detail.html:39
+#: templates/public/sender/space_detail.html:39
 msgid "Upload Space"
-msgstr "Spazio di Upload"
+msgstr "Spazio di caricamento"
 
-#: templates/public/sender_space_detail.html:55
+#: templates/public/sender/request_detail.html:99
 msgid "Total max size of uploads: 50MB"
 msgstr "Massima dimensione totale dei documenti in un caricamento: 50MB"
 
-#: templates/public/sender_space_detail.html:97
-msgid "It is not possible to upload files anymore. For any inquiries, contact:"
-msgstr ""
-"Non è più possibile caricare documenti. Per qualsiasi domanda, contatta:"
-
-#: templates/public/sender_space_detail.html:162
+#: templates/public/sender/request_detail.html:116
 msgid "Click to upload"
 msgstr "Clicca per caricare"
 
-#: templates/public/sender_space_detail.html:204
+#: templates/public/sender/request_detail.html:158
 msgid "Use this as a reference for your upload:"
 msgstr "Usa questo come riferimento per il tuo caricamento:"
 
-#: templates/public/sender_space_detail.html:205
+#: templates/public/sender/request_detail.html:159
 msgid "Template"
 msgstr "Modello"
 
-#: templates/public/sender_space_detail.html:212
-msgid "Restrictions:"
-msgstr "Restrizioni:"
-
-#: templates/public/sender_space_detail.html:215
-msgid "Allowed file extensions:"
-msgstr "Estensioni di file consentite:"
-
-#: templates/public/sender_space_detail.html:230
+#: templates/public/sender/request_detail.html:223
 msgid "Previous uploads"
 msgstr "Caricamenti precedenti"
 
-#: templates/public/sender_space_detail.html:250
+#: templates/public/sender/request_detail.html:239
 msgid "Get an email with a summary of the files uploaded"
-msgstr ""
+msgstr "Ricevi un'email con un riepilogo dei file caricati"
 
-#: templates/public/sender_space_detail.html:255
+#: templates/public/sender/request_detail.html:244
 msgid "Confirm and Upload"
 msgstr "Conferma e Carica"
+
+#: templates/public/sender/space_detail.html:79
+msgid "You will not be able to upload files after the deadline."
+msgstr "Non sarà possibile caricare file dopo la scadenza."
+
+#: templates/public/sender/space_detail.html:91
+msgid "Deadline Expired"
+msgstr "Deadline superata"
+
+#: templates/public/sender/space_detail.html:93
+msgid "It is not possible to upload files anymore. For any inquiries, contact:"
+msgstr ""
+"Non è più possibile caricare documenti. Per qualsiasi domanda, contatta:"
 
 #: templates/public/snippets/custom_login_social.html:9
 msgid "Sign in with"
@@ -721,6 +1458,16 @@ msgstr "Accedi con"
 msgid "Or use a third-party"
 msgstr "O usa un servizio terzo"
 
+#: web_app/adapters.py:54
+msgid "You can not disconnect from your last account"
+msgstr "Non puoi disconnetterti dal tuo ultimo account"
+
+#: web_app/adapters.py:55
+#, fuzzy
+#| msgid "Disconnect"
+msgid "Cannot disconnect"
+msgstr "Impossibile disconnettere"
+
 #: web_app/forms/authentication/login.py:16
 msgid "Forgot your password?"
 msgstr "Dimenticato la password?"
@@ -729,19 +1476,168 @@ msgstr "Dimenticato la password?"
 msgid "Reset"
 msgstr "Reimposta"
 
-#: web_app/forms/authentication/signup.py:20
+#: web_app/forms/authentication/signup.py:11
+#: web_app/forms/authentication/signup.py:14
+msgid "Username"
+msgstr "Nome utente"
+
+#: web_app/forms/authentication/signup.py:21
 msgid "Email address"
 msgstr "Indirizzo email"
 
-#: web_app/forms/file.py:37
+#: web_app/forms/beta_access_request.py:10
+msgid "John Doe"
+msgstr "Andrea Rossi"
+
+#: web_app/forms/beta_access_request.py:12
+msgid "User Name"
+msgstr "Nome"
+
+#: web_app/forms/beta_access_request.py:15
+msgid "jhon.doe@mail.com"
+msgstr "andrea.rossi@mail.com"
+
+#: web_app/forms/beta_access_request.py:17
+msgid "User Email"
+msgstr "Email"
+
+#: web_app/forms/beta_access_request.py:18
+msgid ""
+"This email will be used to grant you access to the beta version, pay "
+"attention to the spelling or you will not hear from us."
+msgstr ""
+
+#: web_app/forms/beta_access_request.py:20
+msgid "Finance"
+msgstr "Finanza"
+
+#: web_app/forms/beta_access_request.py:23
+msgid "Industry"
+msgstr "Settore"
+
+#: web_app/forms/beta_access_request.py:26
+msgid "United States"
+msgstr "Italia"
+
+#: web_app/forms/beta_access_request.py:29
+msgid "Country"
+msgstr "Paese"
+
+#: web_app/forms/beta_access_request.py:32
+msgid "Acme Inc."
+msgstr "ABC spa"
+
+#: web_app/forms/beta_access_request.py:38
+msgid "Accountant"
+msgstr "Contabile"
+
+#: web_app/forms/beta_access_request.py:41
+msgid "Role"
+msgstr "Ruolo"
+
+#: web_app/forms/beta_access_request.py:46
+msgid "Explain what you would like to use Kezyy for"
+msgstr "Spiega per cosa vorresti usare Kezyy"
+
+#: web_app/forms/beta_access_request.py:50
+msgid "Intended use"
+msgstr "Uso previsto"
+
+#: web_app/forms/beta_access_request.py:51
+msgid " "
+msgstr " "
+
+#: web_app/forms/beta_access_request.py:53
+msgid "Linkedin"
+msgstr "Linkedin"
+
+#: web_app/forms/beta_access_request.py:56
+msgid "First Touchpoint"
+msgstr "Come ci hai conosciuto"
+
+#: web_app/forms/beta_access_request.py:71
+#, python-brace-format
+msgid "{email} is not a valid email address"
+msgstr "{email} non è un indirizzo email valido"
+
+#: web_app/forms/beta_access_request.py:77
+msgid "You are a robot"
+msgstr "Sei un robot"
+
+#: web_app/forms/company.py:13 web_app/forms/company.py:15
+#, fuzzy
+#| msgid "Email address"
+msgid "Address"
+msgstr "Indirizzo email"
+
+#: web_app/forms/company.py:20
+#, fuzzy
+#| msgid "Reference Email"
+msgid "Reference contact"
+msgstr "Email di Riferimento"
+
+#: web_app/forms/company.py:21
+msgid "Select the reference contact for the company."
+msgstr ""
+
+#: web_app/forms/company.py:25
+#, fuzzy
+#| msgid "Type to search companies"
+msgid "Type to search for a contact."
+msgstr "Digita per cercare aziende"
+
+#: web_app/forms/company.py:40 web_app/forms/space_create.py:232
+msgid "Untitled Space*"
+msgstr "Spazio senza titolo*"
+
+#: web_app/forms/company.py:43
+#, fuzzy
+#| msgid "Companies"
+msgid "Company title"
+msgstr "Aziende"
+
+#: web_app/forms/contact.py:19 web_app/forms/space_create.py:23
+msgid "Company not found."
+msgstr "Azienda non trovata."
+
+#: web_app/forms/contact.py:28 web_app/forms/user.py:9
+msgid "First name"
+msgstr "Nome"
+
+#: web_app/forms/contact.py:29 web_app/forms/user.py:10
+msgid "First Name"
+msgstr "Nome"
+
+#: web_app/forms/contact.py:30 web_app/forms/user.py:11
+msgid "Last name"
+msgstr "Cognome"
+
+#: web_app/forms/contact.py:31 web_app/forms/user.py:12
+msgid "Last Name"
+msgstr "Cognome"
+
+#: web_app/forms/contact.py:33
+msgid "Email*"
+msgstr "Email*"
+
+#: web_app/forms/contact.py:44 web_app/forms/space_create.py:58
+msgid "Select the company to which the space belongs."
+msgstr "Seleziona l'azienda a cui appartiene lo spazio."
+
+#: web_app/forms/contact.py:48 web_app/forms/space_create.py:62
+msgid "Type to search companies"
+msgstr "Digita per cercare aziende"
+
+#: web_app/forms/contact.py:55 web_app/forms/sender.py:17
+#: web_app/forms/space_create.py:69
+msgid "Type the company name to search for it."
+msgstr "Digita il nome dell'azienda per cercarla."
+
+#: web_app/forms/file.py:38 web_app/forms/file.py:99
 msgid "Add a note to your upload..."
 msgstr "Aggiungi una nota al tuo caricamento..."
 
-#: web_app/forms/file.py:41
-msgid "Notes"
-msgstr "Note"
-
-#: web_app/forms/file.py:42
+#: web_app/forms/file.py:43
 msgid ""
 "Add a note to clarify what you are uploading, if needed. Notes do not "
 "substitute the upload of the requested files.\n"
@@ -749,23 +1645,477 @@ msgid ""
 msgstr ""
 "Aggiungi una nota per chiarire cosa stai caricando, se necessario. Le note "
 "non sostituiscono il caricamento dei documenti richiesti.\n"
-"                            "
+" "
 
-#: web_app/forms/file.py:69
-msgid "has extension "
-msgstr "ha estensione"
-
-#: web_app/forms/file.py:70
-msgid "which is not allowed."
-msgstr "che non è consentita."
-
-#: web_app/forms/file.py:85
+#: web_app/forms/file.py:76
 msgid "You need to upload at least one file."
 msgstr "Devi caricare almeno un documento."
 
+#: web_app/forms/file.py:104
+#, fuzzy
+#| msgid ""
+#| "Add a note to clarify what you are uploading, if needed. Notes do not "
+#| "substitute the upload of the requested files.\n"
+#| "                            "
+msgid ""
+"Add a note to clarify what you are uploading, if needed. Notes do not "
+"substitute the upload of the requested files.\n"
+"                                "
+msgstr ""
+"Aggiungi una nota per chiarire cosa stai caricando, se necessario. Le note "
+"non sostituiscono il caricamento dei documenti richiesti.\n"
+" "
+
+#: web_app/forms/file_changes.py:26
+msgid "You must select at least one file"
+msgstr "Devi selezionare almeno un documento."
+
+#: web_app/forms/request.py:16
+msgid ""
+"Name the file as you want it to appear in your destination folder. You can "
+"use tags to make the file name parametric. Here is the list of the possible "
+"tags:"
+msgstr ""
+"Nomina il file come desideri che appaia nella tua cartella di destinazione. "
+"Puoi utilizzare i tag per rendere il nome del file parametrico. Ecco "
+"l'elenco dei possibili tag:"
+
+#: web_app/forms/request.py:21 web_app/forms/request.py:206
+#: web_app/forms/request.py:222
+#, fuzzy
+#| msgid "Untitled request*"
+msgid "Untitled request"
+msgstr "Richiesta senza titolo*"
+
+#: web_app/forms/request.py:25
+msgid "Request title - MANDATORY"
+msgstr "Titolo della richiesta - OBBLIGATORIO"
+
+#: web_app/forms/request.py:27 web_app/forms/request.py:228
+msgid ""
+"This will be displayed to your invitees. Assign a meaningful title to your "
+"request to help your invitees understand what you are asking for."
+msgstr ""
+"Questo sarà visualizzato dai tuoi invitati. Assegna un titolo significativo "
+"alla tua richiesta per aiutare i tuoi invitati a capire cosa stai chiedendo."
+
+#: web_app/forms/request.py:34
+msgid "Insert file name, use tags for dynamic naming"
+msgstr "Inserisci il nome del file, usa i tag per la denominazione dinamica"
+
+#: web_app/forms/request.py:37
+msgid "File naming formula"
+msgstr "Formula di denominazione del file"
+
+#: web_app/forms/request.py:41
+msgid "Insert parameter"
+msgstr "Inserisci parametro"
+
+#: web_app/forms/request.py:47
+msgid "Available naming tags"
+msgstr "Tag di denominazione disponibili"
+
+#: web_app/forms/request.py:74
+msgid "Destination folder ID"
+msgstr "ID cartella di destinazione"
+
+#: web_app/forms/request.py:76
+msgid ""
+"The file uploaded for this request will be sent to the folder selected here. "
+"Choose a cloud storage provider and search for a folder and select it."
+msgstr ""
+"Il file caricato per questa richiesta verrà inviato alla cartella "
+"selezionata qui. Scegli un provider di archiviazione cloud, cerca una "
+"cartella e selezionala."
+
+#: web_app/forms/request.py:87
+msgid "Destination type"
+msgstr "Tipo di destinazione"
+
+#: web_app/forms/request.py:94
+msgid "Non-editable Field"
+msgstr "Campo non editabile"
+
+#: web_app/forms/request.py:99
+msgid "No folder selected yet"
+msgstr "Ancora nessuna cartella selezionata"
+
+#: web_app/forms/request.py:105 web_app/forms/request.py:106
+msgid "Custom file names"
+msgstr "Nomi parametrici per i documenti"
+
+#: web_app/forms/request.py:111
+msgid "File Naming"
+msgstr "Denominazione File"
+
+#: web_app/forms/request.py:112
+msgid ""
+"By default, files are saved to your destination folder with the name they "
+"have been uploaded with.\n"
+"                You can choose to apply a custom file name to add parametric "
+"information to the file names to make them more meaningful and standardized\n"
+"            "
+msgstr ""
+"Di default, i file vengono salvati nella cartella di destinazione con il "
+"nome con cui sono stati caricati.\n"
+"Puoi scegliere di applicare un nome file personalizzato per aggiungere "
+"informazioni parametriche ai nomi dei file per renderli più significativi e "
+"standardizzati\n"
+" "
+
+#: web_app/forms/request.py:118
+msgid "Multiple Files"
+msgstr "File multipli"
+
+#: web_app/forms/request.py:119
+msgid ""
+"\n"
+"                By default, each request can only contain one file. You can "
+"choose to enable multiple files upload for this request.\n"
+"            "
+msgstr ""
+"\n"
+"Di default, ogni richiesta può contenere solo un file. Puoi scegliere di "
+"abilitare il caricamento di file multipli per questa richiesta.\n"
+" "
+
+#: web_app/forms/request.py:124
+msgid "File Template"
+msgstr "Modello"
+
+#: web_app/forms/request.py:126
+msgid "Insert file template URL"
+msgstr "Inserisci il link a un modello"
+
+#: web_app/forms/request.py:129
+msgid ""
+"\n"
+"                You can provide a template file that will be available for "
+"download to your invitees. \n"
+"                Leave blank if not necessary.\n"
+"            "
+msgstr ""
+"\n"
+"                Puoi fornire un modello di file che sarà disponibile per il "
+"download ai tuoi invitati. \n"
+"                Lascia vuoto se non necessario.\n"
+" "
+
+#: web_app/forms/request.py:226
+#, fuzzy
+#| msgid "Space title - MANDATORY"
+msgid "Title - MANDATORY"
+msgstr "Titolo dello Spazio - OBBLIGATORIO"
+
+#: web_app/forms/request.py:229
+msgid "The title must no be empty."
+msgstr ""
+
+#: web_app/forms/request.py:234
+#, fuzzy
+#| msgid "Add request-specific instructions here"
+msgid "Add instructions here"
+msgstr "Aggiungi qui istruzioni specifiche per la richiesta"
+
+#: web_app/forms/request.py:239 web_app/forms/space_create.py:103
+msgid "Instructions"
+msgstr "Istruzioni"
+
+#: web_app/forms/request.py:240
+#, fuzzy
+#| msgid ""
+#| "Use this to provide additional information for your invitees that are "
+#| "specific to the request.\n"
+#| "                                Leave blank if not necessary.\n"
+#| "                            "
+msgid ""
+"Use this to provide information for your invitees.\n"
+"                                Leave blank if not necessary.\n"
+"                            "
+msgstr ""
+"Utilizza questo per fornire informazioni aggiuntive specifiche della "
+"richiesta ai tuoi invitati.\n"
+"Lascia vuoto se non necessario.\n"
+" "
+
+#: web_app/forms/settings.py:12
+msgid ""
+"This name will be used as the reference name displayed in all notifications "
+"sent to the senders."
+msgstr ""
+"Questo nome verrà utilizzato come nome di riferimento visualizzato in tutte "
+"le notifiche inviato ai mittenti."
+
+#: web_app/forms/settings.py:13 web_app/forms/settings.py:15
+msgid "Reference Email"
+msgstr "Email di Riferimento"
+
+#: web_app/forms/settings.py:16
+msgid ""
+"This email will be used as the reference email displayed in all "
+"notifications sent to the senders."
+msgstr ""
+"Questa email verrà utilizzata come email di riferimento e visualizzata in "
+"tutte le notifiche inviate ai mittenti."
+
+#: web_app/forms/settings.py:19
+msgid ""
+"This language will be used as the preferred language for all notifications "
+"sent to the senders."
+msgstr ""
+"Questa lingua verrà utilizzata come lingua preferita per tutte le notifiche "
+"inviate ai mittenti."
+
+#: web_app/forms/settings.py:31
+msgid "Upload notification"
+msgstr "Notifiche di caricamento"
+
+#: web_app/forms/settings.py:32
+msgid ""
+"Receive a notification when a sender uploads a file to your space. This "
+"notification will be sent to the email address you have registered with us."
+msgstr ""
+"Ricevi una notifica quando un mittente carica un file nel tuo spazio. Questa "
+"notifica verrà inviata all'indirizzo email che hai registrato con noi."
+
+#: web_app/forms/space_create.py:48
+#, python-brace-format
+msgid "{invalid_emails[0]} is not a valid email address"
+msgstr "{invalid_emails[0]} non è un indirizzo email valido"
+
+#: web_app/forms/space_create.py:50
+msgid "{', '.join(invalid_emails)} are not valid email addresses"
+msgstr "{', '.join(invalid_emails)} non sono indirizzi email validi"
+
+#: web_app/forms/space_create.py:73
+msgid "Senders emails"
+msgstr "Email dei mittenti"
+
+#: web_app/forms/space_create.py:76
+msgid ""
+"Each invitee will have their own access link and will not be able to see any "
+"other invitee in the list."
+msgstr ""
+"Ogni invitato avrà il proprio link di accesso e non potrà vedere gli altri "
+"invitati nell'elenco."
+
+#: web_app/forms/space_create.py:80
+msgid "Type or paste email addresses of invitees"
+msgstr "Digita o incolla gli indirizzi email degli invitati"
+
+#: web_app/forms/space_create.py:85
+msgid "Invitation notification"
+msgstr "Notifica di invito"
+
+#: web_app/forms/space_create.py:87
+msgid ""
+"All invitees will receive an email with the link to the space upon creation. "
+"You can re-send the invitation at any time."
+msgstr ""
+"Tutti gli invitati riceveranno un'email con il link allo spazio al momento "
+"della creazione. Puoi inviare nuovamente l'invito in qualsiasi momento."
+
+#: web_app/forms/space_create.py:91
+msgid "Public link"
+msgstr "Link pubblico"
+
+#: web_app/forms/space_create.py:92
+msgid ""
+"The public link will not be tied to a specific email address and can be used "
+"to collect inputs from the general public, when there is not the need to "
+"distinguish one upload from another.\n"
+"                            The link can be enabled and disabled at any "
+"time, and can coexist with the invitees links.\n"
+"                            "
+msgstr ""
+"Il link pubblico non sarà legato a un indirizzo email specifico e può essere "
+"utilizzato per raccogliere contributi dal pubblico generale, quando non è "
+"necessario distinguere un caricamento dall'altro. Il link può essere "
+"attivato e disattivato in qualsiasi momento e può coesistere con i link "
+"degli invitati."
+
+#: web_app/forms/space_create.py:99
+msgid "Explain what files you are requesting"
+msgstr "Spiega quali file stai richiedendo"
+
+#: web_app/forms/space_create.py:104
+msgid ""
+"These instructions will be displayed to your invitees. They refer to all the "
+"file requests in the space.\n"
+"                            "
+msgstr ""
+"Queste istruzioni verranno visualizzate dai tuoi invitati. Si riferiscono a "
+"tutte le richieste di file nello spazio."
+
+#: web_app/forms/space_create.py:113
+msgid ""
+"The deadline applies to all invitees and is visible in their upload page.\n"
+"                                You can customize what happens once the "
+"deadline is reached.\n"
+"                                "
+msgstr ""
+"La scadenza si applica a tutti gli invitati ed è visibile nella loro pagina "
+"di caricamento. Puoi personalizzare cosa succede una volta raggiunta la "
+"scadenza."
+
+#: web_app/forms/space_create.py:122
+msgid "Days"
+msgstr "Giorni"
+
+#: web_app/forms/space_create.py:127
+msgid "Days before deadline"
+msgstr "Giorni prima della deadline"
+
+#: web_app/forms/space_create.py:128
+msgid "Number of days before the deadline to send notifications."
+msgstr "Numero di giorni prima della scadenza per inviare le notifiche."
+
+#: web_app/forms/space_create.py:137
+msgid "Hours"
+msgstr "Ore"
+
+#: web_app/forms/space_create.py:142
+msgid "Hours before deadline"
+msgstr "Ore prima della deadline"
+
+#: web_app/forms/space_create.py:143
+msgid "Number of hours before the deadline to send notifications."
+msgstr "Numero di ore prima della deadline per inviare notifiche."
+
+#: web_app/forms/space_create.py:149
+msgid "Uploads after deadline"
+msgstr "Caricamenti dopo la deadline"
+
+#: web_app/forms/space_create.py:150
+msgid ""
+"Your invitees will be able to upload files after the deadline if this is "
+"enabled.\n"
+"        You can change this setting at any time."
+msgstr ""
+"I tuoi invitati potranno caricare file dopo la scadenza se questa opzione è "
+"abilitata.\n"
+"        Puoi modificare questa impostazione in qualsiasi momento."
+
+#: web_app/forms/space_create.py:154 web_app/forms/space_create.py:155
+msgid "Notification"
+msgstr "Notifiche"
+
+#: web_app/forms/space_create.py:157
+msgid "Notify deadline"
+msgstr "Notifica la deadline"
+
+#: web_app/forms/space_create.py:158
+msgid ""
+"Set a number of days and hours before the deadline to send a notification to "
+"your invitees."
+msgstr ""
+"Imposta un numero di giorni e ore prima della scadenza per inviare una "
+"notifica ai tuoi invitati."
+
+#: web_app/forms/space_create.py:191
+msgid "Deadline must be in the future."
+msgstr "La deadline deve essere  nel futuro."
+
+#: web_app/forms/space_create.py:218
+msgid "Current time is past the deadline notification time."
+msgstr ""
+"L'orario attuale è successivo a quando è pianificata notifica della deadline."
+
+#: web_app/forms/space_create.py:235
+msgid "Space title - MANDATORY"
+msgstr "Titolo dello Spazio - OBBLIGATORIO"
+
+#: web_app/forms/space_create.py:236
+msgid "It will be displayed to your invitees"
+msgstr "Sarà mostrato ai tuoi invitati"
+
+#: web_app/forms/team.py:10
+msgid "Invite collaborator:"
+msgstr "Invita collaboratore:"
+
+#: web_app/forms/team.py:11
+msgid "user@mail.com"
+msgstr "utente@mail.com"
+
+#: web_app/forms/team.py:20
+msgid "User already in organization"
+msgstr "Utente già nell'organizzazione"
+
+#: web_app/forms/team.py:22
+msgid "User already invited"
+msgstr "Utente già invitato"
+
+#: web_app/forms/widgets/contact.py:11
+#, fuzzy
+#| msgid "Type to search companies"
+msgid "Type to search contacts"
+msgstr "Digita per cercare aziende"
+
+#: web_app/mixins.py:29
+msgid "New space"
+msgstr "Nuovo spazio"
+
+#: web_app/mixins.py:30
+msgid "Upgrade to create more spaces"
+msgstr "Passa a Pro per creare più spazi"
+
+#: web_app/mixins.py:130
+msgid "Detail"
+msgstr "Dettagli"
+
+#: web_app/mixins.py:155 web_app/views/space/detail.py:45
+msgid "Documents"
+msgstr ""
+
+#: web_app/models/beta_access_request.py:19
+#, python-brace-format
+msgid ""
+"\n"
+"        New beta access request from {self.user_name} ({self.user_email})\n"
+"        Industry: {self.industry}\n"
+"        Country: {self.country}\n"
+"        Company: {self.company}\n"
+"        User role: {self.user_role}\n"
+"        Intended use: {self.intended_use}\n"
+"        First touchpoint: {self.first_touchpoint}\n"
+"        "
+msgstr ""
+"\n"
+"        Nuova richiesta di accesso alla beta da {self.user_name} ({self."
+"user_email})\n"
+"        Settore: {self.industry}\n"
+"        Paese: {self.country}\n"
+"        Azienda: {self.company}\n"
+"        Ruolo dell'utente: {self.user_role}\n"
+"        Uso previsto: {self.intended_use}\n"
+"        Primo punto di contatto: {self.first_touchpoint}\n"
+"        "
+
+#: web_app/models/beta_access_request.py:37
+#, python-brace-format
+msgid "New beta access request from {self.user_name} ({self.user_email})"
+msgstr ""
+"Nuova richiesta di accesso alla beta da {self.user_name} ({self.user_email})"
+
+#: web_app/models/file.py:8
+msgid "Accepted"
+msgstr "Accettato"
+
+#: web_app/models/file.py:9
+msgid "Rejected"
+msgstr "Respinto"
+
+#: web_app/models/file.py:10
+msgid "Pending"
+msgstr "In attesa"
+
 #: web_app/models/organization.py:26
 msgid "wants you to join"
-msgstr ""
+msgstr "vuole che tu ti unisca a"
+
+#: web_app/models/sender.py:53
+msgid "Deadline notification for sender {}"
+msgstr "Notifica di scadenza per il mittente {}"
 
 #: web_app/models/sender.py:90
 msgid "Remember to complete the upload to the space:"
@@ -783,6 +2133,13 @@ msgstr "ti invita a caricare dei documenti nello spazio:"
 msgid "Invitation:"
 msgstr "Invito:"
 
+#: web_app/models/sender.py:179
+msgid ""
+"{context[\"receiver_name\"]} has requested changes for {upload_request.title}"
+msgstr ""
+"{context[\"receiver_name\"]} ha richiesto modifiche per {upload_request."
+"title}"
+
 #: web_app/models/sender.py:180
 msgid "has requested changes for"
 msgstr "ha richiesto dei cambiamenti a"
@@ -793,15 +2150,194 @@ msgstr "Cambiamenti Richiesti:"
 
 #: web_app/models/sender.py:227
 msgid "Your Upload receipt"
-msgstr ""
+msgstr "La tua ricevuta di caricamento"
 
-#: web_app/models/user.py:81
+#: web_app/models/user.py:94
 msgid "New Upload to"
-msgstr ""
+msgstr "Nuovo caricamento su"
 
-#: web_app/models/user.py:82
+#: web_app/models/user.py:95
 msgid "in space"
+msgstr "nello spazio"
+
+#: web_app/views/authentication/delete.py:28
+msgid "Account successfully deleted"
+msgstr "Account cancellato con successo"
+
+#: web_app/views/company/create.py:35
+#, fuzzy
+#| msgid "Company Name"
+msgid "Company created"
+msgstr "Nome dell'azienda"
+
+#: web_app/views/company/create.py:41
+#, fuzzy
+#| msgid "Company not found."
+msgid "Company not created"
+msgstr "Azienda non trovata."
+
+#: web_app/views/contact/create.py:35
+msgid "Contact created successfully"
+msgstr "Account creato con successo"
+
+#: web_app/views/file.py:35
+msgid "Changes requested successfully"
+msgstr "Modifiche richieste con successo"
+
+#: web_app/views/file.py:57 web_app/views/file.py:81
+msgid "All files accepted successfully"
+msgstr "Tutti i file accettati con successo"
+
+#: web_app/views/file.py:95
+msgid "File accepted successfully"
+msgstr "File accettato con successo"
+
+#: web_app/views/organization/create.py:32
+msgid "Organization created successfully"
+msgstr "Organizzazione creata con successo"
+
+#: web_app/views/organization/create.py:34
+#, fuzzy
+#| msgid "Error creating contact. Please try again."
+msgid "Error creating organization. Please try again."
+msgstr "Errore nella creazione del contatto. Per favore, prova di nuovo."
+
+#: web_app/views/organization/team.py:44
+msgid "User invited successfully"
+msgstr "Utente invitato con successo"
+
+#: web_app/views/organization/team.py:62
+msgid "User added to organization successfully"
+msgstr "Utente aggiunto all'organizzazione con successo"
+
+#: web_app/views/organization/team.py:77
+msgid "Invitation revoked successfully"
+msgstr "Invito revocato con successo"
+
+#: web_app/views/organization/team.py:90
+msgid "You have left the organization"
+msgstr "Hai abbandonato l'organizzazione "
+
+#: web_app/views/organization/team.py:92
+msgid "User removed from organization"
+msgstr "Utente rimosso dall'organizzazione"
+
+#: web_app/views/profile.py:16
+msgid "Profile updated"
+msgstr "Profilo aggiornato"
+
+#: web_app/views/request/detail.py:24
+#, fuzzy
+#| msgid "Back to Spaces"
+msgid "Back to Space"
+msgstr "Torna alla homepage"
+
+#: web_app/views/request/detail.py:25
+#, fuzzy
+#| msgid "Request"
+msgid "Save request"
+msgstr "Richiesta"
+
+#: web_app/views/request/detail.py:56
+#, fuzzy
+#| msgid "Requests"
+msgid "Request saved"
+msgstr "Richieste"
+
+#: web_app/views/request/detail.py:66
+#, fuzzy
+#| msgid "Request beta access"
+msgid "Request not saved. , "
+msgstr "Richiedi accesso alla beta"
+
+#: web_app/views/request/sender.py:61
+#, python-brace-format
+msgid "An error occurred while uploading file {uploaded_file.name}"
 msgstr ""
+"Si è verificato un errore durante il caricamento del file {uploaded_file."
+"name}"
+
+#: web_app/views/request/sender.py:81
+msgid "Your upload has completed"
+msgstr "Il tuo caricamento è stato completato"
+
+#: web_app/views/request/sender.py:97
+#, python-brace-format
+msgid "No Space matches the given query: {filter_criteria}"
+msgstr "Nessuno spazio corrisponde alla query fornita: {filter_criteria}"
+
+#: web_app/views/request/sender.py:109 web_app/views/space/sender/detail.py:44
+#, python-brace-format
+msgid "Sender with id '{sender_id}' not found"
+msgstr "Mittente con id '{sender_id}' non trovato"
+
+#: web_app/views/sender/detail.py:27
+#, python-brace-format
+msgid "{sender.email} notified"
+msgstr "{sender.email} notificato"
+
+#: web_app/views/sender/detail.py:41
+#, python-brace-format
+msgid "{sender.email} invited"
+msgstr "{sender.email} invitato"
+
+#: web_app/views/sender/detail.py:53
+msgid "Notification are being sent to all senders"
+msgstr "Le notifiche stanno venendo inviate a tutti i mittenti"
+
+#: web_app/views/sender/detail.py:65
+msgid "Invitation are being sent to all senders"
+msgstr "Gli inviti stanno venendo inviati a tutti gli invitati"
+
+#: web_app/views/settings.py:46 web_app/views/settings.py:57
+msgid "Settings updated"
+msgstr "Impostazioni aggiornate"
+
+#: web_app/views/space/detail.py:21
+#, fuzzy
+#| msgid "Contacts"
+msgid "Content"
+msgstr "Contatti"
+
+#: web_app/views/space/detail.py:76
+msgid "Save space"
+msgstr "Salva lo spazio"
+
+#~ msgid "Sender Summary"
+#~ msgstr "Riepilogo del mittente"
+
+#~ msgid "Restrictions:"
+#~ msgstr "Restrizioni:"
+
+#~ msgid "Allowed file extensions:"
+#~ msgstr "Estensioni di file consentite:"
+
+#~ msgid "has extension "
+#~ msgstr "ha l'estensione "
+
+#~ msgid "which is not allowed."
+#~ msgstr "che non è consentita."
+
+#, python-brace-format
+#~ msgid "{slug} is not a valid file type"
+#~ msgstr "{slug} non è un tipo di file valido"
+
+#~ msgid "Request Instructions"
+#~ msgstr "Istruzioni per la Richiesta:"
+
+#~ msgid ""
+#~ "Populates the database with common file extensions and descriptive slugs"
+#~ msgstr "Popola il database con estensioni di file comuni e slug descrittivi"
+
+#~ msgid "Successfully populated file types with descriptive slugs"
+#~ msgstr "Tipi di file inseriti con successo con slug descrittivi"
+
+#~ msgid "Error creating contact. Please try again."
+#~ msgstr "Errore nella creazione del contatto. Per favore, prova di nuovo."
+
+#, python-format
+#~ msgid "Notes from the receiver: %(notes)s"
+#~ msgstr "Note dal richiedente: %(notes)s"
 
 #~ msgid "Non chiedere di ricaricare tutti i file sbagliati"
 #~ msgstr "Basta documenti scorretti"

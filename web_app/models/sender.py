@@ -1,5 +1,5 @@
 import json
-from copy import deepcopy
+from copy import deepcopy 
 
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
@@ -23,15 +23,16 @@ class Sender(BaseModel, ActiveModel):
     space = models.ForeignKey('Space', on_delete=models.CASCADE, related_name='senders')
     notified_at = models.DateTimeField(null=True, blank=True)
     invited_at = models.DateTimeField(null=True, blank=True)
-    notification_task = models.ForeignKey(PeriodicTask, on_delete=models.SET_NULL, null=True, blank=True)
+
+    # notification_task = models.ForeignKey(PeriodicTask, on_delete=models.SET_NULL, null=True, blank=True)
 
     @property
     def company(self):
-        return self.contact.company or ''
+        return (self.contact.company or '') if self.contact else ''
 
     @property
     def full_name(self):
-        return f'{self.contact.first_name} {self.contact.last_name}'
+        return f'{self.contact.first_name} {self.contact.last_name}' if self.contact else ''
 
     def duplicate(self, space):
         new_sender = deepcopy(self)
@@ -41,16 +42,16 @@ class Sender(BaseModel, ActiveModel):
         new_sender.save()
         return new_sender
 
-    def schedule_deadline_notification(self):
+    '''def schedule_deadline_notification(self,kezyy_request):
         if self.notification_task is not None:
             self.notification_task.delete()
         clocked, created = ClockedSchedule.objects.get_or_create(
             # Ensure that the datetime is timezone-aware and corresponds to the desired time
-            clocked_time=self.space.deadline_notification_datetime
+            clocked_time=kezyy_request.deadline_notification_datetime
         )
         args = [str(self.pk)]
         task = PeriodicTask.objects.create(
-            name='Deadline notification for sender {}'.format(self.pk),
+            name=_('Deadline notification for sender {}').format(self.pk),
             task='web_app.tasks.notifications.notify_deadline',
             args=json.dumps(args),
             kwargs={},
@@ -58,11 +59,11 @@ class Sender(BaseModel, ActiveModel):
             one_off=True
         )
         self.notification_task = task
-        self.save()
+        self.save()'''
 
     @property
     def link_for_email(self):
-        return settings.BASE_URL + reverse('sender_space_detail_private', kwargs={
+        return settings.BASE_URL + reverse('sender_space_detail', kwargs={
             'space_uuid': self.space.uuid,
             'sender_uuid': self.uuid
         })
@@ -72,9 +73,9 @@ class Sender(BaseModel, ActiveModel):
         context = get_base_context_for_email()
         ctx_update = {
             'sender': self,
-            'receiver_email': self.space.user.sender_notifications_settings.reference_email,
-            'receiver_name': self.space.user.sender_notifications_settings.name or self.space.user.sender_notifications_settings.reference_email,
-            'upload_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
+            'reference_email': self.space.organization.sender_notifications_settings.reference_email,
+            'reference_name': self.space.organization.sender_notifications_settings.name or self.space.user.sender_notifications_settings.reference_email,
+            'kezyy_requests': self.space.requests.filter(is_active=True).order_by('created_at'),
             'space_link': self.link_for_email
 
         }
@@ -84,8 +85,8 @@ class Sender(BaseModel, ActiveModel):
     def notify_deadline(self):
         current_language = get_language()  # Store the current language
         try:
-            if self.is_active and self.space.is_deleted is False:
-                activate(self.space.user.sender_notifications_settings.language)
+            if self.is_active:
+                activate(self.space.organization.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 pre_header_text = _('Remember to complete the upload to the space:')
                 context['pre_header_text'] = format_lazy('{pre_header_text} {title}', pre_header_text=pre_header_text,
@@ -122,8 +123,8 @@ class Sender(BaseModel, ActiveModel):
     def notify_invitation(self):
         current_language = get_language()  # Store the current language
         try:
-            if self.is_active and self.space.is_deleted is False:
-                activate(self.space.user.sender_notifications_settings.language)
+            if self.is_active:
+                activate(self.space.organization.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 pre_header_text = _('invites you to upload files to the space:')
                 invitation_title_text = _('Invitation:')
@@ -169,14 +170,58 @@ class Sender(BaseModel, ActiveModel):
         finally:
             activate(current_language)  # Restore the original language
 
+    def notify_space(self, subject=None, content=None):
+        current_language = get_language()  # Store the current language
+        try:
+            activate(self.space.organization.sender_notifications_settings.language)
+            context = self.get_context_for_email()
+            context['custom_content'] = content
+            pre_header_text = _('invites you to upload files to the space:')
+            invitation_title_text = _('Invitation:')
+            context['pre_header_text'] = subject or format_lazy('{reference_name} {pre_header_text} {title}',
+                                                                reference_name=context["reference_name"],
+                                                                pre_header_text=pre_header_text,
+                                                                title=self.space.title)
+            email_html = render_to_string('emails/sender_invite.html', context)
+            from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
+            subject = subject or format_lazy('{invitation_title_text} {reference_name} {pre_header_text} {title}',
+                                             invitation_title_text=invitation_title_text,
+                                             pre_header_text=pre_header_text,
+                                             reference_name=context["reference_name"],
+                                             title=self.space.title)
+            with get_connection(
+                    host=settings.RESEND_SMTP_HOST,
+                    port=settings.RESEND_SMTP_PORT,
+                    username=settings.RESEND_SMTP_USERNAME,
+                    password=settings.RESEND_API_KEY,
+                    use_tls=True,
+            ) as connection:
+                msg = EmailMultiAlternatives(
+                    subject=subject,
+                    body=html_to_text(email_html),
+                    from_email=from_email,
+                    to=[self.email],
+                    reply_to=[from_email],
+                    connection=connection,
+                    headers={'Return-Path': from_email}
+                )
+                msg.attach_alternative(email_html, 'text/html')
+                msg.send()
+            self.invited_at = arrow.utcnow().datetime
+            self.save()
+            return True
+        finally:
+            activate(current_language)  # Restore the original language
+
     def notify_changes_request(self, upload_request, files, notes):
         current_language = get_language()  # Store the current language
         try:
-            if self.is_active and self.space.is_deleted is False:
-                activate(self.space.user.sender_notifications_settings.language)
+            if self.is_active:
+                activate(self.space.organization.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 context[
-                    'pre_header_text'] = f'{context["receiver_name"]} has requested changes for {upload_request.title}'
+                    'pre_header_text'] = _(
+                    f'{context["receiver_name"]} has requested changes for {upload_request.title}')
                 pre_header_text = _('has requested changes for')
                 changes_title_text = _('Changes Requested:')
                 context['pre_header_text'] = format_lazy('{receiver_name} {pre_header_text} {title}',
@@ -217,15 +262,15 @@ class Sender(BaseModel, ActiveModel):
         finally:
             activate(current_language)  # Restore the original language
 
-    def notify_upload(self, sender_event):
+    def notify_upload(self, sender_events):
         current_language = get_language()  # Store the current language
         try:
-            if self.is_active and self.space.is_deleted is False:
-                activate(self.space.user.sender_notifications_settings.language)
+            if self.is_active:
+                activate(self.space.organization.sender_notifications_settings.language)
                 context = self.get_context_for_email()
                 context[
                     'pre_header_text'] = _('Your Upload receipt')
-                context['sender_event'] = sender_event
+                context['sender_events'] = sender_events
 
                 email_html = render_to_string('emails/sender_upload_notification.html', context)
                 from_email = f"Kezyy <{settings.NO_REPLY_EMAIL}>"
@@ -252,3 +297,12 @@ class Sender(BaseModel, ActiveModel):
             return False
         finally:
             activate(current_language)  # Restore the original language
+
+    def notify_form(self,request_post=None):
+        from web_app.forms import SenderNotifyForm
+        return SenderNotifyForm(request_post)
+    
+    @property
+    def form(self, request_post=None):
+        from web_app.forms import SenderCreateForm
+        return SenderCreateForm(request_post, instance=self, organization=self.space.organization)

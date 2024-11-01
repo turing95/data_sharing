@@ -1,0 +1,40 @@
+{% extends "private/space/detail/base.html" %}
+{% load static %}
+{% load l10n %}
+{% load i18n %}
+{% block space_content %}
+
+    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+    <form id="space-form" action="" method="POST" class="max-w-screen-md">
+        {% csrf_token %}
+
+        <div class="mb-6">
+            <div class="flex items-center mb-2 space-x-2">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Company' %}</h3>
+                {% include 'components/tooltip.html' with content=form.company.help_text target=form.company.name %}
+            </div>
+            {% include 'private/space/create/components/company/widget.html' with input=form.company search_input=form.search_company %}
+            {% include 'components/forms/error_widget.html' with errors=form.company.errors %}
+
+        </div>
+            <div class="mb-6">
+            <div class="flex items-center mb-2 space-x-2">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Grant' %}</h3>
+                {% include 'components/tooltip.html' with content=form.source_grant.help_text target=form.source_grant.name %}
+            </div>
+                {{ form.source_grant }}
+                {% include 'components/forms/error_widget.html' with errors=form.source_grant.errors %}
+
+        </div>
+
+
+
+        
+        <div class="flex justify-end {% if action == 'edit' %} sticky bottom-4 {% endif %}">
+            {% include "components/buttons/submit_with_loader.html" with button_text=submit_text loading="True" extra_classes="min-w-[100px] min-h-[42px]" %}
+            {% if False %}<span class="hidden min-w-[100px] min-h-[42px]"></span>{% endif %}
+        </div>
+    </form>
+
+{% endblock space_content %}
+

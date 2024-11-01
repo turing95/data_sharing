@@ -1,5 +1,8 @@
 {% extends 'public/_base.html' %}
 {% load static %}
 {% block public_content %}
-        {% include 'components/custom_error.html' with code=500 slug='Internal Server Error' description='Something went wrong on our end. Please try again later or contact support if the problem persists.' %}
+{% translate 'Internal Server Error' as slug %}
+{% translate 'Something went wrong on our end. Please try again later or contact support if the problem persists.' as description %}
+
+        {% include 'components/custom_error.html' with code=500 slug=slug description=description %}
 {% endblock public_content %}

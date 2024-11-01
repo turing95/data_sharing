@@ -1,0 +1,27 @@
+{% extends "private/_base.html" %}
+{% load static i18n %}
+{% block private_content %}
+    {% include 'private/request/request_title_form.html' with form=kezyy_request.title_form %}
+
+    {% include "components/tabs_menu.html" with tabs_data=request_tab  pk=kezyy_request.pk secondary_pk=kezyy_request.space.pk %} 
+
+
+    {% block request_content %}
+        {% if kezyy_request.input_requests_position_sorted %}
+            <div class="inline-flex mb-2">
+                <div class="flex items-center mr-2 space-x-2">
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Received content' %}</h3>
+
+                    {% include 'components/tooltip.html' with content=inputs_tooltip_content %}
+                </div>
+                {% include 'components/custom_htmx_indicator.html' with loader_id='loading-indicator-sort' %}
+            </div>
+
+            {% block sorted_requests %}
+                {% for input_request in kezyy_request.input_requests_position_sorted %}
+                    {% include 'private/request/input_request_non_sortable_element.html' with input_request=input_request %}
+                {% endfor %}
+            {% endblock sorted_requests %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

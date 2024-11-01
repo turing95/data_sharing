@@ -1,0 +1,25 @@
+{% load i18n %}
+{% if show_more %}
+    <div class="mb-3">
+        <div class="flex items-center mb-2 space-x-2">
+            <label for="{{ form.instructions.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
+            {% include 'components/tooltip.html' with content=form.instructions.help_text target=form.instructions.name %}
+        </div>
+        {{ form.instructions }}
+        {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
+    </div>
+    <div class="mb-3">
+        <div class="flex items-center mb-2 space-x-2">
+            <label for="{{ form.target.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.target.label }} </label>
+            {% include 'components/tooltip.html' with content=form.target.help_text target=form.target.name %}
+        </div>
+        {{ form.target }}
+        {% include 'components/forms/error_widget.html' with errors=form.target.errors %}
+    </div>
+{% endif %}
+
+{% if from_htmx %}
+    {% include 'private/request/input_request_detail_button.html' with input_request=text_request.input_request from_htmx=from_htmx %}
+{% endif %}

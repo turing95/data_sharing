@@ -1,10 +1,10 @@
 from django import template
 from django.urls import reverse
 
-from web_app.forms.widgets import SenderToggle
 from web_app.models import Sender, SenderEvent, UploadRequest, File
 from web_app.forms.widgets.toggle import ToggleWidget
 import arrow
+
 register = template.Library()
 
 
@@ -37,7 +37,6 @@ def get_message_color(value):
     }
     return colors.get(value, "blue")
 
-
 @register.simple_tag
 def get_count_uploaded_files(upload_request: UploadRequest, sender: Sender = None, public=False):
     files = File.objects.filter(sender_event__request=upload_request)
@@ -58,21 +57,12 @@ def get_list_of_upload_events_per_request(sender, upload_request):
 
 @register.inclusion_tag("forms/widgets/toggle.html")
 def render_sender_activate_toggle(sender, name, value, **kwargs):
+    from web_app.forms.widgets import SenderToggle
+
     return SenderToggle(**kwargs).get_context(name, value,
                                               {'hx-post': reverse('toggle_sender_active',
                                                                   kwargs={'sender_uuid': sender.pk}),
                                                'hx-trigger': f"click", 'hx-swap': 'none', 'sender-uuid': sender.pk})
-
-
-@register.inclusion_tag("forms/widgets/toggle.html")
-def render_space_public_link_toggle(space, name, value):
-    return ToggleWidget(label_on='Public link', label_off='Public link').get_context(name, value,
-                                                                                     {
-                                                                                         'hx-post': reverse(
-                                                                                             'toggle_space_public',
-                                                                                             kwargs={
-                                                                                                 'space_uuid': space.pk}),
-                                                                                         'hx-swap': 'morph:outerHTML'})
 
 
 @register.inclusion_tag("forms/widgets/toggle.html")
@@ -86,3 +76,19 @@ def render_sender_notification_activate_toggle(request):
                                                                                          'hx-post': reverse(
                                                                                              'sender_upload_notification'),
                                                                                          'hx-swap': 'none'})
+
+
+@register.inclusion_tag("forms/widgets/toggle.html")
+def render_input_request_activate_toggle(input_request, **kwargs):
+    return ToggleWidget(**kwargs).get_context('input_request_active_toggle', input_request.is_active,
+                                              {'hx-post': reverse('input_request_update_active',
+                                                                  kwargs={'input_request_uuid': input_request.pk}),
+                                               'hx-trigger': "click", 'hx-swap': 'innerHTML','hx-target':'closest .activation-toggle-container'})
+
+
+@register.inclusion_tag("forms/widgets/toggle.html")
+def render_input_request_complete_toggle(input_request, **kwargs):
+    return ToggleWidget(color_on='green',color_off='gray',**kwargs).get_context('input_request_complete_toggle', input_request.is_complete,
+                                              {'hx-post': reverse('input_request_update_complete',
+                                                                  kwargs={'input_request_uuid': input_request.pk}),
+                                               'hx-trigger': "click", 'hx-swap': 'innerHTML','hx-target':'closest .completion-toggle-container'})

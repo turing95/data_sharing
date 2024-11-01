@@ -1,0 +1,8 @@
+<div class="inline-flex w-full templates-widget-container widget-container">
+    <div class="relative w-full bg-gray-50 templates-search-container search-container">
+        {% include 'private/company_templates/search/input.html' %}
+        <div id="search-templates-results-container-{{group.pk}}" class="absolute z-10 w-full overflow-y-auto bg-gray-50 search-results">
+            {% include 'private/company_templates/search/results.html' %}
+        </div>
+    </div>
+</div>

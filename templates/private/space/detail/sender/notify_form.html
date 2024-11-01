@@ -1,0 +1,23 @@
+{% load i18n %}
+<form hx-post="{% url 'sender_notify' sender.pk %}" hx-target="this" hx-swap="outerHTML">
+    {% csrf_token %}
+    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+        <div class="m-2">
+            <label for="{{ form.subject.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.subject.label }}
+            </label>
+            {{ form.subject }}
+            {% include 'components/forms/error_widget.html' with errors=form.subject.errors %}
+        </div>
+            <div class="m-2">
+            <label for="{{ form.content.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.content.label }}
+            </label>
+            {{ form.content }}
+            {% include 'components/forms/error_widget.html' with errors=form.content.errors %}
+        </div>
+    <div class="flex justify-end mx-2">
+        {% translate 'Confirm' as confirm_text %}
+        {% include 'components/buttons/submit_with_loader.html' with button_text=confirm_text %}
+    </div>
+</form>

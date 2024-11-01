@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,20 +29,23 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
 <script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
 <script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
         {% endcomment %}
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <!-- Ensure proper rendering and touch zooming on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title of the website -->
-    <title>Kezyy - Effortless File Collection</title>
+    <title>{% translate 'Kezyy - Effortless File Collection' %}</title>
     <!-- Description meta tag for SEO -->
-    <meta name="description" content="Kezyy simplifies file collection, allowing you to effortlessly receive files from anyone, anywhere.">
+    <meta name="description"
+          content={% translate "Kezyy simplifies file collection, allowing you to effortlessly receive files from anyone, anywhere." %}>
     <!-- Keywords meta tag for SEO -->
-    <meta name="keywords" content="file collection, file sharing, direct file transfer, cloud storage, easy file upload">
+    <meta name="keywords"
+          content="file collection, file sharing, direct file transfer, cloud storage, easy file upload">
     <!-- Author meta tag -->
     <meta name="author" content="Kezyy">
     <!-- Social media meta tags -->
-    <meta property="og:title" content="Kezyy - Effortless File Collection">
-    <meta property="og:description" content="Simplify your file collection process with Kezyy. Receive files from anyone, anytime.">
+    <meta property="og:title" content={% translate "Kezyy - Effortless File Collection" %}>
+    <meta property="og:description"
+          content={% translate "Simplify your file collection process with Kezyy. Receive files from anyone, anytime." %}>
     <meta property="og:image" content="{% static 'images/logo.png' %}">
     <meta property="og:url" content="https://www.kezyy.com">
     <meta name="twitter:card" content="summary_large_image">
@@ -49,67 +53,57 @@ _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
-
-    <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/idiomorph/dist/idiomorph-ext.min.js"></script>
-    {% if debug %}
-    <script src="https://unpkg.com/htmx.org/dist/ext/debug.js"></script>
-    {% endif %}
-
+    <script src="{% static 'src/js/htmx.min.js' %}"></script>
+    <script src="{% static 'src/js/sortable.min.js' %}"></script>
+    <script src="{% static 'src/js/idiomorph-ext.min.js' %}"></script>
 
 
 </head>
 <body class="flex flex-col min-h-screen" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    <!-- htmx model target-->
-    <div id="htmx-modal" ></div>
+<!-- htmx model target-->
+<div id="htmx-modal"></div>
 
-    <div class="flex-grow">
+<div class="flex-grow">
 
     {% if sender_area is False %}
         {% include 'components/navbar.html' %}
     {% endif %}
-        {% include 'components/messages.html' %}
+    {% include 'components/messages.html' %}
 
-        <div {% if not sender_area %}class="pt-14"{% endif %}>
-            {% block content %}
-            {% endblock %}
-        </div>
+    <div {% if not sender_area %}class="pt-14"{% endif %}>
+        {% block content %}
+        {% endblock %}
     </div>
-    {% include 'components/footer.html' %}
+</div>
+{% include 'components/footer.html' %}
 
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    {% if space_form %}
-        <script type="module" src="{% static 'src/js/space/create/index.js' %}" ></script>
-
-    {% endif %}
-    
-    {% if space_summary %}
-        <script type="module" src="{% static 'src/js/space/detail/index.js' %}" ></script>
-
-    {% endif %}
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+{% block scripts %}
     {% if sender_area %}
         <script type="module" src="{% static 'src/js/sender-space-detail/index.js' %}"></script>
     {% endif %}
-     
-    {% if generic_home %}
-            <script type="module" src="{% static 'src/js/home/index.js' %}"></script>
-    {% endif %}
-    {% if settings_page %}
-    <script type="module" src="{% static 'src/js/settings/index.js' %}"></script>
-    {% endif %}
-    <script type="module" src="{% static 'src/js/index.js' %}"></script>
-    <!-- should be included only when needed -->
 
+    {% if generic_home %}
+        <script type="module" src="{% static 'src/js/home/index.js' %}"></script>
+    {% endif %}
+    {% if beta_access_form %}
+        <script type="module" src="{% static 'src/js/beta-access-form/index.js' %}"></script>
+    {% endif %}
     
+
+{% endblock scripts %}
+
+<script type="module" src="{% static 'src/js/index.js' %}"></script>
+<!-- should be included only when needed -->
+
+
 {% if log_queries %}
     <ul>
         {% for query in sql_queries %}
             <li>{{ query }}</li>
         {% endfor %}
     </ul>
-    {% endif %}
+{% endif %}
 </body>
 </html>

@@ -1,0 +1,68 @@
+{% load i18n %}
+{% if from_htmx %}
+    {% include 'components/messages.html' %}
+{% endif %}
+<form id="request-instructions-form" action="" method="POST" class="max-w-screen-md request-form">
+    {{ file_name_tags |json_script:"file-name-tags" }}
+
+    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+    {% csrf_token %}
+    
+    <!-- INSTRUCTIONS -->
+    <div class="mb-3">
+        <div class="flex items-center mb-2 space-x-2">
+            <label for="{{ form.instructions.id_for_label }}"
+                   class="block text-sm font-medium text-gray-900 dark:text-white">{{ form.instructions.label }} </label>
+            {% include 'components/tooltip.html' with content=form.instructions.help_text target_prefix='requests' target=form.instructions.name %}
+        </div>
+        {{ form.instructions }}
+        {% include 'components/forms/error_widget.html' with errors=form.instructions.errors %}
+    </div>
+    <!-- DEADLINE -->
+        <div class="flex flex-col mb-6 " id="deadline-section">
+            <div class="flex items-center mb-2 space-x-2">
+                <h3 class="text-xl font-medium text-gray-900 dark:text-white">{% translate 'Deadline' %}</h3>
+                {% include 'components/tooltip.html' with content=form.deadline.help_text target=form.deadline.name %}
+            </div>
+            <div id="deadline-input-container" class="my-1 mr-auto border-0">
+                <label for="{{ form.deadline.id_for_label }}"
+                       class="hidden block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.deadline.label }} </label>
+                {{ form.deadline }}
+                {% include 'components/forms/error_widget.html' with errors=form.deadline.errors %}
+            </div>
+            <div class="hidden deadline-settings-container">
+                {% comment %}
+                                <div class="flex items-center my-2 space-x-2">
+                    <div class="flex items-center h-5">
+                        {{ form.notify_deadline }}
+                        <label for="{{ form.notify_deadline.id_for_label }}"
+                               class="hidden text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.notify_deadline.label }}</label>
+                    </div>
+                    {% include 'components/tooltip.html' with content=form.notify_deadline.help_text target=form.notify_deadline.name %}
+                    {% include 'components/forms/error_widget.html' with errors=form.notify_deadline.errors %}
+                </div>
+
+                <div class="container flex-col items-center hidden mb-2 space-x-2 deadline-notice-container">
+                    <div class="flex flex-wrap items-center">
+                        <span class="mr-0.5">Notifications will be sent {{ form.deadline_notice_days }} days and {{ form.deadline_notice_hours }} hours before the deadline.</span>
+
+                    </div>
+
+                </div>
+                {% include 'components/forms/error_widget.html' with errors=form.deadline_notice_days.errors %}
+                {% endcomment %}
+                
+                <div class="flex items-center mb-2 space-x-2">
+                    <div class="flex items-center h-5">
+                        {{ form.upload_after_deadline }}
+                        <label for="{{ form.upload_after_deadline.id_for_label }}"
+                               class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">{{ form.upload_after_deadline.label }}</label>
+                    </div>
+                    {% include 'components/tooltip.html' with content=form.upload_after_deadline.help_text target=form.upload_after_deadline.name %}
+                    {% include 'components/forms/error_widget.html' with errors=form.upload_after_deadline.errors %}
+                </div>
+            </div>
+
+
+        </div>
+</form>

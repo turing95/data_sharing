@@ -1,0 +1,23 @@
+{% extends "private/space/detail/base.html" %}
+{% load static %}
+{% load l10n %}
+{% load i18n %}
+{% load custom_tags %}
+{% block space_content %}
+    <div class="flex justify-end border-b">
+        {% url 'sender_create_row' space.pk as sender_create_row_url %}
+        {% translate 'Add link' as button_text %}
+        {% include "components/buttons/generic.html" with button_text=button_text hx_swap="beforeend" hx_get=sender_create_row_url hx_target='#link-container' extra_classes="my-2" %}
+    </div><!-- UPLOAD STATUS -->
+    <div class="mt-6 mb-6" id="link-container">
+       
+        {% for sender in page_obj %}
+            {% include 'private/space/detail/sender/sender_row.html' %}
+        {% endfor %}
+
+
+    </div>
+            {% if page_obj.paginator.num_pages > 1 %}
+            {% include 'components/pagination.html' %}
+        {% endif %}
+{% endblock %}

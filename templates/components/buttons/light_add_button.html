@@ -1,0 +1,58 @@
+
+
+{% if href %}
+    <a href="{{ href }}"
+       target="{{ target|default_if_none:"_self" }}"
+            {% if button_id %} id="{{ button_id }}" {% endif %}
+            {% if hx_get %}
+       hx-get="{{ hx_get }}{% if query_string and query_string_two %}?{{ query_string }}&{{query_string_two}}{%elif query_string %}?{{ query_string }}{%elif questy_string_two %}?{{ query_string_two }}{% endif %}"
+            {% endif %}
+            {% if hx_post %}
+            {% endif %}
+            {% if hx_post %}
+       hx-post="{{ hx_post }}{% if query_string and query_string_two %}?{{ query_string }}&{{query_string_two}}{%elif query_string %}?{{ query_string }}{%elif questy_string_two %}?{{ query_string_two }}{% endif %}"
+            {% endif %}
+            {% if hx_trigger %}
+       hx-trigger="{{ hx_trigger }}"
+            {% endif %}
+            {% if hx_target %}
+       hx-target="{{ hx_target }}"
+            {% endif %}
+            {% if hx_swap %}
+       hx-swap="{{ hx_swap }}"
+            {% endif %}
+       class="inline-flex items-center px-2 text-marian-blue-300 justify-left hover:text-marian-blue-500 {{extra_classes}}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4 mr-1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
+            {{ button_text }}
+        </a>
+{% else %}
+    <button type="button"
+            {% if button_id %} id="{{ button_id }}" {% endif %}
+            {% if data_modal_toggle %} data-modal-toggle="{{ data_modal_toggle }}" {% endif %}
+            {% if data_modal_target %} data-modal-target="{{ data_modal_target }}" {% endif %}
+            {% if hx_get %}
+            hx-get="{{ hx_get }}{% if query_string and query_string_two %}?{{ query_string }}&{{query_string_two}}{%elif query_string %}?{{ query_string }}{%elif questy_string_two %}?{{ query_string_two }}{% endif %}"
+            {% endif %}
+            {% if hx_post %}
+            hx-post="{{ hx_post }}{% if query_string and query_string_two %}?{{ query_string }}&{{query_string_two}}{%elif query_string %}?{{ query_string }}{%elif questy_string_two %}?{{ query_string_two }}{% endif %}"
+            {% endif %}
+            {% if hx_trigger %}
+            hx-trigger="{{ hx_trigger }}"
+            {% endif %}
+            {% if hx_target %}
+            hx-target="{{ hx_target }}"
+            {% endif %}
+            {% if hx_swap %}
+            hx-swap="{{ hx_swap }}"
+            {% endif %}
+            class="inline-flex items-center px-2 text-marian-blue-300 justify-left hover:text-marian-blue-500 {{extra_classes}}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4 mr-1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
+            {{ button_text }}
+        </button>
+{% endif %}

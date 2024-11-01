@@ -1,0 +1,142 @@
+{% extends "private/grant/_base.html" %}
+{% load i18n %}
+
+{% block grant_content %}
+ 
+<div class="flex flex-col md:flex-row ">
+    <div class="w-full pr-2">
+        
+
+        <!--FINANCER-->
+
+        <div class="inline-flex w-full mt-4 text-sm">
+            {% if grant.financer_name %}
+                <h3 class="me-2">{% translate 'PROMOTED BY:' %}</h3>
+                <a {% if grant.financer_website_link %} 
+                href="{{grant.financer_website_link}}"
+                target="_blank"
+                class=" hover:underline hover:text-marian-blue-400"
+                {%endif%}>
+                    {{ grant.financer_name }}
+                </a>
+            {% endif %}
+            <!--GRANT STATUS-->
+            <div class=" md:hidden ml-auto mr-2 text-sm my-auto  {% if grant.status == grant.GrantStatus.ANNOUNCED %} text-blue-800 bg-blue-200 {% elif grant.status == grant.GrantStatus.PUBLISHED %} text-green-800 bg-green-200 {% elif grant.status == grant.GrantStatus.CLOSED %} text-red-800 bg-red-200{%endif%} align-middle  rounded-full px-[8px] flex items-center justify-center">
+                <span class="text-sm  align-middle rounded-full px-[8px] flex items-center justify-center whitespace-nowrap">
+                    {{ grant.status }}
+                </span>
+            </div>
+        </div>
+   
+
+        <div class="inline-flex mt-1">    
+            
+            <!--GRANT OFFICIAL NAME-->
+            {% if grant.official_name %}
+                <h2 class="text-3xl font-bold ">{{ grant.official_name }}</h2>
+            {% else %}
+                <h2 class="text-3xl font-bold">{% translate 'No official name' %}</h2>
+            {% endif %}
+
+
+        </div>
+
+        <!--GRANT DESCRIPTION-->
+                
+        <div id="accordion-open" class="mt-3 border-b border-b-gray-200 " data-accordion="open">
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_timeline label=grant.form.descriptive_timeline.label %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_beneficiaries label=grant.form.descriptive_beneficiaries.label %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_goals label=grant.form.descriptive_goals.label %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_funds label=grant.form.descriptive_funds.label %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_allowed_activities label=grant.form.descriptive_allowed_activities.label %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_not_allowed_activities label=grant.form.descriptive_not_allowed_activities.label %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_admitted_expenses label=grant.form.descriptive_admitted_expenses.label %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_not_admitted_expenses label=grant.form.descriptive_not_admitted_expenses.label %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_application_iter label=grant.form.descriptive_application_iter.label %}
+            {% translate 'Other information' as info %}
+            {% include 'private/grant/detail_descriptive_accordion_section.html' with description=grant.descriptive_other label=info %}
+            {% if grant.de_minimis %}
+                {% if grant.de_minimis is False %}
+                    {% translate 'The de minimis scheme does not apply' as description %}
+                {% else %}
+                    {% translate 'The de minimis scheme applies' as description %}
+                {% endif %}
+                {% translate 'De minimis scheme' as info %}
+                {% include 'private/grant/detail_descriptive_accordion_section.html' with description=description label=info %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="right-section w-full mt-4 md:w-[280px] flex flex-col text-sm justify-start">
+        <!--GRANT STATUS-->
+        <div class="hidden md:flex mx-auto mb-2 text-sm   {% if grant.status == grant.GrantStatus.ANNOUNCED %} text-blue-800 bg-blue-200 {% elif grant.status == grant.GrantStatus.PUBLISHED %} text-green-800 bg-green-200 {% elif grant.status == grant.GrantStatus.CLOSED %} text-red-800 bg-red-200{%endif%} align-middle  rounded-full px-[8px] flex items-center justify-center">
+            <span class="text-sm  align-middle rounded-full px-[8px] flex items-center justify-center whitespace-nowrap">
+                {{ grant.status }}
+            </span>
+        </div>
+        <div class="flex flex-col w-full p-2 mb-3 border border-gray-300 rounded-md">
+            <div class="mx-auto mb-2 text-sm text-gray-500">{% translate 'LINKS AND CONTACTS' %}</div>
+            <a {% if grant.official_page_link %} 
+            href="{{grant.official_page_link}}"
+            target="_blank"
+            class="mb-2 hover:underline hover:text-marian-blue-400"
+            {%else%}
+            class="mb-2 text-gray-300" title="{% translate 'No link available' %}"
+            {%endif%}>
+                {% translate 'Official grant page'%}
+            </a>
+            <a {% if grant.application_page_link %} 
+            href="{{grant.application_page_link}}"
+            target="_blank"
+            class="mb-2 hover:underline hover:text-marian-blue-400"
+            {%else%}
+            class="mb-2 text-gray-300" title="{% translate 'No link available' %}"
+            {%endif%}>
+                {% translate 'Application page'%}
+            </a>
+            {% if grant.support_email %} 
+                <div class="inline-flex mb-2 inner-group ">
+                    <a 
+                    href="mailto:{{grant.support_email}}"
+                    class="hover:underline hover:text-marian-blue-400">
+                        {{ grant.support_email }}
+                    </a>
+                    <div class="my-auto opacity-0 inner-group-hover:opacity-100">
+                        {% include 'components/buttons/copy_button.html' with text=grant.support_email %}
+                    </div>
+                </div>
+            {%endif%}
+        </div>
+        <div class="flex flex-col w-full p-2 mb-3 border border-gray-300 rounded-md">
+            <div class="mx-auto text-sm text-gray-500">{% translate 'TIMELINE' %}</div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock grant_content %}

@@ -1,0 +1,22 @@
+{% extends "private/company/detail/base.html" %}
+{% load static %}
+{% load l10n %}
+{% load i18n %}
+{% load custom_tags %}
+{% block company_content %}
+{% if page_obj %}
+    <div class="mt-6 mb-6" id="file-container">
+        {% for file in page_obj %}
+            {% include 'private/company/detail/file_row.html' with file=file %}
+        {% endfor %}
+
+    </div>
+    {% if page_obj.end_index > 1 %}
+        {% include 'components/pagination.html' %}
+    {% endif %}
+{% else %}
+    <div class="flex flex-col items-center justify-center mt-12">
+        <p class="mb-3 text-2xl text-center text-gray-500">There are no files yet</p>
+    </div>
+{% endif %}
+{% endblock company_content %}

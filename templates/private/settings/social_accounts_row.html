@@ -1,4 +1,5 @@
 {% load socialaccount static %}
+{% load i18n %}
 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
     <!-- Column 1: Provider Logo and Name -->
     <td class="px-6 py-4 whitespace-nowrap">
@@ -36,19 +37,19 @@
             {% if account.socialtoken_set.count > 0 %}
                 <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 ">
 
-                    Connected
+                    {% translate 'Connected' %}
                 </span>
 
             {% else %}
                 <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 ">
 
-                    Connection expired
+                    {% translate 'Connection expired' %}
                 </span>
             {% endif %}
 
         {% else %}
             <span class="inline-flex items-center bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 ">
-                Not connected
+                {% translate 'Not connected' %}
             </span>
         {% endif %}
     </td>
@@ -58,11 +59,13 @@
         <div class="max-w-[180px]">
             {% if not account %}
                 {% provider_login_url provider process="connect" scope=scope auth_params=auth_params next=next as href %}
-                {% include 'components/buttons/generic.html' with href=href  button_text="Connect" %}
+                {% translate "Connect" as button_text %}
+                {% include 'components/buttons/generic.html' with href=href  button_text=button_text %}
             {% elif account.socialtoken_set.count == 0 %}
                 <div class="my-3">
                     {% provider_login_url provider process="connect" scope=scope auth_params=auth_params next=next as href %}
-                    {% include 'components/buttons/generic.html' with href=href  button_text="Reconnect" %}
+                    {% translate "Reconnect" as button_text %}
+                    {% include 'components/buttons/generic.html' with href=href  button_text=button_text %}
                 </div>
                 <div class="my-3">
                     {% include 'private/settings/socialaccount_disconnect.html' with provider=provider.id %}

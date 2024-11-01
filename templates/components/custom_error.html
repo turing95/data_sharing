@@ -1,17 +1,19 @@
-    <div class="flex flex-col justify-between pt-[200px] px-10">
-        <div class="flex-grow">
-            <div class="flex items-center justify-center h-full">
-                <div class="text-center">
-                    <h1 class="text-6xl font-bold text-gray-800">{{ code }}</h1>
-                    <p class="text-2xl text-gray-600">{{ slug }}</p>
-                    <p class="mt-4 mb-4 text-gray-600">{{ description }}</p>
-                    {% if request.user.is_authenticated %}
-                        {% url 'spaces' as back_url %}   
-                    {% else %}
-                        {% url 'generic_home' as back_url %}          
-                    {% endif %}       
-                    {% include 'components/buttons/generic.html' with href=back_url button_text="Back to homepage"  extra_classes="max-w-[250px] mx-auto" %}
-                </div>
+{% load i18n %}
+<div class="flex flex-col justify-between pt-[200px] px-10">
+    <div class="flex-grow">
+        <div class="flex items-center justify-center h-full">
+            <div class="text-center">
+                <h1 class="text-6xl font-bold text-gray-800">{{ code }}</h1>
+                <p class="text-2xl text-gray-600">{{ slug }}</p>
+                <p class="mt-4 mb-4 text-gray-600">{{ description }}</p>
+                {% if request.user.is_authenticated %}
+                    {% url 'spaces' as back_url %}   
+                {% else %}
+                    {% url 'generic_home' as back_url %}          
+                {% endif %} 
+                {% translate "Back to homepage" as button_text %}  
+                {% include 'components/buttons/generic.html' with href=back_url button_text=button_text  extra_classes="max-w-[250px] mx-auto" %}
             </div>
         </div>
-    </div> 
+    </div>
+</div> 

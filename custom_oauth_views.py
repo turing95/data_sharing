@@ -3,6 +3,7 @@ from allauth.socialaccount.providers.oauth2.views import OAuth2View
 from django.contrib import messages
 from django.shortcuts import redirect
 from requests import RequestException
+from django.utils.translation import gettext_lazy as _
 
 from django.core.exceptions import PermissionDenied
 from allauth.socialaccount.helpers import (
@@ -57,7 +58,7 @@ class CustomOAuth2CallbackView(OAuth2View):
                         not existing_social_accounts.filter(uid=login.account.uid).exists()):
                     provider = self.adapter.get_provider()
                     messages.error(request,
-                                   f"You already have an account with {provider.name}, reconnect or disconnect the existing one.")
+                                   _(f"You already have an account with {provider.name}, reconnect or disconnect the existing one."))
                     default_next = get_adapter().get_connect_redirect_url(request, login.account)
                     next_url = login.get_redirect_url(request) or default_next
                     return redirect(next_url)

@@ -1,0 +1,38 @@
+{% extends 'emails/_base.html' %}
+{% load i18n %}
+{% block content %}
+    <tr>
+        <td>
+            <!--primary 1-->
+            <table style="width:100%;">
+                <tr>
+                    <td style="font-weight:bold;font-size:20px;padding:20px 0;line-height: 1.2">
+                        {% with title=sender.space.title %}
+                            {% blocktranslate trimmed %}
+                                {{ reference_name }} invites you to upload files  to the space:<br>
+                                <a href="{{ space_link }}" style="text-decoration:underline;">
+                                    {{ title }}
+                                </a>
+                            {% endblocktranslate %}
+                        {% endwith %}
+                    </td>
+                </tr>
+                {% if custom_content %}
+                    <tr>
+                        <td style="padding:10px 0;">
+                            {{ custom_content }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td style="padding:10px 0;">
+                        {% blocktranslate trimmed %}
+                            Reference email: {{ reference_email }}
+                        {% endblocktranslate %}
+                    </td>
+                </tr>
+            </table>
+            {% include 'emails/components/main_section.html' %}
+        </td>
+    </tr>
+{% endblock %}

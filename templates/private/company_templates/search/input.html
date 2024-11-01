@@ -1,0 +1,21 @@
+{% load i18n %}
+<div class="inline-flex w-full bg-gray-50 border-gray-300 border h-[36px] pr-1.5">
+
+    <input type="text"
+           name="search-templates"
+           placeholder="{% translate "Type to search a template and add it..." %}"
+           hx-trigger="input changed delay:500ms, search"
+           hx-indicator="#loading-indicator-templates-search-{{ group.pk }}"
+           hx-target="#search-templates-results-container-{{ group.pk }}"
+           class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input"
+           autocomplete="off"
+           hx-post="{% url 'company_templates_search' group.pk %}">
+    <!-- Loading Indicator -->
+    <div id="loading-indicator-templates-search-{{ group.pk }}"
+         class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
+        <div role="status" class="flex spinner ml-0.5">
+            {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>

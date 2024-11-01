@@ -1,0 +1,132 @@
+{% extends 'sender/base.html' %}
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+{% load custom_tags %}
+
+{% block sender_page %}
+
+    <!-- Main Content -->
+    <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
+        <label for="{{ kezyy_request.title.id_for_label }}"
+               class="block pt-3 text-xs font-bold text-gray-900 dark:text-white">{% translate 'Request' %}</label>
+        <h1 class="pb-3 text-3xl font-bold text-black">{{ kezyy_request.title }}</h1>
+        <!-- Instructions Section -->
+        {% if kezyy_request.instructions %}
+            <div class="mt-3">
+                <div class="text-sm">{{ kezyy_request.instructions|linebreaks }}</div>
+            </div>
+        {% endif %}
+        <div class="flex mt-3">
+            <div class="px-2 mb-2 mr-auto text-sm font-medium text-gray-700 bg-gray-200">{% translate 'Total max size of uploads: 50MB' %}</div>
+        </div>
+
+        {% if kezyy_request.deadline %}
+            <!-- Deadline -->
+            <div class="mt-4 mb-2 mb-4 text-base">
+                <span class="">{% translate 'Deadline:' %}</span>
+                {% localize on %}
+                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">
+                    <img src="{% static 'images/icons/calendar-blue.svg' %}" alt="clock icon"
+                         class="w-[13px] h-[13px] mr-1">
+                    {{ kezyy_request.deadline|date }}
+                </span>
+                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
+                    <img src="{% static 'images/icons/clock-blue.svg' %}" alt="clock icon"
+                         class="w-[13px] h-[13px] mr-1">
+                    {{ kezyy_request.deadline|time }} {{ kezyy_request.deadline|date:"T" }}
+                </span>
+
+                {% endlocalize %}
+                {% if kezyy_request.deadline_expired %}
+                    <span class="inline-flex items-center  bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
+                        {% translate 'Deadline expired!' %}
+                    </span>
+                {% else %}
+                    {% if kezyy_request.upload_after_deadline is False %}
+                        <span class="inline-flex items-center text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">
+                            {% translate 'You will not be able to upload files after the deadline.' %}
+                    </span>
+                    {% endif %}
+                {% endif %}
+
+
+            </div>
+            {% if kezyy_request.upload_after_deadline is False and kezyy_request.deadline_expired %}
+
+                <!-- Deadline Expired Message -->
+                <div class="flex items-center justify-center w-4/5 mx-auto my-8">
+                    <div class="p-4 text-center bg-red-100 border border-red-300 shadow-lg">
+                        <h2 class="mt-2 text-xl font-bold text-red-800">{% translate 'Deadline Expired' %}</h2>
+                        <p class="mt-2 text-red-700 text-md">
+                            {% translate 'It is not possible to upload files anymore. For any inquiries, contact:' %}<br>
+                            <a
+                                    href=""
+                                    class="text-blue-500 underline">Missing </a>
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div id="accordion-open" data-accordion="open">
+                {% include 'components/forms/error_widget.html' with errors=formset.non_form_errors %}
+
+                {{ formset.management_form }}
+
+
+                {% for form in formset.forms reversed %}
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
+                    {% if form.upload_request %}
+                        {% if form.upload_request.multiple_files %}
+                            {% include 'sender/request/multi_upload_request.html' %}
+                        {% else %}
+                            {% include 'sender/request/upload_request.html' %}
+                        {% endif %}
+                    {% elif form.text_request %}
+                        {% include 'sender/request/text_request.html' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% comment %} <div class="p-5"
+                 hx-get="{% url 'sender_history_table' space.uuid %}?request_uuid={{ form.upload_request.uuid }}&sender_uuid={{ sender.uuid }}"
+                 hx-trigger="intersect once, filesUpdated from:document"
+                 hx-target="#history-table-{{ forloop.counter0 }}"
+                 hx-indicator="#loading-indicator-history-table-{{ forloop.counter0 }}">
+                <div class="flex items-center mb-3">
+                    <h3 class="text-sm font-semibold ">{% translate 'Previous uploads' %}</h3>
+
+                    <!-- Loading Indicator -->
+                    <div id="loading-indicator-history-table-{{ forloop.counter0 }}"
+                         class="items-center justify-center opacity-0 htmx-indicator">
+                        <div role="status" class="ml-2 spinner">
+                            {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="history-table-{{ forloop.counter0 }}">
+                </div>
+            </div> {% endcomment %}
+
+            {% render_sender_notification_activate_toggle request %}
+            {% translate 'Get an email with a summary of the files uploaded' as receipt_text %}
+            {% include 'components/tooltip.html' with content=receipt_text target='sender_upload_notification' %}
+
+            {% if kezyy_request.upload_after_deadline or not kezyy_request.deadline_expired %}
+                <div class="sticky flex justify-center bottom-4">
+                    {% translate 'Confirm and Upload' as confirm_text %}
+                    {% include "components/buttons/submit_with_loader.html" with button_text=confirm_text loading="True" extra_classes="min-w-[200px] min-h-[42px]" %}
+                    <span class="hidden min-w-[200px] min-h-[42px]"></span>
+
+                </div>
+            {% endif %}
+
+
+        </form>
+
+    </div>
+{% endblock sender_page %}

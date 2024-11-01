@@ -1,10 +1,12 @@
+{% load i18n %}
 <form id="disconnect-{{provider}}"
       action="{% url 'socialaccount_connections' %}"
       method="POST"
-      onsubmit="return confirm('Are you sure you want to disconnect this account? All associated requests will be suspended.')">
+      onsubmit={% translate "return confirm('Are you sure you want to disconnect this account? All associated requests will be suspended.')" %}>
     {% csrf_token %}
-    {{disconnect_form.account_to_disconnect}}  
-    {% include 'components/buttons/submit_with_loader.html' with button_text="Disconnect" %}
+    {{disconnect_form.account_to_disconnect}} 
+    {% translate "Disconnect" as button_text %}
+    {% include 'components/buttons/submit_with_loader.html' with button_text=button_text %}
 </form>
 
 

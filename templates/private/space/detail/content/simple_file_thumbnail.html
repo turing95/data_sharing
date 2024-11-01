@@ -1,0 +1,43 @@
+{% load static %}
+{% load i18n %}
+<!-- from https://www.svgrepo.com/collection/files-8/ -->
+
+<div class="relative mt-2">
+    {% include 'components/file_thumbnail_logo.html' with dim=dim %}
+
+    
+    <div class="absolute inset-0 bg-white bg-opacity-0 hover:bg-opacity-70">
+        <!-- change file Icon Overlay -->
+        <div class="flex items-center justify-center w-full transition-opacity duration-300 ease-in-out rounded opacity-0 cursor-pointer h-1/2 hover:opacity-100 text-marian-blue-400">
+            <label for="{{ file_section.section_form.file.id_for_label }}" class="cursor-pointer ">
+                <svg class="w-5 h-5 mx-auto mb-1 "
+                aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                </svg>
+                <div class="text-xs text-center dark:text-gray-400">
+                    {% translate 'Change file' as upload_text %}
+                    <span class="font-semibold">{{upload_text}}</span>                               
+                </div>
+                {{ file_section.section_form.file }}
+            </label>  
+        </div>
+        <!-- Download Icon Overlay -->
+        <div class="flex items-center justify-center w-full transition-opacity duration-300 ease-in-out rounded opacity-0 cursor-pointer h-1/2 hover:opacity-100 text-marian-blue-400">
+            <a href="{{ file_section.file.url }}" download target="_blank">
+                <!-- Download Icon (SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-5 h-5 mx-auto mb-1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                <div class="text-xs text-center ">
+                    {% translate 'Download' as upload_text %}
+                    <span class="font-semibold">{{upload_text}}</span>                               
+                </div>
+            </a>
+        </div>
+    </div>
+{% include 'components/forms/error_widget.html' with errors=file_section.section_form.file.errors %}  
+</div>
+

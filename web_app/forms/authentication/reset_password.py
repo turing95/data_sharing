@@ -7,6 +7,6 @@ class ResetPasswordForm(AllauthResetPasswordForm):
             
         # Set placeholder for the email field
         self.fields['email'].widget.attrs.update({
-            'placeholder': 'myemail@mail.com',
+            'placeholder': 'email@mail.com',
             'class': text_input  
         })

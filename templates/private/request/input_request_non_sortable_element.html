@@ -1,0 +1,49 @@
+{% load i18n %}
+{% load custom_tags %}
+
+<div class="flex-col mb-4 group">
+
+    <div class="flex-col ">
+        <div class=" ml-4 -mb-[10px] w-full ">
+            {% include 'private/request/input_request_top_tags.html' with input_request=input_request%}
+            
+        </div>
+        <div class="flex-grow max-w-screen-md p-2 border-2 border-gray-100">
+            <div class="mb-2 font-bold"> {{ input_request.title }}</div>
+
+
+
+            {% if input_request.upload_request.outputs %}
+                {% if input_request.upload_request.multiple_files %}
+                    {% for output in input_request.upload_request.outputs %}
+                        {% include 'private/request/detail/output.html' with output=output %}
+                    {% endfor %}
+                {% else %}
+                    {% if input_request.upload_request.last_output %}
+                        {% with output=input_request.upload_request.last_output %}
+                            {% include 'private/request/detail/output.html' with output=output %}            
+                        {% endwith %}
+                    {% endif %}
+                {% endif %}
+
+            {% elif input_request.text_request.outputs %}
+                {% if input_request.text_request.last_output %}
+                    {% with output=input_request.text_request.last_output %}
+                        {% include 'private/request/detail/output.html' with output=output %}
+                    {% endwith %}
+                {% endif %}
+            {% else %}
+                <div class="ml-2 text-xs text-gray-400">
+                    {% translate "No content received yet" %}
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+

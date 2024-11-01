@@ -3,7 +3,8 @@ import { initSubmitButtons } from './utils/submitButton.js';
 import { initNav } from './utils/navbar.js';
 import {initHtmxModal} from "./utils/htmxModal.js";
 import {handleHtmxError} from "./utils/errors.js";
-import { initBetaAccessForm } from "./utils/beta-access-form.js";
+import {preventEnter} from "./utils/forms.js";
+import {initLanguageForm} from "./utils/forms.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone; // e.g. "America/New_York"
@@ -11,22 +12,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initSubmitButtons();
     initMessageBar();
     initNav();
-    initBetaAccessForm();
+    preventEnter();
 });
 document.addEventListener('htmx:afterRequest', function(evt) {
     initMessageBar();
 });
-document.addEventListener('htmx:beforeSwap', function(evt) {
-    if (evt.detail.target.id.startsWith('htmx-modal')) {
-        const modalElement = evt.detail.target.children[0];
-        if (modalElement) {
-            modalElement.remove();
-        }
-    }
-});
-
 document.body.addEventListener('htmx:afterSwap', function(evt) {
-
+    initFlowbite();
+    preventEnter();
     if (evt.target.id.startsWith('htmx-modal')) {
         const modalElement = evt.target.children[0];
         if (modalElement) {
@@ -44,4 +37,9 @@ document.body.addEventListener('htmx:sendError', function(evt) {
 document.body.addEventListener('htmx:responseError', function(evt) {
     handleHtmxError(evt);
 
+});
+
+
+document.addEventListener('htmx:afterSettle', function(evt) {
+    initLanguageForm();
 });

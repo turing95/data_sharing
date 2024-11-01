@@ -1,0 +1,21 @@
+{% extends "private/_base.html" %}
+{% block private_content %}
+<form action="{% url 'company_create' organization.pk %}" method="POST" id="create-company-form">
+    {% csrf_token %}
+    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+    <div class="flex mx-auto">
+        {% for field in form %}
+            <div class="mx-2">
+                <label for="{{ field.id_for_label }}"
+                       class="font-medium text-gray-900 dark:text-white">{{ field.label }}:
+                </label>
+                {{ field }}
+                {% include 'components/forms/error_widget.html' with errors=field.errors %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="flex justify-center m-2">
+        {% include 'components/buttons/submit_with_loader.html' with button_text="Save company" %}
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "private/_base.html" %}
+{% load i18n %}
+{% block private_content %}
+
+<!-- TITLE --> <!-- ADD NEW BUTTON-->
+{% translate "Spaces" as title %}
+{% if request.user.can_create_space is True %}
+    {% url 'space_create' organization.uuid as href %}
+{% else %}
+    {% translate 'plan_pricing_modal_button_list' as button_id %}
+{% endif %}
+{% include 'private/page_title.html' with title=title href=href button_text=new_space_button_text button_id=button_id %}
+{% comment %} 
+        <!-- title  -->
+        <div class="flex items-center justify-between mb-2">
+            <h1 class="text-2xl font-bold text-gray-800">{% translate 'Spaces' %}</h1>
+            <div class="h-8 ml-auto">
+                {% if request.user.can_create_space is True %}
+                    {% url 'space_create' organization.uuid as space_detail_url %}
+                    {% include "components/buttons/generic.html" with button_text=new_space_button_text href=space_detail_url extra_classes="h-8 inline-flex" %}
+                {% else %}
+                    {% include "components/buttons/generic.html" with button_text=new_space_button_text button_id="plan_pricing_modal_button_list" extra_classes="h-8 inline-flex" %}
+                {% endif %}
+            </div> {% endcomment %}
+
+
+
+
+
+{% if page_obj %}
+    <div class="w-full">
+        <div class="flex text-left border-b border-gray-200">
+
+            <div class="flex-1 py-2 px-1.5 font-bold min-w-[200px] max-w-[250px] shrink uppercase text-sm">
+
+            </div>
+            <div class="flex-1 py-2 px-1.5 font-bold min-w-[190px] shrink uppercase text-sm grow">
+                {% translate 'Company' %}
+            </div>
+            <div class="p-1  w-[32px] flex">
+            </div>
+        </div>
+        {% for space in page_obj %}
+            {% include 'private/space/list/space_row.html' %}
+        {% endfor %}
+
+    </div>
+    {% if page_obj.paginator.num_pages > 1 %}
+        {% translate "Spaces" as obj_name %}
+        {% include 'components/pagination.html' with objs_name=obj_name %}
+    {% endif %}
+{% else %}
+    {% comment %} <div class="flex flex-col items-center justify-center mt-12">
+        <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no Spaces yet' %}</p>
+    </div> {% endcomment %}
+    <div class="flex flex-col items-center justify-center mt-10">
+        <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'You have not created any spaces yet' %}</p>
+        {% url 'space_create' organization.uuid as space_create_url %}
+        {% translate "Create your first space" as button_text %}
+        {% include 'components/buttons/generic.html' with button_text=button_text href=space_create_url %}
+        <p class="m-3 text-center text-gray-500">{% translate "Don't know where to start?" %} <a
+                href="{{ doc_url }}" target="_blank"
+                class="text-blue-500 hover:underline">{% translate 'Read our guide' %}</a></p>
+    </div>
+{% endif %}
+
+
+{% endblock private_content %}
+
+

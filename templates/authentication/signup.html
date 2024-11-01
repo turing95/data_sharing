@@ -1,0 +1,65 @@
+{% extends 'public/_base.html' %}
+{% load static i18n %}
+
+{% block public_content %}
+<div class="flex flex-col w-full p-5 mx-auto my-10 border border-gray-200 shadow-sm md:mt-30 max-w-[410px]">
+   
+        <h1 class="mb-4 text-2xl font-semibold text-center">{% translate 'Create a new account' %}</h1>
+        
+
+        <form action="" method="post" class="w-full">
+            {% csrf_token %}
+        
+            <!-- Display non-field errors -->
+            {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+        
+
+
+            <!-- Render Email Field -->
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block mt-1 mb-1 text-sm font-bold text-gray-700">{{form.email.label}}</label>
+                {{ form.email}}
+                {% if form.email.help_text %}
+                    <div class="">{{ form.email.help_text }}</div>
+                {% endif %}
+                {% include 'components/forms/error_widget.html' with errors=form.email.errors %}
+            </div>
+        
+            <!-- Render Password 1 Field -->
+            <div>
+                <label for="{{ form.password1.id_for_label }}" class="block mt-1 mb-1 text-sm font-bold text-gray-700">{{form.password1.label}}</label>
+                {{ form.password1 }}
+                {% if form.password1.help_text %}
+                    <div class="text-xs">{{ form.password1.help_text }}</div>
+                {% endif %}
+                {% include 'components/forms/error_widget.html' with errors=form.password1.errors %}
+            </div>
+        
+            <!-- Render Password 2 Field -->
+            <div>
+                <label for="{{ form.password2.id_for_label }}" class="block mt-1 mb-1 text-sm font-bold text-gray-700">{{form.password2.label}}</label>
+                {{ form.password2 }}
+                {% if form.password2.help_text %}
+                    <div class="text-xs">{{ form.password2.help_text }}</div>
+                {% endif %}
+                {% include 'components/forms/error_widget.html' with errors=form.password2.errors %}
+            </div>
+        
+            <!-- Submit Button --> <!--TRADUZIONE MANCANTE -->
+            {% translate "Register new account" as button_text %}
+            {% include "components/buttons/submit_with_loader.html" with button_text=button_text extra_classes="w-full min-h-[42px] mt-3" loading="True" %}
+        </form>
+
+        <p class="mt-1 text-sm text-center">
+            {% translate 'Already have an account?' %} <a href="{{ login_url }}" class="text-blue-600 underline hover:text-blue-600">{% translate 'Sign in' %}</a>
+        </p>
+
+        <!-- separator from social account login -->
+        <div class="flex items-center justify-center my-4">
+            <div class="flex-grow border-t border-gray-300"></div>
+            <span class="mx-4 text-gray-600">{% translate 'or' %}</span>
+            <div class="flex-grow border-t border-gray-300"></div>
+        </div>
+        {% include "authentication/snippets/login.html" %}
+    </div>
+{% endblock %}

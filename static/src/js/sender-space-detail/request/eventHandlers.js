@@ -10,10 +10,10 @@ export function handleFilesUpload(inputElement) { //function to call onchange on
     if(!tagContainer) return;
     
     // add title paragraph  
-    let titleParagraph = document.createElement('p');
-    titleParagraph.className = 'mb-2 text-sm';
-    titleParagraph.textContent = 'Files ready to be uploaded:';
-    tagContainer.appendChild(titleParagraph);
+    // let titleParagraph = document.createElement('p');
+    // titleParagraph.className = 'mb-0.5 text-xs';
+    // titleParagraph.textContent = 'Files ready to be uploaded:';
+    // tagContainer.appendChild(titleParagraph);
     
 
     const fileList = inputElement.files; // list of files from the input
@@ -28,7 +28,7 @@ export function handleFilesUpload(inputElement) { //function to call onchange on
 function createFileTag(fileName) {
     const tag = document.createElement('span');
 
-    tag.className = 'inline-flex items-center bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 my-1 break-all';
+    tag.className = 'inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 mx-1 mb-1 break-all';
     tag.title = fileName;
 
 

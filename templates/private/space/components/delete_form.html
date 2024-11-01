@@ -1,5 +1,6 @@
 {% load static %}
-<form action="{% url 'space_delete' space.uuid %}" method="post" onsubmit="return confirm('Are you sure you want to delete this space?');">
+{% load i18n %}
+<form action="{% url 'space_delete' space.uuid %}" method="post" onsubmit={% translate "return confirm('Are you sure you want to delete this space?');" %}>
     {% csrf_token %}
     <button type="submit" class="items-center ml-2 text-gray-600 transition duration-300 delete-space-button first-letter:inline-flex hover:text-gray-800 group" >                       
         {% if hide_icon is False%}

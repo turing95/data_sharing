@@ -14,12 +14,13 @@ class OneDrive(BaseModel):
     PROVIDER_ID = 'custom_microsoft'
 
     @classmethod
-    def create_from_folder_id(cls, upload_request, folder_id, user):
+    def create_from_folder_id(cls, upload_request,space, folder_id, user):
         from web_app.models import GenericDestination
         one_drive_destination = cls(folder_id=folder_id, user=user, social_account=user.microsoft_account)
 
         generic_destination = GenericDestination(
             request=upload_request,
+            space=space,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=one_drive_destination.pk,
             social_account=user.microsoft_account,
@@ -56,3 +57,6 @@ class OneDrive(BaseModel):
 
     def get_file_url(self, file_id):
         return self.service.get_file_url(file_id)
+
+    def get_file(self, file_id):
+        raise NotImplementedError

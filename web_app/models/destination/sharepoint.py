@@ -14,7 +14,7 @@ class SharePoint(BaseModel):
     PROVIDER_ID = 'custom_microsoft'
 
     @classmethod
-    def create_from_folder_id(cls, upload_request, folder_id, user, site_id):
+    def create_from_folder_id(cls, upload_request,space, folder_id, user, site_id):
         from web_app.models import GenericDestination
 
         sharepoint_destination = cls(folder_id=folder_id, site_id=site_id, user=user,
@@ -22,6 +22,7 @@ class SharePoint(BaseModel):
 
         generic_destination = GenericDestination(
             request=upload_request,
+            space=space,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=sharepoint_destination.pk,
             social_account=user.microsoft_account,
@@ -58,3 +59,7 @@ class SharePoint(BaseModel):
 
     def get_file_url(self, file_id):
         return self.service.get_file_url(file_id,self.site_id)
+
+
+    def get_file(self, file_id):
+        raise NotImplementedError

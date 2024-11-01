@@ -9,26 +9,34 @@ import pytz
 import arrow
 
 
-class Space(BaseModel, DeleteModel):
+class Space(BaseModel):
     TIMEZONE_CHOICES = tuple((tz, tz) for tz in pytz.all_timezones)
 
     title = models.CharField(max_length=250)
     user = models.ForeignKey('User', null=True, on_delete=models.SET_NULL, related_name='spaces')
-    organization = models.ForeignKey('Organization', null=True, on_delete=models.SET_NULL, related_name='spaces')
+    organization = models.ForeignKey('Organization', null=True, on_delete=models.CASCADE, related_name='spaces')
     company = models.ForeignKey('Company', null=True, on_delete=models.SET_NULL, related_name='spaces')
+    source_grant = models.ForeignKey('Grant', null=True, on_delete=models.SET_NULL,related_name='linked_spaces')
     is_public = models.BooleanField(default=False)
     instructions = models.TextField(null=True, blank=True)
-    deadline = models.DateTimeField(null=True, blank=True)
-    upload_after_deadline = models.BooleanField(default=False)
-    notify_deadline = models.BooleanField(default=False)
-    notify_invitation = models.BooleanField(default=False)
-    deadline_notice_days = models.PositiveSmallIntegerField(blank=True, null=True)
-    deadline_notice_hours = models.PositiveSmallIntegerField(blank=True, null=True)
     timezone = models.CharField(
         max_length=50,
         choices=TIMEZONE_CHOICES
     )
     locale = models.CharField(max_length=10, null=True, blank=True, default='en-us')
+
+    class Meta:
+        ordering = ['-created_at']
+
+    @property
+    def has_complete_requests(self):
+        from web_app.models import InputRequest
+        return InputRequest.objects.filter(request__space=self, is_complete=True).exists()
+
+    @property
+    def has_incomplete_requests(self):
+        from web_app.models import InputRequest
+        return InputRequest.objects.filter(request__space=self, is_complete=False).exists()
 
     @property
     def link_for_email(self):
@@ -37,22 +45,34 @@ class Space(BaseModel, DeleteModel):
         })
 
     @property
-    def deadline_notification_datetime(self):
-        if not self.deadline or self.deadline_notice_days is None or self.deadline_notice_hours is None:
-            return None
-        notice_days = self.deadline_notice_days or 0
-        notice_hours = self.deadline_notice_hours or 0
+    def sections_position_sorted(self):
+        return self.sections.order_by('position')
 
-        # Calculate notification datetime in the server timezone
-        notification_dt = arrow.get(self.deadline).shift(days=-notice_days, hours=-notice_hours)
-        return notification_dt.datetime
+    def add_section(self, heading_section=None, paragraph_section=None, file_section=None, prev_section_position=None):
+        from web_app.models import SpaceSection
+        if prev_section_position:
+            inserting_position = int(prev_section_position) + 1
+        else:
+            inserting_position = 1
+        # increase by 1 all the positions of the sections that have a position greater than or equal to the inserting position
+        self.sections.filter(position__gte=inserting_position).update(
+            position=models.F('position') + 1)
+        space_section = SpaceSection.objects.create(space=self, file_section=file_section,
+                                                    heading_section=heading_section,
+                                                    paragraph_section=paragraph_section,
+                                                    position=inserting_position)
 
-    @property
-    def deadline_expired(self):
-        return bool(self.deadline) and self.deadline < arrow.utcnow()
+    def setup(self):
+        from web_app.models import GenericDestination, Kezyy
+        GenericDestination.create_provider(Kezyy.TAG,
+                                           self.user, space=self)
+
+    def title_form(self, request_post=None):
+        from web_app.forms import SpaceTitleForm
+        return SpaceTitleForm(request_post, instance=self)
 
     def duplicate(self, user):
-
+        #TODO fix
         new_space = deepcopy(self)
         new_space.pk = None
         new_space.user = user
@@ -64,46 +84,3 @@ class Space(BaseModel, DeleteModel):
         for request in self.requests.all().order_by('created_at'):
             request.duplicate(new_space)
         return new_space
-
-    @property
-    def public_upload_events(self):
-        return self.events.filter(sender__isnull=True)
-
-    def get_deadline_url_ics(self, sender):
-        # Format the deadline as YYYYMMDDTHHMMSSZ 
-        if self.deadline is None:
-            return None, None
-        formatted_deadline = self.deadline.strftime('%Y%m%dT%H%M%SZ')
-
-        '''# Calculate the reminder date (one day before the deadline)
-        reminder_date = deadline - timedelta(days=self.deadline_reminder)
-        formatted_reminder_date = reminder_date.strftime('%Y%m%dT%H%M%SZ')'''
-
-        # Construct the calendar URL
-        space_link = sender.link_for_email
-        event_details = f"""You have been invited by: {self.user.email}<br><br>Go to Space: <a href="{space_link}">{self.title}</a>"""
-
-        event_title = f"DEADLINE for upload space: {self.title}"
-
-        ics_content = (
-                "BEGIN:VCALENDAR\n"
-                "VERSION:2.0\n"
-                "PRODID:-//Your Company//Your Product//EN\n"
-                "BEGIN:VEVENT\n"
-                f"UID:{formatted_deadline}-space-{sender.uuid}@yourdomain.com\n"
-                "DTSTAMP:" + formatted_deadline + "\n"
-                                                  "DTSTART:" + formatted_deadline + "\n"
-                                                                                    "DTEND:" + formatted_deadline + "\n"
-                                                                                                                    f"SUMMARY:{event_title}\n"
-                                                                                                                    f"DESCRIPTION:{event_details}\n"
-                                                                                                                    "LOCATION:Online\n"
-                                                                                                                    "END:VEVENT\n"
-                                                                                                                    "END:VCALENDAR"
-        )
-        event_details = event_details.replace(' ', '+')
-        event_title = event_title.replace(' ', '+')
-        calendar_url = f'https://www.google.com/calendar/render?action=TEMPLATE&text={event_title}&dates={formatted_deadline}/{formatted_deadline}&details={event_details}&location=Online'
-        return calendar_url, ics_content
-
-    class Meta:
-        ordering = ['-created_at']

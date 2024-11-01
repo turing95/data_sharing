@@ -1,0 +1,99 @@
+{% extends 'public/_base.html' %}
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+{% load custom_tags %}
+
+{% block public_content %}
+
+    <!-- Top Bar -->
+    <div class="inline-flex p-1 bg-gray-100">
+        <!-- company logo-->
+        <div class="inline-flex text-xs w-[150px]">
+            Powered by: 
+            <a href="{% url 'generic_home' %}" class="flex items-center ml-2 shrink-0">
+                <img src="{% static 'images/logo.png' %}" alt="logo" class="w-[65px]">
+            </a>
+        </div>
+        <div class="flex justify-center max-w-4xl mx-auto">
+            {% if sender %}
+                <p class="pr-3 text-xs text-gray-700">
+                    <strong>{% translate 'Accessing as:' %}</strong> {{ sender.email }}</p>
+            {% else %}
+                <p class="pr-3 text-xs text-gray-700"><strong>{% translate 'Accessing via public link' %}</strong></p>
+            {% endif %}
+            <p class="text-xs text-gray-700"><strong>{% translate 'Invited by:' %}</strong> {{ space.user.email }}</p>
+        </div>
+
+        <div class="inline-flex text-xs w-[150px]">
+            <a id="language_modal_button"
+            hx-get="{% url 'language_modal' %}"
+            class="flex items-center justify-end mx-2 cursor-pointer md:inline-flex max-h-8 hover:scale-[1.05]"
+            title="Select language"
+            hx-target="#htmx-modal"
+            hx-swap="innerHTML">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.1"
+                    stroke="currentColor" class="w-4 h-4 ">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/>
+                </svg>
+                <span class="ml-1">{% translate 'Language' %}</span>
+            </a>
+        </div> 
+    </div>
+
+    <!-- Title Bar  -->
+    <div class="bg-center bg-cover h-25 bg-marian-blue-200">
+        <div class="flex-col max-w-4xl px-10 mx-auto">
+
+            <div class="flex flex-wrap items-center justify-between h-[30px] max-w-screen-xl">
+
+            </div>
+            <h1 class="pt-2 pb-2 text-3xl font-bold text-center text-black">{{ space.title }}</h1>
+        </div>
+
+    </div>
+    {% include "components/tabs_menu.html" with tabs_data=sender_tab  pk=sender.pk pk_1=space.pk %}
+    {% block sender_page %}
+        <div class="w-full max-w-4xl px-10 pb-2 mx-auto">
+
+            {% for space_section in space.sections_position_sorted %}
+                {% if space_section.heading_section %}
+                    {% if space_section.heading_section.title %}
+                        <h2 class="mt-2 mb-4 text-2xl font-bold border-b">
+                            {{ space_section.heading_section.title }}
+                        </h2>
+                    {% endif %}
+                {% elif space_section.paragraph_section %}
+                    {% if space_section.paragraph_section.content %}
+                        <div class= "mb-3 text-sm whitespace-pre-wrap">{{ space_section.paragraph_section.content }}</div>
+                    {% endif %}
+                {% elif space_section.file_section %}
+                    {% if space_section.file_section.file %}
+
+                    <div class="flex items-start p-3 mb-3 space-x-4">
+                        <!-- Thumbnail -->
+                        <a href="{{ space_section.file_section.file.url }}" download target="_blank">
+                            {% include 'sender/file_thumbnail.html' with file=space_section.file_section.file dim=65%}
+                        </a>
+                        <!-- Content Container -->
+                        <div class="flex flex-col flex-grow">
+                            <div class="mb-1.5">
+                          <!-- Title -->
+                          <h2 class="text-lg font-semibold">{{space_section.file_section.title}}</h2>
+                          <!-- Subtitle -->
+                          <p class="{% if space_section.file_section.title %} text-xs font-medium text-gray-600 {% else %} text-lg font-semibold {% endif %}">{{space_section.file_section.file.original_name}}</p>
+                            </div>
+                          <!-- Description -->
+                          <p class="text-sm text-gray-800">{{space_section.file_section.description}}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endblock sender_page %}
+    <!-- Main Content -->
+
+
+{% endblock %}

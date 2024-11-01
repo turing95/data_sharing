@@ -7,25 +7,7 @@ from django.utils.text import format_lazy
 from web_app.forms import css_classes
 from django.utils.translation import gettext_lazy as _
 
-class MultipleFileInput(forms.ClearableFileInput):
-    allow_multiple_selected = True
-
-
-class MultipleFileField(forms.FileField):
-    def __init__(self,upload_request, *args, **kwargs):
-        if upload_request.multiple_files is True:
-            kwargs.setdefault("widget", MultipleFileInput(attrs={'hidden': True}))
-        else:
-            kwargs.setdefault("widget", forms.ClearableFileInput(attrs={'hidden': True}))
-        super().__init__(*args, **kwargs)
-
-    def clean(self, data, initial=None):
-        single_file_clean = super().clean
-        if isinstance(data, (list, tuple)):
-            result = [single_file_clean(d, initial) for d in data]
-        else:
-            result = single_file_clean(data, initial)
-        return result
+from web_app.forms.widgets import MultipleFileField
 
 
 class FileForm(Form):
@@ -44,15 +26,14 @@ class FileForm(Form):
 
     def __init__(self, **kwargs):
         self.request_index = kwargs.pop('request_index')
-        self.space = kwargs.pop('space')
+        self.request = kwargs.pop('request')
         super().__init__(**kwargs)
-        upload_request = self.space.requests.filter(is_active=True)[self.request_index]
-        self.fields['files'] = MultipleFileField(upload_request=upload_request, label='Files', required=False)
+        upload_request = self.request.upload_requests.filter(is_active=True)[self.request_index]
+        self.fields['files'] = MultipleFileField(multiple_files=upload_request.multiple_files, hidden=True,
+                                                 label='Files', required=False)
 
         self.fields['request_uuid'].initial = upload_request.pk
         self.upload_request = upload_request
-        if upload_request.file_types.exists():
-            self.fields['files'].widget.attrs['accept'] = ','.join(upload_request.formatted_extensions)
 
     def clean_files(self):
         super().clean()
@@ -61,14 +42,6 @@ class FileForm(Form):
         # Ensure 'files' is always iterable
         if not isinstance(files, (list, tuple)):
             files = [files] if files else []
-
-        if files and self.upload_request.file_types.exists() is True:
-            for file in files:
-                extension = file.name.split('.')[-1]
-                if (extension in self.upload_request.extensions) is False:
-                    str_a = _('has extension ')
-                    str_b = _('which is not allowed.')
-                    self.add_error('files', format_lazy('{name} {str_a} {extension}, {str_b}',str_a=str_a,str_b=str_b,name=file.name, extension=extension))
         return files
 
 
@@ -89,3 +62,51 @@ class BaseFileFormSet(BaseFormSet):
         kwargs = super().get_form_kwargs(index)
         kwargs["request_index"] = index
         return kwargs
+
+
+class InputRequestForm(Form):
+    request_uuid = forms.CharField(widget=forms.HiddenInput())
+
+    def __init__(self, **kwargs):
+        self.input_request_index = kwargs.pop('input_request_index')
+        self.request = kwargs.pop('request')
+        super().__init__(**kwargs)
+        input_request = self.request.input_requests.filter(is_active=True).order_by('position')[
+            self.input_request_index]
+        if input_request.upload_request:
+            self.fields['files'] = MultipleFileField(multiple_files=input_request.upload_request.multiple_files,
+                                                     hidden=True, label='Files',
+                                                     required=False)
+            self.fields['notes'] = forms.CharField(
+                required=False,
+                widget=forms.Textarea(attrs={
+                    'placeholder': _('Add a note to your upload...'),
+                    'rows': 2,
+                    'class': css_classes.text_area + "text-sm",
+                }),
+                label=_('Notes'),
+                help_text=_("""Add a note to clarify what you are uploading, if needed. Notes do not substitute the upload of the requested files.
+                                """))
+            self.fields['request_uuid'].initial = input_request.upload_request.pk
+            self.upload_request = input_request.upload_request
+        elif input_request.text_request:
+            self.fields['text'] = forms.CharField(label=input_request.text_request.title, required=False,
+                                                  widget=forms.Textarea(attrs={'rows': 1,
+                                                                               'class': css_classes.text_area + "text-sm",
+                                                                               'placeholder': _(
+                                                                                   'Type your input here...')}), )
+            self.fields['request_uuid'].initial = input_request.text_request.pk
+            self.text_request = input_request.text_request
+        self.input_request = input_request
+
+
+class BaseInputRequestFormSet(BaseFormSet):
+
+    def get_form_kwargs(self, index):
+        kwargs = super().get_form_kwargs(index)
+        kwargs["input_request_index"] = index
+        return kwargs
+
+    def is_valid(self):
+        result = super().is_valid()
+        return result

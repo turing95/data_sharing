@@ -7,7 +7,9 @@
         {% if not subscription %} <!-- show free plan only to non-subscribed users -->
             <!-- Pricing Card -->
             <div class="flex flex-col w-full h-full max-w-sm p-5 mx-auto text-center text-gray-900 bg-gray-100 border border-gray-200 rounded-sm sm:w-3/4 md:w-full dark:border-gray-600 xl:p-4 dark:bg-gray-800 dark:text-white">
-                <h3 class="mb-3 text-2xl font-semibold">Basic</h3>
+                <h3 class="mb-3 text-2xl font-semibold">
+                    {% translate 'Basic' %}
+                </h3>
                 <p class="h-10 font-light text-gray-500 dark:text-gray-400">{% translate 'Test out what Kezyy can do to streamline your file collection' %}</p>
                 <div class="flex items-baseline justify-center my-5">
                     <span class="mr-2 text-5xl font-extrabold">{% translate 'Free' %}</span>
@@ -25,7 +27,8 @@
                                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                   clip-rule="evenodd"></path>
                         </svg>
-                        {% blocktranslate trimmed %}<span>Max spaces: <span class="font-semibold">{{ max_free_spaces }} spaces</span></span>{% endblocktranslate %}
+                        {% blocktranslate trimmed %}<span>
+                            Max spaces: <span class="font-semibold">{{ max_free_spaces }} spaces</span></span>{% endblocktranslate %}
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
@@ -35,7 +38,7 @@
                                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                   clip-rule="evenodd"></path>
                         </svg>
-                        <span>{% translate 'Google Drive and One Drive integration' %}</span>
+                        <span>{% translate 'Google Drive, OneDrive and Sharepoint integration' %}</span>
                     </li>
                     <li class="flex items-center space-x-3">
                         <!-- Icon -->
@@ -81,12 +84,12 @@
                 <div class="mt-auto">
                     {% if user.is_authenticated %}
                         <div class="flex items-center justify-center px-5 py-2 font-medium text-center text-gray-800 bg-gray-200">
-                            Current plan
+                            {% translate 'Current plan' %}
                         </div>
                     {% else %}
                         {% url 'generic_beta_access' as form_url %}
-                        {% translate 'Get started' as get_started_text %}
-                        {% include 'components/buttons/generic.html' with href=form_url button_text=get_started_text extra_classes="flex" %}
+                        {% translate 'Get started' as button_text %}
+                        {% include 'components/buttons/generic.html' with href=form_url button_text=button_text extra_classes="flex" %}
                     {% endif %}
                 </div>
             </div>
@@ -95,10 +98,10 @@
         <!-- Pricing Card -->
         <div class="flex flex-col w-full max-w-sm p-5 mx-auto text-center text-gray-900 bg-gray-200 border border-gray-300 rounded-sm sm:w-3/4 md:w-full dark:border-gray-600 xl:p-5 dark:bg-gray-800 dark:text-white">
             <h3 class="mb-3 text-2xl font-semibold">{{ pro_product.name }}</h3>
-            <p class="h-10 font-light text-gray-500 dark:text-gray-400">Make Kezyy your file collection companion</p>
+            <p class="h-10 font-light text-gray-500 dark:text-gray-400">{% translate 'Make Kezyy your file collection companion' %}</p>
             <div class="flex items-baseline justify-center my-5">
                 <span class="mr-2 text-5xl font-extrabold">{{ pro_product_formatted_price }}</span>
-                <span class="text-gray-500 dark:text-gray-400">/month</span>
+                <span class="text-gray-500 dark:text-gray-400">{% translate '/month' %}</span>
             </div>
             <!-- List -->
             <ul role="list" class="mb-5 space-y-4 text-left">
@@ -137,7 +140,7 @@
 
                     {% endif %}
                     <a href="{% url 'create_billing_session' %}"
-                       class="block underline px-4 py-2 text-sm text-gray-700">{% translate 'Manage my subscription' %}</a>
+                       class="block px-4 py-2 text-sm text-gray-700 underline">{% translate 'Manage my subscription' %}</a>
 
                 {% else %}
                     {% if user.is_authenticated %}

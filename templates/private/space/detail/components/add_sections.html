@@ -1,0 +1,43 @@
+{% load i18n %}
+    <!-- Add buttons -->
+    <div class="flex items-center w-full gap-2">
+        <!-- Line before the first button -->
+        <div class="flex-grow border-t border-gray-300"></div>
+
+        <!-- Button 1 --> 
+        <div class="min-w-[100px] inline-flex justify-center my-1">
+            {% with query_string_type="section_type=heading" %}
+            {% url 'text_section_create' space.pk  as file_section_create_url %}
+            {% translate 'add title' as button_text %}           
+            {% include "components/buttons/light_add_button.html" with  button_text=button_text query_string_two=query_string_type query_string=query_string extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+            {% endwith %}
+            {% if False %} <div class="w-[100px] hidden border  bg-white hover:bg-gray-50 rounded border-blue-500"></div>{% endif %} 
+        </div>
+    
+
+        <!-- Line between -->
+        <div class=" border-t border-gray-300 w-[30px]"></div>
+        
+        <!-- Button 2 -->
+        <div class="min-w-[100px] inline-flex justify-center my-1">
+            {% with query_string_type="section_type=paragraph" %}
+            {% url 'text_section_create' space.pk  as file_section_create_url %}
+            {% translate 'add paragraph' as button_text %}           
+            {% include "components/buttons/light_add_button.html" with  button_text=button_text  query_string_two=query_string_type query_string=query_string extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+            {% endwith %}
+            {% if False %} <div class="w-[100px] hidden border  bg-white hover:bg-gray-50 rounded border-blue-500"></div>{% endif %} 
+        </div>
+    
+        <!-- Line between -->
+        <div class=" border-t border-gray-300 w-[30px]"></div>
+
+        <!-- Button 1 -->
+        <div class="min-w-[10px] inline-flex justify-center my-1">
+            {% url 'file_section_create' space.pk as file_section_create_url %}
+            {% translate 'add file' as button_text %}
+            {% include "components/buttons/light_add_button.html" with button_text=button_text extra_classes="border text-sm border-blue-500 bg-white hover:bg-gray-50 rounded" hx_get=file_section_create_url hx_target="#sections-container" hx_swap="beforeend" %}
+        </div>
+    
+        <!-- Line after the second button -->
+        <div class="flex-grow border-t border-gray-300"></div>
+    </div>

@@ -19,3 +19,8 @@ export function initHtmxModal(modalElement) {
     document.body.dispatchEvent(new CustomEvent('htmxModal:init', { detail: modalElement }))
     modal.show();
 }
+
+document.body.addEventListener("closeModal", function(){
+    const modal = FlowbiteInstances.getInstance('Modal', document.getElementById('htmx-modal').children[0].id);
+    modal.hide();
+ })

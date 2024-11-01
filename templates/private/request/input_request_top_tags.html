@@ -1,0 +1,16 @@
+{% load i18n %}
+
+
+    <div class="inline-flex flex-grow font-bold">
+        {% if input_request.upload_request %}                        
+            <span class="font-normal mr-5 my-auto text-[0.6rem] leading-[0.75rem] bg-gray-200 z-[2] align-middle peer-checked:inline-block text-orange-400 rounded-full px-[6px] flex items-center justify-center">{% translate 'file input' %}</span>
+        {% elif input_request.text_request %}
+            <span class="font-normal mr-5 my-auto text-[0.6rem] leading-[0.75rem] bg-gray-200 z-[2] align-middle peer-checked:inline-block text-green-400 rounded-full px-[6px] flex items-center justify-center">{% translate 'text input' %}</span>
+        {% endif %}
+        <div class="inline-flex activation-toggle-container">
+            {% include 'private/request/activation_toggle.html' %}
+        </div>
+        <div class="inline-flex completion-toggle-container">
+            {% include 'private/request/completion_toggle.html' %}
+        </div>
+    </div>

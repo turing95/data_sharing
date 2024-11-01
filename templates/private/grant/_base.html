@@ -1,0 +1,12 @@
+{% extends "private/_base.html" %}
+{% load i18n %}
+
+{% block private_content %}
+    {% include 'private/grant/grant_name.html' with form=grant.name_form %}
+    
+    {% include "components/tabs_menu.html" with tabs_data=grant_tab  pk=grant.pk %}
+
+    {% block grant_content %}
+
+    {% endblock grant_content %}
+{% endblock %}

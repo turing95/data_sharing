@@ -1,5 +1,6 @@
 {% load static i18n socialaccount allauth %}
 
+
 <div id="destination-search-container" class="w-full sm:w-2/3 h-[36px] destination-search">
     {% if not missing_provider and not expired_provider and not provider_name == 'Kezyy' %}
         <div>
@@ -9,16 +10,16 @@
                     <input class="w-full h-full px-2 pr-0 text-base truncate bg-transparent border-none sm:text-sm focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent search-input"
                            type="search"
                            placeholder="Type to search in {{ provider_name }}"
-                           id="id_search-folders-{{ request_index }}-"
-                           name="search-folders-{{ request_index }}-"
-                           hx-post="{% url 'search_folders' %}?request_index={{ request_index }}"
+                           id="id_{{ upload_request.pk }}-search-folders"
+                           name="{{ upload_request.pk }}-search-folders"
+                           hx-post="{% url 'search_folders' upload_request.pk %}"
                            hx-trigger="input changed delay:500ms, search"
                            hx-target="next .search-results"
-                           hx-indicator="#loading-indicator-destination-search-{{ request_index }}-"
+                           hx-indicator="next .my-htmx-indicator"
                            autocomplete="off">
                 </div>
                 <!-- Loading Indicator -->
-                <div id="loading-indicator-destination-search-{{ request_index }}-"
+                <div id="loading-indicator-destination-search"
                      class="flex items-center justify-center m-auto opacity-1 my-htmx-indicator">
                     <div role="status" class="flex spinner ml-0.5">
                         {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
@@ -34,18 +35,27 @@
     {% else %}
         {% if missing_provider %}
             <div class="flex flex-col items-center justify-center pl-3 h-9">
-                <span class="text-xs text-gray-700">To access service:</span>
+                <span class="text-xs text-gray-700">{% translate 'To access service:' %}</span>
                 <a href="{% provider_login_url missing_provider process='connect' scope=scope auth_params=auth_params next=next %}"
                    class="text-sm px-1.5 py-[1.5px] text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400">
-                    Connect a {{ missing_provider.name|title }} Account
+                    {% with provider_name=missing_provider.name|title %}
+                        {% blocktrans trimmed %}
+                            Connect a {{ provider_name }} Account
+                        {% endblocktrans %}
+                    {% endwith %}
                 </a>
             </div>
         {% elif expired_provider %}
             <div class="flex flex-col items-center justify-center pl-3 h-9">
-                <span class="text-xs text-gray-700">To access service:</span>
+                <span class="text-xs text-gray-700">{% translate 'To access service:' %}</span>
                 <a href="{% provider_login_url expired_provider process='connect' scope=scope auth_params=custom_auth_params next=next %}"
                    class="text-sm px-1.5 py-[1.5px] text-center text-marian-blue-400 bg-white hover:text-white hover:bg-marian-blue-300 focus:outline-none focus:ring-marian-blue-300 dark:bg-marian-blue-400 dark:hover:bg-marian-blue-300 dark:focus:ring-marian-blue-200 border border-marian-blue-400">
-                    Reconnect your {% if account.extra_data.mail %}{{ account.extra_data.mail }}{% elif account.extra_data.email %}{{ account.extra_data.email }}{% elif account.extra_data.userPrincipalName %}{{ account.extra_data.userPrincipalName }}{% endif %} {{ expired_provider.name|title }} Account
+
+                    {% translate 'Reconnect your' %}
+                    {% if account.extra_data.mail %}{{ account.extra_data.mail }}{% elif account.extra_data.email %}
+                        {{ account.extra_data.email }}{% elif account.extra_data.userPrincipalName %}
+                        {{ account.extra_data.userPrincipalName }}{% endif %} {{ expired_provider.name|title }} {% translate 'Account' %}
+
                 </a>
             </div>
         {% endif %}
@@ -54,5 +64,5 @@
 
 </div>
 {% if from_htmx %}
-    {% include 'private/space/create/components/destination/sharepoint_site_container.html' with provider_name=provider_name index=request_index %}
+    {% include 'private/space/create/components/destination/sharepoint_site_container.html' with provider_name=provider_name %}
 {% endif %}

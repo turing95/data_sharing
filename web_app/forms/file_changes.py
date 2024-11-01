@@ -2,6 +2,7 @@ from django import forms
 
 from web_app.forms import css_classes
 from web_app.models import File
+from django.utils.translation import gettext_lazy as _
 
 
 class MultipleFileField(forms.ModelMultipleChoiceField):
@@ -23,7 +24,7 @@ class FileSelectForm(forms.Form):
 
     def clean_files(self):
         if not self.cleaned_data['files']:
-            raise forms.ValidationError("You must select at least one file")
+            raise forms.ValidationError(_("You must select at least one file"))
         return self.cleaned_data['files']
 
     def __init__(self, *args, **kwargs):

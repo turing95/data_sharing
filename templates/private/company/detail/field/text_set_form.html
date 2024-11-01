@@ -1,0 +1,36 @@
+{% load i18n %}
+
+<form id="field_create_update_form"
+
+        {% if field %}
+      hx-post="{% url 'text_field_update' field.pk %}"
+        {% else %}
+      hx-post="{% url 'text_field_create' group_uuid %}"
+        {% endif %}
+>
+
+    {% csrf_token %}
+    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div class="mx-2">
+            <label for="{{ form.label.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.label.label }}
+            </label>
+            {{ form.label }}
+            {% include 'components/forms/error_widget.html' with errors=form.label.errors %}
+        </div>
+    </div>
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div class="mx-2">
+            <label for="{{ form.multiple.id_for_label }}"
+                   class="font-medium text-gray-900 dark:text-white">{{ form.multiple.label }}
+            </label>
+            {{ form.multiple }}
+            {% include 'components/forms/error_widget.html' with errors=form.multiple.errors %}
+        </div>
+    </div>
+    <div class="flex justify-end mx-2">
+
+        {% include 'components/buttons/submit_with_loader.html' with button_text=confirm_button_text %}
+    </div>
+</form>

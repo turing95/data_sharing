@@ -12,7 +12,7 @@
                         {% translate 'Effortless file collection' %}
                     </h1>
                     
-                    <p class="max-w-3xl md:px-16 px-3 mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+                    <p class="max-w-3xl px-3 mb-6 font-light text-gray-500 md:px-16 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                         {% translate 'Set instructions, automate reminders, share public links and receive files neatly named in your drive.' %}
                     </p>                    
                    <div class="text-center">
@@ -66,56 +66,63 @@
                             <!--description-->
                             {% translate "Collect the same type of files from multiple counterparties with personal links. No sign up required." as description %}
                             <!--asset link-->
-                            {% translate "images/home_features/sender_link.png" as asset_link %}
+                            {% with "images/home_features/sender_link.png" as asset_link %}
                             <!--asset description-->
                             {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-
+                            {% endwith %}
                         <!-- card -->
                             <!--title-->
                             {% translate "All instructions in one place" as title %}
                             <!--description-->
                             {% translate "Replace long email threads by specifying all instructions in one place. Update details anytime." as description %}
                             <!--asset link-->
-                            {% translate "images/home_features/instructions.png" as asset_link %}
+                            {% with "images/home_features/instructions.png" as asset_link %}
                             <!--asset description-->
                             {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                        <!-- card -->
+                            {% endwith %}
+
+                            <!-- card -->
                             <!--title-->
                             {% translate "No awkward follow-ups with deadlines and reminders" as title %}
                             <!--description-->
                             {% translate "Set deadlines visible in calendars and let automated gentle reminders replace awkward pings." as description %}
                             <!--asset link-->
-                            {% translate "images/home_features/deadline.png" as asset_link %}
+                            {% with "images/home_features/deadline.png" as asset_link %}
                             <!--asset description-->
                             {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                        <!-- card -->
+                            {% endwith %}
+
+                            <!-- card -->
                             <!--title-->
                             {% translate "Predefined file destination" as title %}
                             <!--description-->
                             {% translate "Assign to each file a specific destination in your drive system." as description %}
                             <!--translate link-->
-                            {% translate "images/home_features/destination.png" as asset_link %}
+                            {% with "images/home_features/destination.png" as asset_link %}
                             <!--asset description-->
                             {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
-                        <!-- card -->
+                            {% endwith %}
+
+                            <!-- card -->
                             <!--title-->
                             {% translate "Parametric file names" as title %}
                             <!--description-->
                             {% translate "Stop renaming every attachment you receive, set a name that will tell what's inside including the upload date, sender email, and more." as description %}
                             <!--asset link-->
-                            {% translate "images/home_features/naming.png" as asset_link %}
+                            {% with "images/home_features/naming.png" as asset_link %}
                             <!--asset description-->
                             {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
+                            {% endwith %}
 
                         <!-- card -->
                             <!--title-->
@@ -123,33 +130,39 @@
                             <!--description-->
                             {% translate "Never ask to send the missing file again. Add multiple file requests to each upload space and set dedicated instructions and rules." as description %}
                             <!--asset link-->
-                            {% translate "images/home_features/multi_request.png" as asset_link %}
+                            {% with "images/home_features/multi_request.png" as asset_link %}
                             <!--asset description-->
                             {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
+                            {% endwith %}
+
                         <!-- card -->
                             <!--title-->
                             {% translate "Space dashboard" as title %}
                             <!--description-->
                             {% translate "Don't go through your email to see what's missing, the space dashboard has everything you need." as description %}
                             <!--asset link-->
-                            {% translate "images/home_features/summary.png" as asset_link %}
+                            {% with "images/home_features/summary.png" as asset_link %}
                             <!--asset description-->
                             {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
+                            {% endwith %}
+
                         <!-- card -->
                             <!--title-->
                             {% translate "No more wrong files" as title %}
                             <!--description-->
                             {% translate "Counterparties upload files in one dedicated space. Each file is instantly validated by your rules, making progress transparent to all." as description %}
                             <!--asset link-->
-                            {% translate "images/home_features/restrictions.png" as asset_link %}
+                            {% with "images/home_features/restrictions.png" as asset_link %}
                             <!--asset description-->
                             {% translate "disable sender link gif" as asset_description %}
                             <!-- learn more link-->
                             {% include 'public/feature_card.html' with title=title description=description asset_link=asset_link asset_description=asset_description learn_more_href=beta_access_request_url%}
+                            {% endwith %}
+                            
                     </div>
                 </div>
             </div>

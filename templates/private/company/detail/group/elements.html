@@ -1,0 +1,26 @@
+<div class="group-elements-containers"
+     hx-swap="outerHTML"
+     hx-get="{% url 'group_elements' group.pk %}"
+     hx-trigger="{{ group.update_event }} from:body">
+     {% comment %} <form id="sections-container" {% endcomment %}
+        <div
+        class="sortable"
+        hx-post="{% url 'group_elements_update_order' group.pk %}"
+       
+        hx-trigger="endSort"
+        enctype="multipart/form-data" 
+        data-accordion="collapse">
+            {% for element in group.ordered_elements %}
+                <div class="-ml-[6.5px] sort-el">
+                    <input type="hidden" value="{{ element.pk }}" name="group_element_order[]">
+                {% if element.text_field %}
+                    {% include 'private/company/detail/field/text_fill_form.html' with field=element.text_field %}
+                {% elif element.file_field %}
+                    {% include 'private/company/detail/field/file_fill_form.html' with field=element.file_field %}
+                {% else %}
+                    {% include 'private/company/detail/group/detail.html' with group=element.group %}
+                {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+</div>

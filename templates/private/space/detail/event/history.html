@@ -1,0 +1,53 @@
+{% extends "private/space/detail/base.html" %}
+{% load static %}
+{% load l10n %}
+{% load i18n %}
+{% block space_content %}    
+    <div class="mt-6 mb-6" hx-get="{% url 'history_table' space.uuid %}"
+         hx-trigger="intersect once, filesUpdated from:document"
+         hx-target="#history-table"
+         hx-indicator="#loading-indicator-history-table">
+
+        <div class="flex items-center mb-3">
+
+            <!-- Loading Indicator -->
+            <div id="loading-indicator-history-table" class="items-center justify-center opacity-0 my-htmx-indicator">
+                <div role="status" class="ml-2 spinner">
+                    {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+        {% if space.events.count > 0 %}
+            <!-- Search bar -->
+            <div class="inline-flex pb-4 bg-white dark:bg-gray-900">
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative flex mt-1 items-centered">
+                    <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
+                        <img src="{% static 'images/icons/magnifying-lense.svg' %}" alt="Search Icon"
+                             class="w-[18px] h-[18px] text-gray-500">
+                    </div>
+                    {% translate "Type to search..." as placeholder %}
+                    <input class="outline-none block py-1.5 text-sm text-gray-900 border border-gray-300 form-control ps-10 w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           type="search"
+                           name="search" placeholder=placeholder
+                           hx-post="{% url 'history_table' space.uuid %}"
+                           hx-trigger="input changed delay:500ms, search"
+                           hx-target="#history-table"
+                           hx-indicator="#search-loading-indicator">
+                </div>
+                <!-- Search Loading Indicator -->
+                <div id="search-loading-indicator"
+                     class="flex items-center justify-center my-auto opacity-0 htmx-indicator">
+                    <div role="status" class="ml-2 spinner">
+                        {% include 'components/loading_spinner_light.html' with w="w-5" h="h-5" %}
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div id="history-table">
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render
 from django.urls import translate_url
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import check_for_language
@@ -55,3 +56,14 @@ def custom_set_language(request):
                 samesite=settings.LANGUAGE_COOKIE_SAMESITE,
             )
     return response
+
+
+
+
+
+
+
+def language_modal(request):     
+        next_url = request.META.get('HTTP_REFERER', '/')   
+        response =  render(request, 'components/language_modal.html',{'next':next_url})
+        return response

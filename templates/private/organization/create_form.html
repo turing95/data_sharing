@@ -1,7 +1,8 @@
-<form hx-post="{% url 'create_organization' %}" id="create-organization-form">
+{% load i18n %}
+<form action="{% url 'create_organization' %}" method="POST" id="create-organization-form">
     {% csrf_token %}
     {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
-    <div class="flex justify-center items-center mx-auto">
+    <div class="flex items-center justify-center mx-auto">
         {% for field in form %}
             <div class="mx-2">
                 <label for="{{ field.id_for_label }}"
@@ -15,10 +16,8 @@
         {% endfor %}
     </div>
     <div class="flex justify-center m-2">
-        {% include 'components/buttons/submit_with_loader.html' with button_text="Save organization" %}
+        {% translate "Save organization" as button_text %}
+        {% include 'components/buttons/submit_with_loader.html' with button_text=button_text %}
 
     </div>
 </form>
-{% if show_msg %}
-    {% include 'components/messages.html' %}
-{% endif %}

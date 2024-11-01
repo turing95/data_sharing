@@ -1,0 +1,147 @@
+{% load static %}
+{% load i18n %}
+{% if form.upload_request.destination.alive %}
+{% if kezyy_request.upload_after_deadline or not kezyy_request.deadline_expired %}
+    <div class="mb-8  {% if form.upload_request.input_request.is_complete %} bg-gray-100{% else %} border-b border-gray-300 {%endif%}">
+        {{ form.request_uuid }}
+        <!-- Accordion heading -->
+        <div id="accordion-open-heading-{{ forloop.counter0 }}">
+            <div class="flex items-center justify-between w-full font-medium focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 ">
+                <!-- Title and current provided input -->
+                <div class="inline-flex flex-grow {% if form.upload_request.input_request.is_complete %} opacity-50 {%endif%}">
+                    <div class="inline-flex py-1 pl-5">
+                        <span class="font-bold"> {{ form.upload_request.title }}:</span>
+                        {% if not  form.upload_request.input_request.is_complete %}
+                            {% include 'components/tooltip.html' with content=form.upload_request.instructions trigger="click" num=forloop.counter0 %}
+                        {% endif %}
+                        </div>
+                    {% if form.upload_request.outputs %}
+                        {% if form.upload_request.outputs.count > 1 %}
+                            <div class="py-1 pl-4 max-w-[350px] underline flex-grow overflow-hidden text-ellipsis whitespace-nowrap text-gray-600" 
+                                title="{{ form.upload_request.outputs.count }} {% translate 'files uploaded' %}">                    
+                                    {{ form.upload_request.outputs.count }} {% translate 'files uploaded' %}            
+                            </div>
+                        {% else %}
+                            <div class="py-1 pl-4 max-w-[350px] underline flex-grow overflow-hidden text-ellipsis whitespace-nowrap text-gray-600" 
+                                title="{{ form.upload_request.last_output.content }}">                    
+                                    {{ form.upload_request.last_output.content }}            
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <div class="flex justify-between output-content" >
+                    <div class="flex">
+                    {% if  form.upload_request.input_request.is_complete %}                     
+                        {% translate 'You are done here' as html_title %}
+                        {% translate 'Done' as status %}
+                        {% include 'sender/request/status_tag.html' with html_title=html_title status=status color="green"%}
+                    {% endif %}                      
+                    </div>
+                </div>
+
+
+                <button type="button"
+                        class=" shrink-0 flex items-center justify-end w-[50px] h-full py-2 pr-2 bg-transparent focus:outline-none focus:ring-0 hover:bg-transparent active:bg-transparent"
+                        data-accordion-target="#accordion-open-body-{{ forloop.counter0 }}"
+                        aria-expanded="true"
+                        aria-controls="accordion-open-body-{{ forloop.counter0 }}">
+                    <img data-accordion-icon src="{% static 'images/icons/chevron-up.svg' %}"
+                        alt="chevron icon"
+                        class="w-[18px] h-[18px]mx-auto mr-2 shrink-0">
+
+                </button>
+            </div>
+        </div>
+
+
+        <div id="accordion-open-body-{{ forloop.counter0 }}"
+            aria-labelledby="accordion-open-heading-{{ forloop.counter0 }}"
+            class="request-accordion-body">
+            {% if not form.upload_request.input_request.is_complete %}
+
+                <div class="grid grid-cols-2 px-5 pt-1 pb-3 md:grid-cols-3">
+                    <div class="col-span-2 p-1 sm:col-span-1">
+
+                        <!-- file upload -->                  
+                        <div class="flex items-center justify-center w-full">
+                            <label for="{{ form.files.id_for_label }}"
+                                class="flex flex-col items-center justify-center w-full min-h-[140px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <svg class="w-8 h-8 mb-3 text-gray-500 dark:text-gray-400"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 20 16">
+                                        <path stroke="currentColor" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="2"
+                                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                    </svg>
+                                    <div class="flex flex-col mb-2 text-sm text-center text-gray-500 dark:text-gray-400">
+                                        {% if not form.upload_request.last_output %}
+                                            {% translate 'Click to select files' as upload_text %}
+                                            <span class="font-semibold">{{upload_text}}</span>
+                                        {% else %}
+                                            {% translate 'Click to select files' as upload_text%}
+                                            <span class="font-semibold">{{upload_text}}</span>
+                                        {% endif %}   
+                                 
+                                        <!-- files ready to be uploaded:--> 
+                                        <div class="flex flex-col mt-1 file-tags-container overflow-y-auto max-h-[180px] custom-scrollbar">                                       
+                                        </div>
+                                    </div>
+                                    {% include 'components/forms/error_widget.html' with errors=form.files.errors %}  
+                                </div>
+                                {{ form.files }}
+                            </label>
+                        </div>
+                        <!-- template for the file -->
+                        {% if form.upload_request.file_template %}
+                        <div class="flex flex-col items-center col-span-2 my-1 mb-2 md:col-span-3">
+                            
+                            {% translate 'Template' as template_text %}
+                            {% include 'components/buttons/generic.html' with href=form.upload_request.file_template button_text=template_text target="_blank" extra_classes="w-full" %}
+                            <p class="mr-1 text-xs">{% translate 'Use this as a reference for your upload' %}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-span-2 p-1 sm:col-span-1 md:col-span-2">
+                        <!-- sender notes -->
+                        <div class="dark:border-gray-700 dark:bg-gray-900">
+                            <div class="flex items-center mb-2 space-x-2">
+                                <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ form.notes.label }}</h4>
+                                {% include 'components/tooltip.html' with target_prefix=form.upload_request.uuid title=form.notes.label content=form.notes.help_text target=form.notes.name %}
+                            </div>
+                            {{ form.notes }}
+                            {% include 'components/forms/error_widget.html' with errors=form.notes.errors %}
+                        </div>
+                    </div> 
+                </div>
+            {% endif %}
+
+            {% if form.upload_request.outputs %}
+                <span class="mb-2 ml-5 font-semibold ">{% translate 'Uploaded files:' %}</span>
+                <div class="flex-col pl-5 mr-4 mb-3 max-h-[200px] custom-scrollbar overflow-x-auto mx-auto">
+                    {% for output in form.upload_request.outputs %}
+                        <div class="flex py-1 pl-2 hover:bg-gray-50">
+                            <span class="w-full text-sm max-w-[400px] truncate" title="{{output.content}}" >{{ output.content }}</span>
+                            <div class="w-[120px] ml-5 ">
+                                    {% if output.status == output.OutputStatus.PENDING %}
+                                        {% translate 'Your submission is being checked, once approve you will see it here' as html_title%}
+                                        {% include 'sender/request/status_tag.html' with html_title=html_title status=output.status color="blue"%}
+                                    {% elif  output.status == output.OutputStatus.ACCEPTED %}
+                                        {% translate 'Your submission has been accepted, no further actions required' as html_title%}
+                                        {% include 'sender/request/status_tag.html' with html_title=html_title status=output.status color="green"%}
+                                    {% elif output.status == output.OutputStatus.REJECTED %}
+                                        {% translate 'Yout submission has not been accpted, please provide a new input' as html_title%}
+                                        {% include 'sender/request/status_tag.html' with html_title=html_title status=output.status feedback=output.feedback.notes color="red" target=output.pk %}
+                                    {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endif %}
+{% endif %}

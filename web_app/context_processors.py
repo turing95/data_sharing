@@ -12,8 +12,8 @@ def custom_context(request):
     if request.resolver_match is not None:
         url_name = request.resolver_match.url_name
         if url_name is not None:
-            context['sender_area'] = True if 'sender' in url_name else False
-            context['generic_area'] = True if 'generic' in url_name else False
+            context['sender_area'] = True if 'sender_' in url_name else False
+            context['generic_area'] = True if 'generic_' in url_name else False
     # TODO REMOVE - PICKER LEGACY
     #context['config_data'] = config.get_js_config()
     context['contact_email'] = settings.CONTACT_EMAIL

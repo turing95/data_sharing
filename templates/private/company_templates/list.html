@@ -1,0 +1,38 @@
+{% extends "private/_base.html" %}
+{% load static %}
+{% load i18n %}
+{% block private_content %}
+
+<!-- TITLE --> <!-- ADD NEW BUTTON-->
+{% translate "Company templates" as title %}
+{% comment %} {% url 'company_create' organization.pk as href %} {% endcomment %}
+{% translate 'New template' as button_text %}
+
+{% include 'private/page_title.html' with title=title href=href button_text=button_text %}
+
+
+{% if page_obj %}
+    <div class="w-full">
+        <div class="flex text-left border-b border-gray-200">
+    
+            <div class="flex-1 py-2 px-1.5 font-bold min-w-[200px] max-w-[250px] shrink uppercase text-sm">
+                
+            </div>
+            <div class="p-1  w-[32px] flex">
+            </div>
+        </div>
+        {% for template in page_obj %}
+            {% include 'private/company_templates/template_row.html' with template=template %}
+        {% endfor %}
+    
+    </div> 
+    {% if page_obj.paginator.num_pages > 1 %}
+        {% translate "Templates" as obj_name %}
+        {% include 'components/pagination.html' with objs_name=obj_name %} 
+    {% endif %}
+{% else %}
+    <div class="flex flex-col items-center justify-center mt-12">
+        <p class="mb-3 text-2xl text-center text-gray-500">{% translate 'There are no Templates yet' %}</p>
+    </div>
+{% endif %}
+{% endblock private_content %}

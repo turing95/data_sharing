@@ -1,9 +1,0 @@
-{% extends "private/_base.html" %}
-{% block private_content %}
-
-
-<!-- Display non-field errors -->
-    {{ file_name_tags |json_script:"file-name-tags"  }}
-
-{% include 'private/space/create/components/form.html' with action='create' %}
-{% endblock %}

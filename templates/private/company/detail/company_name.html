@@ -1,0 +1,17 @@
+{% if from_htmx %}
+    {% include 'components/messages.html' %}
+{% endif %}
+<form id="company-title-form" action="" method="POST" class="max-w-screen-md company-title-form">
+    {% include 'components/forms/error_widget.html' with errors=form.non_field_errors %}
+    {% csrf_token %}
+
+    <!-- TITLE -->
+    <div class="mt-2 mb-6">
+        <div class="flex">
+            <label for="{{ form.name.id_for_label }}"
+                   class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ form.name.label }} </label>
+            {{ form.name }}
+        </div>
+        {% include 'components/forms/error_widget.html' with errors=form.name.errors %}
+    </div>
+</form>

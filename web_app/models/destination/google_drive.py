@@ -13,12 +13,13 @@ class GoogleDrive(BaseModel):
     PROVIDER_ID = 'custom_google'
 
     @classmethod
-    def create_from_folder_id(cls, upload_request, folder_id, user):
+    def create_from_folder_id(cls, upload_request,space, folder_id, user):
         from web_app.models import GenericDestination
         google_drive_destination = cls(folder_id=folder_id, user=user, social_account=user.google_account)
 
         generic_destination = GenericDestination(
             request=upload_request,
+            space=space,
             content_type=ContentType.objects.get_for_model(cls),
             object_id=google_drive_destination.pk,
             social_account=user.google_account,
@@ -55,3 +56,5 @@ class GoogleDrive(BaseModel):
 
     def get_file_url(self, file_id):
         return self.service.get_file_url(file_id)
+    def get_file(self, file_id):
+        raise NotImplementedError

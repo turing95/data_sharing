@@ -1,9 +1,9 @@
-<div id="sharepoint_site-{{ index }}-"
+<div id="id_{{ upload_request.pk }}-sharepoint_site"
      {% if from_htmx %}hx-swap-oob="true"{% endif %}
      {% if provider_name == "SharePoint" %}class="h-[36px] border border-gray-300 border-y border-l"{% endif %}>
     {% if provider_name == "SharePoint" %}
         <select class="w-full h-full text-sm bg-white border-none focus:outline-none focus:border-0 focus:ring-0 focus:border-transparent"
-                name="sharepoint-site-{{ index }}-">
+                name="{{ upload_request.pk }}-sharepoint-site">
             {% for site in request.user.sharepoint_sites %}
                 <option value="{{ site.id }}">{{ site.name }}</option>
             {% endfor %}

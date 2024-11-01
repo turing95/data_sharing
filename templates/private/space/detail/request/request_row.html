@@ -1,0 +1,157 @@
+{% load static %}
+{% load custom_tags %}
+{% load i18n %}
+{% load l10n %}
+ {% comment %} <div class="flex items-center justify-between px-3 py-3 border-b border-gray-200 dark:border-gray-700">
+    <div class="inline-flex items-center justify-center text-gray-600 transition duration-300 cursor-pointer hover:underline colors hover:text-gray-800 group hover:cursor-pointer">
+        <a href="{% url 'request_detail' kezyy_request.uuid %}">{{ kezyy_request.title }}</a>
+    </div>
+    <div class="inline-flex items-center justify-center">
+        {% translate 'completed inputs' %} {{ kezyy_request.completed_input_requests.count }}/
+        {{ kezyy_request.input_requests.count }}
+    </div> 
+
+</div> {% endcomment %}
+<div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50 group">
+
+    <div class=" flex inner-group bg-gray-100 border-r flex-1 py-2 px-1.5 min-w-[200px] max-w-[250px] shrink">
+        <a class="font-medium break-all transition duration-150 ease-in-out transform cursor-pointer hover:underline"
+        href="{% url 'request_detail' kezyy_request.uuid %}"
+        title="{% translate 'Open:' %} {{ kezyy_request.title }}"
+        onmousedown="this.classList.add('scale-[0.98]', 'text-marian-blue-400')"
+        onmouseup="this.classList.remove('scale-[0.98]', 'text-marian-blue-400')"
+        onmouseleave="this.classList.remove('scale-[0.98]', 'text-marian-blue-400')"
+        ontouchstart="this.classList.add('scale-[0.98]', 'text-marian-blue-400')"
+        ontouchend="this.classList.remove('scale-[0.98]', 'text-marian-blue-400')"
+        onclick="navigator.clipboard.writeText('{{ kezyy_request.title }}')">
+        {{ kezyy_request.title }}
+        </a>
+       <div class="my-auto opacity-0 inner-group-hover:opacity-100">
+           {% include 'components/buttons/copy_button.html' with text=kezyy_request.title %}
+       </div>
+    </div>
+    <div class=" flex inner-group flex-1 py-2 px-1.5 min-w-[190px] shrink">
+        {{ kezyy_request.completed_input_requests.count }}/
+        {{ kezyy_request.input_requests.count }}
+    </div>
+    <div class=" flex inner-group flex-1 py-2 px-1.5 min-w-[190px] shrink">
+        {% if kezyy_request.latest_event_date %}
+        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5">            
+            {% localize on %}
+            {{ kezyy_request.latest_event_date|date }} - {{ kezyy_request.latest_event_date|time }}
+            {% endlocalize %}      
+        </span>
+        {% else %}
+        <span class="inline-flex items-center bg-red-100 text-gray-600 text-xs font-semibold px-2.5 py-0.5 ">
+            {% translate 'No uploads' %}
+        </span>
+        {% endif %}
+    </div>
+
+    <div class="p-1  w-[35px] flex">
+        <button type="button" id="kezyy_request_row_dropdown_button_{{ kezyy_request.pk }}" aria-expanded="false"
+                data-dropdown-toggle="kezyy_request_row_dropdown_{{ kezyy_request.pk }}" data-dropdown-placement="left"
+                class="text-gray-700 m-auto transition-transform duration-150 ease-in-out rounded hover:text-marian-blue-400 hover:bg-gray-200 p-0.5">
+            <span class="sr-only">Open kezyy_request dropdown</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
+            </svg>
+        </button>
+        <!-- Dropdown menu -->
+        <div class="z-50 hidden my-4 text-base font-normal list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+             id="kezyy_request_row_dropdown_{{ kezyy_request.pk }}">
+            <ul class="py-1 text-sm" aria-labelledby="kezyy_request_row_dropdown_{{ kezyy_request.pk }}">
+                {% comment %} <li>
+                    <form action="{% url 'kezyy_request_duplicate' kezyy_request.pk %}?next={{ request.get_full_path }}"
+                          method="post">
+                        {% csrf_token %}
+                        <button class="block w-full px-4 py-2 text-xs text-left text-gray-700 cursor-pointer justify-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            {% translate 'Duplicate' %}
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form action="{% url 'kezyy_request_delete' kezyy_request.pk %}?next={{ request.get_full_path }}"
+                          onsubmit="return confirm('{% translate "Are you sure you want to delete this request?" %}');"
+                          method="post">
+                        {% csrf_token %}
+                        <button class="block w-full px-4 py-2 text-xs text-left text-gray-700 cursor-pointer justify-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            {% translate 'Delete' %}
+                        </button>
+                    </form>
+                </li> {% endcomment %}
+    
+            </ul>
+        </div>
+    
+    </div>
+</div>    
+
+{% comment %} <div class="flex text-sm text-left border-b border-gray-200 hover:bg-gray-50">
+    <div class="flex-1 px-4 py-2 min-w-[150px] shrink group">
+        <a href="{% url 'request_detail' kezyy_request.uuid %}" class="inline-block relative after:content-[''] after:block after:w-full after:h-[1px] after:bg-current after:absolute after:left-0 after:-bottom-[1px] after:scale-x-0 group-hover:after:scale-x-100 after:origin-bottom-left after:transition-transform after:duration-300 after:bg-gradient-to-r after:from-transparent after:via-transparent after:to-current">
+            {{ kezyy_request.title }}
+        </a>
+    </div>
+    <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
+        {{ kezyy_request.completed_input_requests.count }}/
+        {{ kezyy_request.input_requests.count }}
+    </div>
+    <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
+        {% if kezyy_request.latest_event_date %}
+        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 ml-2">            
+            {% localize on %}
+                {{ kezyy_request.latest_event_date|date:"T" }}
+            {% endlocalize %}      
+        </span>
+        {% else %}
+        <span class="inline-flex items-center bg-red-100 text-gray-600 text-xs font-semibold px-2.5 py-0.5 ">
+            {% translate 'No uploads' %}
+        </span>
+        {% endif %}
+    </div>
+    <div class="flex-1 px-4 py-2 min-w-[150px] shrink">
+        {% translate 'cell_4_row_1' %}
+    </div>
+    <div class="px-2 py-2 ml-auto transition-transform duration-150 ease-in-out w-[40px] hover:text-marian-blue-300">
+        <button type="button"  id="request_row_dropdown_button_{{ kezyy_request.pk }}" aria-expanded="false"
+        data-dropdown-toggle="request_row_dropdown_{{ kezyy_request.pk }}" data-dropdown-placement="left">
+        <span class="sr-only">Open request dropdown</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+            </svg> 
+        </button>
+<!-- Dropdown menu -->
+<div class="z-50 hidden my-4 text-base font-normal list-none bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+     id="request_row_dropdown_{{ kezyy_request.pk }}">
+    <ul class="py-2" aria-labelledby="request_row_dropdown_{{ kezyy_request.pk}}">
+        <li>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <button class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer justify-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    {% translate 'Duplicate' %}
+                </button>
+            </form>
+        </li>
+        <li>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <button class="block w-full px-4 py-2 text-sm text-left text-gray-700 cursor-pointer justify-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                    {% translate 'aa' %}
+                </button>
+            </form>
+        </li>
+
+    </ul>
+</div>
+        
+        
+
+
+
+
+    </div>
+    
+</div> {% endcomment %}
